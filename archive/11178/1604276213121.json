@@ -1,0 +1,164 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 275,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAyMDlfMjEg/MDAxNTgxMTc3NDUxMTMy.xvOMb2ga9H8ZgMp86wNEO1iFCma35TxYhJevfAccvMog.tCO1Idr4zIG-lWzVbN6hoZx-lT_fGdub0E9hhjVLOiMg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>자꾸 잘되다가 json파일 불러오는거 오류나서 오류 알람으로 도배되내요 그러다 또 파일삭제하면 잘되고<br />완성되면 공유할려는대 역시 어렵네요..ㅠ<br />초보가 더럽습니다 오류있으니 퍼가는건 비추<br /><br /><br />소스 :<br />gz = &quot;sdcard/Bot Earth/upgrade.json/gz.ison&quot;;<br />hz = &quot;sdcard/Bot Earth/upgrade.json/hz.json&quot;;<br />iz = &quot;sdcard/Bot Earth/upgrade.json/iz.json&quot;;<br />card = &quot;sdcard/Bot Earth/upgrade.json/card.json&quot;;<br />upgrade = &quot;sdcard/Bot Earth/upgrade.json/upgrade.json&quot;;<br />\r<br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br /><br />var ent = &quot;\\u200b&quot;.repeat(500);\r<br /> if ( msg == (&quot;/강화 설명&quot;)) {<br />replier.reply (&quot;[지구] 강화 시스템 &quot;+ent+&quot;\\n\\n 1.강화 재료\\n   - 강화 재료는 총 4가지가 있다 [카드, 하급 &bull; 중급 &bull; 고급 결정]\\n\\n2.결정\\n   - 하급 결정 : 일반 채팅시 5% 확율로 얻을수 있다. 모든 강화에 필요한 재료 이다. &apos;/교환 하급&apos; 으로 카드 100장으로 1개를 교환 할 수 있다.\\n\\n   - 중급 결정 : 일반 채팅시 1% 확율로 얻을수 있다. 5강 강화부터 필요한 재료 이다. &apos;/교환 중급&apos; 으로 카드 500장으로 1개를 교환 할 수 있다.\\n\\n   - 고급 결정 : 일반 채팅시 0.1% 확율로 얻을수 있다. 10강 강화부터 필요한 재료 이다. &apos;/교환 고급&apos; 으로 카드 5000장으로 1개를 교환 할 수 있다.\\n\\n\\n2.강화 확율및 재료\\n- 1강 정보\\n   &bull; 확률\\n      성공 확율 :100% | 실패 확율 0% | 파괴학율 : 0%\\n   &bull; 재료\\n      카드 : 5000장 | 하급 결정 : 50\\n      중급 결정 : 0 | 고급결정 : 0&quot;);<br /> }<br /> <br /> <br /> if (!FileStream.read(upgrade)) {<br />FileStream.write(upgrade, &quot;{}&quot;);<br />} <br />json4 = JSON.parse(FileStream.read(upgrade));<br /> <br />if (!FileStream.read(gz)) {<br />FileStream.write(gz, &quot;{}&quot;);<br />} json1 = JSON.parse(FileStream.read(gz));<br /><br />if (!FileStream.read(hz)) {<br />FileStream.write(hz, &quot;{}&quot;);<br />} json2 = JSON.parse(FileStream.read(hz));<br /><br />if (!FileStream.read(iz)) {<br />FileStream.write(iz, &quot;{}&quot;);<br />} json3 = JSON.parse(FileStream.read(iz));<br /><br />if (!FileStream.read(card)) {<br />FileStream.write(card, &quot;{}&quot;);<br />} json = JSON.parse(FileStream.read(card));<br /><br />if (!json4[sender]) {<br />json4[sender] = {};<br />json4[sender][&quot;name&quot;] = sender;<br />json4[sender][&quot;count&quot;] = 0;<br />}<br />Math.random()&lt;0&amp;&amp;json4[sender][&quot;count&quot;]++;<br />FileStream.write(upgrade, JSON.stringify(json4));<br /><br />if (!json[sender]) {<br />json[sender] = {};<br />json[sender][&quot;name&quot;] = sender;<br />json[sender][&quot;count&quot;] = 0;<br />}<br />json[sender][&quot;count&quot;]++;<br />FileStream.write(card, JSON.stringify(json));<br /> <br />if (!json1[sender]) {<br />json1[sender] = {};<br />json1[sender][&quot;name&quot;] = sender;<br />json1[sender][&quot;count&quot;] = 0;<br />}<br />Math.random()&lt;0.05&amp;&amp;json1[sender][&quot;count&quot;]++;<br />FileStream.write(gz, JSON.stringify(json1));<br /><br />if (!json2[sender]) {<br />json2[sender] = {};<br />json2[sender][&quot;name&quot;] = sender;<br />json2[sender][&quot;count&quot;] = 0;<br />}<br />Math.random()&lt;0.01&amp;&amp;json2[sender][&quot;count&quot;]++;<br />FileStream.write(hz, JSON.stringify(json2));<br /><br />if (!json3[sender]) {<br />json3[sender] = {};<br />json3[sender][&quot;name&quot;] = sender;<br />json3[sender][&quot;count&quot;] = 0;<br />}<br />Math.random()&lt;0.001&amp;&amp;json3[sender][&quot;count&quot;]++;<br />FileStream.write(iz, JSON.stringify(json3));<br /><br /><br /><br />//========== 교환 소스 ==========//<br /><br />json = JSON.parse(FileStream.read(card));<br />json1 = JSON.parse(FileStream.read(gz));<br />json2 = JSON.parse(FileStream.read(hz));<br />json3 = JSON.parse(FileStream.read(iz));<br />json4 = JSON.parse(FileStream.read(upgrade));<br /><br /><br />if (json[sender][&quot;count&quot;] &gt;= 100 &amp;&amp; msg == (&quot;/강화교환 하급&quot;)) {<br />json1[sender][&quot;count&quot;]++;<br />json[sender][&quot;count&quot;] -= 100;<br />replier.reply (&quot;하급결정 1개를 교환하셨습니다&quot;);<br />}&nbsp;<br />else if ( json[sender][&quot;count&quot;]&lt;= 100 &amp;&amp; msg ==(&quot;/강화교환 하급&quot;)) {<br />replier.reply (&quot;카드가 부족합니다&quot;);<br />}<br /><br />if (json[sender][&quot;count&quot;] &gt;= 500 &amp;&amp; msg == (&quot;/강화교환 중급&quot;)) {<br />json2[sender][&quot;count&quot;]++;<br />json[sender][&quot;count&quot;] -= 500;<br />replier.reply (&quot;중급결정 1개를 교환하셨습니다&quot;);<br />}&nbsp;<br />else if ( json[sender][&quot;count&quot;]&lt;= 500 &amp;&amp; msg ==(&quot;/강화교환 중급&quot;)) {<br />replier.reply (&quot;카드가 부족합니다&quot;);<br />}<br /><br />if (json[sender][&quot;count&quot;] &gt;= 5000 &amp;&amp; msg == (&quot;/강화교환 고급&quot;)) {<br />json3[sender][&quot;count&quot;]++;<br />json[sender][&quot;count&quot;] -= 5000;<br />replier.reply (&quot;고급결정 1개를 교환하셨습니다&quot;);<br />}&nbsp;<br />else if ( json[sender][&quot;count&quot;]&lt;= 5000 &amp;&amp; msg ==(&quot;/강화교환 고급&quot;)) {<br />replier.reply (&quot;카드가 부족합니다&quot;);<br />}<br /><br />FileStream.write(upgrade, JSON.stringify(json4));<br />FileStream.write(iz, JSON.stringify(json3));<br />FileStream.write(hz, JSON.stringify(json2));<br />FileStream.write(gz, JSON.stringify(json1));<br />FileStream.write(card, JSON.stringify(json));<br /><br /><br />//========== 내정보 소스 ==========//<br /><br />json = JSON.parse(FileStream.read(card));<br />json1 = JSON.parse(FileStream.read(gz));<br />json2 = JSON.parse(FileStream.read(hz));<br />json3 = JSON.parse(FileStream.read(iz));<br />json4 = JSON.parse(FileStream.read(upgrade));<br /><br />var cardcount = json[sender][&quot;count&quot;];<br />var gzcount = json1[sender][&quot;count&quot;];<br />var hzcount = json2[sender][&quot;count&quot;];<br />var izcount = json3[sender][&quot;count&quot;];<br />if (msg == (&quot;/강화 내정보&quot;)) {<br />replier.reply (sender+ &quot;님의 정보 입니다&quot; +ent+ &quot;\\n- 카드 : &quot; +cardcount+ &quot;\\n- 하급결정 : &quot; +gzcount+ &quot;\\n- 중급 결정 : &quot; +hzcount+&quot;\\n- 고급 결정 : &quot; +izcount);<br />}\r<br /><br /><br />//==========강화 소스==========//<br /><br /><br /><br />var ran = Math.random() * 100;<br />var upc = json4[sender][&quot;count&quot;];<br /><br />if ( json4[sender][&quot;count&quot;] == 0 &amp;&amp; ran &gt;= 0 &amp;&amp; msg == &quot;/강화&quot;) {<br />if ( json[sender][&quot;count&quot;] &gt;= 5000 &amp;&amp; json1[sender][&quot;count&quot;] &gt;= 50 ) {<br />json4[sender][&quot;count&quot;]++;<br />replier.reply (&quot;[지구] 강화 성공하셨습니다!!\\n 현재 강화 : &quot;+upc+ &quot;강&quot;);<br />} else replier.reply (&quot;[지구] 강화재료가 부족합니다&quot;); <br />} else if ( ran &lt;= 0 &amp;&amp; msg == &quot;강화&quot;) {<br />replier.reply (&quot;[지구] 강화에 실패 하셨습니다\\n현재 강화 : &quot; +upc+ &quot;강&quot;);<br /><br /><br />} else if ( json4[sender][&quot;count&quot;] == 1 &amp;&amp; ran &gt;=10 &amp;&amp; msg == &quot;/강화&quot;) {<br />if (json[sender][&quot;count&quot;] &gt;= 6000 &amp;&amp; json1[sender][&quot;count&quot;] &gt;= 100 ) {<br />json4[sender][&quot;count&quot;]++;<br />replier.reply (&quot;[지구] 강화 성공하셨습니다!!\\n 현재 강화 : &quot;+upc+ &quot;강&quot;); <br />} else replier.reply (&quot;[지구] 강화재료가 부족합니다&quot;); <br />} else if ( ran &lt; 10 &amp;&amp; msg == &quot;강화&quot;) {<br />replier.reply (&quot;[지구] 강화에 실패 하셨습니다\\n현재 강화 : &quot; +upc+ &quot;강&quot;);<br /><br /><br />} else if ( json4[sender][&quot;count&quot;] == 2 &amp;&amp; ran &gt;= 20 &amp;&amp; msg == &quot;/강화&quot;) {<br />if (json[sender][&quot;count&quot;] &gt;= 7000 &amp;&amp; json1[sender][&quot;count&quot;] &gt;= 150 ) {<br />json4[sender][&quot;count&quot;]++;<br />replier.reply (&quot;[지구] 강화 성공하셨습니다!!\\n 현재 강화 : &quot;+upc+ &quot;강&quot;);<br />} else replier.reply (&quot;[지구] 강화재료가 부족합니다&quot;); <br />} else if ( ran &lt; 20 &amp;&amp; msg == &quot;강화&quot;) {<br />replier.reply (&quot;[지구] 강화에 실패 하셨습니다\\n현재 강화 : &quot; +upc+ &quot;강&quot;);<br />}<br /><br /><br /><br />FileStream.write(upgrade, JSON.stringify(json4));<br />FileStream.write(iz, JSON.stringify(json3));<br />FileStream.write(hz, JSON.stringify(json2));<br />FileStream.write(gz, JSON.stringify(json1));<br />FileStream.write(card, JSON.stringify(json));<br /><br />}<br /><br /><br />오류 사진<br /><br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002BAA00000000",
+            "id": 11178,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 92,
+            "refArticleId": 11178,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "이코드에 무슨오류가 있는건지...참..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1581177452037,
+            "writer": {
+                "id": "whdrhkddl123",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMTJfMjg3/MDAxNjAyNDU4NTIzNTE1.MLezUCiaBjjsTRp3eHxrGiEauqPGrV_8QXDjpDNXhLYg.kvN9713evojEbEKHSDMnY2uhPiKReI5ksEGi2-KVJ60g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "dowhd"
+            }
+        },
+        "articleId": 11178,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 111776,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/cd58d162722b29f5d93f5a6d55b3c7b11745bb59e2/MjAyMDAyMDlfMjEg/MDAxNTgxMTc3NDUxMTMy.xvOMb2ga9H8ZgMp86wNEO1iFCma35TxYhJevfAccvMog.tCO1Idr4zIG-lWzVbN6hoZx-lT_fGdub0E9hhjVLOiMg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

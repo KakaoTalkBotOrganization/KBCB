@@ -1,0 +1,420 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1269,
+                            "service": "CAFE",
+                            "style": "width: 718px; height: 1269px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEwMjVfMTQ5/MDAxNTcyMDA1NzIwMDQw.R45xBxANwBy6ImI9H5Foue5Nvmznmhz-YzyQJpMe9dog.1dPdL1nUAYg1xaIv8V-I5Hnn8_IiKVnGXN04I-ZLGWYg.PNG/Screenshot_from_2019-10-25_21.15.06.png",
+                            "width": 718
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div><b>=</b>&gt;&nbsp;터미널에서 카카오봇 시뮬레이션 하기 (메시지만 출력)</div><div><b><br /></b></div><div><b>강좌 내용</b></div><div><b>=&gt;</b></div><div><br /></div><div>참고로 저는 메신저봇 쓰고 있어요</div><div><br /></div><div>준비물은 node.js (<a href=\"https://nodejs.org/en/\" target=\"_blank\">https://nodejs.org/en/</a>&nbsp;에서 다운로드 받아서 설치해 주세요)</div><div><br /></div><div>터미널 (cmd나 bash 등)에 <b>node -v</b>를 쳐서 무언가 나오면 됩니다. (v10 이상 추천)</div><div><br /></div><div><div><span style=\"font-family: 돋움체, DotumChe, AppleGothic;\">$ node -v</span></div><div><span style=\"font-family: 돋움체, DotumChe, AppleGothic;\">v10.15.3</span></div></div><div><span style=\"font-family: 돋움체, DotumChe, AppleGothic;\"><br /></span></div><div><span style=\"font-family: 돋움체, DotumChe, AppleGothic;\">($ 빼고 치세요)</span></div><div><span style=\"font-family: 돋움체, DotumChe, AppleGothic;\"><br /></span></div><div><span style=\"font-family: 돋움체, DotumChe, AppleGothic;\">(선택) Yarn도 받아줍니다. (</span><a href=\"https://yarnpkg.com/lang/en/\" target=\"_blank\">https://yarnpkg.com/lang/en/</a>) 얘는 기본으로 깔리는 패키지 매니저 npm보다 빨라서 씁니다.<b> yarn -v</b>로 잘 설치되었는지 봅니다.</div><div><br /></div><div>$ yarn -v</div><div>1.19.1</div><div><br /></div><div><b><span style=\"font-size: 14pt;\">패키지 설치</span></b></div><div><br /></div><div>새 폴더를 만들어서 거기서 터미널을 열기로 해요&nbsp;</div><div><br /></div><div>터미널에&nbsp;</div><blockquote><table width=\"100%\" border=\"1\"><tbody><tr><td><div><!--quote_txt-->npm init -y<br />yarn add gulp gulp-clean gulp-concat gulp-typescript typescript yargs<!--/quote_txt--><div></div></div></td></tr></tbody></table></blockquote><div>를 입력하여 설치합니다. yarn을 설치하지 않았다면 yarn add 대신 npm install으로 바꿔서 실행해주세요</div><div><br /></div><div><br /></div><div><div><b><span style=\"font-size: 14pt;\">폴더 구조</span></b></div></div><div><br /></div><div>프로젝트 디렉토리 구조를 다음과 같이 만듭니다. (/로 끝나는 애들은 폴더입니다)</div><div><br /></div><div>- package.json (자동으로 생깁니다)</div><div>- lib/</div><div>&nbsp; &nbsp;- run.js</div><div>- src/</div><div>&nbsp; &nbsp;- (카카오톡 봇 .js/.ts 파일들)</div><div>&nbsp; &nbsp;- 저는 response.ts라는 파일을 넣겠습니다.</div><div>- gulpfile.js</div><div>- run.js</div><div><br /></div><div>폴더 이름 파일 이름 다 하나하나 의미가 잇으니까 바꾸지 않으셧으면 좋겟습니다</div><div><br /></div><div><br /><span style=\"font-size: 18.6667px; font-weight: 700;\">run.js</span></div><div><br /></div><div>이 파일이 다른 여러 파일을 실행시켜 줄 겁니다.</div><div><br /></div><div><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"line-height: 19px;\"><div><span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">execSync</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;child_process&apos;</span>).<span style=\"color: #85b1e0;\">execSync</span>;</div><br /><div><span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">arg</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;process.argv[<span style=\"color: #dda2f6;\">2</span>]&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>;</div><div><span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">filename</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;process.argv.<span style=\"color: #f5faff;\">join</span>(<span style=\"color: #9aefea;\">&apos;&nbsp;&apos;</span>).<span style=\"color: #f5faff;\">split</span>(<span style=\"color: #9aefea;\">&apos;--file=&apos;</span>)[<span style=\"color: #dda2f6;\">1</span>];</div><div><span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #85b1e0;\">filename</span>);</div><br /><div><span style=\"color: #f5faff;\">execSync</span>(<span style=\"color: #9aefea;\">&apos;yarn&nbsp;gulp&nbsp;run&nbsp;--file=&apos;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #85b1e0;\">filename</span>,&nbsp;{&nbsp;stdio:&nbsp;[<span style=\"color: #dda2f6;\">0</span>,&nbsp;<span style=\"color: #dda2f6;\">1</span>,&nbsp;<span style=\"color: #dda2f6;\">2</span>]&nbsp;});</div><div><span style=\"color: #f5faff;\">execSync</span>(<span style=\"color: #9aefea;\">&apos;node&nbsp;temp/&apos;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #85b1e0;\">filename</span>.<span style=\"color: #f5faff;\">split</span>(<span style=\"color: #9aefea;\">&apos;.&apos;</span>)[<span style=\"color: #dda2f6;\">0</span>]&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&apos;-run.js&apos;</span>,&nbsp;{</div><div>&nbsp;&nbsp;stdio:&nbsp;[<span style=\"color: #dda2f6;\">0</span>,&nbsp;<span style=\"color: #dda2f6;\">1</span>,&nbsp;<span style=\"color: #dda2f6;\">2</span>],</div><div>});</div></div></div></div><div><div style=\"font-size: 13.3333px;\"><br /><br /></div><div style=\"font-size: 13.3333px;\"><b><span style=\"font-size: 14pt;\">lib/run.js</span></b></div></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">시뮬레이션을 담당합니다</span><span style=\"font-size: 18.6667px; font-weight: 700;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"line-height: 19px;\"><div><span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">readline</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;readline&apos;</span>);</div><br /><div><span style=\"color: #7e7edd;\">let</span>&nbsp;<span style=\"color: #85b1e0;\">room</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">sender</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">isGroupChat</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">replier</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;{&nbsp;reply:&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">imageDB</span>;</div><br /><div><span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">rl</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">readline</span>.<span style=\"color: #f5faff;\">createInterface</span>({</div><div>&nbsp;&nbsp;input:&nbsp;process.stdin,</div><div>&nbsp;&nbsp;output:&nbsp;process.stdout,</div><div>});</div><br /><div><span style=\"color: #7e7edd;\">async</span>&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;<span style=\"color: #f5faff;\">getLine</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #7e7edd;\">new</span>&nbsp;<span style=\"color: #a571f4;\">Promise</span>((<span style=\"color: #b9bed5;\">res</span>,&nbsp;<span style=\"color: #b9bed5;\">rej</span>)&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">rl</span>.<span style=\"color: #f5faff;\">question</span>(<span style=\"color: #9aefea;\">&apos;&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>(<span style=\"color: #b9bed5;\">x</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">res</span>(<span style=\"color: #85b1e0;\">x</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;});</div><div>&nbsp;&nbsp;});</div><div>}</div><br /><div><span style=\"color: #7e7edd;\">async</span>&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;<span style=\"color: #f5faff;\">main</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">`-------------------------------</span></div><div><span style=\"color: #9aefea;\">&nbsp;&nbsp;&nbsp;&nbsp;KAKAOTALK&nbsp;BOT&nbsp;SIMULATOR</span></div><div><span style=\"color: #9aefea;\">-------------------------------</span></div><div><span style=\"color: #9aefea;\">`</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">&apos;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">Room:&nbsp;[DEFAULT_ROOM]&apos;</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">room</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;(<span style=\"color: #7e7edd;\">await</span>&nbsp;<span style=\"color: #f5faff;\">getLine</span>())&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;DEFAULT_ROOM&apos;</span>;</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">&apos;Now&nbsp;the&nbsp;room&nbsp;is&nbsp;&apos;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #85b1e0;\">room</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">&apos;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">Sender:&nbsp;[DEFAULT_SENDER]&apos;</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">sender</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;(<span style=\"color: #7e7edd;\">await</span>&nbsp;<span style=\"color: #f5faff;\">getLine</span>())&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;DEFAULT_SENDER&apos;</span>;</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">&apos;Now&nbsp;the&nbsp;sender&nbsp;is&nbsp;&apos;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #85b1e0;\">sender</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">&apos;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">IsGroupChat:&nbsp;y/[n]&apos;</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">isGroupChat</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;(<span style=\"color: #7e7edd;\">await</span>&nbsp;<span style=\"color: #f5faff;\">getLine</span>()).<span style=\"color: #f5faff;\">trim</span>()&nbsp;<span style=\"color: #93ddfb;\">===</span>&nbsp;<span style=\"color: #9aefea;\">&apos;y&apos;</span>;</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">`The&nbsp;bot&nbsp;is&nbsp;in&nbsp;a&nbsp;${</span><span style=\"color: #85b1e0;\">isGroupChat</span><span style=\"color: #9aefea;\">&nbsp;</span><span style=\"color: #93ddfb;\">?</span><span style=\"color: #9aefea;\">&nbsp;</span><span style=\"color: #9aefea;\">&apos;group&apos;</span><span style=\"color: #9aefea;\">&nbsp;</span><span style=\"color: #93ddfb;\">:</span><span style=\"color: #9aefea;\">&nbsp;</span><span style=\"color: #9aefea;\">&apos;private&apos;}&nbsp;chat`</span>);</div><br /><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">`</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">We&nbsp;collected&nbsp;all&nbsp;the&nbsp;informations!</span><span style=\"color: #93ddfb;\">\\n\\n</span><span style=\"color: #9aefea;\">`</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">query</span>();</div><div>}</div><div><span style=\"color: #7e7edd;\">async</span>&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;<span style=\"color: #f5faff;\">query</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">&apos;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">Type&nbsp;the&nbsp;user&nbsp;input:&nbsp;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">&apos;</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">let</span>&nbsp;<span style=\"color: #85b1e0;\">g</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #7e7edd;\">await</span>&nbsp;<span style=\"color: #f5faff;\">getLine</span>();</div><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #9aefea;\">&apos;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">The&nbsp;bot&nbsp;said:</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">&apos;</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">response</span>(<span style=\"color: #85b1e0;\">room</span>,&nbsp;<span style=\"color: #85b1e0;\">g</span>,&nbsp;<span style=\"color: #85b1e0;\">sender</span>,&nbsp;<span style=\"color: #85b1e0;\">isGroupChat</span>,&nbsp;<span style=\"color: #85b1e0;\">replier</span>,&nbsp;<span style=\"color: #85b1e0;\">imageDB</span>);</div><br /><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">query</span>();</div><div>}</div><br /><div><span style=\"color: #f5faff;\">main</span>();</div></div></div></div><div><br /></div><div><span style=\"font-size: 18.6667px; font-weight: 700;\">gulpfile.js</span></div><div><br /></div><div>얘가 하는 일은 파일 두 개를 붙여주는 겁니다</div><div><br /></div><div><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp&apos;</span>);</div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">ts</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp-typescript&apos;</span>);</div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">clean</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp-clean&apos;</span>);</div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">concat</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp-concat&apos;</span>);</div><div style=\"line-height: 19px;\"><div></div><br /><div><span style=\"color: #555c77;\">/**&nbsp;RUN&nbsp;*/</span></div><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(<span style=\"color: #9aefea;\">&apos;clean-temp&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">src</span>([<span style=\"color: #9aefea;\">&apos;./temp/**/*&apos;</span>],&nbsp;{&nbsp;read:&nbsp;<span style=\"color: #dda2f6;\">false</span>&nbsp;}).<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #f5faff;\">clean</span>());</div><div>});</div><br /><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(<span style=\"color: #9aefea;\">&apos;run-compile&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;yargs&apos;</span>).<span style=\"color: #f5faff;\">alias</span>(<span style=\"color: #9aefea;\">&apos;f&apos;</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;file&apos;</span>).<span style=\"color: #85b1e0;\">argv</span>;</div><br /><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>.<span style=\"color: #85b1e0;\">file</span>;</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">fileWithoutExt</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>.<span style=\"color: #f5faff;\">replace</span>(<span style=\"color: #93ddfb;\">/\\.</span><span style=\"color: #dda2f6;\">[jt]</span><span style=\"color: #93ddfb;\">s/</span><span style=\"color: #7e7edd;\">g</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>);</div><br /><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">if</span>&nbsp;(<span style=\"color: #85b1e0;\">file</span>&nbsp;<span style=\"color: #93ddfb;\">===</span>&nbsp;<span style=\"color: #85b1e0;\">fileWithoutExt</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&apos;.ts&apos;</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">src</span>(<span style=\"color: #9aefea;\">`src/${</span><span style=\"color: #85b1e0;\">file</span><span style=\"color: #9aefea;\">}`</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">ts</span>({</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noImplicitAny:&nbsp;<span style=\"color: #dda2f6;\">true</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lib:&nbsp;[<span style=\"color: #9aefea;\">&apos;esnext&apos;</span>],</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}),</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">dest</span>(<span style=\"color: #9aefea;\">&apos;temp&apos;</span>));</div><div>&nbsp;&nbsp;}&nbsp;<span style=\"color: #7e7edd;\">else</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">src</span>(<span style=\"color: #9aefea;\">`src/${</span><span style=\"color: #85b1e0;\">file</span><span style=\"color: #9aefea;\">}`</span>).<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">dest</span>(<span style=\"color: #9aefea;\">&apos;temp&apos;</span>));</div><div>&nbsp;&nbsp;}</div><div>});</div><br /><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(<span style=\"color: #9aefea;\">&apos;run-append&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;yargs&apos;</span>).<span style=\"color: #f5faff;\">alias</span>(<span style=\"color: #9aefea;\">&apos;f&apos;</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;file&apos;</span>).<span style=\"color: #85b1e0;\">argv</span>;</div><br /><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>.<span style=\"color: #85b1e0;\">file</span>;</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">fileWithoutExt</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>.<span style=\"color: #f5faff;\">replace</span>(<span style=\"color: #93ddfb;\">/\\.</span><span style=\"color: #dda2f6;\">[jt]</span><span style=\"color: #93ddfb;\">s/</span><span style=\"color: #7e7edd;\">g</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>);</div><br /><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">src</span>([<span style=\"color: #9aefea;\">&apos;lib/run.js&apos;</span>,&nbsp;<span style=\"color: #9aefea;\">`temp/${</span><span style=\"color: #85b1e0;\">fileWithoutExt</span><span style=\"color: #9aefea;\">}.js`</span>])</div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #f5faff;\">concat</span>(<span style=\"color: #9aefea;\">`${</span><span style=\"color: #85b1e0;\">fileWithoutExt</span><span style=\"color: #9aefea;\">}-run.js`</span>))</div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">dest</span>(<span style=\"color: #9aefea;\">&apos;temp&apos;</span>));</div><div>});</div><br /><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;run&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">series</span>(</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;clean-temp&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;run-compile&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;run-append&apos;</span>,</div><div>&nbsp;&nbsp;),</div><div>);</div></div></div></div><div><br /></div><div><br /></div><div><b><span style=\"font-size: 14pt;\">테스트</span></b></div><div><div style=\"font-size: 13.3333px;\"><br />이제 테스트를 할 수 있습니다. 예를 들어 src 폴더 안의 파일 이름이&nbsp;<span style=\"font-size: 13.3333px;\">response.ts였으면,</span></div><blockquote><table width=\"100%\" border=\"1\"><tbody><tr><td><div><!--quote_txt--><span style=\"color: rgb(0, 0, 0); font-size: 13.3333px; text-align: start;\">node run.js --file=response.ts</span><!--/quote_txt--><div></div></div></td></tr></tbody></table></blockquote></div><div>를 실행시키면 됩니다. Room, sender, isGroupChat (y는 yes, n는 no)을 입력하고 나면 Type the user input: 라는 줄이 출력되는데 그때 치고 싶은 말(msg 인자)을 치면 됩니다</div><div><br /></div><div><br /></div><div>[[[CONTENT-ELEMENT-0]]]<br /></div><div><br /></div><div><br /></div><div>안 되면 말씀해주세요&nbsp;<span style=\"font-size: 10pt;\">참고로 저는 .ts 파일들(TypeScript) 썼는데 .js 파일도 잘 됩니다</span></div><div><span style=\"font-size: 10pt;\">근데 제가 OS를 Windows를 안 써서 안 되는 게 있을 수 잇어요</span></div><div>여러분도 버그 안 나는 타입스크립트 쓰세요</div><div><br /></div><div>Device info 등 시뮬레이트하는 거는 좀 잇다가 올려볼게요</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001B3C00000000",
+            "head": "기타",
+            "headId": 39,
+            "id": 6972,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 334,
+            "refArticleId": 6972,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "자동으로 터미널에서 카카오봇 시뮬레이션 하기 #1 (메시지만 출력, Node.js)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1571999467863,
+            "writer": {
+                "id": "utophii",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "utophii"
+            }
+        },
+        "articleId": 6972,
+        "attaches": [
+            {
+                "extension": "png",
+                "fullName": "Screenshot_from_2019-10-25_21.15.06.png",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_from...-25_21.15.06.png",
+                "size": 142943,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/eb7ef74c546061d4f91d7a4e7297ea9131639d28/MjAxOTEwMjVfMTQ5/MDAxNTcyMDA1NzIwMDQw.R45xBxANwBy6ImI9H5Foue5Nvmznmhz-YzyQJpMe9dog.1dPdL1nUAYg1xaIv8V-I5Hnn8_IiKVnGXN04I-ZLGWYg.PNG/Screenshot_from_2019-10-25_21.15.06.png?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷㄷ 만드셨네",
+                    "id": 71930218,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71930218,
+                    "updateDate": 1572003949000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "Device도 다음편에서 구현햇으니 관심잇으시면 봐주세요\r\n다른 것들도 비슷하게 구현 가능",
+                    "id": 71930564,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71930218,
+                    "updateDate": 1572004364000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 71930290,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71930290,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572004041000,
+                    "writer": {
+                        "id": "doy0006",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data29/2007/12/9/39/cellphoneimg-doy0006.jpg"
+                        },
+                        "nick": "대기만성"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 71930607,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71930290,
+                    "sticker": {
+                        "height": 112,
+                        "id": "happybean-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/happybean/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572004415000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "yarn 버전가져오는거 까지 잘됬는데 왜 gulp설치과정에서 그거 못 찾는다고애러나요?\r\n\r\nnpm i gulp\r\n실행해서 수동설치하네요;;;",
+                    "id": 71931322,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71931322,
+                    "updateDate": 1572005389000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "아 yarn add gulp인데 오타낫네요 ㅜ ㅜ",
+                    "id": 71931530,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71931322,
+                    "updateDate": 1572005428000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "그리고 설치가 이상한건지...\r\n\r\ngulp run 에서 실페했다고 뜨네요\r\nchild_process.js:660",
+                    "id": 71933050,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71931322,
+                    "replyMember": {
+                        "id": "utophii",
+                        "nick": "utophii"
+                    },
+                    "updateDate": 1572006647000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "에러 메시지를 보여주세요",
+                    "id": 71933131,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71931322,
+                    "replyMember": {
+                        "id": "jomin398",
+                        "nick": "jomin398"
+                    },
+                    "updateDate": 1572006714000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "'gulp'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\r\n배치 파일이 아닙니다.\r\nchild_process.js:660\r\nthrow err;\r\n^\r\n\r\nError: Command failed: gulp run --file=Main.js\r\nat checkExecSyncError (child_process.js:621:11)\r\nat execSync (child_process.js:657:15)\r\nat Object.<anonymous> (C:\\Users\\user\\Desktop\\bot\\run.js:6:1)\r\nat Module._compile (internal/modules/cjs/loader.js:945:30)\r\nat Object.Module._extensions..js (internal/modules/cjs/loader.js:962:10)\r\nat Module.load (internal/modules/cjs/loader.js:798:32)\r\nat Function.Module._load (internal/modules/cjs/loader.js:711:12)\r\nat Function.Module.runMain (internal/modules/cjs/loader.js:1014:10)\r\nat internal/main/run_main_module.js:17:11 {\r\nstatus: 1,\r\nsignal: null,\r\noutput: [ null, null, null ],\r\npid: 1268,\r\nstdout: null,\r\nstderr: null\r\n}\r\n\r\n분명히 똑같이 배치했는데...;;",
+                    "id": 71933418,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71931322,
+                    "replyMember": {
+                        "id": "utophii",
+                        "nick": "utophii"
+                    },
+                    "updateDate": 1572006979000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "잉 아닌데\r\ngulp run 대신 yarn gulp run으로 해보세요 OS차이인듯",
+                    "id": 71933493,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71931322,
+                    "replyMember": {
+                        "id": "jomin398",
+                        "nick": "jomin398"
+                    },
+                    "updateDate": 1572076202000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                }
+            ],
+            "last": {
+                "id": 71933916,
+                "refId": 71933916
+            },
+            "next": {
+                "id": 71933883,
+                "refId": 71931322
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

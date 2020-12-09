@@ -1,0 +1,251 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1521,
+                            "service": "CAFE",
+                            "style": "width:1080px; height:2220px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEyMzBfMzYg/MDAxNTc3NzE0NDUxNzQy.7mEDJNELKVe1zegOBdPvtXphhMyYOXGBLncW0tNu_vMg.aGInAOjiYaQYAMSQiIbx_XXCwi9fPlByNKJH0_hOyzYg.JPEG/Screenshot_20191230-230024_MessengerBot.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;const user = &quot;Base 64 인코딩해서 넣었어요&quot;; //핑퐁 사이트 api 키를 base64 인코딩 해서 넣으면 될겁니다. 아마도?</b></div><div><b>const urlA = &quot;Url 넣었어요&quot;; //Url 넣으세요</b></div><div><b><br /></b></div><div><b>const On = {};</b></div><div><b>const Pro = {};</b></div><div><b><br /></b></div><div><b>function response(room, msg, sender, isGroupChat, replier) {</b></div><div><b>if(!!!On[room]) On[room] = false;</b></div><div><b>if(!!!Pro[room]) Pro[room] = 0;</b></div><div><b>if(msg == &quot;/Talk On&quot;) {</b></div><div><b>On[room] = true;</b></div><div><b>replier.reply(&quot;[Bot]\\nRoom : &quot; + room + &quot;\\nTalk : On&quot;);</b></div><div><b>return;</b></div><div><b>}</b></div><div><b>if(!On[room]) return;</b></div><div><b>if(msg == &quot;/Talk Off&quot;) {</b></div><div><b>On[room] = false;</b></div><div><b>replier.reply(&quot;[Bot]\\nRoom : &quot; + room + &quot;\\nTalk : Off&quot;);</b></div><div><b>return;</b></div><div><b>}</b></div><div><b>if(msg.startsWith(&quot;/Talk &quot;)) {</b></div><div><b>msg = msg.replace(&quot;/Talk &quot;, &quot;&quot;); //replace 쓰는 이유는 명령어 바꾸라고 하는 거에요 아마도...</b></div><div><b>if(isNaN(msg)) return;</b></div><div><b>if(msg &lt; 0 || msg &gt; 100) return;</b></div><div><b>Pro[room] = msg;</b></div><div><b>replier.reply(&quot;[Bot]\\nRoom : &quot; + room + &quot;\\nProbability : &quot; + msg + &quot;%&quot;);&nbsp;</b></div><div><b>return;</b></div><div><b>}</b></div><div><b>if(Math.random() * 100 &lt;&lt; 0 &gt; (99 - Pro[room])) {</b></div><div><b>let jsondata = {&quot;request&quot; : {&quot;query&quot; : msg}};</b></div><div><b><br /></b></div><div><b>function send() {</b></div><div><b>try{</b></div><div><b>let url = new java.net.URL(urlA);</b></div><div><b>let con = url.openConnection();</b></div><div><b>con.setRequestMethod(&quot;POST&quot;); // 서버 접속 방법을 설정하세요. GET, POST, OPTIONS 등..</b></div><div><b>con.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json; charset=utf-8&quot;); // 서버 접속시 가져올 데이터의 형식을 지정</b></div><div><b>con.setRequestProperty(&quot;Authorization&quot;, &quot;Basic &quot; +user); // 인증키 입력. 사이트에 따라 Basic 또는 Bearer 를 사용합니다.</b></div><div><b>con.setRequestProperty(&quot;User-Agent&quot;, &quot;Mozilla&quot;); // 일부 사이트의 경우 User-Agent 를 요구합니다.</b></div><div><b>con.setRequestProperty(&quot;Accpet&quot;, &quot;*.*&quot;); // 일부 사이트의 경우, 이 헤더가 없으면 오류가 발생합니다.</b></div><div><b>con.setDoOutput(true);</b></div><div><b>let wr = new java.io.DataOutputStream(con.getOutputStream());</b></div><div><b>let writer = new java.io.BufferedWriter(new java.io.OutputStreamWriter(wr, &quot;UTF-8&quot;));</b></div><div><b>writer.write(JSON.stringify(jsondata));</b></div><div><b>writer.close();</b></div><div><b>wr.close();</b></div><div><b><br /></b></div><div><b>let responseCode = con.getResponseCode();</b></div><div><b>let br;</b></div><div><b>if(responseCode == 200) {</b></div><div><b>br = new java.io.BufferedReader(new java.io.InputStreamReader(con.getInputStream()));</b></div><div><b>} else {</b></div><div><b>br = new java.io.BufferedReader(new java.io.InputStreamReader(con.getErrorStream()));</b></div><div><b>}</b></div><div><b>let inputLine;</b></div><div><b>let response = &quot;&quot;;</b></div><div><b>while ((inputLine = br.readLine()) != null) {</b></div><div><b>response += inputLine;</b></div><div><b>}</b></div><div><b>br.close();</b></div><div><b>return response;</b></div><div><b>} catch (e) {</b></div><div><b>return e;</b></div><div><b>}&nbsp;</b></div><div><b>} //이건 인디벨님이였나 누구 소스 넣은건데 호랑이가 회사다니던 시절 msg님이 주신 거 참고한 걸 거에요.</b></div><div><b><br /></b></div><div><b>/*소금띠*/</b></div><div><b><br /></b></div><div><b>let results = JSON.parse(send());</b></div><div><b>replier.reply(results[&apos;response&apos;][&apos;replies&apos;][0][&apos;text&apos;]);</b></div><div><b>}</b></div><div><b>}</b></div><div><b><br /></b></div><div><b>/*</b></div><div><b>/Talk On : 핑퐁 대화 켜짐</b></div><div><b>/Talk Off : 핑퐁 대화 꺼짐</b></div><div><b>/Talk &lt;확률 (1~100)&gt; : 대화 반응 확률 설정, 소스가 맞는지는 잘 모르겠지만 맞을거임(?)</b></div><div><b><br /></b></div><div><b>핑퐁 사이트에서 플랫폼 연동으로 들어가셔서 Custom Api 를 연동해주세요.</b></div><div><b>모바일이여도 가로로 회전하면 연동하기 버튼이 뜹니다. 그래도 안된다면 PC버전을 이용해주세요.</b></div><div><b>Api Key는 Base64 로 인코딩 해 주세요.</b></div><div><b>70번째 line 정도에서 replies 항목을 받아올 수 없다고 뜨는 에러는</b></div><div><b>플랫폼 연동이 되지 않은 것입니다.</b></div><div><b>방 별로 다르게 확률을 설정할 수 있습니다. 컴파일하면 초기화됩니다.</b></div><div><b>확률 기본값은 0 입니다. 안된다고 빼액거리면 때립니다.</b></div><div><b>지우고 싶을 때 지울거에요.</b></div><div><b>가져갈거면 댓글이나 하트 누르고 가져가세요. 저는 관심을 먹고 삽니다.</b></div><div><b>*/</b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 커스텀 Api 연동했고 Url 제대로 넣었고 Api 키 Base64로 인코딩해서 넣었습니다</b></div><div><b>이렇게 했는데도 이런 오류가 나요...&nbsp;</b></div><div><b>[[[CONTENT-ELEMENT-0]]]</b><p><b>&nbsp;</b></p><b><br /></b></div><div>Custom Api 연동했습니다&nbsp; Url도 넣었고&nbsp; Api키는 Base64로 인코딩해서 넣었어요.</div><div><b><br /></b></div><div><b><a href=\"https://www.base64encode.net/\" target=\"_blank\">https://www.base64encode.net/</a></b><br /></div><div><b>여기서 인코딩했어요</b></div><div><b><br /></b></div><div><b>소스의 출처는 Alphado님 소스입니다</b></div><div><b>&hearts;Alphado님 감사합니다&hearts;</b></div><div><b><br /></b></div><div><b>왜 오류나는걸까요..???</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000024FF00000000",
+            "id": 9471,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 282,
+            "refArticleId": 9471,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "Alphado님 핑퐁 소스 오류 질문",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1577714587523,
+            "writer": {
+                "id": "mmirya6745",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "ciarro"
+            }
+        },
+        "articleId": 9471,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "Screenshot_20191230-230024_MessengerBot.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_2019...MessengerBot.jpg",
+                "size": 338068,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/4adf56e6f2adae725eb8ddead2344c3490c23cdef3/MjAxOTEyMzBfMzYg/MDAxNTc3NzE0NDUxNzQy.7mEDJNELKVe1zegOBdPvtXphhMyYOXGBLncW0tNu_vMg.aGInAOjiYaQYAMSQiIbx_XXCwi9fPlByNKJH0_hOyzYg.JPEG/Screenshot_20191230-230024_MessengerBot.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "핑퐁핑퐁핑퐁핑퐁 소스 사용해줘요",
+                    "id": 77201381,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77201381,
+                    "updateDate": 1577714698000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "어제 밤에 등업 신청했는데 아직이네염 곧 되겠죠 ..?",
+                    "id": 77201417,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77201417,
+                    "updateDate": 1577714731000,
+                    "writer": {
+                        "id": "mmirya6745",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ciarro"
+                    }
+                },
+                {
+                    "content": "아 등급이 안되시는구나..",
+                    "id": 77201460,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77201417,
+                    "updateDate": 1577714744000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "곧 될겁니다! 관리자님이 확인만 해주시면.. ㅎㅎㅎ",
+                    "id": 77201479,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77201417,
+                    "replyMember": {
+                        "id": "dsy2761",
+                        "nick": "AlphaDo"
+                    },
+                    "updateDate": 1577714761000,
+                    "writer": {
+                        "id": "mmirya6745",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ciarro"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

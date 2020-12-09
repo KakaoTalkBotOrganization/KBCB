@@ -1,0 +1,427 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 19,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 433,
+                            "service": "CAFE",
+                            "style": "width: 740px; height: 433px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA1MTJfNzYg/MDAxNTg5MjY4OTUzMDAw.QKuwfnpGUtiDjaoPVqPB8MqS05gdBcZ7Rhuy3FGR490g.N5gw7Y-pT3Jial0Ve13XWv2I1NLA3REGjARU7W2LeFsg.JPEG/4.JPG",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div>const kalingModule = require(&apos;kaling&apos;).Kakao();</div><div>const Kakao = new kalingModule;</div><div>Kakao.init(&apos;자바키&apos;);</div><div>Kakao.login(&apos;아이디&apos;,&apos;비번&apos;);//봇의 카카오계정</div><div><br /></div><div>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName){<span style=\"white-space:pre\"> </span></div><div>&nbsp; &nbsp; if(msg.indexOf(&quot;/롤전적 &quot;) != -1){</div><div>&nbsp; &nbsp; &nbsp; try{</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var name = msg.substr(5);</div><div><span style=\"white-space:pre\"> </span>&nbsp; &nbsp; var data = org.jsoup.Jsoup.connect(&quot;<a href=\"https://www.op.gg/summoner/userName=\" target=\"_blank\">https://www.op.gg/summoner/userName=</a>&quot;+name+&quot;&amp;l=ko_KR&quot;).get();</div><div><span style=\"white-space:pre\">  </span>var nickname = data.select(&quot;div[class=Information]&gt;span[class=Name]&quot;).text();</div><div><span style=\"white-space:pre\">  </span>var Rank = data.select(&quot;div[class=TierRankInfo]&quot;).text().replace(&quot;솔로랭크&quot;,&quot;&quot;).trim();</div><div><span style=\"white-space:pre\"> </span>&nbsp; &nbsp; var RankImage = &quot;https:&quot;+ data.select(&quot;div[class^=Medal]&gt;img&quot;).attr(&quot;src&quot;);</div><div><span style=\"white-space:pre\">  </span>var gameresultdata = data.select(&quot;div[class=GameItemList]&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var champion1 = gameresultdata.select(&quot;div[class=ChampionName]&quot;).get(0).text(); //챔피언1</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var champion2 = gameresultdata.select(&quot;div[class=ChampionName]&quot;).get(1).text(); //챔피언2</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var champion3 = gameresultdata.select(&quot;div[class=ChampionName]&quot;).get(2).text(); //챔피언3</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var champion4 = gameresultdata.select(&quot;div[class=ChampionName]&quot;).get(3).text(); //챔피언4</div><div><span style=\"white-space:pre\">  </span>var gameresult1 = gameresultdata.select(&quot;div[class=GameResult]&quot;).get(0).text() +&quot; | &quot;+champion1; //게임 결과1 | 챔피언1</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var gameresult2 = gameresultdata.select(&quot;div[class=GameResult]&quot;).get(1).text() +&quot; | &quot;+champion2; //게임 결과2 | 챔피언2<span style=\"white-space:pre\"> </span></div><div>&nbsp; &nbsp; &nbsp; &nbsp; var gameresult3 = gameresultdata.select(&quot;div[class=GameResult]&quot;).get(2).text() +&quot; | &quot;+champion3;&nbsp; //게임 결과3 | 챔피언3</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var gameresult4 = gameresultdata.select(&quot;div[class=GameResult]&quot;).get(3).text() +&quot; | &quot;+champion4;&nbsp; //게임 결과4 | 챔피언4</div><div><span style=\"white-space:pre\">  </span>var CS1 = gameresultdata.select(&quot;div[class=CS]&quot;).get(0).text(); //CS1</div><div><span style=\"white-space:pre\"> </span>&nbsp; &nbsp; var CS2 = gameresultdata.select(&quot;div[class=CS]&quot;).get(1).text(); //CS2</div><div><span style=\"white-space:pre\"> </span>&nbsp; &nbsp; var CS3 = gameresultdata.select(&quot;div[class=CS]&quot;).get(2).text(); //CS3</div><div><span style=\"white-space:pre\"> </span>&nbsp; &nbsp; var CS4 = gameresultdata.select(&quot;div[class=CS]&quot;).get(3).text(); //CS4</div><div><span style=\"white-space:pre\">  </span>var KDA1 = gameresultdata.select(&quot;div[class=KDA] &gt; div[class=KDA]&quot;).get(0).text()+&quot; | &quot;+CS1; //KDA1 | CS1</div><div><span style=\"white-space:pre\">  </span>var KDA2 = gameresultdata.select(&quot;div[class=KDA] &gt; div[class=KDA]&quot;).get(1).text()+&quot; | &quot;+CS2; //KDA1 | CS1</div><div><span style=\"white-space:pre\">  </span>var KDA3 = gameresultdata.select(&quot;div[class=KDA] &gt; div[class=KDA]&quot;).get(2).text()+&quot; | &quot;+CS3; //KDA1 | CS1</div><div><span style=\"white-space:pre\">  </span>var KDA4 = gameresultdata.select(&quot;div[class=KDA] &gt; div[class=KDA]&quot;).get(3).text()+&quot; | &quot;+CS4; //KDA1 | CS1</div><div><span style=\"white-space:pre\">  </span>var championimage1 = &quot;https:&quot;+gameresultdata.select(&quot;[class=GameSettingInfo]&gt;div[class=ChampionImage]&quot;).select(&quot;img&quot;).get(0).attr(&quot;src&quot;); //챔피언이미지1</div><div><span style=\"white-space:pre\">  </span>var championimage2 = &quot;https:&quot;+gameresultdata.select(&quot;[class=GameSettingInfo]&gt;div[class=ChampionImage]&quot;).select(&quot;img&quot;).get(1).attr(&quot;src&quot;); //챔피언이미지2</div><div><span style=\"white-space:pre\">  </span>var championimage3 = &quot;https:&quot;+gameresultdata.select(&quot;[class=GameSettingInfo]&gt;div[class=ChampionImage]&quot;).select(&quot;img&quot;).get(2).attr(&quot;src&quot;); //챔피언이미지3</div><div><span style=\"white-space:pre\">  </span>var championimage4 = &quot;https:&quot;+gameresultdata.select(&quot;[class=GameSettingInfo]&gt;div[class=ChampionImage]&quot;).select(&quot;img&quot;).get(3).attr(&quot;src&quot;); //챔피언이미지4</div><div>&nbsp; &nbsp; &nbsp; &nbsp; Kakao.send(room,{</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &quot;link_ver&quot; : &quot;4.0&quot;,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &quot;template_id&quot; : 템플릿번호,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &quot;template_args&quot; :{</div><div>&nbsp; &nbsp; &nbsp; &nbsp; nickname:nickname,&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; RankType:Rank,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; RankImage:RankImage,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; GameResult1:gameresult1,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; KDA1:KDA1,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; CHImage1:championimage1,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; GameResult2:gameresult2,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; KDA2:KDA2,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; CHImage2:championimage2,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; GameResult3:gameresult3,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; KDA3:KDA3,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; CHImage3:championimage3,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; GameResult4:gameresult4,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; KDA4:KDA4,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; CHImage4:championimage4</div><div>&nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp; },&quot;custom&quot;)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div><div><span style=\"white-space:pre\"> </span>} catch(e){</div><div><span style=\"white-space:pre\"> </span>replier.reply(name+&quot; 님의 전적을 찾을 수 없습니다&quot;)</div><div><span style=\"white-space:pre\"> </span>}</div><div><span style=\"white-space:pre\"> </span>}</div><div><br /></div><div>}</div><div><br /></div><div><br /></div><div>[[[CONTENT-ELEMENT-0]]]<br /></div><div>템플릿 만들줄아시겠죠?(찡긋)</div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000465F00000000",
+            "head": "파싱",
+            "headId": 72,
+            "id": 18015,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 817,
+            "refArticleId": 18015,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "대충만든 롤 전적 (카카오링크)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1589268967210,
+            "writer": {
+                "id": "nahyun2673",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "게으른초보"
+            }
+        },
+        "articleId": 18015,
+        "attaches": [
+            {
+                "extension": "JPG",
+                "fullName": "4.JPG",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "4.JPG",
+                "size": 62194,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/23b63f8c9acfc71b37d1b483bb53275ff9ab55b772/MjAyMDA1MTJfNzYg/MDAxNTg5MjY4OTUzMDAw.QKuwfnpGUtiDjaoPVqPB8MqS05gdBcZ7Rhuy3FGR490g.N5gw7Y-pT3Jial0Ve13XWv2I1NLA3REGjARU7W2LeFsg.JPEG/4.JPG?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오류있으시면 댓글 부탁드려용~",
+                    "id": 90200326,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 90200326,
+                    "updateDate": 1589268987000,
+                    "writer": {
+                        "id": "nahyun2673",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "게으른초보"
+                    }
+                },
+                {
+                    "content": "모듈 어디서 다운받나요?",
+                    "id": 93465954,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93465954,
+                    "updateDate": 1591961331000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Devil1234"
+                    }
+                },
+                {
+                    "content": "템플릿 만등고 컴파일이랑 다 됬는데\r\n전적을 찾을 수 없다네요 ㅜ",
+                    "id": 95053062,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95053062,
+                    "updateDate": 1593324857000,
+                    "writer": {
+                        "id": "92guswns6737",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfMjM3/MDAxNjA0MTE4NTA1NDYw.p-6d225m7mzyprfeGqvK9ipgB_DjV0U7sMRRpQAeHzAg.Lr1SYHK7aqefuh6gYQnlOSa3MLpsjuyjLP8vE8Faf3og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡좋아좋아"
+                    }
+                },
+                {
+                    "content": "앗 제가 셤기간이라 끝내고 확인해볼게용..ㅜㅜ",
+                    "id": 95069572,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95053062,
+                    "updateDate": 1593339281000,
+                    "writer": {
+                        "id": "nahyun2673",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "게으른초보"
+                    }
+                },
+                {
+                    "content": "넵! 감사합니다 ㅜㅜ",
+                    "id": 95069719,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95053062,
+                    "replyMember": {
+                        "id": "nahyun2673",
+                        "nick": "게으른초보"
+                    },
+                    "updateDate": 1593339414000,
+                    "writer": {
+                        "id": "92guswns6737",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfMjM3/MDAxNjA0MTE4NTA1NDYw.p-6d225m7mzyprfeGqvK9ipgB_DjV0U7sMRRpQAeHzAg.Lr1SYHK7aqefuh6gYQnlOSa3MLpsjuyjLP8vE8Faf3og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡좋아좋아"
+                    }
+                },
+                {
+                    "content": "도메인을 뭐로 설정 하나요?\r\nhttps://www.op.gg\r\n이거 맞나..",
+                    "id": 95383295,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95053062,
+                    "replyMember": {
+                        "id": "nahyun2673",
+                        "nick": "게으른초보"
+                    },
+                    "updateDate": 1593585773000,
+                    "writer": {
+                        "id": "92guswns6737",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfMjM3/MDAxNjA0MTE4NTA1NDYw.p-6d225m7mzyprfeGqvK9ipgB_DjV0U7sMRRpQAeHzAg.Lr1SYHK7aqefuh6gYQnlOSa3MLpsjuyjLP8vE8Faf3og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡좋아좋아"
+                    }
+                },
+                {
+                    "content": "자율",
+                    "id": 95383840,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95053062,
+                    "replyMember": {
+                        "id": "92guswns6737",
+                        "nick": "카톡좋아좋아"
+                    },
+                    "updateDate": 1593586126000,
+                    "writer": {
+                        "id": "nahyun2673",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "게으른초보"
+                    }
+                },
+                {
+                    "content": "넵 전적을 찾을 수 없다고 뜨는데 셤기간 끝나시면 확인 부탁드려요!",
+                    "id": 95400456,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95053062,
+                    "replyMember": {
+                        "id": "nahyun2673",
+                        "nick": "게으른초보"
+                    },
+                    "updateDate": 1593598095000,
+                    "writer": {
+                        "id": "92guswns6737",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfMjM3/MDAxNjA0MTE4NTA1NDYw.p-6d225m7mzyprfeGqvK9ipgB_DjV0U7sMRRpQAeHzAg.Lr1SYHK7aqefuh6gYQnlOSa3MLpsjuyjLP8vE8Faf3og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡좋아좋아"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 95548944,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95548944,
+                    "updateDate": 1593705207000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "에구우.. 내일중으로 올려볼게요!",
+                    "id": 95549507,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95548944,
+                    "updateDate": 1593705860000,
+                    "writer": {
+                        "id": "nahyun2673",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "게으른초보"
+                    }
+                }
+            ],
+            "last": {
+                "id": 98383605,
+                "refId": 98383605
+            },
+            "next": {
+                "id": 95550727,
+                "refId": 95548944
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

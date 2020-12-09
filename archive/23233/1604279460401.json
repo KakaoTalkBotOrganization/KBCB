@@ -1,0 +1,225 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-cbe4d258-2366-4090-9ad1-9e2269793b49\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-27f52ba1-0023-4915-8c7c-a5be49ceddcf\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-adc0036a-aeaf-4e50-9a15-625663658991\">본인이 작성한 코드인가요? : 아니요(도미님 강좌글 참고)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a2d25e91-fe50-4b6f-be0b-9c81310a2e2b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-2796ba84-3800-4c7f-aefb-ab09da577aaf\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-043d1f38-03e9-4255-a36b-37fcc102b823\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-e0223d1f-3c07-4f5c-abe0-6c36242a23fc\">검색 여부 : O / X : O</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-52afa9dd-988c-4a5f-8260-8beb4f90bec7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-f8253b3c-607c-44bd-92ab-c640a99eed9b\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-379e4abf-d649-40c3-ac10-acdb91ad22fa\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-c6746b2a-3744-4b05-ae89-e7087b21c581\">오류 내용 (사진첨부 가능) : 없음 또는 </span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-3fce5982-c6af-4402-8759-205f820bf8ee\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">TypeError: Cannot read property &quot;enc&quot; from null</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-3fce5982-c6af-4402-8759-205f820bf8ee\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-c08afb5b-7790-4efe-9ec8-0495e17009d9\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-d71fdf4e-d01e-4e67-9d92-84a247fbf8f6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cc3399ae-1236-4368-8da4-aa7e722f7d53\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-e507eefa-33c0-458e-a2be-465d54d1d59c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-051a22f4-60ab-4ed0-aa17-49b822a8fadf\">오류가 발생하는 부분의 소스코드 : </span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-df18fc88-2d5c-4103-a2d6-b21729ff79df\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">function getChatData() {\n    updateDB();\n    let chatdata &#x3D; db.rawQuery(&quot;SELECT * FROM chat_logs&quot;, null);\n    chatdata.moveToLast();\n    let keys &#x3D; [&quot;_id&quot;, &quot;id&quot;, &quot;type&quot;, &quot;chat_id&quot;, &quot;user_id&quot;, &quot;message&quot;, &quot;attachment&quot;, &quot;created_at&quot;, &quot;deleted_at&quot;, &quot;client_message_id&quot;, &quot;referer&quot;, &quot;supplement&quot;, &quot;v&quot;];\n    let result &#x3D; [];\n    for (var index &#x3D; 0; index &lt; 5; index++) {\n        let json &#x3D; {};\n        for (i in keys) {\n            json[keys[i]] &#x3D; chatdata.getString(i);\n        }\n        json[&quot;message&quot;] &#x3D; decrypt(json[&quot;user_id&quot;], JSON.parse(json[&quot;v&quot;]).enc, json[&quot;message&quot;]); //Here!\n        result.push(json);\n        chatdata.moveToPrevious();\n    }\n    return result;\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-df18fc88-2d5c-4103-a2d6-b21729ff79df\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-87e901f0-bf68-45a0-b3fe-3980817903a5\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1261c028-3ada-4976-93b9-531273bdb515\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-175236e8-82bd-468d-8b7d-e3b8bb5204e4\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-e2c40734-9255-42e2-a4b3-d68007d4568f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-56c5cd8a-2105-42d7-9902-1ffaadd4a591\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-84a635ce-bea3-43af-b8c3-90ed6d4834ff\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-0f31e5b9-7f9b-4d93-9ab5-eb624d2377f8\">전체소스 : </span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-656772f3-d55d-4d28-8090-ee9234714d52\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">function decrypt(userId, enc, text) {\n    try {\n        let iv &#x3D; toByteArray([15, 8, 1, 0, 25, 71, 37, -36, 21, -11, 23, -32, -31, 21, 12, 53]);\n        let password &#x3D; toCharArray([22, 8, 9, 111, 2, 23, 43, 8, 33, 33, 10, 16, 3, 3, 7, 6]);\n        let prefixes &#x3D; [&quot;&quot;, &quot;&quot;, &quot;12&quot;, &quot;24&quot;, &quot;18&quot;, &quot;30&quot;, &quot;36&quot;, &quot;12&quot;, &quot;48&quot;, &quot;7&quot;, &quot;35&quot;, &quot;40&quot;, &quot;17&quot;, &quot;23&quot;, &quot;29&quot;, &quot;isabel&quot;, &quot;kale&quot;, &quot;sulli&quot;, &quot;van&quot;, &quot;merry&quot;, &quot;kyle&quot;, &quot;james&quot;, &quot;maddux&quot;, &quot;tony&quot;, &quot;hayden&quot;, &quot;paul&quot;, &quot;elijah&quot;, &quot;dorothy&quot;, &quot;sally&quot;, &quot;bran&quot;];\n        let salt &#x3D; new _String((prefixes[enc] + userId).slice(0, 16).padEnd(16, &quot;\\x00&quot;)).getBytes(&quot;UTF-8&quot;);\n        let secretKeySpec &#x3D; new SecretKeySpec(SecretKeyFactory.getInstance(&quot;PBEWITHSHAAND256BITAES-CBC-BC&quot;).generateSecret(new PBEKeySpec(password, salt, 2, 256)).getEncoded(), &quot;AES&quot;);\n        let ivParameterSpec &#x3D; new IvParameterSpec(iv);\n        let cipher &#x3D; Cipher.getInstance(&quot;AES/CBC/PKCS5Padding&quot;);\n        cipher.init(2, secretKeySpec, ivParameterSpec);\n        return String(new _String(cipher.doFinal(Base64.decode(text, 0)), &quot;UTF-8&quot;));\n    } catch (e) {\n        return (text + &quot;, 복호화 실패....&quot;);\n    }\n}\n\nfunction toByteArray(bytes) {\n    let res &#x3D; _Array.newInstance(_Byte.TYPE, bytes.length);\n    for (var i &#x3D; 0; i &lt; bytes.length; i++) {\n        res[i] &#x3D; new _Integer(bytes[i]).byteValue();\n    }\n    return res;\n}\n\nfunction toCharArray(chars) {\n    return new _String(chars.map((e) &#x3D;&gt; String.fromCharCode(e)).join(&quot;&quot;)).toCharArray();\n}\n\nfunction getChatData() {\n    updateDB();\n    let chatdata &#x3D; db.rawQuery(&quot;SELECT * FROM chat_logs&quot;, null);\n    chatdata.moveToLast();\n    let keys &#x3D; [&quot;_id&quot;, &quot;id&quot;, &quot;type&quot;, &quot;chat_id&quot;, &quot;user_id&quot;, &quot;message&quot;, &quot;attachment&quot;, &quot;created_at&quot;, &quot;deleted_at&quot;, &quot;client_message_id&quot;, &quot;referer&quot;, &quot;supplement&quot;, &quot;v&quot;];\n    let result &#x3D; [];\n    for (var index &#x3D; 0; index &lt; 5; index++) {\n        let json &#x3D; {};\n        for (i in keys) {\n            json[keys[i]] &#x3D; chatdata.getString(i);\n        }\n        json[&quot;message&quot;] &#x3D; decrypt(json[&quot;user_id&quot;], JSON.parse(json[&quot;v&quot;]).enc, json[&quot;message&quot;]);\n        result.push(json);\n        chatdata.moveToPrevious();\n    }\n    return result;\n}\n\nconst Context &#x3D; android.content.Context;\nconst DatabaseUtils &#x3D; android.database.DatabaseUtils;\nconst PowerManager &#x3D; android.os.PowerManager;\nconst Base64 &#x3D; android.util.Base64;\nconst _Array &#x3D; java.lang.reflect.Array;\nconst _Byte &#x3D; java.lang.Byte;\nconst _Integer &#x3D; java.lang.Integer;\nconst Runtime &#x3D; java.lang.Runtime;\nconst _String &#x3D; java.lang.String;\nconst Timer &#x3D; java.util.Timer;\nconst TimerTask &#x3D; java.util.TimerTask;\nconst Cipher &#x3D; javax.crypto.Cipher;\nconst IvParameterSpec &#x3D; javax.crypto.spec.IvParameterSpec;\nconst PBEKeySpec &#x3D; javax.crypto.spec.PBEKeySpec;\nconst SecretKeyFactory &#x3D; javax.crypto.SecretKeyFactory;\nconst SecretKeySpec &#x3D; javax.crypto.spec.SecretKeySpec;\nconst JSONObject &#x3D; org.json.JSONObject;\nconst SQLiteDatabase &#x3D; android.database.sqlite.SQLiteDatabase;\nlet pm &#x3D; Api.getContext().getSystemService(Context.POWER_SERVICE);\nlet wakeLock &#x3D; pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, &quot;DBBot&quot;);\nwakeLock.acquire();\nlet db &#x3D; null;\nlet db2 &#x3D; null;\njava.lang.Runtime.getRuntime().exec(&quot;su&quot;);\njava.lang.Runtime.getRuntime().exec(&quot;su -c \\&quot;\\&quot;chmod -R 777 /data/data/com.kakao.talk/databases\\&quot;\\&quot;&quot;).waitFor();\n\n\nfunction updateDB() { \n    try { \n        db &#x3D; SQLiteDatabase.openDatabase(&quot;/data/data/com.kakao.talk/databases/KakaoTalk.db&quot;, null, SQLiteDatabase.CREATE_IF_NECESSARY); \n        db2 &#x3D; SQLiteDatabase.openDatabase(&quot;/data/data/com.kakao.talk/databases/KakaoTalk2.db&quot;, null, SQLiteDatabase.CREATE_IF_NECESSARY); \n        return true; \n    } catch (e) { \n        return false; \n    } \n} \n\nfunction response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\n    if(msg.startsWith(&quot;eval &quot;)) {\n        try {\n            var ev &#x3D; eval(msg.substring(5));\n            replier.reply(ev);\n        } catch (e) {\n            replier.reply(e + &quot; at &quot; + e.lineNumber);\n        }\n    }\n    //let chatdata &#x3D; getChatData()[0];\n    //if(msg &#x3D;&#x3D; &quot;db&quot;) replier.reply(decrypt(chatdata.user_id, chatdata.v[&quot;enc&quot;], chatdata.message));\n}\n</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-656772f3-d55d-4d28-8090-ee9234714d52\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-a77c885c-a166-46d4-82a8-11cae228b4ad\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-29fc0aa0-2599-48d0-8c94-c223489a2166\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-62dc164f-f201-4a3f-b55d-a71d2451fdc9\">메시지를 뜯어오려고 하는데 계속 undefined를 뱉거나 전송이 안되서 좀 뜯어보니까 v값이 null로 잡히는데</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a7c324fe-726e-40b9-9e94-d41f69363585\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-82e8c5ed-36a3-4069-894d-0dda8dd67aac\">SQLite Editor로 보면 또 v값이 잘 보입니다. 이건 뭔 경우일까요 :/</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005AC100000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 23233,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 122,
+            "refArticleId": 23233,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "DB관련 질문 222(chat_logs값의 v값이 null임)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1597806402993,
+            "writer": {
+                "id": "bass90301",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "bass9030"
+            }
+        },
+        "articleId": 23233,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "저같은 경우, v에 들어갈 referer에 들어가있는지라, referer로 사용중인 거에오.",
+                    "id": 101207849,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101207849,
+                    "updateDate": 1598416587000,
+                    "writer": {
+                        "id": "dt3141592",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA3MTNfNjAg/MDAxNDk5ODc0MzI1ODY0.L23nhKElHQBYU1HI-neTmsWWI76dJM8ijnLGirojm_0g.ZsTOi3Ay5KzWIPqmG2ZbjR7l0bCQfmpzyPQB9naua4og.PNG.dt3141592/Dark%2BTornado%252B.png"
+                        },
+                        "nick": "Dark Tornado"
+                    }
+                },
+                {
+                    "content": "아쉽게도(?)referer에는 값이 없었습니다. v값도 여전히 null을 뱉고요 :(",
+                    "id": 101237978,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA4MjZfMTAz/MDAxNTk4NDM4NDA0NjU2.5Dc6EKMBqbkwaADHVTdM8polPIfMjp52NUuBRpXgkQYg.V_19oFycDH92yjL1KdddgvFU1vvgZDDNKTcmAExli0cg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 742,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA4MjZfMTAz/MDAxNTk4NDM4NDA0NjU2.5Dc6EKMBqbkwaADHVTdM8polPIfMjp52NUuBRpXgkQYg.V_19oFycDH92yjL1KdddgvFU1vvgZDDNKTcmAExli0cg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MjZfMTAz/MDAxNTk4NDM4NDA0NjU2.5Dc6EKMBqbkwaADHVTdM8polPIfMjp52NUuBRpXgkQYg.V_19oFycDH92yjL1KdddgvFU1vvgZDDNKTcmAExli0cg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 101207849,
+                    "updateDate": 1598438405000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass9030"
+                    }
+                },
+                {
+                    "content": "값이 있는데 복호화 실패라고 뜨기도 하는건 안비밀.\nhttps://github.com/junhyukso/rhinoKakaoTalkDBDecrypter/blob/master/KDBManager.js\n위에꺼로 하니까 잘 풀리더라구요(?)",
+                    "id": 101238227,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101207849,
+                    "replyMember": {
+                        "id": "bass90301",
+                        "nick": "bass9030"
+                    },
+                    "updateDate": 1598438600000,
+                    "writer": {
+                        "id": "dt3141592",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA3MTNfNjAg/MDAxNDk5ODc0MzI1ODY0.L23nhKElHQBYU1HI-neTmsWWI76dJM8ijnLGirojm_0g.ZsTOi3Ay5KzWIPqmG2ZbjR7l0bCQfmpzyPQB9naua4og.PNG.dt3141592/Dark%2BTornado%252B.png"
+                        },
+                        "nick": "Dark Tornado"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

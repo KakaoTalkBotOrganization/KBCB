@@ -1,0 +1,308 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">채팅로그 저장소스를 통해 저장한 로그를 확인합니다.</span></font></b></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>rooms에 방이름 넣으시면되구요</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>.로그 하시면 도움말뜹니다.</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>채팅로그저장소스와 세트입니다.</b></span></font></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var rooms=[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;e&quot;,&quot;도배&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var pensndr=[];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var change=[];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var data=[];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>String.prototype.replaceAll = function (org, dest) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; return this.split(org).join(dest);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>const folder = new java.io.File(sdcard + &quot;/대화저장/&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>folder.mkdirs();//sd카드에 학습 폴더를 생성합니다&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>const blank = &quot;\\u200b&quot;.repeat(501);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function readj(folderName, fileName) { //파일 읽기 함수 제작&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; try</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; return JSON.parse(FileStream.read(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName));</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;catch(e){return &quot;&quot;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function 대화(no,room)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; no=parseInt(no);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; if(no&gt;3000)return &quot;3000개를 초과한로그는 출력할수없습니다.&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; if(no==0)return &quot;0개 로그를 요청하셨습니다.&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;var talk=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;data[room]=readj(&quot;대화저장&quot;,room+&quot;v2.txt&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(data[room]==&quot;&quot;)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {return &quot;아직 로그데이터가 없습니다&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var msgs=data[room][&quot;msgs&quot;].reverse();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var daydata=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; if(msgs.length&gt;=no)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;talk+=&quot;대화 &quot;+no+&quot;개에대한 로그입니다.\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;for(var i=0;i&lt;no;i++)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; if(daydata!=msgs[i][&quot;day&quot;])</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;\\n-------&nbsp; &quot;+msgs[i][&quot;day&quot;]+&quot;&nbsp; -----------&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; daydata=msgs[i][&quot;day&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;\\n\\n&quot;+msgs[i][&quot;sender&quot;]+&quot;(&quot;+msgs[i][&quot;hashcode&quot;]+&quot;): &quot;+msgs[i][&quot;msg&quot;]+&quot; (&quot;+msgs[i][&quot;time&quot;]+&quot;)&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;대화수가 부족하여 &quot;+msgs.length+&quot;개 로그만 출력됩니다.\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;for(var i=0;i&lt;msgs.length;i++)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if(daydata!=msgs[i][&quot;day&quot;])</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;\\n-------&nbsp; &quot;+msgs[i][&quot;day&quot;]+&quot;&nbsp; -----------&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; daydata=msgs[i][&quot;day&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;\\n\\n&quot;+msgs[i][&quot;sender&quot;]+&quot;(&quot;+msgs[i][&quot;hashcode&quot;]+&quot;): &quot;+msgs[i][&quot;msg&quot;]+&quot; (&quot;+msgs[i][&quot;time&quot;]+&quot;)&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>return talk.replaceAll(&quot;\\u202e&quot;,&quot;&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function 대화특정(name,no,room)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;no=parseInt(no);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(no&gt;2000)return &quot;2000개를 초과한로그는 불러올수없습니다.\\n성능테스트에따라 점차풀릴예정입니다.&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(no==0)return &quot;0개 로그를 요청하셨습니다&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(name.startsWith(&quot;저&quot;)&amp;&amp;name.endsWith(&quot;분&quot;))</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;var damyoungsa=name.replace(&quot;저&quot;,&quot;&quot;).replace(&quot;분&quot;,&quot;&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(damyoungsa.replaceAll(&quot;어&quot;,&quot;&quot;)==&quot;&quot;)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;name=상대확인(damyoungsa,room);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(name==undefined)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {return &quot;그분을 찾을수없습니다&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; if(change[rooms.indexOf(room)]==true&amp;&amp;name==&quot;pensndr&quot;){name=pensndr[rooms.indexOf(room)];}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;var talk=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;data[room]=readj(&quot;대화저장&quot;,room+&quot;v2.txt&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(data[room]==&quot;&quot;){return &quot;아직 로그가 없습니다.&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>//일자데이터반환인지 인원인지 설정</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(name.split(&quot;.&quot;).length==3)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var dayspl=name.split(&quot;.&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(parseInt(dayspl[1])&lt;10){dayspl[1]=&quot;0&quot;+parseInt(dayspl[1]);}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(parseInt(dayspl[2])&lt;10){dayspl[2]=&quot;0&quot;+parseInt(dayspl[2]);}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var daydata=dayspl[0]+&quot;.&quot;+dayspl[1]+&quot;.&quot;+dayspl[2];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var datemsgs=data[room][&quot;msgs&quot;].filter(DAT=(value)=&gt;{return value[&quot;day&quot;]==daydata;});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(datemsgs!=undefined&amp;&amp;datemsgs.length!=0)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var msgs=datemsgs.reverse();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;else{return &quot;해당날짜의 기록이 없습니다&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; humanmsgs=data[room][&quot;msgs&quot;].filter(HUM=(value)=&gt;{return value[&quot;sender&quot;]==name;});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; if(humanmsgs!=undefined&amp;&amp;humanmsgs.length!=0)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; var msgs=humanmsgs.reverse();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk=&quot;해당 인원의 기록이 없습니다\\n&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;var 추천=false;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;var 추천인원=data[room][&quot;msgs&quot;].filter(HUMSER=(value)=&gt;{return value[&quot;sender&quot;].indexOf(name)!=-1;});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(추천인원!=undefined&amp;&amp;추천인원.length!=0){추천=true;}&nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(추천)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;적어주신 이름을 포함한 인원의 로그를 뽑아봤습니다\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var msgs=추천인원.reverse();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{return &quot;해당 인원의 기록이 없습니다\\n&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;var daydata=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(msgs.length&gt;=no)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;talk+=&quot;요청하신 대화 &quot;+no+&quot;개에대한 로그입니다.\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;for(var i=0;i&lt;no;i++)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if(daydata!=msgs[i][&quot;day&quot;])</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;\\n-------&nbsp; &quot;+msgs[i][&quot;day&quot;]+&quot;&nbsp; -----------&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; daydata=msgs[i][&quot;day&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;\\n\\n&quot;+msgs[i][&quot;sender&quot;]+&quot;(&quot;+msgs[i][&quot;hashcode&quot;]+&quot;): &quot;+msgs[i][&quot;msg&quot;]+&quot; (&quot;+msgs[i][&quot;time&quot;]+&quot;)&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }&nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;요청하신것에 비해 대화수가 부족하여 &quot;+msgs.length+&quot;개 로그만 출력됩니다.\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;for(var i=0;i&lt;msgs.length;i++)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(daydata!=msgs[i][&quot;day&quot;])</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;\\n-------&nbsp; &quot;+msgs[i][&quot;day&quot;]+&quot;&nbsp; -----------&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; daydata=msgs[i][&quot;day&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;\\n\\n&quot;+msgs[i][&quot;sender&quot;]+&quot;(&quot;+msgs[i][&quot;hashcode&quot;]+&quot;): &quot;+msgs[i][&quot;msg&quot;]+&quot; (&quot;+msgs[i][&quot;time&quot;]+&quot;)&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }&nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>return talk;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function 대화정밀(days,name,no,room)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>no=parseInt(no);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(no&gt;2000)return &quot;2000개를 초과한로그는 불러올수없습니다.\\n성능테스트에따라 점차풀예정입니다.&quot;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(no==0)return &quot;0개 로그를 요청하셨습니다&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(name.startsWith(&quot;저&quot;)&amp;&amp;name.endsWith(&quot;분&quot;))</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;var damyoungsa=name.replace(&quot;저&quot;,&quot;&quot;).replace(&quot;분&quot;,&quot;&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(damyoungsa.replaceAll(&quot;어&quot;,&quot;&quot;)==&quot;&quot;)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;name=상대확인(damyoungsa,room);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(name==undefined)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {return &quot;그분을 찾을수없습니다&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var talk=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(change[rooms.indexOf(room)]==true&amp;&amp;name==&quot;pensndr&quot;){name=pensndr[rooms.indexOf(room)];}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; data[room]=readj(&quot;대화저장&quot;,room+&quot;v2.txt&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(data[room]==&quot;&quot;){return &quot;아직 로그가 없습니다.&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>//날짜점검</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(days.split(&quot;.&quot;).length!=3)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {return &quot;날짜포멧은 년.월.일입니다.&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var dayspl=days.split(&quot;.&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(parseInt(dayspl[1])&lt;10){dayspl[1]=&quot;0&quot;+parseInt(dayspl[1]);}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(parseInt(dayspl[2])&lt;10){dayspl[2]=&quot;0&quot;+parseInt(dayspl[2]);}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var dat=dayspl[0]+&quot;.&quot;+dayspl[1]+&quot;.&quot;+dayspl[2];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var datemsgs=data[room][&quot;msgs&quot;].filter(DAT=(value)=&gt;{return value[&quot;day&quot;]==dat;});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(datemsgs==undefined||datemsgs.length==0){return &quot;해당날짜의 기록이 없습니다&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>//시간인지 확인</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(name.split(&quot;시&quot;).length==2&amp;&amp;parseInt(name.split(&quot;시&quot;)[0])&lt;24)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var timetemp=parseInt(name.split(&quot;시&quot;)[0]);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var msgs=datemsgs.filter(TIMS=(value)=&gt;{return value[&quot;time&quot;].split(&quot;:&quot;)[0]==timetemp;});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(msgs==undefined||msgs.length==0){return &quot;해당시간에 기록이 없습니다&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;else{msgs=msgs.reverse();}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>//아니면 인원이네</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>//인원점검</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var msgs=datemsgs.filter(TIMS=(value)=&gt;{return value[&quot;sender&quot;]==name;});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; if(msgs==undefined||msgs.length==0)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; talk=&quot;해당 인원의 기록이 없습니다\\n&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var 추천=false;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var 추천인원=datemsgs.filter(HUMSER=(value)=&gt;{return value[&quot;sender&quot;].indexOf(name)!=-1;});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; if(추천인원!=undefined&amp;&amp;추천인원.length!=0){추천=true;}&nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; if(추천)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;적어주신 이름을 포함한 인원의 로그를 뽑아봤습니다\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var msgs=추천인원.reverse();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;{return &quot;해당 인원의 기록이 없습니다\\n&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;{msgs=msgs.reverse();}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var daydata=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>//대화출력</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>if(msgs.length&gt;=no)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;talk+=&quot;요청하신 대화 &quot;+no+&quot;개에대한 로그입니다.\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;for(var i=0;i&lt;no;i++)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if(daydata!=msgs[i][&quot;day&quot;])</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;\\n-------&nbsp; &quot;+msgs[i][&quot;day&quot;]+&quot;&nbsp; -----------&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; daydata=msgs[i][&quot;day&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;\\n\\n&quot;+msgs[i][&quot;sender&quot;]+&quot;(&quot;+msgs[i][&quot;hashcode&quot;]+&quot;): &quot;+msgs[i][&quot;msg&quot;]+&quot; (&quot;+msgs[i][&quot;time&quot;]+&quot;)&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }&nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;요청하신것에 비해 대화수가 부족하여 &quot;+msgs.length+&quot;개 로그만 출력됩니다.\\n&quot;+blank;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;for(var i=0;i&lt;msgs.length;i++)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(daydata!=msgs[i][&quot;day&quot;])</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk+=&quot;\\n-------&nbsp; &quot;+msgs[i][&quot;day&quot;]+&quot;&nbsp; -----------&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; daydata=msgs[i][&quot;day&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;talk+=&quot;\\n\\n&quot;+msgs[i][&quot;sender&quot;]+&quot;(&quot;+msgs[i][&quot;hashcode&quot;]+&quot;): &quot;+msgs[i][&quot;msg&quot;]+&quot; (&quot;+msgs[i][&quot;time&quot;]+&quot;)&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }&nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>return talk;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function 상대확인(uuuuuu,room)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; data[room]=readj(&quot;대화저장&quot;,room+&quot;v2.txt&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(data[room]!=&quot;&quot;)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;try{ return data[room][&quot;msgs&quot;][data[room][&quot;msgs&quot;].length-1-uuuuuu.length][&quot;sender&quot;];}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;catch(e){return undefined;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(rooms.indexOf(room)!=-1)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {&nbsp; &nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;if(msg.indexOf(&quot;.로그&quot;)==0)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;change[rooms.indexOf(room)]=false;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;pensndr[rooms.indexOf(room)]=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var talk=&quot;&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; msg=msg.substring(3).trim();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>//sender가 &quot;&quot;에 둘러쌓여있는지 확인</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(msg.indexOf(&quot;\\&quot;&quot;)!=-1&amp;&amp;msg.split(&quot;\\&quot;&quot;).length==3)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;msg=msg.split(&quot;\\&quot;&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;pensndr[rooms.indexOf(room)]=msg[1];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;msg=msg[0]+&quot;pensndr&quot;+msg[2];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;change[rooms.indexOf(room)]=true;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var 검사 = msg;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; for (var i = 0; i &lt; 허용단어.length; i++) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (검사.indexOf(허용단어[i]) != -1) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(검사==&quot;&quot;&amp;&amp;msg!=&quot;&quot;)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk=대화(msg,room);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else if(msg.split(&quot; &quot;).length==2)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;msg=msg.split(&quot; &quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;검사 = msg[1];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (var i = 0; i &lt; 허용단어.length; i++) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (검사.indexOf(허용단어[i]) != -1) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(검사==&quot;&quot;)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;talk=대화특정(msg[0],msg[1],room);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else{talk=&quot;로그의 갯수는 양수인 숫자여야합니다.&quot;;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else if(msg.split(&quot; &quot;).length==3)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;msg=msg.split(&quot; &quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 검사 = msg[2];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (var i = 0; i &lt; 허용단어.length; i++) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (검사.indexOf(허용단어[i]) != -1) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(검사==&quot;&quot;)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk=대화정밀(msg[0],msg[1],msg[2],room);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;talk=&quot;로그의 갯수는 양수인 숫자여야합니다.&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;else{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk=&quot;로그 도움말\\n\\n&quot;+blank+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;.로그 (년.월.일) (갯수) \\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;= 해당일의 마지막기록부터 갯수만큼 출력\\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;.로그 (갯수) \\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;= 최근부터 로그 갯수만큼 출력\\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;.로그 (닉네임) (갯수) \\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;= 해당닉네임의 최근 기록부터 갯수만큼 출력\\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;.로그 (년.월.일) (닉네임) (갯수) \\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;= 해당닉네임의 해당일 마지막기록부터 갯수만큼 출력\\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;.로그 (년.월.일) (시간)시 (갯수) \\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;= 해당일의 특정시간 기록부터 갯수만큼 출력\\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;(닉네임부분에 저분,저어분으로 지칭하면 \\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;어갯수+1만큼 전의 사람을 지칭하게됩니다\\n&quot;+</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;(닉네임은 \\&quot;\\&quot;로 둘러쌀 수 있습니다)&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(talk!=&quot;&quot;&amp;&amp;talk!=undefined)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{replier.reply(talk);}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div><br /></div></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000231C00000000",
+            "id": 8988,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 265,
+            "refArticleId": 8988,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "채팅로그 확인소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1576324404380,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 8988,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "명령어가 뭐죠??",
+                    "id": 75840042,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75840042,
+                    "updateDate": 1576325178000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "앞에 적어놓았어요ㅎ\r\n.로그 적으면 도움말이 나와요",
+                    "id": 75840069,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75840042,
+                    "updateDate": 1576325207000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "안나와요ㅠㅠ 어떡하죠??",
+                    "id": 75850098,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75840042,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1576332921000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "디버그룸에서 방이름으로 지정하고 쳐도 안나오나요?",
+                    "id": 75850176,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75840042,
+                    "replyMember": {
+                        "id": "smleeclan",
+                        "nick": "minimcpe0624"
+                    },
+                    "updateDate": 1576332962000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "넹ㅠㅜ",
+                    "id": 75850282,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75840042,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1576333038000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "rooms에 방이름 넣으신거 맞죠?\r\n그리고 디버깅룸 설정에서 방이름 들어가있구요",
+                    "id": 75850415,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75840042,
+                    "replyMember": {
+                        "id": "smleeclan",
+                        "nick": "minimcpe0624"
+                    },
+                    "updateDate": 1576333120000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

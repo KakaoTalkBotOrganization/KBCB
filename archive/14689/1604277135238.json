@@ -1,0 +1,385 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "방금 막 만든 따끈따끈한 가짜톡입니다!<div><br /></div><div>카페글을 엄청 참고했어요!</div><div>아직 코드가 많이 더러운데, 일단 작동시키는거에만 집중했구요, 나중에 좀 더 간결하게 + 기능 추가해서 업뎃 한 번 해보겠습니다.</div><div><br /></div><div>프사 저장&nbsp;<a id=\"linkUrl\" href=\"https://cafe.naver.com/nameyee/10316\" target=\"_blank\">https://cafe.naver.com/nameyee/10316</a></div><div>액티비티에 사진 올리기&nbsp;<a id=\"linkUrl\" href=\"https://cafe.naver.com/nameyee/9801\" target=\"_blank\">https://cafe.naver.com/nameyee/9801</a></div><div>텍스트 버전 가짜톡&nbsp;<a id=\"linkUrl\" href=\"https://cafe.naver.com/nameyee/4346\" target=\"_blank\">https://cafe.naver.com/nameyee/4346</a></div><div><br /></div><div>사용법***</div><div>아래 방이름 바꾸시구</div><div>저어기 아래에 var par2라고 있는데 거기 세로값 조정하셔서 본인 폰에 맞춰서 쓰시면 됩니다.</div><div>소스 코드 넣고 액티비티 열면됨.</div><div><br /></div><div>&lt;&lt;소스 코드&gt;&gt;</div><div><br /></div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #dcdcaa;\">importPackage</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">widget</span>);</div><div><span style=\"color: #dcdcaa;\">importClass</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">BitmapFactory</span>);</div><div><span style=\"color: #dcdcaa;\">importClass</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Bitmap</span>);</div><div><span style=\"color: #dcdcaa;\">importPackage</span>(<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">io</span>);</div><div><span style=\"color: #dcdcaa;\">importClass</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">view</span>.<span style=\"color: #9cdcfe;\">ViewGroup</span>);</div><div><span style=\"color: #dcdcaa;\">importPackage</span>(<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">io</span>.<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>);</div><br /><div><span style=\"color: #569cd6;\">const</span>&nbsp;<span style=\"color: #9cdcfe;\">folderPath</span>&nbsp;=&nbsp;<span style=\"color: #ce9178;\">&quot;/storage/emulated/0/FakeTalk/&quot;</span>;</div><div><span style=\"color: #569cd6;\">const</span>&nbsp;<span style=\"color: #9cdcfe;\">방</span>&nbsp;=&nbsp;<span style=\"color: #ce9178;\">&quot;청정수&quot;</span>;<span style=\"color: #6a9955;\">//사용할&nbsp;방</span></div><div><span style=\"color: #9cdcfe;\">로그</span>&nbsp;=&nbsp;[];</div><div><span style=\"color: #9cdcfe;\">보낸이</span>&nbsp;=&nbsp;[];</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">액티비티</span>;</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">set</span>=<span style=\"color: #569cd6;\">false</span>;</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">saveProfile</span>(<span style=\"color: #9cdcfe;\">imageDB</span>,<span style=\"color: #9cdcfe;\">path</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">file</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">File</span>(<span style=\"color: #9cdcfe;\">path</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;.png&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">outStream</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">FileOutputStream</span>(<span style=\"color: #9cdcfe;\">file</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">imageDB</span>.<span style=\"color: #dcdcaa;\">getProfileBitmap</span>().<span style=\"color: #dcdcaa;\">compress</span>(<span style=\"color: #9cdcfe;\">Bitmap</span>.<span style=\"color: #9cdcfe;\">CompressFormat</span>.<span style=\"color: #9cdcfe;\">PNG</span>,<span style=\"color: #b5cea8;\">100</span>,<span style=\"color: #9cdcfe;\">outStream</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">response</span>(<span style=\"color: #9cdcfe;\">room</span>,&nbsp;<span style=\"color: #9cdcfe;\">msg</span>,&nbsp;<span style=\"color: #9cdcfe;\">sender</span>,&nbsp;<span style=\"color: #9cdcfe;\">isGroupChat</span>,&nbsp;<span style=\"color: #9cdcfe;\">replier</span>,&nbsp;<span style=\"color: #9cdcfe;\">imageDB</span>,&nbsp;<span style=\"color: #9cdcfe;\">packageName</span>)&nbsp;{</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">보낸이</span>.<span style=\"color: #dcdcaa;\">indexOf</span>(<span style=\"color: #9cdcfe;\">sender</span>)==-<span style=\"color: #b5cea8;\">1</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">saveProfile</span>(<span style=\"color: #9cdcfe;\">imageDB</span>,<span style=\"color: #9cdcfe;\">folderPath</span>+<span style=\"color: #ce9178;\">&quot;유저/&quot;</span>+<span style=\"color: #9cdcfe;\">sender</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">room</span>!=<span style=\"color: #9cdcfe;\">방</span>){<span style=\"color: #c586c0;\">return</span>;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">while</span>(<span style=\"color: #9cdcfe;\">로그</span>.<span style=\"color: #9cdcfe;\">length</span>&gt;<span style=\"color: #b5cea8;\">99</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">로그</span>.<span style=\"color: #dcdcaa;\">splice</span>(<span style=\"color: #b5cea8;\">0</span>,<span style=\"color: #b5cea8;\">1</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">시간</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Date</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">로그</span>.<span style=\"color: #dcdcaa;\">push</span>(<span style=\"color: #9cdcfe;\">sender</span>+<span style=\"color: #ce9178;\">&quot;_&nbsp;&quot;</span>+<span style=\"color: #9cdcfe;\">msg</span>+<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">시간</span>.<span style=\"color: #dcdcaa;\">getHours</span>()+<span style=\"color: #ce9178;\">&quot;시&quot;</span>+<span style=\"color: #9cdcfe;\">시간</span>.<span style=\"color: #dcdcaa;\">getMinutes</span>()+<span style=\"color: #ce9178;\">&quot;분&quot;</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">액티비티</span>.<span style=\"color: #dcdcaa;\">runOnUiThread</span>(<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">lang</span>.<span style=\"color: #4ec9b0;\">Runnable</span>(){<span style=\"color: #dcdcaa;\">run</span>(){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">try</span>{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>(<span style=\"color: #9cdcfe;\">액티비티</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">setOrientation</span>(<span style=\"color: #b5cea8;\">0</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">이미지</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">ImageView</span>(<span style=\"color: #9cdcfe;\">액티비티</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">이미지</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params2</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">이미지</span>.<span style=\"color: #dcdcaa;\">setImageBitmap</span>(<span style=\"color: #9cdcfe;\">BitmapFactory</span>.<span style=\"color: #dcdcaa;\">decodeFile</span>(<span style=\"color: #9cdcfe;\">folderPath</span>+<span style=\"color: #ce9178;\">&quot;유저/&quot;</span>+<span style=\"color: #9cdcfe;\">sender</span>+<span style=\"color: #ce9178;\">&quot;.png&quot;</span>));</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">TextView</span>(<span style=\"color: #9cdcfe;\">액티비티</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setTextColor</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Color</span>.<span style=\"color: #9cdcfe;\">WHITE</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #9cdcfe;\">sender</span>+<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">msg</span>+<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">시간</span>.<span style=\"color: #dcdcaa;\">getHours</span>()+<span style=\"color: #ce9178;\">&quot;시&quot;</span>+<span style=\"color: #9cdcfe;\">시간</span>.<span style=\"color: #dcdcaa;\">getMinutes</span>()+<span style=\"color: #ce9178;\">&quot;분&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setTextSize</span>(<span style=\"color: #b5cea8;\">18</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params2</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">이미지</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">텍스트</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">리니어</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">메세지</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style=\"color: #c586c0;\">catch</span>(<span style=\"color: #9cdcfe;\">e</span>){<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #9cdcfe;\">e</span>);}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}});</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">onCreate</span>(<span style=\"color: #9cdcfe;\">saveInstanceState</span>,&nbsp;<span style=\"color: #9cdcfe;\">activity</span>){</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">par2</span>=<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>.<span style=\"color: #4ec9b0;\">LayoutParams</span>(<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">MATCH_PARENT</span>,&nbsp;<span style=\"color: #b5cea8;\">1000</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//여기&nbsp;1000이&nbsp;스크롤뷰(메세지&nbsp;보이는&nbsp;부분)의&nbsp;높이입니다.&nbsp;적당히&nbsp;조절해서&nbsp;키보드&nbsp;높이에&nbsp;맞춰보세요.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">par2</span>.<span style=\"color: #dcdcaa;\">setMargins</span>(<span style=\"color: #b5cea8;\">20</span>,<span style=\"color: #b5cea8;\">0</span>,<span style=\"color: #b5cea8;\">20</span>,<span style=\"color: #b5cea8;\">20</span>);</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">로그</span>=[];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">보낸이</span>=[];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(!<span style=\"color: #9cdcfe;\">FileStream</span>.<span style=\"color: #dcdcaa;\">read</span>(<span style=\"color: #9cdcfe;\">folderPath</span>+<span style=\"color: #ce9178;\">&quot;/유저/이름.json&quot;</span>)){<span style=\"color: #9cdcfe;\">FileStream</span>.<span style=\"color: #dcdcaa;\">write</span>(<span style=\"color: #9cdcfe;\">folderPath</span>+<span style=\"color: #ce9178;\">&quot;/유저/이름.json&quot;</span>,<span style=\"color: #9cdcfe;\">JSON</span>.<span style=\"color: #dcdcaa;\">stringify</span>(<span style=\"color: #9cdcfe;\">보낸이</span>));}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">보낸이</span>=<span style=\"color: #9cdcfe;\">JSON</span>.<span style=\"color: #dcdcaa;\">parse</span>(<span style=\"color: #9cdcfe;\">FileStream</span>.<span style=\"color: #dcdcaa;\">read</span>(<span style=\"color: #9cdcfe;\">folderPath</span>+<span style=\"color: #ce9178;\">&quot;/유저/이름.json&quot;</span>));</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">full</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>.<span style=\"color: #4ec9b0;\">LayoutParams</span>(<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">MATCH_PARENT</span>,&nbsp;<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">MATCH_PARENT</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">params</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>.<span style=\"color: #4ec9b0;\">LayoutParams</span>(<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">MATCH_PARENT</span>,&nbsp;<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">WRAP_CONTENT</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">params2</span>=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>.<span style=\"color: #4ec9b0;\">LayoutParams</span>(<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">WRAP_CONTENT</span>,&nbsp;<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">WRAP_CONTENT</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">params</span>.<span style=\"color: #dcdcaa;\">setMargins</span>(<span style=\"color: #b5cea8;\">20</span>,<span style=\"color: #b5cea8;\">20</span>,<span style=\"color: #b5cea8;\">20</span>,<span style=\"color: #b5cea8;\">20</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//const&nbsp;imgRoute&nbsp;=&nbsp;new&nbsp;java.lang.String(/*원하는&nbsp;이미지파일&nbsp;경로*/);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">액티비티</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">activity</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메인</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메인</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">full</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메인</span>.<span style=\"color: #dcdcaa;\">setGravity</span>(<span style=\"color: #b5cea8;\">0</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메인</span>.<span style=\"color: #dcdcaa;\">setOrientation</span>(<span style=\"color: #b5cea8;\">1</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">전송</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">전송</span>.<span style=\"color: #dcdcaa;\">setOrientation</span>(<span style=\"color: #b5cea8;\">0</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">전송</span>.<span style=\"color: #dcdcaa;\">setGravity</span>(<span style=\"color: #b5cea8;\">0</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">전송</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">par</span>=<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>.<span style=\"color: #4ec9b0;\">LayoutParams</span>(<span style=\"color: #b5cea8;\">800</span>,&nbsp;<span style=\"color: #9cdcfe;\">ViewGroup</span>.<span style=\"color: #9cdcfe;\">LayoutParams</span>.<span style=\"color: #9cdcfe;\">WRAP_CONTENT</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">에딧</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">EditText</span>(<span style=\"color: #9cdcfe;\">activity</span>);<span style=\"color: #6a9955;\">//보낼&nbsp;내용</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">에딧</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">par</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">버튼</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Button</span>(<span style=\"color: #9cdcfe;\">activity</span>);<span style=\"color: #6a9955;\">//전송&nbsp;버튼</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">버튼</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;전송&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">버튼</span>.<span style=\"color: #dcdcaa;\">setOnClickListener</span>(<span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">onClick</span>(){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">try</span>{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">Api</span>.<span style=\"color: #dcdcaa;\">replyRoom</span>(<span style=\"color: #9cdcfe;\">방</span>,&nbsp;<span style=\"color: #9cdcfe;\">에딧</span>.<span style=\"color: #dcdcaa;\">getText</span>());</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">시간</span>=<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Date</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>(<span style=\"color: #9cdcfe;\">액티비티</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">setOrientation</span>(<span style=\"color: #b5cea8;\">1</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">/*이미지&nbsp;=&nbsp;new&nbsp;ImageView(activity);</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이미지.setLayoutParams(params2);</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이미지.setImageBitmap(BitmapFactory.decodeFile(folderPath+&quot;프사/&quot;+sender+&quot;.png&quot;));*/</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">TextView</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setTextColor</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Color</span>.<span style=\"color: #9cdcfe;\">WHITE</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;나</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">에딧</span>.<span style=\"color: #dcdcaa;\">getText</span>()+<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">시간</span>.<span style=\"color: #dcdcaa;\">getHours</span>()+<span style=\"color: #ce9178;\">&quot;시&quot;</span>+<span style=\"color: #9cdcfe;\">시간</span>.<span style=\"color: #dcdcaa;\">getMinutes</span>()+<span style=\"color: #ce9178;\">&quot;분&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setTextSize</span>(<span style=\"color: #b5cea8;\">18</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params2</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">텍스트</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//메세지.addView(이미지);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">리니어</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">메세지</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">에딧</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}<span style=\"color: #c586c0;\">catch</span>(<span style=\"color: #9cdcfe;\">e</span>){<span style=\"color: #9cdcfe;\">Api</span>.<span style=\"color: #dcdcaa;\">showToast</span>(<span style=\"color: #ce9178;\">&quot;에러&nbsp;:)</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">e</span>);}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;})</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">버튼</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params2</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">버튼</span>.<span style=\"color: #dcdcaa;\">setGravity</span>(<span style=\"color: #b5cea8;\">1</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">전송</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">에딧</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">전송</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">버튼</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">스크롤</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">ScrollView</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">스크롤</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">par2</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">제목</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">TextView</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">제목</span>.<span style=\"color: #dcdcaa;\">setTextColor</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Color</span>.<span style=\"color: #9cdcfe;\">WHITE</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">제목</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;[적당히&nbsp;가짜톡]&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">제목</span>.<span style=\"color: #dcdcaa;\">setTextSize</span>(<span style=\"color: #b5cea8;\">24</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">제목</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">리니어</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">리니어</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">full</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">리니어</span>.<span style=\"color: #dcdcaa;\">setOrientation</span>(<span style=\"color: #b5cea8;\">1</span>);</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">LinearLayout</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">setOrientation</span>(<span style=\"color: #b5cea8;\">0</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">/*var&nbsp;이미지&nbsp;=&nbsp;new&nbsp;ImageView(activity);</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;&nbsp;이미지.setLayoutParams(params2);</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;&nbsp;이미지.setImageBitmap(BitmapFactory.decodeFile(folderPath+&quot;프사/&quot;+sender+&quot;.png&quot;));*/</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">TextView</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setTextColor</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Color</span>.<span style=\"color: #9cdcfe;\">WHITE</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;메세지&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setTextSize</span>(<span style=\"color: #b5cea8;\">18</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">텍스트</span>.<span style=\"color: #dcdcaa;\">setLayoutParams</span>(<span style=\"color: #9cdcfe;\">params2</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//메세지.addView(이미지);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메세지</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">텍스트</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">리니어</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">메세지</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">스크롤</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">리니어</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메인</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">제목</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메인</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">스크롤</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">메인</span>.<span style=\"color: #dcdcaa;\">addView</span>(<span style=\"color: #9cdcfe;\">전송</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">activity</span>.<span style=\"color: #dcdcaa;\">setContentView</span>(<span style=\"color: #9cdcfe;\">메인</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">onStart</span>(<span style=\"color: #9cdcfe;\">activity</span>){}</div><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">onResume</span>(<span style=\"color: #9cdcfe;\">activity</span>){}</div><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">onPause</span>(<span style=\"color: #9cdcfe;\">activity</span>){}</div><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">onStop</span>(<span style=\"color: #9cdcfe;\">activity</span>){}</div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000396100000000",
+            "id": 14689,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 400,
+            "refArticleId": 14689,
+            "replyListOrder": "",
+            "scrapCount": 2,
+            "subject": "프사 까지 나오는 가짜톡 (*주의! 코드 열라 더러움)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585678949390,
+            "writer": {
+                "id": "littledanny",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "닉넴421"
+            }
+        },
+        "articleId": 14689,
+        "attaches": [
+            {
+                "extension": "js",
+                "fullName": "액티비티.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "액티비티.js",
+                "size": 5997,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/8510992e380e0fba9773142012f584ff5f0df392/20200401_247_cafefile/29537083_1585678767247_UvC9LG_js/%EC%95%A1%ED%8B%B0%EB%B9%84%ED%8B%B0.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "<결과>\r\n",
+                    "id": 85995553,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MDFfMzQg/MDAxNTg1Njc4OTgxNzY0.IrQuzTPEeGyoPg1MKk2NrPbMcvCwITHnYwl6OeGaTSwg.d6j_DkKB21IHt5PBISnUZUhgDeWyClYbeZ3Gb6nygoAg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2400,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA0MDFfMzQg/MDAxNTg1Njc4OTgxNzY0.IrQuzTPEeGyoPg1MKk2NrPbMcvCwITHnYwl6OeGaTSwg.d6j_DkKB21IHt5PBISnUZUhgDeWyClYbeZ3Gb6nygoAg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA0MDFfMzQg/MDAxNTg1Njc4OTgxNzY0.IrQuzTPEeGyoPg1MKk2NrPbMcvCwITHnYwl6OeGaTSwg.d6j_DkKB21IHt5PBISnUZUhgDeWyClYbeZ3Gb6nygoAg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 85995553,
+                    "updateDate": 1585678982000,
+                    "writer": {
+                        "id": "littledanny",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "닉넴421"
+                    }
+                },
+                {
+                    "content": "여윽시 괴수ㄷㄷㄷ",
+                    "id": 85995943,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85995943,
+                    "updateDate": 1585681991000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "갓언노운 관리자"
+                    }
+                },
+                {
+                    "content": "어라... 오셨군요 ㅋㅋㅋ\r\n이젠 저걸 앱으로!",
+                    "id": 85995945,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85995943,
+                    "updateDate": 1585682022000,
+                    "writer": {
+                        "id": "littledanny",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "닉넴421"
+                    }
+                },
+                {
+                    "content": "경고",
+                    "id": 85996139,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85995943,
+                    "updateDate": 1585683656000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "어떻게 사용하는거예요??",
+                    "id": 86017608,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86017608,
+                    "updateDate": 1585703865000,
+                    "writer": {
+                        "id": "l0722l",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "뉴브"
+                    }
+                },
+                {
+                    "content": "방제와 높이 값 수정 후 액티비티",
+                    "id": 86017976,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MDFfMjUx/MDAxNTg1NzA0MDUyMDc3.wtf1mWQXALrJW4tLOk3piBGOdhHD0BBL-0qBmsMbTKAg.Pc1LB2OdGqthD5671GroNaId6-dAvZzE7Zq4tAr6xQYg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2400,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA0MDFfMjUx/MDAxNTg1NzA0MDUyMDc3.wtf1mWQXALrJW4tLOk3piBGOdhHD0BBL-0qBmsMbTKAg.Pc1LB2OdGqthD5671GroNaId6-dAvZzE7Zq4tAr6xQYg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA0MDFfMjUx/MDAxNTg1NzA0MDUyMDc3.wtf1mWQXALrJW4tLOk3piBGOdhHD0BBL-0qBmsMbTKAg.Pc1LB2OdGqthD5671GroNaId6-dAvZzE7Zq4tAr6xQYg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 86017608,
+                    "updateDate": 1585704053000,
+                    "writer": {
+                        "id": "littledanny",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "닉넴421"
+                    }
+                },
+                {
+                    "content": "아 저거눌러서 하는거군요 감샇바니다",
+                    "id": 86019793,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86017608,
+                    "replyMember": {
+                        "id": "littledanny",
+                        "nick": "닉넴421"
+                    },
+                    "updateDate": 1585705040000,
+                    "writer": {
+                        "id": "l0722l",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "뉴브"
+                    }
+                },
+                {
+                    "content": "석유 그 자체.",
+                    "id": 100941412,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100941412,
+                    "updateDate": 1598208578000,
+                    "writer": {
+                        "id": "qute0226",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjFfMjIg/MDAxNTk1MzQxMDIyNDA3.pohd8jAVihMZuwGVVTE-yN8kUYr2D_J-5j2IBnp5B7Qg.pWjpXeEi5yBj8O7QX04QtNSsRCkuKnpR2CqzkKEBXkQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하순모주"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

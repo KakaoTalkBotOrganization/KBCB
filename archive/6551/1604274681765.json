@@ -1,0 +1,279 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<p>var searching={};<br />var now ={};<br />var inform = {};<br />var result={};<br />length={};<br />var i = 0<br />String.prototype.replaceAll = function(b,a){<br />return this.split(b).join(a);<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />if(msg.indexOf(&quot;L카드검색&quot;)!=-1){<br />cardname=msg.replace(&quot;L카드검색 &quot;,&quot;&quot;)<br />searching[sender]=cardname<br />length[sender]=org.jsoup.Jsoup.connect(&quot;https://shadowverse-portal.com/cards?card_name=&quot;+cardname+&quot;&amp;format=3&amp;atk=0&amp;atk_operator=1&amp;life=0&amp;life_operator=1&amp;type=0&amp;skill=&amp;card_text=&amp;lang=ko&quot;).get().select(&apos;div[class=&quot;clearfix&quot;]&apos;).size()<br />j=length[sender]-1<br />for(var i = 0;i&lt;j;i++){<br />k=i+1<br />now[i]=org.jsoup.Jsoup.connect(&quot;https://shadowverse-portal.com/cards?card_name=&quot;+cardname+&quot;&amp;format=3&amp;atk=0&amp;atk_operator=1&amp;life=0&amp;life_operator=1&amp;type=0&amp;skill=&amp;card_text=&amp;lang=ko&quot;).get().select(&apos;div[class=&quot;clearfix&quot;]&apos;).get(i).select(&quot;img&quot;).attr(&quot;alt&quot;)<br />if(i==j-1){<br />result[sender]=result[sender]+&quot;[&quot;+k+&quot;]&quot;+now[i]<br />}else{<br />result[sender]=result[sender]+&quot;[&quot;+k+&quot;]&quot;+now[i]+&quot;\\n&quot;<br />}<br />}<br />replier.reply(sender+&quot;님의 &quot;+searching[sender]+&quot;검색 결과 입니다\\n&quot;+result[sender])<br />result[sender]=&quot;&quot;<br />}<br />if(msg.indexOf(&quot;L카드선택 &quot;)!=-1){<br />if(searching[sender]!==undefined){<br />number=msg.replace(&quot;L카드선택 &quot;,&quot;&quot;)<br />if(number&gt;length[sender]-1){<br />replier.reply(&quot;없는 번호입니다 다시 선택해 주세요&quot;)<br />}else{<br />finum=number-1<br />cardfullname=org.jsoup.Jsoup.connect(&quot;https://shadowverse-portal.com/cards?card_name=&quot;+cardname+&quot;&amp;format=3&amp;atk=0&amp;atk_operator=1&amp;life=0&amp;life_operator=1&amp;type=0&amp;skill=&amp;card_text=&amp;lang=ko&quot;).get().select(&apos;div[class=&quot;clearfix&quot;]&apos;).get(finum).select(&quot;img&quot;).attr(&quot;alt&quot;)<br />inform[sender]=org.jsoup.Jsoup.connect(&quot;https://shadowverse-portal.com/cards?card_name=&quot;+cardname+&quot;&amp;format=3&amp;atk=0&amp;atk_operator=1&amp;life=0&amp;life_operator=1&amp;type=0&amp;skill=&amp;card_text=&amp;lang=ko&quot;).get().select(&apos;div[class=&quot;clearfix&quot;]&apos;).get(finum)<br />if(inform[sender].select(&apos;p[class=&quot;el-card-status is-small is-atk&quot;]&apos;).size()==0){<br />abil=inform[sender].select(&apos;p[class=&quot;el-card-detail-skill-description size-large&quot;]&apos;).toString().replace(&apos;&lt;p class=&quot;el-card-detail-skill-description size-large&quot;&gt; &apos;,&quot;&quot;).replaceAll(&quot;&lt;br&gt;&quot;,&quot;\\n&quot;).replace(&quot;&lt;/p&gt;&quot;,&quot;&quot;)<br />replier.reply(cardfullname+&quot;\\n&quot;+abil)<br />}else{<br />befatk=inform[sender].select(&apos;p[class=&quot;el-card-status is-small is-atk&quot;]&apos;).get(0).text()<br />befhp=inform[sender].select(&apos;p[class=&quot;el-card-status is-small is-life&quot;]&apos;).get(0).text()<br />afatk=inform[sender].select(&apos;p[class=&quot;el-card-status is-small is-atk&quot;]&apos;).get(1).text()<br />afhp=inform[sender].select(&apos;p[class=&quot;el-card-status is-small is-life&quot;]&apos;).get(1).text()<br />befabil=inform[sender].select(&apos;p[class=&quot;el-card-detail-skill-description&quot;]&apos;).get(0).toString().replace(&apos;&lt;p class=&quot;el-card-detail-skill-description&quot;&gt; &apos;,&quot;&quot;).replaceAll(&quot;&lt;br&gt;&quot;,&quot;\\n&quot;).replace(&quot;&lt;/p&gt;&quot;,&quot;&quot;)<br />afabil=inform[sender].select(&apos;p[class=&quot;el-card-detail-skill-description&quot;]&apos;).get(1).toString().replace(&apos;&lt;p class=&quot;el-card-detail-skill-description&quot;&gt; &apos;,&quot;&quot;).replaceAll(&quot;&lt;br&gt;&quot;,&quot;\\n&quot;).replace(&quot;&lt;/p&gt;&quot;,&quot;&quot;)<br />replier.reply(cardfullname+&quot;\\n진화 전\\natk:&quot;+befatk+&quot; hp:&quot;+befhp+&quot;\\n&quot;+befabil+&quot;\\n진화 후\\natk:&quot;+afatk+&quot; hp:&quot;+afhp+&quot;\\n&quot;+afabil)<br />}<br />}<br />} else {<br />replier.reply(&quot;카드검색을 먼저 해주세요.&quot;)<br />}<br />}<br />}<br />아주 난장판이네 그냥 ㅋㅋ</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000199700000000",
+            "id": 6551,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 140,
+            "refArticleId": 6551,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "섀도우 버스 카드검색봇",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1571142101040,
+            "writer": {
+                "id": "smartmaster1",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "Yumina"
+            }
+        },
+        "articleId": 6551,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "소스공유 게시판 이동좀...",
+                    "id": 71144833,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71144833,
+                    "updateDate": 1571142153000,
+                    "writer": {
+                        "id": "khjeh0521",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDFfNDEg/MDAxNTg4MzEzOTQwNTE1.4q-Novz5Sw4qAAv2d2F7sK9Va-I5S1uhjqjcy9CdTa4g.zGZrguOhyCVObH7FGz3qLOURdHN3ACvk05_CVV91N70g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "럭스봇"
+                    }
+                },
+                {
+                    "content": "소스공유 게시판으로 이동되었습니다\r\n또 그러면 제재....",
+                    "id": 71145289,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71145289,
+                    "updateDate": 1571142611000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "게시판 선택에 없었어가지구...",
+                    "id": 71145979,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71145289,
+                    "updateDate": 1571143214000,
+                    "writer": {
+                        "id": "smartmaster1",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Yumina"
+                    }
+                },
+                {
+                    "content": "등급 올리셔야 해요ㅜ",
+                    "id": 71146133,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71145289,
+                    "replyMember": {
+                        "id": "smartmaster1",
+                        "nick": "Yumina"
+                    },
+                    "updateDate": 1571143326000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "흐규...",
+                    "id": 71146205,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71145289,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1571143382000,
+                    "writer": {
+                        "id": "smartmaster1",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Yumina"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

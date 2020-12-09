@@ -1,0 +1,162 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "But... 현재 4/15 총선 전까지 검색어순위 조작에 대한 우려로 Daum 측에서 실시간 검색어 순위를 지원을 하지 않는다고 합니다. 네. 그렇습니다.<div><br /></div><div>최종 소스는 동작을 하지만, 결과는 현재 전부 Undefined 출력될 것입니다.</div><div><br /></div><div>그럼 출바알~</div><div><br /></div><div>1)<a href=\"https://m.search.daum.net\" target=\"_blank\">https://m.search.daum.net</a> 에서 파싱을 할 것입니다. 네 그렇습니다.</div><div><br /></div><div>왜 M에서 하느냐? 그건 그냥 검색해보시면.... 모바일 환경이 속도도 더 빠르고.. 뭐 그렇다고 합니다.</div><div><br /></div><div>이전 시간에서 설명해 드렸던 PC 환경에서 아래의 URL 창을 하나 띄워놓고, 모바일 다음도 띄웁니다.</div><div><br /></div><div><span style=\"font-size: 11pt;\"><span style=\"font-size: 10pt;\">2)</span><a href=\"https://try.jsoup.org/\" target=\"_blank\"><span style=\"font-size: 10pt;\">https://try.jsoup.org/</span></a><span style=\"font-size: 10pt;\">이곳에 1)의 URL 을 넣고 Fetch URL 을 눌러줍니다.</span></span></div><div><span style=\"font-size: 11pt;\"><span style=\"font-size: 10pt;\"><br /></span></span></div><div><span style=\"font-size: 11pt;\"><span style=\"font-size: 10pt;\">3) 1)URL 에서 F12버튼으로 개발자모드 를 열고 내가 원하는 값을 따낼 Class 를 찾아줍니다.</span></span></div><div><span style=\"font-size: 11pt;\"><span style=\"font-size: 10pt;\"><br /></span></span></div><div>span Class 의&nbsp;<span style=\"color: rgb(206, 145, 120); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\">txt_issue</span><span style=\"font-size: 10pt;\">&nbsp; 가 적합하군요.</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div>Jsoup 을 통해 해당 클라스만 쏘옥 뽑아내 줍니다.</div><div><br /></div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">data</span>&nbsp;=&nbsp;<span style=\"color: rgb(156, 220, 254);\">org</span>.<span style=\"color: rgb(156, 220, 254);\">jsoup</span>.<span style=\"color: rgb(156, 220, 254);\">Jsoup</span>.<span style=\"color: rgb(220, 220, 170);\">connect</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;<a href=\"https://m.search.daum.net\" target=\"_blank\">https://m.search.daum.net</a>&quot;</span>).<span style=\"color: rgb(220, 220, 170);\">get</span>().<span style=\"color: rgb(220, 220, 170);\">select</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;span.txt_issue&quot;</span>)+<span style=\"color: rgb(206, 145, 120);\">&quot;&quot;</span>;</div></div><div><br /></div><div>네 짤 뽑혔네요.</div><div><br /></div><div>태그를 지워주고~</div><div><br /></div><div>공백을 없애주고~</div><div><br /></div><div>엔터를 넣어주고~</div><div><br /></div><div>결과를 도출합니다.</div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;=&nbsp;(<span style=\"color: rgb(206, 145, 120);\">&quot;&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(197, 134, 192);\">for</span>(<span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">n</span>&nbsp;=<span style=\"color: rgb(181, 206, 168);\">0</span>;<span style=\"color: rgb(156, 220, 254);\">n</span>&lt;<span style=\"color: rgb(181, 206, 168);\">10</span>;<span style=\"color: rgb(156, 220, 254);\">n</span>++){&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;+=(<span style=\"color: rgb(156, 220, 254);\">n</span>+<span style=\"color: rgb(181, 206, 168);\">1</span>)+<span style=\"color: rgb(206, 145, 120);\">&quot;위:&nbsp;&quot;</span>&nbsp;+<span style=\"color: rgb(156, 220, 254);\">data</span>[<span style=\"color: rgb(156, 220, 254);\">n</span>]+<span style=\"color: rgb(206, 145, 120);\">&quot;</span><span style=\"color: rgb(215, 186, 125);\">\\n</span><span style=\"color: rgb(206, 145, 120);\">&quot;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(156, 220, 254);\">replier</span>.<span style=\"color: rgb(220, 220, 170);\">reply</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;[다음&nbsp;실시간&nbsp;검색어&nbsp;순위]</span><span style=\"color: rgb(215, 186, 125);\">\\n\\n</span><span style=\"color: rgb(206, 145, 120);\">&quot;</span>+<span style=\"color: rgb(156, 220, 254);\">result</span>.<span style=\"color: rgb(220, 220, 170);\">trim</span>());</div></div></div><div><br /></div><div>1~10위까지 도출하고자 하여, 위와 같이 for 문을 통해 data 값을 돌려주었습니다.</div><div><br /></div><div>응답!</div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><span style=\"color: rgb(156, 220, 254);\">replier</span>.<span style=\"color: rgb(220, 220, 170);\">reply</span>(<span style=\"color: rgb(156, 220, 254);\">data</span>-<span style=\"color: rgb(181, 206, 168);\">10</span>);</div></div><div><br /></div><div>네. 결과가 잘 나오네요. 헌데 이 글에는 한가지 풀지 못한 <b><font color=\"#ff6c00\">함정</font></b>이 하나 있습니다.</div><div><br /></div><div><b><u><font color=\"#ffaa00\">결과는 1~10위 까지 세로 정렬하여 잘 나오는데 마지막에 Nan 이라는 메시지가 함께 출력됩니다.</font></u></b></div><div><br /></div><div>네. 이건 여러분께 어찌 고쳐야할지 의견을 구합니다.&nbsp;</div><div><br /></div><div>다음편에 다시 올게요. 감사합니다.</div><div><br /></div><div>Ps. 등업 좀 해주세요~</div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002DEA00000000",
+            "id": 11754,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 130,
+            "refArticleId": 11754,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "번외편) 실시간 검색어를 파싱해보자~ (네이버:막힘 | 다음: 가능)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582263640753,
+            "writer": {
+                "id": "brian3918",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20100824_159/brian3918_1282576138330_r7kmvl_jpg/100814-0000.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "토끼는어흥"
+            }
+        },
+        "articleId": 11754,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "var data = org.jsoup.Jsoup.connect(\"https://m.search.daum.net\").get().select(\"span.txt_issue\")+\"\";\r\nvar result = (\"\");\r\n    for(var n =0;n<10;n++){ result +=(n+1)+\"위: \" +data[n]+\"\\n\";\r\n     }\r\n     replier.reply(\"[다음 실시간 검색어 순위]\\n\\n\"+result.trim());\r\nreplier.reply(data-10);\r\n(그냥 보이는거 다 복붙해봄)",
+                    "id": 81845149,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81845149,
+                    "updateDate": 1582276807000,
+                    "writer": {
+                        "id": "vicoki123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMjk0/MDAxNTgwNTI4MTM4MTY3.k0ST66LKqkwN0ncHoJJTuUEWNiB3hhYf1zJ5wboJ5Jgg.BVpV2tjCcnHHeQ3WdPPpKOsvGGS4N9ENpkKs4BNQgHkg.PNG/Laco-1.png"
+                        },
+                        "nick": "라코봇"
+                    }
+                },
+                {
+                    "content": "일부러 중간 소스는 조금 빼고 한글로 채워 넣었습니다. 소스 복붙이 아닌 직접 해보시기를 권하면서...",
+                    "id": 81845348,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81845149,
+                    "updateDate": 1582276965000,
+                    "writer": {
+                        "id": "brian3918",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20100824_159/brian3918_1282576138330_r7kmvl_jpg/100814-0000.jpg"
+                        },
+                        "nick": "토끼는어흥"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

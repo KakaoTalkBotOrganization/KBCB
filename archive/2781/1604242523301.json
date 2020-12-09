@@ -1,0 +1,412 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\">HTTP 에서 인증이 필요한 사이트에 접속 후 JSON을 파싱할 수 있는 소스</font></b></div><div>이 소스는 해당 서버에 JSON 데이터를 보내고 서버에서 JSON 을 다시 받아오는 소스입니다.<br /><span style=\"font-size: 9pt;\"></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><span style=\"font-size: 8pt; font-family: 돋움;\">function response(room,msg,sender,isGroupChat,replier){</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp; var key = &quot;&lt;여기에 base64 로 인코딩된 키를 넣으세요&gt;&quot;;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp; var apiURL = &quot;&lt;여기에 URL을 넣으세요&gt;&quot;;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp; </span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp; var jsondata = &apos;&apos;;</span><br /><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp; function send(){</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp; try{</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; var url = new java.net.URL(apiURL);</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; var con = url.openConnection();</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; con.setRequestMethod(&quot;POST&quot;); // 서버 접속 방법을 설정하세요. GET, POST, OPTIONS 등..</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; con.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json; charset=utf-8&quot;); // 서버 접속시 가져올 데이터의 형식을 지정</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; con.setRequestProperty(&quot;Authorization&quot;, &quot;Basic &quot; + key); // 인증키 입력. 사이트에 따라 Basic 또는 Bearer 를 사용합니다.</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; con.setRequestProperty(&quot;User-Agent&quot;, &quot;Mozilla&quot;); // 일부 사이트의 경우 User-Agent 를 요구합니다.</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; con.setRequestProperty(&quot;Accpet&quot;, &quot;*.*&quot;); // 일부 사이트의 경우, 이 헤더가 없으면 오류가 발생합니다.</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; con.setDoOutput(true);</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; var wr = new java.io.DataOutputStream(con.getOutputStream());</span><span style=\"font-size: 8pt; font-family: 돋움;\"><br />&nbsp;&nbsp;&nbsp; var writer = new java.io.BufferedWriter(new java.io.OutputStreamWriter(wr, &quot;UTF-8&quot;));<br />&nbsp;&nbsp;&nbsp; writer.write(jsondata);<br />&nbsp; &nbsp; writer.close();</span><span style=\"font-size: 8pt; font-family: 돋움;\"></span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; wr.close();</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; </span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; var responseCode = con.getResponseCode();</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; var br;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (responseCode == 200) {</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br = new java.io.BufferedReader(new java.io.InputStreamReader(con.getInputStream()));</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br = new java.io.BufferedReader(new java.io.InputStreamReader(con.getErrorStream()));</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let inputLine;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var response = &quot;&quot;;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ((inputLine = br.readLine()) != null) {</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; response += inputLine;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br.close();</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return response;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp; } catch (e) {</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp;&nbsp;&nbsp; return e;</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;&nbsp; } </span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;}</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;var d1 = send();</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">&nbsp;replier.reply(d1);</span><br /><span style=\"font-size: 8pt; font-family: 돋움;\">}</span><b><br /></b></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000ADD00000000",
+            "id": 2781,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 310,
+            "refArticleId": 2781,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "HTTP 에서 인증이 필요한 사이트에 접속 후 JSON을 파싱할 수 있는 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1559227278783,
+            "writer": {
+                "id": "kieaer",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjJfMTcw/MDAxNTg3NTYxNzUyNTA4.orcSxc1VfUcyV5HAT4cJuKLORdibT_QfGG11LUKWXBAg.aQ8_Cl_9tCfdij6vVNOppJzAeO8JIzrhokynCEUvT7cg.JPEG.kieaer/download20191100154143.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "키에르"
+            }
+        },
+        "articleId": 2781,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "key에다 뭘 base64로 인코딩해서 넣어야되나요?",
+                    "id": 60686474,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60686474,
+                    "updateDate": 1559271011000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "그걸 물어보시면... ㅜㅜ",
+                    "id": 60686942,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60686474,
+                    "updateDate": 1559271432000,
+                    "writer": {
+                        "id": "kieaer",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjJfMTcw/MDAxNTg3NTYxNzUyNTA4.orcSxc1VfUcyV5HAT4cJuKLORdibT_QfGG11LUKWXBAg.aQ8_Cl_9tCfdij6vVNOppJzAeO8JIzrhokynCEUvT7cg.JPEG.kieaer/download20191100154143.jpg"
+                        },
+                        "nick": "키에르"
+                    }
+                },
+                {
+                    "content": "흠... msgdata는 뭘 의미하는거죠",
+                    "id": 60835889,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "updateDate": 1559472058000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "앜\r\n원래 var msgdata = msg.trim 하던걸 삭제하고 나서 저것도 바꾸는걸 까먹었네영\r\n수정했어요",
+                    "id": 60837796,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "updateDate": 1559474344000,
+                    "writer": {
+                        "id": "kieaer",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjJfMTcw/MDAxNTg3NTYxNzUyNTA4.orcSxc1VfUcyV5HAT4cJuKLORdibT_QfGG11LUKWXBAg.aQ8_Cl_9tCfdij6vVNOppJzAeO8JIzrhokynCEUvT7cg.JPEG.kieaer/download20191100154143.jpg"
+                        },
+                        "nick": "키에르"
+                    }
+                },
+                {
+                    "content": "킁...msgdata 변수는 그럴거라 생각하고 msg.trim() 으로 선언 해놨는뎅...",
+                    "id": 60838120,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "replyMember": {
+                        "id": "kieaer",
+                        "nick": "키에르"
+                    },
+                    "updateDate": 1559474657000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "var key = \"(비밀)\";\r\n  var apiURL = \"https://builder.pingpong.us/api/builder/5cf33a6ee4b0c064fb2e0a80/integration/v0.2/custom/\";\r\n  \r\n  var jsondata = '{\"request\": {\"query\": ' + msgdata + ' }}';",
+                    "id": 60838217,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "replyMember": {
+                        "id": "kieaer",
+                        "nick": "키에르"
+                    },
+                    "updateDate": 1559474754000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "여기서 뭐가 잘못됬는지\r\n말을 하면 계속 공백만 반환하네요..",
+                    "id": 60838243,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "replyMember": {
+                        "id": "kieaer",
+                        "nick": "키에르"
+                    },
+                    "updateDate": 1559474780000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "소스코드를 카톡방에 올려주세요",
+                    "id": 60839345,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "replyMember": {
+                        "id": "sweetcorn0318",
+                        "nick": "산하"
+                    },
+                    "updateDate": 1559475998000,
+                    "writer": {
+                        "id": "kieaer",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjJfMTcw/MDAxNTg3NTYxNzUyNTA4.orcSxc1VfUcyV5HAT4cJuKLORdibT_QfGG11LUKWXBAg.aQ8_Cl_9tCfdij6vVNOppJzAeO8JIzrhokynCEUvT7cg.JPEG.kieaer/download20191100154143.jpg"
+                        },
+                        "nick": "키에르"
+                    }
+                },
+                {
+                    "content": "키에르님 카드챗 열려있나요?\r\n잠겨있으면 열어주세요\r\n1ㄷ1 로 보내드릴게요",
+                    "id": 60839596,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "replyMember": {
+                        "id": "kieaer",
+                        "nick": "키에르"
+                    },
+                    "updateDate": 1559476240000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "전 항상 open mind",
+                    "id": 60839744,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60835889,
+                    "replyMember": {
+                        "id": "sweetcorn0318",
+                        "nick": "산하"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_56a701e06b74f-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_56a701e06b74f/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1559476357000,
+                    "writer": {
+                        "id": "kieaer",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjJfMTcw/MDAxNTg3NTYxNzUyNTA4.orcSxc1VfUcyV5HAT4cJuKLORdibT_QfGG11LUKWXBAg.aQ8_Cl_9tCfdij6vVNOppJzAeO8JIzrhokynCEUvT7cg.JPEG.kieaer/download20191100154143.jpg"
+                        },
+                        "nick": "키에르"
+                    }
+                }
+            ],
+            "last": {
+                "id": 60921005,
+                "refId": 60921005
+            },
+            "next": {
+                "id": 60921005,
+                "refId": 60921005
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

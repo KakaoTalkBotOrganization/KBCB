@@ -1,0 +1,196 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<p>/*<br />ComfortableDatasBuilder가 뭔지 모르시는 분들은 아래 링크를 살포시 눌러주세요<br /><a href=\"https://cafe.naver.com/nameyee/6993\" target=\"_blank\">https://cafe.naver.com/nameyee/6993</a><br />*/<br /><br />const ComfortableDatasBuilder = function(msg) {<br />Object.defineProperty(this, &quot;setProperty&quot;, {<br />value : function(object, propertyName, value) {<br />Object.defineProperty(object, propertyName, {<br />value: value, <br />configurable: false<br />});<br />},<br />configurable: false<br />});<br />this.setProperty(this, &quot;msg&quot;, msg);<br />this.setProperty(this, &quot;newMsg&quot;, {});<br />this.prefix = &quot;/&quot;;<br />this.separator = &quot; &quot;;<br />};<br /><br />ComfortableDatasBuilder.prototype.setPrefix = function(prefix) {<br />this.prefix = prefix;<br />};<br /><br />ComfortableDatasBuilder.prototype.setSeparator = function(separator) {<br />this.separator = separator;<br />};<br /><br />ComfortableDatasBuilder.prototype.build = function() {<br />let command = &quot;&quot;;<br />let data = &quot;&quot;;<br />let datas = [];<br />if (!this.msg.startsWith(this.prefix)) {<br />command = &quot;NO_PREFIX&quot;;<br />data = this.msg;<br />datas = data.split(this.separator);<br />} else {<br />let fixedMsg = this.msg.replace(this.prefix, &quot;&quot;);<br />command = fixedMsg.split(this.separator)[0];<br />data = fixedMsg.replace(command, &quot;&quot;).replace(this.separator, &quot;&quot;);<br />datas = data.split(this.separator);<br />}<br />this.setProperty(this.newMsg, &quot;cmd&quot;, command);<br />this.setProperty(this.newMsg, &quot;data&quot;, data);<br />this.setProperty(this.newMsg, &quot;datas&quot;, datas);<br />};<br /><br />ComfortableDatasBuilder.prototype.getMsg = function() {<br />return this.msg;<br />}<br /><br />ComfortableDatasBuilder.prototype.getCmd = function() {<br />if (this.newMsg.cmd === undefined) throw new Error(&quot;trying to call method \\&quot;getCmd\\&quot; before \\&quot;build\\&quot;&quot;);<br />return this.newMsg.cmd;<br />};<br /><br />ComfortableDatasBuilder.prototype.getData = function() {<br />if (this.newMsg.data === undefined) throw new Error(&quot;trying to call method \\&quot;getData\\&quot; before \\&quot;build\\&quot;&quot;);<br />return this.newMsg.data;<br />};<br /><br />ComfortableDatasBuilder.prototype.getDatas = function() {<br />if (this.newMsg.datas === undefined) throw new Error(&quot;trying to call method \\&quot;getDatas\\&quot; before \\&quot;build\\&quot;&quot;);<br />return this.newMsg.datas;<br />};<br /><br />/*<br />업데이트 내용:<br />접두사가 없어도 cmd가 가져와지는 오류 수정<br />build 전에 getCmd, getData, getDatas 함수 호출 시 오류를 던지도록 수정<br /><br />메서드들<br /><br />new ComfortableDatasBuilder(String msg);<br />//msg로 데이터들을 만들 준비를 합니다.<br /><br />ComfortableDatasBuilder.setPrefix(String prefix);<br />//접두사를 정합니다. (미정시 &apos;/&apos;로 설정됨)<br /><br />ComfortableDatasBuilder.setSeparator(String separator);<br />//구분자를 정합니다. (미정시 &apos; &apos;로 설정됨)<br /><br />ComfortableDatasBuilder.build();<br />//데이터들을 만듭니다.<br /><br />ComfortableDatasBuilder.getMsg();<br />//msg를 가져옵니다.<br /><br />//아래 명령어들은 build() 후 사용가능<br /><br />ComfortableDatasBuilder.getCmd();<br />//만든 데이터들에서 정한 구분자로 msg를 자른 기준으로 첫 번째 문자열(cmd)을 가져옵니다. (접두사가 없을 시 &quot;NO_PREFIX&quot; 반환)<br /><br />ComfortableDatasBuilder.getData();<br />//만든 데이터들 중에서 msg에서 cmd를 없앤 문자열(data)을 가져옵니다.<br /><br />ComfortableDatasBuilder.getDatas();<br />//만든 데이터들 중에서 data를 구분자로 자른 배열을 가져옵니다.<br /><br />사용 예시)<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />let message = new ComfortableDatasBuilder(msg);<br />message.setPrefix(&quot;@&quot;);<br />message.build();<br />if (message.getCmd() == &quot;따라하기&quot;) {<br />replier.reply(&quot;[따라하기] &quot;+message.getData());<br />}<br />}<br />//msg가 &apos;@따라하기 안녕&apos; 이면 &apos;[따라하기] 안녕&apos; 이라고 답함<br /><br />//객체지향 스타일로 제대로 소스를 짜보는건 이번이 처음이라, 다소 비효율적이어도 양해부탁드립니다<br /><br />*/</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001B5F00000000",
+            "id": 7007,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 151,
+            "refArticleId": 7007,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "ComfortableDatasBuilder v1.1",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1572131618433,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음 BOT"
+            }
+        },
+        "articleId": 7007,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "굿굿",
+                    "id": 72018365,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72018365,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572131694000,
+                    "writer": {
+                        "id": "dlwjddus4367",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "이정연"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

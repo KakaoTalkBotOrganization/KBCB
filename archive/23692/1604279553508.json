@@ -1,0 +1,219 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-d204fc27-03bc-43e4-9494-8aa6c465fdb4\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-c852fc54-7128-48e3-ac05-5ed185590a7c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a0513447-b568-446f-8773-dead20c81b91\">우선, iris.csv를 읽어야 하는데, 파이썬이 아니라서 pandas 라이브러리에 있는 read_csv()를 대충 구현.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3b663372-a363-435a-ad7e-42120ec2548b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a6a6f4ef-c806-4d37-b560-62e9445cba5f\">&gt; 코드 내용 중 fs.readFileSync()는 그냥 파일 읽어서 파일 내용을 문자열로 내보내는 어디선가 많이 본 함수랑 역할이 같으니 메신저봇에서 쓸 때는 대충 알아서 바꿔주면 됨.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-3978b855-5994-4c55-9e96-9c4a1ad7ecea\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">var fs &#x3D; require(&#x27;fs&#x27;);\nfunction read_csv(csvfile){\n    data &#x3D; fs.readFileSync(csvfile, &#x27;utf8&#x27;).split(&quot;\\n&quot;);\n    console.log(data[data.length-1])\n    for(var i&#x3D;0; i&lt;data.length; i++) data[i] &#x3D; data[i].split(&quot;,&quot;);\n    res &#x3D; [];\n    for(var i&#x3D;1; i&lt;data.length-1; i++){\n        element &#x3D; {};\n        for(var j&#x3D;0; j&lt;data[0].length; j++)\n            element[data[0][j]] &#x3D; data[i][j];\n        res.push(element);\n    }\n    return res;\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-3978b855-5994-4c55-9e96-9c4a1ad7ecea\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-da7ece4d-b00e-4bce-9efe-522b0a985f72\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-0dacb7d9-390a-4029-a748-c41e171fe2bf\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3e6ff87a-56a6-475b-a597-bbb35de446aa\">그러고 봤더니 너무 내용이 주절주절 많은거 보기 힘들어서 .head()랑 .tail()도 구현.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-a31499b8-eae8-4864-a909-624446ecb184\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">Array.prototype.head &#x3D; function(n) {\n    return this.slice().splice(0, n)\n}\nArray.prototype.tail &#x3D; function(n) {\n    return this.slice().splice(this.length-n, n)\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-a31499b8-eae8-4864-a909-624446ecb184\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-40683bf2-5ed1-4fc5-873b-f569c121a4c8\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-f6250c8e-1f47-412d-ab71-e6642703441b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7dbe0f4b-d688-437b-927e-83c55c460b03\">이렇게 해서 보니 이번에는 또 dataframe을 array로 바꿔주는 함수가 없어서 이마저 구현.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-84c6183d-c244-4c4b-bc93-30850691498a\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">function toArray(dataframe){\n    res &#x3D; [];\n    for(i of dataframe){\n        element &#x3D; [];\n        for(j in i){\n            element.push(i[j]);\n        }\n        res.push(element);\n    }\n    return res;\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-84c6183d-c244-4c4b-bc93-30850691498a\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-3bb3544c-d2ee-4771-a842-f8d3a602c6e2\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-207c3239-8ae6-48a0-bbc7-f06c929e1fa4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-190728ef-3b65-474f-bced-e04afe7937c4\">아직 하고 있는데, 이렇게 만들고 나서 걱정되는 것: 이거 만들어서 챗봇 만드는 데에 쓸 때가 없을 것 같은 걱정이...</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005C8C00000000",
+            "id": 23692,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 88,
+            "refArticleId": 23692,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "EBS 교재에 있는거 보고 JavaScript로 할라카니...",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1598445969457,
+            "writer": {
+                "id": "pak_hyun",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "OtakoidTony"
+            }
+        },
+        "articleId": 23692,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "코틀린으로바꾸시지요 선생님",
+                    "id": 101278884,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101278884,
+                    "updateDate": 1598482057000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "코틀린으로 데이터 과학 분야도 할 수 있다길래 시도 해봤는데, 자꾸 에러 뿜뿜하길래 걍 때려침.",
+                    "id": 101314456,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101278884,
+                    "updateDate": 1598500722000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "오류 내용을 알려주심시오",
+                    "id": 101314488,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101278884,
+                    "replyMember": {
+                        "id": "pak_hyun",
+                        "nick": "OtakoidTony"
+                    },
+                    "updateDate": 1598500746000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "님톡방에 예전에 올렸었는데.... ㅠ....",
+                    "id": 101315171,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101278884,
+                    "replyMember": {
+                        "id": "sungbin_dev",
+                        "nick": "성빈"
+                    },
+                    "updateDate": 1598501185000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "데이터과학",
+            "빅데이터",
+            "머신러닝",
+            "dataframe",
+            "csv",
+            "전처리"
+        ]
+    }
+}

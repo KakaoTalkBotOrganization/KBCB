@@ -1,0 +1,345 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메봇 R</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;const scriptName = &quot;읍읍한 사이트 파싱&quot;;</b></div><div><b>/**</b></div><div><b>&nbsp;* (string) room</b></div><div><b>&nbsp;* (string) sender</b></div><div><b>&nbsp;* (boolean) isGroupChat</b></div><div><b>&nbsp;* (void) replier.reply(message)</b></div><div><b>&nbsp;* (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환</b></div><div><b>&nbsp;* (string) imageDB.getProfileBase64()</b></div><div><b>&nbsp;* (string) packageName</b></div><div><b>&nbsp;*/</b></div><div><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</b></div><div><b><span style=\"white-space:pre\"> </span>var htmltext = org.jsoup.Jsoup.connect(&quot;<a href=\"https://hixxxx.me\" target=\"_blank\">https://hixxxx.me</a>&quot;).get().select(&quot;div.gallery-content.row&quot;);</b></div><div><b><span style=\"white-space:pre\"> </span>if (msg.startsWith(&quot;eval&quot;)) {</b></div><div><b><span style=\"white-space:pre\">  </span>var b = msg.substr(5);</b></div><div><b><span style=\"white-space:pre\">  </span>try {</b></div><div><b><span style=\"white-space:pre\">   </span>var c = eval(b);</b></div><div><b><span style=\"white-space:pre\">   </span>replier.reply(c);</b></div><div><b><span style=\"white-space:pre\">  </span>}catch (e) {</b></div><div><b><span style=\"white-space:pre\">   </span>replier.reply(e + &quot;(&quot; + scriptName + &quot; #&quot; + e.lineNumber + &quot;)&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>}</b></div><div><b><span style=\"white-space:pre\"> </span>}</b></div><div><b><span style=\"white-space:pre\"> </span>var result=[]</b></div><div><b><span style=\"white-space:pre\"> </span>for(var i=0;i&lt;=14;i++){</b></div><div><b><span style=\"white-space:pre\">  </span>result[i]={}</b></div><div><b><span style=\"white-space:pre\">  </span>replier.reply(result[i])</b></div><div><b><span style=\"white-space:pre\">  </span>var a=htmltext.get(i)</b></div><div><b><span style=\"white-space:pre\">  </span>var e = a.select(&quot;a.col-sm-12.col-md-3.mb-sm-3.text-center.galleryImage&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>result[i][&quot;link&quot;]=e.attr(&quot;href&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>var e = a.select(&quot;img&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>result[i][&quot;img&quot;]=e.attr(&quot;src&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>var e = a.select(&quot;b&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>result[i][&quot;title&quot;]=e.text();</b></div><div><b><span style=\"white-space:pre\">  </span>var e = a.select(&quot;tr td a&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>result[i][&quot;artist&quot;] = [];</b></div><div><b><span style=\"white-space:pre\">  </span>for (var j = 0; ; i++) {</b></div><div><b><span style=\"white-space:pre\">   </span>try {</b></div><div><b><span style=\"white-space:pre\">   </span>if (e.get(i).attr(&quot;href&quot;).indexOf(&quot;artist:&quot;) != -1) {</b></div><div><b><span style=\"white-space:pre\">    </span>result[i][&quot;artist&quot;].push(e.get(j).text());</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">   </span>}catch (e) {</b></div><div><b><span style=\"white-space:pre\">    </span>break;</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">  </span>}</b></div><div><b><span style=\"white-space:pre\">  </span>var e = a.select(&quot;tr td a&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>result[i][&quot;series&quot;] = [];</b></div><div><b><span style=\"white-space:pre\">  </span>for (var j = 0; ; i++) {</b></div><div><b><span style=\"white-space:pre\">   </span>try {</b></div><div><b><span style=\"white-space:pre\">   </span>if (e.get(i).attr(&quot;href&quot;).indexOf(&quot;series:&quot;) != -1) {</b></div><div><b><span style=\"white-space:pre\">    </span>result[i][&quot;series&quot;].push(e.get(j).text());</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">   </span>}catch (e) {</b></div><div><b><span style=\"white-space:pre\">    </span>break;</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">  </span>}</b></div><div><b><span style=\"white-space:pre\">  </span>var e = a.select(&quot;tr td a&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>result[i][&quot;character&quot;]=[]</b></div><div><b><span style=\"white-space:pre\">  </span>for (var j = 0; ; i++) {</b></div><div><b><span style=\"white-space:pre\">   </span>try {</b></div><div><b><span style=\"white-space:pre\">   </span>if (e.get(i).attr(&quot;href&quot;).indexOf(&quot;character:&quot;) != -1) {</b></div><div><b><span style=\"white-space:pre\">    </span>result[i][&quot;character&quot;].push(e.get(j).text());</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">   </span>}catch (e) {</b></div><div><b><span style=\"white-space:pre\">    </span>break;</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">  </span>}</b></div><div><b><span style=\"white-space:pre\">  </span>var e = a.select(&quot;tr td a&quot;);</b></div><div><b><span style=\"white-space:pre\">  </span>result[i][&quot;tag&quot;]=[]</b></div><div><b><span style=\"white-space:pre\">  </span>for (var j = 0; ; i++) {</b></div><div><b><span style=\"white-space:pre\">   </span>try {</b></div><div><b><span style=\"white-space:pre\">   </span>if (e.get(j).attr(&quot;href&quot;).indexOf(&quot;series:&quot;) == -1 &amp;&amp; e.get(j).attr(&quot;href&quot;).indexOf(&quot;artist:&quot;) == -1 &amp;&amp; e.get(j).attr(&quot;href&quot;).indexOf(&quot;group:&quot;) == -1 &amp;&amp; e.get(j).attr(&quot;href&quot;).indexOf(&quot;type:&quot;) == -1 &amp;&amp; e.get(j).attr(&quot;href&quot;).indexOf(&quot;group:&quot;) == -1 &amp;&amp; e.get(j).attr(&quot;href&quot;).indexOf(&quot;https&quot;) == -1 &amp;&amp; e.get(j).attr(&quot;href&quot;).indexOf(&quot;character:&quot;) == -1) {</b></div><div><b><span style=\"white-space:pre\">    </span>result[i][&quot;tag&quot;].push(e.get(i).text());</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">   </span>}catch (e) {</b></div><div><b><span style=\"white-space:pre\">    </span>break;</b></div><div><b><span style=\"white-space:pre\">   </span>}</b></div><div><b><span style=\"white-space:pre\">  </span>}</b></div><div><b><span style=\"white-space:pre\"> </span>}</b></div><div><b><span style=\"white-space:pre\"> </span>var temp=[]</b></div><div><b><span style=\"white-space:pre\"> </span>for(i in result){</b></div><div><b><span style=\"white-space:pre\">  </span>replier.reply(JSON.stringify(result[i]))</b></div><div><b><span style=\"white-space:pre\"> </span>}</b></div><div><b><span style=\"white-space:pre\"> </span>replier.reply(a);</b></div><div><b>}</b></div><div><b>//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.</b></div><div><b>function onCreate(savedInstanceState, activity) {</b></div><div><b>&nbsp; var textView = new android.widget.TextView(activity);</b></div><div><b>&nbsp; textView.setText(&quot;Hello, World!&quot;);</b></div><div><b>&nbsp; textView.setTextColor(android.graphics.Color.DKGRAY);</b></div><div><b>&nbsp; activity.setContentView(textView);</b></div><div><b>}</b></div><div><b>function onStart(activity) {</b></div><div><b>}</b></div><div><b>function onResume(activity) {</b></div><div><b>}</b></div><div><b>function onPause(activity) {</b></div><div><b>}</b></div><div><b>function onStop(activity) {</b></div><div><b>}</b></div><div><br /></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 45번째 줄에 TypeError : cannot set property &quot;series&quot; of undefined to &quot;&quot;에러가 뜹니다.</b></div><div><b>윗줄에 있는 artist만 작동하고 나머지는 전부 작동이 안되는거 같은데 어떻게 해결해야 하나요?</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000333100000000",
+            "id": 13105,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 64,
+            "refArticleId": 13105,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "cannot set property \"series\" of undefined to \"\"",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583808952733,
+            "writer": {
+                "id": "bass90301",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "bass90301"
+            }
+        },
+        "articleId": 13105,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "45번줄이 어떤 부분인데여?\r\n저희가 세야 하나여..?",
+                    "id": 83703241,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83703241,
+                    "updateDate": 1583811596000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "result[i][\"series\"] = [];\r\n이부분입니다!",
+                    "id": 83703318,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83703241,
+                    "updateDate": 1583811637000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "for 에서 j 인자를 선언해두고 i 를 올리는건가요..?",
+                    "id": 83719942,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83719942,
+                    "updateDate": 1583822544000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "이중 for문입니다.1번째 for문이 i고 2번째for문들은 j로 선언해 둔거에요",
+                    "id": 83721927,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83719942,
+                    "updateDate": 1583823974000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "for (var j = 0; ; i++) {\r\n\r\n이 부분이 왜 있는 건가요...?\r\nj값은 항상 fix해둘거면 while이 낫지 않나요? (소스 전체 안읽어봄)",
+                    "id": 83722106,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83719942,
+                    "replyMember": {
+                        "id": "bass90301",
+                        "nick": "bass90301"
+                    },
+                    "updateDate": 1583824102000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "그런가..? 아무튼 그냥 제 뇌에서 그냥 나온데로 짠거라 작동만 되면 그만입니다.",
+                    "id": 83723082,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83719942,
+                    "replyMember": {
+                        "id": "dsy2761",
+                        "nick": "AlphaDo"
+                    },
+                    "updateDate": 1583824869000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "히요비 읍읍",
+                    "id": 83726593,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83726593,
+                    "updateDate": 1583827171000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "..? 상상도 못한 정답 ㄴㅇㄱ(?)",
+                    "id": 83726637,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83726593,
+                    "updateDate": 1583827208000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 83726666,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83726593,
+                    "replyMember": {
+                        "id": "bass90301",
+                        "nick": "bass90301"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-7-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_7.png",
+                        "width": 129
+                    },
+                    "updateDate": 1583827224000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

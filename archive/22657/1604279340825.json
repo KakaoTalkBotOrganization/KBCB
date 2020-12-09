@@ -1,0 +1,373 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 24,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-0b406432-2811-415c-a520-5c49171f4852\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6803f2e3-da41-11ea-abc2-77d5c30601b0\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-6803f2e2-da41-11ea-abc2-bbde4318b9e8\"><b>검색 여부 : O</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6803f2e5-da41-11ea-abc2-378e6743ac53\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-6803f2e4-da41-11ea-abc2-17f0a19ecdc3\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-680419f7-da41-11ea-abc2-8bd061bfb320\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-680419f6-da41-11ea-abc2-0f6facd3f65b\"><b>오류 내용 : O</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-680419f9-da41-11ea-abc2-1bc2fde72c68\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-680419f8-da41-11ea-abc2-cb79079a3e78\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6805045b-da41-11ea-abc2-ed706c8b9c4b\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-6804dd4a-da41-11ea-abc2-a3b5ea53cdd3\"><b>오류가 발생하는 부분의 소스코드 : 전체 소스에 포함</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6805798d-da41-11ea-abc2-e549ac19c562\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-6805798c-da41-11ea-abc2-e51ef25c183a\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6805a09f-da41-11ea-abc2-69fdf85b0161\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-6805a09e-da41-11ea-abc2-cb094def17ae\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6805c7b1-da41-11ea-abc2-6bd047a8a4de\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-6805c7b0-da41-11ea-abc2-89e680c37bea\"><b>전체소스 :  </b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6805eec3-da41-11ea-abc2-7125e6213c9b\"><span style=\"\" class=\"se-fs-fs16 se-ff-   \" id=\"SE-6805eec2-da41-11ea-abc2-b13a55be2d2a\"><b>​</b></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-8ed0be2e-506d-4eee-86bf-4c77fc0602c1\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">﻿\nfunction response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId)\n{\n\nvar image &#x3D; java.lang.String(imageDB.getProfileBase64()).hashCode();\nvar path &#x3D; &quot;/sdcard/RPG/player&quot;+sender.replace(/\\//g, &quot;+&quot;)+&quot;&amp;&quot;+image+&quot;.json&quot;;\nvar user &#x3D; FileStream.read(path);\n\nif(user &#x3D;&#x3D; null) user &#x3D; {};\nelse JSON.parse(user);\n\nif(msg &#x3D;&#x3D; &quot;ac 입학신청&quot;) {\n//문제 발생 부분 1\n  if(user[&quot;name&quot;] !&#x3D; undefined) {\n    replier.reply(&quot;« SR device »\\n· 이미 입학하셨습니다.\\n· 프로필을 보시려면 \\&quot;ac 프로필\\&quot;을 입력하세요.&quot;);\n}\n//결과 : 명령어 사용 시마다 계속해서 &quot;이미 입학하셨습니다.&quot;만 출력. 파일은 제대로 생성되어있으며, 맨 밑의 테스트 부분에서 테스트 결과 객체 불러오기가 되지 않는 걸로 판단했습니다.\n\n  else {\n    playdata &#x3D; {\n&quot;name&quot;:sender,\n&quot;score&quot;:0,\n&quot;point&quot;:0,\n&quot;hp&quot;:100,\n&quot;hpmax&quot;:100,\n&quot;ap&quot;:5,\n&quot;apmax&quot;:5,\n&quot;damage&quot;:0,\n&quot;job&quot;:&quot;없음&quot;,\n&quot;inventory&quot;:[]\n  };\n    FileStream.write(path, JSON.stringify(playdata, null, &#x27;\\t&#x27;));\n    replier.reply(&quot;« SR device »\\n· 시에러브 아카데미에 입학하였습니다!\\n· \\&quot;ac 프로필\\&quot;을 입력하여 프로필을 확인하세요.&quot;);\n  }\n}\n//맨 처음 첫 if문의 조건을 user !&#x3D; {}로 했을 때 나타난 오류는 user[&quot;name&quot;]!&#x3D;undefined로 바꿨을 파일이 정상적으로 생성되며 사라졌습니다. 하지만 곧바로 객체 불러오기의 결과가 undefined로만 출력되는 오류로 이어졌습니다.\n\n//문제 발생 부분 2\nif(user[&quot;name&quot;] !&#x3D; undefined) {\n  if(msg&#x3D;&#x3D;&quot;ac 프로필&quot;) {\n    score &#x3D; user[&quot;score&quot;];\n    var status &#x3D; &quot;« SR device : Player Profile »\\n• Name : &quot;+sender+&quot;\\n• Score : &quot;+score;\n    replier.reply(status);\n  }\n}\n//밑의 테스트의 결과 때문에 1번과 같다고 생각합니다.\n\n//문제 테스트 부분\nif(msg&#x3D;&#x3D;&quot;TEST&quot;) {\n  replier.reply(user[&quot;name&quot;]);\n}\n//결과 : undefined.\n//답장reply을 user로 했을 때 : FileStream.write로 위에서 쓰여진 playdata의 값&#x3D;파일에 기록된 값이 통째로 출력.\n// &quot; user.\n\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-8ed0be2e-506d-4eee-86bf-4c77fc0602c1\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-4d165a78-f9e5-4242-a8ed-ccb750bb6b11\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68072745-da41-11ea-abc2-b7cf7ff9a790\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-68072744-da41-11ea-abc2-23babdd2c570\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68074e57-da41-11ea-abc2-ef0249b23707\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-68074e56-da41-11ea-abc2-1fa6eeb98dc7\">적어도 제가 보기에는 문자상의 오류는 없어보이기에...... 문제의 원인과 가능하다면 해결책까지 질문하고 싶어요.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68077569-da41-11ea-abc2-6911dba9ff2a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-68077568-da41-11ea-abc2-436451ccbbe0\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68079c7b-da41-11ea-abc2-6f03d400583b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-68079c7a-da41-11ea-abc2-a95922eab407\">도와주세요......ㅠㅠ</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68079c7d-da41-11ea-abc2-b3708335ccb2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-68079c7c-da41-11ea-abc2-c9837ac783c8\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6807c38f-da41-11ea-abc2-b90363b339b2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6807c38e-da41-11ea-abc2-21bc9701f3d5\">//해결 후</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6807eaa1-da41-11ea-abc2-b5bec83480f3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6807eaa0-da41-11ea-abc2-f118dba83ffa\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6807eaa3-da41-11ea-abc2-f58a69b1c22f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6807eaa2-da41-11ea-abc2-99441fe2b64a\">답변해주신 마동석님과 지식이 부족하다 생각하는 인간님 정말 감사합니다~!!!!</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-680811b5-da41-11ea-abc2-f38d4c60a279\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-680811b4-da41-11ea-abc2-4bba53571eb0\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-680838c7-da41-11ea-abc2-5d602998254d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-680838c6-da41-11ea-abc2-f5ac9b5d350a\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68085fd9-da41-11ea-abc2-674f80225531\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-680838c8-da41-11ea-abc2-61ef3c1dab38\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68085fdb-da41-11ea-abc2-e7486c873c77\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-68085fda-da41-11ea-abc2-f309a6da7733\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-680886ed-da41-11ea-abc2-13ad05cea4a8\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-680886ec-da41-11ea-abc2-65383743fcb4\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6808adff-da41-11ea-abc2-63163a74a088\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6808adfe-da41-11ea-abc2-558117472f8f\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6808d511-da41-11ea-abc2-cd426c5edd3f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6808ae00-da41-11ea-abc2-43aad32b3459\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6808fc23-da41-11ea-abc2-5b84dd95c495\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6808fc22-da41-11ea-abc2-cb3d3631e0d7\">*소스 대부분은 &quot;지식이 부족한 인간&quot;님의 RPG만들기 강좌 1 회원가입 부분에서 따왔음을 밝힙니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6808fc25-da41-11ea-abc2-b71904b902cd\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6808fc24-da41-11ea-abc2-d3b22331c18b\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68092337-da41-11ea-abc2-a1c0a4f90f50\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-68092336-da41-11ea-abc2-79034404b3b1\">+ Q. 카페 공식 오픈채팅방 있나요?</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000588100000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 22657,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 103,
+            "refArticleId": 22657,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "파일스트림을 통한 파일에서의 객체 불러오기가 안돼요.※ 해결됨 ※",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1596969162150,
+            "writer": {
+                "id": "elruien0604",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Iloahs Koine"
+            }
+        },
+        "articleId": 22657,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "지식이 부족한 인간님 ㄷㄷ",
+                    "id": 99415576,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99415576,
+                    "updateDate": 1596969455000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "한줄요약 : 선생님 이해가 잘 안 갑니다...",
+                    "id": 99415865,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99415865,
+                    "updateDate": 1596969729000,
+                    "writer": {
+                        "id": "elruien0604",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                        },
+                        "nick": "Iloahs Koine"
+                    }
+                },
+                {
+                    "content": "FS=FileStream;\r\npath=\"/sdcard/RPG/player\";\r\nif (msg==\"생성\"&&FS.read(path)==false){\r\njava.io.File(path).mkdir();\r\n//되려나\r\n}",
+                    "id": 99416310,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99416310,
+                    "updateDate": 1596970034000,
+                    "writer": {
+                        "id": "janghs307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "마동석"
+                    }
+                },
+                {
+                    "content": "amp가 뭔지는 모르겠지만...  일단은 그대로 써보기, amp.FS, FS변수 말고 그냥 FileStream으로 써보기 등 해봤는데 안되네요(컴파일 에러). 오늘 막 메신저앱으로 넘어온 초보.. FileStream로 어제까지 하나도 몰라서 4시간동안 헤메서 겨우 배웠다죠...흑",
+                    "id": 99417299,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99416310,
+                    "updateDate": 1596970751000,
+                    "writer": {
+                        "id": "elruien0604",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                        },
+                        "nick": "Iloahs Koine"
+                    }
+                },
+                {
+                    "content": "RPG폴더가 있나요?",
+                    "id": 99417484,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99416310,
+                    "replyMember": {
+                        "id": "elruien0604",
+                        "nick": "Iloahs Koine"
+                    },
+                    "updateDate": 1596970839000,
+                    "writer": {
+                        "id": "janghs307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "마동석"
+                    }
+                },
+                {
+                    "content": "네네",
+                    "id": 99417521,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99416310,
+                    "replyMember": {
+                        "id": "janghs307",
+                        "nick": "마동석"
+                    },
+                    "updateDate": 1596970877000,
+                    "writer": {
+                        "id": "elruien0604",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                        },
+                        "nick": "Iloahs Koine"
+                    }
+                },
+                {
+                    "content": "그럼왜오류나ㅈ",
+                    "id": 99417538,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99417538,
+                    "updateDate": 1596970882000,
+                    "writer": {
+                        "id": "janghs307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "마동석"
+                    }
+                },
+                {
+                    "content": "그러게요...ㅠㅠ",
+                    "id": 99417570,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99417538,
+                    "updateDate": 1596970904000,
+                    "writer": {
+                        "id": "elruien0604",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                        },
+                        "nick": "Iloahs Koine"
+                    }
+                },
+                {
+                    "content": "컴파일 할때 나오는오류를 말해주세요",
+                    "id": 99417617,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99417538,
+                    "replyMember": {
+                        "id": "elruien0604",
+                        "nick": "Iloahs Koine"
+                    },
+                    "updateDate": 1596970936000,
+                    "writer": {
+                        "id": "janghs307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "마동석"
+                    }
+                },
+                {
+                    "content": "아 컴파일 때의 오류가 아니라 디버깅 룸에서 테스트했을 때(\"생성\" 입력) ampFS는 정의되지 않았습니다?(ampFS is undefined) 라고 뜨네요. amp를 나누었을 때는 amp가 그렇게 뜨고요. 혹시 함수에 넣어야 하나요?",
+                    "id": 99417785,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99417538,
+                    "replyMember": {
+                        "id": "janghs307",
+                        "nick": "마동석"
+                    },
+                    "updateDate": 1596971050000,
+                    "writer": {
+                        "id": "elruien0604",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                        },
+                        "nick": "Iloahs Koine"
+                    }
+                }
+            ],
+            "last": {
+                "id": 99428719,
+                "refId": 99428719
+            },
+            "next": {
+                "id": 99417852,
+                "refId": 99417538
+            }
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

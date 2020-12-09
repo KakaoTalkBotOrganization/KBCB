@@ -1,0 +1,273 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>var mu={<br />Yes_or_Yes:&quot;뭘 고를지 몰라 / 준비해 봤어 / 둘 중에 하나만 골라 / Yes or Yes / 네 마음을 몰라 / 준비해 봤어 / 하나만 선택해 / 어서 Yes or Yes / 싫어는 싫어 / 나 아니면 우리 / 선택을 존중해 / 거절은 거절해 / 선택지는 하나 / 자 선택은 네 맘&quot;,<br />옥탑방:&quot;너는 별을 보자며 / 내 손을 끌어서 / 단 한 번의 달빛을 / 내 눈에 담았어 / Every time I look up in the sky / 근데 단 한 개도 없는 star / 괜찮아 네가 내 우주고 / 밝게 빛나 줘&quot;,<br />なんでもないや:&quot;ふたりのあいだとうりすぎたかぜは / どこからさびしさをはこんできたの / ないたりしたそのあとのそらは / やけにすきとっていたりしたんだ / いつもはとがってたちちのことばが / きょおはあたたかくかんじました / やさしさもえがおもゆめのかたりかたも / しらなくてぜんぶきみをまねたよ&quot;,<br />Heroes_Tonight:&quot;I&apos;ve been flying from town to town / From London to Taiwan / I&apos;ve been all around the globe / Trying to protect your soul / We are heroes tonight / We will fly above the sky / We are heroes tonight yeah / We are heroes tonight / We will fly above the sky / We are heroes tonight yeah / Night yeah&quot;,<br />애국가:&quot;동해물과 백두산이 마르고 닳도록 / 하느님이 보우하사 우리나라 만세 / 남산 위에 저 소나무 철갑을 두른 듯 / 바람 서리 불변함은 우리 기상일세 / 가을 하늘 공활한데 높고 구름 없이 / 밝은 달은 우리 가슴 일편단심일세 / 이 기상과 이 맘으로 충성을 다하여 / 괴로우나 즐거우나 나라 사랑하세 / 무궁화 삼천리 화려강산 / 대한 사랑 대한으로 길이 보전하세&quot;<br />}<br />var power=false;<br />var ment=&quot;&quot;;<br />var num=0;<br />var player=&quot;&quot;;<br />var save=&quot;&quot;;<br />function response(room,msg,sender,isGroupChat,replier){<br />function say(str){<br />replier.reply(str);<br />}<br />if (msg.indexOf(&quot;/노래 &quot;)==0&amp;&amp;!power) {<br />var cmd=msg.substr(4).trim();<br />for (var a=0;a&lt;Object.keys(mu).length;a++){<br />if (Object.keys(mu)[a].replace(/_/g,&quot; &quot;)==cmd){<br />save=Object.keys(mu)[a];<br />}else{<br />save=cmd;<br />}<br />}<br />}<br />if (msg.indexOf(&quot;/노래 &quot;)==0&amp;&amp;!power){<br />if (Object.keys(mu).replace(/_/g,&quot; &quot;).indexOf(save)!=-1){<br />power=true;<br />ment=eval(&apos;mu.&apos;+save).split(&quot; / &quot;);<br />num=0;<br />player=sender;<br />say(&quot;노래 가사 맞히기를 시작합니다.\\n총 말해야 할 가사 횟수는 &quot;+ment.length+&quot; 번입니다.\\n당신이 말해야 할 가사 개수는 &quot;+Math.floor(ment.length/2)+&quot; 번입니다.&quot;);<br />say(ment[num]);<br />num=1;<br />} else {<br />say(sender+&quot; 님 그런 노래 제목은 없습니다!&quot;);<br />say(&quot;[ 현재 저장된 노래 목록 ]\\n&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;\\n\\n&quot;+Object.keys(mu).map((a,s)=&gt;(s+1)+&quot;. &quot;+a.replace(/_/g,&quot; &quot;)).join(&quot;\\n&quot;));<br />}<br />}<br />if (power&amp;&amp;msg==ment[num]&amp;&amp;player==sender){<br />if (!(num&gt;=ment.length-1)) {<br />num++;<br />say(ment[num]);<br />if (ment[num+1]!=undefined) {<br />say(&quot;다음 가사의 글자 개수: &quot;+ment[num+1].length+&quot; ( &quot;+ment[num+1].split(&quot; &quot;).length+&quot;구절 )&quot;);<br />}<br />num++;<br />}<br />}<br />if (num&gt;=ment.length+1&amp;&amp;power) {<br />say(&quot;[ Congratulations! ]\\n&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;\\n\\n[ &quot;+player+&quot; ]\\n\\n&quot;+ment.map((i,p)=&gt;(p%2==0)?&quot;I did: &quot;+i:&quot;U did: &quot;+i).join(&quot;\\n&quot;));<br />power=false;<br />num=-1;<br />return;<br />}<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000266400000000",
+            "id": 9828,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 155,
+            "refArticleId": 9828,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "노래 가사 맞히기 수동",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1578474115777,
+            "writer": {
+                "id": "kjsbus5",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "구름"
+            }
+        },
+        "articleId": 9828,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "초봅니다 ㅠㅠ",
+                    "id": 77929147,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77929147,
+                    "updateDate": 1578474131000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 77933942,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77933942,
+                    "updateDate": 1578478499000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "?",
+                    "id": 77947030,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77933942,
+                    "updateDate": 1578489657000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                },
+                {
+                    "content": "난 잘됨",
+                    "id": 77947111,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77933942,
+                    "updateDate": 1578489711000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                },
+                {
+                    "content": "메봇 안 되나 봄",
+                    "id": 77947182,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77933942,
+                    "updateDate": 1578489761000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

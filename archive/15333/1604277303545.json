@@ -1,0 +1,421 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 45,
+            "contentElements": [],
+            "contentHtml": "<p>/*첨부파일에 있는 codeEditor 모듈을 모듈 폴더에 넣어주시고, 스크립트 설정 -&gt; 레거시 API를 사용합니다. 체크를 해제해주시기 바랍니다!*/<br /><br /></p><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #0000ff;\">const</span> bot = <span style=\"color: #008080;\">BotManager</span>.getCurrentBot();</div><div>bot.setCommandPrefix(<span style=\"color: #a31515;\">&quot;/&quot;</span>);</div><br /><div><span style=\"color: #0000ff;\">let</span> { <span style=\"color: #008080;\">CodeEditor</span> } = require(<span style=\"color: #a31515;\">&quot;codeEditor&quot;</span>);</div><div><span style=\"color: #0000ff;\">let</span> codeEditor = <span style=\"color: #0000ff;\">new</span> <span style=\"color: #008080;\">CodeEditor</span>();</div><br /><div><span style=\"color: #0000ff;\">const</span> compress = () =&gt; <span style=\"color: #a31515;\">&quot;\\u200b&quot;</span>.repeat(<span style=\"color: #09885a;\">500</span>);</div><br /><br /><div><span style=\"color: #0000ff;\">function</span> onCommand(msg) {</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;열기&quot;</span>) {</div><div>    codeEditor.open(msg.args.join(<span style=\"color: #a31515;\">&quot; &quot;</span>));</div><div>    msg.reply(<span style=\"color: #a31515;\">&quot;[ 파일을 열었습니다 ]&quot;</span> + compress() + <span style=\"color: #a31515;\">&quot;\\n\\n&quot;</span> + codeEditor.read());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;커서설정&quot;</span>) {</div><div>    <span style=\"color: #0000ff;\">let</span> index = msg.args.map(<span style=\"color: #008080;\">Number</span>);</div><div>    codeEditor.setCursor(index[<span style=\"color: #09885a;\">0</span>], index[<span style=\"color: #09885a;\">1</span>]);</div><div>    msg.reply(codeEditor.getStatus());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;커서이동&quot;</span>) {</div><div>    <span style=\"color: #0000ff;\">let</span> up = <span style=\"color: #09885a;\">0</span>, down = <span style=\"color: #09885a;\">0</span>, left = <span style=\"color: #09885a;\">0</span>, right = <span style=\"color: #09885a;\">0</span>;</div><div>    <span style=\"color: #0000ff;\">if</span> (msg.args[<span style=\"color: #09885a;\">0</span>].includes(<span style=\"color: #a31515;\">&quot;w&quot;</span>)) up = msg.args[<span style=\"color: #09885a;\">0</span>].match(<span style=\"color: #800000;\">/w/</span><span style=\"color: #0000ff;\">g</span>).length;</div><div>    <span style=\"color: #0000ff;\">if</span> (msg.args[<span style=\"color: #09885a;\">0</span>].includes(<span style=\"color: #a31515;\">&quot;s&quot;</span>)) down = msg.args[<span style=\"color: #09885a;\">0</span>].match(<span style=\"color: #800000;\">/s/</span><span style=\"color: #0000ff;\">g</span>).length;</div><div>    <span style=\"color: #0000ff;\">if</span> (msg.args[<span style=\"color: #09885a;\">0</span>].includes(<span style=\"color: #a31515;\">&quot;a&quot;</span>)) left = msg.args[<span style=\"color: #09885a;\">0</span>].match(<span style=\"color: #800000;\">/a/</span><span style=\"color: #0000ff;\">g</span>).length;</div><div>    <span style=\"color: #0000ff;\">if</span> (msg.args[<span style=\"color: #09885a;\">0</span>].includes(<span style=\"color: #a31515;\">&quot;d&quot;</span>)) right = msg.args[<span style=\"color: #09885a;\">0</span>].match(<span style=\"color: #800000;\">/d/</span><span style=\"color: #0000ff;\">g</span>).length;</div><div>    <span style=\"color: #0000ff;\">let</span> { line, index } = codeEditor.getCursorWithLine();</div><div>    line += down + (-<span style=\"color: #09885a;\">1</span> * up);</div><div>    index += right + (-<span style=\"color: #09885a;\">1</span> * left);</div><div>    codeEditor.setCursor(line, index);</div><div>    msg.reply(codeEditor.getStatus());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;커서수평이동&quot;</span>) {</div><div>    codeEditor.setCursor(<span style=\"color: #008080;\">Number</span>(msg.args[<span style=\"color: #09885a;\">0</span>]) + codeEditor.getCursor());</div><div>    msg.reply(codeEditor.getStatus());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;커서수직이동&quot;</span>) {</div><div>    <span style=\"color: #0000ff;\">let</span> cursor = codeEditor.getCursorWithLine();</div><div>    codeEditor.setCursor(cursor.line + <span style=\"color: #008080;\">Number</span>(msg.args[<span style=\"color: #09885a;\">0</span>]), cursor.index);</div><div>    msg.reply(codeEditor.getStatus());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;입력&quot;</span>) {</div><div>    codeEditor.write(msg.args.join(<span style=\"color: #a31515;\">&quot; &quot;</span>));</div><div>    msg.reply(codeEditor.getStatus());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;함수입력&quot;</span>) {</div><div>    <span style=\"color: #0000ff;\">let</span> name = msg.args[<span style=\"color: #09885a;\">0</span>];</div><div>    msg.args.splice(<span style=\"color: #09885a;\">0</span>, <span style=\"color: #09885a;\">1</span>);</div><div>    <span style=\"color: #0000ff;\">let</span> args = msg.args;</div><div>    codeEditor.writeFunction(name, args);</div><div>    msg.reply(codeEditor.getStatus());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;삭제&quot;</span>) {</div><div>    codeEditor.<span style=\"color: #0000ff;\">delete</span>(<span style=\"color: #008080;\">Number</span>(msg.args[<span style=\"color: #09885a;\">0</span>]));</div><div>    msg.reply(codeEditor.getStatus());</div><div>  }</div><div>  <span style=\"color: #0000ff;\">if</span> (msg.command == <span style=\"color: #a31515;\">&quot;저장&quot;</span>) {</div><div>    codeEditor.save();</div><div>    msg.reply(<span style=\"color: #a31515;\">&quot;저장되었습니다!&quot;</span>);</div><div>  }</div><div>}</div><div>bot.addListener(<span style=\"color: #008080;\">Event</span>.<span style=\"color: #008080;\">COMMAND</span>, onCommand);</div></div><p><br />/* 명령어들 :<br />/열기 (경로) : 해당 경로에 있는 파일을 엽니다.<br />/커서설정 (줄) (인덱스) : 소스의 해당 줄에서 해당 인덱스로 커서를 설정합니다.<br />/커서이동 (방향) : wasd를 방향키로 하여 방향대로 커서를 이동합니다 (예: wwwaas : 위로 3칸 왼쪽으로 2칸 아래로 1칸)<br />/커서(수직/수평)이동 (숫자) : 해당 숫자만큼 커서를 수직/수평 이동합니다.<br />/입력 (텍스트) : 커서 위치에서부터 텍스트를 입력합니다.<br />/함수입력 (함수명) ...(매개변수) : 커서 위치에 해당 함수명과 매개변수로 함수를 입력합니다.<br />/삭제 (숫자) : 커서 위치에서부터 왼쪽으로 숫자만큼 삭제합니다.<br />/저장 : 편집한 것을 저장합니다.<br /><br />위 소스는 예제일 뿐, 자신의 입맛대로 수정하셔도 됩니다..!*/</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003BE500000000",
+            "id": 15333,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 432,
+            "refArticleId": 15333,
+            "replyListOrder": "",
+            "scrapCount": 2,
+            "subject": "원격 코드 수정기 v1.0",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586051861113,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음"
+            }
+        },
+        "articleId": 15333,
+        "attaches": [
+            {
+                "extension": "js",
+                "fullName": "codeEditor.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "codeEditor.js",
+                "size": 2519,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/49dc55e5f1a9ad715dbbdee9d1394b3393c13fddee/20200405_113_cafefile/29537083_1586051860613_6MTcN5_js/codeEditor.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "많이(?) 기다리고 있었어요..!",
+                    "id": 86431040,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86431040,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1586051972000,
+                    "writer": {
+                        "id": "riruhyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDVfODMg/MDAxNTgzMzk0NjUwNDI3.zWXUXb_T3UCOMpgQyf4g34NjSQK_rKCYBdkuqrSC9vwg.J5bPo_o-ZJMjljxxjbgzWzp3DHHfm6wTjfHmmKJnMqEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "hyun123"
+                    }
+                },
+                {
+                    "content": "희희희희희희",
+                    "id": 86432169,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86431040,
+                    "updateDate": 1586052874000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "와 저보다 훨씬 잘하시군요",
+                    "id": 86431573,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86431573,
+                    "updateDate": 1586052405000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "기만자다",
+                    "id": 86432183,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86431573,
+                    "updateDate": 1586052888000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "와우 저보다 잘하시네요",
+                    "id": 86431575,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86431575,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1586052422000,
+                    "writer": {
+                        "id": "dbsehgus0121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                        },
+                        "nick": "Green050121"
+                    }
+                },
+                {
+                    "content": "기만자다22",
+                    "id": 86432201,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86431575,
+                    "updateDate": 1586052906000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "??",
+                    "id": 86775197,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86431575,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음"
+                    },
+                    "updateDate": 1586319550000,
+                    "writer": {
+                        "id": "dbsehgus0121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                        },
+                        "nick": "Green050121"
+                    }
+                },
+                {
+                    "content": "Api2에 모듈까지ㄷㄷ",
+                    "id": 86431862,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86431862,
+                    "updateDate": 1586052647000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "MinSoup"
+                    }
+                },
+                {
+                    "content": "api2 넘 편리해요 희희",
+                    "id": 86432227,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86431862,
+                    "updateDate": 1586052926000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "모듈 쓰면 너무 좋아앗...💕",
+                    "id": 86434652,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86431862,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음"
+                    },
+                    "updateDate": 1586054826000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                }
+            ],
+            "last": {
+                "id": 87496186,
+                "refId": 87496186
+            },
+            "next": {
+                "id": 86434823,
+                "refId": 86431862
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

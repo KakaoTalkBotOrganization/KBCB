@@ -1,0 +1,209 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-a07601f9-63c6-445d-a5d7-d4c1eb3a0012\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-ae25a419-a5cc-4539-9a15-4a6df99a7a5b\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-e7216f00-cfd8-4d53-af46-67c75d092b43\">이번에 구현할 것은 토스트 메시지가 스택처럼 아래쪽부터 쌓이게 하려고 한다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-7285ae56-75c2-4e09-835f-db5d91137047\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-40319a4e-5077-43ef-ab5e-130d1849f7da\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-5257b11f-1e2b-40cd-aebb-8abda3aa3a33\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-6ca90b83-b975-44f6-a98e-2e116ff1c82d\">말은 간단해보이지만 해당 기능을 직접 구현해야 하므로 번잡스럽다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-112c3b85-6790-4272-89d2-144cd4267ebe\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-6f699fdb-8e04-46e1-83bb-191356e26092\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-76918f4b-fde2-473e-bd39-bd707cf97220\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">public class ToastView extends ListView&lt;AnchorPane&gt;\n{\n\tprivate final int MAX_MESSAGE &#x3D; 10;\n\n\tpublic ToastView()\n\t{\n\t\tList&lt;AnchorPane&gt; items &#x3D; this.getItems();\n\n\t\tfor (int i &#x3D; 0 ; i &lt; MAX_MESSAGE ; i ++)\n\t\t{\n\t\t\taddItem(new ToastMessage(&quot;Test : &quot; + (i + 1)));\n\t\t}\n\n\t    getStyleClass().add(&quot;toast-view&quot;);\n\t}\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-76918f4b-fde2-473e-bd39-bd707cf97220\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-e066fb9d-0ce5-4cf9-8d75-5c96233a4728\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-636fba2f-69c6-4b43-9362-ba1da96c3638\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-fc9b0992-de8b-4f8c-8ab8-de7bf85acc6d\">메시지가 아래부터 쌓이게 하려면 빈공간(아이템)을 미리 채워넣으면 된다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-b570e994-d423-437b-9b45-b86ff873184c\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-328e769c-f593-4e6d-8ae1-7e59b0b7d392\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-71ba4821-5047-4ae7-97f0-6b4763ffe734\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">getItems().addListener((ListChangeListener.Change&lt;? extends AnchorPane&gt; change) -&gt;\n{\n\twhile (change.next())\n\t{\n\t\tif (change.wasAdded())\n\t\t{\n\t\t\tif (items.size() &gt; MAX_MESSAGE)\n\t\t\t{\n\t\t\t\tgetItems().remove(0);\n\t\t\t}\n\t\t}\n\t}\n});</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-71ba4821-5047-4ae7-97f0-6b4763ffe734\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-25c6a5fa-3a2a-4731-b548-05c26efd5701\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-0b05a785-e7f6-4806-a0cc-c86ac5b0dba8\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-380f2700-7b2c-4667-8563-4664fe3c0499\">추가로 메시지의 개수가 10개를 초과한다면 상단의 1개를 제거하도록 코드를 작성했다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-4a804e0f-c370-447a-8ea6-b607579a0f5f\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-d73c85c9-2e2e-4465-a105-35dc7afcbb3f\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-0b205fd6-3ea0-4768-9733-0afc52e356f4\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:773px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-0b205fd6-3ea0-4768-9733-0afc52e356f4\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MDhfMjY5/MDAxNTk2ODIwNjUwMDY4.-gvwAsD95q74ZuVgx1I30MBBaw7IFpwrswNwffQu9Wcg.Q_87MObYOYxLKoEIu_ejMkIP04AC5F3vQ0j0LypQsOog.PNG/image.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA4MDhfMjY5/MDAxNTk2ODIwNjUwMDY4.-gvwAsD95q74ZuVgx1I30MBBaw7IFpwrswNwffQu9Wcg.Q_87MObYOYxLKoEIu_ejMkIP04AC5F3vQ0j0LypQsOog.PNG/image.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-c5b34c67-509c-4a01-96c4-91e39a4e2106\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a5960661-1169-4515-804e-9c3f3c061b1c\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-ce202157-da28-4d2b-8d9c-d82ee535c0a6\">테스트는 잘 작동하므로 이제 스택을 쌓기 위한 아이템들을 투명하게 만들어주면</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dd6646f9-d68c-4829-8fbe-0b0403255d5c\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-451cc181-0636-4b09-bbfc-778d68e4f83d\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-4162c7d2-2814-4416-915d-ff22f5d39315\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:773px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-4162c7d2-2814-4416-915d-ff22f5d39315\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MDhfODEg/MDAxNTk2ODIwNjU5Nzg5.sE66WmIKJyvF1kZGxnGuLy0pxZ8BV6t-qO2J3GWr-6gg.jaZf2EBC6HOgmw9F7fAFwTRjhVUJWIVZdtwwR_V0AGQg.PNG/image_%281%29.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA4MDhfODEg/MDAxNTk2ODIwNjU5Nzg5.sE66WmIKJyvF1kZGxnGuLy0pxZ8BV6t-qO2J3GWr-6gg.jaZf2EBC6HOgmw9F7fAFwTRjhVUJWIVZdtwwR_V0AGQg.PNG/image_%281%29.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-feae5e4f-48f7-462e-bc69-5e0a0aa0fd06\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-69be53b5-4f3b-417f-acee-2dc430a7c064\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-069dc34a-be5e-4b83-bfc0-0b95bb6fc6c6\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-26ae21b8-12dc-4ad0-ae0c-0075d0b3001f\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-27f8aa12-73ca-4d4e-8655-04f0546cb5e8\">나름 잘 만들어진거같다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-b4b7be0a-5b6c-4a71-9dd6-4609376aacc4\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-17b4f7ff-1be4-4663-a3ac-1ff3ff007030\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-dac8e3e6-0ebf-4bca-911f-bfd7aeadfcd4\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-5550a85a-949f-4337-a184-5efa89974fa3\">기능은 얼추 완성된거 같고 디자인과 메시지 닫기 버튼은 추후 다듬으면 된다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-d7ae6090-001e-4c82-85b9-be669ffd2450\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-3d2bc270-34ed-4f80-b6b9-eef70dd2acec\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-horizontalLine se-l-line1\" id=\"SE-7a7d5fb1-7519-445c-b89b-2d49fed4eeca\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-horizontalLine se-l-line1 se-section-align-left\">\n                            <div class=\"se-module se-module-horizontalLine\">\n                                <hr class=\"se-hr\" />\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-9275419c-11a6-4625-9c94-9d28150b106b\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-5df91d45-0ffa-4f77-a5e5-c4641d0a09b8\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-9d7c9e01-f9a5-478a-a6e4-c7bf9ba76992\">또한 전에 만들어두었던 Action 인터페이스를 바꾸려고 한다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-487733d8-a365-4699-9011-c4a35fae5a6e\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-8f1977c5-8bac-4583-987e-51129576cde5\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-7400c4fb-1fa1-454f-9af6-6323e8062399\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-5b2b9435-16b5-48e9-91fa-2d37607bef70\">매번 액션을 실행할 때마다 new 연산자를 통해 호출하는 것보다 기존의 방식으로 접근하는 게 훨 더 편리했기 때문이다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-7fc6cf69-0975-4c03-9362-f1c29f643de0\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-c7badbd2-5a42-40e1-a630-8775cd10a145\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-2a805047-5ba1-43f1-a575-dc99c7e88f47\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-5c0b6d14-c1a5-482e-a9eb-43b113a637aa\">자바 개발자들은 Static 사용을 지양하라고 하는데 &quot;편리한데 왜?&quot;라는 생각 때문에 아직 잘 와닿진 않는다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-5410b7bd-5353-4899-bbe2-8bdbfaf4968e\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-23268e7d-1d6a-48a6-bf15-3a0c34fb3c40\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-5ac1f989-b291-40a3-9e68-492082e06114\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">new ShowToastMessageAction().init();\n\nShowToastMessageAction.execute(&quot;Test Toast Message&quot;);</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-5ac1f989-b291-40a3-9e68-492082e06114\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-29fdf7bb-3ee6-4bad-a339-3f72c512c243\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-d8986802-5c3e-42ee-8c41-9b413e4cc0af\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-31d94210-0ab2-4bff-97e3-736dca0cf66d\">위와 같이 프로그램을 시작할 때 액션을 초기화한 후 execute를 호출하는 방식으로 다시 바꿨다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-29744a9e-f555-4ffd-84f4-6587b248ce78\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-dc89d26a-dfbf-4386-9d85-3c90c4f72504\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-358bc473-0a23-4aab-9955-7a34f3760d00\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">public class ShowToastMessageAction implements Action\n{\n\tprivate static ToastView listView;\n\n\t@Override\n\tpublic void init()\n\t{\n\t\tlistView &#x3D; ToastMessagePart.getComponent();\n\t}\n\n\tpublic static void execute(String message)\n\t{\n\t\tlistView.getItems().add(new ToastMessage(message));\n\t}\n\n\t@Override\n\tpublic String getName()\n\t{\n\t\treturn &quot;show.toast.message.action&quot;;\n\t}\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-358bc473-0a23-4aab-9955-7a34f3760d00\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-86601dee-b9f3-4932-86a0-3dfb4f6beb23\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-34b64fa0-365e-4c83-97ca-3ac8378b2262\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumsquare  se-style-unset \" id=\"SE-33152041-eef8-4d2e-bd5f-84ce914ae659\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000583500000000",
+            "head": "개발일지",
+            "headId": 96,
+            "id": 22581,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 81,
+                "menuType": "B",
+                "name": "| 메신저 봇 시뮬레이터 |"
+            },
+            "readCount": 125,
+            "refArticleId": 22581,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "토스트 메시지 구현 (3)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1596820806480,
+            "writer": {
+                "id": "ttyy3388",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMTFfMjQ0/MDAxNTgzOTEwNTc0NDY4.vU8bKegACIEfpYZYPII3dYHsbKShTtP8TI-LiWMv4jcg.VvXtHLAggISwo7chcygRmXxjIo73-Xtjp9zu4p0D5rgg.PNG.ttyy3388/SimulatorDark.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "브위"
+            }
+        },
+        "articleId": 22581,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "JavaFx말고 KotlinFx는 없나",
+                    "id": 99274703,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99274703,
+                    "updateDate": 1596821923000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "스칼라나 코틀린으로도 구현 가능",
+                    "id": 99274735,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99274703,
+                    "updateDate": 1596822040000,
+                    "writer": {
+                        "id": "ttyy3388",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMTFfMjQ0/MDAxNTgzOTEwNTc0NDY4.vU8bKegACIEfpYZYPII3dYHsbKShTtP8TI-LiWMv4jcg.VvXtHLAggISwo7chcygRmXxjIo73-Xtjp9zu4p0D5rgg.PNG.ttyy3388/SimulatorDark.png"
+                        },
+                        "nick": "브위"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 99274746,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99274703,
+                    "replyMember": {
+                        "id": "ttyy3388",
+                        "nick": "브위"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57ff22bec4c65-8-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57ff22bec4c65/original_8.png",
+                        "width": 129
+                    },
+                    "updateDate": 1596822062000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "개발일지",
+                "headId": 96
+            },
+            {
+                "head": "업데이트",
+                "headId": 97
+            },
+            {
+                "head": "배포",
+                "headId": 98
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

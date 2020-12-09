@@ -1,0 +1,190 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;</b> 이상한 아이디어 소스</div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt; 이 소스는 버구칠 님의 가르치기 소스를 개조하여 만들었습니다.</b></div><div><br /></div><div>var a = {}<br />var sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();<br />&nbsp;&nbsp;&nbsp; var folder = new java.io.File(sdcard+&quot;/아이디어/&quot;);<br />&nbsp;&nbsp;&nbsp; folder.mkdirs();<br />//sd카드에 아이디어 폴더를 생성합니다<br />&nbsp;&nbsp;&nbsp; function save(folderName,fileName,str){<br />&nbsp;&nbsp;&nbsp; var c=new java.io.File(sdcard+&quot;/&quot;+folderName+&quot;/&quot;+fileName);<br />&nbsp;&nbsp;&nbsp; var d=new java.io.FileOutputStream(c);<br />&nbsp;&nbsp;&nbsp; var e=new java.lang.String(str);<br />&nbsp;&nbsp;&nbsp; d.write(e.getBytes());<br />&nbsp;&nbsp;&nbsp; d.close();<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; function read(folderName,fileName){ //파일 읽기 함수 제작<br />&nbsp; msg = msg.replace(&quot; &quot;)<br />&nbsp; var b=new java.io.File(sdcard+&quot;/&quot;+folderName+&quot;/&quot;+fileName);<br />&nbsp;&nbsp;&nbsp; if(!(b.exists())) return null; //만약 읽을 파일이 없다면 null 변환<br />&nbsp;&nbsp;&nbsp; var c=new java.io.FileInputStream(b); <br />&nbsp;&nbsp;&nbsp; var d=new java.io.InputStreamReader(c);<br />&nbsp;&nbsp;&nbsp; var e=new java.io.BufferedReader(d);<br />&nbsp;&nbsp;&nbsp; var f=e.readLine();<br />&nbsp;&nbsp;&nbsp; var g=&quot;&quot;;<br />&nbsp;&nbsp;&nbsp; while((g=e.readLine())!=null){<br />&nbsp;&nbsp;&nbsp; f+=&quot;\\n&quot;+g; //\\ = 역슬래쉬 &rarr; 줄바꿈 표시<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; c.close();<br />&nbsp;&nbsp;&nbsp; d.close();<br />&nbsp;&nbsp;&nbsp; e.close();<br />&nbsp;&nbsp;&nbsp; return f.toString(); //읽은 파일 내용을 반환<br />&nbsp;&nbsp;&nbsp; }</div><div>var words = [&quot;시발&quot;,&quot;병신&quot;,&quot;앙&quot;,&quot;ㅗ&quot;];<br />//욕단어 배열</div><div>function response(room, msg, sender, isGroupChat, replier) {<br />//모르면 첫번째 강좌 보고 오세요<br />var 비속어감지 = false;<br />//비속어 감지를 false로 넣어줍니다 몸체 안에 명령어를 실행할 때마다 false로 됩니다</div><div>if(msg.indexOf(&quot;D.아이디어&quot;)==0) {<br />&nbsp;&nbsp;&nbsp; var study0 = msg.substring(6,msg.length)<br />&nbsp;&nbsp;&nbsp; var study1 = study0.split(&quot;.&quot;)<br />&nbsp;&nbsp;&nbsp; var suy1 = study1[0]<br />&nbsp;&nbsp;&nbsp; var suy2 = study1[1]<br />&nbsp;&nbsp;&nbsp; for (var n = 0; n &lt; words.length; n++) {<br />&nbsp;&nbsp;&nbsp; if (suy1.indexOf(words[n]) != -1) {<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;부적절 한 말 감지.\\n&quot;+&quot;*&quot;+words[n].substr(1)+&quot;때문에 추가시킬 수 없습니다.&quot;);<br />&nbsp;&nbsp;&nbsp; 비속어감지 = true;<br />&nbsp;&nbsp;&nbsp; break;<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; else if (suy2.indexOf(words[n]) != -1) {<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;부적절 한 말 감지.\\n&quot;+&quot;*&quot;+words[n].substr(1)+&quot;때문에 추가시킬 수 없습니다.&quot;);<br />&nbsp;&nbsp;&nbsp; 비속어감지 = true;<br />&nbsp;&nbsp;&nbsp; break;<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; else if (suy2 == &quot;&quot;) {<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;잘못입력 하셨습니다.\\nD.아이디어 (제목).(설명) 으로 해주세요.&quot;);<br />&nbsp;&nbsp;&nbsp; 비속어감지 = true;<br />&nbsp;&nbsp;&nbsp; break;<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; else if (suy1 == &quot;&quot;) {<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;잘못입력 하셨습니다.\\nD.아이디어 (제목).(설명) 으로 해주세요.&quot;);<br />&nbsp;&nbsp;&nbsp; 비속어감지 = true;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; break;<br />&nbsp;&nbsp;&nbsp; } <br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; if (비속어감지 == false) {<br />&nbsp;&nbsp;&nbsp; if(a[sender]==undefined)<br />&nbsp;&nbsp;&nbsp; a[sender]=0<br />&nbsp;&nbsp;&nbsp; a[sender]++<br />&nbsp;&nbsp;&nbsp; replier.reply(suy1 +&quot;의 대한 아이디어가 추가되었습니다.&quot;);<br />&nbsp;&nbsp;&nbsp; java.lang.Thread.sleep(1000);<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;[ &quot;+sender+&quot; ] 님의 아이디어 제안 횟수는 &quot;+a[sender]+&quot;회 입니다.&quot;);<br />&nbsp;var folder = new java.io.File(sdcard+&quot;/아이디어/&quot;);<br />&nbsp;&nbsp;&nbsp; folder.mkdirs();<br />&nbsp;&nbsp;&nbsp; save(&quot;아이디어&quot;,suy1.trim()+&quot;.txt&quot;, suy2)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; </div><div>&nbsp; }<br /></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000B9700000000",
+            "id": 2967,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 389,
+            "refArticleId": 2967,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "아이디어  제안 소스 공유",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1559810647653,
+            "writer": {
+                "id": "chlrkdgmlzz",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20200714_182/chlrkdgmlzz_1594666951517COkee_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "rpg봇만들고싶은초보"
+            }
+        },
+        "articleId": 2967,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "제가 코딩초보라 개조해서 만들게 되네요\r\n아 소스를 만드는데의 도움을 주신 버구칠님과\r\n맛소금님 감사합니닷",
+                    "id": 61125718,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61125718,
+                    "updateDate": 1559810687000,
+                    "writer": {
+                        "id": "chlrkdgmlzz",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200714_182/chlrkdgmlzz_1594666951517COkee_PNG/image.png"
+                        },
+                        "nick": "rpg봇만들고싶은초보"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

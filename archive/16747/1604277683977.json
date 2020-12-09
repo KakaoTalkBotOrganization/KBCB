@@ -1,0 +1,287 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 344,
+                            "service": "CAFE",
+                            "style": "width:720px; height:344px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MjZfODcg/MDAxNTg3ODY5MDQ4MDc5.sz03BafsJy6FOndb6FIrVxAVK6w-f7igizovUZTcc4Eg.MO2F-lyFXukPnvfHZCXn2dC3UsaHuRtcFFJqKNQcVpUg.JPEG/1587865879490.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p><span style=\"background-color: rgb(153, 220, 255); font-family: dotum; font-size: 13.3333px;\">(기기 로컬 언어설정 파싱)</span>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div><b>=&gt; </b><font color=\"#7d7d7d\">안드로이드 설정에서 기기언어를 가져와보자.</font></div><div><font color=\"#7d7d7d\"><br /></font></div><div><b>강좌 내용</b></div><div><b>1. 안내</b></div><div><b>2. 개요</b></div><div><b>3. 소스코드</b></div><div><b>4. 활용법</b></div><div><b>5. 작동확인</b></div><div><b><br /></b></div><div><b>1.&nbsp; 안내.</b></div><div><b>본문은 오픈 자바스크립트 소스이며 Api 1을 사용합니다.</b></div><div><b>Api 2를 사용하시는 개발자님께선 호환이 불가능할수 있으니 이점 참고해주시기 바랍니다.</b></div><div><b><br /></b></div><div><b>2. 개요</b></div><div>회원가입 양식을 만들다가 언어파일을 만들게되었고</div><div>기기언어 설정에따라 해당 언어 파일이 로딩되게 하고싶었다.</div><div><br /></div><div><b>3. 소스코드</b></div><div><b><span style=\"color: rgb(150, 150, 150);\">//여러번 쓸 수 있게 언어가져오기 함수를 제작합니다.</span></b></div><div><span style=\"color: rgb(150, 150, 150);\"><b> </b></span><b><span style=\"color: rgb(152, 90, 255);\">function</span>&nbsp;</b><span style=\"font-size: 13pt;\">getLanguage(){</span></div><div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">/* 사용법</span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">* replier.reply(</span><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">getLanguage());</span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">* 본문 5번의 스샷 확인</span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\"><br /></span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">@return String ko,en 등등 언어코드</span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">@see hrefString 안드로이드 소스 참고 :&nbsp;</span><span style=\"color: rgb(150, 150, 150);\"><a href=\"https://developer.android.com/reference/android/content/res/Configuration#getLocales()\" target=\"_blank\">https://developer.android.com/reference/android/content/res/Configuration#getLocales()</a></span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">*/</span></div></div><div><span style=\"font-size: 13pt;\"><br /></span></div><div><span style=\"color: rgb(150, 150, 150);\">//result, 결과를 저장하는 변수,&nbsp;</span><span style=\"color: rgb(150, 150, 150); font-size: 13pt;\">초기값으로 null을 지정.</span></div><div><span style=\"color: rgb(150, 150, 150);\">//이는 전체코드가 실패해도 null로 반환한다.</span></div><div><span style=\"color: rgb(0, 204, 255);\">&nbsp; &nbsp; var</span> result = <span style=\"color: rgb(0, 204, 255);\">null</span>;</div><div><span style=\"color: rgb(150, 150, 150); font-size: 13pt;\">&nbsp; &nbsp; //1번 방식 시도</span><br /></div><div><span style=\"font-size: 13pt;\"><span style=\"color: rgb(152, 90, 255);\">&nbsp; &nbsp; try</span>{</span></div><div><div><span style=\"font-size: 13pt;\"><span style=\"color: rgb(150, 150, 150);\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//안드로이드 소스에 꼭필요한것</span></span></div><div><span style=\"color: rgb(150, 150, 150);\">&nbsp; &nbsp; &nbsp; &nbsp; /*ctx,&nbsp;Context는 어플리케이션과 관련된 정보에 접근하고자 하거나 어플리케이션과 연관된 시스템 레벨의 함수를 호출하고자 할 때 사용됩니다.*/</span><br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b><span style=\"color: rgb(0, 204, 255);\">let</span>&nbsp;<span style=\"color: rgb(0, 204, 102);\">ctx</span>&nbsp;=&nbsp;<span style=\"color: rgb(0, 204, 102);\">Api.getContext()</span>;</b></div><div><b><br /></b></div><div><span style=\"color: rgb(150, 150, 150);\">&nbsp; &nbsp; &nbsp; &nbsp;//앱의 리소스의 설정에서 지역을 가져온다.</span></div><div><span style=\"color: rgb(0, 204, 255);\">&nbsp; &nbsp; &nbsp; &nbsp;let</span>&nbsp;systemLocate =&nbsp;<span style=\"color: rgb(0, 204, 102);\">ctx</span>.getResources().getConfiguration().locale;</div><div><b><br /></b></div><div><span style=\"color: rgb(150, 150, 150);\">&nbsp; &nbsp; &nbsp; &nbsp; //설정된 지역 언어를 가져오고 이를 결과에 저장한다.</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp;result&nbsp; = String(</span><span style=\"font-size: 13pt;\">systemLocale.getLanguage());</span></div></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp;}catch(e){</span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">//1번 방식이 실패할 경우 2번실행</span></div><div><span style=\"color: rgb(150, 150, 150);\">//코뿔소 js엔진이 지원하는 자바코드를 실행후 결과 저장.</span><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\"><br /></span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; result =&nbsp;</span><span style=\"font-size: 13pt;\">java.lang.System.getProperty(&apos;user.language&apos;);</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; }</span></div><div><span style=\"color: rgb(150, 150, 150);\">//리턴을 이용해 호출된곳으로 반환한다.</span><span style=\"font-size: 13pt;\"><br /></span></div><div><b>return&nbsp;</b><span style=\"font-size: 13pt;\">result</span></div><div>};</div><div><span style=\"color: rgb(0, 0, 0);\"> </span><br /></div><div><span style=\"color: rgb(0, 0, 0);\"><b>4. 활용법</b></span></div><div>&nbsp; 1. 언어 지원여부. (하단참고)</div><div>&nbsp; 2. 출력 언어 고정 번역기.</div><div>&nbsp; .....</div><div><span style=\"color: rgb(150, 150, 150);\">//언어판단후 한국어가 아니면 실행.</span></div><div><span style=\"color: rgb(0, 204, 255);\">var</span> lang = <span style=\"font-size: 13pt;\">getLanguage(</span><span style=\"font-size: 13pt;\">);</span></div><div><span style=\"color: rgb(0, 204, 255);\">var</span>&nbsp;isKolang = <span style=\"color: rgb(152, 90, 255);\">Boolean</span>(lang<span style=\"font-size: 13pt;\">==&quot;ko&quot;);</span></div><div><span style=\"color: rgb(152, 90, 255);\">if</span>(!<span style=\"font-size: 13pt;\">isKolang</span><span style=\"font-size: 13pt;\">){</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;<span style=\"color: rgb(150, 150, 150);\">//출력(</span></span><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">lang+&quot;는 아직 미지원하는 언어입니다.&quot;</span><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\">);</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;replier.reply(lang+&quot; is not yet supported Language.&quot;);</span></div><div><span style=\"font-size: 13pt;\">};</span></div><div><span style=\"font-size: 13pt; color: rgb(150, 150, 150);\"><br /></span></div><div><span style=\"font-size: 13pt; color: rgb(0, 0, 0);\"><b>5. 작동확인.</b></span></div><div><span style=\"font-size: 13pt;\">[[[CONTENT-ELEMENT-0]]]<p>&nbsp;</p><br /></span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000416B00000000",
+            "head": "고급",
+            "headId": 21,
+            "id": 16747,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 195,
+            "refArticleId": 16747,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[안드로이드] 기기 로컬 언어설정 가져오기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587868996610,
+            "writer": {
+                "id": "jomin398",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "jomin398"
+            }
+        },
+        "articleId": 16747,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "1587865879490.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "1587865879490.jpg",
+                "size": 31919,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/6aff76c6d58f8e527e98fdcaf21a6d16b0e21cfe01/MjAyMDA0MjZfODcg/MDAxNTg3ODY5MDQ4MDc5.sz03BafsJy6FOndb6FIrVxAVK6w-f7igizovUZTcc4Eg.MO2F-lyFXukPnvfHZCXn2dC3UsaHuRtcFFJqKNQcVpUg.JPEG/1587865879490.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "갖어오기 만우절 장난이죠?",
+                    "id": 88597056,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88597056,
+                    "updateDate": 1587869441000,
+                    "writer": {
+                        "id": "nomadicreptile",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Hji"
+                    }
+                },
+                {
+                    "content": "ㅋㅋ (고치러감)",
+                    "id": 88597149,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88597056,
+                    "updateDate": 1587869498000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "java.lang.System.getProperty('user.language')\r\n읍읍읍읍 당신 누구야",
+                    "id": 88598376,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88598376,
+                    "updateDate": 1587870492000,
+                    "writer": {
+                        "id": "hanbyeul0449",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "파리엘"
+                    }
+                },
+                {
+                    "content": "그래도 되죠 ㅋㅋㅋ 암튼 ㅋㅋ",
+                    "id": 88599287,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88598376,
+                    "updateDate": 1587871267000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "호곡",
+                    "id": 88620224,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88598376,
+                    "replyMember": {
+                        "id": "jomin398",
+                        "nick": "jomin398"
+                    },
+                    "updateDate": 1587890576000,
+                    "writer": {
+                        "id": "hanbyeul0449",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "파리엘"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "안드로이드",
+            "언어",
+            "설정",
+            "가입",
+            "RPG",
+            "필수",
+            "소스"
+        ]
+    }
+}

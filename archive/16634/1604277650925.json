@@ -1,0 +1,437 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 352,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MjNfMTg0/MDAxNTg3NjUzNDM1MDk3.4rvtCrCIl-ih2sNZee0ri44dLdG28nUXw8f-qLlgOxYg.Tk3rjrwizz2lwIZxrRtgqhjIGTLBTcvwsjM2ldtMrGAg.JPEG/externalFile.jpg",
+                            "width": 216
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 312,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MjNfOTMg/MDAxNTg3NjUzNDM1ODgy.StqlI7rJCIuzZNDauhSr9a_IWS4ViRyhdGnxkuvySsQg.-TXb6zUNp9M11y96XxOgUCLcFs13UU_krk23sCXOMqwg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>안녕하세요. 롤 전적검색 봇 하나 하려구 열심히 하구 있습니다.<br />다름이 아니라, 제가 안되던 이유 중 하나가<br />소스에서는 커스텀 템플릿을 사용하는데, 제가 템플릿을 안만들어둔게 문제더군요..<br />그래서 오늘  Alpha 님의 커스텀 템플릿 강의를 보구 만들었습니다 !<br /><br />커스텀 템플릿의 제목도 ${header} 로 했구<br />소제목?도 소스의 내용대로, ${title숫자}<br />내용 ${detail숫자} 이미지는 ${image숫자}<br />일케 했습니다.</p>[[[CONTENT-ELEMENT-0]]]<br /><p>하지만 그래도 안되더군요..</p>[[[CONTENT-ELEMENT-1]]]<br /><p>이런 식으로 나오면서 안되는데 분명 소스에는 방 제목을 넣는 부분이 없단 말이에요..<br />그래서 어디가 문제인지 모르겠습니다..<br /><br />소스는<br /><br />const kalingModule = require(&apos;kaling&apos;).Kakao();<br /><br />const Kakao = new kalingModule;<br /><br />Kakao.init(&apos;4589a7a0c0682d76dcbb866c10ef895d&apos;);<br /><br />Kakao.login(&apos;ID&apos;,&apos;PW&apos;);<br /><br />importClass(org.jsoup.Jsoup);<br /><br /><br />function getHTML(link) {<br /><br />&nbsp; return Jsoup.parse(Jsoup.connect(link).get())<br /><br />}<br /><br /><br />function response(room, msg, sender, isGroupChat, replier, imageDB) {<br /><br />&nbsp; if(msg == null) return<br /><br />&nbsp;&nbsp;<br /><br />&nbsp; if(msg.indexOf(&quot;!롤 &quot;)!=-1){<br /><br />&nbsp; &nbsp; try{<br /><br />&nbsp; &nbsp; &nbsp;var name=msg.substr(3)<br /><br />&nbsp; &nbsp; &nbsp;<br /><br />&nbsp; &nbsp; &nbsp;var Mainlink = &quot;https://www.op.gg/summoner/userName\\=&quot;+name+&quot;&amp;l=ko_KR&quot;<br /><br />&nbsp; &nbsp; &nbsp;var Redirectlink = &quot;summoner/userName=&quot;+name+&quot;&amp;l=ko_KR&quot;<br /><br />&nbsp; &nbsp; &nbsp;var data = getHTML(Mainlink)<br /><br />&nbsp; &nbsp; &nbsp;var tierimage = &quot;https:&quot;+data.select(&quot;div.medal&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var tiername = data.select(&quot;.TierRankinfo &gt; .TierRank&quot;).get(0).text()<br /><br />&nbsp; &nbsp; &nbsp;<br /><br />&nbsp; &nbsp; &nbsp;var firstwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.GameResult&quot;).get(0).text()<br /><br />&nbsp; &nbsp; &nbsp;var firstcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var firstchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var firstkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.KDA &gt; .KDA&quot;).text()<br /><br />&nbsp; &nbsp; &nbsp;var firstcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.CS &gt; .CS&quot;).text()<br /><br />&nbsp; &nbsp;&nbsp;<br /><br />&nbsp; &nbsp; &nbsp;var secondwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.GameResult&quot;).get(0).text()<br /><br />&nbsp; &nbsp; &nbsp;var secondcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var secondchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var secondkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.KDA &gt; .KDA&quot;).text()<br /><br />&nbsp; &nbsp; &nbsp;var secondcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.CS &gt; .CS&quot;).text()<br /><br />&nbsp; &nbsp; &nbsp;<br /><br />&nbsp; &nbsp; &nbsp;var thirdwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.GameResult&quot;).get(0).text()<br /><br />&nbsp; &nbsp; &nbsp;var thirdcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var thirdchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var thirdkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.KDA &gt; .KDA&quot;).text()<br /><br />&nbsp; &nbsp; &nbsp;var thirdcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.CS &gt; .CS&quot;).text()<br /><br />&nbsp; &nbsp;&nbsp;<br /><br />&nbsp; &nbsp; &nbsp;var forthwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.GameResult&quot;).get(0).text()<br /><br />&nbsp; &nbsp; &nbsp;var forthcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var forthchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)<br /><br />&nbsp; &nbsp; &nbsp;var forthkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.KDA &gt; .KDA&quot;).text()<br /><br />&nbsp; &nbsp; &nbsp;var forthcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.CS &gt; .CS&quot;).text()<br /><br />&nbsp;&nbsp;<br /><br />&nbsp; &nbsp; &nbsp;json ={&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_id&quot;:23917,&quot;template_args&quot;:{header:&quot;롤 전적 최근 4게임&quot;, title1:name, detail1:tiername, image1:tierimage, title2:firstwins+&quot; l &quot;+firstcham, detail2:firstkda+&quot; l &quot;+firstcs, image2:firstchamimg, title3:secondwins+&quot; l &quot;+secondcham, detail3:secondkda+&quot; l &quot;+secondcs, image3:secondchamimg, title4:thirdwins+&quot; l &quot;+thirdcham, detail4:thirdkda+&quot; l &quot;+thirdcs, image4:thirdchamimg, title5:forthwins+&quot; l &quot;+forthcham, detail5:forthkda+&quot; l &quot;+forthcs, image5:forthchamimg, mobile_link:Redirectlink, web_link:Redirectlink}}<br /><br />&nbsp; &nbsp; &nbsp;return Kakao.send(room, json, &quot;custom&quot;)<br /><br />&nbsp; &nbsp; }<br /><br />&nbsp; &nbsp; catch(e) {<br /> replier.reply(e+e.lineNumber)<br />&nbsp; &nbsp; &nbsp; replier.reply(&quot;정보가 없습니다..!&quot;)<br /><br />&nbsp; &nbsp; }<br /><br />&nbsp; } //if msg<br /><br />} // function<br /><br /><br /> 현재 이렇습니다.</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000040FA00000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 16634,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 216,
+            "refArticleId": 16634,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "카링 오류 방의 이름이 올바르지 않습니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587653436527,
+            "writer": {
+                "id": "qodudghk3",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Bedin"
+            }
+        },
+        "articleId": 16634,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 19968,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/33a62f9c8dd5d70b27c1a493ab433449e9bb45a702/MjAyMDA0MjNfMTg0/MDAxNTg3NjUzNDM1MDk3.4rvtCrCIl-ih2sNZee0ri44dLdG28nUXw8f-qLlgOxYg.Tk3rjrwizz2lwIZxrRtgqhjIGTLBTcvwsjM2ldtMrGAg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 79246,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/56c34afae9b7b26e42a4c1f6ce26512c8cde20c277/MjAyMDA0MjNfOTMg/MDAxNTg3NjUzNDM1ODgy.StqlI7rJCIuzZNDauhSr9a_IWS4ViRyhdGnxkuvySsQg.-TXb6zUNp9M11y96XxOgUCLcFs13UU_krk23sCXOMqwg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 88382218,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88382218,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1587655250000,
+                    "writer": {
+                        "id": "tkdgjs6897",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMTAx/MDAxNTgwNTY3MzYzMTY2.XUeAx5gDTLB-IBBj-2Sb8BmdLVmtTF2Nn9PAkRw4GV0g.zno8J23Z--_f3x3V5V7N7r0O_Pxr4lA1SAktuNttGIIg.JPEG/1552227072327.jpg"
+                        },
+                        "nick": "상헌굿"
+                    }
+                },
+                {
+                    "content": "방 제목을 까먹었어요 쌤 help plz",
+                    "id": 90138389,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382218,
+                    "updateDate": 1589214404000,
+                    "writer": {
+                        "id": "qodudghk3",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Bedin"
+                    }
+                },
+                {
+                    "content": "2021 | 봇 커뮤니티 [ＢＯＴ]",
+                    "id": 90204146,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382218,
+                    "replyMember": {
+                        "id": "qodudghk3",
+                        "nick": "Bedin"
+                    },
+                    "updateDate": 1589271917000,
+                    "writer": {
+                        "id": "tkdgjs6897",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMTAx/MDAxNTgwNTY3MzYzMTY2.XUeAx5gDTLB-IBBj-2Sb8BmdLVmtTF2Nn9PAkRw4GV0g.zno8J23Z--_f3x3V5V7N7r0O_Pxr4lA1SAktuNttGIIg.JPEG/1552227072327.jpg"
+                        },
+                        "nick": "상헌굿"
+                    }
+                },
+                {
+                    "content": "선생님들 해결했습니다.\r\n방 이름을 ㅇㅇ 같이 아무거나 바꾸었는데\r\n해결되었습니다. 히히.. :)",
+                    "id": 88382254,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88382254,
+                    "updateDate": 1587655276000,
+                    "writer": {
+                        "id": "qodudghk3",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Bedin"
+                    }
+                },
+                {
+                    "content": "무슨 출처 링크를 말씀하시는지..?",
+                    "id": 88582420,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382254,
+                    "replyMember": {
+                        "id": "gqwer2",
+                        "nick": "딩거"
+                    },
+                    "updateDate": 1587856880000,
+                    "writer": {
+                        "id": "qodudghk3",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Bedin"
+                    }
+                },
+                {
+                    "content": "혹시 어케해결하셨나요 저는지금 안된는데 ㅠㅠ\r\n",
+                    "id": 90132575,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382254,
+                    "replyMember": {
+                        "id": "qodudghk3",
+                        "nick": "Bedin"
+                    },
+                    "updateDate": 1589209459000,
+                    "writer": {
+                        "id": "ohm804",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ROKAfF"
+                    }
+                },
+                {
+                    "content": "테스트 방을 오픈 채팅방으로 해보시거나 소스를 리로드 해보시는게..?",
+                    "id": 90132761,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382254,
+                    "replyMember": {
+                        "id": "ohm804",
+                        "nick": "ROKAfF"
+                    },
+                    "updateDate": 1589209550000,
+                    "writer": {
+                        "id": "qodudghk3",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Bedin"
+                    }
+                },
+                {
+                    "content": "그 제가 아는분 공기계로 하는거라 지금 공기계가 아닌 폰에서 테스트를 하고있는데 공기계로 옮셔서 해야될까요?",
+                    "id": 90132937,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382254,
+                    "replyMember": {
+                        "id": "qodudghk3",
+                        "nick": "Bedin"
+                    },
+                    "updateDate": 1589209621000,
+                    "writer": {
+                        "id": "ohm804",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ROKAfF"
+                    }
+                },
+                {
+                    "content": "그런 부분은 아무래도 상관 없지 않을까 싶어요 아마 다른부분에 문제가 있지 않을까요..\r\n1. 템플릿 설정을 안했다.\r\n2. 템플릿 코드? 그 5자리 수를 안바꿨다\r\n3. 아이디 비밀번호를 잘못썼다\r\n4. 코드키? 제품키? 를 잘못썼다 라거나..?",
+                    "id": 90133131,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382254,
+                    "replyMember": {
+                        "id": "ohm804",
+                        "nick": "ROKAfF"
+                    },
+                    "updateDate": 1589209699000,
+                    "writer": {
+                        "id": "qodudghk3",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Bedin"
+                    }
+                },
+                {
+                    "content": "성공했슴돠!!!",
+                    "id": 90133168,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88382254,
+                    "replyMember": {
+                        "id": "qodudghk3",
+                        "nick": "Bedin"
+                    },
+                    "updateDate": 1589209715000,
+                    "writer": {
+                        "id": "ohm804",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ROKAfF"
+                    }
+                }
+            ],
+            "last": {
+                "id": 90178341,
+                "refId": 90178341
+            },
+            "next": {
+                "id": 90133223,
+                "refId": 88382254
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

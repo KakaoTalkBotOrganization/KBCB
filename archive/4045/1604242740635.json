@@ -1,0 +1,375 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentElements": [
+                {
+                    "json": {
+                        "audioUrl": "",
+                        "desc": "이번에는 활용도가 아주 높은, 반복문에 대해 알아보겠습니다.\n일단 반복문은 크게 두 가지 ...",
+                        "domain": "naver.me",
+                        "from": "MOBILEWEB",
+                        "imageUrl": "https://dthumb-phinf.pstatic.net/?src=https://cafeptthumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/KakaoTalk_20190225_180935294.png?type=w740&amp;type=f220",
+                        "layout": "SIMPLE_IMAGE",
+                        "linkUrl": "https://cafe.naver.com/nameyee/3119",
+                        "truncatedDesc": "&#51060;&#48264;&#50640;&#45716; &#54876;&#50857;&#46020;&#44032; &#50500;&#51452; &#45458;&#51008;, &#48152;&#48373;&#47928;&#50640; &#45824;&#54644; &#50508;&#50500;&#48372;&#44192;&#49845;&#45768;&#45796;.\n&#51068;&#45800; &#48152;&#48373;&#47928;&#51008; &#53356;&#44172; &#46160; &#44032;&#51648; ...",
+                        "truncatedTitle": "&#51088;&#48148;&#49828;&#53356;&#47549;&#53944; &#52376;&#51020; &#54644;&#48376;&#45796; &#54616;&#45716; &#48516;&#46308;&#51012;...",
+                        "videoUrl": ""
+                    },
+                    "type": "LINK"
+                }
+            ],
+            "contentHtml": "<p>(모바일이라 가독성은 죄송함미다)<br /><br />제가 여기에 올라오는 파싱 관련 글들을 날마다 쭉 봐보고 있는데, 10에 5~6 정도는 다 노가다성 파싱을 하고 계시더군요..안습<br /><br />반복문을 잘 모르셔서 그렇다고들 하는데 반복문은 알고보면 그냥 누워서 배그 치킨먹기 입니다.<br /><br />반복문 강좌는</p>[[[CONTENT-ELEMENT-0]]]<br /><p>여기 마른얼음님 강좌를 참고하시면 될 것 같습니다.<br /><br />저는 반복문 중에서 for문을 사용하도록 하겠습니다.<br /><br /><br />일단 보통 파싱 하시는 분들의 소스를 보면 대부분 Utils.getWebText 메소드를 사용해 해당 URL의 HTML소스를 가져오고, String 형태인 그 소스를 바탕으로 문자열 자르기(split)을 이용하여 원하는 부분만 가져오시더라구요<br /><br />저도 물론 카톡봇에 대해 잘 모를 시기에는 split 방식을 썼었습니다. 근데 여기서 아예 모든 HTML 태그들(&lt;body&gt;, &lt;div&gt;, &lt;span&gt; 등)과 속성들(class, id, href 등)을 정규식을 사용해 모두 없애고 오직 텍스트만 남은 상태에서 자르시는 분들도 계시더군요..<br /><br />태그삭제식 파싱은 오히려 효율성을 떠나서 눈도 아프고(?) 코딩하기도 힙듭니다. 차라리 태그를 삭제하지 않고 그냥 split 방식을 이용하는 게 훨씬 효율적이라고 생각합니다.<br /><br />요즘은 Jsoup라는 파싱 라이브러리(API)를 이용해 많이들 파싱 하시는데 단순히 split 방식으로도 충분히 효율 좋은 코딩을 하실 수 있습니다. (더군다나 Jsoup로 파싱할 때의 CSS 선택자를 좀 어려워 하시는 분들도 계시고...)<br /><br />바로 앞서 말씀드린 &quot;반복문&quot;을 사용 한다면 가능합니다. 결론 부터 말씀드리면 일단 줄 수가 훨씬 줄어듭니다. 그래서 오히려 더 안 복잡해지고, 보기에도 좋습니다.<br /><br />보통 한 개가 아닌, 일정한 구조를 가진 여러 개의 데이터(대표적으로 목록 태그인 ul과 li)를 가져올 때 하나하나 일일히 손수로 코딩해서 작업 하시더라구요.<br /><br />그런데 이걸 반복문으로 한다?<br /><br />var doc = Utils.getWebText(&quot;https://뭐시기저시기.com&quot;, null, false, false);<br />var li = doc.split(&quot;&lt;ul class=\\&quot;list\\&quot;&gt;&quot;)[1].split(&quot;&lt;/ul&gt;&quot;)[0].split(&quot;&lt;li&gt;&quot;); //대괄호 없이 사용하면 모든 데이터를 가져옴<br />var result = [];<br /><br />for(var i = 0; i &lt; li.length; i++) {<br />    result.push(li[i].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br />}<br /><br />replier.reply(result.join(&quot;\\n&quot;));<br /><br />엥? 10줄 정도 만에 끝났네요?<br /><br />그럼 이번엔 사용이 좀 더 간편한 Jsoup를 이용해 봅시다.<br /><br />var doc = org.jsoup.Jsoup.connect(&quot;https://뭐시기저시기.com&quot;).get();<br />var li = doc.select(&quot;ul.list &gt; li&quot;);<br />var result = [];<br /><br />for(var i = 0; i &lt; li.size(); i++) {<br />    result.push(li.get(i).select(&quot;span&quot;).text());<br />}<br /><br />replier.reply(result.join(&quot;\\n&quot;));<br /><br />역시 약 10줄 만에 끝났습니다.<br /><br />.<br />.<br />.<br />그러나 노가다 방식으로 하면?<br /><br />var doc = Utils.getWebText(&quot;https://뭐시기저시기.com&quot;, null, false, false);<br />var li = doc.split(&quot;&lt;ul class=\\&quot;list\\&quot;&gt;&quot;)[1].split(&quot;&lt;/ul&gt;&quot;)[0].split(&quot;&lt;li&gt;&quot;);<br />var result = [];<br /><br />result.push(li[1].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br />result.push(li[2].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br />result.push(li[3].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br />result.push(li[4].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br />result.push(li[5].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br />result.push(li[6].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br />result.push(li[7].split(&quot;&lt;span&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]);<br /><br />.<br />.<br />.<br />ㅗㅜㅑ...벌써 10줄이 넘어버렸네요<br />확실히 뭐가 더 좋은지 같은 코딩러로써 이 강좌로 조금이나마 아셨으면 합니다.<br /><br />더군다나 .length나 .size()를 이용해 데이터의 길이가 달라도 별 다른 제약 없이 가져올 수 있습니다. 와! 이보다 더 편리하고 간편할 순 없다!<br /><br />인정?<br /><br /><br />어 인정.</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000FCD00000000",
+            "head": "중급",
+            "headId": 20,
+            "id": 4045,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 529,
+            "refArticleId": 4045,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[장문복 주의] 파싱. 가장 효율적으로 하기.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1564070628653,
+            "writer": {
+                "id": "fbtkdqja112",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20200829_126/fbtkdqja112_1598657201500jUbjR_JPEG/image.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "인디벨"
+            }
+        },
+        "articleId": 4045,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 64844674,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64844674,
+                    "updateDate": 1564070940000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 64844763,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 64844674,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-38-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_38.png",
+                        "width": 129
+                    },
+                    "updateDate": 1564071156000,
+                    "writer": {
+                        "id": "fbtkdqja112",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200829_126/fbtkdqja112_1598657201500jUbjR_JPEG/image.jpg"
+                        },
+                        "nick": "인디벨"
+                    }
+                },
+                {
+                    "content": "뭐라는건지 모르겠쿤",
+                    "id": 64844990,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64844990,
+                    "updateDate": 1564071669000,
+                    "writer": {
+                        "id": "fnfnfk1",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "엘지"
+                    }
+                },
+                {
+                    "content": "저도 반복문으로 처리하죠.\r\njsoup 재밌다",
+                    "id": 64846698,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64846698,
+                    "updateDate": 1564078988000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "고인물만 알아듣는 강의",
+                    "id": 64846922,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64846922,
+                    "updateDate": 1564081567000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "장문복주의..\r\n췍 암더 코리안 탑클래스!",
+                    "id": 64847366,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64847366,
+                    "updateDate": 1564087856000,
+                    "writer": {
+                        "id": "dwkl221",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "육덕몸매"
+                    }
+                },
+                {
+                    "content": "오예 내 강좌다(?)",
+                    "id": 64872287,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64872287,
+                    "updateDate": 1564107926000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "Html 태그 제거 안하면 가끔 너무 길어서 메시지가 안옴",
+                    "id": 64885634,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64885634,
+                    "updateDate": 1564120583000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "별명을 입력해 주세요"
+                    }
+                },
+                {
+                    "content": "그럼 필요없는 부분을 좀 짜르면 되죠!",
+                    "id": 64885686,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 64885634,
+                    "updateDate": 1564120634000,
+                    "writer": {
+                        "id": "fbtkdqja112",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200829_126/fbtkdqja112_1598657201500jUbjR_JPEG/image.jpg"
+                        },
+                        "nick": "인디벨"
+                    }
+                },
+                {
+                    "content": "REGEX...",
+                    "id": 64891931,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64891931,
+                    "updateDate": 1564126909000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

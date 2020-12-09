@@ -1,0 +1,220 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"color: rgb(135, 193, 32); font-size: 13pt;\">/**&nbsp;</span></div><p dir=\"ltr\">\r\n<span style=\"color:#87C120;\"> * (string) room\r\n</span><br />\r\n<span style=\"color:#87C120;\"> * (string) sender\r\n</span><br />\r\n<span style=\"color:#87C120;\"> * (boolean) isGroupChat\r\n</span><br />\r\n<span style=\"color:#87C120;\"> * (void) replier.reply(message)\r\n</span><br />\r\n<span style=\"color:#87C120;\"> * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환\r\n</span><br />\r\n<span style=\"color:#87C120;\"> * (string) imageDB.getProfileBase64()\r\n</span><br />\r\n<span style=\"color:#87C120;\"> * (string) packageName\r\n</span><br />\r\n<span style=\"color:#87C120;\"> */</span>\r\n<br />\r\n<span style=\"color:#268BD2;\">function</span> response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\r\n<br />\r\n<span style=\"color:#268BD2;\">const</span> scriptName = <span style=\"color:#269186;\">&quot;rpg&quot;</span>;\r\n<br />\r\nFS = <span style=\"color:#269186;\">FileStream</span>;<br />\r\npath = <span style=\"color:#269186;\">&quot;sdcard/doami/rpg&quot;</span>;<br />\r\n<span style=\"color:#269186;\">Lw</span> = <span style=\"color:#269186;\">&quot;&quot;</span>.repeat(<span style=\"color:#93A1A1;\">1000</span>);<br />\r\n<span style=\"color:#269186;\">Ll</span> = <span style=\"color:#269186;\">&quot;&#9148;&quot;</span>.repeat(<span style=\"color:#93A1A1;\">40</span>);<br />\r\nrooms = [<span style=\"color:#269186;\">&quot;흠냐&quot;</span>];<br />\r\nFS.read(path) || FS.write(path, <span style=\"color:#269186;\">&quot;{}&quot;</span>);<br />\r\n<span style=\"color:#268BD2;\">function</span> response(room, msg, sender, igc, replier, idb) {<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span> (rooms.length &amp;&amp; rooms.indexOf(room) == -<span style=\"color:#93A1A1;\">1</span>)&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">return</span>;<br />\r\n&nbsp; json = JSON.parse(FS.read(path));<br />\r\n&nbsp; json[room] = json[room] || {<br />\r\n&nbsp; <span style=\"color:#269186;\">&quot;TPplayers&quot;</span>: [],&nbsp;<br />\r\n&nbsp; <span style=\"color:#269186;\">&quot;TITplayers&quot;</span>: [],&nbsp;<br />\r\n&nbsp; <span style=\"color:#269186;\">&quot;users&quot;</span>: {}};<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span> (json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender]) {<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;DP&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;DP&quot;</span>] || <span style=\"color:#93A1A1;\">0</span>;<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;exp&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;exp&quot;</span>] || <span style=\"color:#93A1A1;\">0</span>;<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;level&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;exp&quot;</span>] / <span style=\"color:#93A1A1;\">100</span> | <span style=\"color:#93A1A1;\">0</span> + <span style=\"color:#93A1A1;\">1</span> || <span style=\"color:#93A1A1;\">1</span>;<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;title&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;title&quot;</span>] || <span style=\"color:#269186;\">&quot;&quot;</span>;<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;recent&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;recent&quot;</span>] || <span style=\"color:#268BD2;\">new</span> <span style=\"color:#269186;\">Date</span>().getDate() - <span style=\"color:#93A1A1;\">1</span>;<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;location&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;location&quot;</span>] || <span style=\"color:#269186;\">&quot;로비&quot;</span>;<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;items&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;items&quot;</span>] || {};<br />\r\n&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;weapon&quot;</span>] = json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender][<span style=\"color:#269186;\">&quot;weapon&quot;</span>] || <span style=\"color:#269186;\">&quot;맨손&quot;</span>;<br />\r\n&nbsp; }<br />\r\n&nbsp; FS.write(path, JSON.stringify(json, <span style=\"color:#268BD2;\">null</span>, <span style=\"color:#93A1A1;\">4</span>));<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span> (msg == <span style=\"color:#269186;\">&quot;%RPG도움말&quot;</span>) {<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;&bull; 도움말 입니다.&quot;</span> + <span style=\"color:#269186;\">Lw</span> + <span style=\"color:#269186;\">&quot;\\n\\n&quot;</span> + [<span style=\"color:#269186;\">Ll</span>, <span style=\"color:#269186;\">Object</span>.keys(RPG.jsons.locations).map(e =&gt; e + <span style=\"color:#269186;\">&quot; : &quot;</span> + RPG.jsons.locations[e].join(<span style=\"color:#269186;\">&quot;\\n&quot;</span>)).join(<span style=\"color:#269186;\">&quot;\\n\\n&quot;</span> + <span style=\"color:#269186;\">Ll</span> + <span style=\"color:#269186;\">&quot;\\n\\n&quot;</span>), <span style=\"color:#269186;\">Ll</span>].join(<span style=\"color:#269186;\">&quot;\\n\\n&quot;</span>));<br />\r\n&nbsp; }<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span> (msg == <span style=\"color:#269186;\">&quot;%회원가입&quot;</span>) {<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">if</span> (!json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender]) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">if</span> (sender.split(<span style=\"color:#269186;\">/|&#8238;|\\n</span>/).length != <span style=\"color:#93A1A1;\">1</span>) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][<span style=\"color:#269186;\">&quot;users&quot;</span>][sender] = {<br />\r\n&nbsp; <span style=\"color:#269186;\">&quot;id&quot;</span>: <span style=\"color:#269186;\">Math</span>.random().toString(<span style=\"color:#93A1A1;\">36</span>).substr(<span style=\"color:#93A1A1;\">2</span>, <span style=\"color:#93A1A1;\">11</span>)};<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;&bull; 가입 되셨습니다!&quot;</span>);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; 이 게임은 테스트용입니다.&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; 진짜 게임을 즐기시리면 &apos;%메인서버&apos; 명령어를 사용해주세요.&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FS.write(path, JSON.stringify(json, null, 4));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; 닉네임에 포함할 수 없는 글자가 함유되어 있습니다!&quot;);<br />\r\n&nbsp;&nbsp;&nbsp; } else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; 이미 회원가입을 하셨습니다!&quot;);<br />\r\n&nbsp; }<br />\r\n&nbsp; if (json[room][&quot;users&quot;][sender]) {<br />\r\n&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;%정보&quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; who = msg.substr(3).trim();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json = JSON.parse(FS.read(path))[room][&quot;users&quot;];<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ((who &amp;&amp; json[who]) || !who) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; with (json[who ? who : sender]) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; &quot; + (title &amp;&amp; title) + &quot; &quot; + (who ? who : sender) + &quot; 님의 정보&quot;, Ll, &quot;DP : &quot; + DP, &quot;레벨 : &quot; + level, &quot;다음 레벨까지 : &quot; + (100 - Number((exp + &apos;&apos;).substr((exp + &apos;&apos;).length - 2))) + &quot; 경험치&quot;, &quot;현재 위치 : &quot; + location, &quot;무기 : &quot; + weapon, Ll].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; 회원가입을 하지 않은 플레이어 입니다!&quot;);<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\nif(msg == &quot;%메인서버&quot;) {<br />\r\n&nbsp; replier.reply(&quot;&bull; 메인서버의 링크입니다.&quot;);<br />\r\n&nbsp; replier.reply(&quot;https://open.kakao.com/o/gniy59ic&quot;);<br />\r\n}<br />\r\n&nbsp;&nbsp;&nbsp; if (msg == &quot;%이동&quot;) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json = JSON.parse(FS.read(path));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; arr = json[room][&quot;TPplayers&quot;];<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (arr.indexOf(sender) == -1)&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; arr.push(sender);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; 맵 목록입니다.&quot;, Object.keys(RPG.jsons.locations).map((e, i) =&gt; (i + 1) + &quot;. &quot; + e).join(&quot;\\n&quot;), &quot;이동할 장소의 번호를 말해주세요.&quot;].join(&quot;\\n&quot; + Ll + &quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FS.write(path, JSON.stringify(json, null, 4));<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp; if (JSON.parse(FS.read(path))[room][&quot;TPplayers&quot;].indexOf(sender) + 1 &amp;&amp; !isNaN(msg)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (Number.isInteger(Number(msg)) &amp;&amp; Number(msg) &gt; 0 &amp;&amp; Number(msg) &lt;= Object.keys(RPG.jsons.locations).length) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; &quot; + Object.keys(RPG.jsons.locations)[Number(msg) - 1] + &quot; (으)로 이동했습니다!&quot;, RPG.jsons.locations[Object.keys(RPG.jsons.locations)[Number(msg) - 1]].join(&quot;\\n&quot;)].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json = JSON.parse(FS.read(path));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;users&quot;][sender][&quot;location&quot;] = Object.keys(RPG.jsons.locations)[Number(msg) - 1];<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;TPplayers&quot;].splice(json[room][&quot;TPplayers&quot;].indexOf(sender), 1);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FS.write(path, JSON.stringify(json, null, 4));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp; if (msg == &quot;%사냥&quot;) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json = JSON.parse(FS.read(path));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (json[room][&quot;users&quot;][sender][&quot;location&quot;] == &quot;사냥터&quot;) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; monster = RPG.functions.getMonster(json[room][&quot;users&quot;][sender][&quot;level&quot;]);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;users&quot;][sender][&quot;DP&quot;] += (RPG.jsons.weapons.indexOf(json[room][&quot;users&quot;][sender][&quot;weapon&quot;]) + 1) * 5 * monster[1];<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exp = Math.random() * 100 * monster[1] | 0;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;users&quot;][sender][&quot;exp&quot;] += exp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; &quot; + json[room][&quot;users&quot;][sender][&quot;weapon&quot;] + &quot; (으)로 &quot; + monster[0] + &quot; (을)를 잡아 &quot; + (RPG.jsons.weapons.indexOf(json[room][&quot;users&quot;][sender][&quot;weapon&quot;]) + 1) * 5 * monster[1] + &quot; DP 와 &quot; + exp + &quot; 경험치를 획득하였습니다!&quot;, &quot;현재 DP : &quot; + json[room][&quot;users&quot;][sender][&quot;DP&quot;]].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FS.write(path, JSON.stringify(json, null, 4));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; 사냥터에서만 사냥이 가능합니다!&quot;, &quot;&apos;%이동&apos; 명령어를 사용해 주세요.&quot;].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp; if (msg == &quot;%칭호&quot;) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json = JSON.parse(FS.read(path));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (json[room][&quot;users&quot;][sender][&quot;location&quot;] == &quot;창고&quot;) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (json[room][&quot;users&quot;][sender][&quot;items&quot;][&quot;칭호 교환권&quot;] &gt; 0) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;users&quot;][sender][&quot;items&quot;][&quot;칭호 교환권&quot;]--;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; 교체하실 칭호명을 입력해 주세요.&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;TITplayers&quot;].push(sender);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FS.write(path, JSON.stringify(json, null, 4));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; 칭호 교환권이 있어야 칭호 설정이 가능합니다!&quot;, &quot;상점에서 칭호 교환권을 구매해주세요.&quot;].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; 창고에서만 칭호 설정이 가능합니다!&quot;,&nbsp;&quot;&apos;%이동&apos; 명령어를 사용해 주세요.&quot;].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(JSON.parse(FS.read(path))[room][&quot;TITplayers&quot;].indexOf(sender) +&nbsp;1) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(msg.length &lt;=&nbsp;20) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json = JSON.parse(FS.read(path));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;TITplayers&quot;].splice(json[room][&quot;TITplayers&quot;].indexOf(sender),&nbsp;1);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;users&quot;][sender][&quot;title&quot;] = msg;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FS.write(path,&nbsp;JSON.stringify(json,&nbsp;null,&nbsp;4));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; &quot;&nbsp;+ sender +&nbsp;&quot; 님의 칭호가 이제부터 &apos;&quot;&nbsp;+ msg +&nbsp;&quot;&apos; 으로 표시됩니다!&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;&bull; 칭호는 20자 이내로만 입력해주세요!&quot;);<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(msg.startsWith(&quot;%구매&quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json = JSON.parse(FS.read(path));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(json[room][&quot;users&quot;][sender][&quot;location&quot;] ==&nbsp;&quot;상점&quot;) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; thing = msg.substr(3).trim();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!thing) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply([&quot;&bull; 물품 목록&quot;,&nbsp;Ll,&nbsp;Object.keys(RPG.jsons.shopList).map(e =&gt;&nbsp;&quot;- &quot;&nbsp;+&nbsp;e +&nbsp;&quot; : &quot;&nbsp;+ RPG.jsons.shopList[e] +&nbsp;&quot;DP&quot;).join(&quot;\\n&quot;),&nbsp;&quot;&quot;,&nbsp;&quot;%구매 (물건) 으로 물품 구매가 가능합니다.&quot;,&nbsp;Ll].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;else&nbsp;if&nbsp;(Object.keys(RPG.jsons.shopList).indexOf(thing) +&nbsp;1) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(json[room][&quot;users&quot;][sender][&quot;DP&quot;] &gt;= RPG.jsons.shopList[thing]) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;&bull; &quot;&nbsp;+ thing +&nbsp;&quot;을 구매하셨습니다!&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;users&quot;][sender][&quot;DP&quot;] -= RPG.jsons.shopList[thing];<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(thing ==&nbsp;&quot;나무 막대기&quot;) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; json[room][&quot;users&quot;][sender][&quot;weapon&quot;] =&nbsp;&quot;나무 막대기&quot;;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;json[room][&quot;users&quot;][sender][&quot;items&quot;][thing] = ++json[room][&quot;users&quot;][sender][&quot;items&quot;][thing] ||&nbsp;1;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FS.write(path,&nbsp;JSON.stringify(json,&nbsp;null,&nbsp;4));<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;&bull; &quot;&nbsp;+ (RPG.jsons.shopList[thing] - json[room][&quot;users&quot;][sender][&quot;DP&quot;]) +&nbsp;&quot; DP가 부족합니다!&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;&bull; 없는 물품입니다!&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;else&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply([&quot;&bull; 상점에서만 구매가 가능합니다!&quot;,&nbsp;&quot;&apos;%이동&apos; 명령어를 사용해 주세요.&quot;].join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp; }<br />\r\n}<br />\r\nRPG = {<br />\r\n&nbsp; jsons: {<br />\r\n&nbsp; weapons: [&quot;맨손&quot;,&nbsp;&quot;나무 막대기&quot;,&nbsp;&quot;돌도끼&quot;,&nbsp;&quot;철 검&quot;,&nbsp;&quot;티타늄 양날검&quot;,&nbsp;&quot;다마스쿠스&quot;,&nbsp;&quot;묠니르&quot;],&nbsp;<br />\r\n&nbsp; shopList: {<br />\r\n&nbsp;&nbsp;&quot;나무 막대기&quot;:&nbsp;10,&nbsp;<br />\r\n&nbsp;&nbsp;&quot;칭호 교환권&quot;:&nbsp;100},&nbsp;<br />\r\n&nbsp; locations: {<br />\r\n&nbsp;&nbsp;&quot;공용&quot;: [&quot;모든 공간에서 사용할 수 있는 명령어입니다.\\n&quot;,&nbsp;&quot;[ 사용 가능한 명령어 ]&quot;,&nbsp;&quot;%회원가입&quot;,&nbsp;&quot;%정보&quot;,&nbsp;&quot;%정보 (닉네임)&quot;,&nbsp;&quot;%이동&quot;, &quot;%메인서버&quot;],&nbsp;<br />\r\n&nbsp;&nbsp;&quot;로비&quot;: [&quot;다른 유저들과 소통할 수 있는 장소입니다.\\n&quot;,&nbsp;&quot;[ 사용 가능한 명령어 ]&quot;,&nbsp;&quot;추가 중..&quot;],&nbsp;<br />\r\n&nbsp;&nbsp;&quot;사냥터&quot;: [&quot;사냥을 할 수 있는 장소입니다.\\n&quot;,&nbsp;&quot;[ 사용 가능한 명령어 ]&quot;,&nbsp;&quot;%사냥&quot;],&nbsp;<br />\r\n&nbsp;&nbsp;&quot;상점&quot;: [&quot;물건을 구매할 수 있는 장소입니다.\\n&quot;,&nbsp;&quot;[ 사용 가능한 명령어 ]&quot;,&nbsp;&quot;%구매&quot;],&nbsp;<br />\r\n&nbsp;&nbsp;&quot;창고&quot;: [&quot;아이템들을 강화하고 정비하는 장소입니다.\\n&quot;,&nbsp;&quot;[ 사용 가능한 명령어 ]&quot;,&nbsp;&quot;%칭호&quot;],&nbsp;<br />\r\n&nbsp;&nbsp;&quot;도박장&quot;: [&quot;DP로 도박을 하는 장소입니다.\\n&quot;,&nbsp;&quot;[ 사용 가능한 명령어 ]&quot;,&nbsp;&quot;추가 중..&quot;]},&nbsp;<br />\r\n&nbsp; monsters: {<br />\r\n&nbsp;&nbsp;&quot;10&quot;: {<br />\r\n&nbsp;&nbsp;&quot;좀비&quot;: 1,&nbsp;<br />\r\n&nbsp; &quot;해골&quot;: 2},&nbsp;<br />\r\n&nbsp; &quot;20&quot;: {<br />\r\n&nbsp; &quot;미친소&quot;: 4,&nbsp;<br />\r\n&nbsp; &quot;코뿔소&quot;: 5},&nbsp;<br />\r\n&nbsp; &quot;30&quot;: {<br />\r\n&nbsp; &quot;고질라&quot;: 8,&nbsp;<br />\r\n&nbsp; &quot;미누타우로스&quot;: 10,&nbsp;<br />\r\n&nbsp; &quot;디노사우르스&quot;: 12,&nbsp;<br />\r\n&nbsp; &quot;라이노스로스&quot;: 14},&nbsp;<br />\r\n&nbsp; &quot;40&quot;: {<br />\r\n&nbsp; &quot;케르베로스&quot;: 17,&nbsp;<br />\r\n&nbsp; &quot;키클롭스&quot;: 20,&nbsp;<br />\r\n&nbsp; &quot;히드라&quot;: 23,&nbsp;<br />\r\n&nbsp; &quot;크라켄&quot;: 26},&nbsp;<br />\r\n&nbsp; &quot;50&quot;: {<br />\r\n&nbsp; &quot;애스코모이드&quot;: 30,&nbsp;<br />\r\n&nbsp; &quot;발로그&quot;: 35,&nbsp;<br />\r\n&nbsp; &quot;바질리스크&quot;: 40,&nbsp;<br />\r\n&nbsp; &quot;메두사&quot;: 45},&nbsp;<br />\r\n&nbsp; &quot;60&quot;: {<br />\r\n&nbsp; &quot;베히모스&quot;: 50,&nbsp;<br />\r\n&nbsp; &quot;카토블레파스&quot;: 60,&nbsp;<br />\r\n&nbsp; &quot;켈베로스&quot;: 70},&nbsp;<br />\r\n&nbsp; &quot;70&quot;: {<br />\r\n&nbsp; &quot;키메라&quot;: 90,&nbsp;<br />\r\n&nbsp; &quot;코아틀&quot;: 100,&nbsp;<br />\r\n&nbsp; &quot;사이클로프스&quot;: 110},&nbsp;<br />\r\n&nbsp; &quot;80&quot;: {<br />\r\n&nbsp; &quot;데블&quot;: 150,&nbsp;<br />\r\n&nbsp; &quot;데몬&quot;: 200,&nbsp;<br />\r\n&nbsp; &quot;루시퍼&quot;: 250,&nbsp;<br />\r\n&nbsp; &quot;벨제부브&quot;: 300},&nbsp;<br />\r\n&nbsp; &quot;90&quot;: {<br />\r\n&nbsp; &quot;메피스토펠레스&quot;: 400,&nbsp;<br />\r\n&nbsp; &quot;아스모데우스&quot;: 500},&nbsp;<br />\r\n&nbsp; &quot;100&quot;: {<br />\r\n&nbsp; &quot;인비저블 스토커&quot;: 900,&nbsp;<br />\r\n&nbsp; &quot;코볼드&quot;: 1000,&nbsp;<br />\r\n&nbsp; &quot;램프리&quot;: 1100},&nbsp;<br />\r\n&nbsp; &quot;HIGH&quot;: {<br />\r\n&nbsp; &quot;페가수스&quot;: 1500,&nbsp;<br />\r\n&nbsp; &quot;피닉스&quot;: 2000}}},&nbsp;<br />\r\n&nbsp; functions: {<br />\r\n&nbsp; getMonster: level =&gt; {<br />\r\n&nbsp; tier = RPG.jsons.monsters[level &lt;= 10 ? &quot;10&quot; : (level &lt;= 20 ? &quot;20&quot; : (level &lt;= 30 ? &quot;30&quot; : (level &lt;= 40 ? &quot;40&quot; : (level &lt;= 50 ? &quot;50&quot; : (level &lt;= 60 ? &quot;60&quot; : (level &lt;= 70 ? &quot;70&quot; : (level &lt;= 80 ? &quot;80&quot; : (level &lt;= 90 ? &quot;90&quot; : (level &lt;= 100 ? &quot;100&quot; : &quot;HIGH&quot;)))))))))];<br />\r\n&nbsp; monster = Object.keys(tier)[Math.random() * Object.keys(tier).length | 0];<br />\r\n&nbsp; return [monster, tier[monster]];<br />\r\n}}};\r\n<br />\r\n}\r\n<br />\r\n\r\n<br />\r\n//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.\r\n<br />\r\nfunction onCreate(savedInstanceState, activity) {\r\n<br />\r\n&nbsp; var textView = new android.widget.TextView(activity);\r\n<br />\r\n&nbsp; textView.setText(&quot;Hello, World!&quot;);\r\n<br />\r\n&nbsp; textView.setTextColor(android.graphics.Color.DKGRAY);\r\n<br />\r\n&nbsp; activity.setContentView(textView);\r\n<br />\r\n}\r\n<br />\r\n\r\n<br />\r\nfunction onStart(activity) {}\r\n<br />\r\n\r\n<br />\r\nfunction onResume(activity) {}\r\n<br />\r\n\r\n<br />\r\nfunction onPause(activity) {}\r\n<br />\r\n\r\n<br />\r\nfunction onStop(activity) {}</p><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 안녕하세요 rpg만들어볼려고 카페을 돌아다니다</b></div><div><b>찾은 소스을 사용하려고 복붙을 했는데요</b></div><div><b>시작부터 안됨니다 도와주세요</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000055F200000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 22002,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 164,
+            "refArticleId": 22002,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "rpg소스 질문",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1596035419837,
+            "writer": {
+                "id": "alsdn734",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "채팅봇 초보"
+            }
+        },
+        "articleId": 22002,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "시작부터 잘못된 게 아니라\r\n리스폰스도 2개고 소스도 임의로 수정을 하셨네요.\r\n+ 메신저봇 R 전용입니다..",
+                    "id": 98325148,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98325148,
+                    "updateDate": 1596035620000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "리스폰스가 2개였네요ㅠㅠ\n알려주셔서 감사합니다!",
+                    "id": 98325720,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98325148,
+                    "updateDate": 1596035935000,
+                    "writer": {
+                        "id": "alsdn734",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "채팅봇 초보"
+                    }
+                },
+                {
+                    "content": "이렇게 길고 복잡한건...되도록 안건드는게 좋아요 괜히 건드렸다가 오류만 잔뜩 생기고 찾기도 힘듬 ㅠ",
+                    "id": 98325864,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98325864,
+                    "updateDate": 1596036023000,
+                    "writer": {
+                        "id": "adeninelove",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTlfMjg1/MDAxNTk3Nzk3Mjg4ODI5.LTG7-GNxrDXxcM4vMrAmuVyV85v36wHhWkluTgBwaH4g.hycDF0PDEcQODT-DMMn2hGraLk6kkjdHVFPZa1NZ6mYg.PNG/%ED%8F%AC%EB%A7%B7%EB%B3%80%ED%99%98_%EB%8F%84%EC%9C%A4-%EB%A1%9C%EA%B3%A0-2.png"
+                        },
+                        "nick": "도유니"
+                    }
+                },
+                {
+                    "content": "어라",
+                    "id": 98366273,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98366273,
+                    "updateDate": 1596076844000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

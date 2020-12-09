@@ -1,0 +1,254 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MjdfMjAx/MDAxNTkzMjE1NjMwNjEw.MoMImdq7m7NMQWQIoUtTU-1HwDOkROLOJZyFo_OQurkg.mSjEloi-vqVdrTA37orvNHj2Ia5wwj6tHf-na2AUCjog.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MjdfMjY0/MDAxNTkzMjE1NjMxNjky.dG4S9DYlDFsGke9MSXthhQIthXOGnMM8FlIzzhbfoYsg.XILIXx0VLjloOhlKWUS_mWIHjb5NI4elGRUMiBSJfI4g.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>메봇 r사용중인 유저입니다.<br />setinterval사용중에 뭔갈 잘못만졌는지 로그에 컴파일 시작만 남아있습니다<br />다른 오류 메시지는 없습니다.<br />도와주세요</p>[[[CONTENT-ELEMENT-0]]]<br />[[[CONTENT-ELEMENT-1]]]<br /><p><br />[소스코드]<br />const scriptName = &quot;369&quot;;<br />/**\r<br /> * (string) room\r<br /> * (string) sender\r<br /> * (boolean) isGroupChat\r<br /> * (void) replier.reply(message)\r<br /> * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환\r<br /> * (string) imageDB.getProfileBase64()\r<br /> * (string) packageName\r<br /> */<br />var rooms = {};<br />var viewplayers = {};<br />var num = {};<br />var nowturn = {};<br />var nownum = {};<br />var isgameing = {};<br />var answer = {};<br />var lastesay = {};<br />var inv = null;<br /><br />function checkafk(room) {<br />    for (var i = 0; i &lt;= rooms[room].length - 1; i++) {<br />        if (new Date().getTime() - lastesay[room][rooms[room][i]] &lt;= 30000) {<br />            Api.replyRoom(room,new Date().getTime() - lastesay[room][rooms[room][i]])<br />            var delplayer = i;<br />            var nextplayer = i + 1;<br />            if (rooms[room][nextplayer] == undefined || viewplayers[room][nextplayer] == undefined) <br />                nextplayer = 0;<br />            Api.replyRoom(room,viewplayers[room][delplayer] + &quot;님 타임오버로 탈락!\\n다음 플레이어인 &quot; + viewplayers[room][nextplayer] + &quot;님은 계속해서 게임을 이어 해주세요!&quot;);<br />            nowturn[room] = num[room][rooms[room][nextplayer]];<br />            if (rooms[room][nowturn] == undefined) <br />                nowturn[room] = 0;<br />            nownum[room]++;<br />            rooms[room].splice(delplayer, 1);<br />            viewplayers[room].splice(delplayer, 1);<br />            delete num[room][rooms[i]];<br />            Api.replyRoom(room,rooms[room].length);<br />            if (rooms[room].length &lt;= 1) {<br />                clearInterval(inv);<br />                Api.replyRoom(room,viewplayers[room][0] + &quot;님 우승!\\n축하드립니다!&quot;);<br />            }<br />        }<br />    }<br />}<br /><br />function init(room) {<br />    for (var i in rooms[room]) {<br />        Api.replyRoom(room, i)<br />        lastesay[room][rooms[room][i]] = new Date().getTime();<br />    }<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br />    var img = java.lang.String(imageDB.getProfileImage()).hashCode();<br />    if (!Array.isArray(rooms[room])) {<br />        rooms[room] = [];<br />        viewplayers[room] = [];<br />        num[room] = {};<br />        lastesay[room] = {};<br />    }<br />    if (msg == &quot;!참가&quot; &amp;&amp; !isgameing[room]) {<br />        if (rooms[room].indexOf(sender + img) != -1) {<br />            replier.reply(&quot;이미 방에 참가되있습니다.&quot;);<br />            return;<br />        }<br />        rooms[room].push(sender + img);<br />        viewplayers[room].push(sender);<br />        num[room][sender + img] = rooms.length - 1;<br />        replier.reply(sender + &quot;님이 참가했습니다.\\n현재 인원 :\\n&quot; + viewplayers[room].join(&quot;\\n&quot;));<br />    } else if (msg == &quot;!참가&quot; &amp;&amp; !isgameing[room]) {<br />        replier.reply(&quot;이미 게임이 시작되었습니다.&quot;);<br />    }<br />    if (msg == &quot;!퇴장&quot; &amp;&amp; !isgameing[room]) {<br />        if (rooms[room].indexOf(sender + img) == -1) {<br />            replier.reply(&quot;이미 방에 참가되있지 않습니다.&quot;);<br />            return;<br />        } else if (msg == &quot;!퇴장&quot; &amp;&amp; !isgameing[room]) {<br />            replier.reply(&quot;이미 게임이 시작되었습니다.&quot;);<br />            return;<br />        }<br />        rooms[room].splice(num[room][sender + img], 1);<br />        viewplayers[room].splice(num[room][sender + img], 1);<br />        delete num[room][sender + img];<br />        if (rooms[room].length != 0) {<br />            replier.reply(sender + &quot;님이 퇴장했습니다.\\n현재 인원 :\\n&quot; + viewplayers[room].join(&quot;\\n&quot;));<br />        } else {<br />            replier.reply(sender + &quot;님이 퇴장했습니다.\\n현재 인원 :\\n없음&quot;);<br />        }<br />    }<br />    if (msg == &quot;!시작&quot; &amp;&amp; !isgameing[room]) {<br />        if (rooms[room].indexOf(sender + img) == -1) <br />            return;<br />        if (rooms[room].length &lt; 1) {<br />            replier.reply(&quot;최소인원이 2명 이상이여야 합니다.&quot;);<br />        } else {<br />            replier.reply(&quot;게임을 시작합니다.\\n&quot; + viewplayers[room][0] + &quot;님 부터 시작해 주세요.\\n게임 순서 : &quot; + viewplayers[room].join(&quot; -&gt; &quot;));<br />            isgameing[room] = true;<br />            nowturn[room] = 0;<br />            nownum[room] = 1;<br />            init(room);<br />            inv = setInterval(function () { checkafk(room); }, 1000);<br />            return;<br />        }<br />    } else if (msg == &quot;!시작&quot; &amp;&amp; isgameing[room]) {<br />        replier.reply(&quot;이미 게임이 시작되었습니다.&quot;);<br />        return;<br />    }<br />    if (rooms[room].indexOf(sender + img) != -1 &amp;&amp; isgameing[room]) {<br />        lastesay[room][sender + img] = new Date().getTime();<br />        if (sender + img == rooms[room][nowturn[room]]) {<br />            answer[room] = nownum[room].toString().replace(/[369]/g, &quot;짝&quot;);<br />            if (answer[room].replace(/[짝]/g, &quot;&quot;) != &quot;&quot; &amp;&amp; answer[room].indexOf(&quot;짝&quot;) != -1) <br />                answer[room] = &quot;짝&quot;;<br />            if (msg == answer[room]) {<br />                nowturn[room]++;<br />                nownum[room]++;<br />                replier.reply(nowturn[room]);<br />                if (rooms[room][nowturn[room]] == undefined) <br />                    nowturn[room] = 0;<br />                replier.reply(viewplayers[room][nowturn[room]] + &quot;님의 차례입니다.&quot;);<br />            } else {<br />                var delplayer = nowturn[room];<br />                var nextplayer = nowturn[room] + 1;<br />                if (rooms[room][nextplayer] == undefined || viewplayers[room][nextplayer] == undefined) <br />                    nextplayer = 0;<br />                replier.reply(viewplayers[room][delplayer] + &quot;님 탈락!\\n다음 플레이어인 &quot; + viewplayers[room][nextplayer] + &quot;님은 계속해서 게임을 이어 해주세요!&quot;);<br />                nowturn[room] = num[room][rooms[room][nextplayer]];<br />                if (rooms[room][nowturn] == undefined) <br />                    nowturn[room] = 0;<br />                nownum[room]++;<br />                rooms[room].splice(delplayer, 1);<br />                viewplayers[room].splice(delplayer, 1);<br />                delete num[room][sender + img];<br />                replier.reply(rooms[room].length);<br />                if (rooms[room].length &lt;= 1) {<br />                    clearInterval(inv);<br />                    replier.reply(viewplayers[room][0] + &quot;님 우승!\\n축하드립니다!&quot;);<br />                }<br />            }<br />        }<br />    }<br />}<br /><br />function onStartCompile() {<br />    try{<br />        if(inv != null) clearInterval(inv);<br />    }catch(e){<br />    }<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004F9100000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 20369,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 122,
+            "refArticleId": 20369,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "setinterval사용후 컴파일 안됨",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1593215632400,
+            "writer": {
+                "id": "bass90301",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "bass9030"
+            }
+        },
+        "articleId": 20369,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 291709,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/4adf56e6f2adae725eb8ddeadd334d3290c23cdefc/MjAyMDA2MjdfMjAx/MDAxNTkzMjE1NjMwNjEw.MoMImdq7m7NMQWQIoUtTU-1HwDOkROLOJZyFo_OQurkg.mSjEloi-vqVdrTA37orvNHj2Ia5wwj6tHf-na2AUCjog.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 300233,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/66f37acadb8b825e7294f1c6f11f611ebcee10f2db/MjAyMDA2MjdfMjY0/MDAxNTkzMjE1NjMxNjky.dG4S9DYlDFsGke9MSXthhQIthXOGnMM8FlIzzhbfoYsg.XILIXx0VLjloOhlKWUS_mWIHjb5NI4elGRUMiBSJfI4g.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오류내용에 NenkaLab 어쩌고 뜨는 것은 내부오류입니다. 컴파일 두 번 해주면 정상작동합니다",
+                    "id": 94943737,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94943737,
+                    "updateDate": 1593216998000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "어라, 다른 이유군요",
+                    "id": 94943770,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94943737,
+                    "updateDate": 1593217021000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "+추가) 앱을 강제종료하면 다시 컴파일은 됩니다만.. 소스를 한번 작동시키면 또 컴파일이 먹통됩니다. 그리고 저 369소스만 해당됩니다",
+                    "id": 94944882,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94944882,
+                    "updateDate": 1593217814000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass9030"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

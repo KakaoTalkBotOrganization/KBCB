@@ -1,0 +1,348 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1177,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMThfOTYg/MDAxNTc5MzIxMDkyNDEz.DBw5fwUSzT_2onXFkT29Pr7GBla-r03XyrSjn71bxiUg.jjdYP6kc_2fc6NcId68Gx45IpTm4nYnBFuIfOOmBPzgg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>버스 도착 정보 v 1.0<br /><a href=\"https://cafe.naver.com/nameyee/9935\" target=\"_blank\">https://cafe.naver.com/nameyee/9935</a><br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />Jsoup = org.jsoup.Jsoup<br />Lw = &quot;\\u200b&quot;.repeat(500)<br />Ll = &quot;&#9148;&quot;.repeat(50)<br /><br />BusInfo = bus =&gt; {<br />try {<br />id = Jsoup.connect(&quot;https://search.naver.com/search.naver?query=&quot;+bus+&quot;번 버스&quot;).get().select(&quot;.k_bus_thumb&quot;).select(&quot;a&quot;)<br />total = new Array(id.size()).fill()<br />.map((_, b) =&gt; id.get(b).attr(&quot;href&quot;).split(&quot;=&quot;)[1].split(&apos;&quot;&apos;)[0])<br />.map(a =&gt; {<br />try {<br />result = JSON.parse(Jsoup.connect(&quot;https://s.search.naver.com/p/mlocation/map/api2/getBusDetailInfo.nhn?_callback=window.__jindo2_callback._bus_detail_info_0&amp;output=json&amp;caller=pc_search&amp;includeCompanyInfo=true&amp;doSeparateSection=true&amp;includeNonStopBusStops=true&amp;busID=&quot;+a).ignoreContentType(true).get().text().split(&quot;0(&quot;)[1].split(&quot;})&quot;)[0]+&quot;}&quot;)[&quot;message&quot;][&quot;result&quot;]<br />locate = result[&quot;busCityName&quot;]+&quot; | &quot;+result[&quot;busStartPoint&quot;]+&quot; &harr; &quot;+result[&quot;busEndPoint&quot;]<br />time = result[&quot;busFirstTime&quot;]+&quot;~&quot;+result[&quot;busLastTime&quot;]<br />gap = result[&quot;busInterval&quot;]<br />index = JSON.parse(Jsoup.connect(&quot;https://s.search.naver.com/n/api.pubtrans.map/2.0/live/getBusLocation.jsonp?_callback=window.__jindo2_callback._bus_location_list_0&amp;caller=pc_search&amp;routeId=&quot;+a).ignoreContentType(true).get().text().split(&quot;0(&quot;)[1].split(&quot;);&quot;)[0])[&quot;message&quot;][&quot;result&quot;]<br />locations = (index[&quot;metroList&quot;].length==1?index[&quot;busLocationList&quot;]:index[&quot;metroList&quot;]).map(a =&gt; a[&quot;stationSeq&quot;])<br />buses = locations.length<br />stations = result[&quot;station&quot;].map(a =&gt; a[&quot;stationName&quot;] + &quot;\\n&quot;+a[&quot;stationDisplayID&quot;]).map((a, b) =&gt; (locations.indexOf(b)!=-1?&quot;■&quot;:&quot;&darr;&quot;)+a).join(&quot;\\n\\n&quot;)<br />date = new Date().toLocaleString().split(&quot;일 &quot;)[1].split(&quot;분&quot;)[0]+&quot;분&quot;<br />result = &quot;&bull; &quot;+bus+&quot;번 버스 정보입니다.\\n(&quot;+locate+&quot;)&quot;+Lw+&quot;\\n\\n&quot;+Ll+&quot;\\n\\n&quot;+locate+&quot;\\n&quot;+time+&quot; &bull; 배차간격 &quot;+gap+&quot;분\\n\\n&quot;+date+&quot; 기준 &bull; &quot;+buses+&quot;대 운행중\\n\\n&quot;+Ll+&quot;\\n\\n&quot;+stations+&quot;\\n\\n&quot;+Ll<br />return result<br />} catch (e) {}})<br />return total.filter(a =&gt; a)<br />} catch (e) {<br />return [&quot;&bull; 버스 정보가 없습니다!&quot;, e, e.lineNumber]<br />}<br />}<br /><br />function response (room, msg, sender, _, replier) {<br /><br />if (msg.startsWith(&quot;/버스&quot;)) {<br />replier.reply(BusInfo(msg.substr(3).trim()));<br />}<br /><br />}<br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br /><p><br /><br />1. 같은 번호의 버스가 있을 경우 하나만 나오는 문제 해결.<br /><br />2. 약간의 디자인 변경. (나오는 정보는 같음)<br /><br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000027B000000000",
+            "id": 10160,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 409,
+            "refArticleId": 10160,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "버스 도착 정보 v 1.1 (완결)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1579321092883,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 10160,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 74846,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/f762eb5f4e7c7dc8e50166526f89f68d2d7f81f8/MjAyMDAxMThfOTYg/MDAxNTc5MzIxMDkyNDEz.DBw5fwUSzT_2onXFkT29Pr7GBla-r03XyrSjn71bxiUg.jjdYP6kc_2fc6NcId68Gx45IpTm4nYnBFuIfOOmBPzgg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 78761131,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78761131,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-7-185-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_7.png",
+                        "width": 129
+                    },
+                    "updateDate": 1579333394000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "그래서 왜 1번버스에 회기-경희대 없어여...  가끔 필요한데",
+                    "id": 78766582,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78766582,
+                    "updateDate": 1579339707000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "님꺼 있자나여 빼애애앵ㄱ",
+                    "id": 78770849,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78766582,
+                    "updateDate": 1579344542000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "흠 왜 대전이 안나오죠??예전엔 나욌는데...",
+                    "id": 91311527,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91311527,
+                    "updateDate": 1590199785000,
+                    "writer": {
+                        "id": "juncom4261",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "엄준식"
+                    }
+                },
+                {
+                    "content": "버스 정보를 부산노선만 못가져오나요? 어디부분을 수정해야 될까여 초보임다 ㅠㅠ",
+                    "id": 94024582,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94024582,
+                    "updateDate": 1592440798000,
+                    "writer": {
+                        "id": "kimsodo",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "뾰루퉁통"
+                    }
+                },
+                {
+                    "content": "자기지역만 나오나여??",
+                    "id": 96352471,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96352471,
+                    "updateDate": 1594381872000,
+                    "writer": {
+                        "id": "dopani92",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTAxMTdfMjk2/MDAxNTQ3NzI2MTgyNDEw.SwvsAkIbJtDumchWKWlllCyCs0HVRW3H5H2b5_B8Nb4g.qtL_0O-gf7TE1HwOlOImDw1GLs9Z4o4X4QLqsRufHUYg.JPEG.dopani92/%25BA%25ED%25B7%25CE%25B1%25D7%25C0%25CC%25B9%25CC%25C1%25F6.JPG"
+                        },
+                        "nick": "젤리파덕"
+                    }
+                },
+                {
+                    "content": "서울경기만 나와요",
+                    "id": 96352807,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96352471,
+                    "updateDate": 1594382163000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

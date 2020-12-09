@@ -1,0 +1,303 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp;메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><strong>=&gt;&nbsp;</strong><span style=\"color: rgb(0, 0, 0);\">FS = FileStream;</span><br /><span style=\"color: rgb(0, 0, 0);\">path = &quot;sdcard/File/chatingLevel&quot;</span><br /><span style=\"color: rgb(0, 0, 0);\">all = &quot;\\u200b&quot;.repeat(500)</span><br /><br /><span style=\"color: rgb(0, 0, 0);\">levelUp = 10</span><br /><span style=\"color: rgb(0, 0, 0);\">clearOwner = [&quot;관리자&quot;]</span><br /><br /><span style=\"color: rgb(0, 0, 0);\">function response (room, msg, sender, igc, replier) {</span><br /><span style=\"color: rgb(0, 0, 0);\">if (FS.read(path)==null) FS.write(path, &quot;{}&quot;);</span><br /><span style=\"color: rgb(0, 0, 0);\">if (msg) {</span><br /><span style=\"color: rgb(0, 0, 0);\">rd = JSON.parse(FS.read(path))</span><br /><span style=\"color: rgb(0, 0, 0);\">if (rd[room] == undefined) rd[room] = {};</span><br /><span style=\"color: rgb(0, 0, 0);\">if (rd[room][sender] == undefined) {</span><br /><span style=\"color: rgb(0, 0, 0);\">rd[room][sender] = {}</span><br /><span style=\"color: rgb(0, 0, 0);\">rd[room][sender][&quot;chats&quot;] = 0</span><br /><span style=\"color: rgb(0, 0, 0);\">rd[room][sender][&quot;level&quot;] = 0</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">bklv = rd[room][sender][&quot;level&quot;]</span><br /><span style=\"color: rgb(0, 0, 0);\">rd[room][sender][&quot;chats&quot;]++</span><br /><span style=\"color: rgb(0, 0, 0);\">rd[room][sender][&quot;level&quot;] = Number(rd[room][sender][&quot;chats&quot;])/levelUp|0</span><br /><span style=\"color: rgb(0, 0, 0);\">nowlv = rd[room][sender][&quot;level&quot;]</span><br /><span style=\"color: rgb(0, 0, 0);\">if (nowlv != bklv) {</span><br /><span style=\"color: rgb(0, 0, 0);\">replier.reply(&quot;[!] &quot;+sender+&quot; 님의 레벨이 올랐습니다!\\n현재 레벨 : &quot;+nowlv+&quot;\\n채팅 : &quot;+rd[room][sender][&quot;chats&quot;]+&quot;회&quot;)</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">FS.write(path, JSON.stringify(rd))</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">if (msg == &quot;!내채팅&quot;) {</span><br /><span style=\"color: rgb(0, 0, 0);\">rd = JSON.parse(FS.read(path))</span><br /><span style=\"color: rgb(0, 0, 0);\">myChats = rd[room][sender][&quot;chats&quot;]</span><br /><span style=\"color: rgb(0, 0, 0);\">myLevel = rd[room][sender][&quot;level&quot;]</span><br /><span style=\"color: rgb(0, 0, 0);\">result = []</span><br /><span style=\"color: rgb(0, 0, 0);\">for (i in rd[room]) result.push(rd[room][i]+&quot;\\n&quot;+rd[room][i][&quot;chats&quot;]);</span><br /><span style=\"color: rgb(0, 0, 0);\">result.sort((a, b)=&gt;a.split(&quot;\\n&quot;)[1] - b.split(&quot;\\n&quot;)[1]).reverse()</span><br /><span style=\"color: rgb(0, 0, 0);\">score = 0</span><br /><span style=\"color: rgb(0, 0, 0);\">for (k in result) {</span><br /><span style=\"color: rgb(0, 0, 0);\">if (result[k].split(&quot;\\n&quot;)[0] == sender) score = Number(k)+1</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">replier.reply(sender+&quot; (&quot;+(score==0?&quot;1&quot;:score)+&quot;위)\\n레벨 : &quot;+myLevel+&quot;\\n채팅 : &quot;+myChats+&quot;회&quot;)</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">if (msg == &quot;!채팅순위&quot;) {</span><br /><span style=\"color: rgb(0, 0, 0);\">rd = JSON.parse(FS.read(path))</span><br /><span style=\"color: rgb(0, 0, 0);\">result = []</span><br /><span style=\"color: rgb(0, 0, 0);\">for (i in rd[room]) result.push(i+&quot;\\n레벨 : &quot;+rd[room][i][&quot;level&quot;]+&quot;\\n채팅 : &quot;+rd[room][i][&quot;chats&quot;]);</span><br /><span style=\"color: rgb(0, 0, 0);\">result.sort((a, b)=&gt;a.split(&quot;: &quot;)[2] - b.split(&quot;: &quot;)[2]).reverse()</span><br /><span style=\"color: rgb(0, 0, 0);\">for (j in result) result[j] = (Number(j)+1)+&quot;위 | &quot;+result[j];</span><br /><span style=\"color: rgb(0, 0, 0);\">replier.reply(&quot;[!] 채팅 순위입니다.&quot;+all+&quot;\\n\\n방 : &quot;+room+(igc?&quot; (그룹챗)&quot;:&quot; (개인챗)&quot;)+&quot;\\n총 &quot;+result.length+&quot;명\\n\\n&quot;+result.join(&quot;\\n\\n&quot;))</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">if (msg == &quot;!채팅초기화&quot;) {</span><br /><span style=\"color: rgb(0, 0, 0);\">if (clearOwner.indexOf(sender)!=-1) {</span><br /><span style=\"color: rgb(0, 0, 0);\">FS.write(path, &quot;{}&quot;)</span><br /><span style=\"color: rgb(0, 0, 0);\">replier.reply(&quot;[!] 초기화 되었습니다.&quot;)</span><br /><span style=\"color: rgb(0, 0, 0);\">} else {</span><br /><span style=\"color: rgb(0, 0, 0);\">replier.reply(&quot;[!] 지정된 관리자만 채팅을 초기화 할 수 있습니다.&quot;)</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><br /><span style=\"color: rgb(0, 0, 0);\">}</span><div><p style=\"margin: 20px 0px 30px; padding: 0px; font-size: 12px;\"><strong><span style=\"color: rgb(0, 0, 0);\">//[출처]</span></strong><span style=\"color: rgb(0, 0, 0);\">             </span><a href=\"https://cafe.naver.com/nameyee/7141\" target=\"_blank\" rel=\"noopener noreferrer\"><span style=\"color: rgb(0, 0, 0);\">채팅레벨 v 1.2 (리메이크 완결) (카카오톡 봇 커뮤니티)</span></a><span style=\"color: rgb(0, 0, 0);\">             </span><span style=\"padding: 0px 7px 0px 5px; color: rgb(0, 0, 0);\">|</span><span style=\"color: rgb(0, 0, 0);\">      </span><strong><span style=\"color: rgb(0, 0, 0);\">작성자</span></strong><span style=\"color: rgb(0, 0, 0);\">      </span><a href=\"https://cafe.naver.com/nameyee.cafe?iframe_url=%2FCafeMemberNetworkView.nhn%3Fm%3Dview%26memberid%3Ddoami200507\" target=\"_blank\" rel=\"noopener noreferrer\"><span style=\"color: rgb(0, 0, 0);\">doami2005</span></a><span style=\"color: rgb(0, 0, 0);\">           </span></p></div></div><div><b><br /></b></div><div><b>질문내용</b></div><div><strong>=&gt;&nbsp;채팅 횟수가 10개 넘어갈때 레벨업 이 기존 소스 입니다. (</strong><span style=\"color: rgb(0, 0, 0);\">levelUp = 10)</span></div><div><span style=\"color: rgb(0, 0, 0);\">근데 레벨업 할때마다 레벨 업 기준은 &nbsp;&quot;레벨*10&quot; 채팅횟수로 하고 싶습니다.</span></div><div><b>그렇다면 아래 소스중 Number 을 변경 하면 되나요?</b></div><div><span style=\"color: rgb(0, 0, 0);\">bklv = rd[room][sender][&quot;level&quot;]</span><br /><span style=\"color: rgb(0, 0, 0);\">rd[room][sender][&quot;chats&quot;]++</span><br /><span style=\"color: rgb(0, 0, 0);\">rd[room][sender][&quot;level&quot;] = Number(rd[room][sender][&quot;chats&quot;])/<font color=\"#ff0000\"><strong>(level*levelUp)</strong></font>|0</span></div><div><span style=\"color: rgb(0, 0, 0);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 기존 : Number(rd[room][sender][&quot;chats&quot;])/levelUp|0</span><br /><span style=\"color: rgb(0, 0, 0);\">nowlv = rd[room][sender][&quot;level&quot;]</span><br /><span style=\"color: rgb(0, 0, 0);\">if (nowlv != bklv) {</span><br /><br /></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.33px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004A9200000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 19090,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 240,
+            "refArticleId": 19090,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "도미님의 채팅레벨업 소스 관련",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1591071098257,
+            "writer": {
+                "id": "josukjae847",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "철갑상어"
+            }
+        },
+        "articleId": 19090,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "네 그렇습니다",
+                    "id": 92345101,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92345101,
+                    "updateDate": 1591071881000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "rd[room][sender][\"level\"]*levelUp 이 아닐까요",
+                    "id": 92345430,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92345430,
+                    "updateDate": 1591072091000,
+                    "writer": {
+                        "id": "noblesse1980",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjRfMTMx/MDAxNTk1NTY2OTQzNTM3.b7np7GPTo7F0R26DgKXWat-NJcMVROC4QPDhwZYTWlwg.BwHVUl1F9kf8hgyjxORF_JokdecqAynrQhwtYs0I11gg.JPEG/didhd_vmtk.jpg"
+                        },
+                        "nick": "야옹"
+                    }
+                },
+                {
+                    "content": "요걸로 테스트.중입니다.ㅜㅠ 아미녀 앞에 넘버 붙이거나",
+                    "id": 92345520,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 92345430,
+                    "updateDate": 1591072142000,
+                    "writer": {
+                        "id": "josukjae847",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "철갑상어"
+                    }
+                },
+                {
+                    "content": "순간적으로 소스 이해 못한 건 저밖에 없나여",
+                    "id": 92345484,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92345484,
+                    "updateDate": 1591072121000,
+                    "writer": {
+                        "id": "noblesse1980",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjRfMTMx/MDAxNTk1NTY2OTQzNTM3.b7np7GPTo7F0R26DgKXWat-NJcMVROC4QPDhwZYTWlwg.BwHVUl1F9kf8hgyjxORF_JokdecqAynrQhwtYs0I11gg.JPEG/didhd_vmtk.jpg"
+                        },
+                        "nick": "야옹"
+                    }
+                },
+                {
+                    "content": "저리 넣으면 소숫점이.발생하여 레벨업이.이상햐지네요\n다른방법으류 해결완료",
+                    "id": 92355880,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92355880,
+                    "updateDate": 1591078450000,
+                    "writer": {
+                        "id": "josukjae847",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "철갑상어"
+                    }
+                },
+                {
+                    "content": "어떻게 해결하셨어요?",
+                    "id": 102943740,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 92355880,
+                    "updateDate": 1599839291000,
+                    "writer": {
+                        "id": "1120jongjun",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "02년생 수험생"
+                    }
+                },
+                {
+                    "content": "만들어주셔서 감사합니다",
+                    "id": 94441346,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94441346,
+                    "updateDate": 1592804982000,
+                    "writer": {
+                        "id": "tmddyd7190",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20150107_81/tmddyd7190_1420621793483R5eAx_PNG/dnwn+dhk+ckdnjs.PNG"
+                        },
+                        "nick": "키리토"
+                    }
+                },
+                {
+                    "content": "이것저것해봤는데 잘 안되네요 알려주시면 감사하겠습니다..ㅠ",
+                    "id": 107074427,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107074427,
+                    "updateDate": 1603653872000,
+                    "writer": {
+                        "id": "chai0805",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20161024_83/chai0805_14772970739200iSmP_JPEG/image.jpg"
+                        },
+                        "nick": "하느"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

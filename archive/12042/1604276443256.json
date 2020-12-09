@@ -1,0 +1,255 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1479,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAyMjZfOTMg/MDAxNTgyNjgxNjI5MzMw.NRHZFAyTK7Z5peiZq4b-YlfkghSEtmdZMb1HvuJEKVAg.mg_ZuKHQWK0i1eXuMHybp21U1FT31CMvN81eOLblPdkg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1697,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAyMjZfMjIy/MDAxNTgyNjgxNjMwMDU3.0i_ImnVJoVEbqFj_aqR0a1ZuoBIBEVxTyHcCYkC9UL4g.7ybJDmZeACuQK1Ch_eBILrjTcNRW3k4DqPSJ9xFDy3og.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>const scriptName=&quot;wordQuiz.js&quot;;<br />check=10;<br />var langs=[&quot;kr&quot;,&quot;en&quot;,&quot;common_sense&quot;];<br />function getArray(n,lang,th){<br />//5,7,10<br />return JSON.parse(org.jsoup.Jsoup.connect(&quot;https://m.search.naver.com/p/csearch/content/apirender.nhn?where=nexearch&amp;pkid=277&amp;q=%EA%B0%80%EB%A1%9C%EC%84%B8%EB%A1%9C%EB%82%B1%EB%A7%90%ED%80%B4%EC%A6%88&amp;key=CrosswordAPI&amp;u1=&quot;+langs[lang]+&quot;&amp;u2=&quot;+n+&quot;x&quot;+n+&quot;&amp;u3=&quot;+th).ignoreContentType(true).get().text());<br />}<br />var numStr=&quot;&#9450;①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮&#9327;&#9328;&#9329;&#9330;&#9331;&#9398;&#9399;&#9400;&#9401;&#9402;&#9403;&#9404;&#9405;&#9406;&#9407;&#9408;&#9409;&#9410;&#9411;&#9412;&#9413;&#9414;&#9415;&#9416;&#9417;&#9418;&#9419;&#9420;&#9421;&#9422;&#9423;ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ&quot;;<br />var n=7;<br />var lang=0;<br />var th=0;<br />var console={<br />text:&quot;&quot;,<br />log:function(msg){<br />this.text+=msg+&quot;\\n&quot;;<br />}}<br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />if(msg==&quot;문제 만들기&quot;){<br />check=0;<br />replier.reply(&quot;몇*몇의 크기로?&quot;);<br />}<br />else if(check==0){<br />n=Number(msg);<br />replier.reply(&quot;0:국어\\n1:영어\\n2:시사&quot;);<br />check++;<br />}else if(check==1){<br />lang=Number(msg);<br />check++;<br />replier.reply(&quot;몇번째?&quot;);<br />}else if(check==2){<br />check=10;<br />th=Number(msg);<br />var arr=getArray(n,lang,th).itemList[0].wordList;<br />var across=[];<br />var down=[];<br />var map=Array(n).fill().map(a=&gt;Array(n).fill(&quot;■&quot;));<br />for(var i of arr){<br />var {coordinate_y:y,<br />coordinate_x:x,<br />direction:d,<br />length:len}=i;<br />if(d==&quot;down&quot;) {<br />down.push(i);<br />for(j=y;len--;j++)<br />map[j][x]=&quot;□&quot;;<br />map[y][x]=numStr[i.index];<br />}<br />else {<br />across.push(i);<br />for(j=x;len--;j++)<br />map[y][j]=&quot;□&quot;;<br />map[y][x]=numStr[i.index];<br />}<br />}<br />console.log(map.map(a=&gt;a.join(&quot;&quot;)).join(&quot;\\n&quot;))<br />console.log(&quot;\\n&lt;--가로--&gt;&quot;);<br />for(var i of across)<br />console.log(numStr[i.index]+&quot;번: &quot;+i.length+&quot;글자\\n답: &quot;+i.word+&quot;\\n문제: &quot;+i.meaning+&quot;\\n&quot;);<br /><br />console.log(&quot;&lt;--세로--&gt;&quot;);<br />for(var i of down)<br />console.log(numStr[i.index]+&quot;번: &quot;+i.length+&quot;글자\\n답: &quot;+i.word+&quot;\\n문제: &quot;+i.meaning+&quot;\\n&quot;);<br />replier.reply(console.text);<br />console.text=&quot;&quot;;<br />}<br />}<br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />[[[CONTENT-ELEMENT-1]]]<br /><p><br />사용법<br />문제 만들기<br />//낱말퀴즈 만들기를 시작합니다.<br />5 or 7 or 10<br />//문제크기는 5*5, 7*7, 10*10 으로 설정합니다<br />문제번호<br />//문제 번호에 해당하는 낱말 퀴즈를 가져옵니다 문제가 별로 없더라고요;;0부터 시작합니다.<br /><br /><br /><br />※이 소스는 그냥 낱말퀴즈를 파싱해서 보여주는 소스입니다.<br />아직 문제 풀기나 그런게 없습니다.<br />만들 생각도 없고요(결과가 안예쁨)<br />필요하신 분들은 직접 만들기 바랍니다.<br /><br />※이 소스는 sender지정도 안했습니다.<br />도중에 누가 채팅을 치면 그게 반영됩니다<br />직접 수정하시길 바랍니다<br /><br />※답도 미리 나와있습니다.<br />필요하신분들은 지워서 사용하시길 바랍니다.<br /><br />※console.log부분이 출력 부분입니다. 잘찾으시실 바랍니다.</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002F0A00000000",
+            "id": 12042,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 271,
+            "refArticleId": 12042,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "&lt;네이버 낱말 퀴즈&gt; 파싱",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582681630560,
+            "writer": {
+                "id": "a2611577",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "scap"
+            }
+        },
+        "articleId": 12042,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 174873,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/9d088137221617a28f6b0c380ae69ee74715eb48/MjAyMDAyMjZfOTMg/MDAxNTgyNjgxNjI5MzMw.NRHZFAyTK7Z5peiZq4b-YlfkghSEtmdZMb1HvuJEKVAg.mg_ZuKHQWK0i1eXuMHybp21U1FT31CMvN81eOLblPdkg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 264409,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/a93cb50414222396bb5f380c3ed2aad37321dfeb/MjAyMDAyMjZfMjIy/MDAxNTgyNjgxNjMwMDU3.0i_ImnVJoVEbqFj_aqR0a1ZuoBIBEVxTyHcCYkC9UL4g.7ybJDmZeACuQK1Ch_eBILrjTcNRW3k4DqPSJ9xFDy3og.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "js",
+                "fullName": "wordQuiz.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "wordQuiz.js",
+                "size": 1930,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/7fea63d3c29b9b476b8de8dfe70e7e05a5f709eba5/20200226_127_cafefile/29537083_1582682359927_0J07GN_js/wordQuiz.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "어케했ㄴ",
+                    "id": 82331166,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82331166,
+                    "updateDate": 1582685405000,
+                    "writer": {
+                        "id": "khs050909",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "백작선생"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

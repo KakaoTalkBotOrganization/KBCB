@@ -1,0 +1,193 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>FS = FileStream;<br />path = &quot;sdcard/File/chatingLevel&quot;<br />all = &quot;\\u200b&quot;.repeat(500)<br /><br /><br />levelUp = 100<br />clearOwner = [&quot;사람&quot;]<br /><br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (FS.read(path)==null) FS.write(path, &quot;{}&quot;);<br /><br />if (msg) {<br /><br />rd = JSON.parse(FS.read(path))<br /><br />if (rd[room] == undefined) rd[room] = {};<br /><br />if (rd[room][sender] == undefined) {<br /><br />rd[room][sender] = {}<br />rd[room][sender][&quot;chats&quot;] = 0<br />rd[room][sender][&quot;level&quot;] = 0<br /><br />}<br /><br />bklv = rd[room][sender][&quot;level&quot;]<br /><br />rd[room][sender][&quot;chats&quot;]++<br /><br />rd[room][sender][&quot;level&quot;] = Number(rd[room][sender][&quot;chats&quot;])/levelUp|0<br /><br />nowlv = rd[room][sender][&quot;level&quot;]<br /><br />if (nowlv != bklv) {<br /><br />replier.reply(&quot;[!] &quot;+sender+&quot; 님의 레벨이 올랐습니다!\\n현재 레벨 : &quot;+nowlv+&quot;\\n채팅 : &quot;+rd[room][sender][&quot;chats&quot;]+&quot;회&quot;)<br /><br />}<br /><br />FS.write(path, JSON.stringify(rd))<br /><br />}<br /><br />if (msg == &quot;/내 채팅&quot;) {<br /><br />rd = JSON.parse(FS.read(path))<br /><br />myChats = rd[room][sender][&quot;chats&quot;]<br /><br />myLevel = rd[room][sender][&quot;level&quot;]<br /><br />result = []<br /><br />for (i in rd[room]) result.push(rd[room][i]+&quot;\\n&quot;+rd[room][i][&quot;chats&quot;]);<br /><br />result.sort((a, b)=&gt;a.split(&quot;\\n&quot;)[1] - b.split(&quot;\\n&quot;)[1]).reverse()<br /><br />score = 0<br /><br />for (k in result) {<br /><br />if (result[k].split(&quot;\\n&quot;)[0] == sender) score = Number(k)+1<br /><br />}<br /><br />replier.reply(sender+&quot; (&quot;+(score==0?&quot;1&quot;:score)+&quot;위)\\n레벨 : &quot;+myLevel+&quot;\\n채팅 : &quot;+myChats+&quot;회&quot;)<br /><br />}<br /><br />if (msg == &quot;/채팅 순위&quot;) {<br /><br />rd = JSON.parse(FS.read(path))<br /><br />result = []<br /><br />for (i in rd[room]) result.push(i+&quot;\\n레벨 : &quot;+rd[room][i][&quot;level&quot;]+&quot;\\n채팅 : &quot;+rd[room][i][&quot;chats&quot;]);<br /><br />result.sort((a, b)=&gt;a.split(&quot;: &quot;)[2] - b.split(&quot;: &quot;)[2]).reverse()<br /><br />for (j in result) result[j] = (Number(j)+1)+&quot;위 | &quot;+result[j];<br /><br />replier.reply(&quot;[!] 채팅 순위입니다.&quot;+all+&quot;\\n\\n방 : &quot;+room+(igc?&quot; (그룹챗)&quot;:&quot; (개인챗)&quot;)+&quot;\\n총 &quot;+result.length+&quot;명\\n\\n&quot;+result.join(&quot;\\n\\n&quot;))<br /><br />}<br /><br />if (msg == &quot;/채팅 초기화&quot;) {<br /><br />if (clearOwner.indexOf(sender)!=-1) {<br /><br />FS.write(path, &quot;{}&quot;)<br /><br />replier.reply(&quot;[!] 초기화 되었습니다.&quot;)<br /><br />} else {<br /><br />replier.reply(&quot;[!] 지정된 관리자만 채팅을 초기화 할 수 있습니다.&quot;)<br /><br />}<br /><br />}<br /><br />}<br />이거 소스 어디선가 퍼왔던거였는데<br />적용잘되고 실행도 잘되다가 어느순간 꺼져있는데 어떻게해야 하나요?<br />파란색 메신저봇이랑 노란색 메신저봇 둘다 써봤는데<br />둘다 어느순간 꺼져요</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000321400000000",
+            "id": 12820,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 33,
+                "menuType": "B",
+                "name": "| 기타 질문 |"
+            },
+            "readCount": 141,
+            "refArticleId": 12820,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "이거 스스로 꺼지는데..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583507796203,
+            "writer": {
+                "id": "mjmjmj1225",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "청월"
+            }
+        },
+        "articleId": 12820,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "컴파일 오류 시 꺼짐을 off하세영",
+                    "id": 83363566,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83363566,
+                    "updateDate": 1583507872000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "그런기능이 있었군요...",
+                    "id": 83363663,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83363566,
+                    "updateDate": 1583507919000,
+                    "writer": {
+                        "id": "mjmjmj1225",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청월"
+                    }
+                },
+                {
+                    "content": "감사합니다.",
+                    "id": 83363685,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83363566,
+                    "updateDate": 1583507929000,
+                    "writer": {
+                        "id": "mjmjmj1225",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청월"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "어플 관련",
+                "headId": 33
+            },
+            {
+                "head": "프밍언어",
+                "headId": 59
+            },
+            {
+                "head": "답변 완료",
+                "headId": 100
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

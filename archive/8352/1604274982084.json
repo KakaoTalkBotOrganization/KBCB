@@ -1,0 +1,402 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 21,
+            "contentElements": [],
+            "contentHtml": "<p>도미님 JSON강좌 감사해요ㅎ공유할 소스 용도=&gt; 주식게임입니다<br />rooms에 방이름 마스터에 자기 닉네임 해시코드에 자기 해시코드입력하고 .주식 시작하면 그때부터 시작입니다.<br /><br /><br />소스 코드<br />=&gt;<br />var master=&quot;PEN&quot;;<br />var hashcode=364211169;<br />var data;<br />var rooms=[&quot;a&quot;,&quot;b&quot;];<br />String.prototype.replaceAll = function (org, dest) {<br />return this.split(org).join(dest);<br />}<br />function randomRange(min, max) {<br />return Math.floor( (Math.random() * (max - min + 1)) + min );<br />}<br />var 주식돌아감=false;<br />var 주가=500;<br />var sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();<br />var folder = new java.io.File(sdcard + &quot;/주식/&quot;); <br />folder.mkdirs();//sd카드에 출석 폴더를 생성합니다<br />var blank = &quot;\\u200b&quot;.repeat(501);<br /><br /><br />function 잔고(room,sender) {<br />var talk;<br />if (data[room][sender] == undefined) <br />{<br />data[room][sender] = {};<br />data[room][sender][&quot;name&quot;] = sender;<br />data[room][sender][&quot;money&quot;] = 100000;<br />data[room][sender][&quot;ea&quot;] = 0;<br />data[room][sender][&quot;sell&quot;] = 0;<br />data[room][sender][&quot;sellEa&quot;] = 0;<br />data[room][sender][&quot;buy&quot;] = 0;<br />data[room][sender][&quot;buyEa&quot;] = 0;<br /><br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data)<br />talk=&quot;주식계좌가 없어 신규계좌를 개설합니다.\\n지원금 10만원을 받았습니다.&quot;;<br />return talk;<br />}<br />else<br />{<br />talk=data[room][sender][&quot;name&quot;]+&quot;님의 잔고입니다.\\n&quot;+<br />&quot;잔액 : &quot;+data[room][sender][&quot;money&quot;]+&quot;원\\n&quot;+<br />&quot;(구매예약 : &quot;+(data[room][sender][&quot;buy&quot;]*data[room][sender][&quot;buyEa&quot;]) +&quot;)\\n&quot;+<br />&quot;주식 : &quot;+data[room][sender][&quot;ea&quot;]+&quot;주\\n&quot;+<br />&quot;(판매예약 : &quot;+data[room][sender][&quot;sellEa&quot;]+&quot;)&quot;<br />return talk;<br />} <br />}<br /><br /><br />function 사기(room,sender,ea)<br />{<br />if(!주식돌아감)<br />{<br />talk=&quot;주식시장이 열리지 않았습니다.\\n장외거래는 할수없습니다.&quot;;<br />return talk;<br />}<br />if (data[room][sender] == undefined) <br />{<br />data[room][sender] = {};<br />data[room][sender][&quot;name&quot;] = sender;<br />data[room][sender][&quot;money&quot;] = 100000;<br />data[room][sender][&quot;ea&quot;] = 0;<br />data[room][sender][&quot;sell&quot;] = 0;<br />data[room][sender][&quot;sellEa&quot;] = 0;<br />data[room][sender][&quot;buy&quot;] = 0;<br />data[room][sender][&quot;buyEa&quot;] = 0;<br /><br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data)<br />talk=&quot;주식계좌가 없어 신규계좌를 개설합니다.\\n지원금 10만원을 받았습니다.&quot;;<br />return talk;<br />}<br />else<br />{<br />if(((data[room][sender][&quot;money&quot;]-(data[room][sender][&quot;buy&quot;] *data[room][sender][&quot;buyEa&quot;]))/parseInt(주가))&gt;=parseInt(ea))<br />{<br />data[room][sender][&quot;ea&quot;] =data[room][sender][&quot;ea&quot;]+parseInt(ea);<br />data[room][sender][&quot;money&quot;]=data[room][sender][&quot;money&quot;]-(parseInt(ea)*parseInt(주가));<br />talk=&quot;주식을&quot;+ea+&quot;개 구매하셨습니다.\\n&quot;<br />talk+=sender+&quot;님은 주식을 &quot;+data[room][sender][&quot;ea&quot;] +&quot;주 보유하고 계십니다.&quot;<br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />}<br />else<br />{<br />talk=&quot;잔액이 부족합니다.\\n&quot;+sender+&quot;님의 잔액은 &quot;+data[room][sender][&quot;money&quot;]+&quot;원 입니다.\\n&quot;+<br />&quot;( 구매예약 : &quot;+(data[room][sender][&quot;buy&quot;] *data[room][sender][&quot;buyEa&quot;] )+&quot;원 )&quot;;<br />}<br /><br />return talk;<br />}<br />}<br /><br /><br />function 팔기(room,sender,ea)<br />{<br />if(!주식돌아감)<br />{<br />talk=&quot;주식시장이 열리지 않았습니다.\\n장외거래는 할수없습니다.&quot;;<br />return talk;<br />}<br />if (data[room][sender] == undefined) <br />{<br />data[room][sender] = {};<br />data[room][sender][&quot;name&quot;] = sender;<br />data[room][sender][&quot;money&quot;] = 100000;<br />data[room][sender][&quot;ea&quot;] = 0;<br />data[room][sender][&quot;sell&quot;] = 0;<br />data[room][sender][&quot;sellEa&quot;] = 0;<br />data[room][sender][&quot;buy&quot;] = 0;<br />data[room][sender][&quot;buyEa&quot;] = 0;<br /><br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />talk=&quot;주식계좌가 없어 신규계좌를 개설합니다.\\n지원금 10만원을 받았습니다.&quot;;<br />return talk;<br />}<br />else<br />{<br /><br />if(data[room][sender][&quot;ea&quot;]-data[room][sender][&quot;sellEa&quot;]&gt;=parseInt(ea))<br />{<br />data[room][sender][&quot;money&quot;]=data[room][sender][&quot;money&quot;]+(parseInt(ea)*parseInt(주가));<br />data[room][sender][&quot;ea&quot;]=data[room][sender][&quot;ea&quot;]-parseInt(ea);<br />talk=&quot;주식을&quot;+ea+&quot;개 판매하셨습니다.\\n&quot;+<br />sender+&quot;님은 주식을 &quot;+data[room][sender][&quot;ea&quot;]+&quot;주 보유하고 계십니다.&quot;<br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />}<br />else<br />{<br />talk=&quot;주식이 부족합니다.\\n&quot;+sender+&quot;님의 주식은 &quot;+data[room][sender][&quot;ea&quot;]+&quot;주 입니다.\\n&quot;+<br />&quot;( 판매예약 : &quot;+data[room][sender][&quot;sellEa&quot;]+&quot; 주)&quot;;<br />}<br />return talk;<br />}<br />}<br />function 예구(sender,room,ea,money)<br />{<br />if(!주식돌아감)<br />{<br />talk=&quot;주식시장이 열리지 않았습니다.\\n장외거래는 할수없습니다.&quot;;<br />return talk;<br />}<br />if (data[room][sender] == undefined) <br />{<br />data[room][sender] = {};<br />data[room][sender][&quot;name&quot;] = sender;<br />data[room][sender][&quot;money&quot;] = 100000;<br />data[room][sender][&quot;ea&quot;] = 0;<br />data[room][sender][&quot;sell&quot;] = 0;<br />data[room][sender][&quot;sellEa&quot;] = 0;<br />data[room][sender][&quot;buy&quot;] = 0;<br />data[room][sender][&quot;buyEa&quot;] = 0;<br /><br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data)<br />talk=&quot;주식계좌가 없어 신규계좌를 개설합니다.\\n지원금 10만원을 받았습니다.&quot;;<br />return talk;<br />}<br />else<br />{<br />if((data[room][sender][&quot;money&quot;]/parseInt(money))&gt;=parseInt(ea))<br />{<br />data[room][sender][&quot;buyEa&quot;] =parseInt(ea);<br />data[room][sender][&quot;buy&quot;]=parseInt(money);<br />talk=&quot;주식&quot;+ea+&quot;주를 &quot;+money+&quot;원에 구매예약하셨습니다.\\n&quot;<br />talk+=&quot;구매 예약으로인해 &quot;+(data[room][sender][&quot;buy&quot;]*data[room][sender][&quot;buyEa&quot;]) +&quot;원이 예약되었습니다.&quot;<br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />}<br />else<br />{<br />talk=&quot;잔액이 부족합니다.\\n&quot;+sender+&quot;님의 잔액은 &quot;+data[room][sender][&quot;money&quot;]+&quot;원 입니다.&quot;;<br />} <br />return talk;<br />}<br />}<br /><br /><br />function 예판(sender,room,ea,money)<br />{<br />if(!주식돌아감)<br />{<br />talk=&quot;주식시장이 열리지 않았습니다.\\n장외거래는 할수없습니다.&quot;;<br />return talk;<br />}<br /><br />if (data[room][sender] == undefined) <br />{<br />data[room][sender] = {};<br />data[room][sender][&quot;name&quot;] = sender;<br />data[room][sender][&quot;money&quot;] = 100000;<br />data[room][sender][&quot;ea&quot;] = 0;<br />data[room][sender][&quot;sell&quot;] = 0;<br />data[room][sender][&quot;sellEa&quot;] = 0;<br />data[room][sender][&quot;buy&quot;] = 0;<br />data[room][sender][&quot;buyEa&quot;] = 0;<br /><br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />talk=&quot;주식계좌가 없어 신규계좌를 개설합니다.\\n지원금 10만원을 받았습니다.&quot;;<br />return talk;<br />}<br />else<br />{ <br />if(data[room][sender][&quot;ea&quot;]&gt;=parseInt(ea))<br />{<br />data[room][sender][&quot;sellEa&quot;]=parseInt(ea);<br />data[room][sender][&quot;sell&quot;]=parseInt(money);<br />talk=&quot;주식&quot;+ea+&quot;주를 판매예약하셨습니다.\\n&quot;+<br />&quot;판매예약으로인해 주식 &quot;+data[room][sender][&quot;sellEa&quot;]+&quot;주가 예약되었습니다.&quot;<br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />}<br />else<br />{<br />talk=&quot;주식이 부족합니다.\\n&quot;+sender+&quot;님의 주식은 &quot;+data[room][sender][&quot;ea&quot;]+&quot;주 입니다.&quot;;<br />}<br />return talk;<br />}<br />}<br /><br /><br />function 예약구매(replier)<br />{<br />var roms=Object.keys(data)<br /><br />for(var i=0;i&lt;roms.length;i++)<br />{<br />var users=Object.keys(data[roms[i]]);<br />for(var j=0;j&lt;users.length;j++)<br />{<br />if(data[roms[i]][users[j]][&quot;buy&quot;]&gt;=parseInt(주가))<br />{<br />data[roms[i]][users[j]][&quot;ea&quot;]+=data[roms[i]][users[j]][&quot;buyEa&quot;];<br />data[roms[i]][users[j]][&quot;money&quot;]-=(data[roms[i]][users[j]][&quot;buyEa&quot;]*data[roms[i]][users[j]][&quot;buy&quot;]);<br />data[roms[i]][users[j]][&quot;buy&quot;]=0;<br />data[roms[i]][users[j]][&quot;buyEa&quot;]=0;<br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />replier.reply(roms[i],data[roms[i]][users[j]][&quot;name&quot;]+&quot;님의 예약구매가 성사되었습니다.&quot;);<br />}<br />}<br />}<br /><br />}<br />function 예약판매(replier)<br />{<br />var roms=Object.keys(data)<br /><br />for(var i=0;i&lt;roms.length;i++)<br />{<br />var users=Object.keys(data[roms[i]]);<br />for(var j=0;j&lt;users.length;j++)<br />{<br />if(data[roms[i]][users[j]][&quot;sell&quot;]&lt;=parseInt(주가)&amp;&amp;data[roms[i]][users[j]][&quot;sellEa&quot;]!=0)<br />{<br />data[roms[i]][users[j]][&quot;ea&quot;]-=data[roms[i]][users[j]][&quot;sellEa&quot;];<br />data[roms[i]][users[j]][&quot;money&quot;]+=(data[roms[i]][users[j]][&quot;sellEa&quot;]*data[roms[i]][users[j]][&quot;sell&quot;]);<br />data[roms[i]][users[j]][&quot;sell&quot;]=0;<br />data[roms[i]][users[j]][&quot;sellEa&quot;]=0;<br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,data);<br />replier.reply(roms[i],data[roms[i]][users[j]][&quot;name&quot;]+&quot;님의 예약판매가 성사되었습니다.&quot;);<br />}<br />}<br />}<br />}<br /><br /><br /><br /><br /><br /><br /><br /><br />function 뺑이(replier)<br />{<br />while(주식돌아감)<br />{<br />if(주가&gt;600&amp;&amp;주가&lt;5000)<br />{주가+=randomRange(-50,50)*10;}<br />else if(주가&lt;=600)<br />{주가+=randomRange(0,50)*10;}<br />else if(주가&gt;=5000)<br />{주가+=randomRange(-50,0)*10;}<br />예약구매(replier);<br />예약판매(replier);<br />java.lang.Thread.sleep(10000);<br />}<br />}<br /><br /><br /><br /><br /><br /><br />function save(folderName, fileName, data) { //파일 읽기 함수 제작 <br />try<br />{ FileStream.write(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName,data);}<br />catch(e)<br />{}<br />}<br />function savej(folderName, fileName, data) { //파일 읽기 함수 제작 <br />try<br />{ FileStream.write(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName,JSON.stringify(data));}<br />catch(e)<br />{}<br />}<br /><br /><br />function read(folderName, fileName) { //파일 읽기 함수 제작 <br />try<br />{<br />var reading = FileStream.read(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName);<br />return reading.toString();<br />}<br />catch(e){ return &quot;&quot;;}<br />}<br /><br /><br />function readj(folderName, fileName) { //파일 읽기 함수 제작 <br />try<br />{<br />return JSON.parse(FileStream.read(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName));<br />}<br />catch(e){ return null;}<br />}<br /><br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {<br />if(readj(&quot;주식&quot;,&quot;userdata.txt&quot;)==null)<br />{<br />savej(&quot;주식&quot;,&quot;userdata.txt&quot;,{})<br />} <br />data = readj(&quot;주식&quot;,&quot;userdata.txt&quot;);<br />var talk;<br /><br /><br /><br /><br /><br />if(rooms.indexOf(room)!=-1) <br />{//방 맞으면 유저데이터에 추가<br />if(data[room]==undefined)<br />{data[room]={};}<br />if (msg.indexOf(&quot;.&quot;) == 0)//.인식시작<br />{<br />msg = msg.substring(1);<br />if(msg.indexOf(&quot;주식&quot;)==0)<br />{ <br />msg=msg.substring(2).trim();<br />if(msg.indexOf(&quot;사기&quot;)==0)<br />{<br />msg=msg.substring(2).trim();<br />var 검사 = msg;<br />var 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;];<br />for (var i = 0; i &lt; 허용단어.length; i++) {<br />if (검사.indexOf(허용단어[i]) != -1) {<br />검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);<br />}<br />}<br />if(검사==&quot;&quot;)<br />{talk=사기(room,sender,msg);}<br />else{talk=&quot;숫자만 입력가능합니다.&quot;}<br />}<br />else if(msg.indexOf(&quot;팔기&quot;)==0)<br />{<br />msg=msg.substring(2).trim();<br />var 검사 = msg;<br />var 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;,];<br />for (var i = 0; i &lt; 허용단어.length; i++) {<br />if (검사.indexOf(허용단어[i]) != -1) {<br />검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);<br />}<br />}<br />if(검사==&quot;&quot;)<br />{ talk=팔기(room,sender,msg);}<br />else<br />{talk=&quot;숫자만 입력가능합니다.&quot;}<br />}<br />else if(msg.indexOf(&quot;잔고&quot;)==0)<br />{<br />talk=잔고(room,sender);<br />}<br />else if(msg.indexOf(&quot;주가&quot;)==0)<br />{<br />talk=&quot;현재 주가는 &quot;+주가+&quot;원입니다.&quot;;<br />}<br />else if(msg.indexOf(&quot;시작&quot;)==0)<br />{<br />if(master==sender&amp;&amp;java.lang.String(ImageDB.getProfileImage()).hashCode()==hashcode)<br />{<br />주식돌아감=true;<br />replier.reply(&quot;장이 시작되었습니다.&quot;);<br />뺑이(replier);<br />}<br />}<br />else if(msg.indexOf(&quot;종료&quot;)==0)<br />{<br />if(master==sender&amp;&amp;java.lang.String(ImageDB.getProfileImage()).hashCode()==hashcode)<br />{<br />주식돌아감=false;<br />talk=&quot;장이 종료되었습니다.&quot;;<br />}<br />}<br />else if(msg.indexOf(&quot;예약구매&quot;)==0||msg.indexOf(&quot;구매예약&quot;)==0)<br />{<br />msg=msg.substring(4).trim();<br />msg=msg.split(&quot; &quot;);<br />var 검사 = msg.join(&quot;&quot;);<br />var 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;,];<br />for (var i = 0; i &lt; 허용단어.length; i++) {<br />if (검사.indexOf(허용단어[i]) != -1) {<br />검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);<br />}<br />}<br />if(검사==&quot;&quot;&amp;&amp;msg.length==2)<br />{ <br />talk=예구(sender,room,msg[0],msg[1]);<br />}<br />else<br />{talk=&quot;.주식 예약구매 갯수 갯수당돈의 포멧으로 입력해주세요.&quot;}<br />}<br />else if(msg.indexOf(&quot;예약판매&quot;)==0||msg.indexOf(&quot;판매예약&quot;)==0)<br />{<br />msg=msg.substring(4).trim();<br />msg=msg.split(&quot; &quot;);<br />var 검사 = msg.join(&quot;&quot;);<br />var 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;];<br />for (var i = 0; i &lt; 허용단어.length; i++) {<br />if (검사.indexOf(허용단어[i]) != -1) {<br />검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);<br />}<br />}<br />if(검사==&quot;&quot;&amp;&amp;msg.length==2)<br />{ <br />talk=예판(sender,room,msg[0],msg[1]);<br />}<br />else<br />{talk=&quot;.주식 예약판매 갯수 갯수당돈의 포멧으로 입력해주세요&quot;}<br />}<br />else<br />{<br />talk=&quot;.주식 주가 = 주가확인\\n&quot;+<br />&quot;.주식 사기 갯수 = 주식구매\\n&quot;+<br />&quot;.주식 팔기 갯수 = 주식판매\\n&quot;+<br />&quot;.주식 잔고 = 자신의 잔고확인\\n&quot;+<br />&quot;.주식 예약구매 갯수 돈 = 구매를 예약해둡니다.\\n&quot;+<br />&quot;.주식 예약판매 갯수 돈 = 판매를 예약해둡니다.\\n&quot;+<br />&quot;.주식 시작 = 장을 시작합니다\\n&quot;+<br />&quot;.주식 종료 = 장을 마칩니다.&quot;<br />}<br />}//주식인식<br />}//.인식<br />if (talk != null)//메세지전송부 <br />{<br />replier.reply(talk);<br />}<br />}//방이름이 지정된곳일때<br />}//메세지리스폰스<br /><br /><br /><br /><br /><br /><br /><br />( 말머리 등록 해주세요! )<br /><br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000020A000000000",
+            "id": 8352,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 454,
+            "refArticleId": 8352,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "주식게임소스입니다",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574845310453,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 8352,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "존경합니다",
+                    "id": 74485342,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74485342,
+                    "updateDate": 1574845749000,
+                    "writer": {
+                        "id": "hojunyun243",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDZfNTMg/MDAxNTg2MTAwMDEzNzQy.UwC7ZL_cADOp1lwXvYnywIrWiaxLR8u9tcJv5clHGeAg.9tRl5OtmkqseiVG2BBsJfnK5VhomqwzhY-TKFp4GhDgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "버터플라이"
+                    }
+                },
+                {
+                    "content": "자기 해시코드가 몬가용?? ㅜㅜ 재밌을거같은데 못찾고있네요",
+                    "id": 74490986,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74490986,
+                    "updateDate": 1574850980000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "var rooms=[\"a\",\"b\",\"c\"];\r\n\r\nfunction response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){\r\nif(rooms.indexOf(room)!=-1)\r\n{if(msg==\".프로필\")\r\n{\r\nreplier.reply(java.lang.String(ImageDB.getProfileImage()).hashCode());\r\n}}\r\n}\r\n봇에 이거넣고 방이름 설정후에 그방에서 .프로필 쳐보세요\r\n답으로 나오는게 해시코드입니다.\r\n다른사람봇이 아닌 자기봇으로 해야되요\r\n그리고 디버그룸이 아니라 사용하실방에서 하셔야하구요",
+                    "id": 74491362,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74490986,
+                    "updateDate": 1574851340000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "다른기능들은 잘되는거같은데 .주식 시작했을때 반응이없어요.ㅠ 왜그런가요?\r\n시작이 되어야지 진행할수있는데.ㅠ",
+                    "id": 74596607,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74596607,
+                    "updateDate": 1574955434000,
+                    "writer": {
+                        "id": "yangzhu",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "깜찍잉"
+                    }
+                },
+                {
+                    "content": "해시코드랑 룸네임 잘넣으면 잘되요~",
+                    "id": 74596637,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596607,
+                    "updateDate": 1574955449000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "다른거 되신다면 해시코드랑 마스터닉네임부분을 확인해주세요\r\n두개가 맞아야 작동되요\r\n아,디버깅룸에서는 아마 하기 힘드실거에요",
+                    "id": 74596802,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596607,
+                    "updateDate": 1574955643000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "예약취소도 하나 만들어주세요 .. 취소안하고 장을 닫았다 열었더니 망햇어욬ㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
+                    "id": 74596874,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596607,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1574955740000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "일단 지금은 갯수0 금액0넣으면 취소에요\r\n나중엔 음 만들겠죠?",
+                    "id": 74596947,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596607,
+                    "replyMember": {
+                        "id": "kiss_0153",
+                        "nick": "Dabot"
+                    },
+                    "updateDate": 1574955847000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "오. 감사함니당",
+                    "id": 74597279,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596607,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1574956430000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "주가가 고정되는경우도 있나요 수분째 고정되서 '-'",
+                    "id": 74597663,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596607,
+                    "replyMember": {
+                        "id": "kiss_0153",
+                        "nick": "Dabot"
+                    },
+                    "updateDate": 1574957134000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                }
+            ],
+            "last": {
+                "id": 84165240,
+                "refId": 84165240
+            },
+            "next": {
+                "id": 74602988,
+                "refId": 74596607
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

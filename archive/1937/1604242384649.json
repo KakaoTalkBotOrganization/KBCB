@@ -1,0 +1,254 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 416,
+                            "service": "CAFE",
+                            "style": "width: 740px; height: 416px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA0MjZfMjQ5/MDAxNTU2MjUzNjQ3ODg4.c3DmQqTlraRMVrMyeyoSFXe-9Y8dz9xtXL166RSAnQQg.yumIVhPq7KP-Bz2qG9brEhMwcyxNgsTFE3IoaxVyU0wg.PNG.gom0919/KakaoTalk_20190426_134021019.png",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 (새카봇, 젤브봇, 메신져봇, 닼토봇, 기타)</b><div><b>=&gt; 닼토봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><b><br /></b></div><div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function getWeathetInfo(pos) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; try{</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var data = Utils.getWebText(&quot;<a href=\"https://m.search.naver.com/search.naver?query=\" target=\"_blank\">https://m.search.naver.com/search.naver?query=</a>&quot;+pos+&quot;%20날씨&quot;, &quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36&quot;, false, false);&nbsp; //검색 결과 파싱</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; data = data.replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;);&nbsp; //태그 삭제</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; data = data.split(&quot;월간&quot;)[1];&nbsp; //날씨 정보 시작 부분의 윗부분 삭제</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; data = data.split(&quot;시간별 예보&quot;)[0];&nbsp; //날씨 정보 끝 부분의 아래쪽 부분 삭제</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; data = data.trim();&nbsp; //위아래에 붙은 불필요한 공백 삭제</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; data = data.split(&quot;\\n&quot;);&nbsp; //엔터 단위로 자름</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var results = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; results[0] = data[0];&nbsp; //날씨 상태(?)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; results[1] = data[3].replace(&quot;온도&quot;, &quot;온도 : &quot;).trim() + &quot;℃&quot;;&nbsp; //현재 온도</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; results[2] = data[4].replace(&quot;온도&quot;, &quot;온도 : &quot;).trim() + &quot;℃&quot;;&nbsp; //체감 온도</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; results[3] = data[9].replace(&quot;먼지&quot;, &quot;먼지 : &quot;).trim();&nbsp; //미세먼지</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; results[4] = data[13].replace(&quot;습도&quot;, &quot;습도 :&quot;).trim() + &quot;%&quot;;&nbsp; //습도</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var result = &quot;[&quot; + pos + &quot; 날씨 정보]\\n\\n상태 : &quot; + results.join(&quot;\\n&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return result;&nbsp; //결과 반환</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; } catch(e) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; msg = msg.trim();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; var cmd = msg.split(&quot; &quot;)[0];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; var data = msg.replace(cmd + &quot; &quot;, &quot;&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(cmd == &quot;/날씨&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var result = getWeathetInfo(data);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(result == null) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(data + &quot;의 날씨 정보를 가져올 수 없습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(result);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><b>크게 손댄건 없고 (댈줄을 모름;) 거의 복붙하고 해봤는데</b></div><div><b>날씨정보를 가져올수 없다고 뜨네여.</b></div><div><b>혹시 주소가 틀리거나 바뀌었나 싶어서 소스상의 주소 긁어서 지역별검색어 붙여서 해보면</b></div><div><b>다 정상적인 주소는 맞는것같아여 ㅠㅠ</b></div><div><b>어디가 잘못된걸까요</b></div><div><b><br /></b></div><div><b>[[[CONTENT-ELEMENT-0]]]<br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000079100000000",
+            "id": 1937,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 118,
+            "refArticleId": 1937,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "지역별 날씨 추출해서 출력하기중 오류",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1556253659213,
+            "writer": {
+                "id": "gom0919",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTA0MjVfMTM2/MDAxNTU2MTk4NTIzOTY5.s4FHp_NbplSaUifn22oh6IZ5mGHdTNdnEYxjNRu-MWcg.WXsTmkYAJcGctl0rzzlhh7psVRmtzXIz4IDMAh2fg8sg.JPEG.gom0919/ABD046FE-FF7F-420B-97A8-251F3AFDFDAB.jpeg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "건강한참치"
+            }
+        },
+        "articleId": 1937,
+        "attaches": [
+            {
+                "extension": "png",
+                "fullName": "KakaoTalk_20190426_134021019.png",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "KakaoTalk_20190...26_134021019.png",
+                "size": 20860,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/06931aa9bce5e23e12f491a69d7b0474dc8e709256/MjAxOTA0MjZfMjQ5/MDAxNTU2MjUzNjQ3ODg4.c3DmQqTlraRMVrMyeyoSFXe-9Y8dz9xtXL166RSAnQQg.yumIVhPq7KP-Bz2qG9brEhMwcyxNgsTFE3IoaxVyU0wg.PNG.gom0919/KakaoTalk_20190426_134021019.png?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "잘되는데요",
+                    "id": 58178885,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 58178885,
+                    "updateDate": 1556257204000,
+                    "writer": {
+                        "id": "jata050612",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTNfNDcg/MDAxNTgxNTg1NTEzMjA2.Juc0f8XrBzLLMOgdob2TMIVwjK9E7ngquhBw-PWlvUog.ioUS09Wd18lQZhBZnxSy_IDjnUUTGynqSMZxJrfYDOEg.PNG.jata050612/profileImage.png"
+                        },
+                        "nick": "자타"
+                    }
+                },
+                {
+                    "content": "띠용??? 전 왜 안되고 저렇게 정보를 못불러오는걸까요 ㅠ",
+                    "id": 58184803,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58178885,
+                    "updateDate": 1556263691000,
+                    "writer": {
+                        "id": "gom0919",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA0MjVfMTM2/MDAxNTU2MTk4NTIzOTY5.s4FHp_NbplSaUifn22oh6IZ5mGHdTNdnEYxjNRu-MWcg.WXsTmkYAJcGctl0rzzlhh7psVRmtzXIz4IDMAh2fg8sg.JPEG.gom0919/ABD046FE-FF7F-420B-97A8-251F3AFDFDAB.jpeg"
+                        },
+                        "nick": "건강한참치"
+                    }
+                },
+                {
+                    "content": "전 메신져봇 써요\r\n앱 차이일수도?(아님 말고요)\r\n",
+                    "id": 58212828,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58178885,
+                    "replyMember": {
+                        "id": "gom0919",
+                        "nick": "건강한참치"
+                    },
+                    "updateDate": 1556290626000,
+                    "writer": {
+                        "id": "jata050612",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTNfNDcg/MDAxNTgxNTg1NTEzMjA2.Juc0f8XrBzLLMOgdob2TMIVwjK9E7ngquhBw-PWlvUog.ioUS09Wd18lQZhBZnxSy_IDjnUUTGynqSMZxJrfYDOEg.PNG.jata050612/profileImage.png"
+                        },
+                        "nick": "자타"
+                    }
+                },
+                {
+                    "content": "getWebText()는 앱마다 파싱내용이 살짝 달라서 그래요. 메신져봇에 적용하시거나 초록봇의 파싱 결과를 토대로 다시 구성하셔야합니다.",
+                    "id": 59168574,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 59168574,
+                    "updateDate": 1557480375000,
+                    "writer": {
+                        "id": "babara0328",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjdfMjky/MDAxNTY2ODU3ODk5MjU5.VykqYHYV1TQgZcwxaipb6ZH1ziEWOJgmb_qq65CZUMsg.voN5N_Wvvpx84LsTGeSTbDJlOkHKjuFe7F0GSu4LKu4g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "자유"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,237 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div><b>=&gt; try 문</b></div><div><font color=\"#7d7d7d\"><br /></font></div><div><b>강좌 내용</b></div><div><b>=&gt; try 문은!</b></div><div><b>주로 예외처리를 위해 많이 사용됩니다.</b></div><div><b>에러가 나거나 특정 예외상황이 발생했을때</b></div><div><b>스크립트가 종료되지 않고 에러를 다시 반환한다거나 에러를 건너뛰고 흐름을 진행하기 위해서 쓰이는데요.</b></div><div><b>단순히 실행흐름을 관리하기 위해서도 쓰입니다. 대부분의 경우는 아래의 이유로 사용합니다.</b></div><div><ul><li>써드파티 모듈 등 자체 개발한 앱이 아닌 경우 에러를 회피하기 위함</li><li>빠르게 발생한 에러 위치를 제공하기 위함</li><li>좀 더 자세한 에러 정보를 제공하기 위함</li><li>완성된 어플리케이션인 경우 에러를 출력하지 않기 위함</li></ul></div><div><b><br /></b></div><div><b>try 문은 대략 3가지 형태가 있습니다</b></div><div><b><br /></b></div><div><div style=\"\"><b>try...catch</b></div><div style=\"\"><b>try...finally</b></div><div style=\"\"><b>try...catch...finally</b></div></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>설명의 간략화를 위해 마지막 한 가지의 형태만 보기로 하겠습니다.</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><div style=\"font-weight: bold;\">try {</div><div style=\"font-weight: bold;\">&nbsp; &nbsp;try_statements</div><div style=\"font-weight: bold;\">}</div><div style=\"font-weight: bold;\">[catch (exception_var_1 if condition_1) {</div><div style=\"font-weight: bold;\">&nbsp; &nbsp;catch_statements_1</div><div style=\"font-weight: bold;\">}]</div><div style=\"font-weight: bold;\">...</div><div style=\"font-weight: bold;\">[catch (exception_var_2) {</div><div style=\"font-weight: bold;\">&nbsp; &nbsp;catch_statements_2</div><div style=\"font-weight: bold;\">}]</div><div style=\"font-weight: bold;\">[finally {</div><div style=\"font-weight: bold;\">&nbsp; &nbsp;finally_statements</div><div style=\"font-weight: bold;\">}]</div><div style=\"font-weight: bold;\"><br /></div><div style=\"font-weight: bold;\">이게 정석적인 코드인데요. 뭔가 많아 보이죠?</div><div style=\"font-weight: bold;\">그래서 설명하기 쉽게 다 갖다 버렸습니다.</div><div style=\"font-weight: bold;\"><br /></div><div style=\"font-weight: bold;\"><div>try {<span style=\"font-size: 10pt;\">&nbsp;// 실행할 코드&nbsp;</span><span style=\"font-size: 10pt;\">}</span></div><div>catch(error) {<span style=\"font-size: 10pt;\">&nbsp;// 에러시 코드&nbsp;</span><span style=\"font-size: 10pt;\">}</span></div><div>finally { //에러가 나든 안 나든 실행할 코드<span style=\"font-size: 10pt;\">}</span></div></div><div style=\"font-weight: bold;\"><br /></div><div style=\"font-weight: bold;\">훨씬 간단해졌죠. 이것만 봐도 거의 끝난 것 같군요.(착각)</div><div style=\"font-weight: bold;\">여기서 흐름을 보도록 하죠.</div><div style=\"font-weight: bold;\"><br /></div><div style=\"\"><div style=\"font-weight: bold;\"><span style=\"font-size: 10pt;\">에러가 안 났을 때: try - finally</span></div><div style=\"font-weight: bold;\">에러가 났을 때: try - error - catch - finally</div><div style=\"font-weight: bold;\"><br /></div><div style=\"font-weight: bold;\">이처럼 try 내부의 코드를 실행해서 에러가 나더라도</div><div style=\"font-weight: bold;\">에러에 대해 catch 내의 코드를 실행하고 finally 문을 진행합니다.</div><div style=\"font-weight: bold;\">예재를 보면</div><div style=\"font-weight: bold;\"><br /></div><div style=\"\"><div style=\"\"><b>try {</b></div><div style=\"\"><b>&nbsp; &nbsp; alert(abc);&nbsp;</b><b>// abc 변수명이 선언되지 않아 에러가 날 것이 확실함</b></div><div style=\"\"><b>} catch(e) { // 에러가 난 부분에서 에러코드를 잡아옴(?)</b></div><div style=\"\"><b>&nbsp; &nbsp; alert(e); // 에러코드를 출력;</b></div><div style=\"\"><b>}</b></div></div></div></div><div><b><br /></b></div><div><b>결과는 abc is Not defined. 하고 에러코드를 알려줍니다.</b></div><div><b>에러코드를 커스텀 할 수도 있습니다.</b></div><div><b>바로 throw 함수로 가능한데요. 말그대로 던지는 거죠.</b></div><div><b>throw new error(&quot;에러가 왔어요~&quot;);</b></div><div><b>하면 던진 에러를 catch가 잡아옵니다.</b></div><div><br /></div><div><div style=\"\"><b>try {</b></div><div style=\"\"><b>&nbsp; const even = parseInt(prompt(&apos;짝수를 입력하세요&apos;));</b></div><div style=\"\"><b>&nbsp; if (even % 2 !== 0) {</b></div><div style=\"\"><b>&nbsp; &nbsp; throw new Error(&apos;짝수가 아닙니다.&apos;);</b></div><div style=\"\"><b>&nbsp; }</b></div><div style=\"\"><b>} catch (e) {</b></div><div style=\"\"><b>&nbsp; alert(e.message);</b></div><div style=\"\"><b>}</b></div></div><div><b>이러면 입력받은 숫자가 2로 나눠서 나머지가 0이 아닐경우</b></div><div><b>즉,짝수가 아닐때 &apos;짝수가 아닙니다.&apos; 라는 커스텀 에러를 출력합니다.</b></div><div><b>이렇게 작성자가 원치 않는 상황을 예외처리하는게 목적입니다.</b></div><div><b><br /></b></div><div><b>try catch 를 switch case 문처럼 쓸 방법도 있습니다.</b></div><div><b>catch (e if case) 처럼 case 상황에 대해 catch 문을 쓸 수가 있기 때문입니다.</b></div><div><b>이제 여러분도 Eval Error 나 TypeError, RangeError 등에서 오류사항을 확인하는 코드를 짤 수 있습니다.(추카추카)</b></div><div><b>단지 주의할 점은 try 문을 남용하게 되면&nbsp;</b><b>가독성과 유지보수에 악영향을 끼칩니다.</b></div><div><b>따라서&nbsp;</b><b>예외와 오류를 구분해야 하는데,</b></div><div><b>무턱대고 try {} catch (Exception e) {}로만 다 처리해 버리면&nbsp;</b><b>문제가 되죠.</b></div><div><b>쓸때와 안 쓸때를 잘 구분해서 적당히 사용하시기 바랍니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000020700000000",
+            "head": "초급",
+            "headId": 5,
+            "id": 519,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 362,
+            "refArticleId": 519,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "<봇초보가 하는 언어강좌 열세번째> try ~ catch ~finally",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1548396592210,
+            "writer": {
+                "id": "r960701",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "카신"
+            }
+        },
+        "articleId": 519,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이제 내가 사진 공유 소스 강좌를 쓸 차례인가...",
+                    "id": 51901378,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 51901378,
+                    "updateDate": 1548402349000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 51901667,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 51901378,
+                    "sticker": {
+                        "height": 112,
+                        "id": "linebiz21_01-4-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/linebiz21_01/original_4.png",
+                        "width": 129
+                    },
+                    "updateDate": 1548402702000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "ㄷ",
+                    "id": 51937403,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 51937403,
+                    "updateDate": 1548470075000,
+                    "writer": {
+                        "id": "hoodbear1785",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODExMjFfMjU0/MDAxNTQyODAzNzk3OTEx.uj2jiZ6GBFJxWsmW2ECrkIUHCp5kguV_RqYLYb1vhkog.dMoCnonRrq_B94upPWv42ozJ-XSmjE7-KnDJcNPZ0Rsg.JPEG.hoodbear1785/profileImage.jpg"
+                        },
+                        "nick": "뫄뫄비우스"
+                    }
+                },
+                {
+                    "content": "finally 문은 try 혹은 catch애서 return 을 사용하더라도 무조건 거쳐간다고..!",
+                    "id": 52687592,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52687592,
+                    "updateDate": 1549559476000,
+                    "writer": {
+                        "id": "seuiggi1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190215_273/seuiggi1234_1550160993132CUNzC_PNG/image.png"
+                        },
+                        "nick": "이승기"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

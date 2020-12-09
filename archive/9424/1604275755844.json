@@ -1,0 +1,408 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 23,
+            "contentElements": [],
+            "contentHtml": "<p>완성본 아니고 오류 있습니다.<br /><br />댓글에 &quot;이거 오류나요&quot; 이런 거 있으면 숨통 끊어버림.<br /><br />너무 복잡하게 시작해서 진행이 어렵네요..<br />오류 수정해서 만드실 분들은 만드세요<br /><br />게임 참여 / 게임 시작 / 직업 분배 / 낮 / 죽일 사람 단체투표 / 죽임 / 밤<br /><br />까지 작동될겁니다 (은근 짧은 192줄)<br /><br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />const Lw = &quot;\\u200b&quot;.repeat(500)<br />const Ll = &quot;&#9148;&quot;.repeat(40)<br />const Thread = java.lang.Thread<br />players = []<br />king = &quot;&quot;<br />let isStart, day, vote, vote2, say = false<br />turn = 0<br /><br />Mafia = {<br />&quot;Join&quot; : sender =&gt; players.push({&quot;name&quot;:sender, &quot;job&quot;:undefined, &quot;canTalk&quot;:true, &quot;alive&quot;:true, &quot;votes&quot;:[0, 0, 0, 0], &quot;voted&quot;:[false, false, false, false]}),<br />&quot;Remove&quot; : sender =&gt; players.splice(players.indexOf(players.find(json =&gt; json[&quot;name&quot;]==sender)), 1),<br />&quot;Reset&quot; : _ =&gt; {let isStart, day, vote, vote2, say = false; players = [], king = &quot;&quot;, turn = 0}<br />}<br /><br />isAlive = sender =&gt; players.find(json =&gt; json[&quot;name&quot;] == sender)[&quot;alive&quot;];<br />isPlayer = sender =&gt; players.map(a =&gt; a[&quot;name&quot;]).indexOf(sender)!=-1;<br />isVote = index =&gt; !players.find(json =&gt; json[&quot;voted&quot;][index] == false);<br />isVote2 = _ =&gt; !players.find(json =&gt; !json[&quot;voted&quot;][1]&amp;&amp;!json[&quot;voted&quot;][2]&amp;&amp;!json[&quot;voted&quot;][3]);<br />isMute = _ =&gt; !!players.find(json =&gt; json[&quot;canTalk&quot;] == false);<br />allMute = boolean =&gt; players.map(json =&gt; json[&quot;canTalk&quot;] = (boolean?false:true));<br />Mute = (user, boolean) =&gt; players.find(json =&gt; json[&quot;name&quot;] == user)[&quot;canTalk&quot;] = boolean?false:true;<br /><br />getPlayers = _ =&gt; {<br />pl = players<br />rep = &quot;[현재 인원] (&quot;+pl.length+&quot;/10)\\n&quot;+Ll+&quot;\\n&quot;+pl.map((a, b) =&gt; (!a[&quot;alive&quot;]?(a[&quot;name&quot;]+&quot; (사망)&quot;):a[&quot;name&quot;])).map((a, b) =&gt; (b+1)+&quot;. &quot;+(a[&quot;name&quot;]==king?a[&quot;name&quot;]+&quot; (방장)&quot;:a[&quot;name&quot;])).join(&quot;\\n&quot;);<br />return rep<br />}<br /><br />divideJob = _ =&gt; {<br />jobs = new Array(players.length).fill().map((a, b) =&gt; b).sort(_ =&gt; Math.random() - 0.5)<br />arr = [&quot;경찰&quot;, &quot;의사&quot;]<br />for (i=0; i&lt;{4:1, 5:1, 6:2, 7:2, 8:2, 9:3, 10:3}[players.length]; i++) arr.push(&quot;마피아&quot;);<br />for (i=0; i&lt;{4:1, 5:2, 6:2, 7:3, 8:4, 9:5, 10:5}[players.length]; i++) arr.push(&quot;시민&quot;);<br />players.map((a, b) =&gt; players[jobs[b]][&quot;job&quot;] = arr[b])<br />return players<br />}<br /><br />//투표 배열 순서 -&gt; 낮, 마피아, 경찰, 의사<br />function response (room, msg, sender, _, replier) {<br /><br />try {<br />if (msg.startsWith(&quot;yx&quot;)&amp;&amp;sender==&quot;가&quot;) {<br />replier.reply(eval(msg.substr(2).trim()))<br />}<br />} catch(e) {<br />replier.reply(e)<br />}<br /><br />if (msg == &quot;/마피아&quot;&amp;&amp;room==sender) {<br />result = &quot;[!] 마피아 도움말\\n&quot;+Ll+&quot;\\n&quot;+<br />&quot;/마피아 참가\\n&quot;+<br />&quot;/마피아 퇴장\\n&quot;+<br />&quot;/마피아 목록\\n&quot;+<br />&quot;/마피아 시작 (방장만 사용 가능)\\n&quot;+<br />&quot;/마피아 종료 (방장만 사용 가능)\\n&quot;+<br />&quot;\\n&quot;+<br />&quot;\\n&quot;+<br />&quot;[게임 방법]&quot;+<br />&quot;\\n&quot;+Ll+&quot;\\n&quot;+<br />&quot;1. &apos;/마피아 참가&apos; 를 입력한다.\\n&quot;+<br />&quot;2. 4명 이상이 모이면 방장은 &apos;/마피아 시작&apos; 을 입력한다.\\n&quot;+ <br />&quot;3. 게임이 시작되면 각자 직업이 부여되며 밤이 된다.\\n&quot;+<br />&quot;4. 낮에는 모두가 참여하는 투표로, 밤에는 마피아들만의 비밀회의로 죽을 사람을 결정한다.\\n&quot;+<br />&quot;5. 마피아에게 지목당한 사람, 표를 가장 많이 얻은 사람은 죽는다.&quot;<br />+&quot;\\n&quot;+Ll<br />replier.reply(result)<br />}<br /><br />if (msg == &quot;/마피아 참가&quot;&amp;&amp;room==sender) {<br />if (!isStart) {<br />if (!isPlayer(sender)) {<br />Mafia.Join(sender)<br />if (players.length==1) {<br />replier.reply(&quot;[!] &quot;+sender+&quot; 님이 방장입니다!&quot;);<br />king = sender<br />}<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] &quot;+sender+&quot; 님 참가 완료!\\n\\n&quot;+getPlayers())<br />} else replier.reply(&quot;[!] 이미 게임에 참여 중입니다!&quot;);<br />} else replier.reply(&quot;[!] 게임이 이미 시작되었습니다!&quot;);<br />}<br /><br />if (msg == &quot;/마피아 퇴장&quot;&amp;&amp;room==sender) {<br />if (!isStart) {<br />if (isPlayer(sender)) {<br />Mafia.Remove(sender)<br />replier.reply(&quot;[!] &quot;+sender+&quot; 님이 퇴장하셨습니다.\\n\\n&quot;+getPlayers());<br />if (players.length) {<br />if (sender == king) {<br />king = players[0][&quot;name&quot;]<br />replier.reply(&quot;[!] 방장이 퇴장하여 &quot;+king+&quot; 님으로 방장이 이전됩니다!&quot;)<br />}<br />} else replier.reply(&quot;[!] 참가 인원이 없어 방이 소멸하였습니다!&quot;);<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] &quot;+sender+&quot; 님이 퇴장하셨습니다.\\n\\n&quot;+getPlayers());<br />} else replier.reply(&quot;[!] 게임에 참여 중이 아닙니다!&quot;);<br />} else replier.reply(&quot;[!] 게임이 이미 시작되었습니다!&quot;);<br />}<br /><br />if (msg == &quot;/마피아 목록&quot;&amp;&amp;room==sender) replier.reply(getPlayers());<br /><br />if (room==sender&amp;&amp;msg[0]!=&quot;/&quot;&amp;&amp;isPlayer(sender)&amp;&amp;isAlive(sender)&amp;&amp;players.find(a =&gt; a[&quot;name&quot;]==sender)[&quot;canTalk&quot;]&amp;&amp;!vote&amp;&amp;!vote2) {<br />send = &quot;[&quot;+sender+&quot;]\\n&quot;+Ll+&quot;\\n&quot;+msg<br />for (i of players) replier.reply(i[&quot;name&quot;], send);<br />}<br /><br />if (msg == &quot;/마피아 시작&quot;&amp;&amp;room==sender) {<br />if (isPlayer(sender)) {<br />if (sender == king) {<br />if (!isStart) {<br />if (players.length &gt; 3 &amp;&amp; players.length &lt; 11) {<br /><br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] 마피아 게임 세팅 중입니다..&quot;);<br />isStart = true<br />divideJob()<br />Thread.sleep(1000*3)<br />for (i of players) {<br />replier.reply(i[&quot;name&quot;], &quot;[!] 직업이 분배되었습니다!\\n&quot;+i[&quot;name&quot;]+&quot; 님의 직업은 &lt;&quot;+i[&quot;job&quot;]+&quot;&gt; 입니다!&quot;)<br />replier.reply(i[&quot;name&quot;], &quot;[!] 낮이 되었습니다.\\n1분 뒤 투표를 시작합니다.&quot;)<br />}<br />day = true<br />Thread.sleep(1000*10)<br />allMute(true)<br />vote = true<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] 투표 시간입니다. 마피아로 의심되는 사람을 지목해주세요.\\n\\n&quot;+getPlayers()+&quot;\\n\\n입력 방식 : /(번호)\\n예) /1&quot;);<br /><br />} else replier.reply(&quot;[!] 게임 시작 인원은 최&quot;+(players.length&lt;4?&quot;소 4명입니다!&quot;:&quot;대 10명입니다!&quot;));<br />} else replier.reply(&quot;[!] 게임이 이미 시작되었습니다!&quot;);<br />} else replier.reply(&quot;[!] 방장만 게임을 시작할 수 있습니다!&quot;);<br />} else replier.reply(&quot;[!] 게임의 참여자가 아닙니다!&quot;);<br />}<br /><br />if (msg == &quot;/마피아 종료&quot; &amp;&amp; room == sender &amp;&amp; isPlayer(sender)) {<br />if (sender == king) {<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] 게임이 종료됩니다. 테스트 끝!&quot;)<br />Mafia.Reset();<br />} else replier.reply(&quot;[!] 방장만 게임을 종료할 수 있습니다!&quot;)<br />}<br /><br />if (msg[0]==&quot;/&quot;&amp;&amp;(msg.length==2||msg.length==3)&amp;&amp;day&amp;&amp;vote&amp;&amp;isMute()&amp;&amp;room==sender&amp;&amp;isPlayer(sender)) {<br />if (Number(msg.split(&quot;/&quot;)[1]) &gt; 0 &amp;&amp; Number(msg.split(&quot;/&quot;)[1]) &lt;= players.length) {<br />selected = players[Number(msg[1])-1]<br />if (selected[&quot;name&quot;] != sender) {<br />selected[&quot;votes&quot;][0]++<br />replier.reply(&quot;[!] 마피아로 &quot;+selected[&quot;name&quot;]+&quot; 님을 지목했습니다.&quot;)<br />players.find(a =&gt; a[&quot;name&quot;] == sender)[&quot;voted&quot;][0] = true<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] &quot;+sender+&quot; 님이 투표를 마쳤습니다. (&quot;+players.filter(json =&gt; json[&quot;voted&quot;][0] == true).length+&quot;/4)&quot;);<br />if (isVote(0)) {<br />replier.reply(JSON.stringify(players))<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] 모든 사람들이 투표를 마쳤습니다.&quot;);<br />pl = players<br />pl.sort((a, b) =&gt; a[&quot;votes&quot;][0] - b[&quot;votes&quot;][0]).reverse()<br />die = pl[0]<br />players[players.indexOf(die)][&quot;alive&quot;] = false<br />for (i of players) {<br />replier.reply(i[&quot;name&quot;], &quot;[!] &quot;+players[players.indexOf(die)][&quot;name&quot;]+&quot; 님이 사망하였습니다.&quot;);<br />replier.reply(i[&quot;name&quot;], &quot;[!] 그의 직업은 &quot;+players[players.indexOf(die)][&quot;job&quot;]+&quot; 이었습니다!&quot;)<br />}<br />replier.reply(players[players.indexOf(die)][&quot;name&quot;], &quot;[!] 당신은 죽었습니다! 앞으로 게임을 관전하실 수 있습니다.&quot;)<br />vote = false<br />players.map(json =&gt; json[&quot;voted&quot;][0] = false)<br />players.map(json =&gt; json[&quot;votes&quot;][0] = 0)<br />allMute(false)<br />if (!(players.filter(a =&gt; a[&quot;job&quot;]==&quot;마피아&quot;).filter(a =&gt; a[&quot;alive&quot;]==true).length)) {<br />replier.reply(&quot;[!] 시민의 승리입니다! 게임이 종료됩니다.&quot;)<br />Mafia.Reset();<br />} else {<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] 이제 대화가 가능합니다. 1분 뒤 밤이 됩니다.&quot;);<br />Thread.sleep(1000*10)<br />day = false<br />players.map(json =&gt; json[&quot;job&quot;] != &quot;마피아&quot;?json[&quot;canTalk&quot;] = false:&quot;&quot;)<br />for (i of players) replier.reply(i[&quot;name&quot;], &quot;[!] 밤이 되었습니다.&quot;)<br />vote2 = true<br />}<br />}<br />} else replier.reply(&quot;[!] 자기 자신을 지목할 순 없습니다!&quot;);<br />} else replier.reply(&quot;[!] 1번부터 &quot;+players.length+&quot;번 중에만 선택해주세요!&quot;)<br />}<br /><br />if (isStart&amp;&amp;!day&amp;&amp;vote2&amp;&amp;!isVote2()&amp;&amp;!say) {<br />say = true<br />mafias = players.filter(json =&gt; json[&quot;job&quot;] == &quot;마피아&quot;).map(json =&gt; json[&quot;name&quot;])<br />for (i in mafias) replier.reply(mafias[i], &quot;[!] 당신은 마피아 입니다. 죽일 사람을 지정해 주세요.\\n\\n&quot;+getPlayers()+&quot;\\n\\n입력 방식 : /(번호)\\n예) /1&quot;);<br />doctors = players.filter(json =&gt; json[&quot;job&quot;] == &quot;의사&quot;).map(json =&gt; json[&quot;name&quot;])<br />for (i in doctors) replier.reply(doctors[i], &quot;[!] 당신은 의사입니다. 살릴 사람을 지정해 주세요.\\n\\n&quot;+getPlayers()+&quot;\\n\\n입력 방식 : /(번호)\\n예) /1&quot;);<br />policers = players.filter(json =&gt; json[&quot;job&quot;] == &quot;경찰&quot;).map(json =&gt; json[&quot;name&quot;])<br />for (i in doctors) replier.reply(doctors[i], &quot;[!] 당신은 경찰입니다. 조사할 사람을 지정해 주세요.\\n\\n&quot;+getPlayers()+&quot;\\n\\n입력 방식 : /(번호)\\n예) /1&quot;);<br />innos = players.filter(json =&gt; json[&quot;job&quot;] == &quot;시민&quot;).map(json =&gt; json[&quot;name&quot;])<br />for (i in doctors) replier.reply(doctors[i], &quot;[!] 당신은 시민입니다. 낮이 될 때까지 기다려 주세요.&quot;);<br />}<br /><br /><br /><br />}<br /><br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000024D000000000",
+            "id": 9424,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 978,
+            "refArticleId": 9424,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "미완성 마피아 배포",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1577559893590,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 9424,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오류나ㅇ... 어이 거기 누구야! 당신 누ㄱ.. 읍읍",
+                    "id": 77046371,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77046371,
+                    "updateDate": 1577559945000,
+                    "writer": {
+                        "id": "shlee4118",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MTVfMjQz/MDAxNTY1ODgxMTEzMTY4.gp-6oKQVCzRD7ULjBXqsBqR0FeDmlYAptK6F1djINXkg.kmLb2ioU-5M3HU0SINfp5ajHnWcdAZkf-d6jK0Uz5ugg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ApplePlus"
+                    }
+                },
+                {
+                    "content": "님 저 글 올릴 때까지 대기타세여?",
+                    "id": 77046387,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77046371,
+                    "updateDate": 1577560011000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "ㄴ 알림 설정",
+                    "id": 77046390,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77046371,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1577560032000,
+                    "writer": {
+                        "id": "shlee4118",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MTVfMjQz/MDAxNTY1ODgxMTEzMTY4.gp-6oKQVCzRD7ULjBXqsBqR0FeDmlYAptK6F1djINXkg.kmLb2ioU-5M3HU0SINfp5ajHnWcdAZkf-d6jK0Uz5ugg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ApplePlus"
+                    }
+                },
+                {
+                    "content": "이거 오류나요 읍읍 \r\n어디서 오류가 나는지만 확인하면 수정해서 쓰는데 ㅠㅠ 일단 돌려보고 오류부터 찾아야겠네요",
+                    "id": 77047130,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77047130,
+                    "updateDate": 1577565843000,
+                    "writer": {
+                        "id": "yce1014",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MjBfMTIx/MDAxNTg3MzUzNjIzNzAx.gUaiEAPZrvBR4UzgkWFqliJyFnSlkuNpMfU08QhALgsg.lJgdqzxUHJhGfMqLZaZtvmgcGdUYZ8BG7AmJ9STODHAg.JPEG/Totoro-backgrounds-wallpapers-HD_%281%29.jpg"
+                        },
+                        "nick": "SOODA"
+                    }
+                },
+                {
+                    "content": "너무 복잡한데요",
+                    "id": 77048381,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77048381,
+                    "updateDate": 1577573792000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 77048696,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEyMjlfMTgw/MDAxNTc3NTc0NzY1Nzcy.N7PVIl7EE3nYhCHeBkhYdx5sXtrk5vS_6TFKlc98Egcg.UB1Fmh3jzBcAZ3jeC9PUXNJBRkTd0UdKveehvRO8fLMg.JPEG/1577094154151.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "1577094154151.jpg",
+                        "height": 1048,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTEyMjlfMTgw/MDAxNTc3NTc0NzY1Nzcy.N7PVIl7EE3nYhCHeBkhYdx5sXtrk5vS_6TFKlc98Egcg.UB1Fmh3jzBcAZ3jeC9PUXNJBRkTd0UdKveehvRO8fLMg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTEyMjlfMTgw/MDAxNTc3NTc0NzY1Nzcy.N7PVIl7EE3nYhCHeBkhYdx5sXtrk5vS_6TFKlc98Egcg.UB1Fmh3jzBcAZ3jeC9PUXNJBRkTd0UdKveehvRO8fLMg.JPEG/1577094154151.jpg",
+                        "width": 720
+                    },
+                    "refId": 77048696,
+                    "updateDate": 1577574768000,
+                    "writer": {
+                        "id": "hozinryu",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200828_147/hozinryu_1598577910916IfMMA_PNG/image.png"
+                        },
+                        "nick": "알랑뿡까"
+                    }
+                },
+                {
+                    "content": "역시 포기할 줄 알았어",
+                    "id": 77060673,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77060673,
+                    "updateDate": 1577588313000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "신기하네요 마피아...소스.흠...",
+                    "id": 77119368,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77119368,
+                    "updateDate": 1577634080000,
+                    "writer": {
+                        "id": "mmirya6745",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ciarro"
+                    }
+                },
+                {
+                    "content": "ㅎㄷ",
+                    "id": 77276038,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77276038,
+                    "updateDate": 1577786221000,
+                    "writer": {
+                        "id": "hojunyun243",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDZfNTMg/MDAxNTg2MTAwMDEzNzQy.UwC7ZL_cADOp1lwXvYnywIrWiaxLR8u9tcJv5clHGeAg.9tRl5OtmkqseiVG2BBsJfnK5VhomqwzhY-TKFp4GhDgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "한국인"
+                    }
+                },
+                {
+                    "content": "완성되면 꼭 해보고싶다!",
+                    "id": 77346083,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77346083,
+                    "updateDate": 1577877231000,
+                    "writer": {
+                        "id": "korh0101",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDNfMTQ3/MDAxNTc4MDA1NDEzNzA5.FecJpmDBzWn9Sz6a0hzrJQHVL4HOx78afR4_ueji6dwg.nlnE4b-tfZZepgNU-HhEXdv-n4jMkmgnIlFsAoKcjpkg.JPEG/downloadfile-1.jpg"
+                        },
+                        "nick": "소"
+                    }
+                }
+            ],
+            "last": {
+                "id": 95351168,
+                "refId": 95351168
+            },
+            "next": {
+                "id": 77575738,
+                "refId": 77575738
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

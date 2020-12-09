@@ -1,0 +1,375 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 11,
+            "contentElements": [],
+            "contentHtml": "<p>안녕하세요?<br />여러분들의 뇌에 기초적인 프로그래밍 구조를 넣어주기 위해서 온 SuYong입니다<br /><br />봇을 만들기전에 뭔저 사용방법을 익혀야겠죠? 이전까지 강좌가 키보드로 타자치는법을 알려준 강좌라면, 지금 제가쓰는 강좌는 타자를 &quot;잘&quot; 치게 해주는 강좌입니다.<br /><br />물론 타자를 못치셔도 상관없습니다.<br /><br />일단 이 강의는 프로그래밍에 필요한 대표적인 기술이나 개념을 제시하고, 그에대한 정의, 사용방법, 왜 사용하는가, 예시 순으로 나열할 예정입니다.(정의는 딱딱한 사전적 의미가아닌 제가 따로 명명할 예정입니다. 제대로 코딩을 배우고 싶은분들은 검색해서 제대로된 의미를 찾으세요!) 이것들을 이해하시면 다른 카카오봇에서 왜 API를 저렇게 귀찮고 힘들게 만들어놨는지 이해가 되실겁니다.<br /><br />깊숙히 알려주는 내용, 굳이 이런거까지 알아야해?라고 의문이 드는 내용은 [고급]이라고 표시를 하겠습니다 [고급&gt; 여기에 내용이 추가됩니다 &lt;고급] 이사이의 내용은 고급진 내용입니다.<br /><br />-----------------------------<br /><br />목차<br /> * 변수<br />&nbsp;&gt; <font color=\"#2196f3\"><b>기본</b></font><br />&nbsp;&gt; <a href=\"https://cafe.naver.com/nameyee/714\" target=\"_blank\" title=\"새창으로 열림\"><font color=\"#000000\">자료형</font></a><br />&nbsp;&gt; 기타<br /> * 함수<br />&nbsp;&gt; 기본<br />&nbsp;&gt; 익명함수 + arrow function<br />* 콜백<br />&nbsp;&gt; 기본<br />&nbsp;&gt; Promise<br /> * 생각중...<br /><br />-----------------------------<br /><br />변수(Variable) - 기본<br /><br />프로그래밍의 기초이자 핵심이자 전부라고 할수있습니다<br /><br />&gt; 정의<br />값을 담는 상자<br /><br />&gt; 사용방법<br />선언(define) 후 사용<br /><br />이때 선언은 내가 변수를 쓰겠다고 &apos;선언&apos;하는겁니다. 자바스크립트에서는 var이나 let const(상수긴하지만)으로 선언합니다<br /><br />선언은 딱 한번만 하시면 됩니다. 한번이라도 선언된 후는 자유롭게 사용가능합니다<br /><br />[고급&gt;<br />사실 JS에는 호이스팅이라고 선언을 안해도 사용가능한... (선언을 위로 끌어올리는(Hoist)) 메커니즘이 있습니다. 그래서 사실 선언을 생략해도 대부분의 경우는 작동합니다만<br /><br />당근 선언을 하는게 권장사항이겠죠?<br />&lt;고급]<br /><br />선언을 할때에는<br />    var 변수이름<br />이나<br />    let 변수이름<br />으로 선언을 합니다.<br /><br />내가 그 값을 사용할때에는 그냥 변수이름만 적어주시면 됩니다. 가장 많이쓰이니까 가장 쓰기편하죠?<br /><br />[고급&gt;<br />var과 let의 차이는 스코프(scope) 차이라 보시면 되는데<br />스코프는 무엇이냐?<br /><br />프로그래밍을 할때는 특정 부분을 집합 시킵니다<br />그러니까 코드 뭉치들을 그룹짓는다고 보시면 되겠네요<br /><br />코드뭉치들을 그룹지을때 표시가 필요하겠죠? 그표시가 바로 중괄호입니다<br />중괄호안은 같은 그룹이다 라는걸 알려주는거죠<br /><br />이때 이 코드뭉치들이 그룹지어진 범위가 스코프이고 중괄호로 묶인 스코프를 블록단위 스코프라고 합니다<br /><br />var은 함수단위 스코프이고 let은 블록단위 스코프입니다 js es6버전부터 let을 지원하니 js es5버전은 var을 써야만 합니다<br /><br />&lt;고급]<br /><br />(이해 안되셔도 괜찮아요 밑에 예제랑 같이 보시면 됩니다!)<br /><br />&gt; 왜 쓰는가?<br />프로그래밍에서는 값이 매우 중요합니다. 프로그램은 하나의 정보를 가공하여서 사용자에게 보내줍니다. 이에따르면 프로그램은 무조건 정보를 다루는 무언가가 필요합니다<br /><br />이때 정보를 다루는 무언가가 바로 변수입니다. 마인크래프트로 예시를 들어보죠<br /><br />마인크래프트에서 월드를 저장하려면 블럭이 무엇인지 정의되어야합니다. 블럭이 무슨 값들을 가지고 있는지를 체크하고 그 값을 토대로 사용자에게 보여주는거죠<br /><br />ID: 1, minecraft:stone, 돌 블럭은<br /><br />    아이템코드<br />    아이템대미지(부아이템코드)<br />    블럭이미지<br />    부숴지는시간<br />    터지는 강도<br />    부숴진후 나올 블럭<br /><br />등등... 많은 정보를 가지고 있겠죠?<br /><br />이정보를 저장하기 위해서 변수를 사용하는겁니다<br /><br />&gt; 예제<br />(//뒤에 적힌말은 실제 코드에는 없어야하는 부분입니다. 주석이라고 부릅니다)<br /><br />var a // a라는 변수 선언<br />let As1 // As1이라는 변수 선언<br />var t = 0 // t라는 변수가 0인 값을 가지고 있다고 선언<br />let asdf1234, r = t // asdf1234를 선언, r이 t라는 값을 가지고 있다고 선언<br /></p><p><br /><span style=\"font-size: 13.3333px;\">-----------------------------</span><br /></p><p><span style=\"font-size: 13.3333px;\"><br /></span></p><p><span style=\"font-size: 13.3333px;\">강좌를 분리하기로 생각했습니다. 업데이트 할때마다 목차에 링크 추가해둘태니 참고해주세요</span></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000002B300000000",
+            "head": "초급",
+            "headId": 5,
+            "id": 691,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 248,
+            "refArticleId": 691,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "JS의 기초와 뼈대를 잡는 문법 강의 - 변수: 기본",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1549478618130,
+            "writer": {
+                "id": "tlatndyd2001",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzAxMTlfMjk1/MDAxNDg0NzU3NjU1OTg0.i3WaE6_UwjXL--if0A4KarFOoZKk_-azh0eEQkYBUrcg.WXqgCyCXaq9QDJxe6-QVsVXQzS0-gs9Shq_5aVtfCRcg.JPEG.tlatndyd2001/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "SuYong"
+            }
+        },
+        "articleId": 691,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "님이 외 여기 잇으심시오?",
+                    "id": 52609525,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52609525,
+                    "updateDate": 1549490114000,
+                    "writer": {
+                        "id": "astr36",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA3MTVfMjI5/MDAxNTYzMTg5NDIyNDM2.JHg7X32UJM4DC7JBBoSTmZpFed6r-v_aj0SdOOoFKlUg.nHWAX2DSUWTjVws1h3slnUKelTzec-ZGCewEEpZ3m-Ig.PNG.astr36/2048.png"
+                        },
+                        "nick": "Astro"
+                    }
+                },
+                {
+                    "content": "재밋지안슴니까",
+                    "id": 52631810,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 52609525,
+                    "updateDate": 1549509736000,
+                    "writer": {
+                        "id": "tlatndyd2001",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzAxMTlfMjk1/MDAxNDg0NzU3NjU1OTg0.i3WaE6_UwjXL--if0A4KarFOoZKk_-azh0eEQkYBUrcg.WXqgCyCXaq9QDJxe6-QVsVXQzS0-gs9Shq_5aVtfCRcg.JPEG.tlatndyd2001/profileImage.jpg"
+                        },
+                        "nick": "SuYong"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 52632452,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52632452,
+                    "sticker": {
+                        "height": 112,
+                        "id": "linebiz21_01-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/linebiz21_01/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1549510293000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "어라? 왜 여기 있읍니까?",
+                    "id": 52633344,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52633344,
+                    "updateDate": 1549511021000,
+                    "writer": {
+                        "id": "macaga1234",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "NetRiceCake"
+                    }
+                },
+                {
+                    "content": "재밋지안슴니까",
+                    "id": 52633362,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 52633344,
+                    "updateDate": 1549511045000,
+                    "writer": {
+                        "id": "tlatndyd2001",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzAxMTlfMjk1/MDAxNDg0NzU3NjU1OTg0.i3WaE6_UwjXL--if0A4KarFOoZKk_-azh0eEQkYBUrcg.WXqgCyCXaq9QDJxe6-QVsVXQzS0-gs9Shq_5aVtfCRcg.JPEG.tlatndyd2001/profileImage.jpg"
+                        },
+                        "nick": "SuYong"
+                    }
+                },
+                {
+                    "content": "허미 재미지군요",
+                    "id": 52633389,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 52633344,
+                    "replyMember": {
+                        "id": "tlatndyd2001",
+                        "nick": "SuYong"
+                    },
+                    "updateDate": 1549511068000,
+                    "writer": {
+                        "id": "macaga1234",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "NetRiceCake"
+                    }
+                },
+                {
+                    "content": "흠",
+                    "id": 52634510,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52634510,
+                    "updateDate": 1549512056000,
+                    "writer": {
+                        "id": "nenka",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MDhfMjgx/MDAxNTk0MTg2MDI4Mjk5.37YgO3GX_s_qBJW7QQlvROW9K3-N_TUmwyzij2PYHqsg.MS3dYQhDkB7GEv94vVp3EIvlAouKPTxKICZIW2kkMbcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "베미아"
+                    }
+                },
+                {
+                    "content": "마지막 let은 변수를 2개를 1줄에 선언하신건가요??",
+                    "id": 52684177,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52684177,
+                    "updateDate": 1549553177000,
+                    "writer": {
+                        "id": "ekfdmlzkf",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lms0806"
+                    }
+                },
+                {
+                    "content": "네네 정확합니다",
+                    "id": 52684215,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 52684177,
+                    "updateDate": 1549553215000,
+                    "writer": {
+                        "id": "tlatndyd2001",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzAxMTlfMjk1/MDAxNDg0NzU3NjU1OTg0.i3WaE6_UwjXL--if0A4KarFOoZKk_-azh0eEQkYBUrcg.WXqgCyCXaq9QDJxe6-QVsVXQzS0-gs9Shq_5aVtfCRcg.JPEG.tlatndyd2001/profileImage.jpg"
+                        },
+                        "nick": "SuYong"
+                    }
+                },
+                {
+                    "content": "왜 이걸보고도 var=let 이라는걸로 이해가 되는걸까요?\r\n맞게 이해한거 맞나요?",
+                    "id": 52684499,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 52684177,
+                    "replyMember": {
+                        "id": "tlatndyd2001",
+                        "nick": "SuYong"
+                    },
+                    "updateDate": 1549553487000,
+                    "writer": {
+                        "id": "ekfdmlzkf",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lms0806"
+                    }
+                }
+            ],
+            "last": {
+                "id": 52684177,
+                "refId": 52684177
+            },
+            "next": {
+                "id": 52684637,
+                "refId": 52684177
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

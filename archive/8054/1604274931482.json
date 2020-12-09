@@ -1,0 +1,258 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<div><span style=\"font-family: Arial;\"><font color=\"#ff0000\">[ 이전 버전입니다! <a href=\"https://cafe.naver.com/nameyee/8224\" target=\"_blank\" title=\"새창으로 열림\">최신 게시글</a>의 소스를 사용해 주세요! ]</font></span></div><div><span style=\"font-family: Arial;\"><br /></span></div><div><span style=\"font-family: Arial;\">&nbsp;안녕하세요! OnTheWay 입니다.</span></div><div><br /></div><span style=\"font-family: Arial;\">&nbsp;지난 토요일에 &lt;</span><a href=\"https://cafe.naver.com/nameyee/7923\" target=\"_blank\" title=\"새창으로 열림\"><span style=\"font-family: Arial;\">[ES6/개선] 세이프 이발(실행) 소스</span></a><span style=\"font-family: Arial;\">&gt;를 게시하였습니다. 이 소스에서는 카카오톡 봇에 이용되는 &apos;Rhino 자바스크립트 엔진&apos;의 취약점(?)이 해결 되었고, 다른 자바 클래스 접근도 가능해졌습니다. 당시 많은 분들께서 제 소스를 사용해 주셨어요. 정말 고맙습니다!</span><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;그 후, 많은 분들이 개발 버전인 &apos;메신저봇 R&apos;에서 &apos;ClassShutter&apos;와 관련되어 있는 오류가 발생한다는 제보를 해주셨습니다. 제 소스의 특정 부분이 &apos;메신저봇 R&apos;과 연관이 있을 것이라는 추측은 했으나, 정확한 원인을 찾기는 매우 어려웠어요.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;결국 자바의 &apos;리플렉션&apos; 이라는 기능을 이용하여 간단히 해결을 하게 되었습니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;아래 소스의 자세한 설명은&nbsp;</span><span style=\"font-family: Arial;\">&lt;</span><a href=\"https://cafe.naver.com/nameyee/7923\" target=\"_blank\" title=\"새창으로 열림\"><span style=\"font-family: Arial;\">[ES6/개선] 세이프 이발(실행) 소스</span></a><span style=\"font-family: Arial;\">&gt;를 참조하세요!</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div class=\"colorscripter-code\"><table><tbody><tr><td><div style=\"margin:0;padding:0;word-break:normal;text-align:right;color:#666;font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;line-height:130%\"><div style=\"line-height:130%\">1</div><div style=\"line-height:130%\">2</div><div style=\"line-height:130%\">3</div><div style=\"line-height:130%\">4</div><div style=\"line-height:130%\">5</div><div style=\"line-height:130%\">6</div><div style=\"line-height:130%\">7</div><div style=\"line-height:130%\">8</div><div style=\"line-height:130%\">9</div><div style=\"line-height:130%\">10</div><div style=\"line-height:130%\">11</div><div style=\"line-height:130%\">12</div><div style=\"line-height:130%\">13</div><div style=\"line-height:130%\">14</div><div style=\"line-height:130%\">15</div><div style=\"line-height:130%\">16</div><div style=\"line-height:130%\">17</div><div style=\"line-height:130%\">18</div><div style=\"line-height:130%\">19</div><div style=\"line-height:130%\">20</div><div style=\"line-height:130%\">21</div><div style=\"line-height:130%\">22</div><div style=\"line-height:130%\">23</div><div style=\"line-height:130%\">24</div><div style=\"line-height:130%\">25</div><div style=\"line-height:130%\">26</div><div style=\"line-height:130%\">27</div><div style=\"line-height:130%\">28</div><div style=\"line-height:130%\">29</div><div style=\"line-height:130%\">30</div><div style=\"line-height:130%\">31</div><div style=\"line-height:130%\">32</div><div style=\"line-height:130%\">33</div><div style=\"line-height:130%\">34</div><div style=\"line-height:130%\">35</div><div style=\"line-height:130%\">36</div><div style=\"line-height:130%\">37</div><div style=\"line-height:130%\">38</div><div style=\"line-height:130%\">39</div><div style=\"line-height:130%\">40</div><div style=\"line-height:130%\">41</div><div style=\"line-height:130%\">42</div><div style=\"line-height:130%\">43</div><div style=\"line-height:130%\">44</div><div style=\"line-height:130%\">45</div><div style=\"line-height:130%\">46</div><div style=\"line-height:130%\">47</div><div style=\"line-height:130%\">48</div><div style=\"line-height:130%\">49</div><div style=\"line-height:130%\">50</div><div style=\"line-height:130%\">51</div><div style=\"line-height:130%\">52</div><div style=\"line-height:130%\">53</div><div style=\"line-height:130%\">54</div><div style=\"line-height:130%\">55</div><div style=\"line-height:130%\">56</div></div></td><td><div style=\"margin:0;padding:0;color:#010101;font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;line-height:130%\"><div style=\"padding:0 6px; white-space:pre; line-height:130%\">const&nbsp;SafeEval&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;toSecureString:&nbsp;function(obj,&nbsp;isError)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">if</span>&nbsp;(obj&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;<span style=\"color:#066de2\">null</span>&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">|</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">|</span>&nbsp;obj&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;undefined&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">|</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">|</span>&nbsp;typeof&nbsp;obj.<span style=\"color:#066de2\">toString</span>&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">!</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;<span style=\"color:#63a35c\">&quot;function&quot;</span>)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">return</span>&nbsp;<span style=\"color:#63a35c\">&quot;Object&nbsp;is&nbsp;Empty&nbsp;(NULL&nbsp;/&nbsp;Undefined)&quot;</span>;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">try</span>&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">return</span>&nbsp;isError&nbsp;?&nbsp;(obj.name&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">+</span>&nbsp;<span style=\"color:#63a35c\">&quot;:&nbsp;&quot;</span>&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">+</span>&nbsp;obj.message&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">+</span>&nbsp;<span style=\"color:#63a35c\">&quot;&nbsp;(&quot;</span>&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">+</span>&nbsp;obj.fileName&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">+</span>&nbsp;<span style=\"color:#63a35c\">&quot;#&quot;</span>&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">+</span>&nbsp;obj.lineNumber&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">+</span>&nbsp;<span style=\"color:#63a35c\">&quot;)&quot;</span>)&nbsp;:&nbsp;obj.<span style=\"color:#066de2\">toString</span>();</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span style=\"color:#a71d5d\">catch</span>&nbsp;(err)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">return</span>&nbsp;<span style=\"color:#63a35c\">&quot;Security&nbsp;Error&quot;</span>;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;},</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;run:&nbsp;function(src,&nbsp;name,&nbsp;timeout,&nbsp;depth,&nbsp;isClassVisible,&nbsp;objData)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;factory&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;org.mozilla.javascript.ContextFactory.getGlobal();</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;cx&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;factory.enterContext();</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;scope&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;cx.initSafeStandardObjects();</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;field&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;cx.<span style=\"color:#a71d5d\">class</span>.getDeclaredField(<span style=\"color:#63a35c\">&quot;hasClassShutter&quot;</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;result;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field.setAccessible(<span style=\"color:#0099cc\">true</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field.setBoolean(cx,&nbsp;<span style=\"color:#0099cc\">false</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx.setOptimizationLevel(<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">-</span><span style=\"color:#0099cc\">1</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx.setInstructionObserverThreshold(timeout&nbsp;?&nbsp;timeout&nbsp;:&nbsp;<span style=\"color:#0099cc\">3000</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx.setMaximumInterpreterStackDepth(depth&nbsp;?&nbsp;depth&nbsp;:&nbsp;<span style=\"color:#0099cc\">1000</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx.setLanguageVersion(org.mozilla.javascript.Context.VERSION_ES6);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx.getWrapFactory().setJavaPrimitiveWrap(<span style=\"color:#0099cc\">false</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx.setClassShutter(<span style=\"color:#a71d5d\">new</span>&nbsp;org.mozilla.javascript.ClassShutter({</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visibleToScripts:&nbsp;function(fullClassName)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">return</span>&nbsp;isClassVisible&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">!</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;<span style=\"color:#0099cc\">false</span>&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">&amp;</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">&amp;</span>&nbsp;fullClassName&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">!</span><span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;<span style=\"color:#63a35c\">&quot;org.mozilla.javascript.EcmaError&quot;</span>;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}));</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.mozilla.javascript.ScriptableObject.putProperty(scope,&nbsp;<span style=\"color:#63a35c\">&quot;getAuthor&quot;</span>,&nbsp;function()&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">return</span>&nbsp;<span style=\"color:#63a35c\">&quot;\\x4F\\x6E\\x54\\x68\\x65\\x57\\x61\\x79&quot;</span>;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">if</span>&nbsp;(objData)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">for</span>&nbsp;(var&nbsp;key&nbsp;<span style=\"color:#066de2\">in</span>&nbsp;objData)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.mozilla.javascript.ScriptableObject.putProperty(scope,&nbsp;key,&nbsp;objData[key]);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">try</span>&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;SafeEval.toSecureString(cx.evaluateString(scope,&nbsp;src&nbsp;?&nbsp;src&nbsp;:&nbsp;<span style=\"color:#63a35c\">&quot;&quot;</span>,&nbsp;name&nbsp;?&nbsp;name&nbsp;:&nbsp;<span style=\"color:#63a35c\">&quot;SafeEval.js&quot;</span>,&nbsp;<span style=\"color:#0099cc\">1</span>,&nbsp;&nbsp;<span style=\"color:#066de2\">null</span>),&nbsp;<span style=\"color:#0099cc\">false</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span style=\"color:#a71d5d\">catch</span>&nbsp;(err)&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;<span style=\"color:#0086b3\"></span><span style=\"color:#a71d5d\">=</span>&nbsp;SafeEval.toSecureString(err,&nbsp;<span style=\"color:#0099cc\">true</span>);</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx.<span style=\"color:#066de2\">exit</span>();</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#a71d5d\">return</span>&nbsp;result;</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">};</div></div></td></tr></tbody></table></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001F7600000000",
+            "id": 8054,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 246,
+            "refArticleId": 8054,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[메신저봇R 호환] 개선된 세이프 이발 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574086468180,
+            "writer": {
+                "id": "cafeworlds",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "OnTheWay"
+            }
+        },
+        "articleId": 8054,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "!",
+                    "id": 73792734,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73792734,
+                    "updateDate": 1574086495000,
+                    "writer": {
+                        "id": "jeongyeon13751",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수123"
+                    }
+                },
+                {
+                    "content": "!",
+                    "id": 73792738,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73792734,
+                    "updateDate": 1574086503000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 73857063,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73857063,
+                    "updateDate": 1574156087000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 73857085,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73857063,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57f2b52920a55-7-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57f2b52920a55/original_7.png",
+                        "width": 129
+                    },
+                    "updateDate": 1574156108000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

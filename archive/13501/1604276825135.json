@@ -1,0 +1,262 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 174,
+                            "service": "CAFE",
+                            "style": "width: 180px; height: 174px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAzMTZfMjA0/MDAxNTg0Mjg5OTk4NjUw.WsVDDeSywxePOjrUV0tfKaTpz83OzTJRVY-ruSa7tTcg.GIGGNVAxnH-D-doeksLkawl5RufmvWJG-LJWf0ofk0og.JPEG/1.JPG",
+                            "width": 180
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div style=\"font-size:10pt;\"><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)</font></span></div><div><b>던파OFF 라는 웹페이지에서 아이템의 등급 퍼센테이지 정보를 불러오는 소스입니다.</b></div><div><b>&darr; 실행화면 &darr;</b></div><div><b>[[[CONTENT-ELEMENT-0]]]<br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><b>const kalingModule = require(&apos;kaling&apos;).Kakao();</b></div><div style=\"\"><b>const Kakao = new kalingModule;</b></div><div style=\"\"><b>Kakao.init(&apos;&apos;);//1강에서 얻은 Kakao Developers 자바스크립트 키</b></div><div style=\"\"><b>Kakao.login(&apos;&apos;,&apos;&apos;);//봇의 카카오계정(id,비밀번호)</b></div></div><div><div style=\"\"><b></b><div><b>function response(room, msg, sender, isGroupChat, replier, imageDB) {</b></div><div><b><b>if(msg.indexOf(&quot;@등급&quot;) == 0) {</b></b></div></div><div style=\"\"><b>&nbsp; &nbsp;// 날자 생성</b></div><div style=\"\"><b>&nbsp; &nbsp;var day = new Date()</b></div><div style=\"\"><b>&nbsp; &nbsp;// 변수 생성 배열</b></div><div style=\"\"><b>&nbsp; &nbsp;var gImage = []</b></div><div style=\"\"><b>&nbsp; &nbsp;var gName = []</b></div><div style=\"\"><b>&nbsp; &nbsp;var gGrade = []</b></div><div style=\"\"><b>&nbsp; &nbsp;var today = day.getMonth()+1+&quot;월&quot;+day.getDate()+&quot;일 아이템 등급&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp;var dfoff = &quot;<a href=\"https://dunfaoff.com/Grade.df\" target=\"_blank\">https://dunfaoff.com/Grade.df</a>&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp;var u = Utils.getWebText(&quot;<a href=\"https://dunfaoff.com/Grade.df\" target=\"_blank\">https://dunfaoff.com/Grade.df</a>&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp;for(i=1; i&lt;4; i++){</b></div><div style=\"\"><b>&nbsp; &nbsp;// 이미지 링크</b></div><div style=\"\"><b>&nbsp; &nbsp;gi = u.split(&quot;&lt;img src=\\&quot;&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp;gImage[i] = gi[i].split(&quot;\\&quot;&quot;)[0]</b></div><div style=\"\"><b>&nbsp; &nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp;// 아이템명 정보</b></div><div style=\"\"><b>&nbsp; &nbsp;gn = u.split(&quot;&lt;b class=\\&quot;mb-0\\&quot;&gt;&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp;gName[i] = gn[i].split(&quot;&lt;/b&gt;&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g,&quot;&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp;gName[i] = gName[i].replace(/&amp;nbsp;/g, &quot; &quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp;// 등급 정보</b></div><div style=\"\"><b>&nbsp; &nbsp;gg = u.split(&quot;&lt;span style=\\&quot;font-weight:bold;\\&quot;&gt;&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp;gGrade[i] = gg[i].split(&quot;&lt;/span&gt;&quot;)[0]</b></div><div style=\"\"><b>&nbsp; &nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp;Kakao.send(room,{&quot;link_ver&quot;: &quot;4.0&quot;,&quot;template_object&quot;:{&quot;object_type&quot; : &quot;list&quot;,&quot;header_title&quot; : today,&quot;header_link&quot;:{&quot;web_url&quot;: dfoff,&quot;mobile_web_url&quot;: dfoff},&quot;contents&quot;: [{&quot;title&quot;: gName[1],&quot;description&quot;: gGrade[1],&quot;image_url&quot;: gImage[1],&quot;link&quot;:{&quot;mobile_web_url&quot;: dfoff,&quot;web_url&quot;: dfoff}}, {&quot;title&quot;: gName[2],&quot;description&quot;: gGrade[2],&quot;image_url&quot;: gImage[2],&quot;link&quot;:{&quot;mobile_web_url&quot;: dfoff,&quot;web_url&quot;: dfoff}}, {&quot;title&quot;: gName[3],&quot;description&quot;: gGrade[3],&quot;image_url&quot;: gImage[3],&quot;link&quot;:{&quot;mobile_web_url&quot;: dfoff,&quot;web_url&quot;: dfoff}}], &quot;buttons&quot;: [{&quot;title&quot;: &quot;던파오프 바로가기&quot;,&quot;link&quot;:{&quot;mobile_web_url&quot;: dfoff,&quot;web_url&quot;: dfoff}}]}})</b></div><div style=\"\"><b>}</b></div></div><div><b>}</b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br /></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000034BD00000000",
+            "id": 13501,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 182,
+            "refArticleId": 13501,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "던파) 던파OFF 아이템 등급[카카오링크]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584290081273,
+            "writer": {
+                "id": "ruqek77",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "배우미"
+            }
+        },
+        "articleId": 13501,
+        "attaches": [
+            {
+                "extension": "JPG",
+                "fullName": "1.JPG",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "1.JPG",
+                "size": 13466,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/4dd851e1f5a9a97559bfdaedd53c483597c53bd9f0/MjAyMDAzMTZfMjA0/MDAxNTg0Mjg5OTk4NjUw.WsVDDeSywxePOjrUV0tfKaTpz83OzTJRVY-ruSa7tTcg.GIGGNVAxnH-D-doeksLkawl5RufmvWJG-LJWf0ofk0og.JPEG/1.JPG?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이거는 작동 잘하네요",
+                    "id": 84301720,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84301720,
+                    "updateDate": 1584314906000,
+                    "writer": {
+                        "id": "doqmflrkrk32",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDRfMjcw/MDAxNTg1OTc5ODAwNTUz.VfKiu2xL4E35pGdfEKNQciCBuMEIQdP9ZRRTApbGCc0g.CJ2Pl0l_obxjq4RWsjKuR8ib-FwXJj8Ux1wuZ4uhJ20g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하늘"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 84806636,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84806636,
+                    "updateDate": 1584690441000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "kaling 에러이신것같네요\n리로드한번해보시고 오류나는지 확인한번해보세요",
+                    "id": 84807312,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84806636,
+                    "replyMember": {
+                        "id": "fdskek",
+                        "nick": "찬이2"
+                    },
+                    "updateDate": 1584690940000,
+                    "writer": {
+                        "id": "ruqek77",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "배우미"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

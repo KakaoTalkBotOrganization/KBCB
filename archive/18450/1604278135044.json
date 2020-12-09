@@ -1,0 +1,224 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메봇r</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 13pt;\">FS = </span><font color=\"#269186\" style=\"font-size: 13pt;\">FileStream</font><span style=\"font-size: 13pt;\">;</span></div><p dir=\"ltr\">\r\npath = <font color=\"#269186\">&quot;sdcard/File/chatingLevel&quot;</font>;<br />\r\nall = <font color=\"#269186\">&quot;\\u200b&quot;</font>.repeat(<font color=\"#000000\"><font color=\"#93a1a1\">500</font></font>);&nbsp;</p>\r\n<p dir=\"ltr\">levelUp = <font color=\"#93a1a1\">25</font>;<br />\r\nclearOwner = [<font color=\"#269186\">&quot;계민재&quot;</font>];&nbsp;</p>\r\n<p dir=\"ltr\"><font color=\"#268bd2\">function</font> <font color=\"#000000\">response</font> (room, msg, sender, igc, replier) {<br />\r\n<font color=\"#268bd2\">if</font>(wishcoin[sender]==undefined){ wishcoin[sender] = <font color=\"#93a1a1\">0</font>;}<br />\r\n<font color=\"#268bd2\">if</font> (FS.read(<font color=\"#000000\">path</font>)==<font color=\"#268bd2\">null</font>) FS.write(<font color=\"#000000\">path</font>, <font color=\"#000000\"><font color=\"#269186\">&quot;{}&quot;</font></font>);<br />\r\n<font color=\"#268bd2\">if</font> (msg) {</p>\r\n<p dir=\"ltr\">rd = JSON.parse(<font color=\"#000000\">FS.read(</font><font color=\"#000000\">path</font><font color=\"#000000\">)</font>);</p>\r\n<p dir=\"ltr\"><font color=\"#268bd2\">if</font> (rd[room] == undefined) rd[room] = {};</p>\r\n<p dir=\"ltr\"><font color=\"#268bd2\">if</font> (rd[room][sender] == undefined) {</p>\r\n<p dir=\"ltr\">rd[room][sender] = {};<br />\r\nrd[room][sender][<font color=\"#269186\">&quot;chats&quot;</font>] = <font color=\"#93a1a1\">0</font>;<br />\r\nrd[room][sender][<font color=\"#269186\">&quot;level&quot;</font>] = <font color=\"#93a1a1\">0</font>;</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">bklv = rd[room][sender][<font color=\"#269186\">&quot;level&quot;</font>];</p>\r\n<p dir=\"ltr\">rd[room][sender][<font color=\"#269186\">&quot;chats&quot;</font>]++;</p>\r\n<p dir=\"ltr\">rd[room][sender][<font color=\"#269186\">&quot;level&quot;</font>] = <font color=\"#269186\">Number</font>(<font color=\"#000000\">rd[room][sender][</font><font color=\"#000000\"><font color=\"#269186\">&quot;chats&quot;</font></font><font color=\"#000000\">]</font>)/levelUp|<font color=\"#93a1a1\">0</font>;</p>\r\n<p dir=\"ltr\">nowlv = rd[room][sender][<font color=\"#269186\">&quot;level&quot;</font>];<br />\r\nchats = rd[room][sender][<font color=\"#269186\">&quot;chats&quot;</font>];<br />\r\n<font color=\"#268bd2\">if</font> (nowlv != bklv) {</p>\r\n<p dir=\"ltr\">replier.reply(<font color=\"#000000\"><font color=\"#269186\">&quot;[!] &quot;</font></font><font color=\"#000000\">+sender+</font><font color=\"#000000\"><font color=\"#269186\">&quot; 님의 레벨이 올랐습니다!\\n현재 레벨 : &quot;</font></font><font color=\"#000000\">+nowlv+</font><font color=\"#000000\"><font color=\"#269186\">&quot;\\n채팅 : &quot;</font></font><font color=\"#000000\">+rd[room][sender][</font><font color=\"#000000\"><font color=\"#269186\">&quot;chats&quot;</font></font><font color=\"#000000\">]+</font><font color=\"#000000\"><font color=\"#269186\">&quot;회&quot;</font></font>);</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">FS.write(<font color=\"#000000\">path</font>, <font color=\"#000000\">JSON.stringify(</font><font color=\"#000000\">rd</font><font color=\"#000000\">)</font>);</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\"><font color=\"#268bd2\">if</font> (msg == <font color=\"#269186\">&quot;/내채팅&quot;</font>) {</p>\r\n<p dir=\"ltr\">rd = JSON.parse(<font color=\"#000000\">FS.read(</font><font color=\"#000000\">path</font><font color=\"#000000\">)</font>);</p>\r\n<p dir=\"ltr\">myChats = rd[room][sender][<font color=\"#269186\">&quot;chats&quot;</font>];</p>\r\n<p dir=\"ltr\">myLevel = rd[room][sender][<font color=\"#269186\">&quot;level&quot;</font>];</p>\r\n<p dir=\"ltr\">result = [];</p>\r\n<p dir=\"ltr\"><font color=\"#268bd2\">for</font> (i <font color=\"#268bd2\">in</font> rd[room]) result.push(<font color=\"#000000\">rd[room][i]+</font><font color=\"#000000\"><font color=\"#269186\">&quot;\\n&quot;</font></font><font color=\"#000000\">+rd[room][i][</font><font color=\"#000000\"><font color=\"#269186\">&quot;chats&quot;</font></font><font color=\"#000000\">]</font>);</p>\r\n<p dir=\"ltr\">result.sort((a, b)=&gt;a.split(&quot;\\n&quot;)[1] - b.split(&quot;\\n&quot;)[1]).reverse();</p>\r\n<p dir=\"ltr\">score = 0;</p>\r\n<p dir=\"ltr\">for (k in result) {</p>\r\n<p dir=\"ltr\">if (result[k].split(&quot;\\n&quot;)[0] == sender) score = Number(k)+1;</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">replier.reply(sender+&quot; (&quot;+(score==0?&quot;1&quot;:score)+&quot;위)\\n레벨 : &quot;+myLevel+&quot;\\n채팅 : &quot;+myChats+&quot;회&quot;);</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">if (msg == &quot;/채팅순위&quot;) {</p>\r\n<p dir=\"ltr\">rd = JSON.parse(FS.read(path));</p>\r\n<p dir=\"ltr\">result = [];</p>\r\n<p dir=\"ltr\">for (i in rd[room]) result.push(i+&quot;\\n레벨 : &quot;+rd[room][i][&quot;level&quot;]+&quot;\\n채팅 : &quot;+rd[room][i][&quot;chats&quot;]);</p>\r\n<p dir=\"ltr\">result.sort((a, b)=&gt;a.split(&quot;: &quot;)[2] - b.split(&quot;: &quot;)[2]).reverse();</p>\r\n<p dir=\"ltr\">for (j in result) result[j] = (Number(j)+1)+&quot;위 | &quot;+result[j];</p>\r\n<p dir=\"ltr\">replier.reply(&quot;[!] 채팅 순위입니다.&quot;+all+&quot;\\n\\n방 : &quot;+room+(igc?&quot; (그룹챗)&quot;:&quot; (개인챗)&quot;)+&quot;\\n총 &quot;+result.length+&quot;명\\n\\n&quot;+result.join(&quot;\\n\\n&quot;));</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">if (msg == &quot;/채팅초기화&quot;) {</p>\r\n<p dir=\"ltr\">if (clearOwner.indexOf(sender)!=-1) {</p>\r\n<p dir=\"ltr\">FS.write(path, &quot;{}&quot;);</p>\r\n<p dir=\"ltr\">replier.reply(&quot;[!] 초기화 되었습니다.&quot;);</p>\r\n<p dir=\"ltr\">} else {</p>\r\n<p dir=\"ltr\">replier.reply(&quot;[!] 지정된 관리자만 채팅을 초기화 할 수 있습니다.&quot;);</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">}if(chats%2585==0){wishcoin[sender] += 1;<br />\r\n&nbsp; replier.reply(nowlv+&quot;레벨이 되었습니다!! 축하합니다!! 소원조각 하나를 드리겠습니다\\n소원조각에 대한정보는 &apos;&apos;/소원조각 도움말&apos;이라고 하면 됩니다.&quot;);}<br />\r\n&nbsp; if(msg==&quot;/소원조각 도움말&quot;){<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(&quot;소원조각은 10개를 모을시 소원을 들어주는 기능입니다.\\n하지만 언제든지 지울수 있지롱((퍽...&quot;);<br />\r\n&nbsp; }<br />\r\nif(msg==&quot;/내소원조각&quot;){replier.reply(sender+&quot;님의 소원조각 개수 : &quot;+wishcoin[sender]+&quot;개&quot;);}}</p><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; wishcoin이라는 변수때문에 안되는데 왜 안되는지 알려주세요 wishcoin을 전부다 wishcoin[sender]로 바꾸기 전까지는 됬는데 물론 잘 되진 않았어요 소원조각이 계속 0이었지요.. 흑</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000481200000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 18450,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 269,
+            "refArticleId": 18450,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "채팅수소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1590063714820,
+            "writer": {
+                "id": "rpalswo2",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "남한사람 미인재애"
+            }
+        },
+        "articleId": 18450,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "선언을 안하신거같..",
+                    "id": 91161637,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91161637,
+                    "updateDate": 1590065041000,
+                    "writer": {
+                        "id": "yih2776",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                        },
+                        "nick": "Ametrine"
+                    }
+                },
+                {
+                    "content": "var wishcoin = [];",
+                    "id": 91169376,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91161637,
+                    "updateDate": 1590068859000,
+                    "writer": {
+                        "id": "rpalswo2",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "남한사람 미인재애"
+                    }
+                },
+                {
+                    "content": "하면 되나요?",
+                    "id": 91169394,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91161637,
+                    "replyMember": {
+                        "id": "rpalswo2",
+                        "nick": "남한사람 미인재애"
+                    },
+                    "updateDate": 1590068865000,
+                    "writer": {
+                        "id": "rpalswo2",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "남한사람 미인재애"
+                    }
+                },
+                {
+                    "content": "음",
+                    "id": 91172111,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91172111,
+                    "updateDate": 1590070267000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

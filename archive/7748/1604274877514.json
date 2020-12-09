@@ -1,0 +1,292 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">네이버 카페 알림</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><br /></div><div>/*Made By Green050121*/</div><div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">var&nbsp;link=[&quot;<a href=\"https://m.cafe.naver.com/nameyee\" target=\"_blank\">https://m.cafe.naver.com/nameyee</a>&quot;];</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">var&nbsp;errorcount=3;</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">var&nbsp;last=[];</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">function&nbsp;response(room,&nbsp;msg,&nbsp;sender,&nbsp;isGroupChat,&nbsp;replier,&nbsp;imageDB,&nbsp;packageName,&nbsp;threadId){</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;try&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;naver_cafe(a)&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;site=org.jsoup.Jsoup.parse(Utils.getWebText(a));</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;[site.select(&apos;span[class=&quot;nick&quot;]&apos;).get(0).text(),site.select(&apos;strong[class=&quot;tit&quot;]&apos;).get(0).text(),site.select(&apos;span[class=&quot;time&quot;]&apos;).get(0).text()];</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(let&nbsp;i=0;i&lt;link.length;i++)&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;cafeinfo=naver_cafe(link[i]);</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(last[i]==undefined)&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last[i]=cafeinfo</font>.join(&quot;\\n&quot;);</div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;if(last[i]!=cafeinfo.join(&quot;\\n&quot;))&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;새 글이&nbsp;올라왔습니다!\\n\\n작성자&nbsp;:&nbsp;&quot;+cafeinfo[0]+&quot;\\n제목&nbsp;:&nbsp;&quot;+cafeinfo[1]+&quot;\\n작성&nbsp;시간&nbsp;:&nbsp;&quot;+cafeinfo[2]);</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last[i]=cafeinfo</font>.join(&quot;\\n&quot;);</div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;catch(e)&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(--errorcount&gt;0)&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;에러가&nbsp;발생했습니다.\\n&quot;+errorcount+&quot;번&nbsp;더&nbsp;에러나면&nbsp;강제종료됩니다.&quot;)</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;봇이&nbsp;강제종료되었습니다.&quot;);</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Api.off();/*모든&nbsp;소스&nbsp;꺼짐*/</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;}</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;</font></div><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre;\"><font style=\"background-color: rgb(255, 255, 255);\">}</font></div></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001E4400000000",
+            "id": 7748,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 188,
+            "refArticleId": 7748,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "네이버 카페 알림 소스 수정본",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573621703380,
+            "writer": {
+                "id": "dbsehgus0121",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "그린"
+            }
+        },
+        "articleId": 7748,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 73386747,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73386747,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1573632212000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 73405585,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73405585,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1573649547000,
+                    "writer": {
+                        "id": "doy0006",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data29/2007/12/9/39/cellphoneimg-doy0006.jpg"
+                        },
+                        "nick": "대기만성"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 73469458,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73469458,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1573716944000,
+                    "writer": {
+                        "id": "hhhhh9206",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "봇배우미"
+                    }
+                },
+                {
+                    "content": "var link=[\"https://m.cafe.naver.com/nameyee\"];\r\n여기서 다른 카페 링크로 바꿔도 정상작동하나여?",
+                    "id": 74512987,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74512987,
+                    "updateDate": 1574870204000,
+                    "writer": {
+                        "id": "domwis14",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "우웅이"
+                    }
+                },
+                {
+                    "content": "네 대신 모바일 링크여야 합ㄴ디ㅏ",
+                    "id": 74519314,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74512987,
+                    "updateDate": 1574894996000,
+                    "writer": {
+                        "id": "dbsehgus0121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                        },
+                        "nick": "Green050121"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

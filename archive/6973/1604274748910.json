@@ -1,0 +1,435 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 670,
+                            "service": "CAFE",
+                            "style": "width: 575px; height: 670px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEwMjVfMjg0/MDAxNTcyMDA0MDAxMDUw.KfX6-xPhR33hLa_m_fwex5ADfWqzUX1MfXqrZeLKIX4g.rLMEMuZSBsf3hbqyMQc9-pZ0K9uOiH_rJn5MIaXEAowg.PNG/Screenshot_from_2019-10-25_20.44.50.png",
+                            "width": 575
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div style=\"font-size: 13.3333px;\"><b>=</b>&gt;&nbsp;터미널에서 카카오봇 시뮬레이션 하기 (Device.something() 구현)</div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>강좌 내용</b></div><div style=\"font-size: 13.3333px;\"><b>=&gt;</b></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">전 글에서 이어집니다</div><div style=\"font-size: 13.3333px;\">이번 강좌는 Device.무언가() 들을 구ㅇ현해보는 거애요</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">먼저 패키지를 하나 더 다운로드합니다</div><div style=\"font-size: 13.3333px;\"><br /></div><blockquote><table width=\"100%\" border=\"1\"><tbody><tr><td><div><!--quote_txt--><div style=\"font-size: 13.3333px;\">yarn add dotenv</div><!--/quote_txt--><div></div></div></td></tr></tbody></table></blockquote><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><b><span style=\"font-size: 14pt;\">프로젝트 디렉토리 구조</span></b></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">- lib/</div><div style=\"font-size: 13.3333px;\">&nbsp; &nbsp;- aux.ts (또는 aux.js)</div><div style=\"font-size: 13.3333px;\">- src/</div><div style=\"font-size: 13.3333px;\">&nbsp; &nbsp;- 전이랑 똑같이</div><div style=\"font-size: 13.3333px;\">- .env</div><div style=\"font-size: 13.3333px;\">- gulpfile.js 등 나머지 파일은 전이랑 똑같이</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><b><span style=\"font-size: 14pt;\">.env 파일 준비</span></b></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">카톡 봇에 아래 코드를 돌려서 나온 결과물을 복사해서 프로젝트 루트의 .env에 넣어주세요</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: rgb(126, 126, 221);\">var</span>&nbsp;<span style=\"color: rgb(245, 250, 255);\">response</span>&nbsp;<span style=\"color: rgb(147, 221, 251);\">=</span>&nbsp;<span style=\"color: rgb(126, 126, 221);\">function</span>&nbsp;(<span style=\"color: rgb(185, 190, 213);\">room</span>,&nbsp;<span style=\"color: rgb(185, 190, 213);\">msg</span>,&nbsp;<span style=\"color: rgb(185, 190, 213);\">sender</span>,&nbsp;<span style=\"color: rgb(185, 190, 213);\">isGroupChat</span>,&nbsp;<span style=\"color: rgb(185, 190, 213);\">replier</span>,&nbsp;<span style=\"color: rgb(185, 190, 213);\">imageDB</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">if</span>&nbsp;(<span style=\"color: #93ddfb;\">!</span><span style=\"color: #85b1e0;\">isGroupChat</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">replier</span>.<span style=\"color: #f5faff;\">reply</span>(<span style=\"color: #9aefea;\">&quot;#&nbsp;DEVICE</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">ANDROID_VERSION_CODE=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getAndroidVersionCode</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">PHONE_BRAND=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getPhoneBrand</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">PHONE_MODEL=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getPhoneModel</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">IS_CHARGING=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">isCharging</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">BATTERY_LEVEL=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getBatteryLevel</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">BATTERY_HEALTH=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getBatteryHealth</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">BATTERY_TEMPERATURE=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getBatteryTemperature</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">BATTERY_VOLTAGE=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getBatteryVoltage</span>()&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&quot;</span><span style=\"color: #93ddfb;\">\\n</span><span style=\"color: #9aefea;\">BATTERY_STATUS=&quot;</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getBatteryStatus</span>());</div><div>};</div></div></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">얘를 돌려서&nbsp;</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #555c77;\">#&nbsp;DEVICE</span></div><div><span style=\"color: #85b1e0;\">ANDROID_VERSION_CODE</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #dda2f6;\">27</span></div><div><span style=\"color: #85b1e0;\">PHONE_BRAND</span><span style=\"color: #b9bed5;\">=</span>Google</div><div><span style=\"color: #85b1e0;\">PHONE_MODEL</span><span style=\"color: #b9bed5;\">=</span>manta</div><div><span style=\"color: #85b1e0;\">IS_CHARGING</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #dda2f6;\">false</span></div><div><span style=\"color: #85b1e0;\">PLUG_TYPE</span><span style=\"color: #b9bed5;\">=</span>unknown</div><div><span style=\"color: #85b1e0;\">BATTERY_LEVEL</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #dda2f6;\">98</span></div><div><span style=\"color: #85b1e0;\">BATTERY_HEALTH</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #dda2f6;\">2</span></div><div><span style=\"color: #85b1e0;\">BATTERY_TEMPERATURE</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #dda2f6;\">306</span></div><div><span style=\"color: #85b1e0;\">BATTERY_VOLTAGE</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #dda2f6;\">4084</span></div><div><span style=\"color: #85b1e0;\">BATTERY_STATUS</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #dda2f6;\">3</span></div></div></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">이런 파일이 나오면 이걸 .env에 저장합니다</div><div style=\"font-size: 13.3333px;\">얘가 device를 설정해주는 애고 얘를 바꾸면 출력값도 바뀌겟죠</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">(아시는 분은 아시겟지만 manta는 Nexus 10의 codename이고 Nexus 10은 무려 7년 전에 나왓습니다 아직까지 돌아가는 게 신기)</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><span style=\"font-size: 14pt;\"><b>lib/aux.ts (또는 .js)</b></span></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\">여기서 실제 구현이 이루어집니다</div><div style=\"font-size: 13.3333px;\">dotenv를 config()하면 process.env.머시기머시기로 .env에 정의된 걸 쓸 수 있어요</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">&lt;TypeScript 버전&gt;</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;dotenv&apos;</span>).<span style=\"color: #f5faff;\">config</span>();</div><br /><div><span style=\"color: #555c77;\">/**&nbsp;Device&nbsp;*/</span></div><div><span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">ANDROID_VERSION_CODES_TO_NAMES</span>&nbsp;<span style=\"color: #b9bed5;\">=</span>&nbsp;[</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.1&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.5&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.6&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.0.1&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.1&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.2&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.3&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.3.3&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;3.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;3.1&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;3.2&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.0.3&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.1&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.2&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.3&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.4&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.4W&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;5.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;5.1&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;6.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;7.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;7.1&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;8.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;8.1.0&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;9&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;10&apos;</span>,</div><div>];</div><div><span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">Device</span>&nbsp;<span style=\"color: #b9bed5;\">=</span>&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getAndroidVersionCode</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">ANDROID_VERSION_CODE</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getAndroidVersionName</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">ANDROID_VERSION_CODES_TO_NAMES</span>[<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getAndroidVersionCode</span>()];</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getPhoneBrand</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">PHONE_BRAND</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>;</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getPhoneModel</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">PHONE_MODEL</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>;</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">isCharging</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">IS_CHARGING</span>&nbsp;<span style=\"color: #b9bed5;\">===</span>&nbsp;<span style=\"color: #9aefea;\">&apos;true&apos;</span>;</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getPlugType</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">PLUG_TYPE</span>&nbsp;<span style=\"color: #7e7edd;\">as</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #b9bed5;\">|</span>&nbsp;<span style=\"color: #9aefea;\">&apos;ac&apos;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #b9bed5;\">|</span>&nbsp;<span style=\"color: #9aefea;\">&apos;wireless&apos;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #b9bed5;\">|</span>&nbsp;<span style=\"color: #9aefea;\">&apos;usb&apos;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #b9bed5;\">|</span>&nbsp;<span style=\"color: #9aefea;\">&apos;unknown&apos;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #b9bed5;\">|</span>&nbsp;<span style=\"color: #dda2f6;\">undefined</span>;</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryLevel</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_LEVEL</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryHealth</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_HEALTH</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryTemperature</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_TEMPERATURE</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryVoltage</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_VOLTAGE</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryStatus</span>:&nbsp;()&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_STATUS</span>&nbsp;<span style=\"color: #b9bed5;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;},</div><div>};</div></div></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">&lt;JavaScript 버전&gt;</div><div style=\"font-size: 13.3333px;\"><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;dotenv&apos;</span>).<span style=\"color: #f5faff;\">config</span>();</div><div><span style=\"color: #555c77;\">/**&nbsp;Device&nbsp;*/</span></div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">ANDROID_VERSION_CODES_TO_NAMES</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;[</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.1&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.5&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;1.6&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.0.1&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.1&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.2&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.3&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;2.3.3&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;3.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;3.1&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;3.2&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.0.3&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.1&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.2&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.3&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.4&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;4.4W&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;5.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;5.1&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;6.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;7.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;7.1&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;8.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;8.1.0&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;9&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;10&apos;</span>,</div><div>];</div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">Device</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getAndroidVersionCode</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">ANDROID_VERSION_CODE</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getAndroidVersionName</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">ANDROID_VERSION_CODES_TO_NAMES</span>[<span style=\"color: #85b1e0;\">Device</span>.<span style=\"color: #f5faff;\">getAndroidVersionCode</span>()];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getPhoneBrand</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">PHONE_BRAND</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getPhoneModel</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">PHONE_MODEL</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">isCharging</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">IS_CHARGING</span>&nbsp;<span style=\"color: #93ddfb;\">===</span>&nbsp;<span style=\"color: #9aefea;\">&apos;true&apos;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getPlugType</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;process.env.<span style=\"color: #85b1e0;\">PLUG_TYPE</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryLevel</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_LEVEL</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryHealth</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_HEALTH</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryTemperature</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_TEMPERATURE</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryVoltage</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_VOLTAGE</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;},</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">getBatteryStatus</span>:&nbsp;<span style=\"color: #7e7edd;\">function</span>&nbsp;()&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #93ddfb;\">parseInt</span>(process.env.<span style=\"color: #85b1e0;\">BATTERY_STATUS</span>&nbsp;<span style=\"color: #93ddfb;\">||</span>&nbsp;<span style=\"color: #9aefea;\">&apos;0&apos;</span>,&nbsp;<span style=\"color: #dda2f6;\">10</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>};</div></div></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><b><span style=\"font-size: 14pt;\">gulpfile.js</span></b></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">새로운 파일을 만들었으니 얘를 파일 맨 앞에 불러와야겟죠</div><div style=\"font-size: 13.3333px;\">그래서 #1에서 lib/run.js를 맨 앞에 붙였듯이 aux.js도 맨 앞에 붙여줍니다</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp&apos;</span>);</div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">ts</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp-typescript&apos;</span>);</div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">clean</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp-clean&apos;</span>);</div><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">concat</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;gulp-concat&apos;</span>);</div><div style=\"line-height: 19px;\"><div></div><br /><div><span style=\"color: #555c77;\">/**&nbsp;RUN&nbsp;*/</span></div><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(<span style=\"color: #9aefea;\">&apos;clean-temp&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">src</span>([<span style=\"color: #9aefea;\">&apos;./temp/**/*&apos;</span>],&nbsp;{&nbsp;read:&nbsp;<span style=\"color: #dda2f6;\">false</span>&nbsp;}).<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #f5faff;\">clean</span>());</div><div>});</div><div style=\"line-height: 19px;\"><div></div><br /><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(<span style=\"color: #9aefea;\">&apos;compile-libs&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">src</span>(<span style=\"color: #9aefea;\">&apos;lib/*.ts&apos;</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">ts</span>({</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noImplicitAny:&nbsp;<span style=\"color: #dda2f6;\">true</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lib:&nbsp;[<span style=\"color: #9aefea;\">&apos;esnext&apos;</span>],</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}),</div><div>&nbsp;&nbsp;&nbsp;&nbsp;)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">dest</span>(<span style=\"color: #9aefea;\">&apos;lib&apos;</span>));</div><div>});</div></div><br /><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(<span style=\"color: #9aefea;\">&apos;run-compile&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;yargs&apos;</span>).<span style=\"color: #f5faff;\">alias</span>(<span style=\"color: #9aefea;\">&apos;f&apos;</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;file&apos;</span>).<span style=\"color: #85b1e0;\">argv</span>;</div><br /><div>&nbsp;&nbsp;<span style=\"color: #a571f4;\">console</span>.<span style=\"color: #93ddfb;\">log</span>(<span style=\"color: #85b1e0;\">args</span>.<span style=\"color: #85b1e0;\">file</span>);</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>.<span style=\"color: #85b1e0;\">file</span>;</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">fileWithoutExt</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>.<span style=\"color: #f5faff;\">replace</span>(<span style=\"color: #93ddfb;\">/\\.</span><span style=\"color: #dda2f6;\">[jt]</span><span style=\"color: #93ddfb;\">s/</span><span style=\"color: #7e7edd;\">g</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>);</div><br /><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">if</span>&nbsp;(<span style=\"color: #85b1e0;\">file</span>&nbsp;<span style=\"color: #93ddfb;\">===</span>&nbsp;<span style=\"color: #85b1e0;\">fileWithoutExt</span>&nbsp;<span style=\"color: #93ddfb;\">+</span>&nbsp;<span style=\"color: #9aefea;\">&apos;.ts&apos;</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">src</span>(<span style=\"color: #9aefea;\">`src/${</span><span style=\"color: #85b1e0;\">file</span><span style=\"color: #9aefea;\">}`</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #f5faff;\">ts</span>({</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noImplicitAny:&nbsp;<span style=\"color: #dda2f6;\">true</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lib:&nbsp;[<span style=\"color: #9aefea;\">&apos;esnext&apos;</span>],</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}),</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">dest</span>(<span style=\"color: #9aefea;\">&apos;temp&apos;</span>));</div><div>&nbsp;&nbsp;}&nbsp;<span style=\"color: #7e7edd;\">else</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">src</span>(<span style=\"color: #9aefea;\">`src/${</span><span style=\"color: #85b1e0;\">file</span><span style=\"color: #9aefea;\">}`</span>).<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">dest</span>(<span style=\"color: #9aefea;\">&apos;temp&apos;</span>));</div><div>&nbsp;&nbsp;}</div><div>});</div><br /><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(<span style=\"color: #9aefea;\">&apos;run-append&apos;</span>,&nbsp;<span style=\"color: #7e7edd;\">function</span>()&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #93ddfb;\">require</span>(<span style=\"color: #9aefea;\">&apos;yargs&apos;</span>).<span style=\"color: #f5faff;\">alias</span>(<span style=\"color: #9aefea;\">&apos;f&apos;</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;file&apos;</span>).<span style=\"color: #85b1e0;\">argv</span>;</div><br /><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">args</span>.<span style=\"color: #85b1e0;\">file</span>;</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">const</span>&nbsp;<span style=\"color: #85b1e0;\">fileWithoutExt</span>&nbsp;<span style=\"color: #93ddfb;\">=</span>&nbsp;<span style=\"color: #85b1e0;\">file</span>.<span style=\"color: #f5faff;\">replace</span>(<span style=\"color: #93ddfb;\">/\\.</span><span style=\"color: #dda2f6;\">[jt]</span><span style=\"color: #93ddfb;\">s/</span><span style=\"color: #7e7edd;\">g</span>,&nbsp;<span style=\"color: #9aefea;\">&apos;&apos;</span>);</div><br /><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">return</span>&nbsp;<span style=\"color: #85b1e0;\">gulp</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">src</span>([</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;lib/aux.js&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;lib/run.js&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">`temp/${</span><span style=\"color: #85b1e0;\">fileWithoutExt</span><span style=\"color: #9aefea;\">}.js`</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;])</div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #f5faff;\">concat</span>(<span style=\"color: #9aefea;\">`${</span><span style=\"color: #85b1e0;\">fileWithoutExt</span><span style=\"color: #9aefea;\">}-run.js`</span>))</div><div>&nbsp;&nbsp;&nbsp;&nbsp;.<span style=\"color: #f5faff;\">pipe</span>(<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">dest</span>(<span style=\"color: #9aefea;\">&apos;temp&apos;</span>));</div><div>});</div><br /><div><span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">task</span>(</div><div>&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;run&apos;</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">gulp</span>.<span style=\"color: #f5faff;\">series</span>(</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;clean-temp&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;compile-libs&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;run-compile&apos;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9aefea;\">&apos;run-append&apos;</span>,</div><div>&nbsp;&nbsp;),</div><div>);</div><br /></div></div></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><span style=\"font-size: 14pt;\"><b>짜잔</b></span></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">이제 Device.어쩌구들이 포함된 코드를 돌려보면 (getBuild 빼고) 잘 돌아갈 거예요</div><div style=\"font-size: 13.3333px;\">저번처럼 src/에 넣고 node run.js --file=파일이름 하면 실행이 되겟죠</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><span style=\"font-size: 14pt;\"><b>테스트용 파일 (src/getInfo.ts)</b></span></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><div style=\"color: rgb(192, 197, 206); background-color: rgb(42, 45, 55); font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #555c77;\">///&nbsp;</span><span style=\"color: #b9bed5;\">&lt;</span><span style=\"color: #85b1e0;\">reference</span><span style=\"color: #b9bed5;\">&nbsp;</span><span style=\"color: #dda2f6;\">path</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #9aefea;\">&quot;../types/global.d.ts&quot;</span><span style=\"color: #b9bed5;\">&nbsp;/&gt;</span></div><div><span style=\"color: #555c77;\">///&nbsp;</span><span style=\"color: #b9bed5;\">&lt;</span><span style=\"color: #85b1e0;\">reference</span><span style=\"color: #b9bed5;\">&nbsp;</span><span style=\"color: #dda2f6;\">path</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #9aefea;\">&quot;../lib/helpers.ts&quot;</span><span style=\"color: #b9bed5;\">&nbsp;/&gt;</span></div><div><span style=\"color: #555c77;\">///&nbsp;</span><span style=\"color: #b9bed5;\">&lt;</span><span style=\"color: #85b1e0;\">reference</span><span style=\"color: #b9bed5;\">&nbsp;</span><span style=\"color: #dda2f6;\">path</span><span style=\"color: #b9bed5;\">=</span><span style=\"color: #9aefea;\">&quot;../lib/aux.ts&quot;</span><span style=\"color: #b9bed5;\">&nbsp;/&gt;</span></div><br /><div><span style=\"color: #7e7edd;\">var</span>&nbsp;<span style=\"color: #f5faff;\">response</span><span style=\"color: #b9bed5;\">:</span>&nbsp;<span style=\"color: #a571f4;\">KakaoBotResponse</span>&nbsp;<span style=\"color: #b9bed5;\">=</span>&nbsp;(</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">room</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">msg</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">sender</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">isGroupChat</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">replier</span>,</div><div>&nbsp;&nbsp;<span style=\"color: #85b1e0;\">imageDB</span>,</div><div>)&nbsp;<span style=\"color: #7e7edd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;<span style=\"color: #7e7edd;\">if</span>&nbsp;(<span style=\"color: #b9bed5;\">!</span><span style=\"color: #85b1e0;\">isGroupChat</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #85b1e0;\">replier</span>.<span style=\"color: #f5faff;\">reply</span>(<span style=\"color: #9aefea;\">`#&nbsp;DEVICE</span></div><div><span style=\"color: #9aefea;\">ANDROID_VERSION_CODE=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getAndroidVersionCode</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">PHONE_BRAND=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getPhoneBrand</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">PHONE_MODEL=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getPhoneModel</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">IS_CHARGING=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">isCharging</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">BATTERY_LEVEL=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getBatteryLevel</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">BATTERY_HEALTH=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getBatteryHealth</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">BATTERY_TEMPERATURE=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getBatteryTemperature</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">BATTERY_VOLTAGE=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getBatteryVoltage</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}</span></div><div><span style=\"color: #9aefea;\">BATTERY_STATUS=${</span><span style=\"color: #85b1e0;\">Device</span><span style=\"color: #9aefea;\">.</span><span style=\"color: #f5faff;\">getBatteryStatus</span><span style=\"color: #9aefea;\">()</span><span style=\"color: #9aefea;\">}`</span>);</div><div>};</div></div></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">실행하면</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">[[[CONTENT-ELEMENT-0]]]<br /></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">요렇게 입력했던 걸 얻을 수 잇겟죠</div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\">이해가 안 되거나 먼지 하나도 모르겟으면 저를 비난해주세요&nbsp;</div><div style=\"font-size: 13.3333px;\">어차피 등업하려고 올리는 거니까여＊</div><div style=\"font-size: 13.3333px;\"><br /></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001B3D00000000",
+            "id": 6973,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 282,
+            "refArticleId": 6973,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "자동으로 터미널에서 카카오봇 시뮬레이션 하기 #2 (Device.something() 구현, Node.js)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1572004048463,
+            "writer": {
+                "id": "utophii",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "utophii"
+            }
+        },
+        "articleId": 6973,
+        "attaches": [
+            {
+                "extension": "png",
+                "fullName": "Screenshot_from_2019-10-25_20.44.50.png",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_from...-25_20.44.50.png",
+                "size": 77373,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/5ecb42f2e0b9ba664aacc9fec621582684d628ca84/MjAxOTEwMjVfMjg0/MDAxNTcyMDA0MDAxMDUw.KfX6-xPhR33hLa_m_fwex5ADfWqzUX1MfXqrZeLKIX4g.rLMEMuZSBsf3hbqyMQc9-pZ0K9uOiH_rJn5MIaXEAowg.PNG/Screenshot_from_2019-10-25_20.44.50.png?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "비난비난",
+                    "id": 71930452,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71930452,
+                    "updateDate": 1572004245000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 71930515,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71930452,
+                    "sticker": {
+                        "height": 112,
+                        "id": "happybean-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/happybean/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572004310000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "고인물이신감...?",
+                    "id": 71931106,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71931106,
+                    "updateDate": 1572004967000,
+                    "writer": {
+                        "id": "eric071024",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTFfMjI2/MDAxNTgxNDA1MzA3OTE5.wHhJ9BjdQemQL3vrELHIH9c6Sdn7KTULYfMQgy2GN9Eg.bZxBVVQwWHBc8yMZbm6x7Arg8KW03i5YLQlvTtC7w7gg.GIF.eric071024/ezgif-5-8ffa2959ab3f.gif"
+                        },
+                        "nick": "runkan"
+                    }
+                },
+                {
+                    "content": "자동학습 봇입니다 안녕하사ㅔ요",
+                    "id": 71932089,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71931106,
+                    "updateDate": 1572005933000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "뭔말인지 하나로 모르니 비난비난x2",
+                    "id": 71931298,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71931298,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-6-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_6.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572005206000,
+                    "writer": {
+                        "id": "doy0006",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data29/2007/12/9/39/cellphoneimg-doy0006.jpg"
+                        },
+                        "nick": "대기만성"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 71932241,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71931298,
+                    "sticker": {
+                        "height": 112,
+                        "id": "happybean-4-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/happybean/original_4.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572006062000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "비티님인가?",
+                    "id": 71934816,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71934816,
+                    "updateDate": 1572008119000,
+                    "writer": {
+                        "id": "jeongyeon13751",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수123"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 72048130,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71934816,
+                    "sticker": {
+                        "height": 112,
+                        "id": "happybean-40-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/happybean/original_40.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572166623000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                },
+                {
+                    "content": "다음은 java 코드사용 jsoup 등 내장 Api인거네요 ㅎ",
+                    "id": 71937479,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71937479,
+                    "updateDate": 1572010353000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "만들긴 햇는데 gulpfile이 복잡해져서 어떻게 올릴지 고민이에요",
+                    "id": 72047956,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEwMjdfMjU2/MDAxNTcyMTY2NDMyNzUy.Br-2GtHtEyIbWoHIOMfSP9K3_2F5_rGzHqQASbCIu0Ag.8S9__92o7hSNumwbzE4PF3cIOhzASRH8dnolLaP4n40g.PNG/Screenshot_from_2019-10-27_17.52.57.png"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "Screenshot_from_2019-10-27_17.52.57.png",
+                        "height": 534,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTEwMjdfMjU2/MDAxNTcyMTY2NDMyNzUy.Br-2GtHtEyIbWoHIOMfSP9K3_2F5_rGzHqQASbCIu0Ag.8S9__92o7hSNumwbzE4PF3cIOhzASRH8dnolLaP4n40g.PNG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTEwMjdfMjU2/MDAxNTcyMTY2NDMyNzUy.Br-2GtHtEyIbWoHIOMfSP9K3_2F5_rGzHqQASbCIu0Ag.8S9__92o7hSNumwbzE4PF3cIOhzASRH8dnolLaP4n40g.PNG/Screenshot_from_2019-10-27_17.52.57.png",
+                        "width": 456
+                    },
+                    "refId": 71937479,
+                    "updateDate": 1572166452000,
+                    "writer": {
+                        "id": "utophii",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170531_75/utophii_1496164033918emfA2_PNG/image.png"
+                        },
+                        "nick": "utophii"
+                    }
+                }
+            ],
+            "last": {
+                "id": 72033017,
+                "refId": 72033017
+            },
+            "next": {
+                "id": 72033017,
+                "refId": 72033017
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

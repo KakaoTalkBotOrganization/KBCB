@@ -1,0 +1,370 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b></b><div class=\"NHN_Writeform_Main\"><b><b>강좌할 주제</b></b></div><div><b>=&gt; </b><font color=\"#7d7d7d\">(ex: 삼항연산자) </font>ImageDB</div><div><font color=\"#7d7d7d\"><br /></font></div><div><b>강좌 내용</b></div><div><b>=&gt;<span style=\"font-size: 11pt;\">&nbsp;</span></b></div><div><span style=\"font-family: 돋움;\">PC로 써보는건 처음이군요! 이번에는 ImageDB에 대해서 알아보려고 합니다. ImageDB는 response 함수의 6번째 매개변수로, 이미지 관련을 담당하는 아이입니다.</span></div><div><span style=\"font-family: 돋움;\">그럼 본격적으로 강의를 시작해봅시다.</span></div><div><br /></div><div><span style=\"font-family: 돋움;\">먼저, ImageDB가 아까 response 함수의 6번째 매개변수라고 했죠? 제 강좌만 봐오신 분들은 response 함수의 매개변수가 5개라고 기억을 하시고 계실겁니다. 하지만 6번째 인자도 존재했습니다!</span></div><div><br /></div><div><span style=\"font-family: 돋움;\">function response(room, msg, sender, isGroupChat, replier, </span><span style=\"font-family: 돋움;\"><font color=\"#ff0000\">ImageDB</font></span><span style=\"font-family: 돋움;\">) {</span></div><div><br /></div><div><span style=\"font-family: 돋움;\">}</span></div><div><br /></div><div>이렇게 되는 거죠.</div><div>이제 이 ImageDB라는 녀석의 기능을 알아볼까요? 일단 이 녀석 매개변수들과는 다르게 자바 클래스를 가져옵니다. 그래서 이름도 대문자로 시작하죠.</div><div>그럼 이제 이 클래스의 메소드들을 살펴봐야겠죠?</div><div><br /></div><div>ImageDB.getProfileBase64()&nbsp;</div><div>ImageDB.getProfileImage()</div><div>ImageDB.getProfileBitmap()</div><div><b><br /></b></div><div>차근차근 살펴보도록 합시다!</div><div>첫 번째 메소드 getProfileBase64와 두 번째 메소드 getProfileImage는 같은 역할을 해줍니다! 프로필 이미지를 Base64의 형태로 가져온다고 하네요. Base64는 어떤 데이터를 알파벳, 숫자, 기호만으로 나타내는 인코딩 방식입니다. 그냥 암호화 한 것이라고 이해하면 쉽습니다.</div><div>세 번째 메소드인 getProfileBitmap은 프로필 이미지를 Bitmap으로 가져오는데, 여러분들이 쓸 일은 자주 없을 것입니다.</div><div>(첫 번째 메소드는 닼토봇에 존재하지 않습니다.)</div><div><br /></div><div>이 ImageDB는 보통 보안 용도로 많이들 사용하십니다. 관리자용 명령어를 만들 때, 자신의 프로필사진을 base64 인코딩해서 뽑아온 다음, 그 인코딩 된 문자열의 해시코드를 뽑아서이 해시코드를 사람마다 비교하는것이죠. (문자열에서의 해시코드는, 그 문자열이 가진 고유 해시 값이라고 생각하면 됩니다.)</div><div><br /></div><div>일단 이번 강좌에서는 이런 관리자용 명령어를 만들어보도록 하고, 나중에 심화편에서는 상대방 프로필사진을 뜯어오는 법을 강좌 할 수도 있고 안 할 수도 있고요(?)</div><div><br /></div><div>관리자용 명령어를 만들어보기 위해, 자신만의 해시코드를 가져와봅시다. 먼저 프로필사진을 base64인코딩해서 가져와봅시다.</div><div><br /></div><div>ImageDB.getProfileImage()</div><div><br /></div><div>ImageDB.getProfileBase64() 메소드도 있지만, 호환성을 높이기 위해 모든 봇에 존재하는 메소드를 사용했습니다.</div><div>그 다음 이 문자열의 해시코드를 가져와보겠습니다.</div><div><br /></div><div>new java.lang.String(ImageDB.getProfileImage()).hashCode()</div><div><br /></div><div>java.lang.String 객체로 형변환 한 후, 그 객체에서 해시코드를 뽑아왔습니다. 이제 이 해시코드를, &apos;/해시코드&apos; 채팅을 치면 답장하도록 한번 만들어봅시다.</div><div><br /></div><div>function response(room, msg, sender, isGroupChat, replier, ImageDB) {</div><div>&nbsp; &nbsp; if (msg == &quot;/해시코드&quot;) {</div><div><span style=\"font-size: 10pt;\">&nbsp; &nbsp; &nbsp; &nbsp; var profileImageHash = new java.lang.String(ImageDB.getProfileImage()).hashCode();</span></div><div><span style=\"font-size: 10pt;\">&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;당신의 해시코드는 &quot; + profileImageHash);</span></div><div>&nbsp; &nbsp; }</div><div>}</div><div><br /></div><div>좋습니다. 이걸로 자신의 프로필사진 해시코드를 알아낸 후 클립보드에 넣으세요! (예제 소스 작성을 위해 여기서는 1000000000 이 나왔다고 칩시다.)</div><div>이제 관리자용 명령어를 한 번 만들어볼까요? &apos;/관리자&apos; 라는 채팅을 관리자(자신)가 쳤을 때만 답장을 하도록 만들어봅시다.</div><div><br /></div><div><div>function response(room, msg, sender, isGroupChat, replier, ImageDB) {</div><div>&nbsp; &nbsp;&nbsp;<span style=\"font-size: 10pt;\">var profileImageHash = new java.lang.String(ImageDB.getProfileImage()).hashCode();</span></div><div>&nbsp; &nbsp; if (msg == &quot;/해시코드&quot;) {</div><div><span style=\"font-size: 10pt;\">&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;당신의 해시코드는 &quot; + profileImageHash);</span></div><div>&nbsp; &nbsp; }</div><div>&nbsp; &nbsp; if (profileImageHash == 1000000000) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; if (msg == &quot;/관리자&quot;) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;당신은 관리자입니다.);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; }</div><div>}</div></div><div><br /></div><div>여기서 1000000000에 방금 클립보드에 넣었던 그 해시코드를 입력해주시면 잘 답장해줄 것입니다.</div><div><br /></div><div><br /></div><div>rkdwhk Rmx</div><div>이번 강좌도 날로먹어버렸네요. 죄송합니다 ㅠㅠㅠ</div><div>원래 imageDB가 이렇게 쓸게 없던가..</div><div>다음 주제는, 소스 가독성 높이기나 소스 줄이기를 하지 않을까 싶네요</div><div><br /></div><div>그럼 이만</div></div><div class=\"NHN_Writeform_Main\"><div><br /></div></div><div class=\"NHN_Writeform_Main\"><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! ) 선택완료 헤헷</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002F5D00000000",
+            "head": "초급",
+            "headId": 5,
+            "id": 12125,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 232,
+            "refArticleId": 12125,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "(라이노 엔진) 자바스크립트 기초 강의 (8) - response 함수의 6번째 매개변수",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582771768020,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음"
+            }
+        },
+        "articleId": 12125,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "냐하하하",
+                    "id": 82447563,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82447563,
+                    "updateDate": 1582772768000,
+                    "writer": {
+                        "id": "aidenkor",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTNfMjM0/MDAxNTk5OTgzNjcyMTAy.nPYLAEsagoL0HlO-W_SN_Cz7fmfxXBU-MNw67q92LsEg.MIYVbyA3RxdmR6R4_wiJMp1kFv5wFwTsdd677rnvyIcg.PNG/logo-small.png"
+                        },
+                        "nick": "delta"
+                    }
+                },
+                {
+                    "content": "이히히히힣ㅎ",
+                    "id": 82451514,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82447563,
+                    "updateDate": 1582775233000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "다음은 packageName인가\r\n//날먹 ㄱㅈㅇ",
+                    "id": 82451373,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82451373,
+                    "updateDate": 1582775133000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "ㅇㄹㄹㄹ",
+                    "id": 82451520,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82451373,
+                    "updateDate": 1582775239000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "정보) 메봇r은 imageDB이다//메봇r로 갈아탔지만 ImageDB로 계속 쓰는건 기분탓",
+                    "id": 82464744,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82464744,
+                    "updateDate": 1582783719000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "MinSoup"
+                    }
+                },
+                {
+                    "content": "const ImageDB = response.arguments[5]; //각이다",
+                    "id": 82468308,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82464744,
+                    "updateDate": 1582786233000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "옹 그럼  if (profileImageHash == 1000000000) { 밑에 넣은 명령어는 해쉬코드가 1000000000인사람만 작동하는거네용\r\n 날ㅁ..읍읍",
+                    "id": 82470312,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82470312,
+                    "updateDate": 1582787571000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "ㅓ라",
+                    "id": 82470346,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82470312,
+                    "updateDate": 1582787587000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "if (profileImageHash == 1000000000) {이걸  if (profileImageHash == 1000000000||9999999999) {하면 관리자가 2명인감",
+                    "id": 82471667,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82470312,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음"
+                    },
+                    "updateDate": 1582788465000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "? 그걸 그렇게 하면 안되ㅈ..",
+                    "id": 82472006,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82470312,
+                    "replyMember": {
+                        "id": "ppch0529",
+                        "nick": "타카"
+                    },
+                    "updateDate": 1582788671000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                }
+            ],
+            "last": {
+                "id": 82598183,
+                "refId": 82598183
+            },
+            "next": {
+                "id": 82475750,
+                "refId": 82470312
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

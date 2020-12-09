@@ -1,0 +1,224 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 닥토봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt; js</b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 특정 한 인원만 주사위를 키고 끌 수 있게 하는 방법</b></div><div><b><br /></b></div><div>버구칠님의 주사위를 보고 주사위 소스를 가져와서 실험을 하고있는데,</div><div>단톡방의 특정 인원만 주사위 온오프 명령어를 만들려고 합니다. 소스를 찾아서 수정해보려고 해도 안되네요.</div><div>온오프는 닼토님 블로그 강좌를 보고 만들어봤습니다. 어디를 수정해야 할까요?</div><div><br /></div><div><div>var joobot = false;</div><div>function response(room, msg, sender, isGroupChat, replier) {</div><div>&nbsp; &nbsp; if (sender == &quot;A&quot; || sender == &quot;B&quot;) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; if (msg == &quot;!주사위켬&quot;) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; joobot = false;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;주사위를 작동합니다.&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; } else if (msg == &quot;!주사위끔&quot;) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; joobot = true;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;주사위를 중지합니다.&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; } else {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;당신은 주사위를 만질 권한이 없네요.&quot;);</div><div>&nbsp; &nbsp; }</div><div>}</div><div><br /></div><div>function response(room, msg, sender, isGroupChat, replier) {</div><div>&nbsp; &nbsp; if (msg.indexOf(&quot;@주사위&quot;) == 0) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; //메세지가 주사위 라면</div><div>&nbsp; &nbsp; &nbsp; &nbsp; if (joobot == true) return;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; else {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rule = Math.floor(Math.random() * 6) + 1;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // rule 은 Math함수에 랜덤을 해줍니다 Math.random()*6은</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //0~6까지 랜덤으로 나오는겁니다 뒤에 + 1 을 더해준것으로</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //1~6까지 랜덤으로 숫자가 하나 나옵니다</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (rule == 1) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(rule + &quot;이 나왔습니다\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒▒■▒▒\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒▒▒▒▒&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //만약 rule 이 1이라면</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //1이 나왔다고 답변해줍니다</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //나머지도 이런형식 입니다</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (rule == 2) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(rule + &quot;가 나왔습니다\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒▒▒▒▒&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (rule == 3) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(rule + &quot;이 나왔습니다\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒▒▒■▒\\n&nbsp; ▒▒■▒▒\\n&nbsp; ▒■▒▒▒\\n&nbsp; ▒▒▒▒▒&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (rule == 4) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(rule + &quot;가 나왔습니다\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒▒▒▒▒&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (rule == 5) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(rule + &quot;가 나왔습니다\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒▒■▒▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒▒▒▒▒&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (rule == 6) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(rule + &quot;이 나왔습니다\\n&nbsp; ▒▒▒▒▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒■▒■▒\\n&nbsp; ▒▒▒▒▒&quot;);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp; } //주사위 괄호연거를 닫아줍시다</div><div>&nbsp; &nbsp; }//몸체 닫기</div><div>}</div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002DA500000000",
+            "id": 11685,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 131,
+            "refArticleId": 11685,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "특정 한 인원만 봇 명령어를 키고 끌 수 있게 하는 방법",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582123429257,
+            "writer": {
+                "id": "yuki_ren",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "하루나리이"
+            }
+        },
+        "articleId": 11685,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 81666381,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81666381,
+                    "updateDate": 1582123564000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "아하 위에 온오프 기능을 사용하려면 response 펑션을 두개로 만들면 안되는군요.. 감사합니다!",
+                    "id": 81667204,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81666381,
+                    "updateDate": 1582123956000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                },
+                {
+                    "content": "감사합니다! 한번 지금 바로 읽어보겠습니다!",
+                    "id": 81668393,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81666381,
+                    "replyMember": {
+                        "id": "ds2atc",
+                        "nick": "도리도리m"
+                    },
+                    "updateDate": 1582124565000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                },
+                {
+                    "content": "같은 이벤트 리스너는 한 번만...",
+                    "id": 82695644,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82695644,
+                    "updateDate": 1582972334000,
+                    "writer": {
+                        "id": "dt3141592",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA3MTNfNjAg/MDAxNDk5ODc0MzI1ODY0.L23nhKElHQBYU1HI-neTmsWWI76dJM8ijnLGirojm_0g.ZsTOi3Ay5KzWIPqmG2ZbjR7l0bCQfmpzyPQB9naua4og.PNG.dt3141592/Dark%2BTornado%252B.png"
+                        },
+                        "nick": "Dark Tornado"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

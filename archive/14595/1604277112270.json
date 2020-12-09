@@ -1,0 +1,304 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Menlo, Monaco, 'Courier New', monospace; font-size: 12px; line-height: 18px; white-space: pre;\"><div><span style=\"color: #569cd6;\">const</span> <span style=\"color: #9cdcfe;\">scriptName</span> = <span style=\"color: #ce9178;\">&quot;weather&quot;</span>;</div><div><span style=\"color: #6a9955;\">/**</span></div><div><span style=\"color: #6a9955;\"> * (string) room</span></div><div><span style=\"color: #6a9955;\"> * (string) sender</span></div><div><span style=\"color: #6a9955;\"> * (boolean) isGroupChat</span></div><div><span style=\"color: #6a9955;\"> * (void) replier.reply(message)</span></div><div><span style=\"color: #6a9955;\"> * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환</span></div><div><span style=\"color: #6a9955;\"> * (string) imageDB.getProfileBase64()</span></div><div><span style=\"color: #6a9955;\"> * (string) packageName</span></div><div><span style=\"color: #6a9955;\"> */</span></div><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">getForecast</span>(<span style=\"color: #9cdcfe;\">wtf</span>) {</div><div>  <span style=\"color: #c586c0;\">try</span> {</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">wt</span> = <span style=\"color: #9cdcfe;\">org</span>.<span style=\"color: #9cdcfe;\">jsoup</span>.<span style=\"color: #9cdcfe;\">Jsoup</span>.<span style=\"color: #dcdcaa;\">connect</span>(<span style=\"color: #ce9178;\">&quot;<a href=\"https://search.naver.com/search.naver?query=\" target=\"_blank\">https://search.naver.com/search.naver?query=</a>&quot;</span> + <span style=\"color: #9cdcfe;\">wtf</span> + <span style=\"color: #ce9178;\">&quot;날씨&quot;</span>)</div><div>      .<span style=\"color: #dcdcaa;\">userAgent</span>(<span style=\"color: #ce9178;\">&quot;Mozilla&quot;</span>).<span style=\"color: #dcdcaa;\">get</span>().<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;div.cs_weather&quot;</span>);</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">area</span> = <span style=\"color: #9cdcfe;\">wt</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;.api_title&quot;</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">todayWeather</span> = <span style=\"color: #9cdcfe;\">wt</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;.today_area&quot;</span>);</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">nowTemp</span> = <span style=\"color: #9cdcfe;\">todayWeather</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;div.info_data &gt; p &gt; span&quot;</span>).<span style=\"color: #dcdcaa;\">get</span>(<span style=\"color: #b5cea8;\">0</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">yesterday</span> = <span style=\"color: #9cdcfe;\">todayWeather</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;.cast_txt&quot;</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">minTemp</span> = <span style=\"color: #9cdcfe;\">todayWeather</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;.min&quot;</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">maxTemp</span> = <span style=\"color: #9cdcfe;\">todayWeather</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;.max&quot;</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">sensible</span> = <span style=\"color: #9cdcfe;\">todayWeather</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;.sensible &gt; em&quot;</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">dust</span> = <span style=\"color: #9cdcfe;\">todayWeather</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;dd&quot;</span>).<span style=\"color: #dcdcaa;\">get</span>(<span style=\"color: #b5cea8;\">0</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">nanoDust</span> = <span style=\"color: #9cdcfe;\">todayWeather</span>.<span style=\"color: #dcdcaa;\">select</span>(<span style=\"color: #ce9178;\">&quot;dd&quot;</span>).<span style=\"color: #dcdcaa;\">get</span>(<span style=\"color: #b5cea8;\">1</span>).<span style=\"color: #dcdcaa;\">text</span>();</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">result</span> = <span style=\"color: #ce9178;\">&quot;&#9925; 날씨정보</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #9cdcfe;\">area</span> +</div><div>      <span style=\"color: #ce9178;\">&quot;&#9925;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #ce9178;\">&quot;&#127777;현재온도 : &quot;</span> + <span style=\"color: #9cdcfe;\">nowTemp</span> + <span style=\"color: #ce9178;\">&quot;℃</span><span style=\"color: #d7ba7d;\">\\n\\n</span><span style=\"color: #ce9178;\">&quot;</span> +</div><div>      <span style=\"color: #9cdcfe;\">yesterday</span> + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #ce9178;\">&quot;&#128315;최저온도 : &quot;</span> + <span style=\"color: #9cdcfe;\">minTemp</span> + <span style=\"color: #ce9178;\">&quot;℃</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #ce9178;\">&quot;&#128314;&#65039;최고온도 : &quot;</span> + <span style=\"color: #9cdcfe;\">maxTemp</span> + <span style=\"color: #ce9178;\">&quot;℃</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span></div><div>      + <span style=\"color: #ce9178;\">&quot;&#128694;&zwj;♂&#65039;체감온도 : &quot;</span> + <span style=\"color: #9cdcfe;\">sensible</span> + <span style=\"color: #ce9178;\">&quot;℃</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #ce9178;\">&quot;-----미세먼지-----</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&#128721;미세먼지 : &quot;</span> + <span style=\"color: #9cdcfe;\">dust</span> + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&#128721;초미세먼지 : &quot;</span> + <span style=\"color: #9cdcfe;\">nanoDust</span>;</div><div>    <span style=\"color: #c586c0;\">return</span> <span style=\"color: #9cdcfe;\">result</span>;</div><div>  } <span style=\"color: #c586c0;\">catch</span> (<span style=\"color: #9cdcfe;\">e</span>) {</div><div>    <span style=\"color: #c586c0;\">return</span> <span style=\"color: #569cd6;\">null</span>;</div><div>  }</div><div>}</div><br /><br /><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">response</span>(<span style=\"color: #9cdcfe;\">room</span>, <span style=\"color: #9cdcfe;\">msg</span>, <span style=\"color: #9cdcfe;\">sender</span>, <span style=\"color: #9cdcfe;\">isGroupChat</span>, <span style=\"color: #9cdcfe;\">replier</span>, <span style=\"color: #9cdcfe;\">imageDB</span>, <span style=\"color: #9cdcfe;\">packageName</span>) {</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">cmd</span> = <span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&quot; &quot;</span>)[<span style=\"color: #b5cea8;\">0</span>];</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">where</span> = <span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">replace</span>(<span style=\"color: #9cdcfe;\">cmd</span> + <span style=\"color: #ce9178;\">&quot; &quot;</span>, <span style=\"color: #ce9178;\">&quot;&quot;</span>);</div><br /><div>  <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">cmd</span> == <span style=\"color: #ce9178;\">&quot;@날씨&quot;</span>) {</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">velue</span> = <span style=\"color: #dcdcaa;\">getForecast</span>(<span style=\"color: #9cdcfe;\">where</span>);</div><div>    <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">velue</span> == <span style=\"color: #569cd6;\">null</span>) {</div><div>      <span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;날씨 정보 오류&quot;</span>);</div><div>    } <span style=\"color: #c586c0;\">else</span> {</div><div>      <span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #9cdcfe;\">velue</span>);</div><div>    }</div><div>  }</div><div>}</div><br /><div><span style=\"color: #6a9955;\">//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.</span></div><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onCreate</span>(<span style=\"color: #9cdcfe;\">savedInstanceState</span>, <span style=\"color: #9cdcfe;\">activity</span>) {</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">textView</span> = <span style=\"color: #569cd6;\">new</span> <span style=\"color: #4ec9b0;\">android</span>.<span style=\"color: #4ec9b0;\">widget</span>.<span style=\"color: #4ec9b0;\">TextView</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>  <span style=\"color: #9cdcfe;\">textView</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;Hello, World!&quot;</span>);</div><div>  <span style=\"color: #9cdcfe;\">textView</span>.<span style=\"color: #dcdcaa;\">setTextColor</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Color</span>.<span style=\"color: #9cdcfe;\">DKGRAY</span>);</div><div>  <span style=\"color: #9cdcfe;\">activity</span>.<span style=\"color: #dcdcaa;\">setContentView</span>(<span style=\"color: #9cdcfe;\">textView</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onStart</span>(<span style=\"color: #9cdcfe;\">activity</span>) {}</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onResume</span>(<span style=\"color: #9cdcfe;\">activity</span>) {}</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onPause</span>(<span style=\"color: #9cdcfe;\">activity</span>) {}</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onStop</span>(<span style=\"color: #9cdcfe;\">activity</span>) {}</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000390300000000",
+            "id": 14595,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 75,
+            "refArticleId": 14595,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "날씨",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585667361120,
+            "writer": {
+                "id": "yoonhyouka",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "윤빙과"
+            }
+        },
+        "articleId": 14595,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "우와 멋져요 근데 다음을 파싱하시지 네이버는 구조가 계속 바껴서..",
+                    "id": 85987687,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85987687,
+                    "updateDate": 1585667527000,
+                    "writer": {
+                        "id": "jinnyday0719",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMTcx/MDAxNjAyOTQ2MDIzMzAw.a1mEI4EpeDbk8J6sLw5CkdLqVQlDrpmoMOlCejozz7kg.JVmyla18yTNADc733cXr_-hOhQbVbhCC7xE1Bx6eBQIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㅇㅅㅈ"
+                    }
+                },
+                {
+                    "content": "구조 바뀌면 바뀐거 보는맛이 ...",
+                    "id": 85987879,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85987687,
+                    "updateDate": 1585667626000,
+                    "writer": {
+                        "id": "yoonhyouka",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "윤빙과"
+                    }
+                },
+                {
+                    "content": "그런가요 ㅋㅋ 전 귀찮아서",
+                    "id": 85987950,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85987687,
+                    "replyMember": {
+                        "id": "yoonhyouka",
+                        "nick": "윤빙과"
+                    },
+                    "updateDate": 1585667654000,
+                    "writer": {
+                        "id": "jinnyday0719",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMTcx/MDAxNjAyOTQ2MDIzMzAw.a1mEI4EpeDbk8J6sLw5CkdLqVQlDrpmoMOlCejozz7kg.JVmyla18yTNADc733cXr_-hOhQbVbhCC7xE1Bx6eBQIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㅇㅅㅈ"
+                    }
+                },
+                {
+                    "content": "대기업 소스 뜯어서 보다보면 공부가..",
+                    "id": 85988040,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85987687,
+                    "replyMember": {
+                        "id": "jinnyday0719",
+                        "nick": "ㅇㅅㅈ"
+                    },
+                    "updateDate": 1585667692000,
+                    "writer": {
+                        "id": "yoonhyouka",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "윤빙과"
+                    }
+                },
+                {
+                    "content": "그러쿤요!",
+                    "id": 85988241,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85987687,
+                    "replyMember": {
+                        "id": "yoonhyouka",
+                        "nick": "윤빙과"
+                    },
+                    "updateDate": 1585667781000,
+                    "writer": {
+                        "id": "jinnyday0719",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMTcx/MDAxNjAyOTQ2MDIzMzAw.a1mEI4EpeDbk8J6sLw5CkdLqVQlDrpmoMOlCejozz7kg.JVmyla18yTNADc733cXr_-hOhQbVbhCC7xE1Bx6eBQIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㅇㅅㅈ"
+                    }
+                },
+                {
+                    "content": "냠냠냠",
+                    "id": 85990151,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85990151,
+                    "updateDate": 1585668872000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

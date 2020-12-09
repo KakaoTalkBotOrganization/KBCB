@@ -1,0 +1,337 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<p>채팅순위 소스입니당 그대로 복붙해가세여</p><p></p><p dir=\"ltr\"><span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">var</span></span><span style=\"background-color:#FFAA00;\"> chat = []</span> <span style=\"color:#707070;\">// 전역변수</span><br />\r\n<span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">var</span></span><span style=\"background-color:#FFAA00;\"> chat2 = []</span> <span style=\"color:#707070;\">// 전역변수</span><br />\r\n<span style=\"color:#CB772F;\">function</span> <span style=\"color:#FFC66D;\">response</span>(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />\r\n&nbsp;&nbsp;&nbsp; <br />\r\n<span style=\"color:#CB772F;\">if</span>(msg.trim()){ <br />\r\n<span style=\"color:#CB772F;\">if</span>( chat[sender] == undefined){<br />\r\n<span style=\"background-color:#FFAA00;\">chat[sender] = </span><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">1</span></span><span style=\"background-color:#FFAA00;\">+</span><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot; 회: &quot;</span></span><span style=\"background-color:#FFAA00;\">+sender</span> <br />\r\nchat2.push(<span style=\"color:#FFFFFF;\">chat[sender]</span>);<br />\r\n}<span style=\"color:#CB772F;\"> else </span>{<br />\r\n<span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">var</span></span><span style=\"background-color:#FFAA00;\"> i = parseInt(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#7A9EC2;\"><span style=\"background-color:#FFAA00;\">Number</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">(</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">chat[sender].split(</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;회&quot;</span></span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">)[</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">0</span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">].replace(</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#7A9EC2;\"><span style=\"background-color:#FFAA00;\">/[^0-9]/g</span></span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">,</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&quot;</span></span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">)</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">) + </span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">1</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\nchat2[chat2.indexOf(<span style=\"color:#FFFFFF;\">chat[sender]</span>)] = i+<span style=\"color:#A5C25C;\">&quot; 회: &quot;</span>+sender; <br />\r\nchat[sender] = i+<span style=\"color:#A5C25C;\">&quot; 회: &quot;</span>+sender; <br />\r\n}<br />\r\nchat2 = chat2.sort(<span style=\"color:#FFFFFF;\"><span style=\"color:#CB772F;\">function</span></span><span style=\"color:#FFFFFF;\">(a,b){a = </span><span style=\"color:#FFFFFF;\"><span style=\"color:#7A9EC2;\">Number</span></span><span style=\"color:#FFFFFF;\">(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\">a.replace(</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#7A9EC2;\">/[^0-9]/g</span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\">,</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\">)</span></span><span style=\"color:#FFFFFF;\">); b = </span><span style=\"color:#FFFFFF;\"><span style=\"color:#7A9EC2;\">Number</span></span><span style=\"color:#FFFFFF;\">(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\">b.replace(</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#7A9EC2;\">/[^0-9]/g</span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\">,</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\">)</span></span><span style=\"color:#FFFFFF;\">); </span><span style=\"color:#FFFFFF;\"><span style=\"color:#CB772F;\">return</span></span><span style=\"color:#FFFFFF;\"> b-a;}</span>); <br />\r\n}<br />\r\n<span style=\"color:#CB772F;\">if</span>(msg.trim()==<span style=\"color:#A5C25C;\">&quot;/채팅순위&quot;</span>){<br />\r\n<span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">chat2.join(</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;\\n&quot;</span></span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">)</span></span><span style=\"background-color:#FFAA00;\">)</span> <br />\r\n}<br />\r\n}</p>\r\n<p dir=\"ltr\"> </p>&nbsp;<p></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002DE700000000",
+            "id": 11751,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 543,
+            "refArticleId": 11751,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "채팅순위소스><",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582259362510,
+            "writer": {
+                "id": "sian_2090",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "오이냉국"
+            }
+        },
+        "articleId": 11751,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "잘 퍼갑니다~",
+                    "id": 81856793,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81856793,
+                    "updateDate": 1582285781000,
+                    "writer": {
+                        "id": "moon1784",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "읭"
+                    }
+                },
+                {
+                    "content": "넹넹",
+                    "id": 81895563,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81856793,
+                    "updateDate": 1582331894000,
+                    "writer": {
+                        "id": "sian_2090",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "오이냉국"
+                    }
+                },
+                {
+                    "content": "초기화는 없나요?",
+                    "id": 103111923,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81856793,
+                    "updateDate": 1600005535000,
+                    "writer": {
+                        "id": "skadnchlrh",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190903_32/skadnchlrh_1567501951183ttxEP_PNG/avatar_profile.png"
+                        },
+                        "nick": "skyblue"
+                    }
+                },
+                {
+                    "content": "오 감사합니다 ㅎㅎ",
+                    "id": 82521250,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82521250,
+                    "updateDate": 1582818379000,
+                    "writer": {
+                        "id": "gudals930914",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "전강철"
+                    }
+                },
+                {
+                    "content": "사랑합니다 ~",
+                    "id": 83079047,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83079047,
+                    "updateDate": 1583290879000,
+                    "writer": {
+                        "id": "wjsdlscjf77",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "버퍼로우"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 85819423,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85819423,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1585546675000,
+                    "writer": {
+                        "id": "lsy6876876",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "KR ㅣ 끝말러 ㅣ KR"
+                    }
+                },
+                {
+                    "content": "감사합니당!!",
+                    "id": 89873708,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 89873708,
+                    "updateDate": 1588991104000,
+                    "writer": {
+                        "id": "wnsgur031205",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDhfNTUg/MDAxNTg4OTQyNjA2ODIy.VELWp-S741Z4fYslY5-5ltcuwijlL7gvmXhAUe1gD1Eg.mFrCaflQcTid2ukAqqAjdR1PFkRPiK6jES0RbnNHNx0g.JPEG/yande.re_633186_sample_kotomi_alpaca_miko_see_through_wet.jpg"
+                        },
+                        "nick": "스노우"
+                    }
+                },
+                {
+                    "content": "이거 메봇에서는 실행 안되나요?",
+                    "id": 97361130,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97361130,
+                    "updateDate": 1595239566000,
+                    "writer": {
+                        "id": "wngk683",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "피카츄"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

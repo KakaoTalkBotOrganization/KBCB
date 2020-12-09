@@ -1,0 +1,337 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">성능을 조정밑 모니터링 할수 있는 봇 소스</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #0000ff;\">const</span> information = {</div><br /><div>  botInfo:{</div><div>    mode:<span style=\"color: #a31515;\">&quot;rhino&quot;</span>,</div><div>    version:<span style=\"color: #a31515;\">&quot;ssvr_v0.1.a&quot;</span>,</div><div>    threadCount:<span style=\"color: #09885a;\">1</span>,</div><div>    runTime:<span style=\"color: #008080;\">Date</span>.now()</div><div>  },</div><div>  functions:{</div><div>    functionList:[</div><div>      <span style=\"color: #0000ff;\">function</span> init(args){</div><div>        args.cmd = args.msg.split(<span style=\"color: #a31515;\">&quot; &quot;</span>);</div><div>        args.space = args.msg.split(<span style=\"color: #a31515;\">&quot;&quot;</span>);</div><div>        args.endFunctionLoop = <span style=\"color: #0000ff;\">false</span>;</div><div>      },</div><div>      <span style=\"color: #0000ff;\">function</span> utils(args){</div><div>        <span style=\"color: #0000ff;\">if</span>(args.endFunctionLoop)<span style=\"color: #0000ff;\">return</span>;</div><div>        <span style=\"color: #0000ff;\">switch</span>(args.msg){</div><div>          <span style=\"color: #0000ff;\">case</span> <span style=\"color: #a31515;\">&quot;.가동시간&quot;</span>:</div><div>            args.replier.reply((((<span style=\"color: #008080;\">Date</span>.now()-information.botInfo.runTime)/<span style=\"color: #09885a;\">1000</span>)|<span style=\"color: #09885a;\">0</span>)+<span style=\"color: #a31515;\">&quot;초 동안 실행중&quot;</span>);</div><div>            <span style=\"color: #0000ff;\">break</span>;</div><div>          <span style=\"color: #0000ff;\">case</span> <span style=\"color: #a31515;\">&quot;.메모리&quot;</span>:</div><div>            <span style=\"color: #0000ff;\">let</span> m = information.cls.utils.getMemoryInfo();</div><div>            <span style=\"color: #0000ff;\">let</span> buffer = [</div><div>              <span style=\"color: #a31515;\">&quot;===================&quot;</span>,</div><div>              <span style=\"color: #a31515;\">&quot;[현재 봇 메모리 정보]&quot;</span>,</div><div>              <span style=\"color: #a31515;\">&quot;===================&quot;</span>+information.cls.utils.compress(),</div><div>              <span style=\"color: #a31515;\">&quot;-------------------&quot;</span>,</div><div>              <span style=\"color: #a31515;\">&quot;[현재 할당된 메모리]&quot;</span>,</div><div>              ((m.alloc/<span style=\"color: #09885a;\">1024</span>/<span style=\"color: #09885a;\">1024</span>)|<span style=\"color: #09885a;\">0</span>)+<span style=\"color: #a31515;\">&quot;MB 할당됨&quot;</span>,</div><div>              <span style=\"color: #a31515;\">&quot;[현재 사용하는 메모리]&quot;</span>,</div><div>              ((m.using/<span style=\"color: #09885a;\">1024</span>/<span style=\"color: #09885a;\">1024</span>)|<span style=\"color: #09885a;\">0</span>)+<span style=\"color: #a31515;\">&quot;MB 사용중&quot;</span>,</div><div>              <span style=\"color: #a31515;\">&quot;[현재 메모리 여유공간]&quot;</span>,</div><div>              ((m.free/<span style=\"color: #09885a;\">1024</span>/<span style=\"color: #09885a;\">1024</span>)|<span style=\"color: #09885a;\">0</span>)+<span style=\"color: #a31515;\">&quot;MB 남음&quot;</span>,</div><div>              <span style=\"color: #a31515;\">&quot;-------------------&quot;</span></div><div>            ];</div><div>            args.replier.reply(buffer.join(<span style=\"color: #a31515;\">&quot;\\n&quot;</span>));</div><div>            <span style=\"color: #0000ff;\">break</span>;</div><div>          </div><div>          <span style=\"color: #0000ff;\">default</span>:</div><div>            <span style=\"color: #0000ff;\">break</span>;</div><div>        }</div><div>       </div><div>        <span style=\"color: #0000ff;\">if</span>(args.msg.startsWith(<span style=\"color: #a31515;\">&quot;.스레드&quot;</span>)){</div><div>          <span style=\"color: #aaaaaa;\">//(&quot;[&quot;+ String(information.threads.ThreadPool.toString()).replace(&quot;,&quot;,&quot;!&quot;).split(&quot;!&quot;)[1].replace(/=/g,&quot;:&quot;).replace(/ /g,&quot;&quot;))</span></div><div>            <span style=\"color: #0000ff;\">if</span>(args.msg == <span style=\"color: #a31515;\">&quot;.스레드&quot;</span>){args.replier.reply(<span style=\"color: #a31515;\">&quot;[&quot;</span>+<span style=\"color: #008080;\">String</span>(information.threads.<span style=\"color: #008080;\">ThreadPool</span>.toString()).split(<span style=\"color: #a31515;\">&quot;[&quot;</span>)[<span style=\"color: #09885a;\">1</span>]);<span style=\"color: #0000ff;\">return</span>;}</div><div>            </div><div>        }</div><div>        <span style=\"color: #0000ff;\">if</span>(args.msg.startsWith(<span style=\"color: #a31515;\">&quot;.스레드수&quot;</span>)){</div><div>          <span style=\"color: #0000ff;\">if</span>(args.cmd.length == <span style=\"color: #09885a;\">2</span>){</div><div>            <span style=\"color: #0000ff;\">if</span>(!isNaN(args.cmd[<span style=\"color: #09885a;\">1</span>])){</div><div>              information.cls.utils.setThreadCount(<span style=\"color: #008080;\">Number</span>(args.cmd[<span style=\"color: #09885a;\">1</span>]));</div><div>              args.replier.reply(<span style=\"color: #a31515;\">&quot;[스레드수가 적용되었습니다.]&quot;</span>)  </div><div>            }</div><div>            <span style=\"color: #0000ff;\">return</span>;</div><div>          }</div><div>          args.replier.reply(<span style=\"color: #a31515;\">&quot;[&apos;.스레드수 [Integer]&apos; 형태로 해주십시오.]&quot;</span>)</div><div>        }</div><div>      },</div><div>      <span style=\"color: #0000ff;\">function</span>(args){</div><div>        <span style=\"color: #0000ff;\">if</span>(args.endFunctionLoop)<span style=\"color: #0000ff;\">return</span>;</div><div>         args.msg==&quot;.안녕&quot;&amp;&amp;args.replier.reply(&quot;안녕!&quot;)</div></div></div></div><blockquote><div class=\"NHN_Writeform_Main\"><div><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div></div></div></div></div></blockquote><div class=\"NHN_Writeform_Main\"><div><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div>        </div><br /><div>      },</div><div>      <span style=\"color: #0000ff;\">function</span>(args){</div><div>        <span style=\"color: #0000ff;\">if</span>(args.endFunctionLoop)<span style=\"color: #0000ff;\">return</span>;</div><br /><div>      },</div><div>      <span style=\"color: #0000ff;\">function</span>(args){</div><div>        <span style=\"color: #0000ff;\">if</span>(args.endFunctionLoop)<span style=\"color: #0000ff;\">return</span>;</div><br /><div>      },</div><div>      <span style=\"color: #0000ff;\">function</span>(args){</div><div>        <span style=\"color: #0000ff;\">if</span>(args.endFunctionLoop)<span style=\"color: #0000ff;\">return</span>;</div><br /><div>      },</div><div>      <span style=\"color: #0000ff;\">function</span>(args){</div><div>        <span style=\"color: #0000ff;\">if</span>(args.endFunctionLoop)<span style=\"color: #0000ff;\">return</span>;</div><br /><div>      }</div><div>    ],</div><div>    loop:[</div><div>      <span style=\"color: #0000ff;\">function</span>(){</div><br /><div>      }</div><div>    ],</div><div>    init:<span style=\"color: #0000ff;\">function</span>(){</div><div>      information.cls.<span style=\"color: #008080;\">Thread</span>.prototype.start = <span style=\"color: #0000ff;\">function</span>(){</div><div>        <span style=\"color: #0000ff;\">let</span> ctx = <span style=\"color: #0000ff;\">this</span>;</div><div>        <span style=\"color: #aaaaaa;\">//closure</span></div><div>        information.threads.<span style=\"color: #008080;\">ThreadPool</span>.submit(<span style=\"color: #0000ff;\">new</span> java.lang.<span style=\"color: #008080;\">Runnable</span>({run:<span style=\"color: #0000ff;\">function</span>(){</div><div>          <span style=\"color: #0000ff;\">for</span>(<span style=\"color: #0000ff;\">let</span> a=<span style=\"color: #09885a;\">0</span>,len = information.functions.functionList.length;a&lt;len;a++){</div><div>            information.functions.functionList[a].call(<span style=\"color: #0000ff;\">null</span>,ctx.args);</div><div>          }</div><div>        }}));</div><div>      }</div><br /><br /><div>      information.cls.<span style=\"color: #008080;\">ServerStream</span>.prototype.connect = <span style=\"color: #0000ff;\">function</span>(){</div><div>        <span style=\"color: #0000ff;\">this</span>.sc = <span style=\"color: #0000ff;\">new</span> java.net.<span style=\"color: #008080;\">Socket</span>(<span style=\"color: #0000ff;\">this</span>.url,<span style=\"color: #0000ff;\">this</span>.port);</div><br /><div>        <span style=\"color: #0000ff;\">this</span>.<span style=\"color: #0000ff;\">in</span> = <span style=\"color: #0000ff;\">this</span>.sc.getInputStream();</div><div>        <span style=\"color: #0000ff;\">this</span>.out = <span style=\"color: #0000ff;\">this</span>.sc.getOutputStream();</div><br /><div>        <span style=\"color: #0000ff;\">this</span>.reader = <span style=\"color: #0000ff;\">new</span> java.io.<span style=\"color: #008080;\">ObjectInputStream</span>(<span style=\"color: #0000ff;\">this</span>.<span style=\"color: #0000ff;\">in</span>);</div><div>        <span style=\"color: #0000ff;\">this</span>.writer = <span style=\"color: #0000ff;\">new</span> java.io.<span style=\"color: #008080;\">ObjectOutputStream</span>(<span style=\"color: #0000ff;\">this</span>.out);</div><div>      }</div><br /><div>      information.cls.<span style=\"color: #008080;\">ServerStream</span>.prototype.sendObject = <span style=\"color: #0000ff;\">function</span>(obj){</div><div>        <span style=\"color: #0000ff;\">if</span>(obj.<span style=\"color: #0000ff;\">constructor</span> == <span style=\"color: #008080;\">Array</span>){</div><div>          <span style=\"color: #0000ff;\">this</span>.writer.writeObject(information.cls.utils.arrayToList(obj));</div><div>        }</div><div>        <span style=\"color: #0000ff;\">if</span>(obj.<span style=\"color: #0000ff;\">constructor</span> == <span style=\"color: #008080;\">Object</span>){</div><div>          <span style=\"color: #0000ff;\">this</span>.writer.writeObject(information.clas.utils.objectToHashMap(obj));</div><div>        }</div><div>        <span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">false</span>;</div><div>      }</div><br /><div>      information.cls.<span style=\"color: #008080;\">ServerStream</span>.prototype.readObject = <span style=\"color: #0000ff;\">function</span>(){</div><div>        <span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">this</span>.reader.readObject();</div><div>      }</div><br /><div>      information.threads.listener.setDaemon(<span style=\"color: #0000ff;\">true</span>);</div><div>      information.threads.updater.setDaemon(<span style=\"color: #0000ff;\">true</span>);</div><br /><div>      information.threads.listener.start();</div><div>      information.threads.updater.start();</div><div>    }</div><div>  },</div><div>  cls:{</div><div>    <span style=\"color: #008080;\">Thread</span>:<span style=\"color: #0000ff;\">function</span>(args){</div><div>      <span style=\"color: #0000ff;\">this</span>.args = args;</div><div>    },</div><div>    <span style=\"color: #008080;\">ServerStream</span>:<span style=\"color: #0000ff;\">function</span>(url,port){</div><div>      <span style=\"color: #0000ff;\">this</span>.url = url;</div><div>      <span style=\"color: #0000ff;\">this</span>.port = port;</div><div>      </div><div>      <span style=\"color: #0000ff;\">this</span>.sc = <span style=\"color: #0000ff;\">null</span>;</div><br /><div>      <span style=\"color: #0000ff;\">this</span>.<span style=\"color: #0000ff;\">in</span> = <span style=\"color: #0000ff;\">null</span>;</div><div>      <span style=\"color: #0000ff;\">this</span>.reader = <span style=\"color: #0000ff;\">null</span>;</div><br /><div>      <span style=\"color: #0000ff;\">this</span>.out = <span style=\"color: #0000ff;\">null</span>;</div><div>      <span style=\"color: #0000ff;\">this</span>.writer = <span style=\"color: #0000ff;\">null</span>;</div><div>    },</div><div>    utils:{</div><div>      objectToHashMap:<span style=\"color: #0000ff;\">function</span>(obj){</div><div>        <span style=\"color: #0000ff;\">if</span>(obj.<span style=\"color: #0000ff;\">constructor</span> != <span style=\"color: #008080;\">Object</span>)<span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">false</span>;</div><div>        <span style=\"color: #0000ff;\">const</span> hash = <span style=\"color: #0000ff;\">new</span> java.util.<span style=\"color: #008080;\">HashMap</span>();</div><div>        hash.putAll(obj);</div><div>        <span style=\"color: #0000ff;\">return</span> hash;</div><div>      },</div><div>      arrayToList:<span style=\"color: #0000ff;\">function</span>(arr){</div><div>        <span style=\"color: #0000ff;\">if</span>(arr.<span style=\"color: #0000ff;\">constructor</span> != <span style=\"color: #008080;\">Array</span>)<span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">false</span>;</div><div>        <span style=\"color: #0000ff;\">return</span> java.util.<span style=\"color: #008080;\">Arrays</span>.asList(arr);</div><div>      },</div><div>      binaryParser:<span style=\"color: #0000ff;\">function</span>(arr){</div><div>        <span style=\"color: #0000ff;\">const</span> buffer = <span style=\"color: #0000ff;\">new</span> <span style=\"color: #008080;\">Array</span>(<span style=\"color: #09885a;\">10</span>).fill(<span style=\"color: #0000ff;\">new</span> <span style=\"color: #008080;\">Array</span>(<span style=\"color: #09885a;\">10</span>));</div><div>        </div><div>        <span style=\"color: #0000ff;\">return</span> buffer;</div><div>      },</div><div>      getMemoryInfo:<span style=\"color: #0000ff;\">function</span>(){</div><div>        <span style=\"color: #0000ff;\">let</span> run = java.lang.<span style=\"color: #008080;\">Runtime</span>.getRuntime();</div><div>        <span style=\"color: #0000ff;\">return</span> {</div><div>          using:run.totalMemory(),</div><div>          free:run.freeMemory(),</div><div>          alloc:run.maxMemory()</div><div>        };</div><div>      },</div><div>      compress:<span style=\"color: #0000ff;\">function</span>(){</div><div>        <span style=\"color: #0000ff;\">return</span> <span style=\"color: #a31515;\">&quot;\\u200b&quot;</span>.repeat(<span style=\"color: #09885a;\">500</span>);</div><div>      },</div><div>      setThreadCount:<span style=\"color: #0000ff;\">function</span>(c){</div><div>        </div><div>        information.threads.<span style=\"color: #008080;\">ThreadPool</span>.shutdown();</div><div>        <span style=\"color: #0000ff;\">if</span>(c&lt;=<span style=\"color: #09885a;\">1</span>){</div><div>          information.threads.<span style=\"color: #008080;\">ThreadPool</span> = java.util.concurrent.<span style=\"color: #008080;\">Executors</span>.newFixedThreadPool(<span style=\"color: #09885a;\">1</span>);</div><div>          <span style=\"color: #0000ff;\">return</span>;</div><div>        }</div><div>        information.threads.<span style=\"color: #008080;\">ThreadPool</span> = java.util.concurrent.<span style=\"color: #008080;\">Executors</span>.newFixedThreadPool(c);</div><div>        information.botInfo.threadCount = c;</div><div>      },</div><div>      getThreadPoolInformation:<span style=\"color: #0000ff;\">function</span>(){</div><div>        <span style=\"color: #0000ff;\">return</span> <span style=\"color: #008080;\">JSON</span>.parse((<span style=\"color: #a31515;\">&quot;[&quot;</span>+ <span style=\"color: #008080;\">String</span>(information.threads.<span style=\"color: #008080;\">ThreadPool</span>.toString()).replace(<span style=\"color: #a31515;\">&quot;,&quot;</span>,<span style=\"color: #a31515;\">&quot;!&quot;</span>).split(<span style=\"color: #a31515;\">&quot;!&quot;</span>)[<span style=\"color: #09885a;\">1</span>].replace(<span style=\"color: #800000;\">/=/</span><span style=\"color: #0000ff;\">g</span>,<span style=\"color: #a31515;\">&quot;:&quot;</span>).replace(<span style=\"color: #800000;\">/ /</span><span style=\"color: #0000ff;\">g</span>,<span style=\"color: #a31515;\">&quot;&quot;</span>)));</div><div>        <span style=\"color: #aaaaaa;\">//[poolsize:0,activethreads:0,queuedtasks:0,completedtasks:0]</span></div><div>      }</div><br /><div>    },</div><div>    network:{</div><br /><div>    },</div><div>    bot:{</div><div>      </div><div>    }</div><div>  },</div><div>  threads:{</div><div>    <span style=\"color: #008080;\">ThreadPool</span>:java.util.concurrent.<span style=\"color: #008080;\">Executors</span>.newSingleThreadExecutor(),</div><div>  </div><div>    updater:<span style=\"color: #0000ff;\">new</span> java.lang.<span style=\"color: #008080;\">Thread</span>({run:<span style=\"color: #0000ff;\">function</span>(){</div><div>      <span style=\"color: #0000ff;\">try</span>{</div><div>        <span style=\"color: #0000ff;\">while</span>(!java.lang.<span style=\"color: #008080;\">Thread</span>.sleep(<span style=\"color: #09885a;\">333</span>)){</div><div>          <span style=\"color: #0000ff;\">for</span>(<span style=\"color: #0000ff;\">let</span> a=<span style=\"color: #09885a;\">0</span>,b=information.functions.loop.length;a&lt;b;a++){</div><div>            information.functions.loop[a].call(<span style=\"color: #0000ff;\">null</span>);</div><div>          }</div><div>        }</div><div>      }<span style=\"color: #0000ff;\">catch</span>(e){</div><div>        <span style=\"color: #008080;\">Log</span>.d(e);</div><div>      }</div><div>    }}),</div><br /><div>    listener:<span style=\"color: #0000ff;\">new</span> java.lang.<span style=\"color: #008080;\">Thread</span>({run:<span style=\"color: #0000ff;\">function</span>(){</div><div>      <span style=\"color: #0000ff;\">try</span>{</div><div>        <span style=\"color: #0000ff;\">while</span>(!java.lang.<span style=\"color: #008080;\">Thread</span>.sleep(<span style=\"color: #09885a;\">333</span>)){</div><div>          <span style=\"color: #0000ff;\">if</span>(information.botInfo.mode != <span style=\"color: #a31515;\">&quot;TCP_JAVA&quot;</span>){</div><div>            java.lang.<span style=\"color: #008080;\">Thread</span>.sleep(<span style=\"color: #09885a;\">1000</span>);</div><div>            <span style=\"color: #0000ff;\">continue</span>;</div><div>          }</div><br /><div>           </div><div>        </div><div>        }</div><div>      }<span style=\"color: #0000ff;\">catch</span>(e){</div><div>        <span style=\"color: #008080;\">Log</span>.d(e);</div><div>      }</div><div>    }})</div><div>  },</div><div>  <span style=\"color: #008080;\">Data</span>:{</div><div>  }</div><br /><div>}</div><br /><div>information.functions.init.call(<span style=\"color: #0000ff;\">null</span>);</div><br /><div><span style=\"color: #0000ff;\">const</span> response = <span style=\"color: #0000ff;\">function</span>(args){</div><div>  <span style=\"color: #0000ff;\">const</span> <span style=\"color: #008080;\">Thread</span> = information.cls.<span style=\"color: #008080;\">Thread</span>;</div><div>  <span style=\"color: #0000ff;\">let</span> handle = <span style=\"color: #0000ff;\">new</span> <span style=\"color: #008080;\">Thread</span>(args)</div><div>  handle.start();</div><div>  handle = <span style=\"color: #0000ff;\">null</span>;</div><div>}</div></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002D5400000000",
+            "id": 11604,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 278,
+            "refArticleId": 11604,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "간단한 봇!! (인사봇 소스)[초급]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1581924594620,
+            "writer": {
+                "id": "chahyunwooa",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "인사봇 마스터"
+            }
+        },
+        "articleId": 11604,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "청정한 게시판에서 지금 뭐하시는거에오 ㅡㅡ",
+                    "id": 81422554,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81422554,
+                    "updateDate": 1581925476000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "히익 고인물 마얼님이다(!)",
+                    "id": 81422764,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81422554,
+                    "updateDate": 1581925669000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "인사봇 마스터"
+                    }
+                },
+                {
+                    "content": "? 전 청정해요",
+                    "id": 81422784,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81422554,
+                    "replyMember": {
+                        "id": "chahyunwooa",
+                        "nick": "인사봇 마스터"
+                    },
+                    "updateDate": 1581925684000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "이게 초급인가..?",
+                    "id": 81422786,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81422786,
+                    "updateDate": 1581925686000,
+                    "writer": {
+                        "id": "riruhyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDVfODMg/MDAxNTgzMzk0NjUwNDI3.zWXUXb_T3UCOMpgQyf4g34NjSQK_rKCYBdkuqrSC9vwg.J5bPo_o-ZJMjljxxjbgzWzp3DHHfm6wTjfHmmKJnMqEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "hyun123"
+                    }
+                },
+                {
+                    "content": "굇수",
+                    "id": 81423803,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81423803,
+                    "updateDate": 1581926454000,
+                    "writer": {
+                        "id": "sihyunit",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "SQL Injection"
+                    }
+                },
+                {
+                    "content": "와 제목은 초급인데 내용은 고급 ㄷ",
+                    "id": 81452905,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81452905,
+                    "updateDate": 1581946361000,
+                    "writer": {
+                        "id": "tkdgjs6897",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMTAx/MDAxNTgwNTY3MzYzMTY2.XUeAx5gDTLB-IBBj-2Sb8BmdLVmtTF2Nn9PAkRw4GV0g.zno8J23Z--_f3x3V5V7N7r0O_Pxr4lA1SAktuNttGIIg.JPEG/1552227072327.jpg"
+                        },
+                        "nick": "상헌굿"
+                    }
+                },
+                {
+                    "content": "이래야지 시소님답죠",
+                    "id": 83069223,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83069223,
+                    "updateDate": 1583285626000,
+                    "writer": {
+                        "id": "moon1784",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "오리털파카"
+                    }
+                },
+                {
+                    "content": "이게 초급이라니ㅠㅠ",
+                    "id": 87628052,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87628052,
+                    "updateDate": 1587035017000,
+                    "writer": {
+                        "id": "leejaehee0613",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTEyMTRfMTA1/MDAxNTc2MzI2Mjg5NjYw.bTbuOgNk2ZyOqG8KPYviz1_1uVawuuTjuWTEK9wHCEEg.bEupwDbuCLmm5ZNbpPd5z1ANTd7YyIwfZx0JwVuP_T8g.PNG.leejaehee0613/c3628304.png"
+                        },
+                        "nick": "아리루"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,167 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\">이 카페에서 주로 다루는 js 구현체가 Rhino니 이에 맞추어서 써보겠습니다.</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">Rhino Engine의 정렬 알고리즘 구현 부분은 아래 링크에 있습니다.</div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 13.3333px;\"><a href=\"https://github.com/mozilla/rhino/blob/22e2f5eb313bf53e048a0181c30f6933232dace9/src/org/mozilla/javascript/Sorting.java\" target=\"_blank\" title=\"새창으로 열림\">https://github.com/mozilla/rhino/blob/22e2f5eb313bf53e048a0181c30f6933232dace9/src/org/mozilla/javascript/Sorting.java</a></span></div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">Quick Sort를 메인으로 하되, 각 조각의 크기가 16 이하면 Insertion Sort를 사용합니다.</div><div class=\"NHN_Writeform_Main\">Quick Sort가 일반적으로 더 빠른데 작은 데이터에 대해 Insertion Sort를 사용하는 이유를 알아봅시다.</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">배열의 길이를 n이라고 한다면, Quick Sort의 <b>평균적인</b> 시간 복잡도를 Big-O Notation으로 나타내면 O(n log n)이고, 마스터 정리를 이용해 유도할 수 있습니다. 로그의 밑은 2입니다.</div><div class=\"NHN_Writeform_Main\">Insertion Sort의 시간 복잡도를&nbsp;<span style=\"font-size: 10pt;\">Big-O Notation으로 나타내면</span><span style=\"font-size: 10pt;\">&nbsp;O(n^2)이고, 대략적인 수치는 (n^2)/4 정도 됩니다.</span></div><div class=\"NHN_Writeform_Main\">n log_2 n과 (n^2)/4는 n이 16일때 일치하고, 16보다 작으면 (n^2)/4가 더 작습니다. 그러므로 n이 16 이하일 때는 Insertion Sort를 쓰는 것이 더 좋습니다.</div><div class=\"NHN_Writeform_Main\">위 방법을 이용해 대부분의 경우를 O(n log n)이라는 빠른 시간 안에 해결할 수 있습니다.</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">그러나 Quick Sort는 최악의 경우에 O(n^2)의 성능이 나와 매우 느려집니다. 이렇게 Quick Sort가 O(n^2) 복잡도를 갖게 되는 경우를 피하기 위해 Intro Sort라는 알고리즘이 나왔습니다. 이 알고리즘은 C++에서 제공해주는 std::sort에 사용됩니다.</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">Intro Sort의 작동 과정은 다음과 같습니다.</div><div class=\"NHN_Writeform_Main\"><p><span lang=\"EN-US\" style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">1. </span><span style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">리스트의 크기가<span lang=\"EN-US\"> 16 </span>이하라면 Insertion Sort를 한다<span lang=\"EN-US\">.</span></span></p><p></p><p></p><p><span lang=\"EN-US\" style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">2. </span><span style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">전체 리스트에 대해 Quick Sort를 수행한다<span lang=\"EN-US\">.</span></span></p><p></p><p></p><p><span lang=\"EN-US\" style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">3. </span><span style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">수행 도중 재귀 호출의 깊이가 2*n log n을</span><span style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">&nbsp;넘어가게 되면<span lang=\"EN-US\"> 4</span>번 항목으로 넘어간다<span lang=\"EN-US\">.</span></span></p><p></p><p></p><p><span lang=\"EN-US\" style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">4-1. </span><span style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">쪼개진 부분 리스트의 크기가 <span lang=\"EN-US\">16</span>이하라면 그대로 놔둔다<span lang=\"EN-US\">.</span></span></p><p></p><p></p><p><span lang=\"EN-US\" style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">4-2. 16</span><span style=\"mso-bidi-font-size:10.0pt;line-height:107%;mso-fareast-font-family:'맑은 고딕';mso-fareast-theme-font:minor-latin;mso-bidi-font-family:'Times New Roman';background:white;mso-bidi-font-weight:bold\">보다 크다면 해당 부분 리스트에 대해 Heap Sort를 수행한다<span lang=\"EN-US\">.</span></span></p><p><span lang=\"EN-US\" style=\"text-indent: 0.2pt; font-size: 10pt; line-height: 107%; background: white;\">5. 3, 4</span><span style=\"text-indent: 0.2pt; font-size: 10pt; line-height: 107%; background: white;\">번 항목이 모두 완료된 후<span lang=\"EN-US\">, </span>대부분정렬이 된 전체 리스트에 대해 삽입 정렬을 수행한다<span lang=\"EN-US\">.</span></span></p><br /></div><div class=\"NHN_Writeform_Main\">해당 구현 코드는 아래 링크에 있습니다.</div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 13.3333px;\"><a href=\"https://gist.github.com/justiceHui/ed2bc8e17e00aa4039fbef0947178608\" target=\"_blank\" title=\"새창으로 열림\">https://gist.github.com/justiceHui/ed2bc8e17e00aa4039fbef0947178608</a></span></div><div class=\"NHN_Writeform_Main\">C++로 작성이 되어있으나, 알고리즘은 언어에 종속되지 않은 절차에 불과합니다.</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">---</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">사실 이 글에서 생략된 설명이 많습니다. Quick Sort, Insertion Sort, Heap Sort, Master Theorem 등등 여러가지를 빼먹었습니다. 기회가 된다면 관련 글을 다시 작성하도록 하겠습니다.</div><div class=\"NHN_Writeform_Main\">그 전까지는 따로 검색을 하셔서 해당 알고리즘을 익히신 다음에 이 글을 읽어주셨으면 합니다.</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\">질문은 댓글로 주시면 답변 드리겠습니다.</div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000002D900000000",
+            "head": "고급",
+            "headId": 21,
+            "id": 729,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 202,
+            "refArticleId": 729,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "js 기본 정렬 메소드를 알아보고, 개선시켜보자",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1549572593067,
+            "writer": {
+                "id": "matt9316",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "JusticeHui"
+            }
+        },
+        "articleId": 729,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "sort 메소드에 기본적인 방식에 대해 고려한 적이 없었던 터라 색다른 느낌이군요.\r\n정렬 알고리즘에 대해 궁금증이 생겨 찾아보고 매우 간단한 예제를 다룬 블로그를 찾았기에\r\n혹시라도 저처럼 의문이 생기신 분들을 위해 링크를 첨부합니다.\r\nhttps://boycoding.tistory.com/74",
+                    "id": 52707341,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52707341,
+                    "updateDate": 1549592056000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,423 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 28,
+            "contentElements": [],
+            "contentHtml": "<p>//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br />FS = FileStream;<br />path = &quot;sdcard/File/chatingLevel&quot;<br />all = &quot;\\u200b&quot;.repeat(500)<br /><br /><br />levelUp = 625<br />clearOwner = [&quot;설개향&quot;]<br />var userDeck = [];<br />var Bstart = [];<br />var pickk = [];<br />var Hand = [];<br /><br />function cardDeck(deckName)<br />{<br />    var pattern = [&quot;&spades;&quot;, &quot;&hearts;&quot;, &quot;&clubs;&quot;, &quot;◆&quot;];<br />    var cardNum = [&quot;A&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;J&quot;, &quot;Q&quot;, &quot;K&quot;];<br />    userDeck[deckName] = [];<br />    for (var i = 0; i &lt; pattern.length; i++)<br />    {<br />        userDeck[deckName][i] = [];<br />        for (var n = 0; n &lt; cardNum.length; n++)<br />        {<br />            userDeck[deckName][i].push(pattern[i] + cardNum[n]);<br />        }<br />    }<br />    return deckName;<br />}<br /><br />function pick(userName)<br />{<br />    var rnd1 = Math.floor(Math.random() * 3);<br />    var rnd2 = Math.floor(Math.random() * 12);<br />    pickk[userName] = userDeck[userName][rnd1][rnd2];<br />    userDeck[userName][rnd1].splice(rnd2, 1);<br />    if (pickk[userName] == undefined)<br />    {<br />        pickk[userName] = pick(userName);<br />    }<br />    return pickk[userName];<br />}<br /><br />function scoring(score)<br />{<br />    var 계산 = [];<br />    var 점수 = 0;<br />    계산 = Hand[score].split(&quot; &quot;);<br />    for (var i = 0; i &lt; 계산.length; i++)<br />    {<br />        계산[i] = 계산[i].replace(&quot;J&quot;, &quot;10&quot;).replace(&quot;Q&quot;, &quot;10&quot;).replace(&quot;K&quot;, &quot;10&quot;).replace(&quot;A&quot;, &quot;11&quot;)<br />            }<br />    for (var i = 0; i &lt; 계산.length; i++)<br />    {<br />        점수 += Number(계산[i].substr(1));<br />    }<br />    if (점수 &gt; 21)<br />    {<br />        for (var n = 0; n &lt; 계산.length; n++)<br />        {<br />            if (계산[n].indexOf(&quot;11&quot;) != -1) { 계산[n] = 계산[n].replace(&quot;11&quot;, &quot;1&quot;); }<br />        }<br />        점수 = 0;<br />        for (var n = 0; n &lt; 계산.length; n++)<br />        {<br />            점수 += Number(계산[n].substr(1));<br />        }<br />    }<br />    return 점수;<br />}<br /><br />var arr = [[[&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9617;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9617;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9617;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;]], [[&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;], [&quot;&#9617;&quot;, &quot;&#9617;&quot;, &quot;&#9608;&quot;], [&quot;&#9608;&quot;, &quot;&#9608;&quot;, &quot;&#9608;&quot;]] ];<br /><br /><br /><br />function response(room, msg, sender, igc, replier)<br />{<br />    try<br />    {<br />        if (!FS.read(path)) FS.write(path, &quot;{}&quot;);<br /><br />        if (msg)<br />        {<br /><br />            rd = JSON.parse(FS.read(path))<br /><br /><br /><br />if (rd[room] == undefined) rd[room] = { };<br /><br />            if (rd[room][sender] == undefined)<br />            {<br /><br />                rd[room][sender] = { }<br />                rd[room][sender][&quot;chats&quot;] = 0<br />            rd[room][sender][&quot;level&quot;] = 0<br />                rd[room][sender][&quot;gold&quot;] = 0<br /><br /><br /><br />}<br /><br />            bklv = rd[room][sender][&quot;level&quot;]<br /><br /><br /><br />rd[room][sender][&quot;chats&quot;]++<br />rd[room][sender][&quot;gold&quot;] += 0.5<br /><br /><br /><br />rd[room][sender][&quot;level&quot;] = Number(rd[room][sender][&quot;chats&quot;]) / levelUp | 0<br /><br /><br /><br />nowlv = rd[room][sender][&quot;level&quot;]<br /><br /><br /><br /><br /><br />            if (nowlv != bklv)<br />            {<br /><br />                replier.reply(&quot;&#128120;&quot; + sender + &quot; 님의 등급이 상승합니다 \\n\\n             &#128079; 축하합니다 &#128079;\\n\\n&#128081;등급 : &quot; + nowlv + &quot;\\n&#127922;경험치 : &quot; + rd[room][sender][&quot;chats&quot;] + &quot;\\n&#128142;잔고 : &quot; + rd[room][sender][&quot;gold&quot;])<br /><br />}<br /><br /><br /><br />        }<br /><br />        if (msg == &quot;내 등급&quot;)<br />        {<br /><br />            rd = JSON.parse(FS.read(path))<br /><br /><br /><br />myChats = rd[room][sender][&quot;chats&quot;]<br /><br /><br /><br />myLevel = rd[room][sender][&quot;level&quot;]<br /><br /><br />mygold = rd[room][sender][&quot;gold&quot;]<br /><br /><br /><br />result = []<br /><br /><br /><br />for (i in rd[room]) result.push(rd[room][i] + &quot;\\n&quot; + rd[room][i][&quot;chats&quot;] + rd[room][i][&quot;gold&quot;]);<br /><br />            result.sort((a, b) =&gt; a.split(&quot;\\n&quot;)[1] - b.split(&quot;\\n&quot;)[1]).reverse()<br /><br /><br /><br />score = 0<br /><br /><br /><br />for (k in result)<br />            {<br /><br />                if (result[k].split(&quot;\\n&quot;)[0] == sender) score = Number(k) + 1<br /><br />}<br /><br />            replier.reply(&quot;《&#129332;&quot; + sender + &quot; 주인님》\\n\\n&#128081;등급 : &quot; + myLevel + &quot;\\n&#127922;경험치 : &quot; + myChats + &quot;\\n&#128142;잔고 : &quot; + mygold)<br /><br /><br /><br />}<br />        if (msg == &quot;등급 순위&quot;)<br />        {<br /><br />            rd = JSON.parse(FS.read(path))<br /><br /><br /><br />result = []<br /><br /><br /><br />for (i in rd[room]) result.push(i + &quot;\\n&#128081;등급 : &quot; + rd[room][i][&quot;level&quot;] + &quot;\\n&#127922;경험치 : &quot; + rd[room][i][&quot;chats&quot;]);<br /><br />            result.sort((a, b) =&gt; a.split(&quot;: &quot;)[2] - b.split(&quot;: &quot;)[2]).reverse()<br /><br /><br /><br />for (j in result) result[j] = (Number(j) + 1) + &quot;위 | &quot; + result[j];<br /><br />            replier.reply(&quot;&#127757; 현재 &#128081;등급 랭킹 입니다.&quot; + all + &quot;\\n\\n방 : &quot; + room + (igc ? &quot; (&#128101;그룹챗)&quot; : &quot; (&#128100;3개인챗)&quot;) + &quot;\\n총 &quot; + result.length + &quot;명\\n\\n&quot; + result.join(&quot;\\n\\n&quot;))<br /><br /><br /><br />}<br /><br /><br />        if (msg == &quot;등급 초기화&quot;)<br />        {<br /><br />            if (clearOwner.indexOf(sender) != -1)<br />            {<br /><br />                FS.write(path, &quot;{}&quot;)<br /><br /><br /><br />replier.reply(&quot;&#127757; 새로운 시즌이 도래 했습니다.&quot;)<br /><br /><br /><br />}<br />            else<br />            {<br /><br />                replier.reply(&quot;&#128101; 당신은 관리자가 아니기에 새 시즌을 열 수 없습니다&quot;)<br /><br /><br />       <br />}<br />       <br />        }<br />        if (rd[room][sender].gold &gt;= 50)<br />        {<br />            if (rd[room][sender].level &gt;= 10)<br />            {<br />                if (msg.indexOf(&quot;지니야 격발 &quot;) != -1)<br />                {<br />                    dice = Math.floor(Math.random() * 12) + 1;<br />                    if (msg.substr(7) == dice)<br />                    {<br />                        rd[room][sender][&quot;gold&quot;] += 850<br />                        replier.reply(&quot;[&#128100;목표물을 명중 시켰습니다\\n                 □■□\\n                 ━━━\\n                 □▣□\\n                 ━━━\\n                 □▤□\\n                 ━━━\\n                 □▥□ : &quot; + dice + &quot;층 목표물 &#128299;사살]&quot; + sender + &quot;주인님&#129351; \\n &#128142; + 850 &quot;)<br />                    }<br />                    else<br />                    {<br />                        rd[room][sender][&quot;gold&quot;] -= 50<br />                        replier.reply(&quot;[&#127970;목표물을 명중 못했습니다\\n                 □□□\\n                 ━━━\\n                 □□□\\n                 ━━━\\n                 □□□\\n                 ━━━\\n                 □□□ :\\n &quot; + dice + &quot; 층에 있었습니다 \\n 목표가 다른 층으로 이동합니다 \\n 다시 심호흡 후 격발&#128299; 부탁드립니다 \\n※]&quot; + sender + &quot;주인님&#128305; \\n &#128142; - 50&quot;)<br />                    }<br />                }<br />            }<br />        }<br />        if (rd[room][sender].gold &gt;= 20)<br />        {<br />            if (msg == &quot;지니야 슬롯머신&quot;)<br />            {<br />                g = Math.floor(Math.random() * 9); h = Math.floor(Math.random() * 9); i = Math.floor(Math.random() * 9);<br />                if (g == h &amp;&amp; h == i)<br />                {<br />                    rd[room][sender][&quot;gold&quot;] += 2000<br />                    replier.reply(&quot;지니의 슬롯머신\\n&quot; + arr[g][0].join(&quot;&quot;) + &quot; &quot; + arr[h][0].join(&quot;&quot;) + &quot; &quot; + arr[i][0].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][1].join(&quot;&quot;) + &quot; &quot; + arr[h][1].join(&quot;&quot;) + &quot; &quot; + arr[i][1].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][2].join(&quot;&quot;) + &quot; &quot; + arr[h][2].join(&quot;&quot;) + &quot; &quot; + arr[i][2].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][3].join(&quot;&quot;) + &quot; &quot; + arr[h][3].join(&quot;&quot;) + &quot; &quot; + arr[i][3].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][4].join(&quot;&quot;) + &quot;, &quot; + arr[h][4].join(&quot;&quot;) + &quot;, &quot; + arr[i][4].join(&quot;&quot;) + &quot;\\n&#129322;999/9확률&#129322;\\n\\n&clubs;주인님 축하드립니다&clubs; \\n\\n &#127922;3개가 당첨 되셨습니다. \\n &#128142; + 2000 &quot;);<br />                }<br />                else if (g == h || h == i || i == g)<br />                {<br />                    rd[room][sender][&quot;gold&quot;] += 60<br />                    replier.reply(&quot;지니의 슬롯머신\\n&quot; + arr[g][0].join(&quot;&quot;) + &quot; &quot; + arr[h][0].join(&quot;&quot;) + &quot; &quot; + arr[i][0].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][1].join(&quot;&quot;) + &quot; &quot; + arr[h][1].join(&quot;&quot;) + &quot; &quot; + arr[i][1].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][2].join(&quot;&quot;) + &quot; &quot; + arr[h][2].join(&quot;&quot;) + &quot; &quot; + arr[i][2].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][3].join(&quot;&quot;) + &quot; &quot; + arr[h][3].join(&quot;&quot;) + &quot; &quot; + arr[i][3].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][4].join(&quot;&quot;) + &quot;, &quot; + arr[h][4].join(&quot;&quot;) + &quot;, &quot; + arr[i][4].join(&quot;&quot;) + &quot;\\n&#129322;999/270&#129322;\\n\\n&clubs;주인님 축하드립니다&clubs; \\n\\n &#127922;2개가 당첨 되셨습니다. \\n &#128142; + 60 &quot;);<br />                }<br />                else<br />                {<br />                    rd[room][sender][&quot;gold&quot;] -= 20<br />                            replier.reply(&quot;지니의 슬롯머신\\n&quot; + arr[g][0].join(&quot;&quot;) + &quot; &quot; + arr[h][0].join(&quot;&quot;) + &quot; &quot; + arr[i][0].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][1].join(&quot;&quot;) + &quot; &quot; + arr[h][1].join(&quot;&quot;) + &quot; &quot; + arr[i][1].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][2].join(&quot;&quot;) + &quot; &quot; + arr[h][2].join(&quot;&quot;) + &quot; &quot; + arr[i][2].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][3].join(&quot;&quot;) + &quot; &quot; + arr[h][3].join(&quot;&quot;) + &quot; &quot; + arr[i][3].join(&quot;&quot;) + &quot;\\n&quot; + arr[g][4].join(&quot;&quot;) + &quot;, &quot; + arr[h][4].join(&quot;&quot;) + &quot;, &quot; + arr[i][4].join(&quot;&quot;) + &quot;\\n입니다 일치하는 숫자가 없습니다. \\n &#128142; - 20 &quot;);<br />                }<br />            }<br />        }<br />        if (rd[room][sender].gold &gt;= 300)<br />        {<br />            if (rd[room][sender].level &gt;= 2)<br />            {<br />                if (msg == &quot;지니야 가위바위보&quot;)<br />                {<br />                    replier.reply(&quot;◎&#129300;가위바위보는  .\\n\\n &#9996;1. 가위\\n &#9994;2. 바위\\n &#128400;3. 보 &quot;);<br />                    player = sender;<br />                }<br />                if (player == sender &amp;&amp; (msg == &quot;가위&quot; || msg == &quot;바위&quot; || msg == &quot;보&quot;))<br />                {<br />                    var result = Math.floor(Math.random() * 3);<br />                    if (result == 0)<br />                    {<br />                        rd[room][sender][&quot;gold&quot;] += 300<br />                           if (msg == &quot;가위&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#9996;\\n &#128545; : &#128400; \\n&quot; + sender + &quot;주인님 승리 \\n &#128142; + 300 &quot;);<br />                        }<br />                        else if (msg == &quot;바위&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#9994;\\n &#128545; : &#9996; \\n&quot; + sender + &quot;주인님 승리 \\n &#128142; + 300 &quot;);<br />                        }<br />                        else if (msg == &quot;보&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#128400;\\n &#128545; : &#9994; \\n&quot; + sender + &quot;주인님 승리 \\n &#128142; + 300 &quot;);<br />                        }<br />                    }<br />                    else if (result == 1)<br />                    {<br />                        if (msg == &quot;가위&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#9996;\\n &#128529; : &#9996; \\n&quot; + sender + &quot;주인님 비겼습니다&quot;);<br />                        }<br />                        else if (msg == &quot;바위&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#9994;\\n &#128529; : &#9994; \\n&quot; + sender + &quot;주인님 비겼습니다&quot;);<br />                        }<br />                        else if (msg == &quot;보&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#128400;\\n &#128529; : &#128400; \\n&quot; + sender + &quot;주인님 비겼습니다&quot;);<br />                        }<br />                    }<br />                    else if (result == 2)<br />                    {<br />                        rd[room][sender][&quot;gold&quot;] -= 300<br />                            if (msg == &quot;가위&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#9996;\\n &#129322; : &#9994; \\n&quot; + sender + &quot;주인님 패배 쯧 \\n &#128142; - 300 &quot;);<br />                        }<br />                        else if (msg == &quot;바위&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#9994;\\n &#129322; : &#128400; \\n&quot; + sender + &quot;주인님 패배 쯧 \\n &#128142; - 300 &quot;);<br />                        }<br />                        else if (msg == &quot;보&quot;)<br />                        {<br />                            replier.reply(&quot; &#128100; : &#128400;\\n &#129322; : &#9996; \\n&quot; + sender + &quot;주인님 패배 쯧 \\n &#128142; - 300 &quot;);<br />                        }<br />                    }<br />                    player = null;<br />                }<br />            }<br />        }<br /><br />        if (rd[room][sender].gold &gt;= 50)<br />        {<br />            if (msg == &quot;지니야 블랙잭&quot; &amp;&amp; Bstart[sender] != true)<br />            {<br />                cardDeck(sender);<br />                Bstart[sender] = true;<br />                Hand[sender] = pick(sender);<br />                Hand[sender + &quot;dl&quot;] = pick(sender);<br />                Hand[sender] += &quot; &quot; + pick(sender);<br />                replier.reply(&quot;주인님 \\n게임을 시작합니다.\\n카드를 배분하겠습니다.&quot;);<br />                java.lang.Thread.sleep(500);<br />                replier.reply(&quot;[지니 카드]   □ &quot; + Hand[sender + &quot;dl&quot;] + &quot;\\n[&quot; + sender + &quot; 주인님 카드]   &quot; + Hand[sender] + &quot; 〓 &quot; + scoring(sender) + &quot; 점\\n ①/받기  ② /멈추기&quot;)<br />            }<br />            if (Bstart[sender] == true)<br />            {<br />                if (msg == &quot;1&quot; || msg.toLowerCase() == &quot;/받기&quot;)<br />                {<br />                    Hand[sender] += &quot; &quot; + pick(sender);<br />                    replier.reply(&quot;[지니 카드]   □ &quot; + Hand[sender + &quot;dl&quot;] + &quot;\\n[&quot; + sender + &quot; 주인님 카드]   &quot; + Hand[sender] + &quot; 〓 &quot; + scoring(sender) + &quot; 점&quot;);<br />                    if (scoring(sender) &gt; 21)<br />                    {<br />                        rd[room][sender][&quot;gold&quot;] -= 50<br />                        replier.reply(&quot;&lt;패배&gt;\\n※&quot; + sender + &quot; 주인님의 카드점수가 21을 넘었습니다 \\n &#128142; - 50&quot;);<br />                        Hand[sender] = &quot;&quot;;<br />                        Hand[sender + &quot;dl&quot;] = &quot;&quot;;<br />                        userDeck[sender] = undefined;<br />                        Bstart[sender] = false;<br />                    }<br />                    else if (scoring(sender) &lt;= 21)<br />                    {<br />                        replier.reply(&quot;①/받기    ②/멈추기&quot;);<br />                    }<br />                }<br />                else if (msg == &quot;2&quot; || msg.toLowerCase() == &quot;/멈추기&quot;)<br />                {<br />                    Hand[sender + &quot;dl&quot;] += &quot; &quot; + pick(sender);<br />                    replier.reply(&quot;제 카드를 오픈하겠습니다.\\n[지니 카드]  &quot; + Hand[sender + &quot;dl&quot;] + &quot; 〓 &quot; + scoring(sender + &quot;dl&quot;) + &quot; 점\\n[&quot; + sender + &quot; 주인님 카드]   &quot; + Hand[sender] + &quot; 〓 &quot; + scoring(sender) + &quot; 점&quot;);<br />                    while (scoring(sender + &quot;dl&quot;) &lt;= 17)<br />                    {<br />                        Hand[sender + &quot;dl&quot;] += &quot; &quot; + pick(sender);<br />                        java.lang.Thread.sleep(300);<br />                        replier.reply(&quot;[지니 카드]  &quot; + Hand[sender + &quot;dl&quot;] + &quot; 〓 &quot; + scoring(sender + &quot;dl&quot;) + &quot; 점\\n[&quot; + sender + &quot; 주인님 카드]   &quot; + Hand[sender] + &quot; 〓 &quot; + scoring(sender) + &quot; 점&quot;);<br />                    }<br />                    if (scoring(sender + &quot;dl&quot;) &gt; 21)<br />                    {<br />                        rd[room][sender][&quot;gold&quot;] += 35<br />                        replier.reply(&quot;&#128009;주인님\\n※ &quot; + sender + &quot; 주인님께서 이기셨습니다 \\n &#128142; + 35&quot;);<br />                    }<br />                    else<br />                    {<br />                        switch (true)<br />                        {<br />                            case scoring(sender) &gt; scoring(sender + &quot;dl&quot;) : replier.reply(&quot;\\n&#128079;&quot; + sender + &quot; 주인님께서 이기셨습니다 \\n &#128142; + 35 &quot;);<br />                                rd[room][sender][&quot;gold&quot;] += 35<br />                                break;<br />                            case scoring(sender) == scoring(sender + &quot;dl&quot;): replier.reply(&quot;\\n&#128529;&quot; + sender + &quot; 주인님 비겼습니다.&quot;);<br />                                break;<br />                            case scoring(sender) &lt; scoring(sender + &quot;dl&quot;): replier.reply(&quot;\\n&#129322;제가 &quot; + sender + &quot; 주인님 이겼습니다 \\n &#128142; - 50 &quot;);<br />                                rd[room][sender][&quot;gold&quot;] -= 50<br />                                break;<br />                            default:<br />                                replier.reply(&quot;\\n죄송합니다 &quot; + sender + &quot; 주인님 ,  계산에 실패 하였습니다&quot;);<br />                                break;<br />                        }<br />                    }<br />                    Hand[sender] = &quot;&quot;;<br />                    Hand[sender + &quot;dl&quot;] = &quot;&quot;;<br />                    userDeck[sender] = undefined;<br />                    Bstart[sender] = false;<br />                }<br />            }<br />        }<br />        if (rd[room][sender].gold &gt;= 120)<br />        {<br />            if (msg == &quot;환전&quot;)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 120<br />                rd[room][sender][&quot;chats&quot;] += 30<br />                replier.reply(sender + &quot; 주인님 환전 완료되었습니다 \\n\\n &#128142; - 120 \\n &#127922; + 30 &quot;)<br />            }<br />        }<br />        if (rd[room][sender].gold &gt;= 120)<br />        {<br />            if (rd[room][sender].level &gt;= 10)<br />            {<br />                if (msg == &quot;저급환전&quot;)<br />                {<br />                    rd[room][sender][&quot;gold&quot;] -= 120<br />                rd[room][sender][&quot;chats&quot;] += 45<br />                replier.reply(sender + &quot; 주인님 환전 완료되었습니다 \\n\\n &#128142; - 120 \\n &#127922; + 45 &quot;)<br />            }<br />            }<br />        }<br />        if (msg == &quot;노가다&quot;)<br />            {<br />                rd[room][sender][&quot;gold&quot;] += 0.1<br />                replier.reply(sender + &quot;님 \\n &#128142; + 0.1 &quot;)<br />            }<br />        if (rd[room][sender].level &gt;= 7)<br />        {<br />            if (msg == &quot;저급노가다&quot;)<br />            {<br />                rd[room][sender][&quot;gold&quot;] += 0.25<br />                replier.reply(sender + &quot;님 \\n &#128142; + 0.25 &quot;)<br />            }<br />        }<br />        if (rd[room][sender].gold &gt;= 5)<br />        {<br />            if (msg == &quot;지니야 뽑기&quot;)<br />                var result = Math.floor(Math.random() * 6);<br />            if (result == 0)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 5<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; - 5』&quot;)<br />            }<br />            else if (result == 1)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 5<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; - 5』&quot;)<br />            }<br />            else if (result == 2)<br />            {<br />                rd[room][sender][&quot;gold&quot;] += 5<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; + 5』&quot;)<br />            }<br />            else if (result == 3)<br />            {<br />                rd[room][sender][&quot;gold&quot;] += 20<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; + 20』&quot;)<br />            }<br />            else if (result == 4)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 15<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; - 15』&quot;)<br />            }<br />            else if (result == 5)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 5<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; - 5』&quot;)<br />            }<br />}<br />        if (rd[room][sender].gole &gt;= 20)<br />        {<br />         if (rd[room][sender].level &gt;= 15)<br />        {<br />            if (msg == &quot;지니야 저급뽑기&quot;)<br />                var result = Math.floor(Math.random() * 6);<br />            if (result == 0)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 20<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; - 20』&quot;)<br />            }<br />            else if (result == 1)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 20<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; - 20』&quot;)<br />            }<br />            else if (result == 2)<br />            {<br />                rd[room][sender][&quot;gold&quot;] += 25<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; + 25』&quot;)<br />            }<br />            else if (result == 3)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 60<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; + 60』&quot;)<br />            }<br />            else if (result == 4)<br />            {<br />                rd[room][sender][&quot;gold&quot;] += 80<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; + 80』&quot;)<br />            }<br />            else if (result == 5)<br />            {<br />                rd[room][sender][&quot;gold&quot;] -= 20<br />                replier.reply(sender + &quot;님 뽑기 결과 입니다 \\n『&#128142; - 20』&quot;)<br />            }<br />}<br />}<br /><br /><br />        FS.write(path, JSON.stringify(rd))<br /><br />    }<br /><br />    catch (e)<br />    { }<br />}<br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000228300000000",
+            "id": 8835,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 462,
+            "refArticleId": 8835,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "채팅 순위 소스인데 작동이 안됩니다",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575938731790,
+            "writer": {
+                "id": "tlsrjstn258",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "설개향"
+            }
+        },
+        "articleId": 8835,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "파일 경로에 무엇이 쓰여있는지 확인해 보세요",
+                    "id": 75484982,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "updateDate": 1575943563000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "현재 이렇게 되어있습니다",
+                    "id": 75488951,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEyMTBfMjYw/MDAxNTc1OTQ2MTM1MzEx.jVY1iApVa2sUwupoml6qUJlbdl91aoG9E6qtBmy7eEgg.uULhbTO77tNJj3GswdlMsj6m36OTDyPkfdN7fEpQDnQg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2220,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTEyMTBfMjYw/MDAxNTc1OTQ2MTM1MzEx.jVY1iApVa2sUwupoml6qUJlbdl91aoG9E6qtBmy7eEgg.uULhbTO77tNJj3GswdlMsj6m36OTDyPkfdN7fEpQDnQg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTEyMTBfMjYw/MDAxNTc1OTQ2MTM1MzEx.jVY1iApVa2sUwupoml6qUJlbdl91aoG9E6qtBmy7eEgg.uULhbTO77tNJj3GswdlMsj6m36OTDyPkfdN7fEpQDnQg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 75484982,
+                    "updateDate": 1575946135000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                },
+                {
+                    "content": "내 등급 시 안나오고\r\n등급 순위는 나옵니다\r\n\r\n물론 0명으로요\r\n\r\n따로 게속 저장 안되는게 맞는거같아요\r\n\r\n저 안 다른 기능들은 다 되니\r\n\r\n경로를 다른 곳으로 잡을까여",
+                    "id": 75489477,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "tlsrjstn258",
+                        "nick": "설개향"
+                    },
+                    "updateDate": 1575946572000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                },
+                {
+                    "content": "한번 리스폰스 바로 밑에\r\nif (FS.read(path)==null) 이거를\r\nif (!FS.read(path)) 로 고쳐보세요",
+                    "id": 75489717,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "tlsrjstn258",
+                        "nick": "설개향"
+                    },
+                    "updateDate": 1575946756000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "저거 지워도 안되네요..\r\n\r\ntry문을 지우니\r\n\r\n이렇게 떠요",
+                    "id": 75491226,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEyMTBfMjUy/MDAxNTc1OTQ4MDc4MDYy.X14KDPIuIlem6RPAWHQu4ngeH7mlcG4UwI8NKTUgcagg.jt9HR29fj9cJ-cgB4-ec7xYLbwoAjxbHMSHpvi4MQ5gg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2220,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTEyMTBfMjUy/MDAxNTc1OTQ4MDc4MDYy.X14KDPIuIlem6RPAWHQu4ngeH7mlcG4UwI8NKTUgcagg.jt9HR29fj9cJ-cgB4-ec7xYLbwoAjxbHMSHpvi4MQ5gg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTEyMTBfMjUy/MDAxNTc1OTQ4MDc4MDYy.X14KDPIuIlem6RPAWHQu4ngeH7mlcG4UwI8NKTUgcagg.jt9HR29fj9cJ-cgB4-ec7xYLbwoAjxbHMSHpvi4MQ5gg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1575948078000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                },
+                {
+                    "content": "?? 지우라고 한 적 없는데요,, 바꾸라고 했죠\r\ntry문은 갑자기 왜 나와요",
+                    "id": 75491298,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "tlsrjstn258",
+                        "nick": "설개향"
+                    },
+                    "updateDate": 1575948131000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "==null을 지웠단 소리였어요",
+                    "id": 75491336,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1575948155000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                },
+                {
+                    "content": "그걸 지워도 반응이 없어서요,,",
+                    "id": 75491364,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "tlsrjstn258",
+                        "nick": "설개향"
+                    },
+                    "updateDate": 1575948172000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                },
+                {
+                    "content": "앞에 '!' 추가해야죠",
+                    "id": 75491380,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "tlsrjstn258",
+                        "nick": "설개향"
+                    },
+                    "updateDate": 1575948193000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "어 음 '!'를 ==null이 있던 자리에여?",
+                    "id": 75491536,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75484982,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1575948340000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                }
+            ],
+            "last": {
+                "id": 75484982,
+                "refId": 75484982
+            },
+            "next": {
+                "id": 75491586,
+                "refId": 75484982
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

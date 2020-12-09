@@ -1,0 +1,369 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 11,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\r\n</b></div><div><b>if(room==&quot;노가다2&quot;){</b></div><div><b>&nbsp; if(msg.startsWith(&quot;/강화생성 &quot;)){</b></div><div><b>&nbsp; &nbsp; var upg = msg.substring(6,msg.length);</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; playerdata = {</b></div><div><b>&nbsp; &nbsp; &nbsp; &quot;money&quot;:1,</b></div><div><b>&nbsp; &nbsp; &nbsp; &quot;seaa&quot;:sender};</b></div><div><b>&nbsp; &nbsp; FileStream.write(rpgpath, JSON.stringify(playerdata));</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록2/목록.txt&quot;;</b></div><div><b>&nbsp; &nbsp; var list = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; var list2 = list+&quot;\\n&quot;+upg+&quot;  &quot;+player.money;</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록2/목록.txt&quot;;</b></div><div><b>&nbsp; &nbsp; FileStream.write(rpgpath, JSON.stringify(list2));</b></div><div><b>&nbsp; &nbsp; replier.reply(upg+&quot;(이)가 생성되었습니다&quot;);</b></div><div><b>&nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; if(msg.startsWith(&quot;/강화 &quot;)){</b></div><div><b>&nbsp; &nbsp; &nbsp; var upg = msg.substring(4,msg.length);</b></div><div><b>&nbsp; &nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; &nbsp; var seaa = JSON.parse(FileStream.read(rpgpath)).seaa;</b></div><div><b>&nbsp; &nbsp; &nbsp; if(sender==seaa){</b></div><div><b>&nbsp; &nbsp; &nbsp; var per=Math.floor(Math.random()*10);</b></div><div><b>&nbsp; &nbsp; &nbsp; if(per&lt;7){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var player4 = player.money;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; player2 = player4+1;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; player3 = {&quot;money&quot;:player2,</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &quot;seaa&quot;:sender};</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; FileStream.write(rpgpath, JSON.stringify(player3));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;rpgpath = &quot;sdcard/강화/목록2/목록.txt&quot;;</b></div><div><b>&nbsp; &nbsp; var list = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; var list2 = list+&quot;\\n&quot;+upg+&quot;  &quot;+player.money;</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록2/목록.txt&quot;;</b></div><div><b>&nbsp; &nbsp; FileStream.write(rpgpath, JSON.stringify(list2));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;강화에 성공하였습니다!\\n현재레벨 : &quot;+player2);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }else{</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var player4 = player.money;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var player2 = player4-1;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var player3 = {&quot;money&quot;:player2,&quot;seaa&quot;:sender};</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; FileStream.write(rpgpath, JSON.stringify(player3));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;rpgpath = &quot;sdcard/강화/목록2/목록.txt&quot;;</b></div><div><b>&nbsp; &nbsp; var list = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; var list2 = list+&quot;\\n&quot;+upg+&quot;  &quot;+player.money;</b></div><div><b>&nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록2/목록.txt&quot;;</b></div><div><b>&nbsp; &nbsp; FileStream.write(rpgpath, JSON.stringify(list2));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;강화에 실패하였습니다!\\n현재레벨 : &quot;+player2);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }}else{</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;당신은 이 아이템의 주인이 아닙니다!&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }}</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.startsWith(&quot;/강화레벨&quot;)){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var lvch = msg.substring(6,msg.length);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+lvch+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var player2 = player.money</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(lvch+&quot;의 현재레벨 : &quot;+player2);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.startsWith(&quot;/강화삭제&quot;)){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var upg = msg.substring(6,msg.length);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rpgpath = &quot;sdcard/강화/목록/&quot;+upg+&quot;.txt&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var player2 = player.seaa;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(sender==player2){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileStream.remove(rpgpath);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(upg+&quot;(을)를 삭제했습니다.&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }else{</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(upg+&quot;의 주인이 아닙니다!&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg==&quot;/강화도움말&quot;){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;/강화생성 &lt;아이템&gt;\\n강화할 아이템을 생성합니다\\n\\n/강화 &lt;아이템&gt;\\n아이템을 강화합니다\\n\\n/강화레벨 &lt;아이템&gt;\\n해당하는 아이템의 강화레벨을 봅니다\\n\\n/강화삭제 &lt;아이템&gt;\\n해당하는 아이템을 영원히 삭제합니다&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }if(msg==&quot;/강화목록&quot;){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;rpgpath = &quot;sdcard/강화/목록2/목록.txt&quot;;</b></div><div><b>&nbsp; var player = JSON.parse(FileStream.read(rpgpath));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;강화 아이템 목록입니다\\n&quot;+player);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; }}</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>질</b><b>문내용</b></div><div><b>=&gt;&nbsp;</b></div><div><b>/강화생성 (이름)을 하면 파일에</b></div><div><b>{&quot;level&quot;:&quot;1&quot;,&quot;seaa&quot;:&quot;(만든사람)&quot;}으로 저장되게하였습니다</b></div><div><b>/강화 (이름)을 하면 강화가되구요</b></div><div><b>근데 /강화 (이름)을 할때 없는 아이템을 강화하려고하면 오류가떠서 봇이 종료가됩니다</b></div><div><b>이건 어떻게해야할까요?</b></div><div><b><br /></b></div><div><b>2.</b></div><div><b>위에거랑 같은 코드에서</b></div><div><b>랭킹은 나중으로하고 아이템목록을 만들고싶습니다 저는 강화/생성 할때 목록.txt파일에 넣는것으로 생각했는데</b></div><div><b>만약 &apos;흐아아&apos;를 생성하고 강화를 하면</b></div><div><b>흐아아 : 1</b></div><div><b>흐아아 : 2</b></div><div><b>이렇게 뜨더군요 그래서 이전거를 삭제를 해야하는데 제가 아는건 그저 파일자체를 삭제하는것뿐..</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004D0800000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 19720,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 99,
+            "refArticleId": 19720,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "파일스트림을 이용한 강화게임에서의 오류",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1592261322040,
+            "writer": {
+                "id": "yee2know",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "yee2know"
+            }
+        },
+        "articleId": 19720,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "소스를 같이 올려주셔야...",
+                    "id": 93787247,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93787247,
+                    "updateDate": 1592261555000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "앗! 수정했습니다 올린다는걸 깜빡했네요",
+                    "id": 93787500,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93787247,
+                    "updateDate": 1592261690000,
+                    "writer": {
+                        "id": "yee2know",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "yee2know"
+                    }
+                },
+                {
+                    "content": "제 생각엔 처음부터 다시 만드는게 좋을것 같습니다.. 2000명 이상의 많은 인원이 플레이하는게 아닌 이상 저장하는 정보도 적고 간단한 강화게임은 플레이어 전체 객체를 저장하는게 더 관리가 쉬워보입니다.",
+                    "id": 93856347,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "updateDate": 1592301889000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "그런가요..",
+                    "id": 93856387,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "updateDate": 1592301928000,
+                    "writer": {
+                        "id": "yee2know",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "yee2know"
+                    }
+                },
+                {
+                    "content": "다시 만드는거 도와드릴 의향은 있습니다만, 고치길 원하시면 적어도 오류 내용이랑 오류나는 줄이라도 적어주셔야..",
+                    "id": 93856399,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "updateDate": 1592301938000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "1번 문제는 강화 명령어에서 seaa 선언할때\r\n읽은것.seaa 를 하시던데, 없는 아이템이면 읽은게 null이니까 null.seaa를 해서 오류가 나는겁니다. 아마 오류도\r\ncannot read property \"seaa\" from null 아마 이런 비슷한 문구가 떴을겁니다",
+                    "id": 93856979,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "replyMember": {
+                        "id": "yee2know",
+                        "nick": "yee2know"
+                    },
+                    "updateDate": 1592302423000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "seaa선언하기 전에 if(player === null) return; 을 써주시고,\r\n\r\nplayer 선언할때 이미 불러왔는데 또 불러오면 시간낭비이기 때문에 \r\nvar seaa = player.seaa; 하시면 됩니다",
+                    "id": 93857077,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "replyMember": {
+                        "id": "whitebear_0u0",
+                        "nick": "ㅣ화베ㅣ"
+                    },
+                    "updateDate": 1592302501000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "아하 정말 감사합니다!\n카톡봇은 그저 간단한 취미정도라 혼자해보고 싶어요! 감사합니다!",
+                    "id": 93857212,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "replyMember": {
+                        "id": "whitebear_0u0",
+                        "nick": "ㅣ화베ㅣ"
+                    },
+                    "updateDate": 1592302601000,
+                    "writer": {
+                        "id": "yee2know",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "yee2know"
+                    }
+                },
+                {
+                    "content": "2000명ㄷㄷ어떻게 2000명넘게 할 수가 있지\n저는 200명도 안된다는...",
+                    "id": 93861744,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "updateDate": 1592306608000,
+                    "writer": {
+                        "id": "noblesse1980",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjRfMTMx/MDAxNTk1NTY2OTQzNTM3.b7np7GPTo7F0R26DgKXWat-NJcMVROC4QPDhwZYTWlwg.BwHVUl1F9kf8hgyjxORF_JokdecqAynrQhwtYs0I11gg.JPEG/didhd_vmtk.jpg"
+                        },
+                        "nick": "야옹"
+                    }
+                },
+                {
+                    "content": "실제로 2000명 있다는게 아니라 저정도로 작은 데이터를 저장하면 2000명쯤은 돼야 효율적이라는 뜻",
+                    "id": 93861806,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93856347,
+                    "replyMember": {
+                        "id": "noblesse1980",
+                        "nick": "야옹"
+                    },
+                    "updateDate": 1592306650000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                }
+            ],
+            "last": {
+                "id": 93856347,
+                "refId": 93856347
+            },
+            "next": {
+                "id": 93861849,
+                "refId": 93856347
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

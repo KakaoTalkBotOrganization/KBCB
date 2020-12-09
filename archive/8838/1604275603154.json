@@ -1,0 +1,387 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 11,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">자바 공부도 할겸 만들어 보았다.</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><br /></span></font></b></div><div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>const test = new Http();</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>test.get(&quot;/&quot;,function(res){</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>&nbsp;Log.d(&quot;connected&quot;);</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>for(let a =1;a&lt;=8080;a++)res.send(&quot;&lt;button onclick=&apos;alert(&quot;+a+&quot;)&apos;&gt;TEST&lt;/button&gt;&quot;);</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>&nbsp;res.end()</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>})</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>test.listen(8080);</b></span></font></div></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b><br /></b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b><a href=\"http://127.0.0.1:8080/\" target=\"_blank\">http://127.0.0.1:8080/</a></b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>에서 확인</b></span></font></div><div><br /></div><div><br /></div><div><br /></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>const Response = function(sc,id){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.sc = sc;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.buffer = [];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.w = java.io.DataOutputStream(java.io.OutputStream(sc.getOutputStream()));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.r = java.io.BufferedReader(java.io.InputStreamReader(sc.getInputStream()));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.isSend = false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Response.prototype.send = function(str){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(this.isSend)throw new Error(&quot;Already sended&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.buffer.push(str);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Response.prototype.getReadStream = function(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;return this.r;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Response.prototype.end = function(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(this.isSend)throw new Error(&quot;Already sended&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.isSend=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;let temp = java.lang.String(this.buffer.join(&quot;&quot;)).getBytes()</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.w.writeBytes(java.lang.String(&quot;HTTP/1.1 200 OK \\r\\nContent-Type: text/html;charset=utf-8\\r\\nContent-Length: &quot; + temp.length+&quot;\\r\\n\\r\\n&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.w.write(temp,0,temp.length);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.w.writeBytes(&quot;\\r\\n&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.w.flush();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.r.close();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.w.close();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>const Http=function(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.port = null;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.server = null;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.started=false</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.information = [];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.thr = null;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.id = java.lang.String(&quot;&quot;+Math.random()).hashCode();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Http.prototype.serverList = [];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Http.prototype.portList=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Http.prototype.listen=function(port){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(this.started)return;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.started=true</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(this.portList.indexOf(port)+1)throw new Error(&quot;That port is already open (on id &quot;+this.id+&quot;)&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;if(isNaN(this.port))throw new Error(&quot;The port must be integer (on id &quot;+this.id+&quot;)&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;const ctx = this;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.server = new java.net.ServerSocket((this.port=port));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>(this.thr=java.lang.Thread({run:function(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>try{</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;(function(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; let sc,cmd;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; const inform = this.information</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; let isCall=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; while(!java.lang.Thread.sleep(333)){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; sc= new Response(this.server.accept());</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; cmd = sc.getReadStream().readLine().split(&quot; &quot;)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; isCall = true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; java.lang.Thread({run:function(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;for(let a of inform){&nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;if(isCall){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; if(a.key.constructor == RegExp){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if(a.key.test(cmd[1])){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a.func(sc)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; isCall = false</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;else continue;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; if(a.key.constructor==String){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if(a.key==cmd[1]){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a.func(sc)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; isCall = false</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;}}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }}).start();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; }}).call(ctx);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}catch(e){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Log.d(e)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}})).start()</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.portList.push(port);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.serverList.push(this);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Http.prototype.get = function(v1,callback){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;const temp ={};</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;temp.key=v1;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;temp.func = callback;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.information.push(temp)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>Http.prototype.end=function(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.thr.interrupt();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;this.server.close();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>function onStartCompile(){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;for(let a of Http.prototype.serverList){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; a.end()</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"font-weight: bold;\">//////////////////////////////////</div></div><div style=\"font-weight: bold;\">/*밑에다가 코드입력*/</div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000228600000000",
+            "id": 8838,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 218,
+            "refArticleId": 8838,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "라이노 전용 http 클래스 (베타버전)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575952108680,
+            "writer": {
+                "id": "chahyunwooa",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "시소1119"
+            }
+        },
+        "articleId": 8838,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "?!!!?",
+                    "id": 75501814,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75501814,
+                    "updateDate": 1575957759000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "ㅁㅊ 고였다",
+                    "id": 75507766,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75507766,
+                    "updateDate": 1575963751000,
+                    "writer": {
+                        "id": "sihyunit",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "SQLite"
+                    }
+                },
+                {
+                    "content": "ㅘ!",
+                    "id": 75512545,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75512545,
+                    "updateDate": 1575968122000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                },
+                {
+                    "content": "와 공유했군요!\r\n",
+                    "id": 75519219,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75519219,
+                    "updateDate": 1575974466000,
+                    "writer": {
+                        "id": "aiden060303",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDlfMjEw/MDAxNTc4NTQ1NjkyOTIz._uO-Y1_j7sVGs3ks4Fn1rcQ94Vizm6wHqeOYLZNZkz4g.HYSR7cd04kd0byVS9w--hlD7rxzDda-T92FH5fEIiPog.JPEG/externalFile.jpg"
+                        },
+                        "nick": "지헌"
+                    }
+                },
+                {
+                    "content": "그럼 저기에서 열린서버에 html을 넣는건 어떻게... 서버닫는것도어떻게하나요?",
+                    "id": 83106539,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83106539,
+                    "updateDate": 1583309946000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "새로운 버전으로 만드는중입니다. 서버는 리로드 돌리면 알아서 꺼지고요",
+                    "id": 83188905,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83106539,
+                    "updateDate": 1583377351000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "소라게와랍스터"
+                    }
+                },
+                {
+                    "content": "html 삽입은 어떻게하나요? 버튼생성말고...",
+                    "id": 83201142,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83106539,
+                    "replyMember": {
+                        "id": "chahyunwooa",
+                        "nick": "소라게와랍스터"
+                    },
+                    "updateDate": 1583385212000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "파일에서 html코드를 읽은다음 그 html코드를 옮기시면 되겠죠?",
+                    "id": 83231828,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83106539,
+                    "replyMember": {
+                        "id": "jomin398",
+                        "nick": "jomin398"
+                    },
+                    "updateDate": 1583407255000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Ssvr"
+                    }
+                },
+                {
+                    "content": "고였다",
+                    "id": 87628241,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87628241,
+                    "updateDate": 1587035152000,
+                    "writer": {
+                        "id": "leejaehee0613",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTEyMTRfMTA1/MDAxNTc2MzI2Mjg5NjYw.bTbuOgNk2ZyOqG8KPYviz1_1uVawuuTjuWTEK9wHCEEg.bEupwDbuCLmm5ZNbpPd5z1ANTd7YyIwfZx0JwVuP_T8g.PNG.leejaehee0613/c3628304.png"
+                        },
+                        "nick": "아리루"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 89030271,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 89030271,
+                    "updateDate": 1588233196000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                }
+            ],
+            "last": {
+                "id": 87628241,
+                "refId": 87628241
+            },
+            "next": {
+                "id": 89031166,
+                "refId": 89030271
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

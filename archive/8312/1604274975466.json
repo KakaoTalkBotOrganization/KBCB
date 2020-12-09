@@ -1,0 +1,327 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">출석체크입니다</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">.출석이나 .출근이나 뭐... 목록에있는 말하시면 출석되구요.</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">.출석목록,.출책목록 등 목록에 있는 말하시면 출석부 출력됩니다.</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">.자동출석 해놓으시면 이야기하는사람마다 자동으로 출석부에 기록되구요</span></font></b></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>rooms에 사용하실 방이름 넣으시면됩니다.</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>출석부는 방이름날짜.txt로 저장됩니다.</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>그리고 출석부라고 입력하면 불러오구요(방이름이 길면 음...)</b></span></font></div><div><br /></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div><span style=\"font-size: 17.3333px;\">var rooms=[&quot;a&quot;,&quot;b&quot;];</span></div><div><span style=\"font-size: 17.3333px;\">String.prototype.replaceAll = function (org, dest) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; return this.split(org).join(dest);</span></div><div><span style=\"font-size: 17.3333px;\">}</span></div><div><span style=\"font-size: 17.3333px;\">var sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</span></div><div><span style=\"font-size: 17.3333px;\">var folder = new java.io.File(sdcard + &quot;/출석/&quot;);&nbsp;</span></div><div><span style=\"font-size: 17.3333px;\">folder.mkdirs();//sd카드에 출석 폴더를 생성합니다</span></div><div><span style=\"font-size: 17.3333px;\">var Auto_Check = false;</span></div><div><span style=\"font-size: 17.3333px;\">var blank = &quot;\\u200b&quot;.repeat(501);</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">function 출석(room,msg, sender) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; times = new Date();</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; 날짜 = times.getFullYear() + &quot;_&quot; + (times.getMonth() + 1) + &quot;_&quot; + times.getDate();</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; 시간 = times.getHours() + &quot;:&quot; + times.getMinutes() + &quot;:&quot; + times.getSeconds();</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; var talk;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; var 출석체크인식 = [&quot;출석목록&quot;, &quot;출책목록&quot;, &quot;출석한사람&quot;, &quot;출석인원&quot;, &quot;출책인원&quot;, &quot;출첵인원&quot;, &quot;출석부&quot;];</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; if (read(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;) == null) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; save(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;, &quot;.&quot;);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; for (var j = 0; j &lt; 출석체크인식.length; j++) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; if (msg.indexOf(출석체크인식[j]) == 0) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk = &quot;금일 출석목록입니다\\n&quot; + blank;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk += read(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; if (talk == null) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; var 출책확인 = read(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; if (출책확인.indexOf(&quot;\\t&quot; + sender + &quot;,&quot;) != -1) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk = sender + &quot;님은 이미 출석체크 되셨습니다.&quot;</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; else {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var 출석등록 = 출책확인 + &quot;\\n&quot; + 시간 + &quot;\\t&quot; + sender + &quot;,&quot;;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; save(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;, 출석등록);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk = sender + &quot;님 출석체크 되셨습니다.&quot;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; return talk;</span></div><div><span style=\"font-size: 17.3333px;\">}</span></div><div><span style=\"font-size: 17.3333px;\">function Auto_check(room,sender) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; times = new Date();</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; 날짜 = times.getFullYear() + &quot;_&quot; + (times.getMonth() + 1) + &quot;_&quot; + times.getDate();</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; 시간 = times.getHours() + &quot;:&quot; + times.getMinutes() + &quot;:&quot; + times.getSeconds();</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;if (read(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;) == null) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; save(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;, &quot;.&quot;);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; var 출책확인 = read(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; if (출책확인.indexOf(&quot;\\t&quot; + sender + &quot;,&quot;) != -1) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; else {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; var 출석등록 = 출책확인 + &quot;\\n&quot; + 시간 + &quot;\\t&quot; + sender + &quot;,&quot;;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; save(&quot;출석&quot;, room+날짜 + &quot;.txt&quot;, 출석등록);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">}</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">function save(folderName, fileName, data) { //파일 읽기 함수 제작&nbsp;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; try</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; { FileStream.write(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName,data);}</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; catch(e)</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; {}</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">function read(folderName, fileName) { //파일 읽기 함수 제작&nbsp;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; try</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; var reading = FileStream.read(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; return reading.toString();</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;catch(e){ return &quot;&quot;;}</span></div><div><span style=\"font-size: 17.3333px;\">}</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; var master;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; var talk;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;if(rooms.indexOf(room)!=-1)&nbsp;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; if (msg.indexOf(&quot;.&quot;) == 0)//.인식시작</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var msg = msg.substring(1);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp;&nbsp;</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (talk == null)//출석시작</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var 출석인식 = [&quot;출석&quot;, &quot;출책&quot;, &quot;출첵&quot;, &quot;출근&quot;, &quot;출췍&quot;];</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (var i = 0; i &lt; 출석인식.length; i++) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (msg.indexOf(출석인식[i]) == 0)</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { talk = 출석(room,msg, sender); }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; //자동출석</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (talk == null) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (msg.indexOf(&quot;자동출석&quot;) == 0 || msg.indexOf(&quot;자동출책&quot;) == 0) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (Auto_Check == false) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Auto_Check = true;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk = &quot;자동출석이 켜졌습니다.&quot;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Auto_Check = false;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; talk = &quot;자동출석이 꺼졌습니다.&quot;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; }//.이 인식될때</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; if (Auto_Check == true) {//자동출석기능</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Auto_check(room,sender);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; if (talk != null)//메세지전송부&nbsp;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(talk);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; }//방이름이 지정된곳일때</span></div><div><span style=\"font-size: 17.3333px;\">}//메세지리스폰스</span></div></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000207800000000",
+            "id": 8312,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 447,
+            "refArticleId": 8312,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "출석체크 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574752443927,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 8312,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "중복 출석 시 어떻게 되나영?",
+                    "id": 74394971,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74394971,
+                    "updateDate": 1574754384000,
+                    "writer": {
+                        "id": "domwis14",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "우웅이"
+                    }
+                },
+                {
+                    "content": "출석확인이 중간에 끼어있어요\r\n출석한 사람은 이미 출석했다고 떠요",
+                    "id": 74395098,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74394971,
+                    "updateDate": 1574754487000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "렛잇고~ 렛잇고~인물",
+                    "id": 74395212,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74394971,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1574754566000,
+                    "writer": {
+                        "id": "domwis14",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "우웅이"
+                    }
+                },
+                {
+                    "content": "고인물이면 이렇게 줄을 길게 적지않았겠...",
+                    "id": 74395515,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74394971,
+                    "replyMember": {
+                        "id": "domwis14",
+                        "nick": "우웅이"
+                    },
+                    "updateDate": 1574754848000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "잘쓰겠습니다 고맙습니다.",
+                    "id": 74408611,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74408611,
+                    "sticker": {
+                        "height": 112,
+                        "id": "junis-14-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/junis/original_14.png",
+                        "width": 129
+                    },
+                    "updateDate": 1574767322000,
+                    "writer": {
+                        "id": "kyyk112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "부활"
+                    }
+                },
+                {
+                    "content": "몇 번째로 출석하였습니다로 출력하려면 어떤식으로 활용해야할까요?",
+                    "id": 74497818,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74497818,
+                    "updateDate": 1574857741000,
+                    "writer": {
+                        "id": "seebin3300",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "홍뇽"
+                    }
+                },
+                {
+                    "content": "음... read하시고 .split(\"\r\n\")하신다음 .length하시면 줄수가 나올거에요\r\n그럼 출석인원이 나오겠죠?ㅎ",
+                    "id": 74497913,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74497818,
+                    "updateDate": 1574857824000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

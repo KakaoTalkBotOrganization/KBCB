@@ -1,0 +1,288 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p><br />/* 상수선언 */<br />const FilePath = &quot;/sdcard/DataChat/DataChat.json&quot;;<br />const FS=FileStream;<br /><br />var DatatChat = {};<br /><br />/* Utils 객체 &amp;&amp; 날짜소스 출처 브위님 */<br />Utils.getDateText = function()<br />{<br />let date = new Date();<br />return date.getFullYear() + &quot;년 &quot; + (date.getMonth() + 1) + &quot;월 &quot; + date.getDate() + &quot;일 &quot; +<br />new Array(&apos;일요일&apos;, &apos;월요일&apos;, &apos;화요일&apos;, &apos;수요일&apos;, &apos;목요일&apos;, &apos;금요일&apos;, &apos;토요일&apos;)[date.getDay()] +<br />&quot; [&quot; + ((date.getHours() &gt; 12) ? &quot;오후 &quot; + (date.getHours() - 12) : &quot;오전 &quot; + date.getHours()) + &quot;:&quot; +<br />java.lang.String.format(&quot;%02d&quot;, java.lang.Integer(date.getMinutes())) + &quot;]&quot;;<br />};<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br /><br />sender=sender.trim();<br />msg=msg.trim();<br />room=room.trim();<br /><br />MiraiMsg = msg.split(&quot; &quot;);<br />if(!isGroupChat) return;<br /><br />if(FS.read(FilePath)==&quot;&quot;) {FS.write(FilePath,&quot;{}&quot;)}<br />DataChat=JSON.parse(FS.read(FilePath))<br /><br />if(DataChat[room]===undefined){DataChat[room]={}}<br />if(DataChat[room][sender]===undefined){DataChat[room][sender]=[]}<br /><br />if(MiraiMsg[0]==&quot;/도청보기&quot;&amp;&amp;MiraiMsg[1]==undefined){<br />Output = &quot;&quot;;<br />for(var Data in DataChat[room]) {<br />for(i=0;i&lt;DataChat[room][Data].length;i++){<br />Output+=DataChat[room][Data][i][0].Date + &quot;\\n방: &quot;+room+&quot;\\n닉네임: &quot; +DataChat[room][Data][i][0].Name + &quot;\\n내용: &quot; + DataChat[room][Data][i][0].Message + &quot;\\n\\n&quot;<br />}<br />}<br />replier.reply(&quot;[에취 BOT 도청기]\\n&quot;+room+&quot; 의 도청정보 입니다.\\n\\n&quot;+&quot;\\u200b&quot;.repeat(500)+Output.trim());<br />return;<br />}<br />if(MiraiMsg[0]==&quot;/도청보기&quot;){<br />Output = &quot;&quot;;<br />if(!DataChat[room][msg.substr(6)]){<br />replier.reply(msg.substr(6) + &quot;님은 도청한 내용이 없습니다.&quot;);<br />return;<br />}&nbsp;<br />for(i=0;i&lt;DataChat[room][msg.substr(6)].length;i++){<br />Output+=DataChat[room][msg.substr(6)][i][0].Date + &quot;\\n방: &quot;+room+&quot;\\n닉네임: &quot; +DataChat[room][msg.substr(6)][i][0].Name + &quot;\\n내용: &quot; + DataChat[room][msg.substr(6)][i][0].Message + &quot;\\n\\n&quot;<br />}<br />replier.reply(&quot;[에취 BOT]\\n&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;Output.trim()&quot;)<br />return //명령어는 기록 안되게<br />}<br />if(MiraiMsg[0]==&quot;/도청삭제&quot;){<br />FS.write(FilePath,&quot;{}&quot;);<br />DataChat=JSON.parse(FS.read(FilePath))<br />replier.reply(&quot;[에취 BOT]\\n삭제되었습니다.&quot;);<br />return;<br />}<br />if(msg){<br />DataChat[room][sender].push([{&quot;Name&quot;:sender,&quot;Message&quot;:msg,&quot;Date&quot;:Utils.getDateText()}])<br />FS.write(FilePath,JSON.stringify(DataChat))<br />return;<br />}<br />}<br /><br />오래된 메시지가 밑으로 가고 새로온 매시지가 위로오게하려면 어떻게 하나요?</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000017D800000000",
+            "id": 6104,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 167,
+            "refArticleId": 6104,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "이 소스에서",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1570323789760,
+            "writer": {
+                "id": "williameom0826",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA0MDJfMTU1/MDAxNTg1Nzg4NjczNzY1.P0yIN6FJ_f49z-WPSTHegCrZTR-B-hK8YwVgconwsFEg.4fBP8ETOdeLTnaf5v2Ph6SpT27lsVPpHwd2jGpiufPEg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "williameom"
+            }
+        },
+        "articleId": 6104,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "기록을 뽑아내는 부분의 for문의 조건이랑 증감을 바꿔주면 되겠죠",
+                    "id": 70417832,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70417832,
+                    "updateDate": 1570328728000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "어떻게 수정하면 되나요?",
+                    "id": 70430639,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70417832,
+                    "updateDate": 1570342953000,
+                    "writer": {
+                        "id": "williameom0826",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDJfMTU1/MDAxNTg1Nzg4NjczNzY1.P0yIN6FJ_f49z-WPSTHegCrZTR-B-hK8YwVgconwsFEg.4fBP8ETOdeLTnaf5v2Ph6SpT27lsVPpHwd2jGpiufPEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "williameom"
+                    }
+                },
+                {
+                    "content": "한번 해보세용\r\n본인이 직접하다보면 재밌어용\r\n정말어려우시면 그때올리세용",
+                    "id": 70533167,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70417832,
+                    "replyMember": {
+                        "id": "williameom0826",
+                        "nick": "williameom"
+                    },
+                    "updateDate": 1570447989000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "중학생입니다"
+                    }
+                },
+                {
+                    "content": "해보고 하는 소리입니다만",
+                    "id": 70543426,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70417832,
+                    "replyMember": {
+                        "id": "jjh060213",
+                        "nick": "중학생입니다"
+                    },
+                    "updateDate": 1570455805000,
+                    "writer": {
+                        "id": "williameom0826",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDJfMTU1/MDAxNTg1Nzg4NjczNzY1.P0yIN6FJ_f49z-WPSTHegCrZTR-B-hK8YwVgconwsFEg.4fBP8ETOdeLTnaf5v2Ph6SpT27lsVPpHwd2jGpiufPEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "williameom"
+                    }
+                },
+                {
+                    "content": "와 근데 맛소금님꺼 고대로 가져오셨네 ㅋㅋㅋ",
+                    "id": 70719666,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70719666,
+                    "updateDate": 1570664370000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "카프리썬"
+                    }
+                },
+                {
+                    "content": "미니게임 등급인데 복붙 너무 심한거 아닌가요 님소스 같은거 보면 간단한거 빼고 다 복붙인데 ㅋㅋㅋ",
+                    "id": 70719703,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70719703,
+                    "updateDate": 1570664391000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "카프리썬"
+                    }
+                },
+                {
+                    "content": "ㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
+                    "id": 70863332,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70719703,
+                    "updateDate": 1570806263000,
+                    "writer": {
+                        "id": "port_side0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "개발자 현명이"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,325 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<div><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">choice=(a,b,c)=&gt;(a.charCodeAt(a.length-1)-0xAC00)%28==0?a+b:a +c;</span><br /></div><div>function getWeather(place) {</div><div>if(place==&quot;이시국&quot;||place==&quot;이 시국&quot;){place=&quot;일본&quot;;}</div><div>if(place==&quot;킹시국&quot;||place==&quot;킹 시국&quot;){place=&quot;중국&quot;;}</div><div>try {parse=org.jsoup.Jsoup.connect(&quot;<a href=\"https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=\" target=\"_blank\">https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=</a>&quot;+place+&quot;+날씨&quot;).get();</div><div>gg=org.jsoup.Jsoup.connect(&quot;<a href=\"https://m.search.naver.com/search.naver?\" target=\"_blank\">https://m.search.naver.com/search.naver?</a>&quot;).data(&quot;query&quot;,place+&quot; 미세먼지&quot;).get().select(&quot;section.sc.cs_air_environment._cs_air_environment&quot;);</div><div>eee=parse.select(&quot;div.weather_bx&quot;);</div><div>if(String(eee).trim()!=&quot;&quot;){</div><div>q=(&quot;정확한 지명\\n&quot;+eee.select(&quot;span.bt_slt&quot;).text()+&quot;\\n\\n&quot;+((d=eee.select(&quot;div.status_bx&quot;))&amp;&amp;(c=d.select(&quot;em.figure.degree_code&quot;))&amp;&amp;(&quot;현재온도: &quot;+c.get(0).text()+(d.select(&quot;div.wt_text&gt;span.chill_temp&quot;).text().trim()!=&quot;&quot;?&quot;℃\\n체감온도: &quot;+c.get(1).text():&quot;&quot;)+&quot;℃\\n날씨: &quot;+((f=d.select(&quot;div.wt_summary&gt;p&quot;))&amp;&amp;(f.select(&quot;em&quot;).text().trim()!=&quot;&quot;?(f.text().replace(f.select(&quot;em&quot;).text(),f.select(&quot;em&quot;).text()+&quot;℃&quot;)):f.text()))))+&quot;\\n\\n&quot;);</div><div>c=d.select(&quot;div.status_list&gt;ul&gt;li&quot;);for(a=0;a&lt;c.size();a++)q+=((f=c.get(a).text())&amp;&amp;(f.replace(f.split(&quot; &quot;)[0],f.split(&quot; &quot;)[0]+&quot;:&quot;))+(f.startsWith(&quot;습도&quot;)?&quot;%\\n&quot;:(f.startsWith(&quot;자외선&quot;)?&quot;\\n&quot;:((f.startsWith(&quot;풍속&quot;))||(f.startsWith(&quot;바람&quot;))?&quot;㎧\\n&quot;:&quot;℃\\n&quot;)))+(a==(c.size()-1)?&quot;\\n&quot;:&quot;&quot;));</div><div>if(String(gg).trim()!=&quot;&quot;){</div><div>c=gg.select(&quot;div.inner_text&quot;);d=gg.select(&quot;strong.summary_text.level2&quot;);for(a=0;a&lt;c.size();a++)q+=((p=c.get(a).text().replace(/먼지/g,&quot;먼지:&quot;)+&quot; &quot;+d.get(a).text())&amp;&amp;(p.replace(p.split(&quot; &quot;)[1]+&quot; &quot;+p.split(&quot; &quot;)[2],p.split(&quot; &quot;)[2]+&quot; &quot;+p.split(&quot; &quot;)[1])))+&quot;㎍/㎥\\n&quot;;</div><div>c=gg.select(&quot;div.pollutio_info&gt;strong&quot;);for(a=0;a&lt;c.size();a++)q+=c.get(a).text().replace(c.get(a).text().split(&apos; &apos;)[0],c.get(a).text().split(&apos; &apos;)[0]+&quot;:&quot;)+(c.size()-1==a?&quot;\\n&quot;:&quot;ppm\\n&quot;);</div><div>}return place+&quot;의 날씨입니다.\\n&quot;+qazwsx+&quot;-&quot;.repeat(60)+&quot;\\n&quot;+q+&quot;-&quot;.repeat(60);</div><div>}else{return 뀨;}} catch(e) {</div><div>try{q=parse.select(&quot;tr&quot;).text();</div><div>n=&quot;&quot;;</div><div>if (q.startsWith(&quot;나라이름 온도 체감온도 최고/최저온도&quot;))</div><div>{q=q.split(&quot; &quot;);for(m=4;m&lt;q.length;m++)</div><div>{if((m&gt;3)&amp;&amp;(m%5==0)&amp;&amp;(q[m+1].endsWith(&quot;도&quot;)==false))</div><div>{q[m]+=q[m+1];q.splice(m+1,1);q=q.join(&quot; &quot;).split(&quot; &quot;);m--;}</div><div>else{n+=(q[m]+&quot; &quot;);if(m%5==3){n+=(&quot;\\n&quot;+&quot;\\n&quot;);}}}</div><div>return place+&quot;의 날씨입니다.\\n&quot;+qazwsx+&quot;-&quot;.repeat(60)+&quot;\\n&quot;+n.replace(&quot;나라이름&quot;,&quot;도시이름 날씨&quot;).trim()+&quot;\\n&quot;+&quot;-&quot;.repeat(60);}</div><div>else if(place==&quot;한국&quot;)return &quot;&quot;;</div><div>else{return 뀨;}}</div><div>catch(e){</div><div>try{</div><div>c=parse.select(&quot;div.lcl_lst &gt; a&quot;);b=[];for(a=0;a&lt;c.size();a++){b.push(c.get(a).text());}hey=b.join(&quot;\\n&quot;).replace(/도씨/g,&quot;℃&quot;);</div><div>return place+&quot;의 날씨입니다.\\n&quot;+qazwsx+&quot;-&quot;.repeat(60)+&quot;\\n&quot;+(hey.trim()==&quot;&quot;?뀨:hey)+&quot;\\n&quot;+&quot;-&quot;.repeat(60);</div><div>}catch(e){</div><div>try{</div><div>d = parse.select(&quot;tbody &gt; tr&quot;);b=[];for(a=0;a&lt;d.size();a++){c=d.get(a);b.push(c.select(&quot;td.wt_name&quot;).text()+&quot; &quot;+(c.select(&quot;option&quot;).text().trim()==&quot;&quot;?&quot;&quot;:c.select(&quot;option&quot;).get(0).text())+&quot;\\n현재 날씨: &quot;+c.select(&quot;td.wt_tempor&quot;).get(0).text()+&quot;\\n&quot;+&quot;최저기온: &quot;+c.select(&quot;span.temp_low&quot;).text()+&quot; 최고기온: &quot;+c.select(&quot;span.temp_high&quot;).text());}</div><div>return place+&quot;의 날씨입니다.\\n&quot;+qazwsx+&quot;-&quot;.repeat(60)+&quot;\\n&quot;+(d.get(a-1).text().trim()==&quot;&quot;?뀨:b.join(&quot;\\n\\n&quot;))+&quot;\\n&quot;+&quot;-&quot;.repeat(60);</div><div>}catch(e){</div><div>try{gg=org.jsoup.Jsoup.connect(&quot;<a href=\"https://m.search.daum.net/search?\" target=\"_blank\">https://m.search.daum.net/search?</a>&quot;).data(&quot;q&quot;,place+&quot; 날씨&quot;).get();</div><div>url=gg.select(&quot;div.container_weather&quot;);</div><div>url2=gg.select(&quot;div.cont_detail&quot;);</div><div>if(String(url.text()).trim()!=&quot;&quot;){q=&quot;정확한 지명\\n&quot;+url.select(&quot;strong.tit_name&quot;).text()+&quot;\\n\\n현재 온도: &quot;+url.select(&quot;span.txt_info&gt;em.txt_temp&quot;).text()+&quot;\\n날씨: &quot;+url.select(&quot;p.desc_main&quot;).text()+&quot;\\n\\n&quot;;z=url.select(&quot;ul.list_detail&gt;li&quot;);</div><div>for(a=0;a&lt;z.size();a++){q+=((x=String(z.get(a).text()).split(&quot; &quot;))&amp;&amp;(x[0]+=&quot;:&quot;)&amp;&amp;(x.join(&quot; &quot;))+&quot;\\n&quot;);}z=url2.select(&quot;ul.list_detail&gt;li&quot;);</div><div>for(a=0;a&lt;z.size();a++){q+=((x=String(z.get(a).text()).split(&quot; &quot;))&amp;&amp;(x[0]+=&quot;:&quot;)&amp;&amp;(x.join(&quot; &quot;))+&quot;\\n&quot;);}q+=String(gg.select(&quot;div.coll_etc.cont_same&quot;).text()).trim()==&quot;&quot;?&quot;&quot;:(&quot;\\n동명지역: &quot;+gg.select(&quot;div.coll_etc.cont_same&quot;).select(&quot;span.txt_local&quot;).text()+&quot;\\n동명지역 날씨: &quot;+gg.select(&quot;div.coll_etc.cont_same&quot;).select(&quot;span.txt_weather&quot;).text());</div><div>return place+&quot;의 날씨입니다.\\n&quot;+qazwsx+&quot;-&quot;.repeat(60)+&quot;\\n&quot;+q+&quot;\\n&quot;+&quot;-&quot;.repeat(60);}</div><div>else{return 뀨;}}catch(e){</div><div>try{</div><div>g=org.jsoup.Jsoup.connect(&quot;<a href=\"https://www.google.com/search?\" target=\"_blank\">https://www.google.com/search?</a>&quot;).data(&quot;query&quot;,place+&quot; 날씨&quot;).get().select(&quot;div.vk_c.card-section#wob_wc&quot;);</div><div>a=g.select(&quot;div.wob_df.wob_ds&quot;);</div><div>b=g.select(&quot;div.vk_gy.vk_sh.wob-dtl &gt; div&quot;);</div><div>c=&quot;정확한 지명\\n&quot;+g.select(&quot;span&gt;div.vk_gy.vk_h&quot;).text()+&quot;\\n\\n현재 날씨: &quot;+g.select(&quot;span.vk_gy.vk_sh#wob_dc&quot;).text()+&quot;\\n온도: &quot;+g.select(&quot;span.wob_t#wob_tm&quot;).text()+&quot;도\\n최고기온: &quot;+a.select(&quot;span&quot;).get(0).text()+&quot;도\\n최저기온: &quot;+a.select(&quot;span&quot;).get(2).text()+&quot;도\\n&quot;+b.get(0).text()+&quot;\\n&quot;+b.get(1).text()+&quot;\\n풍속: &quot;+b.get(2).select(&quot;span &gt; span&quot;).get(0).text();</div><div>return g.text().trim()==&quot;&quot;?뀨:place+&quot;의 날씨입니다.\\n&quot;+qazwsx+&quot;-&quot;.repeat(60)+&quot;\\n&quot;+c+&quot;\\n&quot;+&quot;-&quot;.repeat(60);}</div><div>catch(e){</div><div>z=choice(place,&quot;는&quot;,&quot;은&quot;);</div><div>return place==&quot;지구&quot;?&quot;<a href=\"https://earth.nullschool.net/ko/\" target=\"_blank\">https://earth.nullschool.net/ko/</a>&quot;:(((place==&quot;우주&quot;)||(place==&quot;태양&quot;))?((a=org.jsoup.Jsoup.connect(&quot;<a href=\"http://spaceweather.kma.go.kr/ko/current.do\" target=\"_blank\">http://spaceweather.kma.go.kr/ko/current.do</a>&quot;).get())&amp;&amp;(c=(&quot;태양복사폭풍\\n&quot;+String(a.select(&quot;div.group.s_alert.groupLink.group1&quot;).text()).split(&quot;) (&quot;)[0]+&quot;)\\n\\n태양입자폭풍\\n&quot;+String(a.select(&quot;div.group.groupLink.group2&quot;).text()).split(&quot;) (&quot;)[0]+&quot;)\\n\\n지자기폭풍\\n&quot;+String(a.select(&quot;div.group.groupLink.group3&quot;).text()).split(&quot; (&quot;)[0]+&quot;\\n\\n자기권계면\\n&quot;+String(a.select(&quot;div.group.groupLink.group4&quot;).text()).split(&quot;) (&quot;)[0]+&quot;)&quot;).replace(/현재/g,&quot;\\n현재&quot;).replace(/최대값/g,&quot;\\n최대값&quot;).replace(/최소값/g,&quot;\\n최소값&quot;))&amp;&amp;place+&quot;의 날씨입니다.\\n&quot;+qazwsx+&quot;-&quot;.repeat(60)+&quot;\\n&quot;+c+&quot;\\n<a href=\"https://sohowww.nascom.nasa.gov/data/realtime-images.html\\n\" target=\"_blank\">https://sohowww.nascom.nasa.gov/data/realtime-images.html\\n</a>&quot;+&quot;-&quot;.repeat(60)):z+&quot; 찾을 수 없는 지역입니다.&quot;);</div><div>}}}}}}</div><div><br /></div><div>}</div><div><br /></div><div><div>function response(room, bbb, sender, isGroupChat, fff, imageDB, packageName) {</div><div>if(bbb.startsWith(&quot;!@날씨 &quot;)){</div><div>bbb=((bbb==&quot;!@날씨&quot;)||(bbb==&quot;!@날씨 한국&quot;))?&quot;!@날씨 전국&quot;:bbb;</div><div>bbb=bbb.substr(4);</div><div>fff.reply(getWeather(bbb));</div><div>}}</div></div><div>/*원래 상현달 그믐달 이런것도 파싱해서 달 날씨라고 하려고 했는데</div><div>오류 안 나겠지*/</div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003B0D00000000",
+            "id": 15117,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 124,
+            "refArticleId": 15117,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "검색 기능에서 날씨 검색기능 하나 떼옴(네이버에서 안 나오면 다음, 그래도 안 나오면 구글 순서로 파싱)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585876364380,
+            "writer": {
+                "id": "ej-musician",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA4MTBfMTU1/MDAxNTAyMzY4NDMwMzU1.GYG6HgStTBq5MW46wAUvYFCRVoHQFlV_-a4-KmggSMAg.WVwJspk_UltacJt9-MLhHnscGNsKB79lLKeJGp8c6sEg.JPEG.ej-musician/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "루카엘"
+            }
+        },
+        "articleId": 15117,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷㄷ",
+                    "id": 86241914,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86241914,
+                    "updateDate": 1585876500000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "쌉청정"
+                    }
+                },
+                {
+                    "content": "걍 생각날 때 마다 하나씩 추가하니까 이따구로(?) 되더라고요",
+                    "id": 86250693,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86241914,
+                    "updateDate": 1585880807000,
+                    "writer": {
+                        "id": "ej-musician",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA4MTBfMTU1/MDAxNTAyMzY4NDMwMzU1.GYG6HgStTBq5MW46wAUvYFCRVoHQFlV_-a4-KmggSMAg.WVwJspk_UltacJt9-MLhHnscGNsKB79lLKeJGp8c6sEg.JPEG.ej-musician/profileImage.jpg"
+                        },
+                        "nick": "루카엘"
+                    }
+                },
+                {
+                    "content": "z=choice(place,\"는\",\"은\"); 할때 choice함수가 뭔지 알려주실 수 있으신가요ㅜㅜ",
+                    "id": 101640614,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101640614,
+                    "updateDate": 1598789507000,
+                    "writer": {
+                        "id": "ssoh1738",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "kiffvincentius"
+                    }
+                },
+                {
+                    "content": "//아 그거 안 써놨네오\nchoice=(a,b,c)=>(a.charCodeAt(a.length-1)-0xAC00)%28==0?a+b:a +c;",
+                    "id": 101722463,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101640614,
+                    "updateDate": 1598855838000,
+                    "writer": {
+                        "id": "ej-musician",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA4MTBfMTU1/MDAxNTAyMzY4NDMwMzU1.GYG6HgStTBq5MW46wAUvYFCRVoHQFlV_-a4-KmggSMAg.WVwJspk_UltacJt9-MLhHnscGNsKB79lLKeJGp8c6sEg.JPEG.ej-musician/profileImage.jpg"
+                        },
+                        "nick": "루카엘"
+                    }
+                },
+                {
+                    "content": "혹시 qazwsx가 무슨 값인지도 알려주실수 있으신가요ㅜㅜ 선언되지 않은 값인거같은데..",
+                    "id": 101723542,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101640614,
+                    "replyMember": {
+                        "id": "ej-musician",
+                        "nick": "루카엘"
+                    },
+                    "updateDate": 1598856543000,
+                    "writer": {
+                        "id": "ssoh1738",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "kiffvincentius"
+                    }
+                },
+                {
+                    "content": "qazwsx=\"\\u200b\".repeat(500)\n입니당!\n그냥 원래 있던 소스에서 아무 생각없이 떼오다보니까 저런게 많이 빠져있네요 ㅠㅠ",
+                    "id": 101738230,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101640614,
+                    "replyMember": {
+                        "id": "ssoh1738",
+                        "nick": "kiffvincentius"
+                    },
+                    "updateDate": 1598867261000,
+                    "writer": {
+                        "id": "ej-musician",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA4MTBfMTU1/MDAxNTAyMzY4NDMwMzU1.GYG6HgStTBq5MW46wAUvYFCRVoHQFlV_-a4-KmggSMAg.WVwJspk_UltacJt9-MLhHnscGNsKB79lLKeJGp8c6sEg.JPEG.ej-musician/profileImage.jpg"
+                        },
+                        "nick": "루카엘"
+                    }
+                },
+                {
+                    "content": "아녜요 감사합니다ㅜㅜ",
+                    "id": 101745021,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101640614,
+                    "replyMember": {
+                        "id": "ej-musician",
+                        "nick": "루카엘"
+                    },
+                    "updateDate": 1598872557000,
+                    "writer": {
+                        "id": "ssoh1738",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "kiffvincentius"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

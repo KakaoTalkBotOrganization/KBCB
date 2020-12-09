@@ -1,0 +1,176 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt; //&nbsp;importing&nbsp;classes</b></div><div><b><br /></b></div><div><b>const&nbsp;Thread&nbsp;=&nbsp;java.lang.Thread;</b></div><div><b><br /></b></div><div><b>const&nbsp;Jsoup&nbsp;=&nbsp;org.jsoup.Jsoup;</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>let&nbsp;room_raw&nbsp;=&nbsp;[&quot;https://open.kakao.com/o/gMLlHIxb&quot;,&nbsp;&quot;https://open.kakao.com/o/gpjuCjR&quot;];&nbsp;//사용할&nbsp;방&nbsp;주소&nbsp;순서대로 추가하시면 됩니다.</b></div><div><b><br /></b></div><div><b>let&nbsp;room_names&nbsp;=&nbsp;[&quot;2019&nbsp;|&nbsp;카카오톡&nbsp;봇&nbsp;개발하기&quot;,&nbsp;&quot;MessengerBot&quot;];&nbsp;//사용할&nbsp;방&nbsp;이름&nbsp;정확하게&nbsp;순서대로&nbsp;추가하시면 됩니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>let&nbsp;data_real&nbsp;=&nbsp;[{result:&nbsp;{headcount:&nbsp;null}},&nbsp;{result:&nbsp;{headcount:&nbsp;null}}];</b></div><div><b><br /></b></div><div><b>let&nbsp;data_pre&nbsp;=&nbsp;[{result:&nbsp;{headcount:&nbsp;null}},&nbsp;{result:&nbsp;{headcount:&nbsp;null}}];</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>let&nbsp;loopStarted&nbsp;=&nbsp;false;</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>function&nbsp;response(room,&nbsp;msg,&nbsp;sender,&nbsp;isGroupChat,&nbsp;replier,&nbsp;ImageDB,&nbsp;packageName,&nbsp;threadId)&nbsp;{</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; if&nbsp;(!loopStarted)&nbsp;{</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; loopStarted&nbsp;=&nbsp;true;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; while&nbsp;(true)&nbsp;{</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;updateData();</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for&nbsp;(let&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;room_raw.length;&nbsp;i&nbsp;++)&nbsp;{</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if&nbsp;(data_pre[i].result.headcount&nbsp;!=&nbsp;null)&nbsp;{</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if&nbsp;(data_real[i].result.headcount&nbsp;&gt;&nbsp;data_pre[i].result.headcount)</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room_names[i],&nbsp;&quot;[알림]&nbsp;누군가&nbsp;방을&nbsp;들어왔어요!\\n&nbsp;인원:&nbsp;&quot;+data_pre[i].result.headcount+&quot;↗&quot;+data_real[i].result.headcount);</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else&nbsp;if&nbsp;(data_real[i].result.headcount&nbsp;&lt;&nbsp;data_pre[i].result.headcount)</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room_names[i],&nbsp;&quot;[알림]&nbsp;누군가&nbsp;방을&nbsp;나갔어요!\\n&nbsp;인원:&nbsp;&quot;+data_pre[i].result.headcount+&quot;↘&quot;+data_real[i].result.headcount);</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Thread.sleep(750);</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; }</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp;}</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>updateData&nbsp;=&nbsp;()&nbsp;=&gt;&nbsp;{</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp;for&nbsp;(let&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;room_raw.length;&nbsp;i&nbsp;++)&nbsp;{</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; data_pre[i]&nbsp;=&nbsp;data_real[i];&nbsp;//&nbsp;copy&nbsp;previous&nbsp;data_real&nbsp;to&nbsp;data_pre</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; let&nbsp;obj&nbsp;=&nbsp;JSON.parse(Jsoup.connect(&quot;https://api.develope.kr/search/room?room=&quot;&nbsp;+&nbsp;room_raw[i]).ignoreContentType(true).get().text());</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; data_real[i]&nbsp;=&nbsp;obj;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp;}</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 이게 갑자기 처음엔 잘되다가 갑자기 안되네요;;왜 그런지 아시는분?</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000345800000000",
+            "id": 13400,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 43,
+            "refArticleId": 13400,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "질문이요..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584197164560,
+            "writer": {
+                "id": "peterilove0531",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "쭈"
+            }
+        },
+        "articleId": 13400,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "그거 서버 터짐요",
+                    "id": 84189649,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84189649,
+                    "updateDate": 1584197554000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "무명"
+                    }
+                },
+                {
+                    "content": "점검 아니였?",
+                    "id": 84205664,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84189649,
+                    "updateDate": 1584229465000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "MinSoup"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,141 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<p>솔직히 제가 파티기능을 추가하려고 했을 때 과연 어떻게 구현해야할지 생각을 했어요. 아무리 그래도 카톡봇으로 구현이 한계가 있다보니 파티의 공격력, 체력을 모두 합치기로 해보았어요<br />var party=[]<br />var partyis=false;<br />var partyking;<br />if(msg.startsWith(&quot;%보스 &quot;)){<br />var bosscode=msg.substr(4);<br />try{<br />var bossdata = JSON.parse(FileStream.read(&quot;/sdcard/키우기/보스/&quot;+ bosscode +&quot;.json&quot;));<br />mydata = JSON.parse(FileStream.read(&quot;/sdcard/키우기/&quot;+ sender +&quot;.json&quot;));<br />replier.reply(bossdata[&quot;name&quot;]+&quot;(레벨 : &quot;+bossdata.level+&quot;)이(가) 나타났다!&quot;);<br />var bosshp=Number(bossdata.hp);<br />if(party.indexOf(sender)==-1){<br />myhp=Number(mydata.hp);<br />while(Number(bosshp)&gt;0&amp;&amp;Number(myhp)&gt;0){<br />damage=Number(mydata.atk)-Number(bossdata.armor);<br />if(damage&lt;0)damage=0;<br />var bossdamage=Number(bossdata.damage)-Number(mydata.def);<br />if(bossdamage&lt;0){<br />bossdamage=0;<br />}<br />bosshp=Number(bosshp)-Number(damage);<br />if(bosshp&lt;0){bosshp=0;}<br />myhp=Number(myhp)-Number(bossdamage);<br />if(myhp&lt;0){myhp=0;}<br />}<br />}<br />위에 것은 전 강좌에요<br />else if(party.indexOf(sender)!=-1){<br />파티에 있으면<br />for(i=0;i&lt;party.length;i++){<br />var playdata=JSON.parse(FileStream.read(&quot;/sdcard/키우기/&quot;+party[i]+&quot;.json&quot;));<br />var partyhp=Number(partyhp)+Number(playdata.hp);<br />var partyatk=Number(partyatk)+Number(playdata.atk);<br />var partydef=Number(partydef)+Number(playdata.def);<br />}<br />파티 수만큼 반복해 공격력, 체력, 방어력을 모두 합친 후<br />while(bosshp&lt;=0&amp;&amp;partyhp&gt;0){<br />전과 동일하게 반복<br />damage=Number(partyatk)-Number(bossdata.armor);<br />if(damage&lt;0)damage=0;<br />bossdamage=Number(bossdata.damage)-Number(partydef);<br />if(bossdamage&lt;0)bossdamage=0;<br />partyhp=Number(partyhp)-Number(bossdamage);<br />bosshp=Number(bosshp)-Number(damage);<br />while(partyhp&gt;0&amp;&amp;bosshp&gt;0){<br />bosshp=Number(bosshp)-Number(damage);<br />if(bosshp&lt;0){bosshp=0;}<br />partyhp=Number(partyhp)-Number(bossdamage);<br />if(partyhp&lt;0){partyhp=0;}<br />}<br />}<br />if(partyhp&lt;=0){<br />replier.reply(&quot;실패&quot;);<br />실패할 경우, 실패를 출력<br />}<br />}<br />}<br />}<br /><br /><br /><br />여기는 파티에 관한 세부사항등<br />if(msg==&quot;%파티생성&quot;){<br />if(!partyis){<br />replier.reply(&quot;파티생성!&quot;);<br />partyis=true;<br />party.push(sender);<br />partyking=sender;<br />파티가 없다면 방장을 설정, 파티에 인원 추가<br />}<br />else if(partyis){<br />replier.reply(&quot;이미 파티가 있습니다!&quot;);<br />있다면 파티가 있다고 출력<br />}<br />}<br />if(msg==&quot;%파티삭제&quot;){<br />if(partyis){<br />if(sender==partyking){<br />party=[];<br />partyis=false;<br />partyking=&quot;&quot;;<br />replier.reply(&quot;삭제 완료!&quot;);<br />파티가 있다면 파티, 방장을 초기화<br />}<br />else if(sender!=partyking){<br />replier.reply(&quot;방장만 삭제할 수 있습니다!&quot;);<br />방장이 아닐경우 삭제 불가<br />}<br />}<br />}<br />if(msg==&quot;%파티참여&quot;){<br />if(partyis&amp;&amp;party.length&lt;4&amp;&amp;party.indexOf(sender)==-1){<br />파티 인원수가 정원이 아니고 파티에 없을경우<br />party.push(sender);<br />replier.reply(&quot;참여 완료!&quot;);<br />파티에 추가<br />}<br />else {<br />replier.reply(&quot;방인원이 다 찼거나 파티가 없거나 이미 참여했습니다!&quot;);<br />만약에 다 찼거나 파티가 없다면 없다고 출력<br />}<br />}<br />if(msg==&quot;%파티정보&quot;){<br />if(partyis){<br />replier.reply(&quot;[ &quot;+partyking+&quot;님의 파티 ]\\n방인원(&quot;+party.length+&quot;/4)&quot;);<br />파티의 방장과 방인원을 출력<br />}<br />else {<br />replier.reply(&quot;방이 없습니다!&quot;);<br />방이 없으면 없다고 출력<br />}<br />}<br /><br />다음 강좌에서는 보스 클리어 보상에 대해 다루겠습니다</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000051A400000000",
+            "id": 20900,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 132,
+                "menuType": "B",
+                "name": "| RPG 소스 강좌 |"
+            },
+            "readCount": 136,
+            "refArticleId": 20900,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "RPG를 쉽게 만들자! 10-2. 보스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1594203149113,
+            "writer": {
+                "id": "khjeh0521",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA1MDFfNDEg/MDAxNTg4MzEzOTQwNTE1.4q-Novz5Sw4qAAv2d2F7sK9Va-I5S1uhjqjcy9CdTa4g.zGZrguOhyCVObH7FGz3qLOURdHN3ACvk05_CVV91N70g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_888.gif",
+                "memberLevelName": "카페스탭",
+                "nick": "럭s봇"
+            }
+        },
+        "articleId": 20900,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "우ㅘ..",
+                    "id": 97465647,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97465647,
+                    "updateDate": 1595319242000,
+                    "writer": {
+                        "id": "qute0226",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjFfMjIg/MDAxNTk1MzQxMDIyNDA3.pohd8jAVihMZuwGVVTE-yN8kUYr2D_J-5j2IBnp5B7Qg.pWjpXeEi5yBj8O7QX04QtNSsRCkuKnpR2CqzkKEBXkQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하순모주"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

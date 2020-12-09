@@ -1,0 +1,286 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp;</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><b>소스 난잡 주의</b></div><div><br /></div><div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>const scriptName=&quot;연습.js&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var cards = [&quot;[1월]소나무&quot;,&quot;[1월]소나무&quot;,&quot;[1월](홍단)&quot;,&quot;[1월]《광》두루미&quot;,&quot;[2월]매화&quot;,&quot;[2월]매화&quot;,&quot;[2월](홍단)&quot;,&quot;[2월]휘파람새&lt;고도리&gt;(열끗)&quot;,&quot;[3월]벚꽃&quot;,&quot;[3월]벚꽃&quot;,&quot;[3월](홍단)&quot;,&quot;[3월]《광》장막&quot;,&quot;[4월]등나무&quot;,&quot;[4월]등나무&quot;,&quot;[4월](초단)&quot;,&quot;[4월]두견새&lt;고도리&gt;(열끗)&quot;,&quot;[5월]창포&quot;,&quot;[5월]창포&quot;,&quot;[5월](초단)&quot;,&quot;[5월]창포와 야츠하시(열끗)&quot;,&quot;[6월]모란&quot;,&quot;[6월]모란&quot;,&quot;[6월](청단)&quot;,&quot;[6월]모란과 나비(열끗)&quot;,&quot;[7월]싸리&quot;,&quot;[7월]싸리&quot;,&quot;[7월](초단)&quot;,&quot;[7월]멧돼지(열끗)&quot;,&quot;[8월]억새&quot;,&quot;[8월]억새&quot;,&quot;[8월]기러기&lt;고도리&gt;(열끗)&quot;,&quot;[8월]《광》달&quot;,&quot;[9월]국화&quot;,&quot;[9월]국화&quot;,&quot;[9월](청단)&quot;,&quot;[9월]사카즈키(열끗)&quot;,&quot;[10월]단풍&quot;,&quot;[10월]단풍&quot;,&quot;[10월](청단)&quot;,&quot;[10월]사슴(열끗)&quot;,&quot;[11월]오동&quot;,&quot;[11월]오동&quot;,&quot;[11월]오동 |쌍피|&quot;,&quot;[11월]《광》봉황&quot;,&quot;[12월]지옥문 |쌍피|&quot;,&quot;[12월](초단)(일부지역)&quot;,&quot;[12월]제비 &apos;비도리&apos;(일부지역)&quot;,&quot;[12월]오노노도후(비광)&quot;];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var gameS = false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var matgo = false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var player = [];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p1cards=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p2cards=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var mcards=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p1sc=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p2sc=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p1sclast=0;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p2sclast=0;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var qkl=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var adf=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var poqw=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p1turn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var p2turn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>function shuffle (a){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var ja,xs,ik;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(ik=a.length-1;ik&gt;0;ik--){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>ja = Math.floor(Math.random()*(ik+1));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>xs=a[ik]; a[ik]=a[ja]; a[ja]=xs;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>return a;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>function score(b,j){//점수합산 b자리는 p1sc j는 p1sclast 들어감</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var gwang = [];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var hongd = [];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var chungd =[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var chod =[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var godori=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var dr=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var ssangpi=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var pi=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(kl=b.length;kl&gt;0;kl--){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;《광》&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>gwang.push(b.indexOf(&quot;《광》&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;《광》&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;(비광)&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>gwang.push(b.indexOf(&quot;(비광)&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;(비광)&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;&lt;고도리&gt;&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>godori.push(b.indexOf(&quot;&lt;고도리&gt;&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;&lt;고도리&gt;&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;(홍단)&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>hongd.push(b.indexOf(&quot;(홍단)&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;(홍단)&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;(청단)&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>chungd.push(b.indexOf(&quot;(청단)&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;(청단)&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;(초단)&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>chod.push(b.indexOf(&quot;(초단)&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;(초단)&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;(열끗)&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>dr.push(b.indexOf(&quot;(열끗)&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;(열끗)&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(b.indexOf(&quot;|쌍피|&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>ssangpi.push(b.indexOf(&quot;|쌍피|&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>b.splice(b.indexOf(&quot;|쌍피|&quot;),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(poq=b.length;poq&gt;0;poq--){//남은 카드는 모두 피 로 추가</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>pi.push(b[poq-1]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(gwang.length&gt;=3){//광 계산</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(gwang.indexOf(&quot;(비광)&quot;)!=-1&amp;&amp;gwang.length==3){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=2;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}else if(gwang.indexOf(&quot;(비광)&quot;)!=-1&amp;&amp;gwang.length==4){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=4;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}else if(gwang.indexOf(&quot;(비광)&quot;)!=-1&amp;&amp;gwang.length==5){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=15;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}else j+=3;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(godori.length&gt;=3){//고도리 및 비도리 계산</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(godori.length==3&amp;&amp;godori.indexOf(&quot;[2월]&quot;)!=-1&amp;&amp;godori.indexOf(&quot;[4월]&quot;)!=-1&amp;&amp;godori.indexOf(&quot;[8월]&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=5;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>else if(godori.length==3&amp;&amp;godori.indexOf(&quot;[2월]&quot;)!=-1&amp;&amp;godori.indexOf(&quot;[12월]&quot;)!=-1&amp;&amp;godori.indexOf(&quot;[8월]&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=2;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>else if(godori.length==3&amp;&amp;godori.indexOf(&quot;[12월]&quot;)!=-1&amp;&amp;godori.indexOf(&quot;[4월]&quot;)!=-1&amp;&amp;godori.indexOf(&quot;[8월]&quot;)!=-1){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=2;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(hongd.length+chungd.length+chod.length&gt;=5){//띠, 단 계산</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=hongd.length+chungd.length+chod.length-4;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(hongd.length==3){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=3;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(chungd.length==3){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=3;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(chod.length==3&amp;&amp;chod.indexOf(&quot;[4월]&quot;)&amp;&amp;chod.indexOf(&quot;[5월]&quot;)&amp;&amp;chod.indexOf(&quot;[7월]&quot;)){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=3;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(godori.length+dr.length&gt;=7){//열끗 계산</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=j;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}else if(godori.length+dr.length&gt;=5){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=godori.length+dr.length-4;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(pi.length&gt;=10){//피 계산</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=pi.length-9;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(ssangpi.length&gt;0){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var qkla= ssangpi.length;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var dgf= qkla+qkla;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>j+=dgf;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>return j;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/맞고&quot;){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(sender+&quot;님이 맞고 게임을 신청하였습니다&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;&#127924;맞고 게임&#127924;에 참가하시겠습니까?\\n 참가하시려면 개인톡으로 저에게 !yes 라고 말해주세요!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/yes&quot;&amp;&amp;room==sender&amp;&amp;player.length&lt;3){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>player.push(sender);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(sender+&quot;님 참가 확인 되었습니다!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/나가기&quot;&amp;&amp;player.indexOf(sender)!=-1&amp;&amp;matgo==false){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>player.splice(player.indexOf(sender),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;참가자&quot;){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;현재 참가자 목록을 불러옵니다 ...\\n&quot;+player[0]+&quot;\\n&quot;+player[1]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/맞고 시작&quot;&amp;&amp;player.length==2&amp;&amp;matgo==false){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>matgo=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>gameS=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1turn=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>suffle(cards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(im=0;im&lt;10;im++){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1cards.push(cards[cards.length-1]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2cards.push(cards[im]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}for(al=0;al&lt;8;al++)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.push(cards[al+10]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(k=1;k&lt;p1cards.length+1;k++)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>qkl+=&quot;\\n&quot;+k+&quot;번 &quot;+p1cards[k-1];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;&#127924;현재 당신의 패입니다&#127924;&quot;+qkl);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(v=1;v&lt;p2cards.length+1;v++)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>adf+=&quot;\\n&quot;+v+&quot;번 &quot;+p2cards[v-1];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;&#127924;현재 당신의 패입니다&#127924;&quot;+adf);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(asd=1;asd&lt;mcards.length+1;asd++)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>poqw+=&quot;\\n&quot;+asd+&quot;번 &quot;+mcards[asd-1];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;&#127924;현재 바닥의 패입니다&#127924;&quot;+poqw);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;&#127924;현재 바닥의 패입니다&#127924;&quot;+poqw);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}if(p1turn==true&amp;&amp;matgo==true&amp;&amp;p2turn==false){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;이제 당신의 턴입니다!\\n/c 자신의패번호 바닥의패번호로 게임을 계속해보세요!\\nex)/c 3 2&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}if(p2turn==true&amp;&amp;matgo==true&amp;&amp;p1turn==false){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;이제 당신의 턴입니다!\\n/c 자신의패번호 바닥의패번호로 게임을 계속해보세요!\\nex)/c 3 2&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg.indexOf(&quot;/c &quot;)==0&amp;&amp;sender==player[0]&amp;&amp;matgo==true&amp;&amp;p1turn==true&amp;&amp;p2turn==false){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var fgh=Number(msg.substr(3));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var qwer=p1cards[fgh-1];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var io=qwer.slice(0,4);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var fghj=Number(msg.substr(5));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var qwert=mcards[fghj-1];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var iop=qwert.slice(0,4);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(io==iop){//내가 낸 패와 바닥패의 월이 일치할때</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1sc.push(mcards[fghj-1]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1sc.push(p1cards[fgh-1]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.splice(fghj-1,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1cards.splice(fgh-1,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수획득 하셨습니다!\\n/p 를 사용하여 카드를 뽑아보세요!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;&#127924;현재 바닥의 패입니다&#127924;&quot;+poqw);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;&#127924;현재 당신의 패입니다&#127924;&quot;+qkl);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/p&quot;){//패 뽑기</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var ahg=Math.floor(Math.random()*cards.length);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>kcards=cards[ahg];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>cards.splice(ahg,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;뽑으신 패입니다.\\n&quot;,kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var hhj=mcards.indexOf(lql);&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var lql=Number(kcards.slice(0,4));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(mcards.indexOf(lql)!=-1){//뽑았을때 바닥패와 일치시 점수에 추가</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1sc.push(kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1sc.push(mcards[hhj]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards[hhj].splice(0,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수 획득 성공!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>else {</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.push[kcards];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1turn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2turn=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}else if(matgo==true&amp;&amp;sender==player[0]){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.push(qwer);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1cards.splice(fgh-1,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;&#127924;현재 바닥의 패입니다&#127924;&quot;+poqw);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(Gplayer1[0],&quot;&#127924;현재 당신의 패입니다&#127924;&quot;+qkl);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수획득에 실패하였습니다.\\n/p 를 사용하여 패를 뽑아 보세요!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/p&quot;){//패 뽑기</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var ahg=Math.floor(Math.random()*cards.length);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>kcards=cards[ahg];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>cards.splice(ahg,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;뽑으신 패입니다.\\n&quot;,kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var hhj=mcards.indexOf(lql);&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var lql=Number(kcards.slice(0,4));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(mcards.indexOf(lql)!=-1){//뽑았을때 바닥패와 일치시 점수에 추가</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2sc.push(kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2sc.push(mcards[hhj]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards[hhj].splice(0,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수 획득 성공!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>else {//뽑은것과 일치하는 바닥패가 없으면 바닥패에 추가</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.push[kcards];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1turn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2turn=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg.indexOf(&quot;/c &quot;)==0&amp;&amp;sender==player[1]&amp;&amp;matgo==true&amp;&amp;p2turn==true&amp;p1turn==false){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var fgh=Number(msg.substr(3));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var qwer=p2cards[fgh-1];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var io=qwer.slice(0,4);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var fghj=Number(msg.substr(5));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var qwert=mcards[fghj-1];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var iop=qwert.slice(0,4);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(io==iop){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2sc.push(mcards[fghj-1]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2sc.push(p2cards[fgh-1]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.splice(fghj-1,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2cards.splice(fgh-1,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수획득 하셨습니다!\\n /p 를 사용하여 패를 뽑아보세요!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;&#127924;현재 바닥의 패입니다&#127924;&quot;+poqw);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;&#127924;현재 당신의 패입니다&#127924;&quot;+qkl);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/p&quot;){//패 뽑기</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var ahg=Math.floor(Math.random()*cards.length);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>kcards=cards[ahg];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>cards.splice(ahg,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;뽑으신 패입니다.\\n&quot;,kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var hhj=mcards.indexOf(lql);&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var lql=Number(kcards.slice(0,4));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(mcards.indexOf(lql)!=-1){//뽑았을때 바닥패와 일치시 점수에 추가</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2sc.push(kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2sc.push(mcards[hhj]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards[hhj].splice(0,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수 획득 성공!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>else {</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.push[kcards];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1turn=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2rurn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>else if(matgo==true&amp;&amp;sender==player[1]){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.push(qwer);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2cards.splice(fgh-1,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;&#127924;현재 바닥의 패입니다&#127924;&quot;+poqw);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(Gplayer2[0],&quot;&#127924;현재 당신의 패입니다&#127924;&quot;+qkl);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수획득에 실패 하셨습니다!\\n /p 를 사용하여 패를 뽑아보세요!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/p&quot;){//패 뽑기</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var ahg=Math.floor(Math.random()*cards.length);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>kcards=cards[ahg];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>cards.splice(ahg,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;뽑으신 패입니다.\\n&quot;,kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var hhj=mcards.indexOf(lql);&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var lql=Number(kcards.slice(0,4));</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(mcards.indexOf(lql)!=-1){//뽑았을때 바닥패와 일치시 점수에 추가</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1sc.push(kcards);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1sc.push(mcards[hhj]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards[hhj].splice(0,1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(&quot;점수 획득 성공!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>else {</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>mcards.push[kcards];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1turn=true;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2turn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg==&quot;/바닥패&quot;&amp;&amp;matgo==true)replier.reply(&quot;&#127924;현재 바닥의 패입니다&#127924;&quot;+poqw);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(p1cards.length==0&amp;&amp;p2cards.length==0){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>matgo=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p1turn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>p2turn=false;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>score(p1sc,p1sclast);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>score(p2sc,p2sclast);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;게임이 종료되었습니다.\\n 점수 계산을 시작합니다 ...&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;플레이어 1의 점수 : &quot;+p1sclast+&quot;\\n플레이어 2의 점수 : &quot;+p2sclast);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;게임이 종료되었습니다.\\n 점수 계산을 시작합니다 ...&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;플레이어 1의 점수 : &quot;+p1sclast+&quot;\\n플레이어 2의 점수 : &quot;+p2sclast);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>player.splice(player.indexOf(player[0]),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>player.splice(player.indexOf(player[1]),1);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(p1sclast&gt;p2sclast){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;플레이어 1의 승리입니다!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;플레이어 1의 승리입니다.. \\n다음에는 승리하시기를 기원합니다!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}if(p1sclast==p2sclast){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;무승부 입니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;무승부 입니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}if(p1sclast&lt;p2sclast){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[0],&quot;플레이어 2의 승리입니다.. \\n다음에는 승리하시기를 기원합니다!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>replier.reply(player[1],&quot;플레이어 2의 승리입니다!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}}}}</b></span></div></div><div><b>질문내용</b></div><div><b>=&gt; 조금씩 며칠동안 배운거 주섬주섬 넣어가면서 어느정도 써갈때까지는 작동이 잘됬는데&nbsp;</b></div><div><b>점수 합산같은거 넣고 여러가지 넣다가 보니까</b></div><div><b>/맞고 로 시작을 하면 답이 와야하는데 답이 오지않습니다</b></div><div><b>컴파일 해보면 딱히 문제는 없는데 디버그로&nbsp;</b></div><div><b>해도 그냥 카톡으로 해도 답장이 안옵니당</b></div><div><b>(소스 난잡 ㅈㅅ 나중에 한번 깨끗하게 청소할</b></div><div><b>예정) 변수를 너무 많이 사용해서 오류가&nbsp;</b></div><div><b>난걸까용 response 밑에는 바뀐게 많이 없어서 response 위에 무언가 이상한게 있을거 같다고 예상중인디...?</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>mcards는 바닥패</b></div><div><b>p1sc,p2sc는 먹은 카드 넣어두는배열</b></div><div><b>p1sclast,p2last는 먹은카드 넣어둔 배열을 점수화한거</b></div><div><b><br /></b></div><div><b>나머지 배열은..&nbsp; 죄송합니다 ㅠㅠ 생각날때마다 대충넣은거라 더러워요</b></div><div><b>문제점에 대한 훈수나 조언 부탁드리겠습니다 최대한 자세하게 해주실수록 감사하겠습니다..</b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002D8000000000",
+            "id": 11648,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 123,
+            "refArticleId": 11648,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "대충 왜 안돼는지 모르겠다는 짤(소스난잡주의)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582042937187,
+            "writer": {
+                "id": "tjdehdwlscjs",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA2MTRfOTgg/MDAxNDk3NDI4NDc2NTA2.Cm6xfAtRKDc6ScEORJXdbs_MDFKctzD2wYslwkPqAkog.ojUCwU-L4m9H0N-0T2ii6akPQDnD0hI876C7mlgliyIg.JPEG.tjdehdwlscjs/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "Kalis"
+            }
+        },
+        "articleId": 11648,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "채팅에 반응하지 않는 것은 괄호 실수일 가능성이 높고, return를 잘못 썼거나 상단에서 반복문이 계속 돌고 있을 때, Thread가 계속 지속되고 있거나 msg를 건드려서 msg의 형태가 바뀌었을 때 가장 많이 발생합니다.\r\n확인해 보시기 바라요.",
+                    "id": 81573599,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81573599,
+                    "updateDate": 1582055462000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                },
+                {
+                    "content": "오류문구랑 오류 줄도 이야기해주세요",
+                    "id": 81573740,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81573740,
+                    "updateDate": 1582057333000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "컴파일 했을때 정상적으로 컴파일은 되나 작동이 안됩니다",
+                    "id": 81597484,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81573740,
+                    "updateDate": 1582075539000,
+                    "writer": {
+                        "id": "tjdehdwlscjs",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA2MTRfOTgg/MDAxNDk3NDI4NDc2NTA2.Cm6xfAtRKDc6ScEORJXdbs_MDFKctzD2wYslwkPqAkog.ojUCwU-L4m9H0N-0T2ii6akPQDnD0hI876C7mlgliyIg.JPEG.tjdehdwlscjs/profileImage.jpg"
+                        },
+                        "nick": "Kalis"
+                    }
+                },
+                {
+                    "content": "섯따인가... ㅎㅎ",
+                    "id": 81574670,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81574670,
+                    "updateDate": 1582062099000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "원래 이런 소스는 작은 기능 하나 만들때마다 일일이 실험해봐야한다는",
+                    "id": 81576935,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81576935,
+                    "updateDate": 1582065618000,
+                    "writer": {
+                        "id": "leesoel7868",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTJfMTE1/MDAxNTgxNDk1MDEyNDcw.hpAaazivKF2WMdlFAqDdi_r-IeRk3fEyHd7-fjb3cm8g.Aum3ykhuiTx3PzZtdk2RJDkPKqJKBX2nXyDNXVuMjj0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "seori"
+                    }
+                },
+                {
+                    "content": "안그러면 다 만들고나서 어떻게 해야할지 모르는 대참사",
+                    "id": 81576961,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81576935,
+                    "updateDate": 1582065633000,
+                    "writer": {
+                        "id": "leesoel7868",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTJfMTE1/MDAxNTgxNDk1MDEyNDcw.hpAaazivKF2WMdlFAqDdi_r-IeRk3fEyHd7-fjb3cm8g.Aum3ykhuiTx3PzZtdk2RJDkPKqJKBX2nXyDNXVuMjj0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "seori"
+                    }
+                },
+                {
+                    "content": "맞고라니....",
+                    "id": 81582194,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81582194,
+                    "updateDate": 1582068658000,
+                    "writer": {
+                        "id": "leej_m",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20111031_179/leej_m_1319993786549_64Rj6l_jpg/%B5%A5%B8%B6_00000.jpg"
+                        },
+                        "nick": "deadmau5"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "난잡ㅈㅅ",
+            "소스난잡"
+        ]
+    }
+}

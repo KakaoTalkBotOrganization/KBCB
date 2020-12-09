@@ -1,0 +1,394 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-160b7f2f-1839-458e-92d5-98ea14e44865\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-68e0bbd7-9012-49de-9b7b-25ee4ec26ecc\"><span style=\"\" class=\"se-fs- se-ff-nanummyeongjo   \" id=\"SE-0ce99e09-2eda-4d01-9477-ef41295c5c4a\">EBS 수학과 함께하는 AI 기초 | 5-2. K-NN 알고리즘을 이용한 붓꽃 분류기 내용을 자바스크립트를 이용하여 실습한 내용입니다. 자바스크립트에 없는 함수는 따로 정의를 해줌으로써 실습하였습니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-bf009d8c-fe2a-4841-bd98-adc654503bdb\"><span style=\"\" class=\"se-fs- se-ff-nanummyeongjo   \" id=\"SE-fcc09a37-38da-452e-9aae-6c10f1110664\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a7efcd9f-dc11-49b7-9d31-8da687c854cc\"><span style=\"\" class=\"se-fs- se-ff-nanummyeongjo   \" id=\"SE-9ac7fb14-9a4a-4005-8c80-0f85768db5de\">실습에 사용된 Dataset은 아래와 같으며, </span><span style=\"\" class=\"se-fs- se-ff-nanummyeongjo   \" id=\"SE-19a90ded-691e-4c9e-86f5-9f46c103187e\"><a href=\"https://www.ebssw.kr/info/intrcn/infoTchmtrHeaderView.do?tabType&#x3D;006&amp;pageIndex&#x3D;1\" class=\"se-link\" target=\"_blank\">https://www.ebssw.kr/info/intrcn/infoTchmtrHeaderView.do?tabType&#x3D;006&amp;pageIndex&#x3D;1</a></span><span style=\"\" class=\"se-fs- se-ff-nanummyeongjo   \" id=\"SE-00147729-54f4-4e73-bf88-790b09540fd7\"> 에서도 다운받으실 수 있습니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-file se-l-default\" id=\"SE-77464213-9422-4521-8d5b-267c3dbfbe55\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-file se-l-default se-section-align-\">\n                            <div class=\"se-module se-module-file\">\n                                <span class=\"se-file-icon\"><strong class=\"se-blind\">첨부파일</strong></span>\n                                <div class=\"se-file-name-container\">\n                                    <span class=\"se-file-name\">Iris</span><span class=\"se-file-extension\">.csv</span>\n                                </div>\n                                <a href=\"https://downapi.cafe.naver.com/v1.0/cafes/article/file/2bc8bedd-e7b3-11ea-bb3d-0050568dd5de/download\" class=\"se-file-save-button __se_link\" role=\"button\" target=\"_blank\" data-linktype=\"file\" data-linkdata='{\"link\": \"https://downapi.cafe.naver.com/v1.0/cafes/article/file/2bc8bedd-e7b3-11ea-bb3d-0050568dd5de/download\"}'>\n                                    <span class=\"se-blind\">파일 다운로드</span>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_file\", \"id\" :\"SE-77464213-9422-4521-8d5b-267c3dbfbe55\", \"data\" : { \"link\": \"https://downapi.cafe.naver.com/v1.0/cafes/article/file/2bc8bedd-e7b3-11ea-bb3d-0050568dd5de/download\"}}'></script>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-dd12bde9-317a-4ac2-a9bb-1c692c7b70d8\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">var fs &#x3D; require(&#x27;fs&#x27;);\n\nfunction read_csv(csvfile){\n    data &#x3D; fs.readFileSync(csvfile, &#x27;utf8&#x27;).split(&quot;\\n&quot;);\n    console.log(data[data.length-1])\n    for(var i&#x3D;0; i&lt;data.length; i++) data[i] &#x3D; data[i].split(&quot;,&quot;);\n    res &#x3D; [];\n    for(var i&#x3D;1; i&lt;data.length-1; i++){\n        element &#x3D; {};\n        for(var j&#x3D;0; j&lt;data[0].length; j++)\n            element[data[0][j]] &#x3D; data[i][j];\n        res.push(element);\n    }\n    return res;\n}\niris &#x3D; read_csv(&quot;Iris.csv&quot;)\n\nfunction toArray(dataframe){\n    res &#x3D; [];\n    for(i of dataframe){\n        element &#x3D; [];\n        for(j in i){\n            element.push(i[j]);\n        }\n        res.push(element);\n    }\n    return res;\n}\n\nfunction getFeatures(arr, a, b){\n    data &#x3D; arr.slice();\n    res &#x3D; [];\n    for(var i&#x3D;0; i&lt;data.length; i++){\n        res.push(data[i].slice().splice(a, b-a+1));\n    }\n    return res;\n}\n\niris &#x3D; toArray(iris)\nfeatures &#x3D; getFeatures(iris, 1,4)\n\n/**\n * @author [okojomaho] @link https://qiita.com/okojomaho\n * @see https://qiita.com/okojomaho/items/774958ced769e9207282\n */\nfunction argsort(array) {\n    const arrayObject &#x3D; array.map((value, idx) &#x3D;&gt; { return { value, idx }; });\n    arrayObject.sort((a, b) &#x3D;&gt; {\n        if (a.value &lt; b.value) {\n            return -1;\n        }\n        if (a.value &gt; b.value) {\n            return 1;\n        }\n        return 0;\n    });\n    const argIndices &#x3D; arrayObject.map(data &#x3D;&gt; data.idx);\n    return argIndices;\n}\n\nArray.prototype.index &#x3D; function(element){\n    for(var i&#x3D;0; i&lt;this.length; i++)\n        if(this[i]&#x3D;&#x3D;element)return i;\n    return -1;\n}\n\nfunction max(arr){\n    res &#x3D; arr[0];\n    for(var i of arr)\n        if(res&lt;i) res&#x3D;i;\n    return res;\n}\ntarget_value &#x3D; getFeatures(iris, 5, 6);\n\nfunction Distance(A, B){\n    var res &#x3D; 0;\n    for (var i&#x3D;0; i&lt;A.length; i++)\n        res +&#x3D; Math.pow(A[i]-B[i], 2);\n    return Math.sqrt(res);\n}\nfunction K_NN(Unknown, features, K){\n    // 붓꽃 분류 함수 - 데이터 사이의 거리 계산\n    distance_result &#x3D; Array(150).fill(0);\n    for(var i&#x3D;0; i&lt;150; i++)\n        distance_result[i] &#x3D; Distance(Unknown, features[i]);\n    // 붓꽃 분류 함수 - 분류하려는 데이터와 가까운 순서대로 인덱스 정렬\n    index &#x3D; argsort(distance_result);\n    // 붓꼿 분류 함수 - K개의 레이블별 빈도 세기\n    target_result &#x3D; [];\n    result &#x3D; [0,0,0];\n    for(var i&#x3D;0; i&lt;K; i++){\n        target_result.push(target_value[index[i]]);\n        if (target_result[i]&#x3D;&#x3D;&#x27;Iris-setosa&#x27;)\n            result[0]+&#x3D;1;\n        else if(target_result[i]&#x3D;&#x3D;&#x27;Iris-versicolor&#x27;)\n            result[1]+&#x3D;1;\n        else\n            result[2]+&#x3D;1;\n    }\n    // 붓꼿 분류 함수 - 레이블의 빈도가 가장 높은 값 반환\n    max_label &#x3D; result.index(max(result));\n    species &#x3D; {0:&#x27;setosa&#x27;, 1:&#x27;versicolor&#x27;, 2:&#x27;virginica&#x27;}\n    species_result &#x3D; species[max_label]\n    return species_result\n}\n\ntest_1 &#x3D; features[149]\ntest_2 &#x3D; [6, 2.9, 5, 2]\nresult_1 &#x3D; K_NN(test_1, features, 5)\nresult_2 &#x3D; K_NN(test_2, features, 5)</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-dd12bde9-317a-4ac2-a9bb-1c692c7b70d8\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-3d090640-804a-4c44-86dd-0c4971abc404\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-38526d43-9bd9-4fae-93e8-c6b7f1b272ef\"><span style=\"\" class=\"se-fs- se-ff-nanummyeongjo   \" id=\"SE-8cbe92d8-ab51-41eb-a32d-f48fac84403f\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005C9900000000",
+            "id": 23705,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 94,
+                "menuType": "B",
+                "name": "| 자랑 게시판 |"
+            },
+            "readCount": 103,
+            "refArticleId": 23705,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "JavaScript K-NN",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1598456039223,
+            "writer": {
+                "id": "pak_hyun",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "OtakoidTony"
+            }
+        },
+        "articleId": 23705,
+        "attaches": [
+            {
+                "extension": "csv",
+                "fileId": "2bc8bedd-e7b3-11ea-bb3d-0050568dd5de",
+                "fullName": "Iris.csv",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Iris.csv",
+                "seComponentId": "SE-77464213-9422-4521-8d5b-267c3dbfbe55",
+                "seComponentIdList": [
+                    "SE-77464213-9422-4521-8d5b-267c3dbfbe55"
+                ],
+                "size": 5107,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://downapi.cafe.naver.com/v1.0/cafes/article/file/2bc8bedd-e7b3-11ea-bb3d-0050568dd5de/download"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "선생님 fs파일이 없습니다",
+                    "id": 101270187,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "updateDate": 1598456615000,
+                    "writer": {
+                        "id": "mir99712",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTRfMTk5/MDAxNTkyMTM4NTM5OTE1.V3wbJhlekTa2nIPrtPu6zC96n_m0ye_xdbijXF3wycwg._nzQagZCEqT6IYMyJ5ch2lX4_9ivqpLRvHe1TrJurXIg.PNG.mir99712/Untitled.png"
+                        },
+                        "nick": "Violet"
+                    }
+                },
+                {
+                    "content": "방금 다시 올렸습니다.\n\n근데, 이거 원래 https://www.ebssw.kr/info/intrcn/infoTchmtrHeaderView.do?tabType=006&pageIndex=1 에서 다운 받을 수 있는 거라....",
+                    "id": 101270542,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "updateDate": 1598456937000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "그게 아니라 fs 모듈파일이요",
+                    "id": 101270869,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "replyMember": {
+                        "id": "pak_hyun",
+                        "nick": "OtakoidTony"
+                    },
+                    "updateDate": 1598457275000,
+                    "writer": {
+                        "id": "mir99712",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTRfMTk5/MDAxNTkyMTM4NTM5OTE1.V3wbJhlekTa2nIPrtPu6zC96n_m0ye_xdbijXF3wycwg._nzQagZCEqT6IYMyJ5ch2lX4_9ivqpLRvHe1TrJurXIg.PNG.mir99712/Untitled.png"
+                        },
+                        "nick": "Violet"
+                    }
+                },
+                {
+                    "content": "fs모듈은 원래 Node.js에 기본적으로 깔려 있는 걸로 알고 있어요;;\n\n카톡 봇에서 사용할려면 fs.readFileSync(csvfile, 'utf8') 부분을 FileStream.read(csvfile)으로 바꾸기만 하면 되요.",
+                    "id": 101271006,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "replyMember": {
+                        "id": "mir99712",
+                        "nick": "Violet"
+                    },
+                    "updateDate": 1598457436000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "봇캎에 올리셔서 봇용으로 공개하신줄",
+                    "id": 101271278,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "replyMember": {
+                        "id": "pak_hyun",
+                        "nick": "OtakoidTony"
+                    },
+                    "updateDate": 1598457730000,
+                    "writer": {
+                        "id": "mir99712",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTRfMTk5/MDAxNTkyMTM4NTM5OTE1.V3wbJhlekTa2nIPrtPu6zC96n_m0ye_xdbijXF3wycwg._nzQagZCEqT6IYMyJ5ch2lX4_9ivqpLRvHe1TrJurXIg.PNG.mir99712/Untitled.png"
+                        },
+                        "nick": "Violet"
+                    }
+                },
+                {
+                    "content": "봇으로 바꾸기 쉬워서 봇카페에 올렸어요!",
+                    "id": 101271363,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "replyMember": {
+                        "id": "mir99712",
+                        "nick": "Violet"
+                    },
+                    "updateDate": 1598457808000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "npm install fs",
+                    "id": 101273844,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "replyMember": {
+                        "id": "pak_hyun",
+                        "nick": "OtakoidTony"
+                    },
+                    "updateDate": 1598463540000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "https://nodejs.org/api/fs.html\n\n기본으로 있는 모듈입니다만;;;",
+                    "id": 101274096,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "replyMember": {
+                        "id": "sungbin_dev",
+                        "nick": "성빈"
+                    },
+                    "updateDate": 1598465243000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "알아오",
+                    "id": 101280317,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101270187,
+                    "replyMember": {
+                        "id": "pak_hyun",
+                        "nick": "OtakoidTony"
+                    },
+                    "updateDate": 1598483058000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "오 굿굿",
+                    "id": 101425742,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101425742,
+                    "updateDate": 1598588805000,
+                    "writer": {
+                        "id": "goqhadl",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Supersunkist"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 77
+            },
+            {
+                "head": "RPG",
+                "headId": 78
+            },
+            {
+                "head": "기타",
+                "headId": 82
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "KNN",
+            "머신러닝",
+            "데이터과학",
+            "실습"
+        ]
+    }
+}

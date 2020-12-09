@@ -1,0 +1,236 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<div><span style=\"font-size: 10pt;\">이전 &apos;카카오톡 메시지 전송으로 컴파일링하기&apos; 소스를 토대로 재구성하였습니다.</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div><span style=\"font-size: 10pt;\">주석에 명시한 메뉴얼과 같이 <b><span style=\"font-size: 10pt;\">스크립트 열람, 활성화/비활성화, 컴파일, 전체 활성화/비활성화, eval</span></b>&nbsp;등을 사용할 수 있습니다.</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div><b><span style=\"font-size: 10pt;\">*eval의 보안은 고려하지 않았습니다.</span></b></div><div><b><span style=\"font-size: 10pt;\"><br /></span></b></div><div><span style=\"font-size: 9pt;\"><span style=\"font-size: 8pt;\"><i>사실, 그냥 eval로 입력해서 켜고끌 수 있습니다.</i></span><span style=\"font-size: 8pt;\">&nbsp;</span></span></div><div><br /></div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><ol><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">/*</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;syncro&nbsp;-&nbsp;현재&nbsp;스크립트&nbsp;목록을&nbsp;보여줍니다.</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;select&nbsp;-&nbsp;스크립트를&nbsp;지정합니다.</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;on&nbsp;-&nbsp;지정한&nbsp;스크립트를&nbsp;활성화합니다.</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;off&nbsp;-&nbsp;지정한&nbsp;스크립트를&nbsp;비활성화합니다.</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;compile&nbsp;-&nbsp;지정한&nbsp;스크립트를&nbsp;컴파일합니다.</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;on&nbsp;all&nbsp;-&nbsp;모든&nbsp;스크립트를&nbsp;활성화합니다.</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;off&nbsp;all&nbsp;-&nbsp;본&nbsp;스크립트를&nbsp;제외한&nbsp;모든&nbsp;스크립트를&nbsp;비활성화합니다.</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">&gt;eval&nbsp;-&nbsp;이발소에서&nbsp;이발</span></li><li><span style=\"color: rgb(106, 153, 85); font-size: 10pt;\">*/</span></li><li><span style=\"color: rgb(86, 156, 214); font-size: 10pt;\">const</span><span style=\"font-size: 10pt;\">&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">scriptName</span><span style=\"font-size: 10pt;\">&nbsp;=&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;Switch.js&quot;</span><span style=\"font-size: 10pt;\">;</span></li><li><br /></li><li><span style=\"color: rgb(86, 156, 214); font-size: 10pt;\">function</span><span style=\"font-size: 10pt;\">&nbsp;</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">response</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">room</span><span style=\"font-size: 10pt;\">,&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">,&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">se</span><span style=\"font-size: 10pt;\">,&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">igc</span><span style=\"font-size: 10pt;\">,&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">,&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">imgDB</span><span style=\"font-size: 10pt;\">)&nbsp;{</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">&nbsp;==&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;on&quot;</span><span style=\"font-size: 10pt;\">)&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">on</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">&nbsp;+&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&nbsp;is&nbsp;turned&nbsp;on.&quot;</span><span style=\"font-size: 10pt;\">);&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">&nbsp;==&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;off&quot;</span><span style=\"font-size: 10pt;\">)&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">off</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">&nbsp;+&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&nbsp;is&nbsp;turned&nbsp;off.&quot;</span><span style=\"font-size: 10pt;\">);&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">&nbsp;==&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;on&nbsp;all&quot;</span><span style=\"font-size: 10pt;\">)&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">on</span><span style=\"font-size: 10pt;\">(),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;all&nbsp;script&nbsp;is&nbsp;turned&nbsp;on.&quot;</span><span style=\"font-size: 10pt;\">);&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">&nbsp;==&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;off&nbsp;all&quot;</span><span style=\"font-size: 10pt;\">)&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">off</span><span style=\"font-size: 10pt;\">(),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">on</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;Switch&quot;</span><span style=\"font-size: 10pt;\">),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;all&nbsp;script&nbsp;is&nbsp;turned&nbsp;off.&quot;</span><span style=\"font-size: 10pt;\">);&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">&nbsp;==&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;compile&quot;</span><span style=\"font-size: 10pt;\">)&nbsp;{&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">try</span><span style=\"font-size: 10pt;\">&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">off</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">compile</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">off</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">&nbsp;+&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&nbsp;is&nbsp;Compiled&quot;</span><span style=\"font-size: 10pt;\">);&nbsp;}&nbsp;</span></li><li><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">    catch</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">e</span><span style=\"font-size: 10pt;\">)&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">e</span><span style=\"font-size: 10pt;\">);&nbsp;}&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">&nbsp;==&nbsp;</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;syncro&quot;</span><span style=\"font-size: 10pt;\">)&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">Api</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">getScriptNames</span><span style=\"font-size: 10pt;\">().</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">join</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;</span><span style=\"color: rgb(215, 186, 125); font-size: 10pt;\">\\n</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;</span><span style=\"font-size: 10pt;\">));&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">startsWith</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;select&quot;</span><span style=\"font-size: 10pt;\">))&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">&nbsp;=&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">substr</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(181, 206, 168); font-size: 10pt;\">8</span><span style=\"font-size: 10pt;\">),&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">rep</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;Selected&nbsp;to&nbsp;&quot;</span><span style=\"font-size: 10pt;\">&nbsp;+&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">spt</span><span style=\"font-size: 10pt;\">);&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(197, 134, 192); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">startsWith</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(206, 145, 120); font-size: 10pt;\">&quot;&gt;eval&quot;</span><span style=\"font-size: 10pt;\">))&nbsp;{&nbsp;</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">replier</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">eval</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(156, 220, 254); font-size: 10pt;\">msg</span><span style=\"font-size: 10pt;\">.</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">substr</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(181, 206, 168); font-size: 10pt;\">5</span><span style=\"font-size: 10pt;\">).</span><span style=\"color: rgb(220, 220, 170); font-size: 10pt;\">trim</span><span style=\"font-size: 10pt;\">()));&nbsp;}</span></li><li><span style=\"font-size: 10pt;\">}</span></li></ol></div></div></div><div><br /></div><div><i><span style=\"font-size: 10pt;\">*피드백, 질문 받습니다.</span></i></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000041C400000000",
+            "head": "기타",
+            "headId": 74,
+            "id": 16836,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 158,
+            "refArticleId": 16836,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "커맨드로 스크립트 활성화 및 컴파일하기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587990051633,
+            "writer": {
+                "id": "lunarbox",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA2MjNfMTM5/MDAxNTkyOTIzNTMzNTU4.vcHRLQkDxvPu9qslG9KUltmtYNFu7PYgaQJNHZkkMrYg.3ZmNSymZBvFJXQCGv1Ky_RibzXdHaR5sNjEgAhpv2HIg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "lunarbox"
+            }
+        },
+        "articleId": 16836,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "eval 보안성말하려했는데 고려하지않고 만드셨다니 ㅋㅋㅋ\r\n보안성은 나중에 하실거니 그외에는 괜찮은것같습니다 ( > 는 cmd가 버릇이되서 그러시는건가(?))",
+                    "id": 88746352,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88746352,
+                    "updateDate": 1587990262000,
+                    "writer": {
+                        "id": "kimdoyoung0616",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "도영"
+                    }
+                },
+                {
+                    "content": "사실 좀 허전해서 마지막에 더 뭘 넣을지 고민하다가 대충 eval 끼워넣었습니다...",
+                    "id": 88746758,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88746352,
+                    "updateDate": 1587990668000,
+                    "writer": {
+                        "id": "lunarbox",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjNfMTM5/MDAxNTkyOTIzNTMzNTU4.vcHRLQkDxvPu9qslG9KUltmtYNFu7PYgaQJNHZkkMrYg.3ZmNSymZBvFJXQCGv1Ky_RibzXdHaR5sNjEgAhpv2HIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "lunarbox"
+                    }
+                },
+                {
+                    "content": "ㅋㅋ",
+                    "id": 88746777,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88746352,
+                    "replyMember": {
+                        "id": "lunarbox",
+                        "nick": "lunarbox"
+                    },
+                    "updateDate": 1587990524000,
+                    "writer": {
+                        "id": "kimdoyoung0616",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "도영"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

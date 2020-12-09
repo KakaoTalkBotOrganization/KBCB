@@ -1,0 +1,302 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; 인베스팅닷컴 들어가기 귀찮을때</b></div><div><b>원자재 투자충들에게 편리함을 제공하고싶어서..&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div>let index = {\r\n &apos;금&apos;:&apos;0&apos;,\r\n &apos;은&apos;:&apos;1&apos;,\r\n &apos;구리&apos;:&apos;2&apos;,\r\n &apos;백금&apos;:&apos;3&apos;,\r\n &apos;팔라듐&apos;:&apos;4&apos;,\r\n &apos;원유&apos;:&apos;5&apos;,\r\n &apos;WTI유&apos;:&apos;5&apos;,\r\n &apos;천연가스&apos;:&apos;6&apos;,\r\n &apos;천가&apos;:&apos;6&apos;,\r\n &apos;브렌트유&apos;:&apos;7&apos;,\r\n &apos;난방유&apos;:&apos;8&apos;,\r\n //&apos;런던설탕&apos;:&apos;9&apos;,\r\n &apos;옥수수&apos;:&apos;10&apos;,\r\n &apos;소맥&apos;:&apos;11&apos;,\r\n &apos;대두&apos;:&apos;12&apos;,\r\n &apos;커피&apos;:&apos;13&apos;,\r\n &apos;설탕&apos;:&apos;14&apos;\r\n}</div><div><br /></div><div>\r\n\r\n\r\nfunction response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId)\r\n{</div><div>&nbsp;if (msg ==&apos;원자재&apos;)\r\n{&nbsp;</div><div>&nbsp; &nbsp; try{&nbsp;</div><div>&nbsp; &nbsp; let doc = org.jsoup.Jsoup.connect(&quot;https://m.kr.investing.com/commodities/&quot;).get()</div><div>&nbsp; &nbsp; var result=&quot;\\u200b&quot;.repeat(500)+&quot;\\n&quot;&nbsp;</div><div>&nbsp; &nbsp; for(var i=0; i&lt;15; i++)\r\n  {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; if (i==9) continue;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var base = doc.select(&quot;article&quot;).get(i)</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var name = base.select(&quot;a&quot;).text()</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var price = base.select(&quot;div&quot;).get(1).text()</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var change = base.select(&quot;span&quot;).get(3).text().replace(&quot;\\+&quot;,&quot; &#128314;&#65039;&quot;).replace(&quot;-&quot;,&quot; &#128317;&quot;)</div><div>&nbsp; &nbsp; &nbsp; &nbsp; var percent = base.select(&quot;span&quot;).get(5).text().replace(&quot;\\+&quot;,&quot;&quot;).replace(&quot;-&quot;,&quot;&quot;)\r\n         \r\n   temp = name + &quot;\\t&quot; + price + &quot;\\t&quot; + change + &quot; (&quot; + percent + &quot;)\\n&quot;</div><div>&nbsp; &nbsp; &nbsp; &nbsp;result += temp\r\n  }&nbsp;</div><div>&nbsp; &nbsp; replier.reply(result);</div><div>catch(e) {replier}</div><div>\r\n \r\n}&nbsp;</div><div><br /></div><div>else\r\n{</div><div>&nbsp; &nbsp; try\r\n {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; let doc = org.jsoup.Jsoup.connect(&quot;https://m.kr.investing.com/commodities/&quot;).get()&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; let base = doc.select(&quot;article&quot;).get(index[msg])</div><div>&nbsp; &nbsp; &nbsp; &nbsp; let name = base.select(&quot;a&quot;).text()&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; let price = base.select(&quot;div&quot;).get(1).text()</div><div>&nbsp; &nbsp; &nbsp; &nbsp; let change = base.select(&quot;span&quot;).get(3).text().replace(&quot;\\+&quot;,&quot; &#128314;&#65039;&quot;).replace(&quot;-&quot;,&quot; &#128317;&quot;)</div><div>&nbsp; &nbsp; &nbsp; &nbsp; let percent = base.select(&quot;span&quot;).get(5).text().replace(&quot;\\+&quot;,&quot;&quot;).replace(&quot;-&quot;,&quot;&quot;)</div><div>&nbsp; &nbsp; &nbsp; &nbsp;let time = base.select(&quot;span &gt; i&quot;).text()\r\n  let clock = base.select(&quot;span&quot;).get(1).attr(&quot;class&quot;)</div><div>&nbsp; &nbsp; &nbsp; &nbsp;if (clock.indexOf(&quot;Green&quot;)!=-1) //장운영중일때 Green값이 있음</div><div>&nbsp; &nbsp; &nbsp; &nbsp;clock2 = &quot; 개장&quot;&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; else clock2 = &quot; 폐장&quot;</div><div>&nbsp; &nbsp; &nbsp; &nbsp;let result = name + &quot;\\n&quot; + price + change + &quot; (&quot; + percent + &quot;)\\n&quot; + time + clock2</div><div><br /></div><div>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply( result )&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; &nbsp;catch(e){replier}&nbsp;</div><div>&nbsp; &nbsp; }</div><div>&nbsp;}<b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No성투하세요(?))</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000164B00000000",
+            "id": 5707,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 159,
+            "refArticleId": 5707,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "원자재 확인 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1569304081997,
+            "writer": {
+                "id": "44_",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTEwMDZfMTg0/MDAxNTcwMjk0ODE0NTk3.faHy_HUpNYs2jzvhh5eUTNWBPi62Kv0I8aOWTqY4Kqsg.QEBNsV5jueN2M0g7IlKV81BcZbrkPxIUclp6uLUzlxog.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "목동댁"
+            }
+        },
+        "articleId": 5707,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "나만안됨 ?",
+                    "id": 69523306,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 69523306,
+                    "updateDate": 1569310921000,
+                    "writer": {
+                        "id": "audgduwns4",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "민혜수"
+                    }
+                },
+                {
+                    "content": "난잘됨",
+                    "id": 69527111,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69523306,
+                    "updateDate": 1569314538000,
+                    "writer": {
+                        "id": "44_",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEwMDZfMTg0/MDAxNTcwMjk0ODE0NTk3.faHy_HUpNYs2jzvhh5eUTNWBPi62Kv0I8aOWTqY4Kqsg.QEBNsV5jueN2M0g7IlKV81BcZbrkPxIUclp6uLUzlxog.JPEG/externalFile.jpg"
+                        },
+                        "nick": "목동댁"
+                    }
+                },
+                {
+                    "content": "실행결과첨부함",
+                    "id": 69527230,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA5MjRfODQg/MDAxNTY5MzE0NjQ5MDc1.OHZcGP-2-153lKL9DqoP4dxvVNHdXri-IaxDnkUrBB4g.Oc8fTjK5fpfnzrE6DrlFHlHPyDhe0mlGoc4o3I1MT6Ig.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2220,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA5MjRfODQg/MDAxNTY5MzE0NjQ5MDc1.OHZcGP-2-153lKL9DqoP4dxvVNHdXri-IaxDnkUrBB4g.Oc8fTjK5fpfnzrE6DrlFHlHPyDhe0mlGoc4o3I1MT6Ig.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA5MjRfODQg/MDAxNTY5MzE0NjQ5MDc1.OHZcGP-2-153lKL9DqoP4dxvVNHdXri-IaxDnkUrBB4g.Oc8fTjK5fpfnzrE6DrlFHlHPyDhe0mlGoc4o3I1MT6Ig.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 69523306,
+                    "updateDate": 1569314649000,
+                    "writer": {
+                        "id": "44_",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEwMDZfMTg0/MDAxNTcwMjk0ODE0NTk3.faHy_HUpNYs2jzvhh5eUTNWBPi62Kv0I8aOWTqY4Kqsg.QEBNsV5jueN2M0g7IlKV81BcZbrkPxIUclp6uLUzlxog.JPEG/externalFile.jpg"
+                        },
+                        "nick": "목동댁"
+                    }
+                },
+                {
+                    "content": "맨위 index 변수 선언할때 주석 들어가 있어서 오류남",
+                    "id": 69866944,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69523306,
+                    "replyMember": {
+                        "id": "44_",
+                        "nick": "목동댁"
+                    },
+                    "updateDate": 1569701584000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "알려주셔서 감사합니다!9번만 html 데이터가 달라서 주석처리하고 개행했는데 소스코드 복붙할때 개행문자가 다 사라져서 그렇게 되었나봅니다ㅠㅠ 9번만 지우심될듯합니다 다른분들도 참고하세용",
+                    "id": 69887356,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69523306,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1569732024000,
+                    "writer": {
+                        "id": "44_",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEwMDZfMTg0/MDAxNTcwMjk0ODE0NTk3.faHy_HUpNYs2jzvhh5eUTNWBPi62Kv0I8aOWTqY4Kqsg.QEBNsV5jueN2M0g7IlKV81BcZbrkPxIUclp6uLUzlxog.JPEG/externalFile.jpg"
+                        },
+                        "nick": "목동댁"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "한강정모",
+            "인베스팅"
+        ]
+    }
+}

@@ -1,0 +1,423 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 13,
+            "contentElements": [],
+            "contentHtml": "<p>const scriptName=&quot;4시 5시.js&quot;;<br />const blank = &quot;\\u200b&quot;.repeat(500);<br />const mob = [];<br />const mhp = [];<br />const exp = [];<br />const mobmax = {};<br />const md = {};<br />const dm = {};<br />const d = {};<br />const GT = {};<br />const that = {};<br />const bgame = {};<br />const buser = [];<br />const skills = [];<br /><br /><br />GT.Monster = function(room, target, name, hp, giveExp, lvl, money, Items, skill){<br />var prefix = &quot;( RPG ) &quot;<br />var alert = &quot;※ Alert ※ \\n&quot;;<br />var ht = &quot;\\n[ 체력 ] : &quot;;<br />var lb = &quot;\\nLv.&quot;;<br />var mData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/Monsters/Monster.json&quot;));<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+target+&quot;.json&quot;));<br />//var RegInv = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/&quot;+ target +&quot;.json&quot;));<br />//var RegItem = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/IDB/&quot;+ target +&quot;/&quot;+RegData.hand+&quot;.json&quot;));<br />mhp[target] = Number(hp);<br />mob[target] = name;<br />mobmax[target] = Number(hp);<br />md[target] = money;<br />skills[target] = skill;<br />exp[target] = giveExp;<br />var length=10;<br />var value=mhp[target];<br />var max=mobmax[target];<br />var per=Math.floor(value/max*length);<br />var mobBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(max+per)+&quot;(MAX&quot;;<br />var length=10;<br />var value=RegData[&quot;hp&quot;];<br />var max=RegData[&quot;maxhp&quot;];<br />var per=Math.floor(value/max*length);<br />var senderBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(per+per)+&quot;(MAX&quot;;<br />var menu = &quot;\\n[ 공격 ] [ 인벤토리 ]\\n[ 회피 ] [ 도망치기 ]&quot;+blank+&quot;\\n [A-RPG Control] &quot;;<br />var ToFormat = mob[target]+&quot;이(가) 나타났다!\\n체력 &quot;+mobBar+&quot;\\n[ ATK : &quot;+mhp[target]/3+&quot; ] [ HP : &quot;+mhp[target]+&quot;HP ] \\n[ SKILL : &quot;+mData[name][&quot;skill&quot;]+&quot; ]&quot;;<br />Api.replyRoom(room, ToFormat);<br />}<br /><br />GT.addInventory = function (target, ItemNick, atk, def, type, effect, Ug, price) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />var RegInv = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/Inventory/&quot;+ target +&quot;.json&quot;));<br />addI = RegInv;<br />addI.push({name:ItemNick,atk:atk,def:def,Price:price});<br />RegInv = addI;<br />var finalData = JSON.stringify(RegInv);<br />FileStream.write(&quot;sdcard/[Game Tool]/Inventory/&quot;+ target +&quot;.json&quot;, finalData);<br />var addID = {name:ItemNick,atk:atk,def:def,effect:effect,Upgrade:Ug,type:type,Price:price};<br />var finalData = JSON.stringify(addID);<br />FileStream.write(&quot;sdcard/[Game Tool]/Inventory/IDB/&quot;+ target +&quot;/&quot;+ItemNick+&quot;.json&quot;, finalData);<br />}<br /><br />GT.addMoney = function (target, num) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />RegData.money = Number(RegData.money) + Number(num);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;,finalData);<br />}<br />GT.buy = function (room, target, name, num, def, atk, type, effect, Ug){<br />that[target] = name;<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />if (RegData.money &gt;= num){<br />Api.replyRoom(room, name+&quot; (을)를 구매 하였습니다.&quot;);<br />GT.addInventory(target, that[target], atk, def, type, effect, Ug);<br />RegData.money = Number(RegData.money)-num;<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;,finalData)<br />return true;<br />} else {<br />Api.replyRoom(room, name+&quot; (을)를 구매하기에는 돈이 부족합니다!\\n[ 가격 ] &quot;+num);<br />return false;<br />}<br />}<br /><br />GT.list = function (way) {<br />return new java.io.File(way).list();<br />}<br />GT.addExp = function (target, num) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />RegData.exp += num;<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;,finalData);<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />var Data = msg.split(&quot; &quot;);<br />/*(이 내용은 길잡이일 뿐이니 지우셔도 무방합니다)<br />*(String) room: 메시지를 받은 방 이름<br />*(String) msg: 메시지 내용<br />*(String) sender: 전송자 닉네임<br />*(boolean) isGroupChat: 단체/오픈채팅 여부<br />*replier: 응답용 객체. replier.reply(&quot;메시지&quot;) 또는 replier.reply(&quot;방이름&quot;,&quot;메시지&quot;)로 전송<br />*(String) ImageDB.getProfileImage(): 전송자의 프로필 이미지를 Base64로 인코딩하여 반환<br />*(String) packageName: 메시지를 받은 메신저의 패키지 이름. (카카오톡: com.kakao.talk, 페메: com.facebook.orca, 라인: jp.naver.line.android<br />*(int) threadId: 현재 쓰레드의 순번(스크립트별로 따로 매김) *Api,Utils객체에 대해서는 설정의 도움말 참조*/<br />if(msg==&quot;G회원가입&quot;){<br />replier.reply(&quot;[ [Game Tool] 회원가입 ]\\nBase Dev :: LEAD&quot;);<br />java.lang.Thread.sleep(3000);<br />replier.reply(&quot;[ JSON 구조 세팅 ]&quot;);<br />var a = {<br />&quot;Name&quot;:sender,<br />&quot;Money&quot;:10000,<br />&quot;prefix&quot;:&quot;[일반]&quot;,<br />&quot;atk&quot;:3,<br />&quot;def&quot;:3,<br />&quot;lvl&quot;:1,<br />&quot;exp&quot;:0,<br />&quot;helmet&quot;:[],&quot;chestplate&quot;:[],&quot;leg&quot;:[],&quot;boots&quot;:[],&quot;Hand&quot;:[&quot;막대기&quot;],&quot;subHand&quot;:[],<br />&quot;Job&quot;:&quot;백수&quot;,<br />&quot;hp&quot;:100,&quot;maxhp&quot;:100,<br />&quot;guild&quot;:&quot;No exists&quot;,<br />&quot;weaponDamage&quot;:5,<br />&quot;Place&quot;:&quot;스노우 마을&quot;,<br />&quot;speed&quot;:5,<br />&quot;x&quot;:0,<br />&quot;y&quot;:3,<br />&quot;z&quot;:0<br />};<br />a = JSON.stringify(a);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;, a)<br />java.lang.Thread.sleep(2000);<br />replier.reply(&quot;[ 회원가입 완료! ]&quot;);<br />var f = [&apos;ㄱ&apos;, [&apos;ㄱ&apos;,&apos;ㄱ&apos;], &apos;ㄴ&apos;, &apos;ㄷ&apos;, [&apos;ㄷ&apos;,&apos;ㄷ&apos;], &apos;ㄹ&apos;, &apos;ㅁ&apos;,&apos;ㅂ&apos;, [&apos;ㅂ&apos;,&apos;ㅂ&apos;], &apos;ㅅ&apos;, [&apos;ㅅ&apos;,&apos;ㅅ&apos;], &apos;G&apos;, &apos;ㅈ&apos;, [&apos;ㅈ&apos;,&apos;ㅈ&apos;], &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];<br />var s = [&apos;ㅏ&apos;, &apos;ㅐ&apos;, &apos;ㅑ&apos;, &apos;ㅒ&apos;, &apos;ㅓ&apos;,[&apos;ㅓ&apos;,&apos;ㅣ&apos;], &apos;ㅕ&apos;,[&apos;ㅕ&apos;,&apos;ㅣ&apos;], &apos;ㅗ&apos;, [&apos;ㅗ&apos;,&apos;ㅏ&apos;], [&apos;ㅗ&apos;,&apos;ㅐ&apos;], [&apos;ㅗ&apos;,&apos;ㅣ&apos;], &apos;ㅛ&apos;, &apos;ㅜ&apos;,[&apos;ㅜ&apos;,&apos;ㅓ&apos;], [&apos;ㅜ&apos;,&apos;ㅓ&apos;,&apos;ㅣ&apos;], [&apos;ㅜ&apos;,&apos;ㅣ&apos;], &apos;ㅠ&apos;, &apos;ㅡ&apos;, [&apos;ㅡ&apos;,&apos;ㅣ&apos;], &apos;ㅣ&apos;];<br />var t = [&apos;&apos;, &apos;ㄱ&apos;, [&apos;ㄱ&apos;,&apos;ㄱ&apos;], [&apos;ㄱ&apos;,&apos;ㅅ&apos;], &apos;ㄴ&apos;, [&apos;ㄴ&apos;,&apos;ㅈ&apos;], [&apos;ㄴ&apos;,&apos;ㅎ&apos;],&apos;ㄷ&apos;, &apos;ㄹ&apos;, &apos;ㄺ&apos;, &apos;ㄻ&apos;, &apos;ㄼ&apos;, &apos;ㄽ&apos;, &apos;ㄾ&apos;,&apos;ㄿ&apos;, &apos;ㅀ&apos;, &apos;ㅁ&apos;, &apos;ㅂ&apos;, &apos;ㅄ&apos;, &apos;ㅅ&apos;, &apos;ㅆ&apos;,&apos;G&apos;, &apos;ㅈ&apos;, &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];<br />FileStream.write(&quot;sdcard/[Game Tool]/Langnuge/&quot;+sender+&quot;.LIST&quot;, f.join(&quot;\\n- &quot;)+&quot;\\n&quot;+s.join(&quot;\\n- &quot;)+&quot;\\n&quot;+t.join(&quot;\\n- &quot;));<br />var testinv=[<br />{name:&quot;막대기&quot;,atk:3, def:0},<br />{name:&quot;야구빠따&quot;,atk:9, def:0}<br />];<br />var finalData = JSON.stringify(testinv);<br />FileStream.write(&quot;sdcard/[Game Tool]/Inventory/&quot;+ sender +&quot;.json&quot;, finalData);<br />}<br />if (msg == &quot;R참가&quot;){<br />if (buser.indexOf(sender) == -1){<br />buser.push(sender);<br />replier.reply(&quot;BigRaid에 참가 하셨습니다! (&quot;+Number(buser.length)+&quot;명)&quot;);<br />return;<br />}<br />if (buser.indexOf(sender)!=-1){<br />replier.reply(&quot;이미 참가 했습니다!&quot;);<br />return;<br />}<br />}<br />if (msg == &quot;R목록&quot;){<br />replier.reply(&quot;[ Big Raid :: Users ]\\n(&quot;+Number(buser.length)+&quot;/50)\\n마스터 : &quot;+buser.join(&quot;\\n\\n♤ &quot;));<br />}<br />if(msg==&quot;G내정보&quot;){<br />var isData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;));<br />replier.reply(&quot;[&quot;+sender+&quot;]\\nInfomation\\n[Game Tool-INFO]&quot;+blank+&quot;\\n골드 : &quot;+isData.Money+<br />&quot;G\\n공격력 : &quot;+isData.atk+<br />&quot;\\n방어력 : &quot;+isData.def+<br />&quot;\\n레벨 : &quot;+isData.lvl+<br />&quot;\\nEXP : &quot;+isData.exp+<br />&quot;\\nHP : &quot;+isData.hp+&quot;/&quot;+isData.maxhp+<br />&quot;\\n칭호 : &quot;+isData.prefix+<br />&quot;\\n머리 / 몸통 / 다리 / 발 : &quot;+isData.helmet+&quot;/&quot;+isData.chestplate+&quot;/&quot;+isData.leg+&quot;/&quot;+isData.boots+<br />&quot;\\n손 : &quot;+isData.Hand+<br />&quot;\\n왼손 : &quot;+isData.subHand+<br />&quot;\\n위치 : &quot;+isData.Place+<br />&quot;\\n속도 : &quot;+isData.speed<br />);<br />}<br /><br />try {<br />// if (!JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/BanList/list.json&quot;)).indexOf(sender)){<br />if (msg == &quot;S사냥&quot;||msg==&quot;C사냥&quot;||msg==&quot;G사냥&quot;) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;));<br />var mons = [ // 몬스터 리스트<br />&quot;운석괴물&quot;,<br />&quot;토끼&quot;<br />];<br />for(var i=0;i&lt;3;i++){<br />var random = Math.floor(Math.random()*mons.length);<br />}<br />var ranMon = mons[random];<br />var randomMon = ranMon;<br />/*if (!(RegData.Place.indexOf(&quot;숲&quot;)!=-1||RegData.Place.indexOf(&quot;사냥&quot;)!=-1||RegData.Place.indexOf(&quot;동굴&quot;)!=-1||RegData.Place.indexOf(&quot;바다&quot;)!=-1||RegData.Place.indexOf(&quot;신전&quot;)!=-1)){<br />replier.reply(&quot;[ 알림 @&quot;+sender+&quot; ]\\n- 여기선 사냥이 불가능합니다\\n- .둘러보기 | .이동 을 이용해주세요.&quot;);<br />return;<br />}*/<br />var randObject = new java.util.Random();<br />var rand = randObject.nextInt(9);<br />var menu = &quot;\\n\\n[ 공격 ] [ 가방 ]\\n[ 도망치기 ] [ 회피 ]&quot;;<br />var b = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;));<br />if (b.Place == &quot;나무 위&quot;){<br />replier.reply(&quot;그런 짓은 하지마&quot;);<br />return;<br />}<br />var mData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/Monster.json&quot;));<br />/* GT.Monster(room, target, name, hp, giveExp, lvl, money, Items, skill) */<br />GT.Monster(room, sender, mData[randomMon][&quot;name&quot;], mData[randomMon][&quot;hp&quot;], mData[randomMon][&quot;exp&quot;], mData[randomMon][&quot;lvl&quot;], mData[randomMon][&quot;money&quot;], mData[randomMon][&quot;item&quot;], mData[randomMon][&quot;skill&quot;]);<br />replier.reply(mData[randomMon][&quot;Say&quot;]);<br />replier.reply(&quot;[ .공격 | .회피 | .도망치기 ]&quot;);<br />}<br />} catch(e) {<br />replier.reply(&quot;아무 일도 없었다...&quot;);<br />return;<br />}<br />if (msg == &quot;G공격&quot;|| msg == &quot;S공격&quot;){<br />if (mob[sender] == undefined){<br />replier.reply(&quot;@&quot;+sender+&quot; G사냥&quot;);<br />return;<br />}<br />var b = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;));<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;));<br />//var RegInv = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/&quot;+ sender +&quot;.json&quot;));<br />//var RegItem = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/IDB/&quot;+ sender +&quot;/&quot;+RegData.hand+&quot;.json&quot;));<br />var randObject = new java.util.Random();<br />var rand = randObject.nextInt(7);<br />var length=10;<br />var value=mhp[sender];<br />var max=mobmax[sender];<br />var per=Math.floor(value/max*length);<br />var mobBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(max+per)+&quot;(MAX&quot;;<br />var length=10;<br />var value=RegData[&quot;hp&quot;];<br />var max=RegData[&quot;maxhp&quot;];<br />var per=Math.floor(value/max*length);<br />var senderBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(per+per)+&quot;(MAX&quot;;<br />var menu = &quot;\\n[ 공격 ] [ 인벤토리 ]&quot;+blank+&quot;\\n[A-RPG|LEAD Game Tool Control] &quot;;<br />var ToFormat = &quot;[공격] @&quot;+sender+&quot;\\n적 체력 -&quot;+Number(b.atk)+&quot;\\n(적) &quot;+mob[sender]+&quot; &quot;+mobBar+&quot;\\n(나) &quot;+sender+&quot; &quot;+senderBar;<br />var BackFormat = &quot;[적의 공격] @&quot;+sender+&quot;\\n내 체력 -&quot;+Number(mhp[sender]/3)+&quot;\\n(적) &quot;+mob[sender]+&quot; &quot;+mobBar+&quot;\\nHP\\n(나) &quot;+sender+&quot; &quot;+senderBar;<br />switch(rand){<br />case 0:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br />replier.reply(ToFormat);<br />break;<br />case 1:<br />replier.reply(&quot;[!!MISS!!] @&quot;+sender);<br /><br />break;<br />case 2:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br /><br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br />case 3:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br /><br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br />case 4:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br /><br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br /><br />카카오톡 봇 커뮤니티<br /><br />검색<br /><br />확장영역 열기<br /><br />중급 소스 공유앱 열기<br /><br />[메신저봇] Game Tool [1.2] RPG || 좋은 업데이트 대령이요~<br /><br />&#65532;<br /><br />리드채팅<br /><br />2019.03.29. 20:08&nbsp;조회&nbsp;110<br /><br />본문 기타 기능<br /><br />내장메모리/[Game Tool]/Monster.json에<br /><br />{<br />&quot;토끼&quot;: {<br />&quot;name&quot;:&quot;토끼&quot;, // 몬스터 이름<br />&quot;lvl&quot;:3, // 몬스터 레벨<br />&quot;exp&quot;:700, // 드롭할 EXP<br />&quot;hp&quot;:300, // 체력<br />&quot;money&quot;:5000, // 드롭할 골드<br />&quot;Say&quot;:&quot;에...&quot;, // 등장 말<br />&quot;item&quot;:[], // 드롭 아이템 (나중에 쓰임)<br />&quot;skill&quot;:[] // 스킬<br />}<br />}<br />을 넣어주세요.<br />&quot;토끼&quot;: {<br />&quot;name&quot;:&quot;토끼&quot;, // 몬스터 이름<br />&quot;lvl&quot;:3, // 몬스터 레벨<br />&quot;exp&quot;:700, // 드롭할 EXP<br />&quot;hp&quot;:300, // 체력<br />&quot;money&quot;:5000, // 드롭할 골드<br />&quot;Say&quot;:&quot;에...&quot;, // 등장 말<br />&quot;item&quot;:[], // 드롭 아이템 (나중에 쓰임)<br />&quot;skill&quot;:[] // 스킬<br />}<br />참고해서 몬스터 만들어주세요!<br /><br />업데이트 내용 : 프리스타일 몬스터,상점<br /><br />오호홍~ 조아여언~<br /><br />const scriptName=&quot;Game Tool.js&quot;;<br />const blank = &quot;\\u200b&quot;.repeat(500);<br />const mob = [];<br />const mhp = [];<br />const exp = [];<br />const mobmax = {};<br />const md = {};<br />const dm = {};<br />const d = {};<br />const GT = {};<br />const that = {};<br />const bgame = {};<br />const buser = [];<br />const skills = [];<br /><br /><br />GT.Monster = function(room, target, name, hp, giveExp, lvl, money, Items, skill){<br />var prefix = &quot;( RPG ) &quot;<br />var alert = &quot;※ Alert ※ \\n&quot;;<br />var ht = &quot;\\n[ 체력 ] : &quot;;<br />var lb = &quot;\\nLv.&quot;;<br />var mData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/Monsters/Monster.json&quot;));<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+target+&quot;.json&quot;));<br />//var RegInv = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/&quot;+ target +&quot;.json&quot;));<br />//var RegItem = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/IDB/&quot;+ target +&quot;/&quot;+RegData.hand+&quot;.json&quot;));<br />mhp[target] = Number(hp);<br />mob[target] = name;<br />mobmax[target] = Number(hp);<br />md[target] = money;<br />skills[target] = skill;<br />exp[target] = giveExp;<br />var length=10;<br />var value=mhp[target];<br />var max=mobmax[target];<br />var per=Math.floor(value/max*length);<br />var mobBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(max+per)+&quot;(MAX&quot;;<br />var length=10;<br />var value=RegData[&quot;hp&quot;];<br />var max=RegData[&quot;maxhp&quot;];<br />var per=Math.floor(value/max*length);<br />var senderBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(per+per)+&quot;(MAX&quot;;<br />var menu = &quot;\\n[ 공격 ] [ 인벤토리 ]\\n[ 회피 ] [ 도망치기 ]&quot;+blank+&quot;\\n [A-RPG Control] &quot;;<br />var ToFormat = mob[target]+&quot;이(가) 나타났다!\\n체력 &quot;+mobBar+&quot;\\n[ ATK : &quot;+mhp[target]/3+&quot; ] [ HP : &quot;+mhp[target]+&quot;HP ] \\n[ SKILL : &quot;+mData[name][&quot;skill&quot;]+&quot; ]&quot;;<br />Api.replyRoom(room, ToFormat);<br />}<br /><br />GT.addInventory = function (target, ItemNick, atk, def, type, effect, Ug, price) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />var RegInv = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/Inventory/&quot;+ target +&quot;.json&quot;));<br />addI = RegInv;<br />addI.push({name:ItemNick,atk:atk,def:def,Price:price});<br />RegInv = addI;<br />var finalData = JSON.stringify(RegInv);<br />FileStream.write(&quot;sdcard/[Game Tool]/Inventory/&quot;+ target +&quot;.json&quot;, finalData);<br />var addID = {name:ItemNick,atk:atk,def:def,effect:effect,Upgrade:Ug,type:type,Price:price};<br />var finalData = JSON.stringify(addID);<br />FileStream.write(&quot;sdcard/[Game Tool]/Inventory/IDB/&quot;+ target +&quot;/&quot;+ItemNick+&quot;.json&quot;, finalData);<br />}<br /><br />GT.addMoney = function (target, num) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />RegData.money = Number(RegData.money) + Number(num);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;,finalData);<br />}<br />GT.buy = function (room, target, name, num, def, atk, type, effect, Ug){<br />that[target] = name;<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />if (RegData.money &gt;= num){<br />Api.replyRoom(room, name+&quot; (을)를 구매 하였습니다.&quot;);<br />GT.addInventory(target, that[target], atk, def, type, effect, Ug);<br />RegData.money = Number(RegData.money)-num;<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;,finalData)<br />return true;<br />} else {<br />Api.replyRoom(room, name+&quot; (을)를 구매하기에는 돈이 부족합니다!\\n[ 가격 ] &quot;+num);<br />return false;<br />}<br />}<br /><br />GT.list = function (way) {<br />return new java.io.File(way).list();<br />}<br />GT.addExp = function (target, num) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;));<br />RegData.exp += num;<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ target +&quot;.json&quot;,finalData);<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />var Data = msg.split(&quot; &quot;);<br />/*(이 내용은 길잡이일 뿐이니 지우셔도 무방합니다)<br />*(String) room: 메시지를 받은 방 이름<br />*(String) msg: 메시지 내용<br />*(String) sender: 전송자 닉네임<br />*(boolean) isGroupChat: 단체/오픈채팅 여부<br />*replier: 응답용 객체. replier.reply(&quot;메시지&quot;) 또는 replier.reply(&quot;방이름&quot;,&quot;메시지&quot;)로 전송<br />*(String) ImageDB.getProfileImage(): 전송자의 프로필 이미지를 Base64로 인코딩하여 반환<br />*(String) packageName: 메시지를 받은 메신저의 패키지 이름. (카카오톡: com.kakao.talk, 페메: com.facebook.orca, 라인: jp.naver.line.android<br />*(int) threadId: 현재 쓰레드의 순번(스크립트별로 따로 매김) *Api,Utils객체에 대해서는 설정의 도움말 참조*/<br />if(msg==&quot;G회원가입&quot;){<br />replier.reply(&quot;[ [Game Tool] 회원가입 ]\\nBase Dev :: LEAD&quot;);<br />java.lang.Thread.sleep(3000);<br />replier.reply(&quot;[ JSON 구조 세팅 ]&quot;);<br />var a = {<br />&quot;Name&quot;:sender,<br />&quot;Money&quot;:10000,<br />&quot;prefix&quot;:&quot;[일반]&quot;,<br />&quot;atk&quot;:3,<br />&quot;def&quot;:3,<br />&quot;lvl&quot;:1,<br />&quot;exp&quot;:0,<br />&quot;helmet&quot;:[],&quot;chestplate&quot;:[],&quot;leg&quot;:[],&quot;boots&quot;:[],&quot;Hand&quot;:[&quot;막대기&quot;],&quot;subHand&quot;:[],<br />&quot;Job&quot;:&quot;백수&quot;,<br />&quot;hp&quot;:100,&quot;maxhp&quot;:100,<br />&quot;guild&quot;:&quot;No exists&quot;,<br />&quot;weaponDamage&quot;:5,<br />&quot;Place&quot;:&quot;스노우 마을&quot;,<br />&quot;speed&quot;:5,<br />&quot;x&quot;:0,<br />&quot;y&quot;:3,<br />&quot;z&quot;:0<br />};<br />a = JSON.stringify(a);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;, a)<br />java.lang.Thread.sleep(2000);<br />replier.reply(&quot;[ 회원가입 완료! ]&quot;);<br />var f = [&apos;ㄱ&apos;, [&apos;ㄱ&apos;,&apos;ㄱ&apos;], &apos;ㄴ&apos;, &apos;ㄷ&apos;, [&apos;ㄷ&apos;,&apos;ㄷ&apos;], &apos;ㄹ&apos;, &apos;ㅁ&apos;,&apos;ㅂ&apos;, [&apos;ㅂ&apos;,&apos;ㅂ&apos;], &apos;ㅅ&apos;, [&apos;ㅅ&apos;,&apos;ㅅ&apos;], &apos;G&apos;, &apos;ㅈ&apos;, [&apos;ㅈ&apos;,&apos;ㅈ&apos;], &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];<br />var s = [&apos;ㅏ&apos;, &apos;ㅐ&apos;, &apos;ㅑ&apos;, &apos;ㅒ&apos;, &apos;ㅓ&apos;,[&apos;ㅓ&apos;,&apos;ㅣ&apos;], &apos;ㅕ&apos;,[&apos;ㅕ&apos;,&apos;ㅣ&apos;], &apos;ㅗ&apos;, [&apos;ㅗ&apos;,&apos;ㅏ&apos;], [&apos;ㅗ&apos;,&apos;ㅐ&apos;], [&apos;ㅗ&apos;,&apos;ㅣ&apos;], &apos;ㅛ&apos;, &apos;ㅜ&apos;,[&apos;ㅜ&apos;,&apos;ㅓ&apos;], [&apos;ㅜ&apos;,&apos;ㅓ&apos;,&apos;ㅣ&apos;], [&apos;ㅜ&apos;,&apos;ㅣ&apos;], &apos;ㅠ&apos;, &apos;ㅡ&apos;, [&apos;ㅡ&apos;,&apos;ㅣ&apos;], &apos;ㅣ&apos;];<br />var t = [&apos;&apos;, &apos;ㄱ&apos;, [&apos;ㄱ&apos;,&apos;ㄱ&apos;], [&apos;ㄱ&apos;,&apos;ㅅ&apos;], &apos;ㄴ&apos;, [&apos;ㄴ&apos;,&apos;ㅈ&apos;], [&apos;ㄴ&apos;,&apos;ㅎ&apos;],&apos;ㄷ&apos;, &apos;ㄹ&apos;, &apos;ㄺ&apos;, &apos;ㄻ&apos;, &apos;ㄼ&apos;, &apos;ㄽ&apos;, &apos;ㄾ&apos;,&apos;ㄿ&apos;, &apos;ㅀ&apos;, &apos;ㅁ&apos;, &apos;ㅂ&apos;, &apos;ㅄ&apos;, &apos;ㅅ&apos;, &apos;ㅆ&apos;,&apos;G&apos;, &apos;ㅈ&apos;, &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];<br />FileStream.write(&quot;sdcard/[Game Tool]/Langnuge/&quot;+sender+&quot;.LIST&quot;, f.join(&quot;\\n- &quot;)+&quot;\\n&quot;+s.join(&quot;\\n- &quot;)+&quot;\\n&quot;+t.join(&quot;\\n- &quot;));<br />var testinv=[<br />{name:&quot;막대기&quot;,atk:3, def:0},<br />{name:&quot;야구빠따&quot;,atk:9, def:0}<br />];<br />var finalData = JSON.stringify(testinv);<br />FileStream.write(&quot;sdcard/[Game Tool]/Inventory/&quot;+ sender +&quot;.json&quot;, finalData);<br />}<br />if (msg == &quot;R참가&quot;){<br />if (buser.indexOf(sender) == -1){<br />buser.push(sender);<br />replier.reply(&quot;BigRaid에 참가 하셨습니다! (&quot;+Number(buser.length)+&quot;명)&quot;);<br />return;<br />}<br />if (buser.indexOf(sender)!=-1){<br />replier.reply(&quot;이미 참가 했습니다!&quot;);<br />return;<br />}<br />}<br />if (msg == &quot;R목록&quot;){<br />replier.reply(&quot;[ Big Raid :: Users ]\\n(&quot;+Number(buser.length)+&quot;/50)\\n마스터 : &quot;+buser.join(&quot;\\n\\n♤ &quot;));<br />}<br />if(msg==&quot;G내정보&quot;){<br />var isData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;));<br />replier.reply(&quot;[&quot;+sender+&quot;]\\nInfomation\\n[Game Tool-INFO]&quot;+blank+&quot;\\n골드 : &quot;+isData.Money+<br />&quot;G\\n공격력 : &quot;+isData.atk+<br />&quot;\\n방어력 : &quot;+isData.def+<br />&quot;\\n레벨 : &quot;+isData.lvl+<br />&quot;\\nEXP : &quot;+isData.exp+<br />&quot;\\nHP : &quot;+isData.hp+&quot;/&quot;+isData.maxhp+<br />&quot;\\n칭호 : &quot;+isData.prefix+<br />&quot;\\n머리 / 몸통 / 다리 / 발 : &quot;+isData.helmet+&quot;/&quot;+isData.chestplate+&quot;/&quot;+isData.leg+&quot;/&quot;+isData.boots+<br />&quot;\\n손 : &quot;+isData.Hand+<br />&quot;\\n왼손 : &quot;+isData.subHand+<br />&quot;\\n위치 : &quot;+isData.Place+<br />&quot;\\n속도 : &quot;+isData.speed<br />);<br />}<br /><br />try {<br />// if (!JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/BanList/list.json&quot;)).indexOf(sender)){<br />if (msg == &quot;S사냥&quot;||msg==&quot;C사냥&quot;||msg==&quot;G사냥&quot;) {<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;));<br />var mons = [ // 몬스터 리스트<br />&quot;운석괴물&quot;,<br />&quot;토끼&quot;<br />];<br />for(var i=0;i&lt;3;i++){<br />var random = Math.floor(Math.random()*mons.length);<br />}<br />var ranMon = mons[random];<br />var randomMon = ranMon;<br />/*if (!(RegData.Place.indexOf(&quot;숲&quot;)!=-1||RegData.Place.indexOf(&quot;사냥&quot;)!=-1||RegData.Place.indexOf(&quot;동굴&quot;)!=-1||RegData.Place.indexOf(&quot;바다&quot;)!=-1||RegData.Place.indexOf(&quot;신전&quot;)!=-1)){<br />replier.reply(&quot;[ 알림 @&quot;+sender+&quot; ]\\n- 여기선 사냥이 불가능합니다\\n- .둘러보기 | .이동 을 이용해주세요.&quot;);<br />return;<br />}*/<br />var randObject = new java.util.Random();<br />var rand = randObject.nextInt(9);<br />var menu = &quot;\\n\\n[ 공격 ] [ 가방 ]\\n[ 도망치기 ] [ 회피 ]&quot;;<br />var b = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+sender+&quot;.json&quot;));<br />if (b.Place == &quot;나무 위&quot;){<br />replier.reply(&quot;그런 짓은 하지마&quot;);<br />return;<br />}<br />var mData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/Monster.json&quot;));<br />/* GT.Monster(room, target, name, hp, giveExp, lvl, money, Items, skill) */<br />GT.Monster(room, sender, mData[randomMon][&quot;name&quot;], mData[randomMon][&quot;hp&quot;], mData[randomMon][&quot;exp&quot;], mData[randomMon][&quot;lvl&quot;], mData[randomMon][&quot;money&quot;], mData[randomMon][&quot;item&quot;], mData[randomMon][&quot;skill&quot;]);<br />replier.reply(mData[randomMon][&quot;Say&quot;]);<br />replier.reply(&quot;[ .공격 | .회피 | .도망치기 ]&quot;);<br />}<br />} catch(e) {<br />replier.reply(&quot;아무 일도 없었다...&quot;);<br />return;<br />}<br />if (msg == &quot;G공격&quot;|| msg == &quot;S공격&quot;){<br />if (mob[sender] == undefined){<br />replier.reply(&quot;@&quot;+sender+&quot; G사냥&quot;);<br />return;<br />}<br />var b = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;));<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;));<br />//var RegInv = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/&quot;+ sender +&quot;.json&quot;));<br />//var RegItem = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/UserData/Inventory/IDB/&quot;+ sender +&quot;/&quot;+RegData.hand+&quot;.json&quot;));<br />var randObject = new java.util.Random();<br />var rand = randObject.nextInt(7);<br />var length=10;<br />var value=mhp[sender];<br />var max=mobmax[sender];<br />var per=Math.floor(value/max*length);<br />var mobBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(max+per)+&quot;(MAX&quot;;<br />var length=10;<br />var value=RegData[&quot;hp&quot;];<br />var max=RegData[&quot;maxhp&quot;];<br />var per=Math.floor(value/max*length);<br />var senderBar = &quot;&#11837;&quot;.repeat(per)+&quot; &quot;.repeat(per+per)+&quot;(MAX&quot;;<br />var menu = &quot;\\n[ 공격 ] [ 인벤토리 ]&quot;+blank+&quot;\\n[A-RPG|LEAD Game Tool Control] &quot;;<br />var ToFormat = &quot;[공격] @&quot;+sender+&quot;\\n적 체력 -&quot;+Number(b.atk)+&quot;\\n(적) &quot;+mob[sender]+&quot; &quot;+mobBar+&quot;\\n(나) &quot;+sender+&quot; &quot;+senderBar;<br />var BackFormat = &quot;[적의 공격] @&quot;+sender+&quot;\\n내 체력 -&quot;+Number(mhp[sender]/3)+&quot;\\n(적) &quot;+mob[sender]+&quot; &quot;+mobBar+&quot;\\nHP\\n(나) &quot;+sender+&quot; &quot;+senderBar;<br />switch(rand){<br />case 0:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br />replier.reply(ToFormat);<br />break;<br />case 1:<br />replier.reply(&quot;[!!MISS!!] @&quot;+sender);<br /><br />break;<br />case 2:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br /><br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br />case 3:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br /><br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br />case 4:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br /><br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br />case 5:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br /><br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br />case 6:<br />mhp[sender] -= Number(b.atk);<br />mhp[sender] -= Number(b.weaponDamage);<br />replier.reply(ToFormat);<br />java.lang.Thread.sleep(300);<br />replier.reply(mob[sender]+&quot;이(가) 공격 하려 합니다!&quot;);<br />java.lang.Thread.sleep(1700);<br />RegData.hp -= Number(mhp[sender]/3);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />java.lang.Thread.sleep(500);<br />replier.reply(BackFormat);<br />break;<br />}<br /><br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;));<br />if (mhp[sender] !== undefined &amp;&amp;0 &gt;= RegData.hp){<br />replier.reply(&quot;[@&quot;+sender+&quot;]\\n&quot;+sender+&quot;님이 사망하였습니다.\\n사유 : &quot;+mob[sender]+&quot;님에게 살해당함&quot;);<br />RegData.hp = Number(RegData.maxhp);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />exp[sender] = undefined;<br />mob[sender] = &quot;Missing No&quot;;<br />mhp[sender] = undefined;<br />return;<br />}<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;));<br />if (mhp[sender] !== undefined){<br />if (0 &gt;= mhp[sender]){<br />replier.reply(sender+&quot;님이 ( &quot;+mob[sender]+&quot; ) 을 사냥 하였습니다 +&quot;+exp[sender]+&quot;EXP&quot;);<br />RegData.exp += exp[sender];<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData)<br />java.lang.Thread.sleep(500);<br />exp[sender] = undefined;<br />mob[sender] = &quot;Missing No&quot;;<br />mhp[sender] = undefined;<br />}<br />}<br />}<br />if (msg == &quot;G레벨업&quot;){<br />if (RegData.exp == RegData.lvl*70){<br />replier.reply(&quot;@&quot;+sender+&quot;\\n레벨업! Lv.&quot;+Number(RegData.lvl+1));<br />RegData.exp -= RegData.lvl*70;<br />RegData.lvl += 1;<br />RegData.atk += 2;<br />RegData.def += 0.5;<br />RegData.maxhp += 100;<br />RegData.Money += RegData.lvl*800;<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData);<br />}<br />}<br />if (msg == &quot;G광질&quot;){<br />var RegData = JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;));<br />var randObject = new java.util.Random();<br />var rand = randObject.nextInt(7);<br />var mis = &quot;♤ Game Tool &quot;<br />switch(rand){<br />case 0:<br />replier.reply(mis+&quot;아무 것도 없었습니다.&quot;);<br />break;<br />case 1:<br />d[sender] = 500;<br />dm[sender] = &quot;조약돌&quot;;<br />replier.reply(mis+dm[sender]+&quot; ( +&quot;+d[sender]+&quot;골드 )&quot;);<br />GT.addMoney(sender, d[sender]);<br />GT.addInventory(sender, dm[sender], 0, 0, &quot;광물&quot;, &quot;X&quot;, &quot;X&quot;);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData)<br />break;<br />case 2:<br />d[sender] = 1000;<br />dm[sender] = &quot;석탄&quot;;<br />replier.reply(mis+dm[sender]+&quot; ( +&quot;+d[sender]+&quot;골드 )&quot;);<br />GT.addMoney(sender, d[sender]);<br />GT.addInventory(sender, dm[sender], 0, 0, &quot;광물&quot;, &quot;X&quot;, &quot;X&quot;);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData)<br />break;<br />case 3:<br />d[sender] = 1500;<br />dm[sender] = &quot;철&quot;;<br />replier.reply(mis+dm[sender]+&quot; ( +&quot;+d[sender]+&quot;골드 )&quot;);<br />GT.addMoney(sender, d[sender]);<br />GT.addInventory(sender, dm[sender], 0, 0, &quot;광물&quot;, &quot;X&quot;, &quot;X&quot;);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData)<br />break;<br />case 4:<br />d[sender] = 2000;<br />dm[sender] = &quot;은&quot;;<br />replier.reply(mis+dm[sender]+&quot; ( +&quot;+d[sender]+&quot;골드 )&quot;);<br />GT.addMoney(sender, d[sender]);<br />GT.addInventory(sender, dm[sender], 0, 0, &quot;광물&quot;, &quot;X&quot;, &quot;X&quot;);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData)<br />break;<br />case 5:<br />d[sender] = 3000;<br />dm[sender] = &quot;순 은&quot;;<br />replier.reply(mis+dm[sender]+&quot; ( +&quot;+d[sender]+&quot;골드 )&quot;);<br />GT.addMoney(sender, d[sender]);<br />GT.addInventory(sender, dm[sender], 0, 0, &quot;광물&quot;, &quot;X&quot;, &quot;X&quot;);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData)<br />break;<br />case 6:<br />d[sender] = 6000;<br />dm[sender] = &quot;금&quot;;<br />replier.reply(mis+dm[sender]+&quot; ( +&quot;+d[sender]+&quot;골드 )&quot;);<br />GT.addMoney(sender, d[sender]);<br />GT.addInventory(sender, dm[sender], 0, 0, &quot;광물&quot;, &quot;X&quot;, &quot;X&quot;);<br />var finalData = JSON.stringify(RegData);<br />FileStream.write(&quot;sdcard/[Game Tool]/&quot;+ sender +&quot;.json&quot;,finalData)<br /><br />}<br />}<br />try {<br />if (msg == &quot;G인벤토리&quot;|| msg == &quot;C인벤&quot; || msg == &quot;S인&quot; || msg == &quot;Game Tool벤&quot;){<br />var inv=JSON.parse(FileStream.read(&quot;sdcard/[Game Tool]/Inventory/&quot;+ sender +&quot;.json&quot;));<br />var res={};<br />inv.map(function(s){<br />res[s.toSource()]=(isNaN(res[s.toSource()])?0:res[s.toSource()])+1;<br />});<br />var res2=[];<br />for(var i=0;i&lt;Object.keys(res).length;i++){<br />res2.push(<br />&quot;♤ &quot;+eval(Object.keys(res)[i]).name+&quot; &quot;+res[Object.keys(res)[i]]+&quot;x ID : &quot;+(i+1)+&quot; ( 공격력 +&quot;+eval(Object.keys(res)[i]).atk+&quot; 방어력 +&quot;+eval(Object.keys(res)[i]).def+&quot; )&quot;<br />)<br />}<br />&quot;\\n&quot;+res2.join(&quot;\\n\\n\\n&quot;);<br />replier.reply(&quot;인벤토리 : &quot;+blank+&quot;\\n&quot;+res2.join(&quot;\\n&quot;));<br />}<br />} catch(e) {<br />replier.reply(&quot;[인벤토리 에러]&quot;);<br />}<br />if (msg == &quot;G상점&quot;){<br />var next = &quot;\\n\\n\\n&quot;;<br />var title = &quot;[[ Game Tool SHOP ]]&quot;+next; // 상점 타이틀<br />var s1 = [&quot;[[ 무기 ]]\\n- 나무 칼 10000G [데미지 15]&quot;]+next; // 카테고리 1<br />var s2 = [&quot;&quot;]+next; // 카테고리 2<br />var s3 = [&quot;&quot;]+next; // 카테고리 3<br />var s4 = [&quot;&quot;]+next; // 카테고리 4<br />var s5 = [&quot;&quot;]+next; // 카테고리 5<br />replier.reply(title+blank+s1+s2+s3+s4+s5);<br />}<br />if (msg == &quot;G구매 나무 칼&quot;){<br />GT.buy(room, sender, &quot;나무 칼&quot;, 10000, 0, 15, &quot;무기&quot;);<br />// sender, 뒤에 부터 . / 1. 이름 / 2. 가격 / 3. 방어력 / 4. 공격력 /<br />}<br />if (msg == &quot;G구매 돌 칼&quot;){<br />GT.buy(room, sender, &quot;Vector&quot;, 5000000, 0, 30, &quot;총&quot;);<br />}<br />}<br /><br />function onStartCompile(){<br />/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.<br />*제안하는 용도: 리로드시 자동 백업*/<br /><br />}<br /><br />//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.<br />function onCreate(savedInstanceState,activity) {<br />var layout=new android.widget.LinearLayout(activity);<br />layout.setOrientation(android.widget.LinearLayout.HORIZONTAL);<br />var txt=new android.widget.TextView(activity);<br />txt.setText(&quot;액티비티 사용 예시입니다.&quot;);<br />layout.addView(txt);<br />activity.setContentView(layout);<br />}<br />function onResume(activity) {}<br />function onPause(activity) {}<br />function onStop(activity) {}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000067300000000",
+            "id": 1651,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 518,
+            "refArticleId": 1651,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "리드님 이거 뭐 어떻게 더 해야하죠",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1554615784603,
+            "writer": {
+                "id": "kimsiyoon4202",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "카톡봇 궁금이"
+            }
+        },
+        "articleId": 1651,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "질문의 요지를 모르겠군요",
+                    "id": 56793896,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "updateDate": 1554623327000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "어 정확히 말하자면 컴파일 하는데 function 어쩌구 저쩌구 하면서 안된다 하네요",
+                    "id": 56793972,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "updateDate": 1554623418000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇 궁금이"
+                    }
+                },
+                {
+                    "content": "자바스크립트 어쩌구자너",
+                    "id": 56794117,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "kimsiyoon4202",
+                        "nick": "카톡봇 궁금이"
+                    },
+                    "updateDate": 1554623579000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇 궁금이"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 56794128,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA0MDdfMTgg/MDAxNTU0NjIzNTk0MDA1.oA9_1NZq_EJjcB4yyCO3LoLFCQZ_xFJCg7Qfx_rSAxog.l996dTd7ZpWA3vv96BT4JeJ5f3f6hiG1geZsNGnGwvcg.JPEG.kimsiyoon4202/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 246,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA0MDdfMTgg/MDAxNTU0NjIzNTk0MDA1.oA9_1NZq_EJjcB4yyCO3LoLFCQZ_xFJCg7Qfx_rSAxog.l996dTd7ZpWA3vv96BT4JeJ5f3f6hiG1geZsNGnGwvcg.JPEG.kimsiyoon4202/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA0MDdfMTgg/MDAxNTU0NjIzNTk0MDA1.oA9_1NZq_EJjcB4yyCO3LoLFCQZ_xFJCg7Qfx_rSAxog.l996dTd7ZpWA3vv96BT4JeJ5f3f6hiG1geZsNGnGwvcg.JPEG.kimsiyoon4202/externalFile.jpg",
+                        "width": 896
+                    },
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "captain9910",
+                        "nick": "Iam"
+                    },
+                    "updateDate": 1554623594000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇 궁금이"
+                    }
+                },
+                {
+                    "content": "요렇게 뜨네영",
+                    "id": 56794145,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "captain9910",
+                        "nick": "Iam"
+                    },
+                    "updateDate": 1554623612000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇 궁금이"
+                    }
+                },
+                {
+                    "content": "중간에 이상한게",
+                    "id": 56794560,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA0MDdfMTUg/MDAxNTU0NjI0MjI5OTkw.0u6Y9cb9nQGJHzuXmFm_sSWjH0xd_4czdXmEHsFbu9cg.mbAy8VZu-vW7WKrGBfhmZXmre6z4-t7BAFdGBvyUgMkg.JPEG.r960701/Screenshot_2019-04-07_at_17.03.31.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "Screenshot_2019-04-07_at_17.03.31.jpg",
+                        "height": 446,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA0MDdfMTUg/MDAxNTU0NjI0MjI5OTkw.0u6Y9cb9nQGJHzuXmFm_sSWjH0xd_4czdXmEHsFbu9cg.mbAy8VZu-vW7WKrGBfhmZXmre6z4-t7BAFdGBvyUgMkg.JPEG.r960701/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA0MDdfMTUg/MDAxNTU0NjI0MjI5OTkw.0u6Y9cb9nQGJHzuXmFm_sSWjH0xd_4czdXmEHsFbu9cg.mbAy8VZu-vW7WKrGBfhmZXmre6z4-t7BAFdGBvyUgMkg.JPEG.r960701/Screenshot_2019-04-07_at_17.03.31.jpg",
+                        "width": 490
+                    },
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "kimsiyoon4202",
+                        "nick": "카톡봇 궁금이"
+                    },
+                    "updateDate": 1554624240000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "엌ㅋ 잠깐만요",
+                    "id": 56794581,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1554624270000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇 궁금이"
+                    }
+                },
+                {
+                    "content": "저거 말고도 아래에 변수,함수 중복되있네요 전부.\r\n소스 2개를 붙이신거 같습니다.",
+                    "id": 56794704,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "kimsiyoon4202",
+                        "nick": "카톡봇 궁금이"
+                    },
+                    "updateDate": 1554624438000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "다 날려버렸는데 돌아가네요 ㅎㅎ",
+                    "id": 56794803,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1554624560000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇 궁금이"
+                    }
+                },
+                {
+                    "content": "800줄->200줄",
+                    "id": 56794823,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 56793896,
+                    "replyMember": {
+                        "id": "kimsiyoon4202",
+                        "nick": "카톡봇 궁금이"
+                    },
+                    "updateDate": 1554624586000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇 궁금이"
+                    }
+                }
+            ],
+            "last": {
+                "id": 56951557,
+                "refId": 56951557
+            },
+            "next": {
+                "id": 56951557,
+                "refId": 56951557
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

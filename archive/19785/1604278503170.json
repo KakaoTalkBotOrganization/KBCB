@@ -1,0 +1,302 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<div>메이플스토리M 단체톡방에서 사용하는 원정대 명단 작성 도우미 봇입니다.</div><div><br /></div><div>기능은 원정대 생성, 가입, 탈퇴, 초기화(백업기능 포함), 복구 정도로 간단한 기능만 있습니다.</div><div><br /></div><div>상업적 사용과 재배포는 불가능합니다. 소스는 긁기 불가능해서 파일 첨부 했습니다.</div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">var 원정대최대수 = 10;</span></div><div><span style=\"font-size: 13.3333px;\">var 원정대 = [[],[],[],[],[],[],[],[],[],[]];</span></div><div><span style=\"font-size: 13.3333px;\">var 백업원정대 = [[],[],[],[],[],[],[],[],[],[]];</span></div><div><span style=\"font-size: 13.3333px;\">var 전체초기화백업 = [[],[],[],[],[],[],[],[],[],[]];</span></div><div><span style=\"font-size: 13.3333px;\">var 인원;</span></div><div><span style=\"font-size: 13.3333px;\">var 교체용 = [];</span></div><div><span style=\"font-size: 13.3333px;\">var 전체초기화확인 = 0;</span></div><div><span style=\"font-size: 13.3333px;\">function response(room, msg, sender, isGroupChat, replier, ImageDB) {</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>if(msg == &apos;!도움&apos;) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>var toSend =&apos;&lt;필수값&gt;(선택값)\\r\\n&apos;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!생성 &lt;원정대설명&gt; (인원수) ex !생성 노여1팀/12:00\\r\\n인원 수는 지정하지 않을 경우 10명으로 고정됩니다.\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!가입 &lt;원정대번호&gt; &lt;캐릭터명&gt; (직위)&nbsp; ex !가입 1 캐릭터 리더\\r\\n키워드 알림의 경우 캐릭터명 사이에 특수문자를 넣어주세요.\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!탈퇴 &lt;원정대번호&gt; &lt;대원번호&gt; ex !탈퇴 1 1\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!명단&nbsp; 원정대리스트를 불러옵니다.\\r\\n!명단 &lt;원정대번호&gt; ex !명단 1\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!초기화 &lt;원정대번호&gt; ex !초기화 1\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!초기화 all : 원정대 리스트를 초기화합니다. ex !초기화 all\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!refresh : 초기화 all 이후 초기화 all이 사용안되는 경우 사용하면 초기화 all을 사용할 수 있습니다.\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!복구 &lt;삭제된원정대번호&gt; : 삭제된 원정대 정보를 다시 불러옵니다. 원정대 번호는 바뀔 수도 있습니다.ex !복구 1\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!복구 all : 삭제된&nbsp; 모든 원정대 정보를 다시 불러옵니다. ex !복구 all\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!수정 &lt;원정대번호&gt; &lt;변경원정대설명&gt; (변경인원수) ex !수정 1 노여1팀/12:00\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!수정 &lt;원정대번호&gt; &lt;원정대원번호&gt; &lt;변경캐릭터명&gt; (변경직위) ex !수정 1 1 캐릭터 리더\\r\\n키워드 알림의 경우 캐릭터명 사이에 특수문자를 넣어주세요.\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;!교체 &lt;원정대번호&gt; &lt;원정대원번호&gt; &lt;변경대상원정대원번호&gt; ex !교체 1 1 2\\r\\n원정대원의 원정대 내의 순번을 다른 원정대원과 교환합니다.\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>toSend += &quot;&lt;원정대 리스트&gt;\\r\\n&quot;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>for (var i = 0; i &lt; 원정대최대수; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>var j = i + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(원정대[i][0] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>toSend += j+&quot;.&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>인원 = 원정대[i].length-2;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>toSend += j+&quot;. &quot;+원정대[i][0]+&quot; (&quot;+인원+&quot;/&quot;+원정대[i][1]+&quot;)&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if( j == 원정대최대수){}else{toSend += &quot;\\r\\n&quot;}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>&nbsp; replier.reply(toSend);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span> }</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span> if(msg.split(&quot; &quot;)[0] == &quot;!생성&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>&nbsp; var 원정대인원;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[1] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>&nbsp; &nbsp;replier.reply(&apos;원정대 설명을 입력해주세요. ex !생성 노여1팀12:05&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(msg.split(&quot; &quot;)[2] == null || isNaN(parseInt(msg.split(&quot; &quot;)[2]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>원정대인원 = 10;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>원정대인원 = parseInt(msg.split(&quot; &quot;)[2]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대이름 = msg.split(&quot; &quot;)[1];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var i = 0; i &lt; 원정대최대수; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var j = i + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var status = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if(원정대[i][0] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>&nbsp; &nbsp;replier.reply(j+&apos;. &apos;+원정대이름+&apos;(이)가 생성이 되었습니다.&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>&nbsp; &nbsp;원정대[i].push(원정대이름);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>&nbsp; &nbsp;원정대[i].push(원정대인원);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>&nbsp; &nbsp;status = 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>&nbsp; &nbsp;i = 원정대최대수 - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>&nbsp; status = 2;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if (status == 2){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>&nbsp; &nbsp;replier.reply(&apos;현재 원정대 목록이 가득찼습니다. 사용하지 않는 원정대를 초기화해주세요.&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span> }</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span> }</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span> if(msg.split(&quot; &quot;)[0] == &quot;!가입&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[2] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&apos;캐릭터 닉네임을 입력해주세요. ex !가입 1 A&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var name;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대번호 = msg.split(&quot; &quot;)[1];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var n = parseInt(원정대번호) - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(msg.split(&quot; &quot;)[3] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>name = msg.split(&quot; &quot;)[2];&nbsp;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>} else {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>name = &quot;(&quot;+msg.split(&quot; &quot;)[3] + &quot;) &quot; +msg.split(&quot; &quot;)[2];&nbsp;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if((원정대[n][0] == null) || (원정대[n].length-2 == 원정대[n][1])){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&apos;존재하지 않거나 파티원 자리가 없는 원정대입니다.&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>원정대[n].push(name);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var NUM = 원정대[n].length;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var Send = &quot;[&quot;+원정대번호 + &quot;] &quot; + 원정대[n][0]+&quot;\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>for (var i = 2; i &lt; NUM; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>var j = i - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>Send += j+&quot;. &quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>var 리더여부 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>for (var m = 2; m &lt; NUM; m++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>if(원정대[n][m].split(&quot; &quot;)[0] == &quot;(리더)&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">       </span>리더여부 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">       </span>m = NUM-1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">       </span>리더여부 = 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>}&nbsp;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>if(j == 1 &amp;&amp; 리더여부 == 1){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>Send += &quot;(리더) &quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>Send += 원정대[n][i];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>if( i+1 == NUM){}else{Send += &quot;\\r\\n&quot;}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(Send);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span> if(msg.split(&quot; &quot;)[0] == &quot;!탈퇴&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[2] == null || parseInt(msg.split(&quot; &quot;)[2]) &lt; 1 || isNaN(parseInt(msg.split(&quot; &quot;)[2])) || isNaN(parseInt(msg.split(&quot; &quot;)[1]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&apos;원정대번호와 원정대원 번호를 기입해주세요. 혹은 자연수가 아닌 수를 입력하셨습니다. ex !탈퇴 1 1&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 탈퇴 = parseInt(msg.split(&quot; &quot;)[2]) + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대번호 = parseInt(msg.split(&quot; &quot;)[1]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var n = 원정대번호 - 1</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>원정대[n].splice(탈퇴, 1);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var NUM = 원정대[n].length;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var Send = &quot;[&quot;+원정대번호 + &quot;] &quot; +원정대[n][0]+&quot;\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var i = 2; i &lt; NUM; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>var j = i - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>Send += j+&quot;. &quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>Send += 원정대[n][i];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if( i+1 == NUM){}else{Send += &quot;\\r\\n&quot;}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(Send);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span> if(msg.split(&quot; &quot;)[0] == &quot;!명단&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[1] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>var toSend = &quot;&lt;원정대 리스트&gt;\\r\\n&quot;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var i = 0; i &lt; 원정대최대수; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var j = i + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if(원정대[i][0] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>toSend += j+&quot;.&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>인원 = 원정대[i].length-2;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>toSend += j+&quot;. &quot;+원정대[i][0]+&quot; (&quot;+인원+&quot;/&quot;+원정대[i][1]+&quot;)&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if( j == 원정대최대수){}else{toSend += &quot;\\r\\n&quot;}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>replier.reply(toSend);</span></div><div><span style=\"font-size: 13.3333px;\">&nbsp; &nbsp; &nbsp; }else if(msg.split(&quot; &quot;)[1] != null &amp;&amp; 원정대[parseInt(msg.split(&quot; &quot;)[1]) - 1][0] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&quot;존재하지 않는 원정대입니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(msg.split(&quot; &quot;)[1] != null &amp;&amp; !isNaN(parseInt(msg.split(&quot; &quot;)[1]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대번호 = msg.split(&quot; &quot;)[1];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var n = parseInt(원정대번호) - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var NUM = 원정대[n].length;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var Send = &quot;[&quot;+원정대번호 + &quot;] &quot; + 원정대[n][0]+&quot;\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var i = 2; i &lt; NUM; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>var j = i - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>Send += j+&quot;. &quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>var 리더여부 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>for (var m = 2; m &lt; NUM; m++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>if(원정대[n][m].split(&quot; &quot;)[0] == &quot;(리더)&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">       </span>리더여부 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">       </span>m = NUM-1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">       </span>리더여부 = 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>}&nbsp;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>if(j == 1 &amp;&amp; 리더여부 == 1){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">      </span>Send += &quot;(리더) &quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>Send += 원정대[n][i];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if( i+1 == NUM){}else{Send += &quot;\\r\\n&quot;}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(Send);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span> if(msg.split(&quot; &quot;)[0] == &quot;!초기화&quot; &amp;&amp; msg.split(&quot; &quot;)[2] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[1] == &quot;all&quot; &amp;&amp; 전체초기화확인 == 0){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 확인 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var k = 0; k &lt; 원정대최대수; k++){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if(원정대[k].length != 0){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>확인 = 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>k = 원정대최대수;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(확인 == 1){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>for (var i = 0; i &lt; 원정대최대수; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>전체초기화백업[i] = [];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>for (var j = 0; j &lt; 원정대[i].length ; j++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>전체초기화백업[i].push(원정대[i][j]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>원정대[i] = [];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>전체초기화확인 = 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;모든 원정대를 초기화 했습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;초기화할 원정대가 없습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(msg.split(&quot; &quot;)[1] == &quot;all&quot; &amp;&amp; 전체초기화확인 == 1){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;이미 전체초기화를 한 이력이 있습니다. 전체초기화를 사용했다면 복구 all을 사용해주세요.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(msg.split(&quot; &quot;)[1] == null || isNaN(parseInt(msg.split(&quot; &quot;)[1]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&apos;원정대번호를 기입해주세요. 예 !초기화 1&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(원정대[parseInt(msg.split(&quot; &quot;)[1]) - 1][0] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&quot;존재하지 않는 원정대입니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>var 원정대번호 = msg.split(&quot; &quot;)[1];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>var n = parseInt(원정대번호) - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>var NUM = 원정대[n].length;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>var Send = &quot;[&quot;+원정대번호 + &quot;] &quot; + 원정대[n][0]+&quot;\\r\\n&quot;;</span></div><div><span style=\"font-size: 13.3333px;\">&nbsp; &nbsp; &nbsp; 백업원정대[n] = [];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>백업원정대[n].push(원정대[n][0]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>백업원정대[n].push(원정대[n][1]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var i = 2; i &lt; NUM; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>var j = i - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>Send += j+&quot;. &quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>Send += 원정대[n][i];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>백업원정대[n].push(원정대[n][i]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if( i+1 == NUM){}else{Send += &quot;\\r\\n&quot;;}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>원정대[n] = [];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>Send += &quot;\\r\\n초기화완료&quot;;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>replier.reply(Send);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}else if(msg.split(&quot; &quot;)[0] == &quot;!초기화&quot; &amp;&amp; msg.split(&quot; &quot;)[2] != null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>replier.reply(&quot;혹시 !탈퇴 명령어를 쓰시려고 하셨나요?&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>if(msg.split(&quot; &quot;)[0] == &quot;!복구&quot;)</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[1] == &quot;all&quot; &amp;&amp; 전체초기화확인 == 1){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 확인 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var k = 0; k &lt; 원정대최대수; k++){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if(전체초기화백업[k].length != 0){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>확인 = 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>k = 원정대최대수;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(확인 == 1){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>for (var i = 0; i &lt; 원정대최대수; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>원정대[i] = [];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>for (var j = 0; j &lt; 전체초기화백업[i].length ; j++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>원정대[i].push(전체초기화백업[i][j]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>전체초기화백업[i] = [];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>전체초기화확인 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;모든 원정대를 복구 했습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;복구할 원정대가 없습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(msg.split(&quot; &quot;)[1] == &quot;all&quot; &amp;&amp; 전체초기화확인 == 0){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&quot;전체초기화 기능을 사용한 적이 없어 복구를 진행할 수 없습니다. 전체초기화 기능을 이용 후 사용해주세요.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if((msg.split(&quot; &quot;)[1] == null || isNaN(parseInt(msg.split(&quot; &quot;)[1])))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&apos;복구할 원정대번호를 기입해주세요. 예 !복구 1&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대번호 = msg.split(&quot; &quot;)[1];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var n = parseInt(원정대번호) - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var NUM = 백업원정대[n].length;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var l = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>for (var k = 0; k &lt; 원정대최대수; k++){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>if(원정대[k][0] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>l = k;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">     </span>k = 원정대최대수;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(원정대[l][0] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>for (var i = 0; i &lt; NUM; i++) {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>원정대[l].push(백업원정대[n][i]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>}</span></div><div><span style=\"font-size: 13.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var m = l + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&apos;[&apos;+m+&apos;]에 &apos; +백업원정대[n][0]+ &apos; 원정대가 복구되었습니다.&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>} else {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&apos;원정대 목록이 꽉찬 상태입니다. 사용하지 않는 원정대를 비운 후 다시 시도해주세요.&apos;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>if(msg.split(&quot; &quot;)[0] == &quot;!수정&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[1] == null || isNaN(Number(msg.split(&quot; &quot;)[1]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&quot;!수정 &lt;원정대번호&gt; &lt;변경할원정대설명&gt; (변경인원수) ex !수정 1 노여1팀/12:00\\r\\n!수정 &lt;원정대번호&gt; &lt;원정대원번호&gt; &lt;변경캐릭터명&gt; (변경직위) ex !수정 1 1 캐릭터 리더\\r\\n키워드 알림의 경우 캐릭터명 사이에 특수문자를 넣어주세요.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(msg.split(&quot; &quot;)[2] != null &amp;&amp; !isNaN(Number(msg.split(&quot; &quot;)[1])) &amp;&amp; isNaN(Number(msg.split(&quot; &quot;)[2]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대번호 = parseInt(msg.split(&quot; &quot;)[1]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var n = 원정대번호 - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 설명교체 = msg.split(&quot; &quot;)[2];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 교체인원수;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(isNaN(parseInt(msg.split(&quot; &quot;)[3]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>교체인원수 = 원정대[n][1];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>} else {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>교체인원수 = parseInt(msg.split(&quot; &quot;)[3]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>원정대[n].splice(0, 1, 설명교체);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>원정대[n].splice(1, 1, 교체인원수);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&quot;원정대 설정이 변경되었습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(msg.split(&quot; &quot;)[3] != null &amp;&amp; msg.split(&quot; &quot;)[2] != null &amp;&amp; !isNaN(Number(msg.split(&quot; &quot;)[1])) &amp;&amp; !isNaN(Number(msg.split(&quot; &quot;)[2]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대번호 = parseInt(msg.split(&quot; &quot;)[1]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var n = 원정대번호 - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대원번호 = parseInt(msg.split(&quot; &quot;)[2]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var m = 원정대원번호 + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 변경캐릭명;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(msg.split(&quot; &quot;)[4] == null){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>변경캐릭명 = msg.split(&quot; &quot;)[3];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>} else {</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>변경캐릭명 = &quot;(&quot;+msg.split(&quot; &quot;)[4]+&quot;) &quot; +msg.split(&quot; &quot;)[3];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>원정대[n].splice(m, 1, 변경캐릭명);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&quot;캐릭터명 변경이 완료되었습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>if(msg.split(&quot; &quot;)[0] == &quot;!교체&quot;){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>if(msg.split(&quot; &quot;)[3] == null || msg.split(&quot; &quot;)[2] == null || msg.split(&quot; &quot;)[1] == null || isNaN(Number(msg.split(&quot; &quot;)[1])) || isNaN(Number(msg.split(&quot; &quot;)[2])) || isNaN(Number(msg.split(&quot; &quot;)[3]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>replier.reply(&quot;!교체 &lt;원정대번호&gt; &lt;원정대원번호&gt; &lt;교환대상원정대원번호&gt; ex !교체 1 1 2&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}else if(msg.split(&quot; &quot;)[3] != null &amp;&amp; msg.split(&quot; &quot;)[2] != null &amp;&amp; msg.split(&quot; &quot;)[1] != null &amp;&amp; !isNaN(Number(msg.split(&quot; &quot;)[1])) &amp;&amp; !isNaN(Number(msg.split(&quot; &quot;)[2])) &amp;&amp; !isNaN(Number(msg.split(&quot; &quot;)[3]))){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대번호 = parseInt(msg.split(&quot; &quot;)[1]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var n = 원정대번호 - 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대원1번호 = parseInt(msg.split(&quot; &quot;)[2]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var m = 원정대원1번호 + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var 원정대원2번호 = parseInt(msg.split(&quot; &quot;)[3]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>var o = 원정대원2번호 + 1;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>if(원정대[n].length-1 &gt;= o &amp;&amp; 원정대[n].length-1 &gt;= m &amp;&amp; 원정대원1번호 != 원정대원2번호){</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>교체용.push(원정대[n][m]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>교체용.push(원정대[n][o]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>원정대[n].splice(m, 1, 교체용[1]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>원정대[n].splice(o, 1, 교체용[0]);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>교체용 = [];</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;번호 교체가 완료되었습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}else{</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;존재하지 않는 원정대원이 있거나 동일한 원정대원입니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">   </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">  </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\"> </span>}</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">&nbsp; &nbsp;if(msg == &quot;!refresh&quot;){</span></div><div><span style=\"font-size: 13.3333px;\">&nbsp; 전체초기화확인 = 0;</span></div><div><span style=\"font-size: 13.3333px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;모두복구를 사용할 수 없게 되었습니다.&quot;);</span></div><div><span style=\"font-size: 13.3333px;\">&nbsp; &nbsp;}</span></div><div><span style=\"font-size: 13.3333px;\">}</span></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004D4900000000",
+            "head": "카톡봇",
+            "headId": 83,
+            "id": 19785,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 256,
+            "refArticleId": 19785,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "메이플스토리M 원정대 명단 작성 도우미 봇(자바스크립트)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1592316590323,
+            "writer": {
+                "id": "youngrj93",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "자바스크립트초보"
+            }
+        },
+        "articleId": 19785,
+        "attaches": [
+            {
+                "extension": "txt",
+                "fullName": "메M 원정대봇 자바스크립트(배포용).txt",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "메M 원정대봇 자바스크립트(배포용).txt",
+                "size": 13836,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/ea7ff64d546160d5f81c7b407590e99030629c11/20200616_171_cafefile/29537083_1592316446571_gqxWtz_txt/%EB%A9%94M+%EC%9B%90%EC%A0%95%EB%8C%80%EB%B4%87+%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%28%EB%B0%B0%ED%8F%AC%EC%9A%A9%29.txt?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "긁기 가능한뎁...",
+                    "id": 93879162,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93879162,
+                    "updateDate": 1592316975000,
+                    "writer": {
+                        "id": "noblesse1980",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjRfMTMx/MDAxNTk1NTY2OTQzNTM3.b7np7GPTo7F0R26DgKXWat-NJcMVROC4QPDhwZYTWlwg.BwHVUl1F9kf8hgyjxORF_JokdecqAynrQhwtYs0I11gg.JPEG/didhd_vmtk.jpg"
+                        },
+                        "nick": "야옹"
+                    }
+                },
+                {
+                    "content": "오른쪽 마우스 비허용입니다. 별도로 뭘 설정하신거 아니면 안긁히는게 정상이에요.",
+                    "id": 93879326,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93879162,
+                    "updateDate": 1592317058000,
+                    "writer": {
+                        "id": "youngrj93",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "자바스크립트초보"
+                    }
+                },
+                {
+                    "content": "그 별도로 뭘 설치한 건 아니지만 뭘 한 것은 맞습니다",
+                    "id": 93879600,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93879162,
+                    "replyMember": {
+                        "id": "youngrj93",
+                        "nick": "자바스크립트초보"
+                    },
+                    "updateDate": 1592317187000,
+                    "writer": {
+                        "id": "noblesse1980",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjRfMTMx/MDAxNTk1NTY2OTQzNTM3.b7np7GPTo7F0R26DgKXWat-NJcMVROC4QPDhwZYTWlwg.BwHVUl1F9kf8hgyjxORF_JokdecqAynrQhwtYs0I11gg.JPEG/didhd_vmtk.jpg"
+                        },
+                        "nick": "야옹"
+                    }
+                },
+                {
+                    "content": "자바스크립트 disable 같은거 하셨겠죠",
+                    "id": 93879710,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93879162,
+                    "replyMember": {
+                        "id": "noblesse1980",
+                        "nick": "야옹"
+                    },
+                    "updateDate": 1592317232000,
+                    "writer": {
+                        "id": "youngrj93",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "자바스크립트초보"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 93891638,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93891638,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1592326035000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

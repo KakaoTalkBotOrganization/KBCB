@@ -1,0 +1,435 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 28,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\">어라.... 글이 지워졌었네요.수정한다고 편집하고는 임시저장만 했었나</div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\"><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>/*</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>-인원수를 2~8인</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>(1인일때 시작안되고 8인 가득차면 참가불가 - 필요시 수정하시길)</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>-인원수가 적거나 8인이 되면 참가불가 메시지</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>-중간 종료가능(종료시 재확인1회 1또는 예 하면 종료, 2또는 아니요 하면 종료취소)</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>-현재 순서 알림</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>-탄환수(현재 8발) 중 발포 될때까지 순서돌리기(3명일시 1,2,3,1,2,3,1,2)</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>-이미 시작된 경우 참가불가 메시지</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>*/</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b><br /></b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>var players = [];</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>var Gstart = false;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>var 탄환;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>var m;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>var 종료확인 = false;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>var 종료확인자;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b><br /></b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp;if (msg == &quot;/러시안룰렛&quot;) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;replier.reply(&quot;[봇]\\n게임설명\\n/러시안룰렛 참가 로 참가하시고 /시작 하시면 룰렛을 준비. 탄환은 8발이며 최소2인에서 8인까지 참여가능.\\n자신의 운을 믿으시나요?&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;if (msg == &quot;/러시안룰렛 참가&quot;) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; if (players.length &lt; 8 &amp;&amp; Gstart == false) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (players.indexOf(sender)!=-1) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[봇]\\n&quot;+sender+&quot;님은 이미 참가하셨습니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; players.push(sender);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n룰렛에 참가하셨습니다.현재 참가자는 :\\n&quot; + players + &quot;\\n입니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (players.length == 8) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[봇]\\n참가자가 8명이 되었으니 준비가 되셨으면 시작하여 주세요&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; }&nbsp; else if (players.length == 8 || Gstart == true) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[봇]\\n게임이 이미 시작되었거나 정원이 가득차 참가하실 수 없으십니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;if (msg == &quot;/시작&quot; &amp;&amp; players.indexOf(sender)!=-1) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; if (players.length &gt; 1) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; Gstart = true;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; m = 0;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (players.length &lt; 8) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while (players.length &lt; 8) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for (var n=0 ; n &lt; players.length ; n++) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (players.length &lt; 8) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; players.push(players[n]);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {break;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;탄환 = Math.floor(Math.random() * 8);&nbsp;&nbsp;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[봇]\\n탄환이 장전되었습니다. 첫 시작은 &quot; + players[0] +&quot;님 이십니다.\\n/빵 으로 방아쇠를 당겨주세요&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; } else if (players.length == 1) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n혼자서는 시작할 수 없습니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;if (msg == &quot;/빵&quot; &amp;&amp; Gstart == true &amp;&amp; players[m] == sender) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; if (m == 탄환) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n타-앙!&#128073;\\n&quot;+sender+&quot;님이 사망하셨습니다. 애도를...&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; Gstart = false;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; m = 0;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; players = [];</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; 탄환 = null;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; m+=1;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n철컥.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; java.lang.Thread.sleep(1000);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;다음은 &quot;+players[m]+&quot;님 차례입니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;} else if (msg == &quot;/빵&quot; &amp;&amp; Gstart == false) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;replier.reply(&quot;[봇]\\n아직 게임이 시작되지 않았습니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;if (msg == &quot;/종료&quot; &amp;&amp; Gstart == true) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;replier.reply(&quot;[봇]\\n게임이 진행중입니다. 정말로 종료하시겠습니까?\\n1.예&nbsp; &nbsp; &nbsp;2.아니오&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;종료확인 = true</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;종료확인자 = sender;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;} else if (msg == &quot;/종료&quot; &amp;&amp; Gstart == false) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; if (players.length != 0) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n게임은 시작되지 않았으나 참가중인 유저가 있습니다.\\n게임을 종료하시겠습니까?\\n1.예&nbsp; &nbsp; &nbsp; 2.아니요&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n게임이 시작되지 않았습니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;}</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;if (종료확인 &amp;&amp; sender == 종료확인자) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; if (msg.indexOf(&quot;1&quot;)!=-1 || msg.indexOf(&quot;예&quot;)!=-1) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; Gstart = false;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; m = 0;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; players = [];</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; 탄환 = null;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; 종료확인 = false;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; 종료확인자 = null;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n게임을 종료했습니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; } if (msg.indexOf(&quot;2&quot;)!=-1 || msg.indexOf(&quot;아니오&quot;)!=-1) {</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; 종료확인 = false;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; 종료확인자 = null;</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n종료가 취소되었습니다.&quot;);</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"font-family: inherit; font-size: inherit; list-style: none; margin: 0px; padding: 0px;\"><b>&nbsp; &nbsp;}</b></div><div><b>}</b></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000014500000000",
+            "id": 325,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 750,
+            "refArticleId": 325,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "러시안 룰렛(수정)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1546240300840,
+            "writer": {
+                "id": "r960701",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "카신"
+            }
+        },
+        "articleId": 325,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 50553772,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50553772,
+                    "sticker": {
+                        "height": 112,
+                        "id": "linebiz21_01-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/linebiz21_01/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1546242239000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "2 가 포함되있어도 종료\r\n아니오가 포함되있어도 종료\r\n",
+                    "id": 50555322,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50553772,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1546244611000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "게임을 종료하시겠습니까에서 \"2.아니요\" 라고 되있는데 \"아니오\"라고 입력해야 종료가 취소되게 되있네염\r\n그리고 취소부분은 &&로 되있어서 ||으로 고치는게 좋겠네염",
+                    "id": 50554503,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50554503,
+                    "updateDate": 1546243475000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "아. ||이건 제가 틀린게 맞습니다. 지적 감사합니다.\r\n",
+                    "id": 50555437,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50554503,
+                    "updateDate": 1546244763000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "이렇게 뜨네요...",
+                    "id": 50554897,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxODEyMzFfMTEg/MDAxNTQ2MjQ0MDI5NTU3.YLfH1ghu4fJ--HxS5GTmOwaYQsww6qhcDJ03YKh7rA8g.6RY_q8ancEsNlioI6HYHI942Ab40pjkCRmQsX8LWDG4g.PNG.h11744/externalFile.png"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.png",
+                        "height": 1920,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxODEyMzFfMTEg/MDAxNTQ2MjQ0MDI5NTU3.YLfH1ghu4fJ--HxS5GTmOwaYQsww6qhcDJ03YKh7rA8g.6RY_q8ancEsNlioI6HYHI942Ab40pjkCRmQsX8LWDG4g.PNG.h11744/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxODEyMzFfMTEg/MDAxNTQ2MjQ0MDI5NTU3.YLfH1ghu4fJ--HxS5GTmOwaYQsww6qhcDJ03YKh7rA8g.6RY_q8ancEsNlioI6HYHI942Ab40pjkCRmQsX8LWDG4g.PNG.h11744/externalFile.png",
+                        "width": 1080
+                    },
+                    "refId": 50554897,
+                    "updateDate": 1546244030000,
+                    "writer": {
+                        "id": "h11744",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "l상상l"
+                    }
+                },
+                {
+                    "content": "이대로 입력했습니다.\r\n\r\nfunction response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){\r\n if (msg == \"/러시안룰렛\") {\r\n   replier.reply(\"[봇]\r\n게임설명\r\n/러시안룰렛 참가 로 참가하시고 /시작 하시면 룰렛을 준비. 탄환은 8발이며 최소2인에서 8인까지 참여가능.\r\n자신의 운을 믿으시나요?\");\r\n   }\r\n   if (msg == \"/러시안룰렛 참가\") {\r\n      if (players.length < 8 && Gstart == false) {\r\n         if (players.indexOf(sender)!=-1) {\r\n         replier.reply(\"[봇]\r\n\"+sender+\"님은 이미 참가하셨습니다.\");\r\n         return;\r\n         }\r\n      players.push(sender);\r\n      replier.reply(\"[봇]\r\n룰렛에 참가하셨습니다.현재 참가자는 :\r\n\" + players + \"\r\n입니다.\");\r\n         if (players.length == 8) {\r\n         replier.reply(\"[봇]\r\n참가자가 8명이 되었으니 준비가 되셨으면 시작하여 주세요\");\r\n         }\r\n      }  else if (players.length == 8 || Gstart == true) {\r\n         replier.reply(\"[봇]\r\n게임이 이미 시작되었거나 정원이 가득차 참가하실 수 없으십니다.\");\r\n         }\r\n   }\r\n   if (msg == \"/시작\" && players.indexOf(sender)!=-1) {\r\n      if (players.length > 1) {\r\n      Gstart = true;\r\n      m = 0;\r\n         if (players.length < 8) {\r\n            while (players.length < 8) {\r\n               for (var n=0 ; n < players.length ; n++) {\r\n                  if (players.length < 8) {\r\n                  players.push(players[n]);\r\n                  } else {break;}\r\n               }\r\n            }\r\n         }\r\n         탄환 = Math.floor(Math.random() * 8);  \r\n         replier.reply(\"[봇]\r\n탄환이 장전되었습니다. 첫 시작은 \" + players[0] +\"님 이십니다.\r\n/빵 으로 방아쇠를 당겨주세요\");\r\n      } else if (players.length == 1) {\r\n      replier.reply(\"[봇]\r\n혼자서는 시작할 수 없습니다.\");\r\n      }\r\n   }\r\n   if (msg == \"/빵\" && Gstart == true && players[m] == sender) {\r\n      if (m == 탄환) {\r\n      replier.reply(\"[봇]\r\n타-앙!👉\r\n\"+sender+\"님이 사망하셨습니다. 애도를...\");\r\n      Gstart = false;\r\n      m = 0;\r\n      players = [];\r\n      탄환 = null;\r\n      } else {\r\n      m+=1;\r\n      replier.reply(\"[봇]\r\n철컥.\");\r\n      java.lang.Thread.sleep(1000);\r\n      replier.reply(\"다음은 \"+players[m]+\"님 차례입니다.\");\r\n      }\r\n   } else if (msg == \"/빵\" && Gstart == false) {\r\n   replier.reply(\"[봇]\r\n아직 게임이 시작되지 않았습니다.\");\r\n   }\r\n   if (msg == \"/종료\" && Gstart == true) {\r\n   replier.reply(\"[봇]\r\n게임이 진행중입니다. 정말로 종료하시겠습니까?\r\n1.예     2.아니오\");\r\n   종료확인 = true\r\n   종료확인자 = sender;\r\n   } else if (msg == \"/종료\" && Gstart == false) {\r\n      if (players.length != 0) {\r\n      replier.reply(\"[봇]\r\n게임은 시작되지 않았으나 참가중인 유저가 있습니다.\r\n게임을 종료하시겠습니까?\r\n1.예      2.아니요\");\r\n      } else {\r\n      replier.reply(\"[봇]\r\n게임이 시작되지 않았습니다.\");\r\n      }\r\n   }\r\n   if (종료확인 && sender == 종료확인자) {\r\n      if (msg.indexOf(\"1\")!=-1 || msg.indexOf(\"예\")!=-1) {\r\n      Gstart = false;\r\n      m = 0;\r\n      players = [];\r\n      탄환 = null;\r\n      종료확인 = false;\r\n      종료확인자 = null;\r\n      replier.reply(\"[봇]\r\n게임을 종료했습니다.\");\r\n      } if (msg.indexOf(\"2\")!=-1&&msg.indexOf(\"아니오\")!=-1) {\r\n      종료확인 = false;\r\n      종료확인자 = null;\r\n      replier.reply(\"[봇]\r\n종료가 취소되었습니다.\");\r\n      }\r\n   }",
+                    "id": 50554902,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50554897,
+                    "updateDate": 1546244058000,
+                    "writer": {
+                        "id": "h11744",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "l상상l"
+                    }
+                },
+                {
+                    "content": "맨위에 전역변수가 일단빠져있어요",
+                    "id": 50555508,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50554897,
+                    "replyMember": {
+                        "id": "h11744",
+                        "nick": "l상상l"
+                    },
+                    "updateDate": 1546244868000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "var players = [];\r\n\r\nvar Gstart = false;\r\n\r\nvar 탄환;\r\n\r\nvar m;\r\n\r\nvar 종료확인 = false;\r\n\r\nvar 종료확인자;\r\n\r\n이게 전역변수로 아는데 요거 입력해도 마찬가지네요...",
+                    "id": 50555604,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50554897,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1546244999000,
+                    "writer": {
+                        "id": "h11744",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "l상상l"
+                    }
+                },
+                {
+                    "content": "맨아래에 } 추가 \r\n>.<\r\n수정해뒀으니 그냥 다시 붙여보세요",
+                    "id": 50555641,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50554897,
+                    "replyMember": {
+                        "id": "h11744",
+                        "nick": "l상상l"
+                    },
+                    "updateDate": 1546245098000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "오옷! 됩니다! 감사해요",
+                    "id": 50555680,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50554897,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "line_choco-2-160-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/line_choco/original_2.png",
+                        "width": 112
+                    },
+                    "updateDate": 1546245125000,
+                    "writer": {
+                        "id": "h11744",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "l상상l"
+                    }
+                }
+            ],
+            "last": {
+                "id": 58490412,
+                "refId": 58490412
+            },
+            "next": {
+                "id": 50560028,
+                "refId": 50560028
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

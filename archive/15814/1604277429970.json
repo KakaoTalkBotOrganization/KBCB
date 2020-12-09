@@ -1,0 +1,182 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [
+                {
+                    "json": {
+                        "audioUrl": "",
+                        "desc": "자바스크립트를 사용한다면 배열을 많이 사용한다. 하지만, 다차원 배열을 생성하려면 잠깐 머뭇거리기 마련이다. 그 머뭇거림을 해결해보고자 이 포스팅을 작성한다. 우선, 2차원 배열은 배열로 이루어진 배열이..",
+                        "domain": "smilerici.tistory.com",
+                        "from": "MOBILEWEB",
+                        "imageUrl": "https://dthumb-phinf.pstatic.net/?src=https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99AE8E4E5B90D69D18&amp;type=f220",
+                        "layout": "SIMPLE_IMAGE",
+                        "linkUrl": "https://smilerici.tistory.com/71",
+                        "truncatedDesc": "&#51088;&#48148;&#49828;&#53356;&#47549;&#53944;&#47484; &#49324;&#50857;&#54620;&#45796;&#47732; &#48176;&#50676;&#51012; &#47566;&#51060; &#49324;&#50857;&#54620;&#45796;. &#54616;&#51648;&#47564;, &#45796;&#52264;&#50896; &#48176;&#50676;&#51012; &#49373;&#49457;&#54616;&#47140;&#47732; &#51104;&#44624; &#47672;&#47943;&#44144;&#47532;&#44592; &#47560;&#47144;&#51060;&#45796;. &#44536; &#47672;&#47943;&#44144;&#47548;..",
+                        "truncatedTitle": "[javascript] &#45796;&#52264;&#50896; &#48176;&#50676; &#47564;&#46300;&#45716; 3&#44032;&#51648; &#48169;&#48277;",
+                        "videoUrl": ""
+                    },
+                    "type": "LINK"
+                }
+            ],
+            "contentHtml": "<p>자바스크립트를 사용한다면 배열을&nbsp;많이 사용한다.&nbsp;<br />하지만, 다차원 배열을 생성하려면 잠깐 머뭇거리기&nbsp;마련이다.<br />그 머뭇거림을 해결해보고자&nbsp;이 포스팅을 작성한다.&nbsp;&nbsp;<br /><br />우선,<br />2차원 배열은 배열로 이루어진 배열이다.&nbsp;<br />3차원은 배열로 이루어진 배열의 배열이다.&nbsp;<br />4차원은 배열로 이루어진&nbsp;배열의......<br /><br />다차원 배열의 의미는&nbsp;다들 알고 있을테니,<br />말장난은 그만하고 대표적으로 2차원 배열을 만들어보자<br />(다차원 배열의 의미를 모른다면 다른 글을 참고하자.&nbsp;이 글에서는 설명해주지 않는다.)<br /><br />1. 배열 직접 선언<br /><br />배열 기호나&nbsp;Array를 이용해서 미리 선언하여 사용하는 방법이다.<br /><br />다음 코드를 보자<br /><br />const array = [[], []];<br />array[0][0] = 1;<br />array[0][1] = 2;<br />array[1][0] = 3;<br />array[1][1] = 4;<br />replier.reply(array); //[[1,2],[3,4]]<br /><br />배열 기호를 통해 다차원 배열을 선언한다. Array를 이용한 선언도 마찬가지다.<br /><br />const array = Array(Array(), Array());<br />array[0][0] = 1;<br />array[0][1] = 2;<br />array[1][0] = 3;<br />array[1][1] = 4;<br />replier.reply(array); //[[1,2],[3,4]]<br /><br />사실,&nbsp;첫번째와 같은 것이다. 배열 메소드 push로도 값을 추가해줘도 된다.<br /><br />const array = Array(Array(), Array());<br />array[0].push(1);<br />array[0].push(2);<br />array[1].push(3);<br />array[1].push(4);<br />replier.reply(array); //[[1,2],[3,4]]<br /><br />물론 값을 나중에 할당하지 않고 배열을 선언할 때&nbsp;값을 할당해도 된다.<br /><br />const array = Array(Array(1,2), Array(3,4));<br />replier.reply(array); //[[1,2],[3,4]]<br /><br />2. Array.map 활용&nbsp;<br /><br />만약, 배열안에 100개의 배열을 1번과 같이 선언하려면 언제 100개를 선언하고&nbsp;있을 것인가.<br />map 메소드를 이용해서 간단하게 다차원 배열을 선언하자.<br /><br />const array = Array(4).fill(null).map(() =&gt; Array());<br />replier.reply(array); //[[],[],[],[]]<br /><br />원하는 크기의 배열을 생성하고 fill 함수를 이용해서 null로 초기 값을 할당해준다.<br />null로 할당하지 않는다면 map 함수가 실행되지 않을 것이다.<br />그리고 map 함수를 이용해서 각 배열 요소를&nbsp;빈 배열로 재선언 해주면 원하는 크기의 다차원 배열로 사용할 수 있다.<br />물론, map 함수를 통해&nbsp;원하는 값으로&nbsp;return&nbsp;하여&nbsp;배열을 선언 할 수도 있다.&nbsp;(위 코드에서는&nbsp;arrow function&nbsp;사용했다.)<br />위의 코드에서는 4개 크기의 배열을 선언하였으니 4개의 배열을 가진 다차원 배열이 생성됐다.<br /><br />사용법은 1번을 참고하자.<br /><br />3. Array.from 활용<br /><br />2번에서&nbsp;map을 통해 다차원 배열을 만들었다면 2번을 응용해서 Array.from 함수를 통해 다차원 배열을 만들어 보자.<br />Array.from은 ES6에서 정의한 문법이다.<br /><br />const array = Array.from(Array(4), () =&gt; Array());<br />replier.reply(array); //[[],[],[],[]]<br /><br />Array.from은&nbsp;배열 혹은 유사한 배열을 배열로 변환해주는 역할을 한다.<br />첫번째 요소로는 유사한 배열을 받고, 두번째 요소로는 map함수와 동일하게&nbsp;배열&nbsp;각 요소에 적용할&nbsp;함수를 받는다.<br />위 코드를 실행하면 2번과 동일한 결과를 받을 수 있다.<br /><br />이 외에도 for, forEach 등 을 사용해서 다차원 배열을 선언할 수 있다. 개발자 취향대로 사용하면 되겠다.<br /><br />출처 : <a href=\"https://smilerici.tistory.com/71\" target=\"_blank\">https://smilerici.tistory.com/71</a></p>[[[CONTENT-ELEMENT-0]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003DC600000000",
+            "id": 15814,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 151,
+            "refArticleId": 15814,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "다차원 배열 만드는 3가지 방법",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586508404797,
+            "writer": {
+                "id": "choho0327",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA2MTZfMTEg/MDAxNTkyMjM4ODI5NjU2.Q8dwixhud4Izb3cWGmGI9aXV7iamN1oBkInKT5guiKgg.NiwRar-HWe1ErnKq4v8FyAlfaRPb358-weeQ_H8ao9og.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "익명"
+            }
+        },
+        "articleId": 15814,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "fill하고 map 하지 말고 그냥 처음부터 fill([]) 하면 되는것",
+                    "id": 87033267,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87033267,
+                    "updateDate": 1586521962000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

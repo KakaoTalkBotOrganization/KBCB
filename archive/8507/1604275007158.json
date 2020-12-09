@@ -1,0 +1,447 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 23,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 2227,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEyMDFfMjEx/MDAxNTc1MTk2NTYyMDQ3.mRiTjxaWFwre7FVdNBwFu_vlA7_1CACmhD5FVr-CwLAg.97HPYonq7w48u6PYkE3AU4l53jHCfNeWdX2NsehK3mog.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1099,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEyMDFfODYg/MDAxNTc1MTk2NTYyOTIw.npCF9EKpSCjp8F67QF38WZQdD6fNfdbWSMAtJVFeqjYg.IliJfNsn_ofrSoP-FxEIQRedCmekO5FA53dZUU3t4dYg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>//12월 3일 소스에 오타가 있어 수정했습니다.<br /><br />limit = 31<br />playerList = []<br />order = []<br />start = false<br />leader = &quot;없음&quot;<br />nowTurn = &quot;없음&quot;<br />total = 0<br /><br />Array.prototype.shuffle = function() {<br />return this.sort(_ =&gt; Math.random() - 0.5)<br />}<br /><br />brReset = _ =&gt; playerList = [],order = [],start = false,leader = &quot;없음&quot;,nowTurn = &quot;없음&quot;,total = 0;<br /><br />function response (room, msg, sender, _, replier) {<br /><br />if (msg == &quot;/베라 입장&quot;) {<br />if (!start) {<br />if (playerList.indexOf(sender)==-1) {<br />playerList.push(sender)<br />replier.reply(&quot;[!] &quot;+sender+&quot; 님이 방에 입장하셨어요!\\n\\n&quot;+playerList.map((a, b) =&gt; (b+1)+&quot;. &quot;+a).join(&quot;\\n&quot;))<br />if (playerList.length==1) {<br />leader = sender<br />replier.reply(&quot;[!] &quot;+sender+&quot; 님이 방장입니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 이미 방에 입장하셨습니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 이미 게임이 시작되었습니다.&quot;)<br />}<br />}<br /><br />if (msg == &quot;/베라 퇴장&quot;) {<br />if (!start) {<br />if (playerList.indexOf(sender)!=-1) {<br />playerList.splice(playerList.indexOf(sender), 1)<br />replier.reply((&quot;[!] &quot;+sender+&quot; 님이 퇴장하셨어요!\\n\\n&quot;+playerList.map((a, b) =&gt; (b+1)+&quot;. &quot;+a).join(&quot;\\n&quot;)).trim())<br />if (playerList.length==1) {<br />leader = sender<br />replier.reply(&quot;[!] &quot;+playerList+&quot; 님이 방장입니다!&quot;)<br />}<br />if (playerList.length==0) replier.reply(&quot;[!] 모든 플레이어가 퇴장하였습니다!&quot;);<br />} else {<br />replier.reply(&quot;[!] 아직 방에 입장하지 않으셨습니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 게임 중에는 퇴장할 수 없습니다!&quot;)<br />}<br />}<br /><br />if (msg == &quot;/베라 시작&quot;) {<br />if (!start) {<br />if (sender == leader) {<br />if (playerList.length &gt; 1) {<br />start = true<br />order = playerList.shuffle()<br />nowTurn = order[0]<br />replier.reply(&quot;[!] 게임을 시작합니다! &quot;+nowTurn+&quot; 님 부터 1, 2, 3 중 하나를 입력해 주세요.&quot;)<br />} else {<br />replier.reply(&quot;[!] 2인 이상이어야 게임을 시작할 수 있습니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 게임은 오직 방장만 시작할 수 있습니다.&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 이미 게임이 시작되었습니다.&quot;)<br />}<br />}<br /><br />if (msg == &quot;/베라 종료&quot;) {<br />if (start) {<br />if (sender == leader) {<br />brReset()<br />replier.reply(&quot;[!] 게임이 종료되었습니다!&quot;)<br />} else {<br />replier.reply(&quot;[!] 게임은 오직 방장만 종료할 수 있습니다.&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 아직 게임이 시작되지 않았습니다!&quot;);<br />}<br />}<br /><br />if (!isNaN(msg)&amp;&amp;nowTurn==sender&amp;&amp;start) {<br />if (1 &lt;= Number(msg)-total &amp;&amp; Number(msg)-total &lt;= 3) {<br />total = Number(msg)<br />if (total &gt; limit-1) {<br />playerList.splice(playerList.indexOf(sender), 1)<br />replier.reply(&quot;[!] 이런, &quot;+sender+&quot; 님이 탈락하였습니다! 게임 끝!\\n\\n[생존자]\\n&quot;+(playerList.map((a, b) =&gt; (b+1)+&quot;. &quot;+a).join(&quot;\\n&quot;)).trim())<br />brReset()<br />} else {<br />nowTurn = order[((order.indexOf(nowTurn)+1)&lt;(order.length))?(order.indexOf(nowTurn)+1):0]<br />replier.reply(&quot;[!] &quot;+total+&quot;\\n&quot;+nowTurn+&quot; 님은 &quot;+(total+1)+&quot;, &quot;+(total+2)+&quot;, &quot;+(total+3)+&quot; 중 하나를 입력해 주세요.&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 숫자는 &quot;+(total+1)+&quot;, &quot;+(total+2)+&quot;, &quot;+(total+3)+&quot; 중 하나만 입력해 주세요.&quot;)<br />}<br />}<br /><br />}<br /><br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />[[[CONTENT-ELEMENT-1]]]<br /><p><br /><br />명령어<br /><br />/베라 입장<br />-- 베라 입장하기 (1빠가 방장임)<br /><br />/베라 퇴장<br />-- 베라 퇴장하기<br /><br />/베라 시작<br />-- 베라 시작하기 (방장만 시작 가능)<br /><br />/베라 종료<br />-- 베라 종료하기 (방장만 종료 가능)<br /><br /><br /><br />소스 맨위에 Limit = 31 되어있는데<br />숫자를 마음대로 조정하여 게임 방식을 바꿀 수 있습니다.<br /><br />Limit = 41 하면<br />41 말하면 지는 거임<br /><br /><br />딱 100줄 채웠습니다ㅎㅎ</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000213B00000000",
+            "id": 8507,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 594,
+            "refArticleId": 8507,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "베스킨라빈스 31 v 1.0",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575196563547,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 8507,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 137899,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/96038a3b281d1ca9846007330fe893ec4c1ee046/MjAxOTEyMDFfMjEx/MDAxNTc1MTk2NTYyMDQ3.mRiTjxaWFwre7FVdNBwFu_vlA7_1CACmhD5FVr-CwLAg.97HPYonq7w48u6PYkE3AU4l53jHCfNeWdX2NsehK3mog.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 64545,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/3faa239081dddb072bcda89fa7403b43e5b749ab10/MjAxOTEyMDFfODYg/MDAxNTc1MTk2NTYyOTIw.npCF9EKpSCjp8F67QF38WZQdD6fNfdbWSMAtJVFeqjYg.IliJfNsn_ofrSoP-FxEIQRedCmekO5FA53dZUU3t4dYg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "개고인물",
+                    "id": 74787780,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74787780,
+                    "updateDate": 1575196940000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "NotreDame"
+                    }
+                },
+                {
+                    "content": "30 하면 끝 아닌가요?ㅋㅋ",
+                    "id": 74788255,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74788255,
+                    "updateDate": 1575197393000,
+                    "writer": {
+                        "id": "tkdgjs6897",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMTAx/MDAxNTgwNTY3MzYzMTY2.XUeAx5gDTLB-IBBj-2Sb8BmdLVmtTF2Nn9PAkRw4GV0g.zno8J23Z--_f3x3V5V7N7r0O_Pxr4lA1SAktuNttGIIg.JPEG/1552227072327.jpg"
+                        },
+                        "nick": "상헌굿"
+                    }
+                },
+                {
+                    "content": "아뇨 입력 못한다고 떠요",
+                    "id": 74788628,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74788255,
+                    "updateDate": 1575197696000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "근데 프로토타입을 람다식 안쓴건 100줄 채우려고 그런거늬",
+                    "id": 74802017,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74802017,
+                    "updateDate": 1575207179000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "가독성때문에\r\n프로토타입에는 원래 안 씀",
+                    "id": 74802064,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74802017,
+                    "updateDate": 1575207211000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "머하는 분이지",
+                    "id": 74802330,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74802017,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1575207385000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "써짐",
+                    "id": 74814542,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74802017,
+                    "replyMember": {
+                        "id": "enffl1032",
+                        "nick": "이정우"
+                    },
+                    "updateDate": 1575214953000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "ㅘ",
+                    "id": 74821167,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74821167,
+                    "updateDate": 1575240411000,
+                    "writer": {
+                        "id": "pauljjang410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "그린스크린"
+                    }
+                },
+                {
+                    "content": "으어 만들려고 해도 순서대로 돌아가는거 못하게따",
+                    "id": 74867721,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74867721,
+                    "updateDate": 1575278177000,
+                    "writer": {
+                        "id": "jjes1302",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "흐미"
+                    }
+                },
+                {
+                    "content": "저도 카톡봇 시작했을 때 그것때문에 베라 못 만들었었는데..\r\n제 소스 잘보시면 해결한 원리 있어요!",
+                    "id": 74868400,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74867721,
+                    "updateDate": 1575278869000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                }
+            ],
+            "last": {
+                "id": 95958139,
+                "refId": 95958139
+            },
+            "next": {
+                "id": 75842412,
+                "refId": 74867721
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

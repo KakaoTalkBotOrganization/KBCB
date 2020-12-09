@@ -1,0 +1,174 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div><b>=&gt; <font color=\"#7d7d7d\">생성자함수의 상속</font></b></div><div><font color=\"#7d7d7d\"><br /></font></div><div><b>강좌 내용</b></div><div><b>=&gt; 주의 : 이 강좌는 초심자에게는 권하지 않습니다.</b></div><div><b><br /></b></div><div><b>저번 강좌에서는 객체 간의 상속을 알아봤다.</b></div><div><b>이번 강좌에서는 생성자함수의 상속에 대해서 알아보겠다.</b></div><div><b><br /></b></div><div><b>일단 왜 이게 필요한지 예제를 들어보겠다.</b></div><div><b>(prototype 강좌에서 썼던 예제에 조금 추가했다.)</b></div><div><b><br /></b></div><div><div style=\"font-size: 13.3333px; font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; background-color: rgb(255, 255, 255);\"><div style=\"font-size: 13.3333px;\"><b>function robotmake(name) {&nbsp; //생성자함수</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.name = name;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.gold = 100;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.health = 10;</b></div><div style=\"font-size: 13.3333px;\"><b>}</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>robotmake.prototype.upgrade = function() {&nbsp; //robotmake.prototype 객체에 메소드를 넣는다</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style=\"font-size: 13.3333px;\">this.gold -= 10;</span></b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.health++;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return &quot;업그레이드 완료&quot;; };</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>function turretmake(name) {&nbsp; //생성자함수</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.name = name;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.gold = 100;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.health = 10;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.attack = 5;</b></div><div style=\"font-size: 13.3333px;\"><b>}</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>turretmake.prototype.upgrade = function() {&nbsp; //turretmake.prototype 객체에 메소드를 넣는다</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style=\"font-size: 13.3333px;\">this.gold -= 10;</span></b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.health++;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return &quot;업그레이드 완료&quot;; };</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>robotmake라는 생성자 함수를 만들고</b></div><div style=\"font-size: 13.3333px;\"><b>robotmake에 attack를 추가한 turretmake 생성자 함수를 만들었다.</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>그냥 이렇게 만들어도 잘 작동하지만</b></div><div style=\"font-size: 13.3333px;\"><b>중복이 발생하고 있기 때문에 유지보수를 하기 힘들고 코드가 길어진다.</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>이걸 해결해주는것이 상속이다.</b></div><div style=\"font-size: 13.3333px;\"><b>생성자함수를 상속시킨 코드를 보면서 설명하겠다.</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>function robotmake(name) {&nbsp; //생성자함수</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.name = name;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.gold = 100;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.health = 10;</b></div><div style=\"font-size: 13.3333px;\"><b>}</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>robotmake.prototype.upgrade = function() {&nbsp; //robotmake.prototype 객체에 메소드를 넣는다</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style=\"font-size: 13.3333px;\">this.gold -= 10;</span></b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.health++;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return &quot;업그레이드 완료&quot;; };</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>function turretmake(name) {&nbsp; //생성자함수</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>&nbsp; <span style=\"font-size: 11pt;\">robotmake.call(this, name);&nbsp; //robotmake 상속</span></b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.attack = 5;</b></div><div style=\"font-size: 13.3333px;\"><b>}</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>turretmake.prototype.__proto__ = robotmake.prototype;&nbsp; //robotmake.prototype 상속</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>var turret = new turretmake(&quot;turret1&quot;);</b></div><div style=\"font-size: 13.3333px;\"><b>replier.reply(turret.upgrade());</b></div><div style=\"font-size: 13.3333px;\"><b>replier.reply(turret.gold);</b></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"font-size: 13.3333px;\"><b>원리를 설명하자면&nbsp;</b><b>robotmake.call(this, name);&nbsp;</b></div><div style=\"font-size: 13.3333px;\"><b>여기서 this는 turretmake가 만들고 있는 객체인 turret이 된다.</b></div><div style=\"font-size: 13.3333px;\"><b>(new가 있으므로 this는 생성자함수가 만들고 있는 객체가 된다.)</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>그러니까 robotmake 생성자함수가 turret에 속한것처럼 작동하므로</b></div><div style=\"font-size: 13.3333px;\"><b>robotmake 안에있는 this는 turret을 가리킨다.</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>그러므로 turret 객체에 name, gold, health 속성이 들어가게 된다.</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div></div></div></div></div></div></div></div></div></div><div><b>그리고 turretmake.prototype.__proto__ = robotmake.prototype; 여기서</b></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>turretmake.prototype이 robotmake.prototype을 상속하므로</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>turretmake.prototype에 upgrade 메소드가 들어가게 된다.</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>그래서 turret.upgrade()를 실행시킬때</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>turret에는 upgrade 메소드가 없으므로</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>turret.prototype에 있는 upgrade메소드를 사용하게 되는것이다.</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>당연히&nbsp;</b></span></font><b>turretmake.prototype.__proto__ = robotmake.prototype; 이걸</b></div><div><b>turretmake.prototype = Object.create(robotmake.prototype);</b></div><div><b>이렇게 Object.create()로도 구현이 가능하다.</b></div><div><b>(여기서는 이해를 돕기위해 좀더 직관적인 __proto__ 를 사용했다.)</b></div><div><b><br /></b></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>참고로 같은 이름의 속성이 있다면</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>상속받은 속성을 쓰지않고 기존 객체에 있는 속성을 쓴다.</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>이것도 예제를 보면서 설명하겠다.</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><div style=\"font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>function robotmake(name) {&nbsp; //생성자함수</b></div><div style=\"font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>&nbsp; this.name = name;</b></div><div style=\"font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>&nbsp; this.gold = 100;</b></div><div style=\"font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>&nbsp; this.health = 10;</b></div><div style=\"font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>}</b></div><div style=\"font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><div style=\"font-size: 13.3333px;\"><b>robotmake.prototype.upgrade = function() {&nbsp; //robotmake.prototype 객체에 메소드를 넣는다</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style=\"font-size: 13.3333px;\">this.gold -= 10;</span></b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.health++;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return &quot;업그레이드 완료&quot;; };</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>function turretmake(name) {&nbsp; //생성자함수</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>&nbsp; robotmake.call(this, name);&nbsp; //robotmake 상속</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; this.attack = 5;</b></div><div style=\"font-size: 13.3333px;\"><b>}</b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>turretmake.prototype.__proto__ = robotmake.prototype;&nbsp; //robotmake 상속</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>turretmake.prototype.upgrade =&nbsp;</b><b>function() {&nbsp; //turretmake.prototype 객체에 메소드를 재정의 한다.</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style=\"font-size: 13.3333px;\">this.gold -= 10;</span></b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.health++;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.attack++;</b></div><div style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return &quot;업그레이드 완료&quot;; };</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div><b>var turret = new turretmake(&quot;turret&quot;);</b></div><div><b>replier.reply(turret.upgrade());&nbsp; //상속받은 메소드 대신 재정의된 메소드가 실행된다.</b></div><div><b><br /></b></div><div style=\"font-size: 13.3333px;\"><div style=\"font-size: 13.3333px;\"><b>상속받은 메소드를 다르게 실행시키고 싶다면</b></div><div style=\"font-size: 13.3333px;\"><b>(여기서는 업그레이드할때 공격력도 올라가게 하기)</b></div><div style=\"font-size: 13.3333px;\"><b>그냥 상속을 하는 코드 밑에다 메소드를 재정의 하면 된다.</b></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>이렇게 상속받은 메소드를 재정의 하는것을 오버라이딩 이라고 한다.</b></div><div style=\"font-size: 13.3333px;\"><br /></div></div></div></div></div></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>생성자함수의 상속은 어렵기 때문에 이해가 안되더라도 너무 낙담하지말라.</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>사실 ES6(자바스크립트 6버전)에 추가된 class를 사용하면</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>좀 더 쉽게 이걸 구현할수 있지만</b></span></font></div><div><br /></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>아직 메신저봇에서는 바벨이 불완전하기 때문에</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>(하이라이팅이 사라지는등)</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>prototype을 이용한 상속을 하는 방법을 알려드렸습니다.</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><b>//바벨이 자바스크립트 6버전을 사용할수 있게 해준다.</b></div><div><b><br /></b></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>나중에 완전하게 바벨을 지원을 한다면 class 강좌를 올려보겠다.</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>이번 강좌에서 생성자함수의 상속을 알아봤다.</b></span></font></div><div><b>다음 강좌에서는 constructor 를 설명하겠다.</b></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>//질문은 댓글로 받고 있습니다</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>긴글 읽어주셔서 감사합니다!</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b>//분량 조절 실패로 글이 엄청 길어졌네요 ㅋㅋ</b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div><div><font face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 13.3333px; background-color: rgb(255, 255, 255);\"><b><br /></b></span></font></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000051B900000000",
+            "head": "중급",
+            "headId": 20,
+            "id": 20921,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 65,
+            "refArticleId": 20921,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "함수지향과 객체지향(14) - 생성자함수의 상속",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1594271977613,
+            "writer": {
+                "id": "choi0108-",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "choi0108"
+            }
+        },
+        "articleId": 20921,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 105944049,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 105944049,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57172f8181a7f-15-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57172f8181a7f/original_15.png",
+                        "width": 129
+                    },
+                    "updateDate": 1602571443000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

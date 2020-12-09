@@ -1,0 +1,264 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "안녕하세요<div>그냥... 일본 노래 찾을 때 가수 이름 일본어로 치기 귀찮아서 만들어봤습니다</div><div>간단하지만 드러워서 별로 좋아 보이진 않지만 나름 편해졌습니다 ㅋㅋ</div><div><br /></div><div><div>function response(room, msg, sender, isGroupChat, replier, imageDB) {</div><div>&nbsp; if (room == &quot;&lt;방 이름&gt;&quot; &amp;&amp; (msg.indexOf(&quot;wj&quot;) == 0 || msg.indexOf(&quot;Wj&quot;) == 0)) {</div><div>&nbsp; &nbsp; msg = msg.replace(msg.split(&quot; &quot;)[0] + &quot; &quot;, &quot;&quot;);</div><div><br /></div><div>&nbsp; &nbsp; //원래 を는 wo라고 발음표기하고 o소리가 납니다만.. お와 겹치기에 옹이라고 적어뒀습니다.</div><div>&nbsp; &nbsp; //그리고 ぢゃ, ぢゅ, ぢょ는 jya, jyu, jyo라고 발음표기가 됩니다만.. 이는 じゃ, じゅ, じょ와 발음표기가 같기에 일본어 타자상 dya, dyu, dyo로 적어뒀습니다.</div><div>&nbsp; &nbsp; var japanese = [&quot;あ&quot;, &quot;い&quot;, &quot;う&quot;, &quot;え&quot;, &quot;お&quot;, &quot;か&quot;, &quot;き&quot;, &quot;く&quot;, &quot;け&quot;, &quot;こ&quot;, &quot;さ&quot;, &quot;し&quot;, &quot;す&quot;, &quot;せ&quot;, &quot;そ&quot;, &quot;た&quot;, &quot;ち&quot;, &quot;つ&quot;, &quot;て&quot;, &quot;と&quot;, &quot;な&quot;, &quot;に&quot;, &quot;ぬ&quot;, &quot;ね&quot;, &quot;の&quot;, &quot;は&quot;, &quot;ひ&quot;, &quot;ふ&quot;, &quot;へ&quot;, &quot;ほ&quot;, &quot;ま&quot;, &quot;み&quot;, &quot;む&quot;, &quot;め&quot;, &quot;も&quot;, &quot;や&quot;, &quot;ゆ&quot;, &quot;よ&quot;, &quot;ら&quot;, &quot;り&quot;, &quot;る&quot;, &quot;れ&quot;, &quot;ろ&quot;, &quot;わ&quot;, &quot;を&quot;, &quot;ん&quot;, &quot;きゃ&quot;, &quot;きゅ&quot;, &quot;きょ&quot;, &quot;しゃ&quot;, &quot;しゅ&quot;, &quot;しょ&quot;, &quot;ちゃ&quot;, &quot;ちゅ&quot;, &quot;ちょ&quot;, &quot;にゃ&quot;, &quot;にゅ&quot;, &quot;にょ&quot;, &quot;ひゃ&quot;, &quot;ひゅ&quot;, &quot;ひょ&quot;, &quot;みゃ&quot;, &quot;みゅ&quot;, &quot;みょ&quot;, &quot;りゃ&quot;, &quot;りゅ&quot;, &quot;りょ&quot;, &quot;が&quot;, &quot;ぎ&quot;, &quot;ぐ&quot;, &quot;げ&quot;, &quot;ご&quot;, &quot;ざ&quot;, &quot;じ&quot;, &quot;ず&quot;, &quot;ぜ&quot;, &quot;ぞ&quot;, &quot;だ&quot;, &quot;ぢ&quot;, &quot;づ&quot;, &quot;で&quot;, &quot;ど&quot;, &quot;ば&quot;, &quot;び&quot;, &quot;ぶ&quot;, &quot;べ&quot;, &quot;ぼ&quot;, &quot;ぱ&quot;, &quot;ぴ&quot;, &quot;ぷ&quot;, &quot;ぺ&quot;, &quot;ぽ&quot;, &quot;ぎゃ&quot;, &quot;ぎゅ&quot;, &quot;ぎょ&quot;, &quot;じゃ&quot;, &quot;じゅ&quot;, &quot;じょ&quot;, &quot;ぢゃ&quot;, &quot;ぢゅ&quot;, &quot;ぢょ&quot;, &quot;びょ&quot;, &quot;びゅ&quot;, &quot;びょ&quot;, &quot;ぴゃ&quot;, &quot;ぴゅ&quot;, &quot;ぴょ&quot;];</div><div><br /></div><div>&nbsp; &nbsp; var korean = [&quot;아&quot;, &quot;이&quot;, &quot;우&quot;, &quot;에&quot;, &quot;오&quot;, &quot;카&quot;, &quot;키&quot;, &quot;쿠&quot;, &quot;케&quot;, &quot;코&quot;, &quot;사&quot;, &quot;시&quot;, &quot;스&quot;, &quot;세&quot;, &quot;소&quot;, &quot;타&quot;, &quot;치&quot;, &quot;츠&quot;, &quot;테&quot;, &quot;토&quot;, &quot;나&quot;, &quot;니&quot;, &quot;누&quot;, &quot;네&quot;, &quot;노&quot;, &quot;하&quot;, &quot;히&quot;, &quot;후&quot;, &quot;헤&quot;, &quot;호&quot;, &quot;마&quot;, &quot;미&quot;, &quot;무&quot;, &quot;메&quot;, &quot;모&quot;, &quot;야&quot;, &quot;유&quot;, &quot;요&quot;, &quot;라&quot;, &quot;리&quot;, &quot;루&quot;, &quot;레&quot;, &quot;로&quot;, &quot;와&quot;, &quot;옹&quot;, &quot;응&quot;, &quot;캬&quot;, &quot;큐&quot;, &quot;쿄&quot;, &quot;샤&quot;, &quot;슈&quot;, &quot;쇼&quot;, &quot;챠&quot;, &quot;츄&quot;, &quot;쵸&quot;, &quot;냐&quot;, &quot;뉴&quot;, &quot;뇨&quot;, &quot;햐&quot;, &quot;휴&quot;, &quot;효&quot;, &quot;먀&quot;, &quot;뮤&quot;, &quot;묘&quot;, &quot;랴&quot;, &quot;류&quot;, &quot;료&quot;, &quot;가&quot;, &quot;기&quot;, &quot;구&quot;, &quot;게&quot;, &quot;고&quot;, &quot;자&quot;, &quot;지&quot;, &quot;즈&quot;, &quot;제&quot;, &quot;조&quot;, &quot;다&quot;, &quot;지&quot;, &quot;쯔&quot;, &quot;데&quot;, &quot;도&quot;, &quot;바&quot;, &quot;비&quot;, &quot;부&quot;, &quot;베&quot;, &quot;보&quot;, &quot;파&quot;, &quot;피&quot;, &quot;푸&quot;, &quot;페&quot;, &quot;포&quot;, &quot;갸&quot;, &quot;규&quot;, &quot;교&quot;, &quot;쟈&quot;, &quot;쥬&quot;, &quot;죠&quot;, &quot;댜&quot;, &quot;듀&quot;, &quot;됴&quot;, &quot;뱌&quot;, &quot;뷰&quot;, &quot;뵤&quot;, &quot;퍄&quot;, &quot;퓨&quot;, &quot;표&quot;];</div><div><br /></div><div>&nbsp; &nbsp; var result = &quot;&quot;;</div><div>&nbsp; &nbsp; for (var i = 0; i &lt; msg.length; i++) {</div><div>&nbsp; &nbsp; &nbsp; if (msg[i] != &quot; &quot;) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; if (msg[i] == &quot;ㄴ&quot; || msg[i] == &quot;ㅇ&quot;) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result = result + &quot;ん&quot;;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; } else {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result = result + japanese[korean.indexOf(msg[i])];</div><div>&nbsp; &nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; &nbsp; } else {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; result = result + &quot; &quot;;</div><div>&nbsp; &nbsp; &nbsp; }</div><div>&nbsp; &nbsp; }</div><div><br /></div><div>&nbsp; &nbsp; replier.reply(result);</div><div>&nbsp; }</div><div><br /></div><div>}</div></div><div><br /></div><div><br /></div><div><br /></div><div>//사용예)) wj 코ㄴ니치하</div><div>//출력예))こんにちは</div><div><br /></div><div>//(발음은 와이지만.. 분석은 귀찮음으로.. 하하;;)</div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000316A00000000",
+            "id": 12650,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 54,
+            "refArticleId": 12650,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "발음 -> 히라가나",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583357132097,
+            "writer": {
+                "id": "dydtnalswl",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAzMDVfNjAg/MDAxNTgzMzU4NTY2OTMy.MiRsqNUCvMryQXCNCQl5s99RMKt3Mbx40COxgUOkWgMg.T84vDPH-Hp_MYDRWCuuVGrSc6KvVb35kgbFx-fpMI6Ug.PNG/wiulab_logo_3_2.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Musido"
+            }
+        },
+        "articleId": 12650,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "일본어 자판을 씁시..다..!",
+                    "id": 83156797,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83156797,
+                    "updateDate": 1583357196000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "넵 알겠습니다! ㅋㅋㅋㅋ",
+                    "id": 83156826,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83156797,
+                    "updateDate": 1583357351000,
+                    "writer": {
+                        "id": "dydtnalswl",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDVfNjAg/MDAxNTgzMzU4NTY2OTMy.MiRsqNUCvMryQXCNCQl5s99RMKt3Mbx40COxgUOkWgMg.T84vDPH-Hp_MYDRWCuuVGrSc6KvVb35kgbFx-fpMI6Ug.PNG/wiulab_logo_3_2.png"
+                        },
+                        "nick": "Musido"
+                    }
+                },
+                {
+                    "content": "번역기 소....스....!",
+                    "id": 83158642,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83158642,
+                    "updateDate": 1583361096000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "こんにちは！",
+                    "id": 83163564,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83163564,
+                    "updateDate": 1583364298000,
+                    "writer": {
+                        "id": "hi_ro0404",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMDlfODEg/MDAxNTgzNzY1MzUxNDMw.l_ocKBqdCJUVuQOAp0xwnl04ifiMoaIOhVZe6dN63kgg.Cs3_xZwulyBeLwechHwWBc3wnPMjNhxVLgNMeDAjB-Mg.PNG.hi_ro0404/KakaoTalk_20200306_015408990.png"
+                        },
+                        "nick": "D3fine"
+                    }
+                },
+                {
+                    "content": "こんばんは！",
+                    "id": 83360241,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83163564,
+                    "updateDate": 1583506075000,
+                    "writer": {
+                        "id": "dydtnalswl",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDVfNjAg/MDAxNTgzMzU4NTY2OTMy.MiRsqNUCvMryQXCNCQl5s99RMKt3Mbx40COxgUOkWgMg.T84vDPH-Hp_MYDRWCuuVGrSc6KvVb35kgbFx-fpMI6Ug.PNG/wiulab_logo_3_2.png"
+                        },
+                        "nick": "Musido"
+                    }
+                },
+                {
+                    "content": "트위치 후원용이군",
+                    "id": 83165967,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83165967,
+                    "updateDate": 1583365563000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "이거 좋네요 ㅋㅋㅋ 트위치 후원용 ㅋㅋㅋ",
+                    "id": 83360201,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83165967,
+                    "updateDate": 1583506054000,
+                    "writer": {
+                        "id": "dydtnalswl",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDVfNjAg/MDAxNTgzMzU4NTY2OTMy.MiRsqNUCvMryQXCNCQl5s99RMKt3Mbx40COxgUOkWgMg.T84vDPH-Hp_MYDRWCuuVGrSc6KvVb35kgbFx-fpMI6Ug.PNG/wiulab_logo_3_2.png"
+                        },
+                        "nick": "Musido"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

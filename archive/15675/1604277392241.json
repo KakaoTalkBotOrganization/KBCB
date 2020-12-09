@@ -1,0 +1,445 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 16,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 632,
+                            "service": "CAFE",
+                            "style": "width:1080px; height:923px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MDhfMjEz/MDAxNTg2MzM0MzIzMTM0.wI7khcg_ztgmxE9B6NiL18fFgfu67YRQo-moUspNnXMg.B0CBw7Bs-9ym78dUu4LE7-jx6kTHADnC80VFpg3XtsQg.JPEG/20200408_172505.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p><span style=\"font-size: 13pt;\">&nbsp;[[[CONTENT-ELEMENT-0]]]</span></p><p>&nbsp;</p><p>네이버가 table구조 바꾸면서</p><p>기존소스가 건조주의보 같은 것의 유무때문에</p><p>출력깨지길래 해당태그 삭제후 출력하게끔 만들어 봤습니다.</p><p>&nbsp;</p><p><b><span style=\"color: rgb(204, 0, 0);\">피드백 환영합니다.</span></b></p><p>&nbsp;</p><p>&nbsp;</p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">if(msg.indexOf(&quot;@날씨&quot;) == 0){</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; var area = msg.substr(4);  // 검색어</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; try {&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let data = org.jsoup.Jsoup.connect(&quot;https://m.search.naver.com/search.naver?query=&quot;+area+&quot;%20날씨&quot;).get();&nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let a = data.select(&quot;div.status_wrap&quot;);    // 필요한 데이터가있는 태그 추출</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; a.select(&quot;.list_box li.type_report&quot;).empty(); // 불필요한 태그 내용삭제 ex) 부산,건조주의보&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let b = a.text();  // html태그를 제거해주는 text()</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let tmp = / /gi;   // 공백 한 칸 gi는 정규표현식으로 앞에 문자값 모두찾을때 씀</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var w_arr = [];  // 파싱데이터를 담을 빈 배열선언</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for(var i = 0; i&lt;b.match(tmp).length; i++){ // match(tmp).length == 총 공백갯수&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;w_arr.push(b.split(&quot; &quot;)[i]); // 공백 한 칸 단위로 쪼개서 배열에 담기</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // replier.reply(&quot;z&quot;);</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></p><p>/*  점검용</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(a); html태그 제거 전</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(b); html태그 제거 후</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(w_arr); 데이터 배열</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(w_arr.length); 데이터 배열 길이값</p><p>*/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //  출력방식1</p><p>/*&nbsp;&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;날씨: &quot; + w_arr[2]); //상태</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;현재온도: &quot; + w_arr[4].replace(&quot;온도&quot;,&quot;&quot;) + &quot;C&quot;); //현재온도</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;최고온도: &quot; + w_arr[7] + &quot;C&quot;); //최고온도</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;최저온도: &quot; + w_arr[10] + &quot;C&quot;); //최저온도</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;체감온도: &quot; + w_arr[13].replace(&quot;체감&quot;,&quot;&quot;) + &quot;C&quot;); //체감온도</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;미세먼지: &quot; + w_arr[20] + &quot;㎍/㎥&quot; + &quot;(&quot;+ w_arr[22] +&quot;)&quot;); //미세먼지</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;초미세먼지: &quot; + w_arr[23] + &quot;㎍/㎥&quot; + &quot;(&quot;+ w_arr[25] +&quot;)&quot;); //초미세먼지</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;자외선: &quot; + w_arr[26] + &quot;uvi&quot;+ &quot;(&quot;+ w_arr[28] +&quot;)&quot;); //자외선 mW /㎡&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;습도: &quot; + w_arr[35] + &quot;%&quot;); //습도</p><p>&nbsp; &nbsp; &nbsp; &nbsp;//       replier.reply(&quot;바람: &quot; + w_arr[38] + &quot;m/s&quot; + &quot;(&quot;+ w_arr[40] +&quot;)&quot;); //바람</p><p>*/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //  출력방식2</p><p>/*</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;【&quot;+area+&quot; 날씨】\\n\\n&quot;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;현재상태: &quot; + w_arr[2]+&quot;\\n현재온도: &quot; + w_arr[4].replace(&quot;온도&quot;,&quot;&quot;) + &quot;C&quot;+&quot;\\n최고온도: &quot; + w_arr[7] + &quot;C&quot;+&quot;\\n최저온도: &quot; + w_arr[10] + &quot;C&quot;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;\\n체감온도: &quot; + w_arr[13].replace(&quot;체감&quot;,&quot;&quot;) + &quot;C&quot;+&quot;\\n미세먼지: &quot; + w_arr[20] + &quot;㎍/㎥&quot; + &quot;(&quot;+ w_arr[22] +&quot;)&quot;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;\\n초미세먼지: &quot; + w_arr[23] + &quot;㎍/㎥&quot; + &quot;(&quot;+ w_arr[25] +&quot;)&quot;+&quot;\\n자외선: &quot; + w_arr[26] + &quot;uvi&quot;+ &quot;(&quot;+ w_arr[28] +&quot;)&quot;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;\\n습도: &quot; + w_arr[35] + &quot;%&quot;+&quot;\\n바람: &quot; + w_arr[38] + &quot;m/s&quot; + &quot;(&quot;+ w_arr[40] +&quot;)&quot;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; );</p><p>*/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // 출력방식3</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[0] = &quot;날씨: &quot; + w_arr[2];</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[1] = &quot;현재온도: &quot; + w_arr[4].replace(&quot;온도&quot;,&quot;&quot;) + &quot;C&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[2] = &quot;최고온도: &quot; + w_arr[7] + &quot;C&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[3] = &quot;최저온도: &quot; + w_arr[10] + &quot;C&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[4] = &quot;체감온도: &quot; + w_arr[13].replace(&quot;체감&quot;,&quot;&quot;) + &quot;C&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[5] = &quot;미세먼지: &quot; + w_arr[20] + &quot;㎍/㎥&quot; + &quot;(&quot;+ w_arr[22] +&quot;)&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[6] = &quot;초미세먼지: &quot; + w_arr[23] + &quot;㎍/㎥&quot; + &quot;(&quot;+ w_arr[25] +&quot;)&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[7] = &quot;자외선: &quot; + w_arr[26] + &quot;uvi&quot;+ &quot;(&quot;+ w_arr[28] +&quot;)&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[8] = &quot;습도: &quot; + w_arr[35] + &quot;%&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_arr[9] = &quot;바람: &quot; + w_arr[38] + &quot;m/s&quot; + &quot;(&quot;+ w_arr[40] +&quot;)&quot;;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var result = &quot;【&quot;+area+&quot; 날씨】\\n\\n&quot; + r_arr.join(&quot;\\n&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(result);</p><p>&nbsp;</p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} catch(e) {</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&apos;\\&quot;&apos;+area+&apos;\\&quot; 날씨정보 불러오기 실패&apos;);&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p>&nbsp;</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003D3B00000000",
+            "id": 15675,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 898,
+            "refArticleId": 15675,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[Jsoup] 네이버 날씨정보 파싱",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586334092690,
+            "writer": {
+                "id": "horangi777",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Simiken"
+            }
+        },
+        "articleId": 15675,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "20200408_172505.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "20200408_172505.jpg",
+                "size": 282696,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/f267ee5a467978cde0046357648af788287a84d6/MjAyMDA0MDhfMjEz/MDAxNTg2MzM0MzIzMTM0.wI7khcg_ztgmxE9B6NiL18fFgfu67YRQo-moUspNnXMg.B0CBw7Bs-9ym78dUu4LE7-jx6kTHADnC80VFpg3XtsQg.JPEG/20200408_172505.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "날씨 기능 안고장난 1인",
+                    "id": 86799267,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86799267,
+                    "updateDate": 1586336544000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "MinSoup"
+                    }
+                },
+                {
+                    "content": "제껀 고장나섯. ㅠ",
+                    "id": 86870657,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799267,
+                    "updateDate": 1586397125000,
+                    "writer": {
+                        "id": "horangi777",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                        },
+                        "nick": "Simiken"
+                    }
+                },
+                {
+                    "content": "갠적으로 저렇게 나열하는 것보다 배열 선언한뒤 push로 데이터를 넣고 마지막에 join 해주는 것이 속도도 그렇고 깔끔할 듯 싶습니다.",
+                    "id": 86800273,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86800273,
+                    "updateDate": 1586337360000,
+                    "writer": {
+                        "id": "0308kang",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "공돌이"
+                    }
+                },
+                {
+                    "content": "위에 추가한 내용중\n출력방식3 이런식 말입니까?",
+                    "id": 86870868,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86800273,
+                    "updateDate": 1586398573000,
+                    "writer": {
+                        "id": "horangi777",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                        },
+                        "nick": "Simiken"
+                    }
+                },
+                {
+                    "content": "대충 저런 느낌\n문자열 나열하는 것보다 속도 차이도 실제로 있을 거에요",
+                    "id": 86879334,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86800273,
+                    "replyMember": {
+                        "id": "horangi777",
+                        "nick": "Simiken"
+                    },
+                    "updateDate": 1586401889000,
+                    "writer": {
+                        "id": "0308kang",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "공돌이"
+                    }
+                },
+                {
+                    "content": "아하",
+                    "id": 86888213,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86800273,
+                    "replyMember": {
+                        "id": "0308kang",
+                        "nick": "공돌이"
+                    },
+                    "updateDate": 1586407837000,
+                    "writer": {
+                        "id": "horangi777",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                        },
+                        "nick": "Simiken"
+                    }
+                },
+                {
+                    "content": "음이질문하면 좀 그렇겠지만\n\n테마 예쁜거같은데..머에욥??\n(궁금 궁금)",
+                    "id": 87033297,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87033297,
+                    "updateDate": 1586521981000,
+                    "writer": {
+                        "id": "akzmek112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lilieml"
+                    }
+                },
+                {
+                    "content": "\"파리의 밤\" 이라는 테마입니다ㅋㅋ",
+                    "id": 87155812,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MTJfOTMg/MDAxNTg2NjUxOTg1Mzg3.RvoRJJzOCAsWRKK3WM9frJbkDPLzgIG-1xXihTImbf8g.b4VDTCDUEe1bJpZRDDZg458zue7aH99VLjrsJixH2mUg.JPEG/Screenshot_20200412-093908_KakaoTalk.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "Screenshot_20200412-093908_KakaoTalk.jpg",
+                        "height": 2400,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA0MTJfOTMg/MDAxNTg2NjUxOTg1Mzg3.RvoRJJzOCAsWRKK3WM9frJbkDPLzgIG-1xXihTImbf8g.b4VDTCDUEe1bJpZRDDZg458zue7aH99VLjrsJixH2mUg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA0MTJfOTMg/MDAxNTg2NjUxOTg1Mzg3.RvoRJJzOCAsWRKK3WM9frJbkDPLzgIG-1xXihTImbf8g.b4VDTCDUEe1bJpZRDDZg458zue7aH99VLjrsJixH2mUg.JPEG/Screenshot_20200412-093908_KakaoTalk.jpg",
+                        "width": 1080
+                    },
+                    "refId": 87033297,
+                    "updateDate": 1586652006000,
+                    "writer": {
+                        "id": "horangi777",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                        },
+                        "nick": "Simiken"
+                    }
+                },
+                {
+                    "content": "알려주셔서 감사합니다~~ 호호 테마 그걸로 바꿔야게써욥~~",
+                    "id": 87200952,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87033297,
+                    "replyMember": {
+                        "id": "horangi777",
+                        "nick": "Simiken"
+                    },
+                    "updateDate": 1586688816000,
+                    "writer": {
+                        "id": "akzmek112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lilieml"
+                    }
+                },
+                {
+                    "content": "폰테마샵에서받았습니당",
+                    "id": 87246497,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87033297,
+                    "replyMember": {
+                        "id": "akzmek112",
+                        "nick": "lilieml"
+                    },
+                    "updateDate": 1586733799000,
+                    "writer": {
+                        "id": "horangi777",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                        },
+                        "nick": "Simiken"
+                    }
+                }
+            ],
+            "last": {
+                "id": 104670691,
+                "refId": 104670691
+            },
+            "next": {
+                "id": 95610976,
+                "refId": 95610976
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,311 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<p>각종 오류 수정<br />카드 섞는 명령어 변경<br /><br /><br />const scriptName=&quot;포커.js&quot;<br />var cards=[&quot;s 14&quot;, &quot;s 2&quot;, &quot;s 3&quot;, &quot;s 4&quot;, &quot;s 5&quot;, &quot;s 6&quot;, &quot;s 7&quot;, &quot;s 8&quot;, &quot;s 9&quot;, &quot;s 10&quot;, &quot;s 11&quot;, &quot;s 12&quot;, &quot;s 13&quot;, &quot;d 14&quot;, &quot;d 2&quot;, &quot;d 3&quot;, &quot;d 4&quot;, &quot;d 5&quot;, &quot;d 6&quot;, &quot;d 7&quot;, &quot;d 8&quot;, &quot;d 9&quot;, &quot;d 10&quot;, &quot;d 11&quot;, &quot;d 12&quot;, &quot;d 13&quot;, &quot;h 14&quot;, &quot;h 2&quot;, &quot;h 3&quot;, &quot;h 4&quot;, &quot;h 5&quot;, &quot;h 6&quot;, &quot;h 7&quot;, &quot;h 8&quot;, &quot;h 9&quot;, &quot;h 10&quot;, &quot;h 11&quot;, &quot;h 12&quot;, &quot;h 13&quot;, &quot;c 14&quot;, &quot;c 2&quot;, &quot;c 3&quot;, &quot;c 4&quot;, &quot;c 5&quot;, &quot;c 6&quot;, &quot;c 7&quot;, &quot;c 8&quot;, &quot;c 9&quot;, &quot;c 10&quot;, &quot;c 11&quot;, &quot;c 12&quot;, &quot;c 13&quot;];<br />var poker=false;<br />var Gstart=false;<br />var player=[];<br />var player2=[];<br />var R;<br />var card1;<br />var card2;<br />var cardlist=[];<br />var common=[];<br />var coin=[];<br />var chips=[];<br />var basicchips=100;<br />var basicseed=1;<br />var money=0;<br />var pot=[];<br />var pot2=[];<br />var beting=[];<br />var call=0;<br />var m=0;<br />var pc=&quot;&quot;;<br />var isBet=false;<br />var status=0;<br />var x=&quot;&quot;;<br />var isFirstgame=true;<br />var allsee=&quot;\\u200b&quot;.repeat(500);<br />var nagagi=[];<br />var preChat=[];<br />var turnoff=false;<br />var onoff=[];<br /><br />function shuffle(a) {<br />    var j, x, i;<br />    for (i = a.length - 1; i &gt; 0; i--) {<br />        j = Math.floor(Math.random() * (i + 1));<br />        x = a[i];<br />        a[i] = a[j];<br />        a[j] = x;<br />    }<br />    return a;<br />}<br />function seol(moyang){<br />      var mo=moyang.replace(/s/g,3).replace(/d/g,2).replace(/h/g,1).replace(/c/g,0);<br />      return mo;<br />}<br /><br />function lee(sutja){<br />      var isStraight=0;<br />            var sut=[];<br />            var ja=[];<br /><br />            for (var i=0;i&lt;sutja.length;i++){<br />                     sutja[i]=Number(sutja[i]);<br />                     sut.push(Number(sutja[i]));<br />                     ja.push(Number(sutja[i]));<br />            }<br />            for (var i=0;i&lt;sutja.filter(e =&gt; e == 14).length;i++){<br />                     sutja.push(1);<br />                     sut.push(1);<br />                     ja.push(1);<br />            }<br />   <br />      for (var i=14;i&gt;1;i--){<br />                        if (sutja.filter(e =&gt; e == i).length==4){ return [9, i]; }<br />               }<br /><br />               for (var i=14;i&gt;1;i--){<br />                        if (sutja.filter(e =&gt; e == i).length==3){<br />                                for (k=0;k&lt;3;k++){ sut.splice(sut.indexOf(i),1); }<br />                                 for (var j=14;j&gt;1;j--){<br />                                          if (sut.filter(e =&gt; e == j).length&gt;=2){ return [8,i+0.01*j]; }<br />                                 }<br />                        }<br />               }<br /><br />               for (var i=14;i&gt;9;i--){<br />                        if (sutja.filter(e =&gt; e == i).length&gt;=1){<br />                                 isStraight+=1;<br />                                 if (isStraight==5){ return [6,0]; }<br />                        } else {<br />                                 isStraight=0;<br />                                 break;<br />                        }<br />               }<br /><br />             for (var i=5;i&gt;0;i--){<br />                        if (sutja.filter(e =&gt; e == i).length&gt;=1){<br />                                 isStraight+=1;<br />                                 if (isStraight==5){ return [5,0]; }<br />                        } else {<br />                                 isStraight=0;<br />                                 break;<br />                        }<br />               }<br />   <br />            for (var p=13; p&gt;5; p--){<br />                     for (var i=0;i&lt;5;i++){<br />                              if (sutja.filter(e =&gt; e == (p-i)).length &gt;=1 ){<br />                                       isStraight+=1;<br />                                       if (isStraight==5){ return [4,p]; }<br />                              } else { break;}<br />                     }isStraight=0;<br />               }<br /><br />               for (var i=14;i&gt;1;i--){<br />                        if (sutja.filter(e =&gt; e == i).length==3){ return [3,i]; }<br />               }<br /><br />               for (var i=14;i&gt;1;i--){<br />                        if (sutja.filter(e =&gt; e == i).length==2){<br />                                for (k=0;k&lt;2;k++){ ja.splice(ja.indexOf(i),1); }<br />                                 for (var j=i-1;j&gt;1;j--){<br />                                          if (ja.filter(e =&gt; e == j).length==2){ return [2,i+0.01*j]; } <br />                                 }<br />                             return [1,i];<br />                        }<br />               }<br /><br />            var ans=[0,Math.max.apply(null, sutja)];<br />            return ans;<br />   }<br /><br />function grade(CARD){<br />            var Flushshape;<br />            var shape=[];<br />            var num=[];;<br />            var Realgrade=[[]];<br />         var isFlush=false;<br />         var card=[];<br /><br />            for (var i=0; i&lt;CARD.length; i++){<br />                     shape.push(seol(CARD[i].split(&quot; &quot;)[0]));<br />                     num.push(CARD[i].split(&quot; &quot;)[1]);<br />                  card.push(Number(num[i])*10+Number(shape[i]));<br />            }<br /><br />            for (var i=0; i&lt;4; i++){<br />                     if (shape.filter(e =&gt; e == i).length&gt;=5){<br />                              isFlush=true;<br />                              Flushshape=i;<br />                              break;<br />                     }<br />            }<br /><br />            if (isFlush==true){<br />                     for(var i=0;i&lt;shape.length; i++){<br />                              if (shape[i]!=Flushshape){<br />                                 card.splice(card[i],1);<br />                                       num.splice(num[i],1);<br />                              }<br />                     }<br />                     if (lee(num)[0]==6){ Realgrade[0].push(12); }<br />                     else if (lee(num)[0]==5){ Realgrade[0].push(11); }<br />                     else if (lee(num)[0]==4){ Realgrade[0].push(10); }<br />                     else { Realgrade[0].push(7); }<br />            } else { Realgrade[0].push(lee(num)[0]); }<br /><br />         num.sort((a,b)=&gt;b-a);<br />         var nnum=0;<br />         card.sort((a,b)=&gt;b-a);<br />         var sshape=0;<br />         for (var i=0;i&lt;num.length;i++){<br />            nnum+=Math.pow(0.01,i)*num[i];<br />            sshape+=Math.pow(0.001,i)*card[i];<br />      }<br />      Realgrade[0].push(lee(num)[1]);<br />      Realgrade.push(nnum);<br />      Realgrade.push(sshape);<br /><br />      return Realgrade;<br />   }<br /><br />function sh(shs){<br />      shs=shs.replace(/s /g,&quot;&spades;&#65039;&quot;).replace(/d /g,&quot;&diams;&#65039;&quot;).replace(/h /g,&quot;&hearts;&#65039;&quot;).replace(/c /g,&quot;&clubs;&#65039;&quot;).replace(/14/g, &quot;A&quot;).replace(/13/g, &quot;K&quot;).replace(/12/g, &quot;Q&quot;).replace(/11/g, &quot;J&quot;);<br />      return shs;<br />}<br /><br />function outgrade(put){<br />      var first=Number(put[1]).toFixed(0);<br />      var second=Math.round((Number(put[1])-first)*100);<br />      var third=Number(put[0]).toFixed(0).replace(&quot;12&quot;, &quot;로티플&quot;).replace(&quot;11&quot;, &quot;백티플&quot;).replace(&quot;10&quot;, &quot;스티플&quot;).replace(&quot;9&quot;,&quot;포카드&quot;).replace(&quot;8&quot;,&quot;풀하우스&quot;).replace(&quot;7&quot;,&quot;플러쉬&quot;).replace(&quot;6&quot;,&quot;마운틴&quot;).replace(&quot;5&quot;,&quot;백스트레이트&quot;).replace(&quot;4&quot;,&quot;스트레이트&quot;).replace(&quot;3&quot;,&quot;트리플&quot;).replace(&quot;2&quot;,&quot;투페어&quot;).replace(&quot;1&quot;,&quot;원페어&quot;).replace(&quot;0&quot;,&quot;탑&quot;);<br /><br />      var ans=first+&quot;, &quot;+second+&quot; &quot;+third;<br /><br />      if (first==0){ return third; }<br />      else if (second==0){ return first+&quot; &quot;+third; }<br />      else{return ans;}<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadld){<br /><br />   if (preChat[room]==msg){ return 0; }<br />   preChat[room]=msg;<br /><br />         var cmd=msg.split(&quot; &quot;)[0];<br />         var data=msg.replace(cmd+&quot; &quot;,&quot;&quot;);<br />         if (msg==&quot;/포커 방만들기&quot; &amp;&amp; isGroupChat==true){<br />                     if (poker==true){<br />                           replier.reply(&quot;이미 생성된 방이 있습니다.&quot;);<br />                  }else{<br />                           poker=true;<br />                           R=room;<br />                           replier.reply(&quot;방이 생성되었습니다.\\n저에게 갠톡으로 &apos;/포커 참가&apos;라고 보내주시면 참가가 됩니다.\\n5명까지 참가할 수 있습니다.&quot;+allsee+&quot;\\n\\n[기본값]\\n칩: 100개, 시드: 1개\\n이는 /칩 (숫자), /시드 (숫자) 로 변경 가능합니다.\\n\\n조건\\n0.2% &le; 시드/칩 &le; 5%\\n50 &le; 칩 &le; 1000&quot;);<br />                }<br />         }<br /><br />            if (Gstart==false &amp;&amp; poker==true &amp;&amp; cmd==&quot;/칩&quot; &amp;&amp; isNaN(data)==false){<br />                  if ((data-Math.floor(data))==0){<br />                                     if (50&lt;=data &amp;&amp; data&lt;=1000){<br />                           basicchips=Number(data);<br />                           replier.reply(&quot;기본 칩이 &quot;+data+&quot;개로 설정되었습니다.&quot;);<br />coin.fill(basicchips);<br />chips.fill(basicchips);<br />                           if (basicseed/basicchips&lt;0.002){<br />                                 basicseed=Math.cell(basicchips*0.002);<br />                                 replier.reply(&quot;최저시드(&quot;+basicseed+&quot;개)로 자동 설정되었습니다.&quot;);<br />                           } else if (basicseed/basicchips&gt;0.05){<br />                                 basicseed=Math.floor(basicchips*0.05);<br />                                 replier.reply(&quot;최고시드(&quot;+basicseed+&quot;개)로 자동 설정되었습니다.&quot;);<br />                           } <br />                     } else { replier.reply(&quot;50에서 1000 사이의 자연수를 입력해주세요.&quot;); }<br />                  } else { replier.reply(&quot;자연수를 입력해주세요.&quot;); }<br />            }<br />            if (Gstart == false &amp;&amp; poker==true &amp;&amp; cmd==&quot;/시드&quot; &amp;&amp; isNaN(data)==false){<br />                  if ((data-Math.floor(data))==0){<br />         basicseed=Number(data);<br />                     if (basicseed/basicchips&lt;0.002){<br />                           basicseed=Math.cell(basicchips*0.002);<br />                           replier.reply(&quot;최저시드(&quot;+basicseed+&quot;개)로 자동 설정되었습니다.&quot;);<br />                     } else if (basicseed/basicchips&gt;0.05){<br />                           basicseed=Math.floor(basicchips*0.05);<br />                           replier.reply(&quot;최고시드(&quot;+basicseed+&quot;개)로 자동 설정되었습니다.&quot;);<br />                     } else {<br />                           replier.reply(&quot;시드가 &quot;+data+&quot;개로 설정되었습니다.&quot;);<br />                     }<br />                  } else { replier.reply(&quot;자연수를 입력해주세요.&quot;); }<br />            }<br /><br />         if (msg==&quot;/포커 참가&quot;){<br />                 if (Gstart==false){<br />                       if (poker==true){<br />                               if (room==sender){<br />                                       if (player.length&lt;5){<br />                                               if (player.indexOf(sender)==-1){<br />                                                      player.push(sender);<br />                                                      player2.push(sender);<br />                                                  coin.push(basicchips);<br />                                              chips.push(basicchips);<br />                   <br />                                                  pot.push(0);<br />                                              pot2.push(0);<br />                                          cardlist.push([]);<br />                                                      replier.reply(&quot;정상 참가 처리 되었습니다.&quot;);<br />                                                      replier.reply(R, &quot;현재 참가자: &quot;+player);<br />                                                } else {<br />                                                      replier.reply(sender + &quot;님은 이미 참가하셨습니다.&quot;);<br />                                                }<br />                                        } else {<br />                                                 replier.reply(&quot;최대 인원은 5명입니다.&quot;);<br />                                        }<br />                               } else {<br />                                     replier.reply(&quot;갠톡으로 보내주셔야 참가가 인정됩니다.&quot;);<br />                               }<br />                       } else {<br />                                replier.reply(&quot;아직 방이 만들어지지 않았습니다.&quot;);<br />                       }<br />                 } else {<br />                    replier.reply(&quot;이미 게임이 진행중입니다.&quot;);<br />                }<br />         }<br /><br />         if (msg==&quot;/포커 시작&quot; &amp;&amp; room==R &amp;&amp; player.indexOf(sender)!=-1){<br />                 if (player.length&gt;=2){<br />                       if (poker==true){<br />                               if (Gstart==false){<br />               Gstart=true;<br />                           if (isFirstgame==false &amp;&amp; basicseed&lt;Math.floor(0.05*basicchips)){<br />                                 replier.reply(&quot;시드를 올리시겠습니까?\\n- /업 (숫자) 또는 /킵 으로 설정 가능\\n주의: 한 번 올린 시드는 되돌릴 수 없습니다.&quot;);<br />                             while (isFirstgame==false){}<br />                           } <br />                              shuffle(cards);<br />                                   replier.reply(&quot;게임을 시작합니다.&quot;);<br />                                   for(var i=0; i&lt;=player.length-1; i++){<br />                                                card1=cards[cards.length-1];<br />                                                cards.pop();<br />                                                card2=cards[cards.length-1];<br />                                                cards.pop();<br />                                 cardlist[i].push(card1);<br />                                       cardlist[i].push(card2);<br />                                            var ans=&quot;핸드 카드를 받았습니다.\\n&quot;+cardlist[i]+&quot;\\n현재 등급: &quot;+outgrade(grade(cardlist[i])[0]);<br />                                                replier.reply(player[i],sh(ans));<br />                                   }<br />                                   java.lang.Thread.sleep(1000);<br />                                   replier.reply(&quot;처음 기본 칩은 &quot;+basicchips+&quot;개입니다. &quot;+basicseed+&quot;/&quot;+basicseed*2+&quot;$ 게임입니다.\\nSB: &quot;+player[0]+&quot;님, &quot;+basicseed+&quot;개 지불\\nBB: &quot;+player[1]+&quot;님, &quot;+basicseed*2+&quot;개 지불&quot;);<br />                                   coin[0]=coin[0]-basicseed;<br />                                   coin[1]=coin[1]-basicseed*2;<br />                                  chips[0]=chips[0]-basicseed;<br />                                   chips[1]=chips[1]-basicseed*2;<br />                                   money=basicseed*3;<br />                                   pot[0]=basicseed;<br />                                  pot2[0]=basicseed;<br />                                   pot[1]=basicseed*2;<br />                                 pot2[1]=basicseed*2;<br />                                   if (player.length!=3){<br />                                         for (var p=0; p&lt;=3*player.length-1;p++){<br />                                                    beting.push(player[(3%player.length-1+p)%player.length]);<br />                                         }<br />                                   } else {<br />                                         for (var p=0; p&lt;=3*player.length-1;p++){<br />                                                    beting.push(player[(2+p)%player.length]);<br />                                         }<br />                                   }<br />                                   pc=&quot;&quot;;<br />                                   for (var k=0; k&lt;=player.length-1;k++){<br />                                                pc=pc+player[k]+&quot;: &quot;+pot[k]+&quot;개 배팅/&quot;+chips[k]+&quot;개 남음\\n&quot;;<br />                                   }<br />                                     replier.reply(beting[m]+&quot;님부터 배팅을 시작합니다.\\n/콜, /폴드, /레이즈 (숫자)로 배팅이 가능합니다.\\n\\n현재 콜: &quot;+(Math.max.apply(null,pot)-pot[player.indexOf(beting[m])])+&quot;개\\n레이즈 최대치: &quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(beting[m])])+&quot;개\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc.trim());<br />                                     isBet=true;<br />                              } else {<br />                                   replier.reply(&quot;이미 게임이 시작되었습니다.&quot;);<br />                              }<br />                     } else {<br />                                replier.reply(&quot;아직 방이 만들어지지 않았습니다.&quot;);<br />                     }<br />                  } else {<br />                     replier.reply(&quot;최소 참가자는 2명입니다.&quot;);<br />               }<br />         }<br /><br />      if (isFirstgame==false &amp;&amp; cmd==&quot;/업&quot; &amp;&amp; isNaN(data)==false){<br />          basicseed+=Math.floor(data);<br />             if (basicseed/basicchips&gt;0.05){<br />                              basicseed=Math.floor(basicchips*0.05);<br />                              replier.reply(&quot;최고시드(&quot;+basicseed+&quot;개)로 자동 설정되었습니다.&quot;);<br />                              isFirstgame=true;<br />                        } else {<br />                              replier.reply(&quot;시드가 &quot;+data+&quot;개 올라 &quot;+basicseed+&quot;개가 되었습니다.&quot;);<br />                              isFirstgame=true;<br />                        }<br />           } else if (isFirstgame==false &amp;&amp; msg==&quot;/킵&quot;){<br />                        isFirstgame=true;<br />              }<br /><br />      if (isBet==true){<br />               if (msg == &quot;/체크&quot;){<br />                     if (m==0 &amp;&amp; sender==beting[m] &amp;&amp; room==R &amp;&amp; status&gt;=1){<br />                        replier.reply(&quot;체크! 다음 &quot;+beting[m+1]+&quot;님 배팅해주세요.\\n/콜, /폴드, /레이즈 (숫자)로 배팅이 가능합니다.\\n\\n현재 콜: &quot;+(Math.max.apply(null, pot)-pot[player.indexOf(beting[m+1])])+&quot;개\\n레이즈 최대치: &quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(beting[m+1])])+&quot;개\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc);<br />                       m+=1;<br />                  }<br />             } else if (msg==&quot;/콜&quot; &amp;&amp; beting[m]==sender &amp;&amp; room==R){<br />         if (status==0 || m!=0){<br />                              coin[player.indexOf(sender)]=coin[player.indexOf(sender)]-Math.max.apply(null, pot)+pot[player.indexOf(sender)];<br />                           chips[player2.indexOf(sender)]=chips[player2.indexOf(sender)]-Math.max.apply(null, pot)+pot2[player2.indexOf(sender)];<br />                              money = money+ Math.max.apply(null, pot)-pot[player.indexOf(sender)];<br />                          pot[player.indexOf(sender)]=Math.max.apply(null, pot);<br />                             pot2[player.indexOf(sender)]=Math.max.apply(null, pot2);<br />                              pc=&quot;&quot;;<br />                             for (var k=0; k&lt;=player.length-1;k++){<br />                                          pc=pc+player[k]+&quot;: &quot;+pot[k]+&quot;개 배팅/&quot;+coin[k]+&quot;개 남음\\n&quot;;<br />                              }<br />                              pc=pc.trim();<br />                              call +=1;<br />                              if (call==player.length-1){<br />                                       replier.reply(&quot;배팅이 완료되었습니다.\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc.trim());<br />                                       isBet=false;<br />                              status+=1;<br />                           call=0;<br />                              } else {<br />                                       replier.reply(&quot;다음 &quot;+beting[m+1]+&quot;님 배팅해주세요.\\n/콜, /폴드, /레이즈 (숫자)로 배팅이 가능합니다.\\n\\n현재 콜: &quot;+(Math.max.apply(null, pot)-pot[player.indexOf(beting[m+1])])+&quot;개\\n레이즈 최대치: &quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(beting[m+1])])+&quot;개\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc);<br />                                       m+=1;<br />                             }<br />         }<br />               } else if (msg==&quot;/폴드&quot; &amp;&amp; sender==beting[m] &amp;&amp; room==R){<br />                           if (player.length != 2) {<br />                                    coin.splice(player.indexOf(sender),1);<br />                                    pot.splice(player.indexOf(sender),1);<br />                      cardlist.splice(player.indexOf(sender),1);<br />                                       player.splice(player.indexOf(sender),1);  <br />                                 for (var i=0;i&lt;=2;i++){<br />                                          beting.splice(beting.indexOf(sender),1);<br />                                 }<br />                                 pc=&quot;&quot;;<br />                                   for (var k=0; k&lt;=player.length-1;k++){<br />                                                pc=pc+player[k]+&quot;: &quot;+pot[k]+&quot;개 배팅/&quot;+coin[k]+&quot;개 남음\\n&quot;;<br />                                 }<br />                                      replier.reply(sender+&quot;님 폴드(다이)하셨습니다.&quot;);<br />                                 if (call==player.length-1){<br />                                             replier.reply(&quot;배팅이 완료되었습니다.\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc.trim());<br />                                             isBet=false;<br />                                 status+=1;<br />                                call=0;<br />                                 } else {<br />                                             m=m-Math.floor(m/(player.length+1));<br />                                             replier.reply(&quot;다음 &quot;+beting[m]+&quot;님 배팅해주세요.\\n/콜, /폴드, /레이즈 (숫자)로 배팅이 가능합니다.\\n\\n현재 콜: &quot;+(Math.max.apply(null, pot)-pot[player.indexOf(beting[m])])+&quot;개\\n레이즈 최대치: &quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(beting[m])])+&quot;개\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc.trim());<br />                                 }<br />                        } else {<br />                                    player.splice(player.indexOf(sender),1);<br />                              chips[player2.indexOf(player[0])]+=money;<br />                                 pc=&quot;현재 칩 보유량&quot;;<br />                                   for (var k=0; k&lt;=player2.length-1;k++){<br />                                                pc=pc+&quot;\\n&quot;+player2[k]+&quot;: &quot;+chips[k]+&quot;개&quot;;<br />                                 }<br />                               replier.reply(&quot;나머지 선수가 모두 폴드하여 &quot;+player+&quot;님 승리입니다!\\n\\n&quot;+pc);<br />            if (nagagi.length!=0){<br />               for (i=0;i&lt;nagagi.length;i++){<br />                  player2.splice(player2.indexOf(nagagi[i]),1);<br />                  chips.splice(player2.indexOf(nagagi[i]),1);<br />               }<br />               replier.reply(nagagi+&quot;님이 나가셨습니다.\\n남은 참가자: &quot;+player2);<br />            }<br />                                 cards=[&quot;s 14&quot;, &quot;s 2&quot;, &quot;s 3&quot;, &quot;s 4&quot;, &quot;s 5&quot;, &quot;s 6&quot;, &quot;s 7&quot;, &quot;s 8&quot;, &quot;s 9&quot;, &quot;s 10&quot;, &quot;s 11&quot;, &quot;s 12&quot;, &quot;s 13&quot;, &quot;d 14&quot;, &quot;d 2&quot;, &quot;d 3&quot;, &quot;d 4&quot;, &quot;d 5&quot;, &quot;d 6&quot;, &quot;d 7&quot;, &quot;d 8&quot;, &quot;d 9&quot;, &quot;d 10&quot;, &quot;d 11&quot;, &quot;d 12&quot;, &quot;d 13&quot;, &quot;h 14&quot;, &quot;h 2&quot;, &quot;h 3&quot;, &quot;h 4&quot;, &quot;h 5&quot;, &quot;h 6&quot;, &quot;h 7&quot;, &quot;h 8&quot;, &quot;h 9&quot;, &quot;h 10&quot;, &quot;h 11&quot;, &quot;h 12&quot;, &quot;h 13&quot;, &quot;c 14&quot;, &quot;c 2&quot;, &quot;c 3&quot;, &quot;c 4&quot;, &quot;c 5&quot;, &quot;c 6&quot;, &quot;c 7&quot;, &quot;c 8&quot;, &quot;c 9&quot;, &quot;c 10&quot;, &quot;c 11&quot;, &quot;c 12&quot;, &quot;c 13&quot;];<br />                                 Gstart=false;<br />                              coin=[];<br />                              player=[];<br />            pot=[];<br />            pot2=[];<br />            cardlist=[];<br />                        player2.unshift(player2[player2.length-1]);<br />                        chips.unshift(chips[chips.length-1]);<br />                        player2.pop();<br />                        chips.pop();<br />                                for ( var i=0; i&lt;=player2.length-1;i++){<br />                                     coin.push(chips[i]);<br />                                    player.push(player2[i]);<br />                              }<br />                                 money=0;<br />                                    for(var j=0; j&lt;=player.length-1; j++){<br />                                            pot.push(0);<br />                                        pot2.push(0);<br />                                        cardlist.push([]);<br />                                   }<br />                                 beting=[];<br />                                 call=0;<br />                                 m=0;<br />                                 isBet=false;<br />                        status=0;<br />                        common=[];<br />                        x=&quot;&quot;;<br />                        isFirstgame=false;<br />            nagagi=[];<br />                        replier.reply(&quot;새로운 참가자가 저에게 갠톡으로 &apos;/포커 참가&apos;를 보내주시면 참가 처리됩니다.\\n&apos;/포커 시작&apos;을 입력하시면 게임을 이어 하실 수 있습니다.&quot;);<br />                           }<br />               } else if (cmd==&quot;/레이즈&quot; &amp;&amp; sender==beting[m] &amp;&amp; room==R){<br />                        if (isNaN(data) == false){<br />                                 if ((data-Math.floor(data))==0){<br />                                           if ((Math.max.apply(null, pot)-pot[player.indexOf(sender)])&lt;data &amp;&amp; data&lt;=(2*Math.max.apply(null, pot)-pot[player.indexOf(sender)])){<br />                                                 if (m&lt;beting.length-player.length){<br />                                                       data=Number(data);<br />                                                        pot[player.indexOf(sender)]= pot[player.indexOf(sender)]+data;<br />                                                        pot2[player2.indexOf(sender)]= pot2[player2.indexOf(sender)]+data;<br />                                                        coin[player.indexOf(sender)]=coin[player.indexOf(sender)]-data;<br />                                                        chips[player2.indexOf(sender)]=chips[player2.indexOf(sender)]-data;<br />                                                        money +=data;<br />                                                        call=0;<br />                                                         pc=&quot;&quot;;<br />                                                        for (var k=0; k&lt;=player.length-1;k++){<br />                                                                     pc=pc+player[k]+&quot;: &quot;+pot[k]+&quot;개 배팅/&quot;+coin[k]+&quot;개 남음\\n&quot;;<br />                                                        }<br />                                                           replier.reply(&quot;다음 &quot;+beting[m+1]+&quot;님 배팅해주세요.\\n/콜, /폴드, /레이즈 (숫자)로 배팅이 가능합니다.\\n\\n현재 콜: &quot;+(Math.max.apply(null, pot)-pot[player.indexOf(beting[m+1])])+&quot;개\\n레이즈 최대치: &quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(beting[m+1])])+&quot;개\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc.trim());<br />                                                         m+=1;<br />                                          } else {<br />                                                   replier.reply(&quot;레이즈 횟수 최대치 달성으로 /콜만 가능합니다.&quot;);<br />                                          }<br />                                       } else {<br />                                                replier.reply(&quot;배팅금액이 콜 이하이거나 레이즈 최대치(&quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(sender)])+&quot;)를 초과하여 레이즈할 수 없습니다.&quot;);<br />                                       }<br />                               } else {<br />                                     replier.reply(&quot;자연수만 입력해주세요.&quot;);<br />                               }<br />                       } else {<br />                                replier.reply(&quot;숫자만 입력해주세요.&quot;);<br />                       }<br />               }<br />      }<br /><br />      if (status==1 &amp;&amp; isBet==false){<br />               m=0;<br />               beting=[];<br />               for (var i=0; i&lt;3*player.length; i++){<br />                     beting.push(player[i%player.length]);<br />               }<br />               for (var i=0; i&lt;3; i++){<br />                     common.push(cards[cards.length-1]);<br />                     cards.pop();<br />               }<br />               for (var i=0;i&lt;player.length;i++){<br />                  for (var j=0;j&lt;common.length;j++){<br />                        cardlist[i].push(common[j]);<br />                  }<br />            }<br />            var ans=&quot;공통 카드 3장을 공개합니다.\\n&quot;+common;<br />               replier.reply(sh(ans));<br />               for (var i=0; i&lt;player.length; i++){<br />                     var ans=&quot;현재 나의 카드\\n&quot;+cardlist[i]+&quot;\\n현재 등급: &quot;+outgrade(grade(cardlist[i])[0]);<br />                     replier.reply(player[i],sh(ans));<br />               }<br />               replier.reply(beting[m]+&quot;님부터 배팅을 시작합니다.\\n/체크, /폴드, /레이즈 (숫자) 로 배팅이 가능합니다.\\n\\n현재 콜: &quot;+(Math.max.apply(null,pot)-pot[player.indexOf(beting[m])])+&quot;개\\n레이즈 최대치: &quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(beting[m])])+&quot;개\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc.trim());<br />               isBet=true;<br />      }<br /><br />      if (status&gt;=2 &amp;&amp; status&lt;=3 &amp;&amp; isBet==false){<br />            m=0;<br />            if (status==3){x=&quot;마지막 &quot;;}<br />                  common.push(cards[cards.length-1]);<br />                  cards.pop();  <br />               for (var j=0;j&lt;player.length;j++){<br />                     cardlist[j].push(common[status+1]);<br />               }<br />            var ans=x+&quot;추가 공통 카드 1장을 공개합니다: &quot;+common[status+1]+&quot;\\n공통 카드: &quot;+common;<br />               replier.reply(sh(ans));<br />               for (var i=0; i&lt;player.length; i++){<br />                     var ans=&quot;현재 나의 카드\\n&quot;+cardlist[i]+&quot;\\n현재 등급: &quot;+outgrade(grade(cardlist[i])[0]);<br />                     replier.reply(player[i],sh(ans));<br />               }<br />               replier.reply(beting[m]+&quot;님부터 &quot;+x+&quot;배팅을 시작합니다.\\n/체크, /폴드, /레이즈 (숫자) 로 배팅이 가능합니다.\\n\\n현재 콜: &quot;+(Math.max.apply(null,pot)-pot[player.indexOf(beting[m])])+&quot;개\\n레이즈 최대치: &quot;+(2*Math.max.apply(null, pot)-pot[player.indexOf(beting[m])])+&quot;개\\n\\nPOT: &quot;+money+&quot;개\\n\\n&quot;+pc.trim());<br />               isBet=true;<br />      }<br /><br />      if (status==4 &amp;&amp; isBet==false){<br />            var gl=[];<br />            var gradelist=[];<br />            var gradelist2=[];<br />            var ult=&quot;공통 카드: &quot;+common+&quot;\\n\\n핸드 카드를 공개합니다.&quot;;<br />      var Res=&quot;&quot;;<br />            replier.reply(&quot;마지막 배팅이 종료되었습니다.&quot;);<br />            for (var i=0; i&lt;player.length; i++){<br />                     var gg=player[i]+&quot;: &quot;+outgrade(grade(cardlist[i])[0])+&quot;\\n&quot;;<br />                     Res=Res+gg;<br />                     gg=player[i]+&quot;: &quot;+cardlist[i][0]+&quot;, &quot;+cardlist[i][1];<br />                     ult=ult+&quot;\\n&quot;+gg;<br />            }<br />            for (var i=0;i&lt;player.length;i++){<br />                  gl.push(grade(cardlist[i]));<br />                  gradelist.push(grade(cardlist[i]));<br />                  gradelist2.push(grade(cardlist[i])[0][0]);<br />            }<br />            for (var i=0;i&lt;gradelist2.length;i++){<br />                  if (gradelist2[i]!=Math.max.apply(null, gradelist2)){<br />                        gradelist2.splice(i, 1);<br />                        gradelist.splice(i, 1);<br />                  }<br />            }<br /><br />            if (gradelist.length!=1){<br />                  for (var i=0;i&lt;gradelist.length;i++){<br />                        gradelist2[i]=gradelist[i][0][1];<br />                  }<br />                  for (var i=0;i&lt;gradelist2.length;i++){<br />                        if (gradelist2[i]!=Math.max.apply(null, gradelist2)){<br />                           gradelist2.splice(i, 1);<br />                           gradelist.splice(i, 1);<br />                        }<br />                  }<br />            }<br />            if (gradelist.length!=1){<br />                  for (var i=0;i&lt;gradelist.length;i++){<br />                        gradelist2[i]=gradelist[i][1];<br />                  }<br />                  for (var i=0;i&lt;gradelist2.length;i++){<br />                        if (gradelist2[i]!=Math.max.apply(null, gradelist2)){<br />                           gradelist2.splice(i, 1);<br />                           gradelist.splice(i, 1);<br />                        }<br />                  }<br />            }<br />            if (gradelist.length!=1){<br />                  for (var i=0;i&lt;gradelist.length;i++){<br />                        gradelist2[i]=gradelist[i][2];<br />                  }<br />                  for (var i=0;i&lt;gradelist2.length;i++){<br />                        if (gradelist2[i]!=Math.max.apply(null, gradelist2)){<br />                           gradelist2.splice(i, 1);<br />                           gradelist.splice(i, 1);<br />                        }<br />                  }<br />            }<br />            var winner=player[gl.map((s,i) =&gt; s.toSource() != gradelist[0].toSource() ? false : i).filter(s =&gt; s !== false)[0]];<br />            replier.reply(sh(ult));<br />            replier.reply(sh(Res.trim()));<br />                  chips[player2.indexOf(winner)]+=money<br />                     pc=&quot;현재 칩 보유량&quot;;<br />                          for (var k=0; k&lt;=player2.length-1;k++){<br />                                       pc=pc+&quot;\\n&quot;+player2[k]+&quot;: &quot;+chips[k]+&quot;개&quot;;<br />                        }<br />                   replier.reply(&quot;승리자는 &quot;+winner+&quot;님입니다!\\n\\n&quot;+pc);<br /><br />      if (nagagi.length!=0){<br />         for (i=0;i&lt;nagagi.length;i++){<br />            player2.splice(player2.indexOf(nagagi[i]),1);<br />chips.splice(player2.indexOf(nagagi[i]),1);<br />         }<br />         replier.reply(nagagi+&quot;님이 나가셨습니다.\\n남은 참가자: &quot;+player2);<br />      }<br />                     cards=[&quot;s 14&quot;, &quot;s 2&quot;, &quot;s 3&quot;, &quot;s 4&quot;, &quot;s 5&quot;, &quot;s 6&quot;, &quot;s 7&quot;, &quot;s 8&quot;, &quot;s 9&quot;, &quot;s 10&quot;, &quot;s 11&quot;, &quot;s 12&quot;, &quot;s 13&quot;, &quot;d 14&quot;, &quot;d 2&quot;, &quot;d 3&quot;, &quot;d 4&quot;, &quot;d 5&quot;, &quot;d 6&quot;, &quot;d 7&quot;, &quot;d 8&quot;, &quot;d 9&quot;, &quot;d 10&quot;, &quot;d 11&quot;, &quot;d 12&quot;, &quot;d 13&quot;, &quot;h 14&quot;, &quot;h 2&quot;, &quot;h 3&quot;, &quot;h 4&quot;, &quot;h 5&quot;, &quot;h 6&quot;, &quot;h 7&quot;, &quot;h 8&quot;, &quot;h 9&quot;, &quot;h 10&quot;, &quot;h 11&quot;, &quot;h 12&quot;, &quot;h 13&quot;, &quot;c 14&quot;, &quot;c 2&quot;, &quot;c 3&quot;, &quot;c 4&quot;, &quot;c 5&quot;, &quot;c 6&quot;, &quot;c 7&quot;, &quot;c 8&quot;, &quot;c 9&quot;, &quot;c 10&quot;, &quot;c 11&quot;, &quot;c 12&quot;, &quot;c 13&quot;];<br />                     Gstart=false;<br />                  coin=[];<br />                  player=[];<br />      pot=[];<br />      pot2=[];<br />      cardlist=[];<br />            player2.unshift(player2[player2.length-1]);<br />            chips.unshift(chips[chips.length-1]);<br />            player2.pop();<br />            chips.pop();<br />                    for ( var i=0; i&lt;=player2.length-1;i++){<br />                         coin.push(chips[i]);<br />                           player.push(player2[i]);<br />                  }<br />                     money=0;<br />                           for(var j=0; j&lt;=player.length-1; j++){<br />                                pot.push(0);<br />                               pot2.push(0);<br />                               cardlist.push([]);<br />                          }<br />                     beting=[];<br />                     call=0;<br />                     m=0;<br />                     isBet=false;<br />               status=0;<br />            common=[];<br />            x=&quot;&quot;;<br />            isFirstgame=false;<br />      nagagi=[];<br />               replier.reply(&quot;새로운 참가자가 저에게 갠톡으로 &apos;/포커 참가&apos;를 보내주시면 참가 처리됩니다.\\n &apos;/포커 시작&apos;을 입력하시면 게임을 이어하실 수 있습니다.&quot;);<br />      }<br /><br />   if (msg==&quot;/나가기&quot; &amp;&amp; player2.indexOf(sender)!=-1 &amp;&amp; nagagi.indexOf(sender)==-1){<br />      if (Gstart==true){<br />         nagagi.push(sender);<br />         replier.reply(R, sender+&quot;님의 나가기가 예약되었습니다. 한 게임이 끝날 시 자동으로 나가집니다.&quot;);<br />      } else {<br />         player.splice(player.indexOf(sender),1);<br />player2.splice(player.indexOf(sender),1);<br />         replier.reply(R, sender+&quot;님이 나가셨습니다.\\n남은 참가자: &quot;+player2);<br />      }<br />   }<br /><br />   if (msg==&quot;/나가기취소&quot; &amp;&amp; player2.indexOf(sender)!=-1 &amp;&amp; nagagi.indexOf(sender)!=-1){<br />      nagagi.splice(nagagi.indexOf(sender),1);<br />      replier.reply(R, sender+&quot;님 나가기 예약 취소&quot;);<br />   }<br /><br />   if (Gstart==true &amp;&amp; player2.length==1){<br />      replier.reply(&quot;참가자가 1명밖에 남지 않아 게임이 자동 종료됩니다.&quot;);<br />      Api.compile(&quot;포커.js&quot;);<br />   }<br /><br />   if (msg==&quot;/포커 종료&quot; &amp;&amp; player2.indexOf(sender)!=-1){<br />      turnoff=true;<br />      onoff.push(sender);<br />      replier.reply(&quot;/찬성 으로 종료 찬성이 가능합니다. 5초 이내 과반수 이상 찬성 시 게임이 종료됩니다.&quot;);<br />      java.lang.Thread.sleep(5000);<br />      if (onoff.length&gt;=player2.length/2){<br />         replier.reply(onoff.length+&quot;명의 찬성으로 게임이 종료됩니다.&quot;);<br />         Api.compile(&quot;포커.js&quot;);<br />      } else {<br />         replier.reply(&quot;과반수가 넘지 않아 게임이 계속 진행됩니다.&quot;);<br />onoff=[];<br />turnoff=false;<br />      }<br />   }<br /><br />   if (turnoff=true &amp;&amp; onoff.indexOf(sender)==-1 &amp;&amp; msg==&quot;/찬성&quot;){<br />      onoff.push(sender);<br />      replier.reply(sender+&quot;님 찬성&quot;);<br />   }<br /><br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000289400000000",
+            "id": 10388,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 89,
+            "refArticleId": 10388,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "(공유) 포커[텍사스 홀덤] v1.4 by seori",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1579781894360,
+            "writer": {
+                "id": "leesoel7868",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAyMTJfMTE1/MDAxNTgxNDk1MDEyNDcw.hpAaazivKF2WMdlFAqDdi_r-IeRk3fEyHd7-fjb3cm8g.Aum3ykhuiTx3PzZtdk2RJDkPKqJKBX2nXyDNXVuMjj0g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "seori"
+            }
+        },
+        "articleId": 10388,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이제 슬슬 파일로 올리심이 어떠신지...",
+                    "id": 79212665,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79212665,
+                    "updateDate": 1579788701000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "이때까지 쭉 파일로도 올렸어요 ㅋㅋ 이번 게시글만 폰에서 복붙해서 작성",
+                    "id": 79212714,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79212665,
+                    "updateDate": 1579788741000,
+                    "writer": {
+                        "id": "leesoel7868",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTJfMTE1/MDAxNTgxNDk1MDEyNDcw.hpAaazivKF2WMdlFAqDdi_r-IeRk3fEyHd7-fjb3cm8g.Aum3ykhuiTx3PzZtdk2RJDkPKqJKBX2nXyDNXVuMjj0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "seori"
+                    }
+                },
+                {
+                    "content": "온리파일",
+                    "id": 79216079,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79212665,
+                    "replyMember": {
+                        "id": "leesoel7868",
+                        "nick": "seori"
+                    },
+                    "updateDate": 1579790948000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "ㅇㅎ 넵\r\n그게 나으련가요?",
+                    "id": 79216197,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79212665,
+                    "replyMember": {
+                        "id": "dsy2761",
+                        "nick": "AlphaDo"
+                    },
+                    "updateDate": 1579791025000,
+                    "writer": {
+                        "id": "leesoel7868",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTJfMTE1/MDAxNTgxNDk1MDEyNDcw.hpAaazivKF2WMdlFAqDdi_r-IeRk3fEyHd7-fjb3cm8g.Aum3ykhuiTx3PzZtdk2RJDkPKqJKBX2nXyDNXVuMjj0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "seori"
+                    }
+                },
+                {
+                    "content": "몰라여 히히",
+                    "id": 79216233,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79212665,
+                    "replyMember": {
+                        "id": "leesoel7868",
+                        "nick": "seori"
+                    },
+                    "updateDate": 1579791047000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "ㅡ3ㅡ",
+                    "id": 79216298,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79212665,
+                    "replyMember": {
+                        "id": "dsy2761",
+                        "nick": "AlphaDo"
+                    },
+                    "updateDate": 1579791081000,
+                    "writer": {
+                        "id": "leesoel7868",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTJfMTE1/MDAxNTgxNDk1MDEyNDcw.hpAaazivKF2WMdlFAqDdi_r-IeRk3fEyHd7-fjb3cm8g.Aum3ykhuiTx3PzZtdk2RJDkPKqJKBX2nXyDNXVuMjj0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "seori"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,370 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 17,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-size:10pt;\"><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>//꼬봉소환</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg == &quot;/꼬봉&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;안녕 반가워&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>//숫자야구게임</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const scriptName = &quot;야구게임&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>let answer = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>let is_start = 0; let count = 0;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room,msg,sender,isGroupChat,replier,imageDB,packageName) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg.startsWith(&quot;/숫자야구시작&quot;) &amp;&amp; is_start === 0) { answer = setNumber();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;숫자야구게임을 시작합니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>is_start = 1; count = 10;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp;if (is_start === 1) { if (!isNaN(Number(msg)) &amp;&amp; msg.length == 4) { let result = compare(msg); count -= 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (result[0] == 4) { replier.reply(sender + &quot;님, 정답입니다!\\n게임을 종료합니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>is_start = 0; count = 10;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>else if (result[0] == 0 &amp;&amp; result[1] == 0) { replier.reply(&quot;아웃!\\n\\n남은기회 &quot; + count + &quot;번&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>else { replier.reply(result[0] +&quot; 스트라이크\\n&quot; +result[1] +&quot; 볼\\n\\n남은기회 &quot; +count +&quot;번&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp;if (count == 0) { replier.reply(&quot;기회를 모두 사용했습니다\\n패배! \\n정답 : &quot; +String(answer[0]) +String(answer[1]) +String(answer[2]) +String(answer[3]));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>is_start = 0; count = 10;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg == &quot;/포기&quot;) { replier.reply(&quot;정답 : &quot; +String(answer[0]) +String(answer[1]) +String(answer[2]) +String(answer[3])); is_start = 0;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>count = 10;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function setNumber() { let answer = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>let check = true; while (answer.length &lt; 4) { let randomNumber = Math.floor(Math.random() * 10);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>for (let data of answer) { if (data == randomNumber) { check = false; break;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (check) { answer.push(randomNumber);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>} check = true; } return answer;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function compare(msg) { let SB = [0, 0]; for (let i = 0;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>i &lt; 4; i++) { for (let j = 0; j &lt; 4;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>j++) { if (answer[i] == msg[j]) { if (i == j) { SB[0] += 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>else { SB[1] += 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp;return SB;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>//가위바위보게임</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroup, replier) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; msg = msg.trim();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if (msg == &quot;/가위바위보&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;가위바위보 게임을 시작합니다.\\n가위, 바위, 보 중 하나를 내주세요.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; player = sender;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if (player == sender &amp;&amp; (msg == &quot;가위&quot; || msg == &quot;바위&quot; || msg == &quot;보&quot;)) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var result = Math.floor(Math.random() * 3);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (result == 0) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (msg == &quot;가위&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;저는 바위를 냈습니다.\\n제가 이겼습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if (msg == &quot;바위&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;저는 보를 냈습니다.\\n제가 이겼습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if (msg == &quot;보&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;저는 가위를 냈습니다.\\n제가 이겼습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else if (result == 1) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;저는 &quot; + msg + &quot;를 냈습니다.\\n비겼습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else if (result == 2) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (msg == &quot;가위&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;저는 보를 냈습니다.\\n당신이 이겼습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if (msg == &quot;바위&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;저는 가위를 냈습니다.\\n당신이 이겼습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if (msg == &quot;보&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;저는 바위를 냈습니다.\\n당신이 이겼습니다.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; player = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>//자동출첵소스</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var reset;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const FS = FileStream;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 순위 = 0;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 목록 = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 출석 = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var Lw = &quot;\\u200b&quot;.repeat(500);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if(msg == &quot;/출첵&quot;||msg == &quot;ㅊㅊ&quot;||msg == &quot;/출석&quot;){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if(출석.indexOf(sender) == -1) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>출석.push(sender);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>순위 ++;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>목록.push(&quot;[&quot;+순위+&quot;등] &quot;+sender);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(sender+&quot;님이 &quot;+순위+&quot;등으로 출석하셨습니다!!!&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>else</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if(msg == &quot;/출첵&quot;||msg == &quot;ㅊㅊ&quot;||msg == &quot;/출석&quot;){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(sender+&quot;님은 이미 출석체크를 하셨습니다&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if(msg == &quot;/출석목록&quot;){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;오늘의 출석목록입니다&quot;+Lw+&quot;\\n\\n\\n&quot;+목록.join(&quot;\\n\\n&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if(msg) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var day = new Date();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>reset = ((day.getMonth() + 1) + &quot;월 &quot; + day.getDate() + &quot;일&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if(reset != FS.read(&quot;sdcard/출석체크/날짜.txt&quot;)) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>FS.write(&quot;sdcard/출석체크/날짜.txt&quot;, reset);&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>순위 = 0;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>목록 = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>출석 = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>else return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>//주사위</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var g = [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,][Math.floor(Math.random()*12)]</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg == &quot;/주사위&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[알림] &quot;+g+&quot;(이)가 나왔습니다&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>//로또</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 로또1 = Math.floor(Math.random()*45)+1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 로또2 = Math.floor(Math.random()*45)+1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 로또3 = Math.floor(Math.random()*45)+1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 로또4 = Math.floor(Math.random()*45)+1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 로또5 = Math.floor(Math.random()*45)+1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>var 로또6 = Math.floor(Math.random()*45)+1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if(msg == &quot;/로또&quot;){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(sender+&quot;님의 로또를 돌린결과\\n[&quot;+로또1+&quot;], &quot;+&quot;[&quot;+로또2+&quot;], &quot;+&quot;[&quot;+로또3+&quot;], &quot;+&quot;[&quot;+로또4+&quot;], &quot;+&quot;[&quot;+로또5+&quot;], &quot;+&quot;[&quot;+로또6+&quot;]&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><br /></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>//채팅레벨업</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>FS = FileStream;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>path = &quot;sdcard/File/chatingLevel&quot;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>all = &quot;\\u200b&quot;.repeat(500)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>levelUp = 10</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>clearOwner = [&quot;admin&quot;]</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response (room, msg, sender, igc, replier) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (FS.read(path)==null) FS.write(path, &quot;{}&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd = JSON.parse(FS.read(path))</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (rd[room] == undefined) rd[room] = {};</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (rd[room][sender] == undefined) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd[room][sender] = {}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd[room][sender][&quot;chats&quot;] = 0</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd[room][sender][&quot;level&quot;] = 0</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>bklv = rd[room][sender][&quot;level&quot;]</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd[room][sender][&quot;chats&quot;]++</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd[room][sender][&quot;level&quot;] = Number(rd[room][sender][&quot;chats&quot;])/levelUp|0</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>nowlv = rd[room][sender][&quot;level&quot;]</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (nowlv != bklv) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[!] &quot;+sender+&quot; 님의 레벨이 올랐습니다!\\n현재 레벨 : &quot;+nowlv+&quot;\\n채팅 : &quot;+rd[room][sender][&quot;chats&quot;]+&quot;회&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>FS.write(path, JSON.stringify(rd))</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg == &quot;!내채팅&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd = JSON.parse(FS.read(path))</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>myChats = rd[room][sender][&quot;chats&quot;]</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>myLevel = rd[room][sender][&quot;level&quot;]</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>result = []</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>for (i in rd[room]) result.push(rd[room][i]+&quot;\\n&quot;+rd[room][i][&quot;chats&quot;]);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>result.sort((a, b)=&gt;a.split(&quot;\\n&quot;)[1] - b.split(&quot;\\n&quot;)[1]).reverse()</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>score = 0</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>for (k in result) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (result[k].split(&quot;\\n&quot;)[0] == sender) score = Number(k)+1</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(sender+&quot; (&quot;+(score==0?&quot;1&quot;:score)+&quot;위)\\n레벨 : &quot;+myLevel+&quot;\\n채팅 : &quot;+myChats+&quot;회&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg == &quot;!채팅순위&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>rd = JSON.parse(FS.read(path))</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>result = []</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>for (i in rd[room]) result.push(i+&quot;\\n레벨 : &quot;+rd[room][i][&quot;level&quot;]+&quot;\\n채팅 : &quot;+rd[room][i][&quot;chats&quot;]);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>result.sort((a, b)=&gt;a.split(&quot;: &quot;)[2] - b.split(&quot;: &quot;)[2]).reverse()</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>for (j in result) result[j] = (Number(j)+1)+&quot;위 | &quot;+result[j];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[!] 채팅 순위입니다.&quot;+all+&quot;\\n\\n방 : &quot;+room+(igc?&quot; (그룹챗)&quot;:&quot; (개인챗)&quot;)+&quot;\\n총 &quot;+result.length+&quot;명\\n\\n&quot;+result.join(&quot;\\n\\n&quot;))</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg == &quot;!채팅초기화&quot;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (clearOwner.indexOf(sender)!=-1) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>FS.write(path, &quot;{}&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[!] 초기화 되었습니다.&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>} else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[!] 지정된 관리자만 채팅을 초기화 할 수 있습니다.&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt;&nbsp;</b></div><div><b>소스 하나하나확인하여 돌렸을때는 잘 돌아가는데, 모아서 사용할려고 하니깐 오류가 뜹니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004EEA00000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 20202,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 249,
+            "refArticleId": 20202,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "여러개의 소스를 한꺼번에 사용할려고 하니 오류가 뜹니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1592911292433,
+            "writer": {
+                "id": "ybw0408",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20121215_272/ybw0408_13555566158209mATs_JPEG/%A4%A1.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "랄라"
+            }
+        },
+        "articleId": 20202,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "아마 자바스크립트 기본 지식 습득하시면 해결될겁니다.",
+                    "id": 94575927,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94575927,
+                    "updateDate": 1592911382000,
+                    "writer": {
+                        "id": "dt3141592",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA3MTNfNjAg/MDAxNDk5ODc0MzI1ODY0.L23nhKElHQBYU1HI-neTmsWWI76dJM8ijnLGirojm_0g.ZsTOi3Ay5KzWIPqmG2ZbjR7l0bCQfmpzyPQB9naua4og.PNG.dt3141592/Dark%2BTornado%252B.png"
+                        },
+                        "nick": "Dark Tornado"
+                    }
+                },
+                {
+                    "content": "오류가안날수가없습니다",
+                    "id": 94575975,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94575975,
+                    "updateDate": 1592911414000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Devil1234"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 94576959,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94575975,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6e98126-6-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6e98126/original_6.png",
+                        "width": 129
+                    },
+                    "updateDate": 1592912196000,
+                    "writer": {
+                        "id": "jkbjh010",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMjEx/MDAxNTk5NjE5MjY1NTU4.5LDiO85tlD2ARzJcIp_7eGAE5ccWOcuyFBT-R0K3QbQg.EiSxSUX0EC-j6wQRCIjIIP0CCvvuymgWRtGXtvzsch4g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "피리"
+                    }
+                },
+                {
+                    "content": "모아서 사용하면 response 함수가 겹쳐서 당연 오류가 납니다...",
+                    "id": 94576196,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94576196,
+                    "updateDate": 1592911599000,
+                    "writer": {
+                        "id": "whdrhkddl123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTJfMjg3/MDAxNjAyNDU4NTIzNTE1.MLezUCiaBjjsTRp3eHxrGiEauqPGrV_8QXDjpDNXhLYg.kvN9713evojEbEKHSDMnY2uhPiKReI5ksEGi2-KVJ60g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "dowhd"
+                    }
+                },
+                {
+                    "content": "아마 오류의 원인은 이름이 겹지는 상수/변수들 때문일겁니다.\n같은 함수는 여러번 정의하면 가장 아래에 있는 녀석으로 덮어쓰기됩니다.",
+                    "id": 94576333,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94576196,
+                    "updateDate": 1592911745000,
+                    "writer": {
+                        "id": "dt3141592",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA3MTNfNjAg/MDAxNDk5ODc0MzI1ODY0.L23nhKElHQBYU1HI-neTmsWWI76dJM8ijnLGirojm_0g.ZsTOi3Ay5KzWIPqmG2ZbjR7l0bCQfmpzyPQB9naua4og.PNG.dt3141592/Dark%2BTornado%252B.png"
+                        },
+                        "nick": "Dark Tornado"
+                    }
+                },
+                {
+                    "content": "그렇겠네욤",
+                    "id": 94577926,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94576196,
+                    "replyMember": {
+                        "id": "dt3141592",
+                        "nick": "Dark Tornado"
+                    },
+                    "updateDate": 1592912942000,
+                    "writer": {
+                        "id": "whdrhkddl123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTJfMjg3/MDAxNjAyNDU4NTIzNTE1.MLezUCiaBjjsTRp3eHxrGiEauqPGrV_8QXDjpDNXhLYg.kvN9713evojEbEKHSDMnY2uhPiKReI5ksEGi2-KVJ60g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "dowhd"
+                    }
+                },
+                {
+                    "content": "이런 글에 죄송하지만 숫자 야구소스 좀 사용해도 될까요?",
+                    "id": 94576675,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94576675,
+                    "updateDate": 1592911991000,
+                    "writer": {
+                        "id": "andong_kdh",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMjlfMjY3/MDAxNTgyOTY0MTY3Nzgx.MEKh-NPvObxGfASwf8T1whdfgBuZKcKRRv7RpgWAXDIg.E8PyC3hz6VVOExwQM2cK3nN7IjQ1gr2siz-1dB8U8M0g.JPEG.andong_kdh/e.png"
+                        },
+                        "nick": "Sn67"
+                    }
+                },
+                {
+                    "content": "?",
+                    "id": 94576854,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94576675,
+                    "updateDate": 1592912113000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Devil1234"
+                    }
+                },
+                {
+                    "content": "네네",
+                    "id": 94579250,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94576675,
+                    "replyMember": {
+                        "id": "ccwwhh0830",
+                        "nick": "Devil1234"
+                    },
+                    "updateDate": 1592913849000,
+                    "writer": {
+                        "id": "ybw0408",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20121215_272/ybw0408_13555566158209mATs_JPEG/%A4%A1.jpg"
+                        },
+                        "nick": "랄라"
+                    }
+                },
+                {
+                    "content": "이거 써도되는 소스인가요?",
+                    "id": 94584444,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94584444,
+                    "updateDate": 1592916944000,
+                    "writer": {
+                        "id": "inuyashaani",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA2MjZfMTAy/MDAxNTYxNTQwMzgxMzU3.zWF1z8ge8lhiVfEQKanX3quaLNz0PHY5RhWOlv57Cq4g.0h2VaCLmAShrKhsYROmVNR0lUWiCQHe7iyIbVsi5E1wg.JPEG.inuyashaani/profileImage.jpg"
+                        },
+                        "nick": "카구야"
+                    }
+                }
+            ],
+            "last": {
+                "id": 104786020,
+                "refId": 104786020
+            },
+            "next": {
+                "id": 94585008,
+                "refId": 94584444
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

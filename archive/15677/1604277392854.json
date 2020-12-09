@@ -1,0 +1,410 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 20,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">호출</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><span style=\"color: rgb(206, 145, 120);\">&quot;use strict&quot;</span><span style=\"color: rgb(220, 220, 220);\">;</span></div><div style=\"background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><font color=\"#dcdcdc\"><br /></font><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #569cd6;\">var</span> scriptName <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #ce9178;\">&quot;호출&quot;</span><span style=\"color: #dcdcdc;\">;</span></div><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #569cd6;\">var</span> mode <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">null</span><span style=\"color: #dcdcdc;\">;</span> <span style=\"color: #608b4e;\">//숫자를 넣으시오</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #569cd6;\">var</span> admin <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">null</span><span style=\"color: #dcdcdc;\">;</span> <span style=\"color: #608b4e;\">//호출 메시지 받을 방 이름 넣으시오</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #569cd6;\">var</span> ms <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">null</span><span style=\"color: #dcdcdc;\">;</span> <span style=\"color: #608b4e;\">//진동 ms</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #569cd6;\">var</span> window <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #dcdcdc;\">{};</span></div><div style=\"color: rgb(212, 212, 212);\">importPackage<span style=\"color: #dcdcdc;\">(</span>android<span style=\"color: #dcdcdc;\">.</span>widget<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #569cd6;\">var</span> ctx <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #3dc9b0;\">Api</span><span style=\"color: #dcdcdc;\">.</span>getContext<span style=\"color: #dcdcdc;\">();</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #569cd6;\">function</span> response<span style=\"color: #dcdcdc;\">(</span>room<span style=\"color: #dcdcdc;\">,</span> msg<span style=\"color: #dcdcdc;\">,</span> sender<span style=\"color: #dcdcdc;\">,</span> isGroupChat<span style=\"color: #dcdcdc;\">,</span> replier<span style=\"color: #dcdcdc;\">,</span> imageDB<span style=\"color: #dcdcdc;\">,</span> packageName<span style=\"color: #dcdcdc;\">)</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">    <span style=\"color: #569cd6;\">if</span> <span style=\"color: #dcdcdc;\">(</span>msg <span style=\"color: #dcdcdc;\">==</span> <span style=\"color: #ce9178;\">&quot;호출&quot;</span><span style=\"color: #dcdcdc;\">)</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">        <span style=\"color: #569cd6;\">switch</span> <span style=\"color: #dcdcdc;\">(</span>mode<span style=\"color: #dcdcdc;\">)</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">            <span style=\"color: #569cd6;\">case</span> <span style=\"color: #b5cea8;\">0</span><span style=\"color: #dcdcdc;\">:</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//토스트(방,보낸 인간)</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #3dc9b0;\">Api</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">UIThread</span><span style=\"color: #dcdcdc;\">(</span><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcdc;\">()</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #3dc9b0;\">Toast</span><span style=\"color: #dcdcdc;\">.</span>makeText<span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #ce9178;\">&quot;Room : &quot;</span><span style=\"color: #dcdcdc;\">.</span>concat<span style=\"color: #dcdcdc;\">(</span>room<span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #ce9178;\">&quot;\\nSender : &quot;</span><span style=\"color: #dcdcdc;\">).</span>concat<span style=\"color: #dcdcdc;\">(</span>sender<span style=\"color: #dcdcdc;\">),</span> <span style=\"color: #b5cea8;\">1</span><span style=\"color: #dcdcdc;\">).</span>show<span style=\"color: #dcdcdc;\">();</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #dcdcdc;\">});</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #569cd6;\">break</span><span style=\"color: #dcdcdc;\">;</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\">            <span style=\"color: #569cd6;\">case</span> <span style=\"color: #b5cea8;\">1</span><span style=\"color: #dcdcdc;\">:</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//토스트(프로필 이미지,방,보낸 인간)</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #3dc9b0;\">Api</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">UIThread</span><span style=\"color: #dcdcdc;\">(</span><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcdc;\">()</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> lay <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">LinearLayout</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>setOrientation<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #b5cea8;\">1</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>setBackgroundColor<span style=\"color: #dcdcdc;\">(-</span><span style=\"color: #b5cea8;\">1</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> img <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">ImageView</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    img<span style=\"color: #dcdcdc;\">.</span>setImageBitmap<span style=\"color: #dcdcdc;\">(</span>imageDB<span style=\"color: #dcdcdc;\">.</span>getProfileBitmap<span style=\"color: #dcdcdc;\">());</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>addView<span style=\"color: #dcdcdc;\">(</span>img<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> info <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">TextView</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    info<span style=\"color: #dcdcdc;\">.</span>setText<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #ce9178;\">&quot;Room : &quot;</span><span style=\"color: #dcdcdc;\">.</span>concat<span style=\"color: #dcdcdc;\">(</span>room<span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #ce9178;\">&quot;\\nSender : &quot;</span><span style=\"color: #dcdcdc;\">).</span>concat<span style=\"color: #dcdcdc;\">(</span>sender<span style=\"color: #dcdcdc;\">));</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>addView<span style=\"color: #dcdcdc;\">(</span>info<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> to <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">Toast</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    to<span style=\"color: #dcdcdc;\">.</span>setDuration<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #b5cea8;\">1</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    to<span style=\"color: #dcdcdc;\">.</span>setGravity<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #b5cea8;\">17</span><span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #b5cea8;\">0</span><span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #b5cea8;\">0</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    to<span style=\"color: #dcdcdc;\">.</span>setView<span style=\"color: #dcdcdc;\">(</span>lay<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    to<span style=\"color: #dcdcdc;\">.</span>show<span style=\"color: #dcdcdc;\">();</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #dcdcdc;\">});</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #569cd6;\">break</span><span style=\"color: #dcdcdc;\">;</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\">            <span style=\"color: #569cd6;\">case</span> <span style=\"color: #b5cea8;\">2</span><span style=\"color: #dcdcdc;\">:</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//알림(프로필 이미지,방,보낸 인간)</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #3dc9b0;\">Api</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">UIThread</span><span style=\"color: #dcdcdc;\">(</span><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcdc;\">()</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> noti <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> android<span style=\"color: #dcdcdc;\">.</span>app<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">Notification</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">Builder</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    noti<span style=\"color: #dcdcdc;\">.</span>setContentTitle<span style=\"color: #dcdcdc;\">(</span>room<span style=\"color: #dcdcdc;\">).</span>setContentText<span style=\"color: #dcdcdc;\">(</span>sender<span style=\"color: #dcdcdc;\">).</span>setLargeIcon<span style=\"color: #dcdcdc;\">(</span>imageDB<span style=\"color: #dcdcdc;\">.</span>getProfileBitmap<span style=\"color: #dcdcdc;\">()).</span>setSmallIcon<span style=\"color: #dcdcdc;\">(</span>android<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">R</span><span style=\"color: #dcdcdc;\">.</span>drawable<span style=\"color: #dcdcdc;\">.</span>ic_menu_info_details<span style=\"color: #dcdcdc;\">).</span>setAutoCancel<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #569cd6;\">false</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    ctx<span style=\"color: #dcdcdc;\">.</span>getSystemService<span style=\"color: #dcdcdc;\">(</span>android<span style=\"color: #dcdcdc;\">.</span>content<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">Context</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">NOTIFICATION_SERVICE</span><span style=\"color: #dcdcdc;\">).</span>notify<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #3dc9b0;\">Date</span><span style=\"color: #dcdcdc;\">.</span>now<span style=\"color: #dcdcdc;\">(),</span> noti<span style=\"color: #dcdcdc;\">.</span>getNotification<span style=\"color: #dcdcdc;\">());</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #dcdcdc;\">});</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #569cd6;\">break</span><span style=\"color: #dcdcdc;\">;</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\">            <span style=\"color: #569cd6;\">case</span> <span style=\"color: #b5cea8;\">3</span><span style=\"color: #dcdcdc;\">:</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//WindowManager(프로필 이미지,방,보낸 인간)</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//<a href=\"http://blog.naver.com/dt3141592/221189173955\" target=\"_blank\">http://blog.naver.com/dt3141592/221189173955</a></span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//닼토님 블로그 좋아요 오홍홍</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #3dc9b0;\">Api</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">UIThread</span><span style=\"color: #dcdcdc;\">(</span><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcdc;\">()</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> now <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #3dc9b0;\">Date</span><span style=\"color: #dcdcdc;\">.</span>now<span style=\"color: #dcdcdc;\">();</span></div><div style=\"color: rgb(212, 212, 212);\">                    window<span style=\"color: #dcdcdc;\">[</span>now<span style=\"color: #dcdcdc;\">]</span> <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">ScrollView</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> lay <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">LinearLayout</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>setOrientation<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #b5cea8;\">1</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>setBackgroundColor<span style=\"color: #dcdcdc;\">(-</span><span style=\"color: #b5cea8;\">1</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> img <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">ImageView</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    img<span style=\"color: #dcdcdc;\">.</span>setImageBitmap<span style=\"color: #dcdcdc;\">(</span>imageDB<span style=\"color: #dcdcdc;\">.</span>getProfileBitmap<span style=\"color: #dcdcdc;\">());</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>addView<span style=\"color: #dcdcdc;\">(</span>img<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> info <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">TextView</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    info<span style=\"color: #dcdcdc;\">.</span>setText<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #ce9178;\">&quot;Room : &quot;</span><span style=\"color: #dcdcdc;\">.</span>concat<span style=\"color: #dcdcdc;\">(</span>room<span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #ce9178;\">&quot;\\nSender : &quot;</span><span style=\"color: #dcdcdc;\">).</span>concat<span style=\"color: #dcdcdc;\">(</span>sender<span style=\"color: #dcdcdc;\">));</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>addView<span style=\"color: #dcdcdc;\">(</span>info<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> btn <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> <span style=\"color: #3dc9b0;\">Button</span><span style=\"color: #dcdcdc;\">(</span>ctx<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    btn<span style=\"color: #dcdcdc;\">.</span>setText<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #ce9178;\">&quot;Remove&quot;</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    btn<span style=\"color: #dcdcdc;\">.</span>setOnClickListener<span style=\"color: #dcdcdc;\">(</span><span style=\"color: #569cd6;\">new</span> android<span style=\"color: #dcdcdc;\">.</span>view<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">View</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">OnClickListener</span><span style=\"color: #dcdcdc;\">({</span></div><div style=\"color: rgb(212, 212, 212);\">                        onClick<span style=\"color: #dcdcdc;\">:</span> <span style=\"color: #569cd6;\">function</span> onClick<span style=\"color: #dcdcdc;\">()</span> <span style=\"color: #dcdcdc;\">{</span></div><div style=\"color: rgb(212, 212, 212);\">                            ctx<span style=\"color: #dcdcdc;\">.</span>getSystemService<span style=\"color: #dcdcdc;\">(</span>android<span style=\"color: #dcdcdc;\">.</span>content<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">Context</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">WINDOW_SERVICE</span><span style=\"color: #dcdcdc;\">).</span>removeView<span style=\"color: #dcdcdc;\">(</span>window<span style=\"color: #dcdcdc;\">[</span>now<span style=\"color: #dcdcdc;\">]);</span></div><div style=\"color: rgb(212, 212, 212);\">                        <span style=\"color: #dcdcdc;\">}</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #dcdcdc;\">}));</span></div><div style=\"color: rgb(212, 212, 212);\">                    lay<span style=\"color: #dcdcdc;\">.</span>addView<span style=\"color: #dcdcdc;\">(</span>btn<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> a <span style=\"color: #dcdcdc;\">=</span> <span style=\"color: #569cd6;\">new</span> android<span style=\"color: #dcdcdc;\">.</span>view<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">WindowManager</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">LayoutParams</span><span style=\"color: #dcdcdc;\">(-</span><span style=\"color: #b5cea8;\">2</span><span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #dcdcdc;\">-</span><span style=\"color: #b5cea8;\">2</span><span style=\"color: #dcdcdc;\">,</span> android<span style=\"color: #dcdcdc;\">.</span>view<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">WindowManager</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">LayoutParams</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">TYPE_TOAST</span><span style=\"color: #dcdcdc;\">,</span> android<span style=\"color: #dcdcdc;\">.</span>view<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">WindowManager</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">LayoutParams</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">FLAG_NOT_FOCUSABLE</span><span style=\"color: #dcdcdc;\">,</span> android<span style=\"color: #dcdcdc;\">.</span>graphics<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">PixelFormat</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">TRANSLUCENT</span><span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    <span style=\"color: #569cd6;\">var</span> scroll <span style=\"color: #dcdcdc;\">=</span> window<span style=\"color: #dcdcdc;\">[</span>now<span style=\"color: #dcdcdc;\">];</span></div><div style=\"color: rgb(212, 212, 212);\">                    scroll<span style=\"color: #dcdcdc;\">.</span>addView<span style=\"color: #dcdcdc;\">(</span>lay<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                    ctx<span style=\"color: #dcdcdc;\">.</span>getSystemService<span style=\"color: #dcdcdc;\">(</span>android<span style=\"color: #dcdcdc;\">.</span>content<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">Context</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">WINDOW_SERVICE</span><span style=\"color: #dcdcdc;\">).</span>addView<span style=\"color: #dcdcdc;\">(</span>scroll<span style=\"color: #dcdcdc;\">,</span> a<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #dcdcdc;\">});</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #569cd6;\">break</span><span style=\"color: #dcdcdc;\">;</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\">            <span style=\"color: #569cd6;\">case</span> <span style=\"color: #b5cea8;\">4</span><span style=\"color: #dcdcdc;\">:</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//진동(ms만큼)</span></div><div style=\"color: rgb(212, 212, 212);\">                ctx<span style=\"color: #dcdcdc;\">.</span>getSystemService<span style=\"color: #dcdcdc;\">(</span>android<span style=\"color: #dcdcdc;\">.</span>content<span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">Context</span><span style=\"color: #dcdcdc;\">.</span><span style=\"color: #3dc9b0;\">VIBRATOR_SERVICE</span><span style=\"color: #dcdcdc;\">).</span>vibrate<span style=\"color: #dcdcdc;\">(</span>ms<span style=\"color: #dcdcdc;\">);</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #569cd6;\">break</span><span style=\"color: #dcdcdc;\">;</span></div><font color=\"#d4d4d4\"><br /></font><div style=\"color: rgb(212, 212, 212);\">            <span style=\"color: #569cd6;\">default</span><span style=\"color: #dcdcdc;\">:</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #608b4e;\">//호출 메시지 받을 방으로 전송(방,보낸 인간)</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #3dc9b0;\">Api</span><span style=\"color: #dcdcdc;\">.</span>canReply<span style=\"color: #dcdcdc;\">(</span>admin<span style=\"color: #dcdcdc;\">)</span> <span style=\"color: #dcdcdc;\">&amp;&amp;</span> <span style=\"color: #3dc9b0;\">Api</span><span style=\"color: #dcdcdc;\">.</span>replyRoom<span style=\"color: #dcdcdc;\">(</span>admin<span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #ce9178;\">&quot;Room : &quot;</span><span style=\"color: #dcdcdc;\">.</span>concat<span style=\"color: #dcdcdc;\">(</span>room<span style=\"color: #dcdcdc;\">,</span> <span style=\"color: #ce9178;\">&quot;\\nSender : &quot;</span><span style=\"color: #dcdcdc;\">).</span>concat<span style=\"color: #dcdcdc;\">(</span>sender<span style=\"color: #dcdcdc;\">));</span></div><div style=\"color: rgb(212, 212, 212);\">                <span style=\"color: #569cd6;\">break</span><span style=\"color: #dcdcdc;\">;</span></div><div style=\"color: rgb(212, 212, 212);\">        <span style=\"color: #dcdcdc;\">}</span></div><div style=\"color: rgb(212, 212, 212);\">    <span style=\"color: #dcdcdc;\">}</span></div><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #dcdcdc;\">}</span></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003D3D00000000",
+            "id": 15677,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 288,
+            "refArticleId": 15677,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "골라먹는 호출",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586336479523,
+            "writer": {
+                "id": "okysky1121",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "졸려"
+            }
+        },
+        "articleId": 15677,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "으악 const를 써주새오",
+                    "id": 86799626,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "updateDate": 1586336820000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "그런거 쓰는거 아님미다",
+                    "id": 86799672,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "updateDate": 1586336855000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "ㅂㄷㅂㄷ",
+                    "id": 86799689,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "replyMember": {
+                        "id": "okysky1121",
+                        "nick": "졸려"
+                    },
+                    "updateDate": 1586336863000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "let 쓰세요",
+                    "id": 88520716,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "replyMember": {
+                        "id": "okysky1121",
+                        "nick": "졸려"
+                    },
+                    "updateDate": 1587787783000,
+                    "writer": {
+                        "id": "dbsehgus0121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                        },
+                        "nick": "Green050121"
+                    }
+                },
+                {
+                    "content": "var 쓰십쇼",
+                    "id": 88520766,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "replyMember": {
+                        "id": "dbsehgus0121",
+                        "nick": "Green050121"
+                    },
+                    "updateDate": 1587787824000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "그런거 쓰는거 아님미다",
+                    "id": 88520780,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "replyMember": {
+                        "id": "okysky1121",
+                        "nick": "졸려"
+                    },
+                    "updateDate": 1587787839000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "val 쓰기전에 var 쓰십쇼",
+                    "id": 88520813,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음"
+                    },
+                    "updateDate": 1587787867000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "var 보단 let!",
+                    "id": 88520819,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799626,
+                    "replyMember": {
+                        "id": "okysky1121",
+                        "nick": "졸려"
+                    },
+                    "updateDate": 1587787871000,
+                    "writer": {
+                        "id": "dbsehgus0121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                        },
+                        "nick": "Green050121"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 86799814,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86799814,
+                    "updateDate": 1586336966000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "언젠가 쓸게요\r\n근데 개판으로 나올듯",
+                    "id": 86799954,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86799814,
+                    "updateDate": 1586337082000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                }
+            ],
+            "last": {
+                "id": 87858365,
+                "refId": 87858365
+            },
+            "next": {
+                "id": 86800309,
+                "refId": 86800309
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

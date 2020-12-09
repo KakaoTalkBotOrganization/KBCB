@@ -1,0 +1,239 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<p>/*배틀그라운드 가져오기(dak.gg)<br />Copyright 2019, Indvel All rights reserved.*/<br />function getPUBGInfo(nick) {<br /> try {<br /> var doc = Utils.getWebText(&quot;https://dak.gg/profile/&quot; + nick + &quot;?hl=ko-KR&quot;, null, false, false);<br /> <br /> if(doc.trim().indexOf(&quot;플레이어를 찾을 수 없습니다.&quot;) != -1) {<br />  return nick + &quot;유저를 찾을 수 없습니다.&quot;;<br /> } else {<br />  <br />  var solo = doc.split(&quot;&lt;section class=\\&quot;solo modeItem\\&quot;&gt;&quot;)[1].split(&quot;&lt;/section&gt;&quot;)[0];<br />  if(solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;/div&gt;&quot;)[0].indexOf(&quot;grade-info&quot;) == -1) {<br />   solo = null;<br />  }<br />  <br />  var duo = doc.split(&quot;&lt;section class=\\&quot;duo modeItem\\&quot;&gt;&quot;)[1].split(&quot;&lt;/section&gt;&quot;)[0];<br />  if(duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;/div&gt;&quot;)[0].indexOf(&quot;grade-info&quot;) == -1) {<br />   duo = null;<br />   }<br />  <br />  var squad = doc.split(&quot;&lt;section class=\\&quot;squad modeItem\\&quot;&gt;&quot;)[1].split(&quot;&lt;/section&gt;&quot;)[0];<br />  if(squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;/div&gt;&quot;)[0].indexOf(&quot;grade-info&quot;) == -1) {<br />   squad = null;<br />  }<br />  <br />  var result = [];<br />  var str = &quot;&quot;;<br />  <br />  result[0] = doc.split(&quot;&lt;div class=\\&quot;userData\\&quot;&gt;&quot;)[1].split(&quot;&lt;p&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g, &quot;&quot;).trim().replace(&quot;: &quot;, &quot; : &quot;);<br />  result[1] = &quot;서버 : &quot; + doc.split(&quot;&lt;div class=\\&quot;regions\\&quot;&gt;&quot;)[1].split(&quot;class=\\&quot;active\\&quot;&gt;&quot;)[1].split(&quot;&gt;&quot;)[1].split(&quot;&lt;/a&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g, &quot;&quot;).replace(&quot;&lt;/a&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />  result[2] = doc.split(&quot;&lt;div class=\\&quot;seasons\\&quot;&gt;&quot;)[1].split(&quot;class=\\&quot;active\\&quot;&gt;&quot;)[1].split(&quot;&lt;a href&quot;)[1].split(&quot;&gt;&quot;)[1].split(&quot;&lt;&quot;)[0].trim() + &quot;\\n&quot;;<br />  <br />  if(solo != null) {<br />  str += &quot;솔로 : &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;em&gt;&quot;)[1].split(&quot;&lt;/em&gt;&quot;)[0] + &quot;\\n=&gt; &quot; + doc.split(&quot;&lt;p class=\\&quot;grade-name\\&quot; style=\\&quot;font-size:11px;\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0] + &quot; / &quot; + solo.split(&quot;&lt;span class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;(&quot; + solo.split(&quot;&lt;span class=\\&quot;top\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;)&quot;.trim() + &quot;\\n=&gt; 킬뎃 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 승률 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[2].split(&quot;&lt;/p&gt;&quot;)[0] + &quot;\\n=&gt; 헤드샷 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[7].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 저격 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[8].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;\\n\\n&quot;;<br />}<br />  if(duo != null) {<br />   str += &quot;듀오 : &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;em&gt;&quot;)[1].split(&quot;&lt;/em&gt;&quot;)[0] + &quot;\\n=&gt;&quot; + duo.split(&quot;&lt;p class=\\&quot;grade-name\\&quot; style=\\&quot;font-size:11px;\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0] + &quot; / &quot; + duo.split(&quot;&lt;span class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;(&quot; + duo.split(&quot;&lt;span class=\\&quot;top\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;)&quot;.trim() + &quot;\\n=&gt; 킬뎃 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 승률 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[2].split(&quot;&lt;/p&gt;&quot;)[0] + &quot;\\n=&gt; 헤드샷 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[7].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 저격 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[8].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;\\n\\n&quot;;<br /> }<br />  if(squad != null) {<br />   str += &quot;스쿼드 : &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;em&gt;&quot;)[1].split(&quot;&lt;/em&gt;&quot;)[0] + &quot;\\n=&gt;&quot; + squad.split(&quot;&lt;p class=\\&quot;grade-name\\&quot; style=\\&quot;font-size:11px;\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0] + &quot; / &quot; + squad.split(&quot;&lt;span class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;(&quot; + squad.split(&quot;&lt;span class=\\&quot;top\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;)&quot;.trim() + &quot;\\n=&gt; 킬뎃 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 승률 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[2].split(&quot;&lt;/p&gt;&quot;)[0] + &quot;\\n=&gt; 헤드샷 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[7].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 저격 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[8].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;\\n\\n&quot;;<br /> }<br /> <br /> str = str.substring(0, str.lastIndexOf(&quot;\\n\\n&quot;));<br />  <br />  return nick + &quot;님의 배틀그라운드\\n\\n&quot; + result.join(&quot;\\n&quot;) + &quot;\\n&quot; + str + &quot;\\n\\ndak.gg/profile/&quot; + nick;<br /> }<br /> } catch (e) {<br />  return nick + &quot; 유저를 찾을 수 없습니다.&quot;;<br /> }<br />}<br />이거 사용법이..</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000032A900000000",
+            "id": 12969,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 73,
+            "refArticleId": 12969,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "이거 어떻게사용하는거에요?",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583669207707,
+            "writer": {
+                "id": "mjmjmj1225",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "청월"
+            }
+        },
+        "articleId": 12969,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "음 이거 이발용인가",
+                    "id": 83527616,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83527616,
+                    "updateDate": 1583669295000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "초급게시글 죽돌이"
+                    }
+                },
+                {
+                    "content": "그러게요 response 함수가 안보이네요",
+                    "id": 83528049,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83528049,
+                    "updateDate": 1583669517000,
+                    "writer": {
+                        "id": "yisimgok",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDVfMTc3/MDAxNTc4MTg0OTQ4MzI3.eok9H5YfiHd4kTJCHmBwqV1r9aws1NJi8UP4V0bSOsog.-WdtCOmjiS1iWvDSXMBtVmnJ4oPfL-LUby1UYMMN63sg.PNG/%EC%9E%90%EC%BA%90.png"
+                        },
+                        "nick": "타키"
+                    }
+                },
+                {
+                    "content": "아래에 response 함수를 추가하시고 replier.reply(getPUBGInfo(이름)); 을 쓰시면 됩니다",
+                    "id": 83528754,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83528049,
+                    "updateDate": 1583669880000,
+                    "writer": {
+                        "id": "yisimgok",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDVfMTc3/MDAxNTc4MTg0OTQ4MzI3.eok9H5YfiHd4kTJCHmBwqV1r9aws1NJi8UP4V0bSOsog.-WdtCOmjiS1iWvDSXMBtVmnJ4oPfL-LUby1UYMMN63sg.PNG/%EC%9E%90%EC%BA%90.png"
+                        },
+                        "nick": "타키"
+                    }
+                },
+                {
+                    "content": "추측하기론 getPUBGInfo(\"이름\") 하면 정보가 나올 겁니다.",
+                    "id": 83528242,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83528242,
+                    "updateDate": 1583669627000,
+                    "writer": {
+                        "id": "partworm",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "PartWorm"
+                    }
+                },
+                {
+                    "content": "배그전적 소스 뿌릴까",
+                    "id": 83528497,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83528497,
+                    "updateDate": 1583669765000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

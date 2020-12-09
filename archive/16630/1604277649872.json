@@ -1,0 +1,248 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>/* <br />[CR Stats]<br />Made By EliF<br /><br />주in님의 api 사용<br />문제 시 자삭<br />*/<br /><br />function response(e, a, s, n, r, t, i) {<br />    if (a.startsWith(&quot;/cr&quot;)) try {<br />        tag = a.substr(3).trim().replace(/#/, &quot;&quot;).toUpperCase();<br />        let e = &quot;http://htmlcode.dothome.co.kr/royale.php?tag=&quot; + tag;<br />        var o = org.jsoup.Jsoup.connect(e).get().text();<br />        let s = (o = JSON.parse(o)).name,<br />            n = o.tag,<br />            t = o.arena.name,<br />            i = o.wins,<br />            w = o.losses;<br />        var l = &quot;0&quot;;<br />        o.warDayWins &amp;&amp; (l = o.warDayWins);<br />        var g = &quot;0&quot;;<br />        o.trophies &amp;&amp; (g = o.trophies);<br />        var c = &quot;0&quot;;<br />        o.bestTrophies &amp;&amp; (c = o.bestTrophies);<br />        var u = &quot;0&quot;;<br />        o.totalDonations &amp;&amp; (u = o.totalDonations);<br />        var S = &quot;0&quot;;<br />        o.threeCrownWins &amp;&amp; (S = o.threeCrownWins);<br />        var p = &quot;0&quot;;<br />        o.clanCardsCollected &amp;&amp; (p = o.clanCardsCollected);<br />        var d = &quot;0&quot;;<br />        o.challengeCardsWon &amp;&amp; (d = o.challengeCardsWon);<br />        var b = &quot;0&quot;;<br />        o.challengeMaxWins &amp;&amp; (b = o.challengeMaxWins);<br />        var h = &quot;0&quot;;<br />        null != o.badges[0] &amp;&amp; &quot;Classic12Wins&quot; == o.badges[0].name &amp;&amp; o.badges[0].progress &gt; 0 &amp;&amp; (h = o.badges[0].progress);<br />        var v = &quot;0&quot;;<br />        null != o.badges[0] &amp;&amp; (&quot;Classic12Wins&quot; != o.badges[0].name &amp;&amp; &quot;Grand12Wins&quot; == o.badges[0].name &amp;&amp; o.badges[0].progress &gt; 0 &amp;&amp; (v = o.badges[0].progress), &quot;Classic12Wins&quot; == o.badges[0].name &amp;&amp; &quot;Grand12Wins&quot; == o.badges[1].name &amp;&amp; o.badges[1].progress &gt; 0 &amp;&amp; (v = o.badges[1].progress));<br />        var C = &quot;클랜 없음&quot;;<br />        o.clan &amp;&amp; (&quot;leader&quot; == o.role &amp;&amp; (role = &quot;Leader&quot;), &quot;coLeader&quot; == o.role &amp;&amp; (role = &quot;Co-leader&quot;), &quot;elder&quot; == o.role &amp;&amp; (role = &quot;Elder&quot;), &quot;member&quot; == o.role &amp;&amp; (role = &quot;Member&quot;), C = o.clan.name + &quot; | &quot; + role + &quot;\\n&quot; + o.clan.tag);<br />        var W = &quot;기록 없음&quot;;<br />        if (o.leagueStatistics &amp;&amp; null != o.leagueStatistics.previousSeason) {<br />            var m = &quot;언랭&quot;;<br />            o.leagueStatistics.previousSeason.rank &amp;&amp; (m = o.leagueStatistics.previousSeason.rank), W = &quot;순위 - &quot; + m + &quot;\\n최대 트로피 - &quot; + o.leagueStatistics.previousSeason.bestTrophies + &quot;\\n트로피 - &quot; + o.leagueStatistics.previousSeason.trophies<br />        }<br />        var k = &quot;기록 없음&quot;;<br />        if (o.leagueStatistics) {<br />            var y = &quot;언랭&quot;;<br />            o.leagueStatistics.bestSeason.rank &amp;&amp; (y = o.leagueStatistics.bestSeason.rank), k = &quot;시즌 [&quot; + o.leagueStatistics.bestSeason.id + &quot;]\\n순위 - &quot; + y + &quot;\\n트로피 - &quot; + o.leagueStatistics.bestSeason.trophies<br />        }<br />        var T = &quot;기록 없음&quot;;<br />        if (o.leagueStatistics &amp;&amp; null != o.leagueStatistics.currentSeason.bestTrophies) {<br />            var f = &quot;언랭&quot;;<br />            o.leagueStatistics.currentSeason.rank &amp;&amp; (f = o.leagueStatistics.currentSeason.rank), T = &quot;순위 - &quot; + f + &quot;\\n최대 트로피 - &quot; + o.leagueStatistics.currentSeason.bestTrophies + &quot;\\n트로피 - &quot; + o.leagueStatistics.currentSeason.trophies<br />        }<br />        r.reply(s + &quot;\\n&quot; + n + &quot;\\n\\n&#127942; &quot; + g + &quot; | &quot; + t + &quot;\\n&quot; + &quot;&#8203;&quot;.repeat(500) + &quot;\\n\\n▷ Clan ◁\\n&quot; + C + &quot;\\n\\n▷ Trophies ◁\\n최대 트로피 - &quot; + c + &quot;\\n현재 트로피 - &quot; + g + &quot;\\n\\n▷ Stats ◁\\n승리 - &quot; + i + &quot;\\n패배 - &quot; + w + &quot;\\n3 크라운 승리 - &quot; + S + &quot;\\n지원 합계 - &quot; + u + &quot;\\n\\n▷ Clan War ◁\\n전쟁일 승리 - &quot; + l + &quot;\\n수집한 카드 - &quot; + p + &quot;\\n\\n▷ Challenge ◁\\n최대 승리 수 - &quot; + b + &quot;\\n획득한 카드 - &quot; + d + &quot;\\n그랜드 12승 - &quot; + v + &quot;\\n클래식 12승 - &quot; + h + &quot;\\n\\n▷ Current Season ◁\\n&quot; + T + &quot;\\n\\n▷ Previous Season ◁\\n&quot; + W + &quot;\\n\\n▷ Best Season ◁\\n&quot; + k)<br />    } catch (e) {<br />        r.reply(&quot;플레이어 정보를 찾지 못하였습니다.\\n\\n*플레이어 태그 구성 요소\\n숫자 [0, 2, 8, 9]\\n알파벳 [P, Y, L, Q, G, R, J, C, U, V]&quot;)<br />    }<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000040F600000000",
+            "id": 16630,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 100,
+            "refArticleId": 16630,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "클로 스탯 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587649668530,
+            "writer": {
+                "id": "joonsama2004",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "EliF"
+            }
+        },
+        "articleId": 16630,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "와 참 멋져요",
+                    "id": 88370658,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88370658,
+                    "updateDate": 1587649822000,
+                    "writer": {
+                        "id": "cr_purple2",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Ruin"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 88372255,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88372255,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58f1f5bf4517a-6-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58f1f5bf4517a/original_6.png",
+                        "width": 129
+                    },
+                    "updateDate": 1587650569000,
+                    "writer": {
+                        "id": "juchan06",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfMjEy/MDAxNTgzNjY4NTU3OTIx.Tkj-wjdgKuWj0H5wRoYpy-1slJ99aFJFLJRE04pOix0g.OU7v7BRMojJNOO_3x2w3XrfXo4J0i5CqssRwF2eYblgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "주in"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 88377201,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88372255,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5747936e7d55d-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5747936e7d55d/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1587652763000,
+                    "writer": {
+                        "id": "joonsama2004",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                        },
+                        "nick": "EliF"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "클래시로얄",
+            "클로"
+        ]
+    }
+}

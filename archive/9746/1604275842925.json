@@ -1,0 +1,382 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 20,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1315,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMDZfMjMy/MDAxNTc4MzEwNjk3OTYz.rTO7yfyyH9HfBQgW9Au9C1c-8VWVnnxxhO6LhpZmC2sg.5RkJCQEv-W9XIlUwThrbHcCDpmTkcDX97ZX8gbbeYUMg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>const scriptName = &quot;버스&quot;;\r<br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\r<br />  /*\r<br />   *(string) room\r<br />   *(string) sender\r<br />   *(boolean) isGroupChat\r<br />   *(function) replier.reply(message)\r<br />   *(function) replier.reply(room, message, hideErrorToast = false)\r<br />   *(function) imageDB.getProfileBase64()\r<br />   *(string) packageName\r<br />   */\r<br />}<br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />if(msg.indexOf(&quot;/버스&quot;) ==0){&nbsp; //버스 명령어&nbsp;<br />&nbsp;&nbsp;&nbsp; var search = msg.split(&quot; &quot;)[0];<br />&nbsp;&nbsp;&nbsp; if(search == msg){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;띄어쓰기로 구분좀요&quot;);<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; msg = msg.replace(/번/g,&quot;&quot;)<br />&nbsp;&nbsp;&nbsp; msg = msg.replace(/ +/g,&quot; &quot;)<br />&nbsp;&nbsp;&nbsp; search = msg.substring(4)<br />&nbsp;&nbsp;&nbsp; var url = &quot;https://search.naver.com/search.naver?sm=top_hty&amp;fbm=1&amp;ie=utf8&amp;query=&quot;+search+&quot;번 버스&quot;<br />&nbsp;&nbsp;&nbsp; text =&quot;&quot;<br />&nbsp;try{&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var stn =[]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var stn_name =[]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var ar_stn = []<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text = &quot;--&quot;+search+&quot;번 실시간 정보--&quot;+ &quot;\\u200b&quot;.repeat(500)+&quot;\\n\\n&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var link = Utils.getWebText(url)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var imf = link.split(&quot;https://map.naver.com/?busId=&quot;)[1].split(&quot;\\&quot;&quot;)[0]&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var arrive =Utils.getWebText(&quot;https://s.search.naver.com/n/api.pubtrans.map/2.0/live/getBusLocation.jsonp?_callback=window.__jindo2_callback._bus_location_list_0&amp;caller=pc_search&amp;routeId=&quot;+imf).split(&quot;busLocationList\\&quot;:&quot;)[1]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var stop = &quot;https://s.search.naver.com/p/mlocation/map/api2/getBusDetailInfo.nhn?_callback=window.__jindo2_callback._bus_detail_info_0&amp;output=json&amp;caller=pc_search&amp;includeCompanyInfo=true&amp;doSeparateSection=true&amp;includeNonStopBusStops=true&amp;busID=&quot;+imf<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(arrive !=undefined){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; arrive = arrive.split(&quot;stationId\\&quot;:\\&quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(var i = 0; i&lt;arrive.length; i++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ar_stn.push(arrive[i].split(&quot;\\&quot;,\\&quot;station&quot;)[0])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var stop_link = Utils.getWebText(stop)//Made by 이긴라면<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var start =stop_link.split(&quot;busStartPoint\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var end =stop_link.split(&quot;busEndPoint\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var time =stop_link.split(&quot;busInterval\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var time =stop_link.split(&quot;busInterval\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var st_t =stop_link.split(&quot;busFirstTime\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var end_t=stop_link.split(&quot;busLastTime\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var loc =stop_link.split(&quot;busCityName\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp; // replier.reply(start+end)<br />&nbsp;&nbsp;&nbsp;&nbsp; var stop_n = stop_link.split(&quot;stationID\\&quot;:\\&quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp; text+= &quot;※버스정보※\\n지역 : &quot;+ loc+&quot;\\n기점 :&quot;+start+&quot;&nbsp; 종점 : &quot;+ end+&quot;\\n배차간격 : &quot;+time+&quot;분\\n&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp; text += &quot;첫차시각 : &quot; +st_t +&quot;&nbsp;&nbsp; 막차시각&quot;+end_t+&quot;\\n\\n&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp; text += &quot;총 &quot;+ar_stn.length+&quot;대 운영중\\n\\n&quot;;<br />&nbsp;&nbsp;&nbsp;&nbsp; stop_n.shift()<br /><br />&nbsp;&nbsp;&nbsp;&nbsp; for(var i = 0; i&lt;stop_n.length; i++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var name = stop_n[i].split(&quot;stationDisplayName\\&quot;:\\&quot;&quot;)[1].split(&quot;\\&quot;,&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var stop_num = stop_n[i].split(&quot;\\&quot;,\\&quot;isNonStop&quot;)[0]<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stn_name.push(name)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stn.push(stop_num)<br />&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp; //저는 봇에 대핫 초보개발자 입니다.<br />&nbsp;&nbsp;&nbsp;&nbsp; for(var i =0 ; i&lt;stn.length; i++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(ar_stn.indexOf(stn[i]) !=-1){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text +=&quot;▼&nbsp;&nbsp; ※&quot;+stn_name[i]+&quot;※\\n&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else{&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text +=&quot;▽&nbsp;&nbsp; ※&quot;+stn_name[i]+&quot;※\\n&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(text)<br />&nbsp;}<br />&nbsp;catch(e){<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;버스정보가 없습니다.\\n 상세검색을 위해 지역을 입력해주세요.\\n/버스 서울 1&quot;)<br />}<br />}<br />}</p>[[[CONTENT-ELEMENT-0]]]<br /><p>사로로님 버스 소스를 사용하였는데 안되네요.. 뭐가 문제인 걸까요??<br />제발 도와주세요<br />못 고치겠어요..ㅠㅠ</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000261200000000",
+            "id": 9746,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 203,
+            "refArticleId": 9746,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "버스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1578310698553,
+            "writer": {
+                "id": "smleeclan",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "minimcpe0624"
+            }
+        },
+        "articleId": 9746,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 176854,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/f461e85c4e7f7ecbe60265516c8bf78e2e7c82f5/MjAyMDAxMDZfMjMy/MDAxNTc4MzEwNjk3OTYz.rTO7yfyyH9HfBQgW9Au9C1c-8VWVnnxxhO6LhpZmC2sg.5RkJCQEv-W9XIlUwThrbHcCDpmTkcDX97ZX8gbbeYUMg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "그거 일부로 오류낸건데여.. .알아서 고치세요\r\n이미 리스폰스 두개부터가",
+                    "id": 77760032,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77760032,
+                    "updateDate": 1578312288000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "숨은 그림 찾기 빠밤",
+                    "id": 77760358,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77760358,
+                    "updateDate": 1578312515000,
+                    "writer": {
+                        "id": "bonzoby",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "호랑나비"
+                    }
+                },
+                {
+                    "content": "일부러 오류내신 거에요.\r\n알아서 찾으시면 됨",
+                    "id": 77761631,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77761631,
+                    "updateDate": 1578313434000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "아직도 오류가 보이세요?",
+                    "id": 77761668,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77761631,
+                    "updateDate": 1578313462000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "이미 리스폰스 2개부터 오류시고,\r\n원작자 님이 버스 소스 올리실 때 복붙 방지로 일부러 틀리게 올렸다는 이야기 하심",
+                    "id": 77761741,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77761631,
+                    "replyMember": {
+                        "id": "smleeclan",
+                        "nick": "minimcpe0624"
+                    },
+                    "updateDate": 1578313513000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "심지어 주석 바꾸지 말라고 적혀있는데 바꾸셨군요.....",
+                    "id": 77761847,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77761847,
+                    "updateDate": 1578313592000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "다른분이 소스 오류 낫다고 한거 거기서 따온건데..",
+                    "id": 77761896,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77761847,
+                    "updateDate": 1578313628000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "구글 어시스턴트였나.. 그분거에서 가지고 온거라 주석이 있는줄도 몰랐습니다",
+                    "id": 77762045,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77761847,
+                    "updateDate": 1578313767000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "이거는 어찌 풀엇는데 지하철이 진짜 안풀이네요ㅠㅠㅠㅠ",
+                    "id": 77765103,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77761847,
+                    "updateDate": 1578315919000,
+                    "writer": {
+                        "id": "bonzoby",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "호랑나비"
+                    }
+                },
+                {
+                    "content": "그럼 그 푼것을 공유해주시면 같이 지하철을 풀어 보아요",
+                    "id": 77765205,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77761847,
+                    "replyMember": {
+                        "id": "bonzoby",
+                        "nick": "호랑나비"
+                    },
+                    "updateDate": 1578315996000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                }
+            ],
+            "last": {
+                "id": 79437223,
+                "refId": 79437223
+            },
+            "next": {
+                "id": 77837449,
+                "refId": 77761847
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

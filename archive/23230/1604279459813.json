@@ -1,0 +1,396 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 11,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1521,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA4MTlfMjEg/MDAxNTk3ODA1MTAwMjg1.t1DTF81_Re6beKUqJHYaz9AJqjCn52VKO4MxD3oTrT8g.pd50KxilSoyRTLeypnmVT7EDM3qRpGYMccZId4pwXXMg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "[[[CONTENT-ELEMENT-0]]]<br /><p>뭐 이렇게 계속뜨는데요...<br />도대체 뭐가 문제인거죠?<br /><br />파일이 첨부안되서 올린 소스코드<br />const scriptName = &quot;RPG테스트&quot;;\r<br />/**\r<br /> * (string) room\r<br /> * (string) sender\r<br /> * (boolean) isGroupChat\r<br /> * (void) replier.reply(message)\r<br /> * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환\r<br /> * (string) imageDB.getProfileBase64()\r<br /> * (string) packageName\r<br /> */\r<br /><br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br />  <br />}<br />\r<br />//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.\r<br />function onCreate(savedInstanceState, activity) {\r<br />  var textView = new android.widget.TextView(activity);\r<br />  textView.setText(&quot;Hello, World!&quot;);\r<br />  textView.setTextColor(android.graphics.Color.DKGRAY);\r<br />  activity.setContentView(textView);\r<br />}\r<br />\r<br />function onStart(activity) {}\r<br />\r<br />function onResume(activity) {}\r<br />\r<br />function onPause(activity) {}\r<br />\r<br />function onStop(activity) {}<br /><br />FS = FileStream<br />path = &quot;sdcard/doami/rpg&quot;<br />Lw = &quot;\\u200b&quot;.repeat(1000)<br />Ll = &quot;&#9148;&quot;.repeat(40)<br /><br />rooms = []<br /><br />FS.read(path) || FS.write(path, &quot;{}&quot;)<br /><br />function response (room, msg, sender, igc, replier, idb) {<br /><br />if (rooms.length &amp;&amp; rooms.indexOf(room) == -1) return<br /><br />json = JSON.parse(FS.read(path))<br />json[room] = json[room] || {<br />  &quot;TPplayers&quot; : [],<br />  &quot;TITplayers&quot; : [],<br />  &quot;users&quot; : {}<br />}<br /><br />if (json[room][&quot;users&quot;][sender]) {<br />  json[room][&quot;users&quot;][sender][&quot;DP&quot;] = json[room][&quot;users&quot;][sender][&quot;DP&quot;] || 0<br />  json[room][&quot;users&quot;][sender][&quot;exp&quot;] = json[room][&quot;users&quot;][sender][&quot;exp&quot;] || 0<br />  json[room][&quot;users&quot;][sender][&quot;level&quot;] = json[room][&quot;users&quot;][sender][&quot;exp&quot;]/json[room][&quot;users&quot;][sender][&quot;level&quot;]*100|0+1 || 1<br />  json[room][&quot;users&quot;][sender][&quot;title&quot;] = json[room][&quot;users&quot;][sender][&quot;title&quot;] || &quot;&quot; <br />  json[room][&quot;users&quot;][sender][&quot;recent&quot;] = json[room][&quot;users&quot;][sender][&quot;recent&quot;] || new Date().getDate()-1<br />  json[room][&quot;users&quot;][sender][&quot;location&quot;] = json[room][&quot;users&quot;][sender][&quot;location&quot;] || &quot;사령부&quot;<br />  json[room][&quot;users&quot;][sender][&quot;items&quot;] = json[room][&quot;users&quot;][sender][&quot;items&quot;] || {}<br />  json[room][&quot;users&quot;][sender][&quot;weapon&quot;] = json[room][&quot;users&quot;][sender][&quot;weapon&quot;] || &quot;맨손&quot;<br />  json[room][&quot;users&quot;][sender][&quot;pet&quot;] = json[room][&quot;users&quot;][sender][&quot;pet&quot;] || &quot;없음&quot;<br />}<br /><br />FS.write(path, JSON.stringify(json, null, 4))<br /><br />if (msg == &quot;/도움말&quot;) {<br />  replier.reply(&quot;&bull; 도움말 입니다.&quot;+Lw+&quot;\\n\\n&quot;+[Ll, Object.keys(RPG.jsons.locations).map(e =&gt; e+&quot; : &quot;+RPG.jsons.locations[e].join(&quot;\\n&quot;)).join(&quot;\\n\\n&quot;+Ll+&quot;\\n\\n&quot;), Ll].join(&quot;\\n\\n&quot;))<br />}<br /><br />if (msg == &quot;/회원가입&quot;) {<br />  if (!json[room][&quot;users&quot;][sender]) {<br />    if (sender.split(/\\u200b|\\u202e|\\n/).length == 1) {<br />      json[room][&quot;users&quot;][sender] = {<br />        &quot;id&quot; : Math.random().toString(36).substr(2, 11)<br />      }<br />      replier.reply(&quot;&bull; 가입 되셨습니다!&quot;)<br />      FS.write(path, JSON.stringify(json, null, 4))<br />    } else replier.reply(&quot;&bull; 닉네임에 포함할 수 없는 글자가 함유되어 있습니다!&quot;)<br />  } else replier.reply(&quot;&bull; 이미 회원가입을 하셨습니다!&quot;)<br />}<br /><br />if (json[room][&quot;users&quot;][sender]) {<br /><br />  if (msg.startsWith(&quot;/정보&quot;)) {<br />    who = msg.substr(3).trim()<br />    json = JSON.parse(FS.read(path))[room][&quot;users&quot;] <br />    if ((who &amp;&amp; json[who]) || !who) {<br />      with (json[who?who:sender]) {<br />        replier.reply([<br />        &quot;&bull; &quot;+(title&amp;&amp;title)+&quot; &quot;+(who?who:sender)+ &quot;님의 정보&quot;, Ll,<br />        &quot;돈(달러) : &quot;+DP,<br />        &quot;레벨 : &quot;+level,<br />        &quot;다음 레벨까지 : &quot;+(json[room][&quot;users&quot;][sender][&quot;level&quot;]*100 - Number((exp+&apos;&apos;).substr((exp+&apos;&apos;).length-2)))+&quot; 경험치&quot;,<br />        &quot;현재 위치 : &quot;+location,<br />        &quot;펫 : &quot;+pet,<br />        &quot;무기 : &quot;+weapon, Ll<br />        ].join(&quot;\\n&quot;));<br />      }<br />    } else replier.reply(&quot;&bull; 회원가입을 하지 않은 플레이어 입니다!&quot;)<br />  }<br /><br />  if (msg == &quot;/이동&quot;) {<br />    json = JSON.parse(FS.read(path))<br />    arr = json[room][&quot;TPplayers&quot;]<br />    if (arr.indexOf(sender) == -1) arr.push(sender)<br />    replier.reply([<br />    &quot;&bull; 맵 목록입니다.&quot;,<br />    Object.keys(RPG.jsons.locations).map((e, i) =&gt; (i+1)+&quot;. &quot;+e).join(&quot;\\n&quot;),<br />    &quot;이동할 장소의 번호를 말해주세요.&quot;<br />    ].join(&quot;\\n&quot;+Ll+&quot;\\n&quot;))<br />    FS.write(path, JSON.stringify(json, null, 4))<br />  }<br /><br />  if (JSON.parse(FS.read(path))[room][&quot;TPplayers&quot;].indexOf(sender)+1 &amp;&amp; !isNaN(msg)) {<br />    if (Number.isInteger(Number(msg)) &amp;&amp; Number(msg) &gt; 0 &amp;&amp; Number(msg) &lt;= Object.keys(RPG.jsons.locations).length) {<br />      replier.reply([<br />      &quot;&bull; &quot;+Object.keys(RPG.jsons.locations)[Number(msg)-1]+&quot; (으)로 이동했습니다!&quot;,<br />      RPG.jsons.locations[Object.keys(RPG.jsons.locations)[Number(msg)-1]].join(&quot;\\n&quot;)<br />      ].join(&quot;\\n&quot;))<br />      json = JSON.parse(FS.read(path))<br />      json[room][&quot;users&quot;][sender][&quot;location&quot;] = Object.keys(RPG.jsons.locations)[Number(msg)-1]<br />      json[room][&quot;TPplayers&quot;].splice(json[room][&quot;TPplayers&quot;].indexOf(sender), 1)<br />      FS.write(path, JSON.stringify(json, null, 4))<br />    }<br />  }<br /><br />  if (msg == &quot;/전투&quot;) {<br />    json = JSON.parse(FS.read(path))<br />    if (json[room][&quot;users&quot;][sender][&quot;location&quot;] == &quot;전쟁터&quot;) {<br />        monster = RPG.functions.getMonster(json[room][&quot;users&quot;][sender][&quot;level&quot;])<br />        json[room][&quot;users&quot;][sender][&quot;DP&quot;] += (RPG.jsons.weapons.indexOf(json[room][&quot;users&quot;][sender][&quot;weapon&quot;])+1)*3*monster[1]<br />        exp = Math.random()*5*monster[1]|0<br />        json[room][&quot;users&quot;][sender][&quot;exp&quot;] += exp<br />        replier.reply([<br />        &quot;&bull; &quot;+json[room][&quot;users&quot;][sender][&quot;weapon&quot;]+&quot; (으)로 &quot;+monster[0]+&quot; (을)를 잡아 &quot;+(RPG.jsons.weapons.indexOf(json[room][&quot;users&quot;][sender][&quot;weapon&quot;])+1)*2*monster[1]+&quot; 달러($) 와 &quot;+exp+&quot; 경험치를 획득하였습니다!&quot;,<br />        &quot;현재 달러($) : &quot;+json[room][&quot;users&quot;][sender][&quot;DP&quot;]<br />        ].join(&quot;\\n&quot;))<br />        FS.write(path, JSON.stringify(json, null, 4))<br />     } else replier.reply([<br />     &quot;&bull; 전쟁터에서만 전투가 가능합니다!&quot;,<br />     &quot;&apos;/이동&apos; 명령어를 사용해 주세요.&quot;<br />     ].join(&quot;\\n&quot;))<br />  }<br />  <br />  if (msg == &quot;/칭호&quot;) {<br />    json = JSON.parse(FS.read(path))<br />    if (json[room][&quot;users&quot;][sender][&quot;location&quot;] == &quot;창고&quot;) {<br />      if (json[room][&quot;users&quot;][sender][&quot;items&quot;][&quot;호패 발행권&quot;] &gt; 0) {<br />        json[room][&quot;users&quot;][sender][&quot;items&quot;][&quot;호패 발행권&quot;] --<br />        replier.reply(&quot;&bull; 교체하실 칭호명을 입력해 주세요.&quot;)<br />        json[room][&quot;TITplayers&quot;].push(sender)<br />        FS.write(path, JSON.stringify(json, null, 4))<br />        return;<br />      } else replier.reply([<br />      &quot;&bull; 호패 발행권이 있어야 칭호 설정이 가능합니다!&quot;,<br />      &quot;보급소에서 호패 발행권을 구매해주세요.&quot;<br />      ].join(&quot;\\n&quot;))<br />    } else replier.reply([<br />     &quot;&bull; 창고에서만 칭호 설정이 가능합니다!&quot;,<br />     &quot;&apos;/이동&apos; 명령어를 사용해 주세요.&quot;<br />     ].join(&quot;\\n&quot;))<br />  }<br />  <br />  if (JSON.parse(FS.read(path))[room][&quot;TITplayers&quot;].indexOf(sender)+1) {<br />    if (msg.length &lt;= 20) {<br />      json = JSON.parse(FS.read(path))<br />      json[room][&quot;TITplayers&quot;].splice(json[room][&quot;TITplayers&quot;].indexOf(sender), 1)<br />      json[room][&quot;users&quot;][sender][&quot;title&quot;] = msg<br />      FS.write(path, JSON.stringify(json, null, 4))<br />      replier.reply(&quot;&bull; &quot;+sender+&quot; 님의 칭호가 이제부터 &apos;&quot;+msg+&quot;&apos; 으로 표시됩니다!&quot;)<br />    } else replier.reply(&quot;&bull; 칭호는 20자 이내로만 입력해주세요!&quot;)<br />  }<br />  <br />  if (msg.startsWith(&quot;/구매&quot;)) {<br />    json = JSON.parse(FS.read(path))<br />    if (json[room][&quot;users&quot;][sender][&quot;location&quot;] == &quot;보급소&quot;) {<br />      thing = msg.substr(3).trim()<br />      if (!thing) {<br />        replier.reply([<br />        &quot;&bull; 물품 목록&quot;, Ll,<br />        Object.keys(RPG.jsons.shopList).map(e =&gt; &quot;- &quot;+e+&quot; : &quot;+RPG.jsons.shopList[e]+&quot;$&quot;).join(&quot;\\n&quot;),<br />        &quot;&quot;, &quot;/구매 (물건) 으로 물품 구매가 가능합니다.&quot;, Ll<br />        ].join(&quot;\\n&quot;))<br />      } else if (Object.keys(RPG.jsons.shopList).indexOf(thing)+1) {<br />          if (json[room][&quot;users&quot;][sender][&quot;DP&quot;] &gt;= RPG.jsons.shopList[thing]) {<br />            replier.reply(&quot;&bull; &quot;+thing+ &quot;을(를) 보급받으셨습니다!&quot;)<br />            json[room][&quot;users&quot;][sender][&quot;DP&quot;] -= RPG.jsons.shopList[thing]<br />            if (thing == &quot;서양식 단도&quot;, &quot;일본식 장검&quot;, &quot;화승총&quot;, &quot;bayonet총검&quot;, &quot;Delvigne라이플&quot;, &quot;Edge연사라이플&quot;, &quot;윈채스터 모델1903&quot;,&quot;맥심중기관총&quot;,&quot;Mp40&quot;,&quot;M2카빈&quot;,&quot;K-2소총&quot;,&quot;AK-104&quot;,&quot;K-11복합소총&quot;) <br />               json[room][&quot;users&quot;][sender][&quot;weapon&quot;] = [thing];<br />               else json[room][&quot;users&quot;][sender][&quot;items&quot;][thing] = ++json[room][&quot;users&quot;][sender][&quot;items&quot;][thing] || 1<br />            FS.write(path, JSON.stringify(json, null, 4))<br />          } else replier.reply(&quot;&bull; &quot;+(RPG.jsons.shopList[thing]-json[room][&quot;users&quot;][sender][&quot;DP&quot;])+&quot; 달러($)가 부족합니다!&quot;)<br />      } else replier.reply(&quot;&bull; 없는 물품입니다!&quot;)<br />    } else replier.reply([<br />     &quot;&bull; 보급소에서만 구매가 가능합니다!&quot;,<br />     &quot;&apos;/이동&apos; 명령어를 사용해 주세요.&quot;<br />     ].join(&quot;\\n&quot;))<br />  }<br />  <br />    if (msg.startsWith(&quot;/입양&quot;)) {<br />    json = JSON.parse(FS.read(path))<br />    if (json[room][&quot;users&quot;][sender][&quot;location&quot;] == &quot;보급소&quot;) {<br />      thing = msg.substr(3).trim()<br />      if (!thing) {<br />        replier.reply([<br />        &quot;&bull; 펫 목록&quot;, Ll,<br />        Object.keys(RPG.jsons.shopList2).map(e =&gt; &quot;- &quot;+e+&quot; : &quot;+RPG.jsons.shopList2[e]+&quot;$&quot;).join(&quot;\\n&quot;),<br />        &quot;&quot;, &quot;/입양 (입양할펫) 으로 펫 입양이 가능합니다.&quot;, Ll<br />        ].join(&quot;\\n&quot;))<br />      } else if (Object.keys(RPG.jsons.shopList2).indexOf(thing)+1) {<br />          if (json[room][&quot;users&quot;][sender][&quot;DP&quot;] &gt;= RPG.jsons.shopList2[thing]) {<br />            replier.reply(&quot;&bull; &quot;+thing+ &quot;을(를) 입양하셨습니다!&quot;)<br />            json[room][&quot;users&quot;][sender][&quot;DP&quot;] -= RPG.jsons.shopList2[thing]<br />            if (thing == &quot;군견&quot;,&quot;짬타이거&quot;,&quot;전보비둘기&quot;,&quot;군마&quot;,&quot;이등병&quot;,&quot;말년병장&quot;) <br />               json[room][&quot;users&quot;][sender][&quot;pet&quot;] = [thing];<br />               else json[room][&quot;users&quot;][sender][&quot;items&quot;][thing] = ++json[room][&quot;users&quot;][sender][&quot;items&quot;][thing] || 1<br />            FS.write(path, JSON.stringify(json, null, 4))<br />          } else replier.reply(&quot;&bull; &quot;+(RPG.jsons.shopList2[thing]-json[room][&quot;users&quot;][sender][&quot;DP&quot;])+&quot; 달러($)가 부족합니다!&quot;)<br />      } else replier.reply(&quot;&bull; 없는 펫입니다!&quot;)<br />    } else replier.reply([<br />     &quot;&bull; 보급소에서만 입양이 가능합니다!&quot;,<br />     &quot;&apos;/이동&apos; 명령어를 사용해 주세요.&quot;<br />     ].join(&quot;\\n&quot;))<br />  }<br /><br />  if (msg == &quot;/출석&quot;) {<br />    json = JSON.parse(FS.read(path))<br />    if (json[room][&quot;users&quot;][sender][&quot;recent&quot;] != new Date().getDate()) {<br />      json[room][&quot;users&quot;][sender][&quot;recent&quot;] = new Date().getDate()<br />      json[room][&quot;users&quot;][sender][&quot;DP&quot;] += json[room][&quot;users&quot;][sender][&quot;level&quot;]*100<br />      day = new Date()<br />      replier.reply(&quot;&bull; &quot;+day.getMonth()+&quot;월 &quot;+day.getDate()+&quot;일 출석 보상으로 &quot;+json[room][&quot;users&quot;][sender][&quot;level&quot;]*100+&quot; 달러를 받았습니다!&quot;)<br />      FS.write(path, JSON.stringify(json, null, 4))<br />    } else replier.reply(&quot;&bull; 이미 출석체크를 하셨습니다!&quot;)<br />  }<br /><br />}<br /><br />}<br /><br />RPG = {<br />  jsons : {<br />    weapons : [&quot;맨손&quot;,&quot;서양식 단도&quot;, &quot;일본식 장검&quot;, &quot;화승총&quot;, &quot;bayonet총검&quot;, &quot;Delvigne라이플&quot;, &quot;Edge연사라이플&quot;, &quot;윈채스터 모델1903&quot;,&quot;맥심중기관총&quot;,&quot;Mp40&quot;,&quot;M2카빈&quot;,&quot;K-2소총&quot;,&quot;AK-104&quot;,&quot;K-11복합소총&quot;],<br />    shopList : {<br />      &quot;서양식 단도&quot; : 15,<br />      &quot;일본식 장검&quot; : 50,<br />      &quot;이화창&quot; : 100,<br />      &quot;화승총&quot; : 500,<br />      &quot;bayonet총검&quot; : 2000,<br />      &quot;Delvigne라이플&quot; : 5500,<br />      &quot;Edge연사라이플&quot; : 18000,<br />      &quot;윈채스터 모델1903&quot; : 120000,<br />      &quot;맥심중기관총&quot; : 500000,<br />      &quot;Mp40&quot; : 830000,<br />      &quot;M2카빈&quot; : 1350000,<br />      &quot;K-2소총&quot; : 3280000,<br />      &quot;AK-104&quot; : 5013000,<br />      &quot;K-11복합소총&quot; : 8710000,<br />      &quot;호패 발행권&quot; : 50000,<br />      },<br />      <br />    pets : [&quot;군견&quot;,&quot;짬타이거&quot;,&quot;전보비둘기&quot;,&quot;군마&quot;,&quot;이등병&quot;,&quot;말년병장&quot;],<br />    shopList2 : {<br />      &quot;군견&quot; : 80000,<br />      &quot;짬타이거&quot; : 200000,<br />      &quot;전보비둘기&quot; : 770000,<br />      &quot;군마&quot; : 1000000,<br />      &quot;이등병&quot; : 1500000,<br />      &quot;말년병장&quot; : 3000000,<br />    },<br />    locations : {<br />      &quot;참호안&quot; : [<br />      &quot;모든 공간에서 사용할 수 있는 명령어입니다.\\n&quot;,<br />      &quot;[ 사용 가능한 명령어 ]&quot;,<br />      &quot;/회원가입&quot;,<br />      &quot;/정보&quot;,<br />      &quot;/정보 (닉네임)&quot;,<br />      &quot;/출석&quot;,<br />      &quot;/이동&quot;<br />      ],<br />      &quot;사령부&quot; : [<br />      &quot;다른 유저들과 소통할 수 있는 장소입니다.\\n&quot;,<br />      &quot;[ 사용 가능한 명령어 ]&quot;,<br />      &quot;추가 중..&quot;<br />      ],<br />      &quot;전쟁터&quot; : [<br />      &quot;전투를 할 수 있는 장소입니다.\\n&quot;,<br />      &quot;[ 사용 가능한 명령어 ]&quot;,<br />      &quot;/전투&quot;<br />      ],<br />      &quot;보급소&quot; : [<br />      &quot;물건을 구매할 수 있는 장소입니다.\\n&quot;,<br />      &quot;[ 사용 가능한 명령어 ]&quot;,<br />      &quot;/구매&quot;,<br />      &quot;/입양&quot;<br />      ],<br />      &quot;창고&quot; : [<br />      &quot;아이템들을 강화하고 정비하는 장소입니다.\\n&quot;,<br />      &quot;[ 사용 가능한 명령어 ]&quot;,<br />      &quot;/칭호&quot;<br />      ],<br />      &quot;도박장&quot; : [<br />      &quot;달러로 도박을 하는 장소입니다.\\n&quot;,<br />      &quot;[ 사용 가능한 명령어 ]&quot;,<br />      &quot;추가 중..&quot;<br />      ]<br />    },<br />    monsters : {<br />      &quot;10&quot; : {<br />        &quot;1592 일본무사&quot; : 1,<br />        &quot;1597 일본조총병&quot; : 2<br />      },<br />      &quot;20&quot; : {<br />        &quot;1866 프랑스군&quot; : 4,<br />        &quot;1871 미국군&quot; : 5,<br />      },<br />      &quot;30&quot; : {<br />        &quot;1914 오스트리아군&quot; : 7,<br />        &quot;1914 세르비아군&quot; : 9,<br />        &quot;1916 추축(동맹)군&quot; : 11,<br />        &quot;1918 연합군&quot; : 13,<br />      },<br />      &quot;40&quot; : {<br />        &quot;1939 나치군&quot; : 15,<br />        &quot;1941 프랑스-영국군&quot; : 18,<br />        &quot;1943 미국군&quot; : 21,<br />        &quot;1945 소련군&quot; : 24<br />      },<br />      &quot;50&quot; : {<br />        &quot;1950 중공-소련군&quot; : 27,<br />        &quot;1950 유엔군&quot; : 31,<br />        &quot;1953 북한군&quot; : 36,<br />        &quot;1953 한국군&quot; : 42<br />      },<br />      &quot;60&quot; : {<br />        &quot;1991 러시아연방군&quot; : 44,<br />        &quot;1995 나토방위군&quot; : 50,<br />        &quot;2000 미군&quot; : 55<br />      },<br />      &quot;70&quot; : {<br />        &quot;2010 중국군&quot; : 70,<br />        &quot;2010 유럽연합군&quot; : 85,<br />        &quot;2010 미군&quot; : 100<br />      },<br />      &quot;80&quot; : {<br />        &quot;2012 중국군&quot; : 105,<br />        &quot;2012 일본군&quot; : 150,<br />        &quot;2012 러시아군&quot; : 180,<br />        &quot;2012 한국군&quot; : 200<br />      },<br />      &quot;90&quot; : {<br />        &quot;2015 러시아군&quot; : 300,<br />        &quot;2015 미국군&quot; : 350<br />      },<br />      &quot;100&quot; : {<br />        &quot;2018 중국군&quot; : 400,<br />        &quot;2018 러시아군&quot; : 550,<br />        &quot;2018 미국군&quot; : 750,<br />      },<br />      &quot;HIGH&quot; : {<br />        &quot;2020 중국군&quot; : 800,<br />        &quot;2020 미국군&quot; :   1000,<br />      }<br />    }<br />  },<br />  functions : {<br />    getMonster : level =&gt; {<br />      tier = RPG.jsons.monsters[level&lt;=10?&quot;10&quot;:(level&lt;=20?&quot;20&quot;:(level&lt;=30?&quot;30&quot;:(level&lt;=40?&quot;40&quot;:(level&lt;=50?&quot;50&quot;:(level&lt;=60?&quot;60&quot;:(level&lt;=70?&quot;70&quot;:(level&lt;=80?&quot;80&quot;:(level&lt;=90?&quot;90&quot;:(level&lt;=100?&quot;100&quot;:&quot;HIGH&quot;)))))))))]<br />      monster = Object.keys(tier)[Math.random()*Object.keys(tier).length|0]<br />      return [monster, tier[monster]]<br />    }<br />  }<br />};</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005ABE00000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 23230,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 222,
+            "refArticleId": 23230,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "이거땜에 미쳐버리겠습니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1597805100927,
+            "writer": {
+                "id": "kirin080304",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190327_70/kirin080304_1553663864110MxkaN_PNG/avatar_profile.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "읭읭이721121"
+            }
+        },
+        "articleId": 23230,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 1443875,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/ce5bd261712b2af6da3c596e59b6cfb41446b85af3/MjAyMDA4MTlfMjEg/MDAxNTk3ODA1MTAwMjg1.t1DTF81_Re6beKUqJHYaz9AJqjCn52VKO4MxD3oTrT8g.pd50KxilSoyRTLeypnmVT7EDM3qRpGYMccZId4pwXXMg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "undefined에서 김계란을 읽을 수 없다네요.",
+                    "id": 100439062,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100439062,
+                    "updateDate": 1597805166000,
+                    "writer": {
+                        "id": "dltpals0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "WASANS"
+                    }
+                },
+                {
+                    "content": "그럼 어케해야하죠",
+                    "id": 100439447,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100439062,
+                    "updateDate": 1597805365000,
+                    "writer": {
+                        "id": "kirin080304",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190327_70/kirin080304_1553663864110MxkaN_PNG/avatar_profile.png"
+                        },
+                        "nick": "읭읭이721121"
+                    }
+                },
+                {
+                    "content": "if (msg.startsWith(\"/정보\")) {\r\n    who = msg.substr(3).trim()\r\n    json = JSON.parse(FS.read(path))[room][\"users\"] \r\n    if ((who && json[who]) || !who) {\r\n      with (json[who?who:sender]) {\r\n        replier.reply([\r\n        \"• \"+(title&&title)+\" \"+(who?who:sender)+ \"님의 정보\", Ll,\r\n        \"돈(달러) : \"+DP,\r\n        \"레벨 : \"+level,\r\n        \"다음 레벨까지 : \"+(json[room][\"users\"][sender][\"level\"]*100 - Number((exp+'').substr((exp+'').length-2)))+\" 경험치\",\r\n        \"현재 위치 : \"+location,\r\n        \"펫 : \"+pet,\r\n        \"무기 : \"+weapon, Ll\r\n        ].join(\"\r\n\"));\r\n      }\r\n    } else replier.reply(\"• 회원가입을 하지 않은 플레이어 입니다!\")\r\n  }",
+                    "id": 100440619,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100440619,
+                    "updateDate": 1597806028000,
+                    "writer": {
+                        "id": "kirin080304",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190327_70/kirin080304_1553663864110MxkaN_PNG/avatar_profile.png"
+                        },
+                        "nick": "읭읭이721121"
+                    }
+                },
+                {
+                    "content": "87~103번째까지의 소스입니ㄷㅏ",
+                    "id": 100440659,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100440619,
+                    "updateDate": 1597806052000,
+                    "writer": {
+                        "id": "kirin080304",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190327_70/kirin080304_1553663864110MxkaN_PNG/avatar_profile.png"
+                        },
+                        "nick": "읭읭이721121"
+                    }
+                },
+                {
+                    "content": "김계란에 대한 JSON파일이 없는건 아닌가요? replier에서 뱉어야하는데 정보를 찾을 수 없어서 생기는 오류같네요",
+                    "id": 100443631,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100443631,
+                    "updateDate": 1597807773000,
+                    "writer": {
+                        "id": "adeninelove",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTlfMjg1/MDAxNTk3Nzk3Mjg4ODI5.LTG7-GNxrDXxcM4vMrAmuVyV85v36wHhWkluTgBwaH4g.hycDF0PDEcQODT-DMMn2hGraLk6kkjdHVFPZa1NZ6mYg.PNG/%ED%8F%AC%EB%A7%B7%EB%B3%80%ED%99%98_%EB%8F%84%EC%9C%A4-%EB%A1%9C%EA%B3%A0-2.png"
+                        },
+                        "nick": "도유니"
+                    }
+                },
+                {
+                    "content": "분명히 /회원가입 쳐서 정보등록해놨고 /회원가입 쳐도 이미 등록되있다 하든데요...",
+                    "id": 100443889,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100443631,
+                    "updateDate": 1597807942000,
+                    "writer": {
+                        "id": "kirin080304",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190327_70/kirin080304_1553663864110MxkaN_PNG/avatar_profile.png"
+                        },
+                        "nick": "읭읭이721121"
+                    }
+                },
+                {
+                    "content": "회원가입 소스 보여주실수 있으신가요",
+                    "id": 100444791,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100443631,
+                    "replyMember": {
+                        "id": "kirin080304",
+                        "nick": "읭읭이721121"
+                    },
+                    "updateDate": 1597808463000,
+                    "writer": {
+                        "id": "adeninelove",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTlfMjg1/MDAxNTk3Nzk3Mjg4ODI5.LTG7-GNxrDXxcM4vMrAmuVyV85v36wHhWkluTgBwaH4g.hycDF0PDEcQODT-DMMn2hGraLk6kkjdHVFPZa1NZ6mYg.PNG/%ED%8F%AC%EB%A7%B7%EB%B3%80%ED%99%98_%EB%8F%84%EC%9C%A4-%EB%A1%9C%EA%B3%A0-2.png"
+                        },
+                        "nick": "도유니"
+                    }
+                },
+                {
+                    "content": "msg.substr(3) 공백 없이 맞죠? (확인차)",
+                    "id": 100445099,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100443631,
+                    "replyMember": {
+                        "id": "kirin080304",
+                        "nick": "읭읭이721121"
+                    },
+                    "updateDate": 1597808600000,
+                    "writer": {
+                        "id": "adeninelove",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTlfMjg1/MDAxNTk3Nzk3Mjg4ODI5.LTG7-GNxrDXxcM4vMrAmuVyV85v36wHhWkluTgBwaH4g.hycDF0PDEcQODT-DMMn2hGraLk6kkjdHVFPZa1NZ6mYg.PNG/%ED%8F%AC%EB%A7%B7%EB%B3%80%ED%99%98_%EB%8F%84%EC%9C%A4-%EB%A1%9C%EA%B3%A0-2.png"
+                        },
+                        "nick": "도유니"
+                    }
+                },
+                {
+                    "content": "네 없습니다.",
+                    "id": 100470403,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100443631,
+                    "replyMember": {
+                        "id": "adeninelove",
+                        "nick": "도유니"
+                    },
+                    "updateDate": 1597824242000,
+                    "writer": {
+                        "id": "kirin080304",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190327_70/kirin080304_1553663864110MxkaN_PNG/avatar_profile.png"
+                        },
+                        "nick": "읭읭이721121"
+                    }
+                },
+                {
+                    "content": "전체 소스코드를 첨부하지도 않으시고 질문을 하시면..,",
+                    "id": 100445999,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100445999,
+                    "updateDate": 1597809070000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                }
+            ],
+            "last": {
+                "id": 100445999,
+                "refId": 100445999
+            },
+            "next": {
+                "id": 100470991,
+                "refId": 100445999
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

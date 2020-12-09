@@ -1,0 +1,370 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [],
+            "contentHtml": "<p>드디어 6시간에 걸친 파싱 강좌가 끝나고, 다른 주제로 돌아왔습니다! 이번에는 Math 객체를 다뤄보겠습니다. Math 객체는 이름에서 보이다시피 수학과 관련된 객체입니다.<br />Math 객체에는 여러 함수들 또는 상수들이 있는데, 일단 예제부터 봅시다.<br /><br />예제1)<br />const LIST = [&quot;인형&quot;, &quot;포르쉐 911&quot;, &quot;나무젓가락&quot;, &quot;라면스프&quot;, &quot;갤럭시 폴드&quot;];<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />if (msg == &quot;/랜덤뽑기&quot;) {<br />var randomNum = Math.floor(Math.random() * LIST.length);<br />replier.reply(LIST[randomNum]+&quot;(이)가 뽑혔습니다!&quot;);<br />}<br />}<br /><br /><br />소스를 차근차근 분석해봅시다.<br />일단 response함수 밖에서 LIST라는 변수를 선언하는군요! const를 써서 변수를 선언하면 값이 바뀌지 않는 상수가 된다고 1강에서 얘기했던것 같네요.<br />response함수 안으로 들어가면, 메시지가 /랜덤뽑기 일 때 그 if문 안에 있는것들이 작동합니다.<br />여기서 우리가 처음 보는것이 등장했습니다!<br /><br />var randomNum = Math.floor(Math.random() * LIST.length);<br /><br />이걸 한번 차근차근 분석해봅시다.<br /><br />일단 Math.floor는 Math.floor(number) 형태로 쓰이는데, 해당 숫자에서 소수점 아래를 버린 숫자를 반환합니다. 쉽게 말해서 소수점 떼주는거에요.<br />그리고 Math.random() 은 0 이상 1 미만의 난수, 즉 랜덤수를 반환합니다. LIST.length 만큼 곱했으니 (a * b는 a와 b를 곱했다는겁니당) 0 이상 5 미만의 랜덤수를 반환하겠군요.<br />그리고 소수점을 떼서 보여주니 결국 0~4에서 랜덤으로 정수 하나를 뽑아오는겁니다!<br />결론적으로 0~4에서 랜덤으로 뽑은 정수가 들어있는 변수 randomNum을 선언하는군요.<br /><br />그리고, LIST에서 randomNum번째에 들어있는 것을 가져와서 이게 뽑혔다고 답장해주는거군요.<br /><br />새로 배운것들을 정리하자면, Math.random() 은 0 이상 1 미만의 난수를 반환하고, Math.floor(number)은 number의 소수점 아래를 버리고 보여줍니다. 그리고 추가로 Math.round(number)은 소수점 반올림, Math.ceil(number)은 소수점 올림이라는것도 알아두세용<br /><br />이제 예제를 하나 더 봅시다.<br /><br />예제2)<br />function response(room, msg, sender, isGroupChat, replier) {<br />var datas = msg.split(&quot; &quot;);<br />if (datas[0] == &quot;/제곱&quot;) {<br />datas.splice(0, 1);<br />if (datas.length != 2) {<br />replier.reply(&quot;&apos;/제곱 (밑) (지수)&apos; 형식으로 입력해주세요.&quot;);<br />} else {<br />replier.reply(&quot;계산 결과는 &quot;+Math.pow(Number(datas[0]), Number(datas[1]))+&quot;이네요.&quot;);<br />}<br />}<br />if (datas[0] == &quot;/제곱근&quot;) {<br />datas.splice(0, 1);<br />if (datas.length != 1) {<br />replier.reply(&quot;&apos;/제곱근 (수)&apos; 형식으로 입력해주세요.&quot;);<br />} else {<br />replier.reply(&quot;계산 결과는 &quot;+Math.sqrt(Number(datas[0]))+&quot;이네요.&quot;);<br />}<br />}<br />}<br /><br />음.. 예제소스가 조금 길죠? 이때까지 봤던 것 중에 가장 길었던 것 같네요 (응 파싱이 더 길ㅇ...읍읍)<br />그래도 한번 소스를 분석해봅시다.<br />일단 response 함수 안에서 datas 라는 변수를 선언하네요. datas에는 받은 메시지 내용을 띄어쓰기 단위로 잘라서 배열로 저장했네요.<br />그리고 datas 중에 첫번째 요소가 &apos;/제곱&apos; 일 때 그 if문에 있는것들이 작동하겠네요.<br /><br />먼저 datas 배열에서 0번째 요소부터 1개 삭제합니다. 즉 첫번째껄 삭제한다는거죠!<br />그리고 남은 datas 배열의 길이가 2가 아니라면(즉 datas 배열에 두개의 요소가 들어있지 않다면) 올바른 형식으로 입력하라고 답장을 하네요!<br />만약 그게 아니라면, 여기서 우리가 처음 보는것이 등장하네요!<br /><br />Math.pow(Number(datas[0]), Number(datas[1]))<br /><br />Math.pow(num1, num2) 는 num1을 밑으로 하고 num2를 지수로 한 거듭제곱의 결과를 반환합니다.<br />여기서는 datas[0]과 datas[1]을 각각 숫자로 형변환한다음 거듭제곱 결과를 보여주네요.<br />그리고 그 결과를 인용해서 계산 결과가 이렇다고 답장해주네요.<br /><br />datas의 0번째 요소가 &apos;/제곱근&apos; 일때도 위와 같이 해석 할 수 있습니다.<br />datas의 0번째 요소를 삭제하고, 남은 요소들이 1개가 아니라면 올바른 형식으로 입력하라고 하네요.<br />그게 아니라면, 또 여기서 새로운 것이 등장합니다!<br /><br />Math.sqrt(Number(datas[0]))<br /><br />Math.sqrt(num) 은 num의 제곱근을 반환합니다. 추가로 Math.cbrt(num) 은 세제곱근이라는것을 알아두세요!<br />하여튼 예제에서는 datas에서 0번째 요소의 제곱근을 가져와서 계산 결과가 이렇다고 답장하네요.<br /><br /><br />새로 배운것들을 정리하자면, Math.pow(num1, num2)는 거듭제곱, Math.sqrt(num)은 제곱근, Math.cbrt(num)은 세제곱근 이네요!<br />추가로 삼각함수(Math.sin, Math.cos, Math.tan 등등)에 대해서도 설명해드리고 싶지만, 정확한 개념이 잡혀있지 않은 중2라서 대충 설명했다가 고인물분들께 뚜드러맞을것 같아요(?) 나중에 심화편에서 자세히 알게 되면 설명해드리기로 합시다.<br /><br />마지막으로 Math.max와 Math.min을 설명해드릴것인데, Math.max(num1, num2, num3, num4...) 는 해당 숫자들 중 가장 큰 것을 반환합니다. 만약 인자들 중에 하나라도 숫자가 아닌 것이 있다면 NaN으로 나옵니다.<br />반대로 Math.min(num1, num2, num3, num4...)는 가장 작은것을 반환하겠죠?<br /><br /><br />강좌 끝<br />이번 강좌는 뭔가 짧은 느낌이네요. 기초 강좌 주제로 좋은 것이 있다면 댓글로 남겨주세요!<br />그럼 이만<br /><br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000017E300000000",
+            "head": "초급",
+            "headId": 5,
+            "id": 6115,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 662,
+            "refArticleId": 6115,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "(라이노 엔진) 자바스크립트 기초 강의 (6) - Math 객체",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1570349219337,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음 BOT"
+            }
+        },
+        "articleId": 6115,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "LIST 무엇",
+                    "id": 70436074,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70436074,
+                    "updateDate": 1570349362000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "민soup"
+                    }
+                },
+                {
+                    "content": "상수!",
+                    "id": 70438473,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70436074,
+                    "updateDate": 1570352081000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "너무 어렵다",
+                    "id": 70437765,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70437765,
+                    "updateDate": 1570351180000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "Math는 개쉬운ㄷ...",
+                    "id": 70438484,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70437765,
+                    "updateDate": 1570352097000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 70438264,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70438264,
+                    "updateDate": 1570351829000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "기본 개념은 살짝 알긴 하는데, 계산하는 부분이 살짝 이해가 안가요 ㅠㅠ",
+                    "id": 70438630,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70438264,
+                    "updateDate": 1570352293000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "Math.LN10 -> In(10) ≈ 2.302\r\nMath.LN2 -> In(2) ≈ 0.693\r\nMath.LOG10E -> log₁₀(e) ≈ 0.434\r\nMath.LOG2E -> log₂(e) ≈ 1.442\r\nMath.SQRT1_2 -> √(1/2) ≈ 0.707\r\nMath.SQRT2 -> √(2) ≈ 1.414\r\nMath.PI -> π ≈ 3.14159\r\nMath.E -> e ≈ 2.718",
+                    "id": 70442379,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70442379,
+                    "updateDate": 1570356613000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "오오.... 상수는 잘 모르고 있었는데...정리해주셔서 감사합니당!",
+                    "id": 70446067,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70442379,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-5-154-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_5.png",
+                        "width": 107
+                    },
+                    "updateDate": 1570359801000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "마얼님이 중2라는 걸 처음 알았...친구할래요?(?",
+                    "id": 70470839,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70470839,
+                    "updateDate": 1570376590000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "어라",
+                    "id": 70480312,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70470839,
+                    "updateDate": 1570404062000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                }
+            ],
+            "last": {
+                "id": 77781553,
+                "refId": 77781553
+            },
+            "next": {
+                "id": 70529410,
+                "refId": 70470839
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

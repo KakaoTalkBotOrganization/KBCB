@@ -1,0 +1,295 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt; 사진저장</b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 맨들님의 사진 저장 소스 인데 어케 써야하나요</b></div><div><b><br /></b></div><div><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">/* 소스중 일부는 사진저장을 포함한 채팅기록 소스에서 떼왔습니다. (php도), 템플릿은 직접 만드시길, 소스가 많이 더럽습니다. 소스를 구원해주세요. 소스는 한줄입니다. */ const scriptName = &quot;image save&quot;; const kalingModule = require(&apos;kaling&apos;).Kakao(); const Kakao = new kalingModule; Kakao.init(&apos;js키&apos;); Kakao.login(&apos;카톡디&apos;, &apos;카톡아이디&apos;); var check = 0; let name = null; let mysite=&quot;http://hide00142.dothome.co.kr&quot;; const PICTURE_PATH = &quot;sdcard/Android/data/com.kakao.talk/contents/Mg==&quot;; function getLastPictureFolderPath(){ var file = new java.io.File(PICTURE_PATH); var list = file.listFiles().sort(function(a, b){ return b.lastModified() -a.lastModified(); } ); return list[0].toString(); } function getLastPictureFilePathFromFoldPath(path){ var file = new java.io.File(path); var list = file.listFiles().sort(function(a, b){ return b.lastModified() - a.lastModified(); } ); return list; } function getLastPicture(r){ try{ var path = getLastPictureFilePathFromFoldPath(getLastPictureFolderPath()); for(var i=0;i&lt;path.length;i++){ var file = new java.io.File(path[i].toString()); if(file.listFiles().length == 0) continue; else { var picture = getLastPictureFilePathFromFoldPath(file.getPath())[0].toString(); let baos = new java.io.ByteArrayOutputStream(); let bm = android.graphics.BitmapFactory.decodeFile(picture) try{ bm.compress(android.graphics.Bitmap.CompressFormat.JPEG, 100, baos); }catch(e){ } let bImage = baos.toByteArray(); let base64 = android.util.Base64.encodeToString(bImage, android.util.Base64.NO_WRAP); return base64; } } return null; } catch(e){ return null; } } function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) { if (msg.startsWith(&quot;/사진저장 &quot;)) { name = msg.split(&quot;/사진저장 &quot;)[1]; b = FileStream.read(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name); if (b != null) { replier.reply(&quot;이미 존재하는 이름입니다.&quot;); name = null; } else { check = 1; replier.reply(&quot;사진을 보내주세요.&quot;); } } if (msg == &quot;사진을 보냈습니다.&quot; &amp;&amp; check == 1) { let a = org.jsoup.Jsoup.connect(mysite+&apos;/imglog.php&apos;).data(&apos;room&apos;,room).data(&apos;img&apos;,getLastPicture(room)).ignoreContentType(true).post().text(); FileStream.write(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name, mysite+&apos;/img/&apos;+encodeURIComponent(room)+&apos;/&apos;+a+&apos;.jpg&apos;); c = FileStream.read(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;); try { if (c == null) { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, name); } else { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, c + &quot;\\n&quot; + name); } replier.reply(&quot;저장되었습니다. 사진을 보시려면 /사진보기 &quot; + name + &quot; 를 입력해 주세요&quot;); name = null; check = 0; } catch(e) { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, c + &quot;\\n&quot; + name); replier.reply(&quot;저장되었습니다. 사진을 보시려면 /사진보기 &quot; + name + &quot; 를 입력해 주세요&quot;); name = null; check = 0; } } if (msg.startsWith(&quot;/사진보기 &quot;)) { name = msg.split(&quot;/사진보기 &quot;)[1]; b = FileStream.read(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name); if (b != null) { Kakao.send(room, { &quot;link_ver&quot;:&quot;4.0&quot;, &quot;template_id&quot;:(00000), &quot;template_args&quot;:{ name:name, img:b } }, &quot;custom&quot;); } else { replier.reply(&quot;없는 제목입니다.&quot;); } } if (msg == &quot;/사진목록&quot;) { try { c = FileStream.read(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;); if (c != null) { replier.reply(c); } else { replier.reply(&quot;저장된 사진이 없습니다.&quot;); } } catch(e) { replier.reply(&quot;저장된 사진이 없습니다.&quot;); } } } function onCreate(savedInstanceState, activity) { var textView = new android.widget.TextView(activity); textView.setText(&quot;Hello, World!&quot;); textView.setTextColor(android.graphics.Color.DKGRAY); activity.setContentView(textView); } function onStart(activity) { } function onResume(activity) { } function onPause(activity) { } function onStop(activity) { }</span><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000513400000000",
+            "id": 20788,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 137,
+            "refArticleId": 20788,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "맨들님 소스 질문",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1594009945287,
+            "writer": {
+                "id": "hohoho507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MzBfMTI2/MDAxNTk4NzkwNjE5MzY5.-ayjHJhWBdW7og6ilXdyId4f3S7W2QedHq67zDLmp5og.JPm_SY9feZHg0IAU0JhUUbXq54La77y8KMlY3jyKiEwg.JPEG/1598695844238.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "봇초보입니당"
+            }
+        },
+        "articleId": 20788,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "카링모듈 추가하시고 아이디랑 비번이랑 자스키 너으시면 되요",
+                    "id": 95880430,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95880430,
+                    "updateDate": 1594010082000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                },
+                {
+                    "content": "전 그것들도 모ㄹ‥",
+                    "id": 95880627,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95880430,
+                    "updateDate": 1594010195000,
+                    "writer": {
+                        "id": "hohoho507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MzBfMTI2/MDAxNTk4NzkwNjE5MzY5.-ayjHJhWBdW7og6ilXdyId4f3S7W2QedHq67zDLmp5og.JPm_SY9feZHg0IAU0JhUUbXq54La77y8KMlY3jyKiEwg.JPEG/1598695844238.jpg"
+                        },
+                        "nick": "봇초보입니당"
+                    }
+                },
+                {
+                    "content": "카링 쓰는거 같으니까 해야되요",
+                    "id": 95880891,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95880430,
+                    "replyMember": {
+                        "id": "hohoho507",
+                        "nick": "봇초보입니당"
+                    },
+                    "updateDate": 1594010360000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                },
+                {
+                    "content": "도메인주소같은거 안넣어도되요?",
+                    "id": 95881654,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95880430,
+                    "updateDate": 1594010806000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lucifer"
+                    }
+                },
+                {
+                    "content": "일반 소스에 카링 적용한거 같으니까\r\n카카오 디벨에 등록같은거 해야되는거 같아요",
+                    "id": 95881951,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95880430,
+                    "replyMember": {
+                        "id": "ccwwhh0830",
+                        "nick": "lucifer"
+                    },
+                    "updateDate": 1594011006000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                },
+                {
+                    "content": "키,모듈을 어케 해야하는지‥ 델타님 모듈은 잏ㅇ긴 있는데\n쓰는법을‥",
+                    "id": 95884119,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95880430,
+                    "replyMember": {
+                        "id": "franknoh1218",
+                        "nick": "franknoh"
+                    },
+                    "updateDate": 1594012399000,
+                    "writer": {
+                        "id": "hohoho507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MzBfMTI2/MDAxNTk4NzkwNjE5MzY5.-ayjHJhWBdW7og6ilXdyId4f3S7W2QedHq67zDLmp5og.JPm_SY9feZHg0IAU0JhUUbXq54La77y8KMlY3jyKiEwg.JPEG/1598695844238.jpg"
+                        },
+                        "nick": "봇초보입니당"
+                    }
+                },
+                {
+                    "content": "강좌보고 따라하세요",
+                    "id": 95884646,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95880430,
+                    "replyMember": {
+                        "id": "hohoho507",
+                        "nick": "봇초보입니당"
+                    },
+                    "updateDate": 1594012759000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

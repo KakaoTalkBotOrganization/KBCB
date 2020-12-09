@@ -1,0 +1,259 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>//일단 메신저봇용 딴데도 될수도?<br />//제작자 : 이름을 입력해주세요<br />//무단배포 씹가능<br />//배포시 제작자의 이름을 알려주세요(?)<br /><br />const learnObjPath=&quot;sdcard/anyReply/learn.txt&quot;;<br />const pro=0;<br />const blackList=[];<br />on=true;<br /><br />const readFile=(path)=&gt;{<br />var b=new java.io.File(path);<br />if(!(b.exists())) return null;<br />var c=new java.io.FileInputStream(b); <br />var d=new java.io.InputStreamReader(c);<br />var e=new java.io.BufferedReader(d);<br />var f=e.readLine();<br />var g=&quot;&quot;;<br />while((g=e.readLine())!=null){<br />f+=&quot;\\n&quot;+g;<br />}<br />c.close();<br />d.close();<br />e.close();<br />return f==null?null:String(f);<br />}<br /><br />const saveFile=(path,file)=&gt;{<br />FileStream.write(path,file);<br />}<br /><br />const splitKorean=(kor)=&gt;{<br /> var kor=String(kor)<br /> var f = [&apos;ㄱ&apos;, [&apos;ㄱ&apos;,&apos;ㄱ&apos;], &apos;ㄴ&apos;, &apos;ㄷ&apos;, [&apos;ㄷ&apos;,&apos;ㄷ&apos;], &apos;ㄹ&apos;, &apos;ㅁ&apos;,&apos;ㅂ&apos;, [&apos;ㅂ&apos;,&apos;ㅂ&apos;], &apos;ㅅ&apos;, [&apos;ㅅ&apos;,&apos;ㅅ&apos;], &apos;ㅇ&apos;, &apos;ㅈ&apos;, [&apos;ㅈ&apos;,&apos;ㅈ&apos;], &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];<br /> var s = [&apos;ㅏ&apos;, &apos;ㅐ&apos;, &apos;ㅑ&apos;, &apos;ㅒ&apos;, &apos;ㅓ&apos;,[&apos;ㅓ&apos;,&apos;ㅣ&apos;], &apos;ㅕ&apos;,[&apos;ㅕ&apos;,&apos;ㅣ&apos;], &apos;ㅗ&apos;, [&apos;ㅗ&apos;,&apos;ㅏ&apos;], [&apos;ㅗ&apos;,&apos;ㅐ&apos;], [&apos;ㅗ&apos;,&apos;ㅣ&apos;], &apos;ㅛ&apos;, &apos;ㅜ&apos;,[&apos;ㅜ&apos;,&apos;ㅓ&apos;], [&apos;ㅜ&apos;,&apos;ㅓ&apos;,&apos;ㅣ&apos;], [&apos;ㅜ&apos;,&apos;ㅣ&apos;], &apos;ㅠ&apos;, &apos;ㅡ&apos;, [&apos;ㅡ&apos;,&apos;ㅣ&apos;], &apos;ㅣ&apos;];<br /> var t = [&apos;&apos;, &apos;ㄱ&apos;, [&apos;ㄱ&apos;,&apos;ㄱ&apos;], [&apos;ㄱ&apos;,&apos;ㅅ&apos;], &apos;ㄴ&apos;, [&apos;ㄴ&apos;,&apos;ㅈ&apos;], [&apos;ㄴ&apos;,&apos;ㅎ&apos;],&apos;ㄷ&apos;, &apos;ㄹ&apos;, &apos;ㄺ&apos;, &apos;ㄻ&apos;, &apos;ㄼ&apos;, &apos;ㄽ&apos;, &apos;ㄾ&apos;,&apos;ㄿ&apos;, &apos;ㅀ&apos;, &apos;ㅁ&apos;, &apos;ㅂ&apos;, &apos;ㅄ&apos;, &apos;ㅅ&apos;, &apos;ㅆ&apos;,&apos;ㅇ&apos;, &apos;ㅈ&apos;, &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];<br /> var ga = 44032;<br /> var box=[];<br /> for (a=0;a&lt;kor.length;a++) {<br />  var un = kor.charCodeAt(a);<br />  un=un-ga;<br />  var fn = parseInt(un / 588);<br />  var sn = parseInt((un - (fn * 588)) / 28);<br />  var tn = parseInt(un % 28);<br />  if (f[fn]==undefined) {<br />   box.push(kor[a])<br />  }else if (t[tn]==&quot;&quot;||t[tn]==undefined) {<br />   box.push(f[fn]);<br />   box.push(s[sn]);<br />  }else {<br />   box.push(f[fn]);<br />   box.push(s[sn]);<br />   box.push(t[tn]);<br />  }<br /> }<br /> return box;<br />}<br /><br />const learn=(msg)=&gt;{<br />if (msg.length&gt;200) return;<br />if (learnObj.indexOf(msg)!=-1) return;<br />for (i in blackList) if (msg.indexOf(blackList[i])!=-1) return;<br />learnObj.push(msg);<br />}<br /><br />const getLearnObj=(room)=&gt;{<br />var data=readFile(learnObjPath);<br />try {<br />if (data==null||data==&quot;[]&quot;) {<br />Api.replyRoom(&quot;이름을입력해주세요&quot;,data);<br />Log.d(Date());<br />var data=readFile(learnObjPath);<br />}<br />return data==null?[]:eval(data);<br />}catch(e) {<br />saveFile(&quot;sdcard/anyReply/error/&quot;+new Date()+&quot;.txt&quot;,data);<br />return [];<br />}finally {<br />rand(1)?saveFile(&quot;sdcard/anyReply/bak/&quot;+Date()+&quot;.txt&quot;,data):0;<br />}<br />}<br /><br />const rand=(num)=&gt;{<br />return Math.floor(Math.random()*100)&lt;num;<br />}<br /><br />const hash=(t)=&gt;{<br />return java.lang.String(t).hashCode();<br />}<br /><br />const learnReply=(msg)=&gt;{<br />var obj=learnObj[msg];<br />return obj[Math.floor(Math.random()*obj.length)];<br />}<br /><br />const KMP=(msg,msg1)=&gt;{<br />if (!on) return;<br />if (msg==msg1) return 100;<br />var f=splitKorean(msg);<br />var s=splitKorean(msg1);<br />var t=String(msg).split(&quot;&quot;);<br />var fo=String(msg1).split(&quot;&quot;);<br />var c=0;<br />f.map((_,i)=&gt;{<br />if (s.indexOf(f[i])!=-1) c++;<br />});<br />s.map((_,i)=&gt;{<br />if (f.indexOf(s[i])!=-1) c++;<br />});<br />t.map((_,i)=&gt;{<br />if (fo.indexOf(t[i])!=-1) c++;<br />})<br />fo.map((_,i)=&gt;{<br />if (t.indexOf(fo[i])!=-1) c++;<br />})<br />var c=(100/(f.length+s.length+t.length+fo.length))*c;<br />if (c&gt;100) c=100;<br />if (c==100&amp;&amp;f.length!=s.length) return c-(f.length*s.length)+(msg.length+msg1.length);<br />if (c==100&amp;&amp;f.join(&quot;&quot;)==s.join(&quot;&quot;)) return c-f.length*2.4;<br />return c;<br />}<br /><br />const reply=(msg)=&gt;{<br />var box=[];<br />if (pro&gt;3) return box;<br />pro++;<br />learnObj.map((_,i)=&gt;{<br />var kmp=KMP(msg,learnObj[i])<br />if (kmp&gt;85&amp;&amp;kmp&lt;100) {<br />Log.i(msg+&quot;\\n&quot;+learnObj[i]+&quot;\\n&quot;+kmp);<br />box.push(learnObj[i]);<br />}<br />});<br />pro--;<br />return box;<br />}<br /><br />const checkObj=()=&gt;{<br />var Obj=learnObj;<br />var check_=0;<br />learnObj.map((_,s)=&gt;{<br />var check=0<br />blackList.map((__,i)=&gt;{<br />if (Obj[s].indexOf(blackList[i])!=-1) {<br />check++;<br />}<br />});<br />if (check==0) return;<br />var box=[];<br />for (i in learnObj) {<br />if (i!=s-check_) box.push(learnObj[i]);<br />}<br />check_++;<br />learnObj=box;<br />});<br />}<br /><br />const response=(infos)=&gt;{<br />if (!on) return;<br />learnObj=getLearnObj(infos.room);<br />var msg=infos.msg.trim();<br />var sender=infos.sender;<br />var room=infos.room;<br />var replier=infos.replier;<br />var profile=hash(infos.ImageDB.getProfileImage());<br />if (rand(50)) {<br />var l=reply(msg);<br />if (l==&quot;&quot;) {}else {<br />if (typeof l==&quot;object&quot;) {<br />replier.reply(l[Math.floor(Math.random()*l.length)]);<br />}else {<br />replier.reply(l);<br />}<br />}<br />}<br />if (rand(8)) learn(msg);<br />msg==&quot;/상태p&quot;?replier.reply(&quot;제한 : 3개\\n처리중 : &quot;+pro+&quot;개&quot;):0;<br />msg==&quot;/learnList&quot;?replier.reply(Array(500).join(&quot;\\0&quot;)+learnObj.join(&quot;\\n&quot;)):0;<br />msg==&quot;/checkObj&quot;?replier.reply(checkObj()):0;<br />msg==&quot;/쉿&quot;?on=false:0;<br />msg==&quot;/말해&quot;?on=true:0;<br />msg==&quot;/lDB&quot;?replier.reply(learnObj.length+&quot;개&quot;):0;<br />saveFile(learnObjPath,learnObj.toSource());<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000058500000000",
+            "id": 1413,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 484,
+            "refArticleId": 1413,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "자동학습",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1553267202110,
+            "writer": {
+                "id": "qkralswo0825",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA4MjdfNzIg/MDAxNTM1Mzc0ODA1Mzcx.4fPPQyRh3gNOuCLhi__tQWMyX0gkFf03Mq0wZ377BhMg.26O6HkEnB0ZHkJ9pjOGX0MI9p-bH9ONpRk6_3gROFPIg.PNG.qkralswo0825/profileImage.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "이름을입력해주세요"
+            }
+        },
+        "articleId": 1413,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "발적화 기모띠",
+                    "id": 55727883,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 55727883,
+                    "updateDate": 1553267218000,
+                    "writer": {
+                        "id": "qkralswo0825",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA4MjdfNzIg/MDAxNTM1Mzc0ODA1Mzcx.4fPPQyRh3gNOuCLhi__tQWMyX0gkFf03Mq0wZ377BhMg.26O6HkEnB0ZHkJ9pjOGX0MI9p-bH9ONpRk6_3gROFPIg.PNG.qkralswo0825/profileImage.png"
+                        },
+                        "nick": "이름을입력해주세요"
+                    }
+                },
+                {
+                    "content": "김오띠",
+                    "id": 55728496,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55727883,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1553267716000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "이게머야..",
+                    "id": 55773664,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 55773664,
+                    "updateDate": 1553344395000,
+                    "writer": {
+                        "id": "dlwjddus4367",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "건전한정연상"
+                    }
+                },
+                {
+                    "content": "ㄷ",
+                    "id": 87872618,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87872618,
+                    "updateDate": 1587261188000,
+                    "writer": {
+                        "id": "nybeom",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjlfMjgg/MDAxNjAzOTc0MTQ3Njgw.xneQtQTgZivwtGuIoyfXpVnYEy8aX9LN75uA_My17wkg.4OctfpVyvEdnAh77DKk-eR0-2KHGLCJcwOHNYY_rLDYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "알파플러스"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

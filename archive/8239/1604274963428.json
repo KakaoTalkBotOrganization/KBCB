@@ -1,0 +1,248 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b><span style=\"font-size: 10pt; font-family: 돋움;\">Github API</span></b><div><font color=\"#7d7d7d\"><br /></font></div><div><b><span style=\"font-size: 10pt; font-family: 돋움;\">강좌 내용</span></b></div><div><span style=\"font-size: 10pt; font-family: 돋움;\">이번 강좌에서는 깃허브 저장소에 올린 스크립트 목록을 가져오고 json파일을 사용하는 방법에 대해서 다뤄보고자 한다꾸!&nbsp;</span><span style=\"font-size: 10pt; font-family: 돋움;\">우선, 내가 사용하는 저장소를 예로 들어 설명하겠꾸~!</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div><span style=\"font-size: 10pt; font-family: 돋움;\">아래 링크가 내가 사용하는 저장소 중 하나라꾸~ 그니까 제발 누가 좀 스타 좀 눌러달라꾸.... 8ㅁ8</span></div><div><a href=\"https://github.com/OtakoidTony/MessengerBotExample\" target=\"_blank\"><span style=\"font-size: 10pt; font-family: 돋움;\">https://github.com/OtakoidTony/MessengerBotExample</span></a></div><div><br /></div><div><span style=\"font-size: 10pt; font-family: 돋움;\">깃허브 저장소에 올린 스크립트 목록을 가져오는 것은 어렵지 않다꾸~!</span></div><div><span style=\"box-sizing: border-box; color: rgb(215, 58, 73); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\">var</span><span style=\"color: rgb(36, 41, 46); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\"> data </span><span style=\"box-sizing: border-box; color: rgb(215, 58, 73); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\">=</span><span style=\"color: rgb(36, 41, 46); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\"> </span><span style=\"box-sizing: border-box; color: rgb(36, 41, 46); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\">Utils</span><span style=\"color: rgb(36, 41, 46); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\">.</span><span style=\"box-sizing: border-box; color: rgb(111, 66, 193); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\">getWebText</span><span style=\"color: rgb(36, 41, 46); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\">(</span><span style=\"box-sizing: border-box; color: rgb(3, 47, 98); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\"><span style=\"box-sizing: border-box; font-size: 10pt; font-family: 돋움;\">&quot;</span><a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/\" target=\"_blank\"><span style=\"font-size: 10pt; font-family: 돋움;\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/</span></a><span style=\"box-sizing: border-box; font-size: 10pt; font-family: 돋움;\">&quot;</span></span><span style=\"color: rgb(36, 41, 46); font-family: 돋움; font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255);\">);</span></div><div><font color=\"#24292e\" face=\"SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace\"><span style=\"font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255); font-family: 돋움;\">먼저 위와 같이 작성하면 data에는 html이 저장된다꾸! 근데, 우리는 html을 파싱할려하는게 아니라 json을 파싱하려고 했다꾸!</span></font></div><div><font color=\"#24292e\" face=\"SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace\"><span style=\"font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255); font-family: 돋움;\">그런데, replier.reply(data)를 이용해 대충 봤더니 &lt;body&gt;같은 html태그가 있었다꾸! 그 다음에는 바로 json 형식의 데이터가 작성되었꾸.</span></font></div><div><font color=\"#24292e\" face=\"SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace\"><span style=\"font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255); font-family: 돋움;\">참고로 &lt;body&gt;는 한 번 나오면 반드시 마지막에 &lt;/body&gt;가 있어야 한다꾸! 이 점을 고려하면 &lt;body&gt;&lt;/body&gt;사이에 우리가 뽑을려 하는 데이터가 있을 꺼라는 것을 알 수 있을 것이라꾸!</span></font></div><div><font color=\"#24292e\" face=\"SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace\"><span style=\"font-size: 10pt; white-space: pre; background-color: rgb(255, 255, 255); font-family: 돋움;\">그러니 다음과 같이 태그 사이에 있는 데이터를 뽑아내자꾸~~!</span></font></div><div><div class=\"colorscripter-code\"><table><tbody><tr><td><div style=\"margin:0;padding:0;word-break:normal;text-align:right;color:#aaa;font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;line-height:130%\"><div style=\"line-height:130%\"><span style=\"font-size: 10pt; font-family: 돋움;\">1</span></div><div style=\"line-height:130%\"><span style=\"font-size: 10pt; font-family: 돋움;\">2</span></div></div></td><td><div style=\"margin:0;padding:0;color:#f0f0f0;font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;line-height:130%\"><div style=\"padding:0 6px; white-space:pre; line-height:130%\"><span style=\"font-size: 10pt; font-family: 돋움;\">data&nbsp;</span><span style=\"color:#0086b3\"></span><span style=\"color: rgb(255, 51, 153); font-size: 10pt; font-family: 돋움;\">=</span><span style=\"font-size: 10pt; font-family: 돋움;\">&nbsp;data.</span><span style=\"color: rgb(75, 230, 250); font-size: 10pt; font-family: 돋움;\">split</span><span style=\"font-size: 10pt; font-family: 돋움;\">(</span><span style=\"color: rgb(255, 213, 0); font-size: 10pt; font-family: 돋움;\">&quot;&lt;body&gt;\\n&quot;</span><span style=\"font-size: 10pt; font-family: 돋움;\">)[</span><span style=\"color: rgb(193, 10, 255); font-size: 10pt; font-family: 돋움;\">1</span><span style=\"font-size: 10pt; font-family: 돋움;\">];</span></div><div style=\"padding:0 6px; white-space:pre; line-height:130%\"><span style=\"font-size: 10pt; font-family: 돋움;\">data&nbsp;</span><span style=\"color:#0086b3\"></span><span style=\"color: rgb(255, 51, 153); font-size: 10pt; font-family: 돋움;\">=</span><span style=\"font-size: 10pt; font-family: 돋움;\">&nbsp;data.</span><span style=\"color: rgb(75, 230, 250); font-size: 10pt; font-family: 돋움;\">split</span><span style=\"font-size: 10pt; font-family: 돋움;\">(</span><span style=\"color: rgb(255, 213, 0); font-size: 10pt; font-family: 돋움;\">&quot;&lt;/body&gt;&quot;</span><span style=\"font-size: 10pt; font-family: 돋움;\">)[</span><span style=\"color: rgb(193, 10, 255); font-size: 10pt; font-family: 돋움;\">0</span><span style=\"font-size: 10pt; font-family: 돋움;\">];</span></div></div></td><td></td></tr></tbody></table><span style=\"background-color: rgb(255, 255, 255); font-size: 10pt; font-family: 돋움;\">이렇게 작성하면 json형식의 문자열만을 뽑아 낼 수 있꾸!</span></div></div><div class=\"colorscripter-code\"><span style=\"background-color: rgb(255, 255, 255); font-size: 10pt; font-family: 돋움;\">이제 json을 뽑아 냈으니 json을 객체로 바꾸면 된다꾸!</span></div><div class=\"colorscripter-code\"><span style=\"background-color: rgb(255, 255, 255); font-size: 10pt; font-family: 돋움;\">방법은 간단하꾸! 그냥, JSON.parse(data)라고만 하면 된다꾸!</span></div><div class=\"colorscripter-code\"><span style=\"background-color: rgb(255, 255, 255); font-size: 10pt; font-family: 돋움;\">매번 JSON.parse(data)를 사용하면 우리 휴대폰이 <b><i><span style=\"font-size: 10pt; font-family: 돋움;\">응기이이이이잇&nbsp;</span></i></b></span><span style=\"font-weight: bold; background-color: rgb(255, 255, 255); color: rgb(84, 84, 84); font-family: 돋움; font-size: 10pt;\">&hearts;</span><span style=\"font-weight: bold; background-color: rgb(255, 255, 255); color: rgb(84, 84, 84); font-family: 돋움; font-size: 10pt;\">&hearts;</span><span style=\"background-color: rgb(255, 255, 255); font-family: 돋움; font-size: 10pt;\"><span style=\"color: rgb(84, 84, 84); font-weight: bold;\"><span style=\"font-size: 10pt; font-family: 돋움;\">&hearts; </span></span>하고 가버릴 수 있으니까 data=JSON.parse(data); 로 정의해주자꾸~! 설명을 위해 내가 뽑은 JSON데이터의 일부를 보여주면 이렇게 되어있꾸!</span></div><div class=\"colorscripter-code\"><div class=\"colorscripter-code\"><table><tbody><tr><td><div style=\"margin:0;padding:0;word-break:normal;text-align:right;color:#aaa;font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;line-height:130%\"><div style=\"line-height:130%\">1</div><div style=\"line-height:130%\">2</div><div style=\"line-height:130%\">3</div><div style=\"line-height:130%\">4</div><div style=\"line-height:130%\">5</div><div style=\"line-height:130%\">6</div><div style=\"line-height:130%\">7</div><div style=\"line-height:130%\">8</div><div style=\"line-height:130%\">9</div><div style=\"line-height:130%\">10</div><div style=\"line-height:130%\">11</div><div style=\"line-height:130%\">12</div><div style=\"line-height:130%\">13</div><div style=\"line-height:130%\">14</div><div style=\"line-height:130%\">15</div><div style=\"line-height:130%\">16</div><div style=\"line-height:130%\">17</div><div style=\"line-height:130%\">18</div><div style=\"line-height:130%\">19</div><div style=\"line-height:130%\">20</div><div style=\"line-height:130%\">21</div><div style=\"line-height:130%\">22</div><div style=\"line-height:130%\">23</div><div style=\"line-height:130%\">24</div><div style=\"line-height:130%\">25</div><div style=\"line-height:130%\">26</div><div style=\"line-height:130%\">27</div><div style=\"line-height:130%\">28</div><div style=\"line-height:130%\">29</div><div style=\"line-height:130%\">30</div><div style=\"line-height:130%\">31</div><div style=\"line-height:130%\">32</div><div style=\"line-height:130%\">33</div><div style=\"line-height:130%\">34</div></div></td><td><div style=\"margin:0;padding:0;color:#f0f0f0;font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;line-height:130%\"><div style=\"padding:0 6px; white-space:pre; line-height:130%\">[</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;name&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;KakaoANN.js&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;path&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;KakaoANN.js&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;sha&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;73aa752f7a5e65c4d8c4dccbe36bd99fe6cf03fa&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;size&quot;</span>:&nbsp;<span style=\"color:#c10aff\">9979</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoANN.js?ref=master\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoANN.js?ref=master</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;html_url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoANN.js\" target=\"_blank\">https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoANN.js</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;git_url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/73aa752f7a5e65c4d8c4dccbe36bd99fe6cf03fa\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/73aa752f7a5e65c4d8c4dccbe36bd99fe6cf03fa</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;download_url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://raw.githubusercontent.com/OtakoidTony/MessengerBotExample/master/KakaoANN.js\" target=\"_blank\">https://raw.githubusercontent.com/OtakoidTony/MessengerBotExample/master/KakaoANN.js</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;type&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;file&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;_links&quot;</span>:&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;self&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoANN.js?ref=master\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoANN.js?ref=master</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;git&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/73aa752f7a5e65c4d8c4dccbe36bd99fe6cf03fa\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/73aa752f7a5e65c4d8c4dccbe36bd99fe6cf03fa</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;html&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoANN.js\" target=\"_blank\">https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoANN.js</a>&quot;</span></div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;},</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;name&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;KakaoBrailleEnc.js&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;path&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;KakaoBrailleEnc.js&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;sha&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;71dc0dca5bfc6ca25fb4a9f26affc08df7fb5a88&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;size&quot;</span>:&nbsp;<span style=\"color:#c10aff\">3040</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoBrailleEnc.js?ref=master\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoBrailleEnc.js?ref=master</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;html_url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoBrailleEnc.js\" target=\"_blank\">https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoBrailleEnc.js</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;git_url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/71dc0dca5bfc6ca25fb4a9f26affc08df7fb5a88\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/71dc0dca5bfc6ca25fb4a9f26affc08df7fb5a88</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;download_url&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://raw.githubusercontent.com/OtakoidTony/MessengerBotExample/master/KakaoBrailleEnc.js\" target=\"_blank\">https://raw.githubusercontent.com/OtakoidTony/MessengerBotExample/master/KakaoBrailleEnc.js</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;type&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;file&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;_links&quot;</span>:&nbsp;{</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;self&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoBrailleEnc.js?ref=master\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/contents/KakaoBrailleEnc.js?ref=master</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;git&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/71dc0dca5bfc6ca25fb4a9f26affc08df7fb5a88\" target=\"_blank\">https://api.github.com/repos/OtakoidTony/MessengerBotExample/git/blobs/71dc0dca5bfc6ca25fb4a9f26affc08df7fb5a88</a>&quot;</span>,</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#ffd500\">&quot;html&quot;</span>:&nbsp;<span style=\"color:#ffd500\">&quot;<a href=\"https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoBrailleEnc.js\" target=\"_blank\">https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoBrailleEnc.js</a>&quot;</span></div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">&nbsp;&nbsp;}</div><div style=\"padding:0 6px; white-space:pre; line-height:130%\">]</div></div></td><td></td></tr></tbody></table><div class=\"colorscripter-code\"><span style=\"background-color: rgb(255, 255, 255); font-family: 돋움; font-size: 10pt;\">보다시피 Array에 요소는 객체로 되어있다는 것을 알 수 있꾸! 그럼, 이걸 이용해서 올린 스크립트가 무엇무엇이 있는지를 알아보자꾸!&nbsp;</span><span style=\"font-size: 10pt; background-color: rgb(255, 255, 255); font-family: 돋움;\">이 때 사용되는 함수는&nbsp;</span><span style=\"box-sizing: border-box; color: rgb(0, 92, 197); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">Object</span><span style=\"color: rgb(36, 41, 46); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">.</span><span style=\"box-sizing: border-box; color: rgb(111, 66, 193); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">getOwnPropertyNames</span><span style=\"color: rgb(36, 41, 46); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">() 라꾸! </span><span style=\"box-sizing: border-box; color: rgb(0, 92, 197); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">Object</span><span style=\"color: rgb(36, 41, 46); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">.</span><span style=\"box-sizing: border-box; color: rgb(111, 66, 193); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">getOwnPropertyNames</span><span style=\"color: rgb(36, 41, 46); font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; font-size: 12px; white-space: pre; background-color: rgb(255, 255, 255);\">() 는 입력값의 이름들을 Array로 내보내준다꾸!</span></div></div></div><div class=\"colorscripter-code\">이제 이걸 이용해서 삶아먹든 구워먹든 맛있게 먹으면 된다꾸~~!</div><div class=\"colorscripter-code\"><br /></div><div class=\"colorscripter-code\">맛저하라꾸~! 헤헿<span style=\"background-color: rgb(255, 255, 255); color: rgb(84, 84, 84); font-family: 'Apple SD Gothic Neo', arial, sans-serif; font-size: 14px;\">☆</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000202F00000000",
+            "id": 8239,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 166,
+            "refArticleId": 8239,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "Github API",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574594055220,
+            "writer": {
+                "id": "pak_hyun",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "OtakoidTony"
+            }
+        },
+        "articleId": 8239,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "설명 상태가..?",
+                    "id": 74240826,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74240826,
+                    "updateDate": 1574594332000,
+                    "writer": {
+                        "id": "jeongyeon13751",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수123"
+                    }
+                },
+                {
+                    "content": "응기이이이이잇 ♥♥♥",
+                    "id": 74241135,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74240826,
+                    "updateDate": 1574594589000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "스타를 주작작",
+                    "id": 74244407,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74244407,
+                    "updateDate": 1574597376000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "주주작작 주작작",
+                    "id": 74262390,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74244407,
+                    "updateDate": 1574610178000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "스타 눌렀ㄷ..",
+                    "id": 74271301,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74271301,
+                    "updateDate": 1574637650000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

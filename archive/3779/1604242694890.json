@@ -1,0 +1,328 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<p>레식&nbsp;전적&nbsp;파싱하신&nbsp;분이&nbsp;많길래&nbsp;바로&nbsp;소스&nbsp;공개합니다.<br />response만&nbsp;수정하면&nbsp;jsoup을 지원하는 봇에서 사용가능합니다.<br /><br /><br /><br />const scriptName=&quot;rainbow.js&quot;;<br />const command=&quot;/레식&quot;;<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />    if(msg.indexOf(command+&quot; &quot;)!=-1)<br />replier.reply(rainbowSix(msg.replace(command+&quot; &quot;,&quot;&quot;)));<br />}<br /><br />function rainbowSix(nickname){<br />/*2차 배포 금지, 수정 가능<br />written by cubemine*/<br />  var info = [&quot;레벨&quot;, &quot;최고 MMR&quot;,&quot;랭크&quot;,&quot;평균 시즌 MMR&quot;,&quot;주 오퍼레이터&quot;,&quot;승리&quot;,&quot;승률&quot;,&quot;킬&quot;,&quot;킬뎃&quot;,&quot;\\n\\n이번 시즌\\n최고 MMR&quot;,&quot;시작일&quot;,&quot;플레이 시간&quot;,&quot;승리&quot;,&quot;승률&quot;,&quot;킬&quot;,&quot;킬뎃&quot;];<br />  var url = &quot;https://r6.tracker.network/profile/pc/&quot;+nickname;<br />  try{<br />  var u = org.jsoup.Jsoup.connect(url).ignoreContentType(true).get();<br />  }catch(e){return -1;}<br />  var p = u.select(&quot;.trn-defstat__name+.trn-defstat__value&quot;);<br />  for(var i=0;i&lt;info.length;i++){<br />    if(p.eq(i)==&quot;&quot;)return -1;<br />    if(info[i]==&quot;주 오퍼레이터&quot;){<br />      var oper = [], j=0, tmp = p.eq(i).select(&quot;img&quot;);<br />      if(tmp==&quot;&quot;)return newUser(p);<br />      while(tmp.eq(j)!=&quot;&quot;){oper.push(hangulOper(tmp.eq(j).attr(&quot;title&quot;)));j++;}<br />      info[i]+=&quot; &quot;+oper.join(&quot;, &quot;);<br />    }<br />    else info[i]+=&quot; &quot;+p.eq(i).html();<br />  }<br />  return info.join(&quot;\\n&quot;);<br />}<br /><br />function newUser(p){<br />var info = [&quot;레벨&quot;,&quot;skipped&quot;,&quot;주 오퍼레이터&quot;,&quot;승리&quot;,&quot;승률&quot;,&quot;킬&quot;,&quot;킬뎃&quot;,&quot;skipped&quot;,&quot;\\n\\n이번 시즌\\n시작일&quot;,&quot;플레이 시간&quot;,&quot;승리&quot;,&quot;승률&quot;,&quot;킬&quot;,&quot;킬뎃&quot;];<br />for(var i=0;i&lt;info.length;i++){<br />if(info[i]==&quot;주 오퍼레이터&quot;){<br />      var oper = [], j=0, tmp = p.eq(i).select(&quot;img&quot;);<br />      while(tmp.eq(j)!=&quot;&quot;){oper.push(hangulOper(tmp.eq(j).attr(&quot;title&quot;)));j++;}<br />      info[i]+=&quot; &quot;+oper.join(&quot;, &quot;);<br />    }<br />else info[i]+=&quot; &quot;+p.eq(i).html();<br />}<br />return info.join(&quot;\\n&quot;).replace(/skipped \\n/g,&quot;&quot;);<br />}<br /><br />function hangulOper(eng){<br />var translate = {&quot;RECRUIT&quot;:&quot;예비 병력&quot;,<br />                             &quot;SLEDGE&quot;:&quot;슬레지&quot;,&quot;THATCHER&quot;:&quot;대처&quot;,&quot;SMOKE&quot;:&quot;스모크&quot;,&quot;MUTE&quot;:&quot;뮤트&quot;,<br />                             &quot;ASH&quot;:&quot;애쉬&quot;,&quot;THERMITE&quot;:&quot;써마이트&quot;,&quot;CASTLE&quot;:&quot;캐슬&quot;,&quot;PULSE&quot;:&quot;펄스&quot;,<br />                             &quot;TWITCH&quot;:&quot;트위치&quot;,&quot;MONTAGNE&quot;:&quot;몽타뉴&quot;,&quot;DOC&quot;:&quot;닥&quot;,&quot;ROOK&quot;:&quot;룩&quot;,<br />                             &quot;GLAZ&quot;:&quot;글라즈&quot;,&quot;FUZE&quot;:&quot;퓨즈&quot;,&quot;KAPKAN&quot;:&quot;캅칸&quot;,&quot;TACHANKA&quot;:&quot;타찬카&quot;,<br />                             &quot;BLITZ&quot;:&quot;블리츠&quot;,&quot;IQ&quot;:&quot;아이큐&quot;,&quot;J&Auml;GER&quot;:&quot;예거&quot;,&quot;BANDIT&quot;:&quot;밴딧&quot;,<br />                             &quot;BUCK&quot;:&quot;벅&quot;,&quot;FROST&quot;:&quot;프로스트&quot;,&quot;BLACKBEARD&quot;:&quot;블랙비어드&quot;,&quot;VALKYRIE&quot;:&quot;발키리&quot;,<br />                             &quot;CAPIT&Atilde;O&quot;:&quot;카피탕&quot;,&quot;CAVEIRA&quot;:&quot;카베이라&quot;,&quot;HIBANA&quot;:&quot;히바나&quot;,&quot;ECHO&quot;:&quot;에코&quot;,<br />                             &quot;JACKAL&quot;:&quot;자칼&quot;,&quot;MIRA&quot;:&quot;미라&quot;,&quot;YING&quot;:&quot;잉&quot;,&quot;LESION&quot;:&quot;리전&quot;,<br />                             &quot;ZOFIA&quot;:&quot;조피아&quot;,&quot;ELA&quot;:&quot;엘라&quot;,&quot;DOKKAEBI&quot;:&quot;도깨비&quot;,&quot;VIGIL&quot;:&quot;비질&quot;,<br />                             &quot;LION&quot;:&quot;라이온&quot;,&quot;FINKA&quot;:&quot;핀카&quot;,&quot;MAESTRO&quot;:&quot;마에스트로&quot;,&quot;ALIBI&quot;:&quot;알리바이&quot;,<br />                             &quot;MAVERICK&quot;:&quot;매버릭&quot;,&quot;CLASH&quot;:&quot;클래시&quot;,&quot;NOMAD&quot;:&quot;노매드&quot;,&quot;KAID&quot;:&quot;카이드&quot;,<br />                             &quot;GRIDLOCK&quot;:&quot;그리드락&quot;,&quot;MOZZIE&quot;:&quot;모지&quot;,&quot;N&Oslash;KK&quot;:&quot;뇌크&quot;,&quot;WARDEN&quot;:&quot;워든&quot;};<br />return translate[eng];<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000EC300000000",
+            "id": 3779,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 262,
+            "refArticleId": 3779,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "레식 전적 파싱",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1563018018327,
+            "writer": {
+                "id": "cubeminetv",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MTFfMTAw/MDAxNTg2NTgzMDc5MDEx.IQLuKnQtvUZmQvjya_zadmEU6pQtqkpRba6_5DgYCSEg.baU4wRzksr8efxYgDH8E4ZjYpSeyNFkSiGYhSHbg_rAg.JPEG.cubeminetv/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "큐브마인"
+            }
+        },
+        "articleId": 3779,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "젠장 내가 졌다",
+                    "id": 63893607,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63893607,
+                    "updateDate": 1563018841000,
+                    "writer": {
+                        "id": "fbtkdqja112",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200829_126/fbtkdqja112_1598657201500jUbjR_JPEG/image.jpg"
+                        },
+                        "nick": "인디벨"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 63897567,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63897567,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1563022663000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 63944050,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63897567,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-8-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_8.png",
+                        "width": 129
+                    },
+                    "updateDate": 1563087521000,
+                    "writer": {
+                        "id": "cubeminetv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MTFfMTAw/MDAxNTg2NTgzMDc5MDEx.IQLuKnQtvUZmQvjya_zadmEU6pQtqkpRba6_5DgYCSEg.baU4wRzksr8efxYgDH8E4ZjYpSeyNFkSiGYhSHbg_rAg.JPEG.cubeminetv/profileImage.jpg"
+                        },
+                        "nick": "큐브마인"
+                    }
+                },
+                {
+                    "content": "아...공유할까 생각햤는ㄷ..",
+                    "id": 70385580,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70385580,
+                    "updateDate": 1570280131000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "중학생입니다"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 73963016,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73963016,
+                    "updateDate": 1574261554000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "웹에 있는거 그대로 가져오는거라서 파싱 후에 정규식으로 처리하면 되지 않을까요?",
+                    "id": 73963630,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73963016,
+                    "updateDate": 1574261917000,
+                    "writer": {
+                        "id": "cubeminetv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MTFfMTAw/MDAxNTg2NTgzMDc5MDEx.IQLuKnQtvUZmQvjya_zadmEU6pQtqkpRba6_5DgYCSEg.baU4wRzksr8efxYgDH8E4ZjYpSeyNFkSiGYhSHbg_rAg.JPEG.cubeminetv/profileImage.jpg"
+                        },
+                        "nick": "큐브마인"
+                    }
+                },
+                {
+                    "content": ".replace(/(최고 MMR .+)\\.n(랭크 .+)/,\"$2\\.n$1\")",
+                    "id": 73964071,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73963016,
+                    "updateDate": 1574262419000,
+                    "writer": {
+                        "id": "cubeminetv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MTFfMTAw/MDAxNTg2NTgzMDc5MDEx.IQLuKnQtvUZmQvjya_zadmEU6pQtqkpRba6_5DgYCSEg.baU4wRzksr8efxYgDH8E4ZjYpSeyNFkSiGYhSHbg_rAg.JPEG.cubeminetv/profileImage.jpg"
+                        },
+                        "nick": "큐브마인"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

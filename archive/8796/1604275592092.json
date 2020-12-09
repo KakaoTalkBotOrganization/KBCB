@@ -1,0 +1,275 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-size:10pt;\"><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">메이플 캐릭터 이름 입력시 캐릭터의 무릉정보 불러오기</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"color: rgb(187, 187, 187); background-color: rgb(40, 44, 52); font-family: 'D2Coding ligature', Consolas, 'Courier New', monospace; font-size: 17px; line-height: 23px; white-space: pre;\"><div><span style=\"color: #c678dd;\">function</span>&nbsp;<span style=\"color: #61afef;\">response</span><span style=\"color: #abb2bf;\">(room,</span>&nbsp;<span style=\"color: #abb2bf;\">msg,</span>&nbsp;<span style=\"color: #abb2bf;\">sender,</span>&nbsp;<span style=\"color: #abb2bf;\">isGroupChat,</span>&nbsp;<span style=\"color: #abb2bf;\">replier,</span>&nbsp;<span style=\"color: #abb2bf;\">ImageDB,</span>&nbsp;<span style=\"color: #abb2bf;\">packageName,</span>&nbsp;<span style=\"color: #abb2bf;\">threadId){</span></div><br /><div>&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span><span style=\"color: #abb2bf;\">(room</span>&nbsp;<span style=\"color: #56b6c2;\">!=</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&quot;방이름&quot;</span><span style=\"color: #abb2bf;\">)</span>&nbsp;<span style=\"color: #56b6c2;\">&amp;&amp;</span>&nbsp;<span style=\"color: #e06c75;\">msg</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">indexOf</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;!무릉&nbsp;&apos;</span><span style=\"color: #abb2bf;\">)</span>&nbsp;<span style=\"color: #56b6c2;\">!=</span>&nbsp;<span style=\"color: #56b6c2;\">-</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">){</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">murung</span><span style=\"color: #56b6c2;\">=</span><span style=\"color: #e06c75;\">msg</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;&nbsp;&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">url</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">Utils</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">getWebText</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&quot;<a href=\"https://maple.gg/u/\" target=\"_blank\">https://maple.gg/u/</a>&quot;</span><span style=\"color: #56b6c2;\">+</span><span style=\"color: #abb2bf;\">murung[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]);</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span>&nbsp;<span style=\"color: #abb2bf;\">(</span><span style=\"color: #e06c75;\">url</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">indexOf</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;예전&nbsp;무릉&nbsp;최고&apos;</span><span style=\"color: #abb2bf;\">)</span>&nbsp;<span style=\"color: #56b6c2;\">!=</span>&nbsp;<span style=\"color: #56b6c2;\">-</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">){</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #e06c75;\">url</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">indexOf</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;검색결과가&nbsp;없습니다.&apos;</span><span style=\"color: #abb2bf;\">)</span>&nbsp;<span style=\"color: #56b6c2;\">!=</span>&nbsp;<span style=\"color: #56b6c2;\">-</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">){</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #e06c75;\">replier</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">reply</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;[&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">murung[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;]</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;존재하지&nbsp;않는&nbsp;캐릭터&nbsp;입니다.&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">return</span><span style=\"color: #abb2bf;\">;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">data</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">url</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;text-white&quot;&gt;&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">3</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;더시드&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #56b6c2;\">/(&lt;(</span><span style=\"color: #d19a66;\">[</span><span style=\"color: #56b6c2;\">^</span><span style=\"color: #d19a66;\">&gt;]</span><span style=\"color: #56b6c2;\">+)&gt;)/</span><span style=\"color: #c678dd;\">g</span><span style=\"color: #abb2bf;\">,</span><span style=\"color: #98c379;\">&quot;&quot;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">data</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #56b6c2;\">/&nbsp;/</span><span style=\"color: #c678dd;\">gi</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">data</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #56b6c2;\">/</span><span style=\"color: #d19a66;\">\\n</span><span style=\"color: #56b6c2;\">/</span><span style=\"color: #c678dd;\">gi</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span>&nbsp;<span style=\"color: #abb2bf;\">(</span><span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">indexOf</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;기록이없습니다.&apos;</span><span style=\"color: #abb2bf;\">)</span>&nbsp;<span style=\"color: #56b6c2;\">!=</span>&nbsp;<span style=\"color: #56b6c2;\">-</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">){</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #e06c75;\">replier</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">reply</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;[&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">murung[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;]</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;기록이&nbsp;없습니다&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">return</span><span style=\"color: #abb2bf;\">;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">else</span><span style=\"color: #abb2bf;\">{</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">info</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;층&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">2</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;월드&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">];</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">floor</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;록&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;층&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">];</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">time</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;층&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;Lv&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">];</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">date</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;위&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">2</span><span style=\"color: #abb2bf;\">];</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">date</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">date</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;기준일:&apos;</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;&nbsp;&apos;</span><span style=\"color: #abb2bf;\">)</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">old</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;예전&nbsp;무릉&nbsp;최고&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;Lv&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">old</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">old</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;.&apos;</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;Lv.&apos;</span><span style=\"color: #abb2bf;\">)</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">old</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">old</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;/&apos;</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">직업&nbsp;:&apos;</span><span style=\"color: #abb2bf;\">)</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">old</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">old</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;기준일:&apos;</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">기준일&nbsp;:&apos;</span><span style=\"color: #abb2bf;\">)</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">old</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">old</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;&quot;&gt;예전무릉최고&apos;</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">최고&nbsp;기록&nbsp;:&apos;</span><span style=\"color: #abb2bf;\">)</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #e06c75;\">replier</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">reply</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;[&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">murung[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;]</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">info</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">기록:&nbsp;&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">floor</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;층</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">시간:&nbsp;&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">time</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">날짜:&nbsp;&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">date</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n\\n</span><span style=\"color: #98c379;\">&lt;예전&nbsp;무릉&gt;&nbsp;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">레벨&nbsp;:&nbsp;&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">old);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">else</span><span style=\"color: #abb2bf;\">{</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #e06c75;\">url</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">indexOf</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;검색결과가&nbsp;없습니다.&apos;</span><span style=\"color: #abb2bf;\">)</span>&nbsp;<span style=\"color: #56b6c2;\">!=</span>&nbsp;<span style=\"color: #56b6c2;\">-</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">){</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #e06c75;\">replier</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">reply</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;[&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">murung[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;]</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;존재하지&nbsp;않는&nbsp;캐릭터&nbsp;입니다.&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">return</span><span style=\"color: #abb2bf;\">;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">data</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">url</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;text-white&quot;&gt;&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">3</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;더시드&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #56b6c2;\">/(&lt;(</span><span style=\"color: #d19a66;\">[</span><span style=\"color: #56b6c2;\">^</span><span style=\"color: #d19a66;\">&gt;]</span><span style=\"color: #56b6c2;\">+)&gt;)/</span><span style=\"color: #c678dd;\">g</span><span style=\"color: #abb2bf;\">,</span><span style=\"color: #98c379;\">&quot;&quot;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">data</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #56b6c2;\">/&nbsp;/</span><span style=\"color: #c678dd;\">gi</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">data</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">replace</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #56b6c2;\">/</span><span style=\"color: #d19a66;\">\\n</span><span style=\"color: #56b6c2;\">/</span><span style=\"color: #c678dd;\">gi</span><span style=\"color: #abb2bf;\">,</span>&nbsp;<span style=\"color: #98c379;\">&apos;&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span>&nbsp;<span style=\"color: #abb2bf;\">(</span><span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">indexOf</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;기록이없습니다.&apos;</span><span style=\"color: #abb2bf;\">)</span>&nbsp;<span style=\"color: #56b6c2;\">!=</span>&nbsp;<span style=\"color: #56b6c2;\">-</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">){</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #e06c75;\">replier</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">reply</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;[&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">murung[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;]</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;기록이&nbsp;없습니다&apos;</span><span style=\"color: #abb2bf;\">);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">return</span><span style=\"color: #abb2bf;\">;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">else</span><span style=\"color: #abb2bf;\">{</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">info_n</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;초&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;월드&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">];</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">floor_n</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;록&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;층&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">];</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">time_n</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;층&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">].</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;Lv&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">0</span><span style=\"color: #abb2bf;\">];</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;<span style=\"color: #abb2bf;\">date_n</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #e06c75;\">data</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">split</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;기준일:&apos;</span><span style=\"color: #abb2bf;\">)[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">];</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #e06c75;\">replier</span><span style=\"color: #abb2bf;\">.</span><span style=\"color: #61afef;\">reply</span><span style=\"color: #abb2bf;\">(</span><span style=\"color: #98c379;\">&apos;[&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">murung[</span><span style=\"color: #d19a66;\">1</span><span style=\"color: #abb2bf;\">]</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;]</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">info_n</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">기록:&nbsp;&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">floor_n</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;층</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">시간:&nbsp;&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">time_n</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&apos;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">날짜:&nbsp;&apos;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #abb2bf;\">date_n);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><br /><div>&nbsp;&nbsp;&nbsp;<span style=\"color: #abb2bf;\">}</span></div><div><span style=\"color: #abb2bf;\">}</span></div></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000225C00000000",
+            "id": 8796,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 111,
+            "refArticleId": 8796,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "메이플 무릉 확인",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575825538283,
+            "writer": {
+                "id": "yce1014",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA0MjBfMTIx/MDAxNTg3MzUzNjIzNzAx.gUaiEAPZrvBR4UzgkWFqliJyFnSlkuNpMfU08QhALgsg.lJgdqzxUHJhGfMqLZaZtvmgcGdUYZ8BG7AmJ9STODHAg.JPEG/Totoro-backgrounds-wallpapers-HD_%281%29.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "SOODA"
+            }
+        },
+        "articleId": 8796,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "무릉도장이 개편되면서 구무릉과 신무릉으로 나뉘어지는 바람에 인벤에서 한 고수님께서 공유해주신 코드가 작동하지 않아 제가 직접 제작해봤습니다.",
+                    "id": 75376908,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75376908,
+                    "updateDate": 1575825795000,
+                    "writer": {
+                        "id": "yce1014",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MjBfMTIx/MDAxNTg3MzUzNjIzNzAx.gUaiEAPZrvBR4UzgkWFqliJyFnSlkuNpMfU08QhALgsg.lJgdqzxUHJhGfMqLZaZtvmgcGdUYZ8BG7AmJ9STODHAg.JPEG/Totoro-backgrounds-wallpapers-HD_%281%29.jpg"
+                        },
+                        "nick": "SOODA"
+                    }
+                },
+                {
+                    "content": "앗 무릉 변했나여",
+                    "id": 75418175,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75376908,
+                    "updateDate": 1575873034000,
+                    "writer": {
+                        "id": "kyleok",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "kyleok"
+                    }
+                },
+                {
+                    "content": "네 maple.gg 파싱해보니까 구무릉 신무릉 했냐 안햇냐에 따라 조금 다르더라구요",
+                    "id": 75420892,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75376908,
+                    "replyMember": {
+                        "id": "kyleok",
+                        "nick": "kyleok"
+                    },
+                    "updateDate": 1575875429000,
+                    "writer": {
+                        "id": "yce1014",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MjBfMTIx/MDAxNTg3MzUzNjIzNzAx.gUaiEAPZrvBR4UzgkWFqliJyFnSlkuNpMfU08QhALgsg.lJgdqzxUHJhGfMqLZaZtvmgcGdUYZ8BG7AmJ9STODHAg.JPEG/Totoro-backgrounds-wallpapers-HD_%281%29.jpg"
+                        },
+                        "nick": "SOODA"
+                    }
+                },
+                {
+                    "content": "우와",
+                    "id": 75654575,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75654575,
+                    "updateDate": 1576118090000,
+                    "writer": {
+                        "id": "jeonsh8069",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "에너지봇"
+                    }
+                },
+                {
+                    "content": "전 메이플이 뭔지 몰라서 영어사전에 쳐봤어요...근데.....게임이었군......참.....세상참 좋아졌어(?) 농담인거....아시죠?......쩝......훌쩍.....ㅠㅠ",
+                    "id": 75841409,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75841409,
+                    "updateDate": 1576326608000,
+                    "writer": {
+                        "id": "sesryan7047",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "설명봇"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

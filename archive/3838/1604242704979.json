@@ -1,0 +1,251 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)&nbsp;</font></span><span style=\"font-size: 12px;\">편집 거리(Levenshtein Distance) 구하기 / 오타 교정 소스</span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><span style=\"font-size: 12px; font-family: 나눔고딕, NanumGothic, 돋움;\"><b><span style=\"font-size: 14pt;\">편집 거리(Levenshtein Distance) 구하기</span></b></span></div><div><span style=\"font-size: 12px;\"><br /></span></div><div><div style=\"color: rgb(238, 255, 255); background-color: rgb(33, 33, 33); font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #c792ea;\">function</span> <span style=\"color: #82aaff;\">levenshtein</span><span style=\"color: #89ddff;\">(</span><span style=\"color: #ff5370;\">strA</span><span style=\"color: #89ddff;\">,</span> <span style=\"color: #ff5370;\">strB</span><span style=\"color: #89ddff;\">)</span> <span style=\"color: #89ddff;\">{</span></div><div>    <span style=\"color: #c792ea;\">const</span> <span style=\"color: #f07178;\">row</span> <span style=\"color: #c792ea;\">=</span> strA<span style=\"color: #89ddff;\">.</span>length <span style=\"color: #c792ea;\">+</span> <span style=\"color: #f78c6c;\">1</span><span style=\"color: #89ddff;\">;</span></div><div>    <span style=\"color: #c792ea;\">const</span> <span style=\"color: #f07178;\">col</span> <span style=\"color: #c792ea;\">=</span> strB<span style=\"color: #89ddff;\">.</span>length <span style=\"color: #c792ea;\">+</span> <span style=\"color: #f78c6c;\">1</span><span style=\"color: #89ddff;\">;</span></div><div>    <span style=\"color: #c792ea;\">const</span> <span style=\"color: #f07178;\">table</span> <span style=\"color: #c792ea;\">=</span> [<span style=\"color: #c792ea;\">...new</span> <span style=\"color: #ffcb6b;\">Array</span>(row)]<span style=\"color: #89ddff;\">.</span><span style=\"color: #82aaff;\">map</span>(<span style=\"color: #ff5370;\">_</span> <span style=\"color: #c792ea;\">=&gt;</span> [<span style=\"color: #c792ea;\">...new</span> <span style=\"color: #ffcb6b;\">Array</span>(col)])<span style=\"color: #89ddff;\">;</span></div><div>    <span style=\"color: #89ddff;font-style: italic;\">for</span> (<span style=\"color: #c792ea;\">let</span> c <span style=\"color: #c792ea;\">=</span> <span style=\"color: #f78c6c;\">0</span><span style=\"color: #89ddff;\">;</span> c <span style=\"color: #c792ea;\">&lt;</span> col<span style=\"color: #89ddff;\">;</span> c <span style=\"color: #c792ea;\">+=</span> <span style=\"color: #f78c6c;\">1</span>) <span style=\"color: #89ddff;\">{</span></div><div>        table[<span style=\"color: #f78c6c;\">0</span>][c] <span style=\"color: #c792ea;\">=</span> c<span style=\"color: #89ddff;\">;</span></div><div>    <span style=\"color: #89ddff;\">}</span></div><div>    <span style=\"color: #89ddff;font-style: italic;\">for</span> (<span style=\"color: #c792ea;\">let</span> r <span style=\"color: #c792ea;\">=</span> <span style=\"color: #f78c6c;\">0</span><span style=\"color: #89ddff;\">;</span> r <span style=\"color: #c792ea;\">&lt;</span> row<span style=\"color: #89ddff;\">;</span> r <span style=\"color: #c792ea;\">+=</span> <span style=\"color: #f78c6c;\">1</span>) <span style=\"color: #89ddff;\">{</span></div><div>        table[r][<span style=\"color: #f78c6c;\">0</span>] <span style=\"color: #c792ea;\">=</span> r<span style=\"color: #89ddff;\">;</span></div><div>    <span style=\"color: #89ddff;\">}</span></div><div>    <span style=\"color: #89ddff;font-style: italic;\">for</span> (<span style=\"color: #c792ea;\">let</span> r <span style=\"color: #c792ea;\">=</span> <span style=\"color: #f78c6c;\">1</span><span style=\"color: #89ddff;\">;</span> r <span style=\"color: #c792ea;\">&lt;</span> row<span style=\"color: #89ddff;\">;</span> r <span style=\"color: #c792ea;\">+=</span> <span style=\"color: #f78c6c;\">1</span>) <span style=\"color: #89ddff;\">{</span></div><div>        <span style=\"color: #89ddff;font-style: italic;\">for</span> (<span style=\"color: #c792ea;\">let</span> c <span style=\"color: #c792ea;\">=</span> <span style=\"color: #f78c6c;\">1</span><span style=\"color: #89ddff;\">;</span> c <span style=\"color: #c792ea;\">&lt;</span> col<span style=\"color: #89ddff;\">;</span> c <span style=\"color: #c792ea;\">+=</span> <span style=\"color: #f78c6c;\">1</span>) <span style=\"color: #89ddff;\">{</span></div><div>            <span style=\"color: #89ddff;font-style: italic;\">if</span> (strA[r <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>] <span style=\"color: #c792ea;\">===</span> strB[c <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>]) <span style=\"color: #89ddff;\">{</span></div><div>                table[r][c] <span style=\"color: #c792ea;\">=</span> table[r <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>][c <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>]<span style=\"color: #89ddff;\">;</span></div><div>            <span style=\"color: #89ddff;\">}</span> <span style=\"color: #89ddff;font-style: italic;\">else</span> <span style=\"color: #89ddff;\">{</span></div><div>                table[r][c] <span style=\"color: #c792ea;\">=</span> <span style=\"color: #f78c6c;\">Math</span><span style=\"color: #89ddff;\">.</span><span style=\"color: #82aaff;\">min</span>(table[r <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>][c]<span style=\"color: #89ddff;\">,</span> table[r][c <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>]<span style=\"color: #89ddff;\">,</span> table[r <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>][c <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>]) <span style=\"color: #c792ea;\">+</span> <span style=\"color: #f78c6c;\">1</span><span style=\"color: #89ddff;\">;</span></div><div>            <span style=\"color: #89ddff;\">}</span></div><div>        <span style=\"color: #89ddff;\">}</span></div><div>    <span style=\"color: #89ddff;\">}</span></div><div>    <span style=\"color: #89ddff;font-style: italic;\">return</span> table[row <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>][col <span style=\"color: #c792ea;\">-</span> <span style=\"color: #f78c6c;\">1</span>]<span style=\"color: #89ddff;\">;</span></div><div><span style=\"color: #89ddff;\">}</span></div></div></div><div><b><br /></b></div><div><b><span style=\"font-family: 나눔고딕, NanumGothic, 돋움; font-size: 14pt;\">오타 교정 소스</span></b></div><div><b><span style=\"font-family: 나눔고딕, NanumGothic, 돋움; font-size: 14pt;\"><span style=\"font-size: 10pt;\">&nbsp;</span><br /></span></b></div><div><div style=\"color: rgb(238, 255, 255); background-color: rgb(33, 33, 33); font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #c792ea;\">const</span> <span style=\"color: #f07178;\">commands</span> <span style=\"color: #c792ea;\">=</span> [<span style=\"color: #89ddff;\">&apos;</span><span style=\"color: #c3e88d;\">안녕</span><span style=\"color: #89ddff;\">&apos;</span><span style=\"color: #89ddff;\">,</span> <span style=\"color: #89ddff;\">&apos;</span><span style=\"color: #c3e88d;\">알림</span><span style=\"color: #89ddff;\">&apos;</span><span style=\"color: #89ddff;\">,</span> <span style=\"color: #89ddff;\">&apos;</span><span style=\"color: #c3e88d;\">따라하기</span><span style=\"color: #89ddff;\">&apos;</span>]<span style=\"color: #89ddff;\">;</span></div><br /><div><span style=\"color: #c792ea;\">function</span> <span style=\"color: #82aaff;\">fix</span><span style=\"color: #89ddff;\">(</span><span style=\"color: #ff5370;\">text</span><span style=\"color: #89ddff;\">)</span> <span style=\"color: #89ddff;\">{</span></div><div>    <span style=\"color: #89ddff;font-style: italic;\">return</span> commands<span style=\"color: #89ddff;\">.</span><span style=\"color: #82aaff;\">map</span>(<span style=\"color: #ff5370;\">command</span> <span style=\"color: #c792ea;\">=&gt;</span> [<span style=\"color: #82aaff;\">levenshtein</span>(command<span style=\"color: #89ddff;\">,</span> text)<span style=\"color: #89ddff;\">,</span> command])</div><div>        <span style=\"color: #89ddff;\">.</span><span style=\"color: #82aaff;\">reduce</span>(<span style=\"color: #89ddff;\">(</span><span style=\"color: #ff5370;\">acc</span><span style=\"color: #89ddff;\">,</span> <span style=\"color: #ff5370;\">cur</span><span style=\"color: #89ddff;\">)</span> <span style=\"color: #c792ea;\">=&gt;</span> acc[<span style=\"color: #f78c6c;\">0</span>] <span style=\"color: #c792ea;\">&gt;</span> cur[<span style=\"color: #f78c6c;\">0</span>] <span style=\"color: #c792ea;\">?</span> cur <span style=\"color: #c792ea;\">:</span> acc<span style=\"color: #89ddff;\">,</span> [<span style=\"color: #f78c6c;\">Infinity</span>])[<span style=\"color: #f78c6c;\">1</span>]</div><div><span style=\"color: #89ddff;\">}</span></div></div></div><div><b><br /></b></div><div>Chrome F12에서 테스트되었습니다. 카톡봇에서는 알아서 수정해서 쓰세요</div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000EFE00000000",
+            "id": 3838,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 222,
+            "refArticleId": 3838,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "편집 거리(Levenshtein Distance) 구하기 / 오타 교정 소스(파싱X)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1563280511527,
+            "writer": {
+                "id": "astr36",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA3MTVfMjI5/MDAxNTYzMTg5NDIyNDM2.JHg7X32UJM4DC7JBBoSTmZpFed6r-v_aj0SdOOoFKlUg.nHWAX2DSUWTjVws1h3slnUKelTzec-ZGCewEEpZ3m-Ig.PNG.astr36/2048.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "PSJ"
+            }
+        },
+        "articleId": 3838,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "파싱버전은 doami2005님이 올려주셨습니다: https://cafe.naver.com/nameyee/3761\r\n",
+                    "id": 64128798,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64128798,
+                    "updateDate": 1563280704000,
+                    "writer": {
+                        "id": "astr36",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA3MTVfMjI5/MDAxNTYzMTg5NDIyNDM2.JHg7X32UJM4DC7JBBoSTmZpFed6r-v_aj0SdOOoFKlUg.nHWAX2DSUWTjVws1h3slnUKelTzec-ZGCewEEpZ3m-Ig.PNG.astr36/2048.png"
+                        },
+                        "nick": "PSJ"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 64131258,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64131258,
+                    "updateDate": 1563282599000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "화이팅!",
+                    "id": 64131406,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 64131258,
+                    "updateDate": 1563282705000,
+                    "writer": {
+                        "id": "astr36",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA3MTVfMjI5/MDAxNTYzMTg5NDIyNDM2.JHg7X32UJM4DC7JBBoSTmZpFed6r-v_aj0SdOOoFKlUg.nHWAX2DSUWTjVws1h3slnUKelTzec-ZGCewEEpZ3m-Ig.PNG.astr36/2048.png"
+                        },
+                        "nick": "PSJ"
+                    }
+                },
+                {
+                    "content": "메신저봇r 에서\n...new 에서 에러가 생겨요 (syntax error)",
+                    "id": 93339534,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93339534,
+                    "updateDate": 1591862708000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,393 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 26,
+            "contentElements": [],
+            "contentHtml": "<p>(주의) 이 강의의 길이는 제 다른 강의보다 역대급으로 길 수 있습니다.<br /><br />오랜만에 써보는 강의군요! 그만큼 저도 매우 중요한 강의 주제를 들고 왔습니다. 이번에는 java.io.File 클래스와 InputStream, OutPutStream 등등을 활용한 파일 입출력을 해 보고, 또 관련된 여러 파일들을 다루는 방법을 알려드리겠습니다. 참고로 java.io.File 클래스는 자바 기준으로 만들어져있기 때문에, 약간의 자바 지식이 없으면 이해하는데 약간의 어려움이 있을 것입니다.<br /><br />일단 java.io.File 클래스는 생성자를 통해 파일의 경로를 설정해 줄 겁니다. (뭔 말인지 모르겠다면 이 문장은 스킵하셔도 좋습니다)<br /><br />new java.io.File(path);<br /><br />path(경로)는 문자열이어야 합니다! 저는 예시로 sdcard 안에 있는 FunnyJS 폴더를 경로로 삼아보죠.<br /><br />var myFile = new java.io.File(&quot;/sdcard/FunnyJS&quot;);<br /><br />저희의 목표는, FunnyJS 폴더 안에 FunnyJS.txt 파일을 생성한 뒤, response 함수를 이용해 &apos;/파일입력 (값)&apos; 메시지로 입력받은 값을 그 파일 안에 입력한 뒤, &apos;/파일보기&apos; 메시지를 받았을 때 FunnyJS.txt 파일 내용을 읽어올겁니다. 더불어 &apos;/파일삭제&apos; 메시지를 받았을 때는 파일을 (숙청)삭제해버릴겁니다.<br /><br />일단 위에 해당하는 틀을 잡아줄까요?<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />if (msg.indexOf(&quot;/파일입력 &quot;) == 0) {<br />//파일 생성 및 내용 쓰기<br />}<br />if (msg == &quot;/파일보기&quot;) {<br />//파일 내용 답장하기<br />}<br />if (msg == &quot;/파일삭제&quot;) {<br />//파일 삭제하고 그 여부 답장하기<br />}<br />}<br /><br />자, 이제 틀은 잡혔습니다! 이제 파일 관련 애들을 만들어봅시다. 우선 파일을 생성해볼까요? 파일 생성 관련 메소드들을 가져와봤습니다.<br /><br />new java.io.File(path).exists();<br />new java.io.File(path).mkdir();<br />new java.io.File(path).mkdirs();<br />new java.io.File(path).createNewFile();<br /><br />우리가 파일 생성에서 주로 쓸 것들은 요 네가지 입니다.<br /><br />일단 첫 번째 메소드 exists는 메소드 이름에서 보이듯이 파일이 존재하는지에 대한 논리값(true, false)를 반환합니다.<br /><br />그리고 두 번째와 세 번째 메소드들은 폴더를 생성하는 메소드로, 언뜻 보면 거기서 거기인 듯 싶지만 전혀 다릅니다!<br />두 번째 메소드 mkdir는, 생성하려는 폴더의 상위 폴더가 없으면 false를 반환하고, 그렇지 않으면 폴더를 생성한 후 true를 반환합니다.<br />세 번째 메소드 mkdirs는, 생성하려는 폴더의 상위 폴더가 있든 없든 필요한 폴더들을 무조건 다 생성해줍니다.<br /><br />그리고 네 번째 메소드 createNewFile은 역시 이름에서 보이듯이 파일을 생성해줍니다.<br /><br />그럼 이제 FunnyJS 폴더 안에 FunnyJS.txt 파일을 만들어서 파일 입력까지 해봅시다!<br />먼저 FunnyJS 폴더와 FunnyJS.txt 파일을 만들어줍시다.<br /><br />var myFile = new java.io.File(&quot;/sdcard/FunnyJS/FunnyJS.txt&quot;);<br />if (myFile.exists() == false) {<br />myFile.getParentFile().mkdirs();<br />myFile.createNewFile();<br />}<br /><br />여기서 뭔가 처음보는 것이 등장할 것입니다.<br /><br />myFile.getParentFile().mkdirs();<br /><br />어? 이게 뭐지?<br />일단 맨 뒤에 있는 mkdirs로 폴더를 모두 생성해준다는건 알겠는데, 중간에 getParentFile은 뭘까요? 얘는 바로 상위 경로를 담고 있는 File 객체를 반환합니다. 왜 이런식으로 파일을 생성하는 것일까요?<br /><br />아까 위를 자세히 보면 알 수 있습니다. mkdirs 메소드는 폴더를 만드는 메소드이기 때문에 파일은 만들지 못합니다. 그래서 파일 이름인 FunnyJS.txt 조차도 폴더로 만들어버릴 수 있습니다! (ㅎㄷㄷ) (내가 이거때문에 카톡봇 시뮬 만들때 개고생을 했는데 읍읍)<br /><br />그래서 일부러 상위 경로를 가져와서 폴더를 먼저 만들어준 뒤, 파일을 생성해주는 겁니다.<br />여튼 파일이 존재하지 않으면 파일을 생성해준다는 그런 내용이었네요.<br /><br />이 다음, 이제 파일에 내용을 넣어 줄 겁니다. 파일에 내용을 입력할 때는 OutputStream을 상속받은 FileOutputStream을 이용하는데요, 이 녀석은 파일에 연결해서 데이터를 주는 형식으로 작동합니다. 생성자를 통해 파일 경로를 받고 write 메소드를 이용해 내용을 넣습니다. 제가 한번 사용 예시를 보여드리겠습니다.<br /><br />var str = &quot;파일에 입력할 내용이 들어갑니다.&quot;;<br />var fos = new java.io.FileOutputStream(myFile);<br />fos.write(new java.lang.String(str).getBytes());<br />fos.close();<br /><br />음.. 살짝 복잡해보이긴 하지만 간단합니다.<br />일단 FileOutputStream은 매개변수를 java.io.File 또는 String으로 받습니다. (FileDescriptor를 받기도 하는데 그건 생략하겠습니다.) 즉 위 예제처럼 File 객체를 넣어줘도 되고 그냥 문자열로 파일의 경로를 넣어도 된다는 겁니다.<br />그리고 write 하는 부분에서 java.lang.String(str).getBytes() 이라는것이 등장하는데요, 이것은 문자열을 바이트 배열로 변환하기 위한 작업입니다. write는 인자를 바이트로 받기 때문이죠.<br />그리고 마지막으로 FileOutputStream 사용이 끝났으니 close를 통해 파일과의 연결을 끊습니다.<br /><br />자 이제 지금까지 짜놓았던 소스들을 합쳐봅시다!<br /><br />var myFile = new java.io.File(&quot;/sdcard/FunnyJS/FunnyJS.txt&quot;);<br />if (myFile.exists() == false) {<br />myFile.getParentFile().mkdirs();<br />myFile.createNewFile();<br />}<br />var str = &quot;파일에 입력할 내용이 들어갑니다.&quot;;<br />var fos = new java.io.FileOutputStream(myFile);<br />fos.write(new java.lang.String(str).getBytes());<br />fos.close();<br /><br />소스가 조금 길군요. 이것을 response 함수에 통째로 넣어줘도 되지만, 소스 가독성을 고려하여 저는 함수 형태로 만들어주겠습니다. (함수를 모르시는 분들은 제 강의 2강을 참고하시면 좋을 것 같습니다)<br /><br />function saveFile(path, value) {<br />var myFile = new java.io.File(path);<br />if (myFile.exists() == false) {<br />myFile.getParentFile().mkdirs();<br />myFile.createNewFile();<br />}<br />var fos = new java.io.FileOutputStream(myFile);<br />fos.write(new java.lang.String(value).getBytes());<br />fos.close();<br />}<br /><br />파일의 경로와 입력할 내용을 매개변수로 넘겨줬습니다. 이러면 아무래도 사용 범위가 넓어져서 다른 기능을 만들 때 활용할 수 있겠네요.<br /><br />그럼 이제 다음 할 일을 찾아봅시다! 다음 할 일은 파일 내용 답장하기네요. 이번에는 파일 내용을 읽는 방법을 알아봅시다.<br /><br />파일을 읽을 때에는 InputStream 클래스를 상속받은 FileInputStream을 사용하는데, 이 녀석만 사용하는건 비효율적입니다. 그래서 우리는 BufferedReader를 사용할겁니다. 이 녀석은 버퍼를 이용하여 데이터를 전달하는데, 우리가 짐을 나른다고 생각해 봅시다. 만약 버퍼를 사용하지 않고 짐을 나른다면 우리는 짐을 한 개씩 한 개씩 나를 것입니다. 그런데 버퍼를 사용하면, 짐을 모두 버퍼라는 상자에 담아서 짐을 한 번 또는 몇여 번에 걸쳐서 짐을 다 나를 수 있습니다. 그래서 이 BufferedReader는 보다 더 효율적입니다.<br /><br />일단 한 번 소스를 만들어 봅시다.<br /><br />var myFile = new java.io.File(&quot;/sdcard/FunnyJS/FunnyJS.txt&quot;);<br />var fis = new java.io.FileInputStream(myFile);<br />var isr = new java.io.InputStreamReader(fis);<br />var br = new java.io.BufferedReader(isr);<br />var result = br.readLine();<br />var test = &quot;&quot;;<br />while ((test = br.readLine()) != null) {<br />result += &quot;\\n&quot; + test;<br />}<br />fis.close();<br />isr.close();<br />br.close();<br /><br />소스가 좀 길죠? 원래 버퍼를 사용하는 소스를 짜면 이렇게 번거롭습니다. 하지만 그만큼 속도가 빨라집니다!<br /><br />천천히 소스를 분석해봅시다. 일단 FileInputStream도 아까 전 FileOutputStream과 똑같이 매개변수를 java.io.File 또는 문자열로 받습니다.<br />그리고 BufferedReader는 매개변수를 Reader로 받습니다. 그래서 우리는 FileInputStream에 맞는 InputStreamReader를 사용했습니다.<br />그리고, BufferedReader는 띄어쓰기 단위 또는 개행문자(엔터) 단위로 끊어서 데이터를 보내는데, 여기서는 br.readLine() 을 이용하여 개행문자(엔터) 단위로 끊어서 데이터를 받아왔습니다. 엔터 단위로 끊어서 데이터를 계속 읽어와서 읽어온 데이터가 null 일 때 까지 result 변수에 넣어주네요.<br />그리고 사용이 끝난 InputStream, Reader들은 다 close를 통해 연결을 끊습니다.<br /><br />이제 얘도 함수로 만들어볼까요?<br /><br />function readFile(path) {<br />var myFile = new java.io.File(path);<br />var fis = new java.io.FileInputStream(myFile);<br />var isr = new java.io.InputStreamReader(fis);<br />var br = new java.io.BufferedReader(isr);<br />var result = br.readLine();<br />var test = &quot;&quot;;<br />while ((test = br.readLine()) != null) {<br />result += &quot;\\n&quot; + test;<br />}<br />fis.close();<br />isr.close();<br />br.close();<br />return result;<br />}<br /><br />역시 이것도 경로를 매개변수로 넘겨줬습니다.<br /><br />자 이제 마지막 할 일은? 파일 삭제하고 그 여부 답장하기 입니다.<br />파일을 삭제하는 메소드는 단 한개입니다!<br /><br />new java.io.File(path).delete();<br /><br />파일을 삭제하고 그 여부를 보내줍니다.<br />이제 얘를 다이렉트로 함수로 만들어줍시다!<br /><br />function removeFile(path) {<br />return new java.io.File(path).delete();<br />}<br /><br />이제 모든 준비가 다 되었습니다! 이제 소스를 완성시켜봅시다.<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />if (msg.indexOf(&quot;/파일입력 &quot;) == 0) {<br />var stringOfFile = readFile(&quot;/sdcard/FunnyJS/FunnyJS.txt&quot;) + msg.substr(6);<br />saveFile(&quot;/sdcard/FunnyJS/FunnyJS.txt&quot;, stringOfFile);<br />replier.reply(&quot;파일 입력 완료.&quot;);<br />}<br />if (msg == &quot;/파일보기&quot;) {<br />replier.reply(&quot;파일을 읽어왔습니다: \\n\\n&quot;+readFile(&quot;/sdcard/FunnyJS/FunnyJS.txt&quot;));<br />}<br />if (msg == &quot;/파일삭제&quot;) {<br />var isDeleted = removeFile(&quot;/sdcard/FunnyJS/FunnyJS.txt&quot;);<br />if (isDeleted == true) {<br />replier.reply(&quot;파일이 삭제되었습니다.&quot;);<br />} else {<br />replier.reply(&quot;파일이 삭제되지 않았습니다.&quot;);<br />}<br />}<br />}<br /><br />소스가 완성된 것 같군요! 그럼 지금까지 만든 소스들을 정렬해봅시다. 그리고 저 파일이 있는 경로는 계속 반복되니 상수로 만들어 버리겠습니다.<br /><br />const PATH = &quot;/sdcard/FunnyJS/FunnyJS.txt&quot;;<br /><br />function saveFile(path, value) {<br />var myFile = new java.io.File(path);<br />if (myFile.exists() == false) {<br />myFile.getParentFile().mkdirs();<br />myFile.createNewFile();<br />}<br />var fos = new java.io.FileOutputStream(myFile);<br />fos.write(new java.lang.String(value).getBytes());<br />fos.close();<br />}<br /><br />function readFile(path) {<br />var myFile = new java.io.File(path);<br />var fis = new java.io.FileInputStream(myFile);<br />var isr = new java.io.InputStreamReader(fis);<br />var br = new java.io.BufferedReader(isr);<br />var result = br.readLine();<br />var test = &quot;&quot;;<br />while ((test = br.readLine()) != null) {<br />result += &quot;\\n&quot; + test;<br />}<br />fis.close();<br />isr.close();<br />br.close();<br />return result;<br />}<br /><br />function removeFile(path) {<br />return new java.io.File(path).delete();<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />if (msg.indexOf(&quot;/파일입력 &quot;) == 0) {<br />var stringOfFile = readFile(PATH) + msg.substr(6);<br />saveFile(PATH, stringOfFile);<br />replier.reply(&quot;파일 입력 완료.&quot;);<br />}<br />if (msg == &quot;/파일보기&quot;) {<br />replier.reply(&quot;파일을 읽어왔습니다: \\n\\n&quot;+readFile(PATH));<br />}<br />if (msg == &quot;/파일삭제&quot;) {<br />var isDeleted = removeFile(PATH);<br />if (isDeleted == true) {<br />replier.reply(&quot;파일이 삭제되었습니다.&quot;);<br />} else {<br />replier.reply(&quot;파일이 삭제되지 않았습니다.&quot;);<br />}<br />}<br />}<br /><br />소스 길이 역대급..<br />우리가 이렇게 파일을 다루는 함수들을 3개 만들어봤는데, 사실 닼토봇/메신저봇에서는 이 함수들이 이미 존재합니다! (개고생)<br />그래서 다음 강의에는 그것들에 대해 다뤄보도록 하겠습니다.<br />그럼 강의를 마치겠습니다.<br /><br /><br />정말정말 오랜만입니다!<br />이번에는 내용이 조금 길었네요. 자바 클래스 개념이 약간 들어가 있어서 이해하기 약간 어려우실 분들도 있을 것 같아 후회되네요.. 그래도 저는 최선을 다해서 설명했으니 이해 부탁드립니다 ㅠ<br /><br />그럼 이만</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000274900000000",
+            "head": "중급",
+            "headId": 20,
+            "id": 10057,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 510,
+            "refArticleId": 10057,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "(라이노 엔진) 자바스크립트 기초 강의 (7 - 1) - 파일 입출력 및 기타 등등 (java.io 패키지)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1578985642550,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음 BOT"
+            }
+        },
+        "articleId": 10057,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 78419487,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78419487,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57172f8181a7f-8-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57172f8181a7f/original_8.png",
+                        "width": 129
+                    },
+                    "updateDate": 1578986158000,
+                    "writer": {
+                        "id": "delay1599",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "별명을 입력해주세요"
+                    }
+                },
+                {
+                    "content": "띠용",
+                    "id": 78419634,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78419487,
+                    "updateDate": 1578986283000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "그렇지 않아도 파일스트림에서 java.io로 갈아타려했는데 마땅한 강좌가 없어 지금까지 못하고 있었네요. 강좌 감사합니다!",
+                    "id": 78419887,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78419887,
+                    "updateDate": 1578986495000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "오... 도움이 되신다니 진짜 감사드립니다",
+                    "id": 78419948,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78419887,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-5-154-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_5.png",
+                        "width": 107
+                    },
+                    "updateDate": 1578986549000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "어버버버 좀더 공부하고 올게요",
+                    "id": 78421813,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78421813,
+                    "updateDate": 1578988327000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP"
+                    }
+                },
+                {
+                    "content": "허허.. 좋습니다",
+                    "id": 78422256,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78421813,
+                    "updateDate": 1578988716000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "그래도 하트는 누릅니다 허허..",
+                    "id": 78422828,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78421813,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음"
+                    },
+                    "updateDate": 1578989248000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 78422182,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78422182,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1578988664000,
+                    "writer": {
+                        "id": "a2611577",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "scap"
+                    }
+                },
+                {
+                    "content": "와!",
+                    "id": 78422261,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78422182,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-5-154-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_5.png",
+                        "width": 107
+                    },
+                    "updateDate": 1578988725000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "아직 머리에만 두고 안해봤는데 소켓통신도 되려나요?",
+                    "id": 78430054,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78430054,
+                    "updateDate": 1578995423000,
+                    "writer": {
+                        "id": "time______",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "현 혹"
+                    }
+                }
+            ],
+            "last": {
+                "id": 83738271,
+                "refId": 83738271
+            },
+            "next": {
+                "id": 78430084,
+                "refId": 78430054
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

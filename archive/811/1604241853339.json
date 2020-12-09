@@ -1,0 +1,322 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><div class=\"NHN_Writeform_Main\" style=\"\"><b>공유할 소스 용도</b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b>=&gt; 관리자 권한 인증</b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b><br /></b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b>소스 코드</b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b>=&gt;&nbsp;</b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b>이 소스는 CC BY-NC-SA 2.0 KR 라이선스 가 적용되어 있습니다. 아래 링크에서 확인해주세요.</b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b><br /></b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b><a href=\"https://github.com/UnNamed72/I-bot#license%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4\" target=\"_blank\" title=\"새창으로 열림\">[라이선스 링크]</a></b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b><br /></b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b>/*&nbsp;</b></div><div class=\"NHN_Writeform_Main\" style=\"\"><b><span style=\"font-size: 14pt;\">Made by UnNamed72</span></b></div><div class=\"NHN_Writeform_Main\" style=\"\"><div class=\"NHN_Writeform_Main\"><b>&apos;메신저 자동응답 봇&apos; 어플용 스크립트입니다. 약간의 수정 후 다른 앱에서도 사용 가능합니다.</b></div><div class=\"NHN_Writeform_Main\"><b>지정된 관리자 목록(administrator에 미리 들어가있는 닉네임들)이 관리자 인증을 받을 수 있는 소스입니다.</b></div><div class=\"NHN_Writeform_Main\"><b>관리자 인증을 받으면 logged_in 목록으로 imageDB가 들어가게 되며, 관리자 인증을 받아야지만 특정 명령어를 사용할 수 있도록 설정하시면 됩니다.</b></div><div class=\"NHN_Writeform_Main\"><b>로그인이 된 상태에서 계속 &apos;관리자인증&apos;명령어로 로그인이 가능하지만 인증여부는 계속 &apos;인증됨&apos;으로 유지되며, &apos;로그아웃&apos;을 사용하거나 봇을 재컴파일했을때 모두 로그아웃이 됩니다.</b></div><div class=\"NHN_Writeform_Main\"><b>*/</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>const scriptName=&quot;관리자인증.js&quot;;</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>//변수 미리 선언</b></div><div class=\"NHN_Writeform_Main\"><b>var administrator = []; //관리자 인증 가능한 사람 목록(관리자목록)</b></div><div class=\"NHN_Writeform_Main\"><b>var logged_in = []; //로그인한 관리자 목록</b></div><div class=\"NHN_Writeform_Main\"><b>var key; //인증요청시 비밀번호</b></div><div class=\"NHN_Writeform_Main\"><b>var log_out; //로그아웃할때 쓰는 변수</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; if(administrator.indexOf(sender) !== -1) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(msg === &quot;관리자인증&quot;) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; key = Math.floor(Math.random()*9000) + 1000;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(sender, sender + &quot;님의 비밀번호: \\n&quot; + key);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return replier.reply(&quot;비밀번호를 입력해주세요.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if(msg == key) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; logged_in.push(java.lang.String(ImageDB.getProfileImage()).hashCode());</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; key = 0;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return replier.reply(sender + &quot;님이 관리자로 로그인 하셨습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if(msg === &quot;로그아웃&quot; &amp;&amp; logged_in.length !== 0) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for(i=0; i &lt; logged_in.length; i++) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(logged_in[i] === java.lang.String(ImageDB.getProfileImage()).hashCode()) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; logged_in.splice(i, 1);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; log_out = true;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else log_out = false;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(log_out) replier.reply(sender + &quot;님이 관리자 계정에서 로그아웃하셨습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else replier.reply(sender + &quot;님은 관리자 계정에 로그인되어 있지 않습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if(msg === &quot;로그아웃&quot; &amp;&amp; logged_in.length == 0) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;현재 로그인 되어있는 관리자가 없습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return;&nbsp; &nbsp;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div></div></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000032B00000000",
+            "id": 811,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 525,
+            "refArticleId": 811,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "'UnNamed72' 님의 관리자인증 소스입니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1550040711223,
+            "writer": {
+                "id": "r960701",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "카신"
+            }
+        },
+        "articleId": 811,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 53077889,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 53077889,
+                    "updateDate": 1550041702000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "가장 먼저\r\nadministrator=[] 이 안에 관리자인증을 할 톡방 닉을 입력합니다.\r\nex) administrator=[\"우하로\",\"나\"];\r\n\r\n이렇게 해야 관리자인증이 가능한 대상이 됩니다.\r\n명령어는\r\n\r\nvar hashId = java.lang.String(ImageDB.getProfileImage()).hashCode()\r\nif(logged_in.indexOf(hashId)!=-1) {\r\n//이안에 if 명령문들을 넣습니다. 일단은 저번에 예제로 쓰셧던 eval로 하지요.\r\nif(msg.indexOf(\"/실행 \")==0){\r\nreplier.reply(eval(msg.substring(4)));\r\n}\r\n}\r\n\r\n이런식으로 넣으신 후에 저장 및 리로드를 하고\r\n톡방에서\r\n관리자인증\r\n이라고 보내면 갠톡으로 비밀번호가 날아오고\r\n그걸 입력하면 로그인이 됩니다.\r\n그 후에 /실행 1+1 이라고 보내면 2라고 답장이 오겠네요",
+                    "id": 53079198,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 53077889,
+                    "updateDate": 1550043046000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "혹시 해보시고 안되시면 다시 댓달아주세요\r\n(그리고 죄송하지만 이건 말씀드릴게요 묵묵무답x 묵묵부답o 뭔가 거슬렸습니다....크흠)",
+                    "id": 53079602,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 53077889,
+                    "updateDate": 1550043467000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "사용하실때에는 소스 맨 위에 주석으로 라이선스를 적어주세요\r\n\r\n/*\r\nMade by UnNamed72\r\nThis source is licensed 'CC BY-NC-SA 2.0 KR'.\r\n*/\r\n\r\n이런식으로요.\r\n(그리고 '명령어'나 '봇 설명' 명령어 등을 통해 원저작자를 밝혀야합니다.)",
+                    "id": 53080118,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 53077889,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "우하로"
+                    },
+                    "updateDate": 1550044161000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "좀 더 정확하게는 administrator 안에 메세지를 보낼 계정의 이름을 입력하시면 됩니다. 오픈챗방이라면 오픈 챗방에서의 이름을, 1대1 채팅이라면 본래 계정의 이름을 넣어주시면 됩니다. 배열(Array) 형식으로 넣어주세요.\r\n\r\n로그인한 관리자는 logged_in 배열에 추가 됩니다. 이 소스를 이용해서 관리자 로그인 하신분만 사용할 수 있는 소스를 만들고 싶으시다면 같은 스크립트 안에 if(logged_in.indexOf(java.lang.String(ImageDB.getProfileImage()).hashCode()) != -1)문을 만들어서 그 안에 관리자용 명령어를 써주시면 되요!",
+                    "id": 53081343,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 53077889,
+                    "updateDate": 1550045550000,
+                    "writer": {
+                        "id": "dhlee991124",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTAyMDlfNjgg/MDAxNTQ5NjQ4Mzk3OTg3.G-CkkFTMOBnok9C7UY--3oOEUt40d3bE5c_wMmg-vywg.suMgcqF3ZuikdGh1Y0EygirwjtoqGA7LNkMCznVTXuAg.JPEG.dhlee991124/UnNamed.jpg"
+                        },
+                        "nick": "UnNamed72"
+                    }
+                },
+                {
+                    "content": "또한, 'replier.reply(sender, sender + \"님의 비밀번호: \\n\" + key);' 부분때문에 로그인 하려는 관리자 분들께서는 봇 계정과 친구가 되어있어야하며, 그 톡방의 이름은 로그인 하려는 톡방에서 로그인 요청을 한 계정의 이름과 같아야합니다.",
+                    "id": 53081414,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 53077889,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "우하로"
+                    },
+                    "updateDate": 1550045400000,
+                    "writer": {
+                        "id": "dhlee991124",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTAyMDlfNjgg/MDAxNTQ5NjQ4Mzk3OTg3.G-CkkFTMOBnok9C7UY--3oOEUt40d3bE5c_wMmg-vywg.suMgcqF3ZuikdGh1Y0EygirwjtoqGA7LNkMCznVTXuAg.JPEG.dhlee991124/UnNamed.jpg"
+                        },
+                        "nick": "UnNamed72"
+                    }
+                },
+                {
+                    "content": "카신님",
+                    "id": 64297854,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 64297854,
+                    "updateDate": 1563456513000,
+                    "writer": {
+                        "id": "chj79337",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "chj79337"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,378 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MTNfNDEg/MDAxNTg2NzU0OTMxNTI2.mKbhQrZQzddSj0wWHd38Pn6TODP8kVoo3Y7IKtHAOQog.jEQLckhsip_caaPl7qgElPpQv9yDakqCBQQoMHpf9bEg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>이게 돌을 놓고싶은데 안 되네요...<br /><br />이게 소스<br /><br /><br />importPackage(java.lang);<br />importPackage(java.io);<br /><br />const GAME_TIMER_OUT = 30;<br />const ROOM_TIMER_OUT = 60;<br /><br />let gameMap = [<br /> [&apos;┏&apos;,3,3,3,3,3,3,3,3,3,3,3,3,3,&apos;┓&apos;],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />   [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br /> [&apos;┗&apos;,5,5,5,5,5,5,5,5,5,5,5,5,5,&apos;┛&apos;]];<br /><br /> gameMapSize = 15,<br /><br /> gamePower = false,<br /> gameFirst = true,<br /> gameTurn = 1,<br /> <br /> gamePosX = 0,<br /> gamePosY = 0,<br /> <br /> gameStartTime = &quot;&quot;,<br /> <br /> gamePlayerList = [],<br /> gamePlayerStone = [],<br /> <br /> gameTimerCount = 0,<br /> gameTimerPower = false,<br /> gameTimerShield = 3,<br /><br /> roomName = &quot;of&quot;,<br /> roomCreat = false,<br /> roomTimerCount = 0,<br /> roomTimerPower = false;<br /> <br />const Bot = {};<br /><br />const Game =<br />{<br /> setMapClear : function()<br /> {<br />  // initialization<br /><br />  gameMap = [<br />        [&apos;┏&apos;,3,3,3,3,3,3,3,3,3,3,3,3,3,&apos;┓&apos;],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />    [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />        [&apos;┗&apos;,5,5,5,5,5,5,5,5,5,5,5,5,5,&apos;┛&apos;]];<br /> },<br /><br /> start : function()<br /> {<br />  Game.stopRoomTimer();<br /><br />  Thread.sleep(5000);<br /><br />  gameStartTime = new Date();<br /><br />  Game.startGameTimer();<br /> },<br /><br /> off : function()<br /> {<br />  Game.stopRoomTimer();<br />  Game.stopGameTimer();<br /><br />  Game.setMapClear();<br /><br />  gameMapSize = 15,<br /><br />  gamePower = false,<br />  gameFirst = true,<br />  gameTurn = 1,<br />  <br />  gamePosX = 0,<br />  gamePosY = 0,<br />  <br />  gameStartTime = &quot;&quot;,<br />  <br />  gamePlayerList = [],<br />  gamePlayerStone = [],<br />  <br />  gameTimerCount = 0,<br />  gameTimerPower = false,<br />  gameTimerShield = 3,<br /><br />  roomName = &quot;&quot;,<br />  roomCreat = false,<br />  roomTimerCount = 0,<br />  roomTimerPower = false;<br /> },<br /><br /> restart : function() <br /> {<br />  Game.setMapClear();<br /><br />        gamePlayerStone = [0, 0];<br /><br />        gameFirst = true;<br /><br />        gamePosX = 0;<br />        gamePosY = 0;<br />        gameTurn = 1;<br /><br />  gameTimerCount = 0;<br /> },<br /><br /> /* ----------------------------------- Timer ---------------------------------- */<br /><br /> startGameTimer : function()<br /> {<br />  gameTimerPower = true;<br /><br />  new Thread <br />  ({ <br />   run : function() { try <br />   {<br />    while (gameTimerPower)<br />    {<br />     Thread.sleep(1000);<br />     <br />     if (gameTimerCount &gt;= GAME_TIMER_OUT)<br />     {<br />      Game.setNextTurn();<br /><br />      Bot.replyRoom<br />      (<br />       &quot;시간이 초과되어 자동으로 턴이 넘어갑니다.\\n&quot; +<br />       &quot;현재 플레이어 : &quot; + Game.getNowPlayer() + &quot;(&quot; + Game.getNowStone() + &quot;)&quot;<br />      );<br />     }<br />     else <br />     {<br />      gameTimerCount ++;<br />      <br />      ((gameTimerCount - GAME_TIMER_OUT) == 20) ? Bot.replyRoom(&quot;20초 남았습니다.&quot;) :<br />      ((gameTimerCount - GAME_TIMER_OUT) == 10) ? Bot.replyRoom(&quot;10초 남았습니다.&quot;) : null;<br />     }<br />    }<br />   }<br />   catch(e) <br />   { <br />    Bot.replyRoom<br />    (<br />     &quot;TIMER ERROR!\\n\\n&quot; +<br />     &quot;Error Code : &quot; + e <br />    );<br />   }<br />  }}).start();<br /> },<br /><br /> startRoomTimer : function()<br /> {<br />  roomTimerPower = true;<br /><br />  new Thread<br />  ({ <br />   run : function() { try<br />   {<br />    while (roomTimerPower)<br />    {<br />     Thread.sleep(1000);<br />      <br />     if ((roomTimerCount &gt;= ROOM_TIMER_OUT) &amp;&amp; (!gamePower))<br />     {<br />      Bot.replyRoom(&quot;60초가 지나 자동으로 방을 삭제합니다.&quot;);<br />      Game.off(); break;<br />     }<br />     else <br />     {<br />      roomTimerCount ++; <br /><br />      ((roomTimerCount - ROOM_TIMER_OUT) == 30) ? Bot.replyRoom(&quot;30초 후 방이 삭제됩니다.&quot;) : <br />      ((roomTimerCount - ROOM_TIMER_OUT) == 10) ? Bot.replyRoom(&quot;10초 후 방이 삭제됩니다.&quot;) : null;<br />     } <br />    }<br />   }<br />   catch(e) <br />   { <br />    Bot.reply<br />    (<br />     &quot;ROOM TIMER ERROR\\n\\n&quot; +<br />     &quot;Error : &quot; + e <br />    );<br />   }<br />  }}).start();<br /> },<br /><br /> stopGameTimer : function()<br /> {<br />  gameTimerCount = 0;<br />  gameTimerPower = false;<br /> },<br /><br /> stopRoomTimer : function()<br /> {<br />  roomTimerCount = 0;<br />  roomTimerPower = false;<br /> },<br /><br /> /* ---------------------------------------------------------------------------- */<br /><br /> getMapText : function() <br /> {<br />  let posText = [&quot;①&quot;,&quot;②&quot;,&quot;③&quot;,&quot;④&quot;,&quot;⑤&quot;,&quot;⑥&quot;,&quot;⑦&quot;,&quot;⑧&quot;,&quot;⑨&quot;,&quot;⑩&quot;,&quot;⑪&quot;,&quot;⑫&quot;,&quot;⑬&quot;,&quot;⑭&quot;,&quot;⑮&quot;],<br />   vertical = [], horizontal = [], num = 0, i, posX, posY, mapText = &quot;&quot;;<br />  <br />  for (i = 0 ; i &lt; gameMapSize ; i ++)<br />  {<br />   vertical[i] = posText[i];<br />   horizontal[i] = posText[i];<br />  }<br /><br />  horizontal = &quot;⊙&quot; + horizontal + &quot;\\n&quot;;<br />  mapText = &quot;&quot; + horizontal;<br /><br />  for (posX = 0 ; posX &lt; gameMapSize ; posX ++) <br />  { <br />   for (posY = 0 ; posY &lt; gameMapSize ; posY ++) <br />   { <br />    if (!posY) { mapText += vertical[num ++]; } <br />   } <br />   mapText += gameMap[posX]; <br />   <br />   if (posX != (gameMapSize - 1)) { mapText += &quot;\\n&quot;; }<br />  }<br /><br />  return &quot;\\n\\n&quot; + mapText.replace(/,/g,&quot;&quot;).replace(/0/g,&quot;╋&quot;).replace(/1/g,&quot;●&quot;).replace(/2/g,&quot;○&quot;).replace(/3/g,&quot;┳&quot;).replace(/4/g,&quot;┫&quot;).replace(/5/g,&quot;┻&quot;).replace(/6/g,&quot;┣&quot;); <br /> },<br /><br /> /* ---------------------------------------------------------------------------- */<br /><br /> printEventMap : function() <br /> {<br />  var time = Math.floor((new Date() - gameStartTime) / 1000),<br />   minute = Math.floor(time / 60), second = time % 60,<br /><br />   minuteText = ((String(minute).length &gt; 1) ? minute : &apos;0&apos; + minute) + &quot;분 &quot;,<br />   secondText = ((String(second).length &gt; 1) ? second : &apos;0&apos; + second) + &quot;초&quot;,<br />  <br />   timeText = (minute == 0) ? secondText + &quot; &quot; : &quot; &quot; + minuteText + secondText,<br />   ballText = (gamePlayerStone[0] == 10 &amp;&amp; gamePlayerStone[1] == 9) ? (&quot;흑 &quot; + gamePlayerStone[0] + &quot; 백 &quot; + &apos;0&apos; + gamePlayerStone[1]) : <br />   ((gamePlayerStone[1] &gt; 9) ? (&quot;흑 &quot; + gamePlayerStone[0] + &quot; 백 &quot; + gamePlayerStone[1]) : (&quot;흑 &quot; + gamePlayerStone[0] + &quot; 백 &quot; + gamePlayerStone[1])),<br />  <br />   messageText = &quot;현재 순서 : &quot; + Game.getNowPlayer() + &quot; (&quot; + Game.getNowStone() + &quot;)\\n\\n&quot; + &quot;[ &quot; + timeText + &quot; : &quot; + ballText + &quot; ]&quot;;<br />  <br />  Bot.replyRoom<br />  (<br />   messageText + Game.getMapText().substring(1) + &quot;\\n\\n&quot; + <br />   &quot;좌표 ( &quot; + gamePosX + &quot; , &quot; + gamePosY + &quot; ) 에 돌을 두었습니다.&quot;<br />  );<br /> },<br /><br /> printWinEvent : function()<br /> {<br />  Bot.replyRoom(Game.getMapText().substring(2, Game.getMapText().length));<br />  Bot.replyRoom(&quot;승자는 &quot; + Game.getNextStone() + &quot; 을 두신 [ &quot; + Game.getNextPlayer() + &quot; ] 님 입니다!&quot;);<br />  Game.off();<br /> },<br /><br /> /* ---------------------------------------------------------------------------- */<br /> <br /> checkStone : function(posX, posY)<br /> {<br />  if (gameFirst)<br />  {<br />   if (posX == 8 &amp;&amp; posY == 8)<br />   {<br />    gameFirst = false; <br />    return true; <br />   }<br />   else <br />   { <br />    Bot.replyRoom(&quot;첫 수는 가운데에만 둘 수 있습니다. \\n\\n좌표 : ( 8 , 8 )&quot;); <br />    return false; <br />   }<br />  }<br />  else if (!posX || !posY) <br />  { <br />   Bot.replyRoom(&quot;값을 입력해주세요&quot;); <br />   return false; <br />  }<br />  else if (isNaN(posX) || isNaN(posY)) <br />  { <br />   Bot.replyRoom(&quot;숫자만 입력해주세요.&quot;); <br />   return false; <br />  }<br />  else if (1 &gt; posX || posX &gt; 15 || 1 &gt; posY || posY &gt; 15) <br />  { <br />   Bot.replyRoom(&quot;입력 범위를 초과했습니다\\n&quot; + &quot;1 ~ 15 사이의 값을 입력해주세요.&quot;); <br />   return false; <br />  }<br />  else if (gameMap[posY - 1][posX - 1] == 1 || gameMap[posY - 1][posX - 1] == 2) <br />  { <br />   Bot.replyRoom(&quot;이미 돌이 있습니다.&quot;); <br />   return false; <br />  }<br />  else { return true; }<br /> },<br /><br /> checkWin : function()<br /> {<br />  var score = 0, posX, posY;<br />      <br />  for (posX = 2 ; posX &lt; (gameMapSize - 2) ; posX ++)<br />  {<br />   for (posY = 0 ; posY &lt; gameMapSize ; posY ++)<br />   {<br />     if   (gameMap[posY][posX - 2] == 1 &amp;&amp; gameMap[posY][posX - 1] == 1 &amp;&amp; gameMap[posY][posX] == 1 &amp;&amp; gameMap[posY][posX + 1] == 1 &amp;&amp; gameMap[posY][posX + 2] == 1) { score ++; }<br />     else if (gameMap[posY][posX - 2] == 2 &amp;&amp; gameMap[posY][posX - 1] == 2 &amp;&amp; gameMap[posY][posX] == 2 &amp;&amp; gameMap[posY][posX + 1] == 2 &amp;&amp; gameMap[posY][posX + 2] == 2) { score ++; }   <br />    else if (gameMap[posX - 2][posY] == 1 &amp;&amp; gameMap[posX - 1][posY] == 1 &amp;&amp; gameMap[posX][posY] == 1 &amp;&amp; gameMap[posX + 1][posY] == 1 &amp;&amp; gameMap[posX + 2][posY] == 1) { score ++; }<br />     else if (gameMap[posX - 2][posY] == 2 &amp;&amp; gameMap[posX - 1][posY] == 2 &amp;&amp; gameMap[posX][posY] == 2 &amp;&amp; gameMap[posX + 1][posY] == 2 &amp;&amp; gameMap[posX + 2][posY] == 2) { score ++; }<br />   }<br />  }<br />  for (posX = 2 ; posX &lt; (gameMapSize - 2) ; posX ++)<br />  {<br />   for (posY = 2 ; posY &lt; (gameMapSize - 2) ; posY ++)<br />   {<br />     if   (gameMap[posY - 2][posX - 2] == 1 &amp;&amp; gameMap[posY - 1][posX - 1] == 1 &amp;&amp; gameMap[posY][posX] == 1 &amp;&amp; gameMap[posY + 1][posX + 1] == 1 &amp;&amp; gameMap[posY + 2][posX + 2] == 1) { score ++; }<br />     else if (gameMap[posY - 2][posX - 2] == 2 &amp;&amp; gameMap[posY - 1][posX - 1] == 2 &amp;&amp; gameMap[posY][posX] == 2 &amp;&amp; gameMap[posY + 1][posX + 1] == 2 &amp;&amp; gameMap[posY + 2][posX + 2] == 2) { score ++; }  <br />    else if (gameMap[posY + 2][posX - 2] == 1 &amp;&amp; gameMap[posY + 1][posX - 1] == 1 &amp;&amp; gameMap[posY][posX] == 1 &amp;&amp; gameMap[posY - 1][posX + 1] == 1 &amp;&amp; gameMap[posY - 2][posX + 2] == 1) { score ++; }<br />     else if (gameMap[posY + 2][posX - 2] == 2 &amp;&amp; gameMap[posY + 1][posX - 1] == 2 &amp;&amp; gameMap[posY][posX] == 2 &amp;&amp; gameMap[posY - 1][posX + 1] == 2 &amp;&amp; gameMap[posY - 2][posX + 2] == 2) { score ++; }<br />   }<br />  }<br />  return (score &gt; 0) ? true : false; <br /> },<br /> <br /> /* ---------------------------------------------------------------------------- */<br /><br /> setRoomCreat : function(room)<br /> {<br />  roomName = room;<br />  roomCreat = true;<br /><br />  Game.startRoomTimer();<br /> },<br /> <br /> setPlayerAdd : function(player)<br /> {<br />  gamePlayerList.push(player);<br />  gamePlayerStone.push(0);<br /> },<br /><br /> setMapStone : function(posX, posY)<br /> {<br />  gamePosX = posX;<br />  gamePosY = posY;<br />  <br />  gamePlayerStone[gameTurn - 1] ++;<br />  gameMap[posY - 1][posX - 1] = ((gameTurn == 1) ? 1 : 2);<br /><br />  Game.setNextTurn();<br /> },<br /><br /> setNextTurn : function()<br /> {<br />  gameTimerCount = 0;<br />  gameTurn = (gameTurn == 1) ? 2 : 1;<br /><br />  Game.checkWin() ? Game.printWinEvent() : Game.printEventMap(); <br /> },<br /><br /> main : function(room, message, sender)<br /> {<br />  let input = message.split(&quot; &quot;)[0] == &quot;!&quot;,<br />   command = message.charAt(0) == &quot;.&quot;;<br /><br />  (command) ? Game.command(room, message, sender) : null;<br /><br />  if (gamePower &amp;&amp; input)<br />  {<br />   let posX = Number(message.split(&quot; &quot;)[1]),<br />    posY = Number(message.split(&quot; &quot;)[2]), num = 0;<br /><br />   // gamePlayerList.length = 2<br />   for (num = 0 ; num &lt; 2 ; num ++)<br />   {<br />    if (sender == gamePlayerList[num] &amp;&amp; (gameTurn - 1) == num)<br />    {<br />     if (Game.checkStone(posX, posY))<br />     {<br />      Game.setMapStone(posX, posY);<br />     }<br />    }<br />   }<br />  }<br /> },<br /><br /> getNowPlayer : () =&gt; { return gamePlayerList[gameTurn - 1]; },<br /> getNowStone : () =&gt; { return ((gameTurn == 1) ? &quot;흑&quot; : &quot;백&quot;); },<br /><br /> getNextPlayer : () =&gt; { return gamePlayerList[(gameTurn == 1) ? 1 : 0]; },<br /> getNextStone : function() { return ((gameTurn == 1) ? &quot;백&quot; : &quot;흑&quot;); },<br /><br /> command : function(room, message, sender)<br /> {<br />  var command = message.charAt(0),<br />   input = message.substr(1).split(&quot; &quot;)[0],<br /><br />   printMessage = function(type)<br />   {<br />    switch (type) <br />    {<br />     case 1 : Bot.replyRoom(&quot;이미 생성된 방이 있습니다.&quot;); break;<br />     case 2 : Bot.reply(&quot;생성된 방이 없습니다.&quot;); break;<br />     case 3 : Bot.reply(&quot;오목 게임이 생성된 채팅방에서만 입력이 가능합니다.&quot;); break;<br />     case 4 : Bot.replyRoom(&quot;이미 오목 게임이 진행중입니다.&quot;); break;<br />     case 5 : Bot.replyRoom(&quot;진행중인 게임이 없습니다.&quot;); break;<br />     case 6 : Bot.replyRoom(&quot;2명 이상이 참가해야 게임 시작이 가능합니다.&quot;); break;<br />     case 7 : Bot.replyRoom(&quot;방장만 입력이 가능합니다.&quot;); break;<br />     case 8 : Bot.replyRoom(&quot;중복 참여로 참가가 거부되었습니다.&quot;); break;<br />     case 11 : Bot.replyRoom(&quot;게임에 참가중인 상태가 아닙니다.&quot;); break;<br />     case 12 : Bot.replyRoom(&quot;인원이 초과되었습니다.&quot;);<br />    }<br />   },<br />   <br />   roomManager  = gamePlayerList[0],<br />   roomCheck  = (roomName == room),<br />   managerCheck = (roomManager == sender),<br />   playerCheck  = (gamePlayerList.indexOf(sender) != -1);<br />  <br />  if (command == &quot;.&quot;) { if (input == &quot;도움말&quot;)<br />  {<br />   Bot.reply<br />   (<br />    &quot;&lt; 오목 도움말 &gt;\\n\\n&quot; +<br />    &quot;● 게임시작 방법 : 생성 &gt; 참가 (자동시작)\\n&quot; +<br />    &quot;● 게임 방법 : ! x좌표 y좌표\\n&quot; +<br />    &quot;● .판 / .맵 / .종료 / . 재시작&quot;<br />   );<br />  }<br />  else if (input == &quot;생성&quot;) { if (!roomCreat)<br />  {<br />   Game.setPlayerAdd(sender);<br />   Game.setRoomCreat(room);<br /><br />   Bot.replyRoom<br />   (<br />    &quot;[ &quot; + sender + &quot; ] 님이 오목 게임을 생성하였습니다.\\n\\n&quot; + <br />    &quot;게임 참가를 원하시면 \\&quot;.참가\\&quot;를 입력 해 주세요.&quot;<br />   );<br />  } else printMessage(1); }<br />  else if (input == &quot;참가&quot;) { if (roomCreat) { if (roomCheck) { if (!gamePower) { if(!playerCheck) { if (gamePlayerList.length &lt; 2) <br />  {<br />   Game.setPlayerAdd(sender);<br />    <br />   Bot.replyRoom<br />   (<br />    &quot;[ &quot; + sender + &quot; ] 님이 오목에 참가하셨습니다.\\n\\n&quot; + <br />    &quot;5초 뒤 게임이 시작됩니다.&quot;<br />   );<br /><br />   Game.start();<br /><br />   Bot.replyRoom<br />   (<br />    &quot;게임을 시작합니다!\\n\\n&quot; +<br />    &quot;&lt; 플레이어 목록 &gt;\\n&quot; +<br />    &quot;흑 : &quot; + gamePlayerList[0] + &quot;님\\n&quot; + <br />    &quot;백 : &quot; + gamePlayerList[1] + &quot;님\\n\\n&quot; +<br />    Game.getMapText().substring(2, Game.getMapText().length)<br />   ); <br />  } else printMessage(12); } else printMessage(8); } else printMessage(4); } else printMessage(3); } else printMessage(2); }<br />  else if (input == &quot;판&quot; || input == &quot;맵&quot;) { if (roomCreat)<br />  {<br />   Bot.replyRoom(Game.getMapText().substring(2, Game.getMapText().length)); <br />  } else printMessage(2); }<br />  else if (input == &quot;종료&quot; || input == &quot;재시작&quot;) { if (roomCheck) { if (managerCheck) { if (gamePower)<br />        {<br />            if (input == &quot;종료&quot;)<br />            {<br />                Bot.replyRoom(&quot;게임이 종료됩니다.&quot;);<br />                Game.off();<br />            }<br />            else if (input == &quot;재시작&quot;)<br />            {<br />                Bot.replyRoom(&quot;현재 인원으로 게임을 재시작합니다.&quot;);<br />                Game.restart();<br />            }<br />  } else printMessage(5); } else printMessage(7); } else printMessage(3); }}<br /> },<br />};<br /><br />function response(room, message, sender, isGroupChat, replier) { try <br />{<br /> Bot.replyRoom = (chatting) =&gt; { Api.replyRoom(roomName, chatting); };<br /> Bot.reply = (chatting) =&gt; { replier.reply(chatting); };<br /><br /> Game.main(room, message, sender);<br />}<br />catch(e) <br />{ <br /> Bot.replyRoom<br /> (<br />  &quot;Error : &quot; + e.name + &quot;\\n\\n&quot; + <br />  &quot;Content : &quot; + e.message + &quot;\\n\\n&quot; + <br />  &quot;Line : &quot; + e.lineNumber<br /> );<br />}}<br /><br />function onStartCompile()<br />{<br /> Game.stopRoomTimer();<br /> Game.stopGameTimer();<br />};<br /><br /><br />여기서 시작도 되고<br />다 되는데 돌이 안 놓아짐....<br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br /><p><br /><br />어케해야  하죠?<br />소스는 다 읽어 봄<br /><br /><br />! 8 8<br /><br />이렇게함</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003E7200000000",
+            "id": 15986,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 47,
+                "menuType": "B",
+                "name": "| 오목 |"
+            },
+            "readCount": 353,
+            "refArticleId": 15986,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "브위님 오목 질문!!",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586754932113,
+            "writer": {
+                "id": "michaelkim7211",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20201011_82/michaelkim7211_1602385964548xQLAE_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "맛있는 연어 스테이크"
+            }
+        },
+        "articleId": 15986,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 239868,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/10850cbfabf3f42804e287b088601168ca986684e4/MjAyMDA0MTNfNDEg/MDAxNTg2NzU0OTMxNTI2.mKbhQrZQzddSj0wWHd38Pn6TODP8kVoo3Y7IKtHAOQog.jEQLckhsip_caaPl7qgElPpQv9yDakqCBQQoMHpf9bEg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이게 아닌가요?",
+                    "id": 87284780,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87284780,
+                    "updateDate": 1586754973000,
+                    "writer": {
+                        "id": "michaelkim7211",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20201011_82/michaelkim7211_1602385964548xQLAE_PNG/image.png"
+                        },
+                        "nick": "맛있는 연어 스테이크"
+                    }
+                },
+                {
+                    "content": "소스가 수정된 게 아니라면 기본 돌 두는 명령어는\r\n! X Y 입니다.",
+                    "id": 87288285,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87288285,
+                    "updateDate": 1586757280000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "네 저도 그건...",
+                    "id": 87288491,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87288285,
+                    "updateDate": 1586757419000,
+                    "writer": {
+                        "id": "michaelkim7211",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20201011_82/michaelkim7211_1602385964548xQLAE_PNG/image.png"
+                        },
+                        "nick": "맛있는 연어 스테이크"
+                    }
+                },
+                {
+                    "content": "그러면 소스 재다운로드하세요.",
+                    "id": 87288593,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87288285,
+                    "replyMember": {
+                        "id": "michaelkim7211",
+                        "nick": "맛있는 연어 스테이크"
+                    },
+                    "updateDate": 1586757483000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "넵",
+                    "id": 87289902,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87288285,
+                    "replyMember": {
+                        "id": "kookyunchan",
+                        "nick": "카톡우앙"
+                    },
+                    "updateDate": 1586758329000,
+                    "writer": {
+                        "id": "michaelkim7211",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20201011_82/michaelkim7211_1602385964548xQLAE_PNG/image.png"
+                        },
+                        "nick": "맛있는 연어 스테이크"
+                    }
+                },
+                {
+                    "content": "소스는 지우고 링크로 바꿔주세요",
+                    "id": 87298766,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87298766,
+                    "updateDate": 1586764964000,
+                    "writer": {
+                        "id": "hojunyun243",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDZfNTMg/MDAxNTg2MTAwMDEzNzQy.UwC7ZL_cADOp1lwXvYnywIrWiaxLR8u9tcJv5clHGeAg.9tRl5OtmkqseiVG2BBsJfnK5VhomqwzhY-TKFp4GhDgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "한국인"
+                    }
+                },
+                {
+                    "content": "카카오톡 링크만 남길까요 ㅡ?",
+                    "id": 87299839,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87298766,
+                    "updateDate": 1586765777000,
+                    "writer": {
+                        "id": "michaelkim7211",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20201011_82/michaelkim7211_1602385964548xQLAE_PNG/image.png"
+                        },
+                        "nick": "맛있는 연어 스테이크"
+                    }
+                },
+                {
+                    "content": "?",
+                    "id": 87301491,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87298766,
+                    "replyMember": {
+                        "id": "michaelkim7211",
+                        "nick": "맛있는 연어 스테이크"
+                    },
+                    "updateDate": 1586766896000,
+                    "writer": {
+                        "id": "hojunyun243",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDZfNTMg/MDAxNTg2MTAwMDEzNzQy.UwC7ZL_cADOp1lwXvYnywIrWiaxLR8u9tcJv5clHGeAg.9tRl5OtmkqseiVG2BBsJfnK5VhomqwzhY-TKFp4GhDgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "한국인"
+                    }
+                },
+                {
+                    "content": "소스링크요",
+                    "id": 87301500,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87298766,
+                    "replyMember": {
+                        "id": "michaelkim7211",
+                        "nick": "맛있는 연어 스테이크"
+                    },
+                    "updateDate": 1586766901000,
+                    "writer": {
+                        "id": "hojunyun243",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDZfNTMg/MDAxNTg2MTAwMDEzNzQy.UwC7ZL_cADOp1lwXvYnywIrWiaxLR8u9tcJv5clHGeAg.9tRl5OtmkqseiVG2BBsJfnK5VhomqwzhY-TKFp4GhDgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "한국인"
+                    }
+                },
+                {
+                    "content": "넵",
+                    "id": 87306439,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87298766,
+                    "replyMember": {
+                        "id": "hojunyun243",
+                        "nick": "한국인"
+                    },
+                    "updateDate": 1586770727000,
+                    "writer": {
+                        "id": "michaelkim7211",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20201011_82/michaelkim7211_1602385964548xQLAE_PNG/image.png"
+                        },
+                        "nick": "맛있는 연어 스테이크"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

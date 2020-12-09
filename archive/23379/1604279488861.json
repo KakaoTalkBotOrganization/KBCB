@@ -1,0 +1,420 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 13,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-quotation se-l-quotation_postit\" id=\"SE-6067e2b1-7ed1-49b6-87e1-3915860455a0\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-quotation se-l-quotation_postit\">\n                            <blockquote class=\"se-quotation-container\">\n                                <div class=\"se-module se-module-text se-quote\"><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7fbb4ef9-e51f-11ea-8771-ddfb4f37ffa3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7fbb4ef8-e51f-11ea-8771-8991ca4bec84\">소스 복/붙 하시면 출처를 꼭 남겨주세요.</span></p><!-- } SE-TEXT --></div>\n                                <div class=\"se-module se-module-text se-cite\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7fbb27e7-e51f-11ea-8771-853973337c7b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7fbb27e6-e51f-11ea-8771-e16e81f86717\">&lt; 세라봇 &gt;</span></p></div>\n                            </blockquote>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-code se-l-code_black\" id=\"SE-c5c10fd6-5d0f-48d4-8d9e-2c64e52c32c8\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs16\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">﻿\n//----------------------------------------------------------\n// 제작 : &lt;세라봇&gt;\n// 카톡ID : nan2zzang\n// 복.붙 하시면 이 주석은 지우지마세요.\n// 자유롭게 단어 추가해서 쓰시면 됩니다.\n// 단어 추가후 ..자음등록 명령어로 저장하셔야됩니다.\n//----------------------------------------------------------\n\nvar file &#x3D; randomFile();\n﻿var ansArr &#x3D; file.name;  //정답배열\nvar ansNum &#x3D; ansArr.length;  //정답배열갯수\nvar topic &#x3D; file.topic;  //주제\nvar ans &#x3D; ansArr[Math.floor(Math.random() * ansNum)];  //정답\nvar anst &#x3D; ans;\nvar ansArray &#x3D; ans.split(&#x27;&#x27;);\nvar question &#x3D; ans.split(&#x27;&#x27;).map(e &#x3D;&gt; e.normalize(&quot;NFKD&quot;).split(&#x27;&#x27;));  //정답분해\nvar game &#x3D; false;  //게임시작 토글\nvar quest &#x3D; [];  //문제\nvar hint &#x3D; [];  //힌트게이지\nvar user &#x3D; []; //플레이어\nvar hint1&#x3D;quest;\n\nfunction response(room, msg, sender, isGroupChat, r, imageDB) {\n  const ll &#x3D; &quot;\\n--------------------------\\n&quot;;  //문단나누기\n  const li &#x3D; &quot;\\n---------------------------------------------\\n&quot;;  //문단나누기\n  const more &#x3D; &quot;​&quot;.repeat(500);  //유니코드 띄어쓰기 500개 추가\n  const path &#x3D; &quot;/sdcard/serabot/&quot;;  //저장될 Data경로 적어주세요.\n  const pathP &#x3D; &quot;/sdcard/G_test/Data/&quot;;  //플레이어 Data경로.(유저시스템이 없다면 지워도됩니다.)\n  const FS &#x3D; FileStream;  //파일스트림\n  \n  \n  if(msg&#x3D;&#x3D;&quot;..자음퀴즈&quot;){\n    r.reply(&quot;📖 자음퀴즈 도움말&quot;+li+&quot;..자음시작&quot;+more+&quot;\\n..힌트\\n..포기\\n\\n- 글자의 초성만 보고 정답을 맞혀보세요\\n- 3회 이상 틀리면 힌트를 볼 수 있어요&quot;);\n  }\n  \n// 아래줄에 해쉬코드 넣어주세요. 없다면 &amp;&amp;부터 뒤로 지워주세요.\n  if (msg &#x3D;&#x3D; &quot;..자음등록&quot; &amp;&amp; (java.lang.String(imageDB.getProfileImage()).hashCode() &#x3D;&#x3D; 해쉬코드)) {\n   // 주제를 추가하고싶다면 아래 4줄을 복제하여 d1부분만 일치하도록 고치면 됩니다.\n    var d1 &#x3D; {\n  &quot;topic&quot;: &quot;육지동물&quot;, \n  &quot;name&quot;: [&quot;호랑이&quot;, &quot;사자&quot;]}; // 단어는 자유롭게 형식에 맞게 추가만하면 끝.\n    FS.write(path + d1.topic + &quot;.json&quot;, JSON.stringify(d1));\n    var d2 &#x3D; {\n  &quot;topic&quot;: &quot;영화&quot;, \n  &quot;name&quot;: [&quot;쉬리&quot;, &quot;마션&quot;]};\n    FS.write(path + d2.topic + &quot;.json&quot;, JSON.stringify(d2));\n    var d3 &#x3D; {\n  &quot;topic&quot;: &quot;음식&quot;, \n  &quot;name&quot;: [&quot;계란&quot;, &quot;우유&quot;]};\n    FS.write(path + d3.topic + &quot;.json&quot;, JSON.stringify(d3));\n    var d4 &#x3D; {\n  &quot;topic&quot;: &quot;우주&quot;, \n  &quot;name&quot;: [&quot;태양&quot;, &quot;인공위성&quot;]};\n    FS.write(path + d4.topic + &quot;.json&quot;, JSON.stringify(d4));\n    var d5 &#x3D; {\n  &quot;topic&quot;: &quot;전자기기&quot;, \n  &quot;name&quot;: [&quot;텔레비전&quot;, &quot;디지털카메라&quot;]};\n  FS.write(path + d5.topic + &quot;.json&quot;, JSON.stringify(d5));\n    r.reply(&quot;[!] 자음퀴즈 업데이트 완료!!&quot;);\n  }\n  \n  \n  if (msg &#x3D;&#x3D; &quot;..자음시작&quot;) {\n    if (game) {\n      r.reply(&quot;[!] 현재 자음퀴즈 진행중이예요!&quot;);\n    } else if (!game) {\n      game &#x3D; true;\n      user.push(sender);\n      for (let i &#x3D; 0; i &lt; question.length; i++) {\n        quest.push(question[i][0]);\n    }\n      quest &#x3D; quest.join(&#x27;&#x27;);\n      r.reply(&quot;- 주제 : &quot; + topic + &quot;\\n- 문제 : &quot; + quest + &quot;\\n(&#x27;-기린&#x27; 형식으로 제출)&quot;);\n    }\n  }\n  \n// 힌트요구 오답횟수는 아래쪽 세곳의 3을 바꾸면 됩니다. (기본횟수 3)\n  if(msg&#x3D;&#x3D;&quot;..힌트&quot; &amp;&amp; game &amp;&amp; user&#x3D;&#x3D;sender){\n    try{\n    if(hint.length&lt;3){\n      var hintNum&#x3D;3-Number(hint.length);\n      r.reply(&quot;[!] 앞으로&quot;+hintNum+&quot;회 이상 오답이면 힌트를 볼 수 있어요.&quot;);\n    }\n    else if(hint.length&gt;&#x3D;3){\n      hint1.splice(0,1);\n      hint1.unshift(ansArray[0]);\n      hint1&#x3D;hint1.join(&#x27;&#x27;);\n      r.reply(&quot;[!] 힌트 : &quot;+hint1+&quot;(&quot;+topic+&quot;)&quot;);\n    }\n    } catch(e){\n    }\n  }\n  \n  if(msg.startsWith(&quot;-&quot;) &amp;&amp; game){\n      var input&#x3D;msg.substr(1);\n      if(input!&#x3D;ans){\n        hint.push(sender);\n        r.reply(&quot;[!] 틀렸어요!&quot;);\n      }\n      else if(input&#x3D;&#x3D;ans){\n// 보상관련 시스템이 없다면 여기서\n        var pData &#x3D; JSON.parse(FS.read(pathP+&quot;playerData/&quot;+sender+&quot;/&quot;+sender+&quot;.json&quot;));\n        try{\n        if(pData.name&#x3D;&#x3D;sender){\n          pData.exp&#x3D;Number(pData.exp)+Number(pData.lv)*30;\n          pData.gold&#x3D;Number(pData.gold)+Number(pData.lv)*100;\n          FS.write(pathP+&quot;playerData/&quot;+sender+&quot;/&quot;+sender+&quot;.json&quot;, JSON.stringify(pData));\n          r.reply(&quot;- &quot;+sender+&quot;님, 정답!!\\n- 정답 : &quot;+ans+&quot;\\n[!] +&quot;+Number(pData.lv)*30+&quot;호감도, +&quot;+Number(pData.lv)*100+&quot;세라&quot;);\n// 여기까지 지워주시고      \n          Reset();\n        }\n        } catch(e){\n          r.reply(&quot;- &quot;+sender+&quot;님, 정답!!\\n- 정답 : &quot;+ans); //이줄을 지운곳에 넣으세요.\n          Reset();\n        } // 그리고 try - catch도 {}와 함께 지워주세요.\n     }\n   }\n  \n  if(msg&#x3D;&#x3D;&quot;..포기&quot; &amp;&amp; game &amp;&amp; user&#x3D;&#x3D;sender){\n    var ansZ&#x3D;anst.length-1;\n    if(anst[ansZ].normalize(&quot;NFKD&quot;).length&#x3D;&#x3D;3){\n      r.reply(&quot;[!] 자음퀴즈 종료!!\\n[!] 정답은 &quot;+anst+&quot;이예요!&quot;);\n      Reset();\n    } else{\n      r.reply(&quot;[!] 자음퀴즈 종료!!\\n[!] 정답은 &quot;+anst+&quot;예요!&quot;);\n      Reset();\n    }\n  }\n}\n\nfunction randomFile() {\n  var listFiles &#x3D; java.io.File(&quot;/sdcard/serabot/&quot;).listFiles();  // 저장될 Data경로 적어주세요.\n  var i &#x3D; Math.floor(Math.random() * (listFiles.length));\n  var fileContent &#x3D; JSON.parse(FileStream.read(listFiles[i].getPath()));\n  return fileContent;\n}\n\nfunction Reset(){\n\tgame&#x3D;false;\n      hint&#x3D;[];\n      quest&#x3D;[];\n      user&#x3D;[];\n      hint1&#x3D;quest;\n\tApi.reload(&quot;파일이름적어주세요&quot;);\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-c5c10fd6-5d0f-48d4-8d9e-2c64e52c32c8\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-02a06388-da26-4a0b-b43d-16fefff7cc54\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7fbc395b-e51f-11ea-8771-2d19691b0c5f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7fbc395a-e51f-11ea-8771-2b66e5ed6b3f\">..자음등록 명령어로 파일생성을 한 다음 가지고놀면 됩니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7fbc606d-e51f-11ea-8771-b1459d8b0985\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7fbc606c-e51f-11ea-8771-9707be1d171e\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7fbc606f-e51f-11ea-8771-31bee503f2d7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7fbc606e-e51f-11ea-8771-bde5e3280aee\">복붙하고 주석 안읽어보고 안된다 하시면 방법이없네요...</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005B5300000000",
+            "head": "미니게임",
+            "headId": 70,
+            "id": 23379,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 466,
+            "refArticleId": 23379,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "청정수의 자음퀴즈 소스입니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1597978760407,
+            "writer": {
+                "id": "spleewk",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMjZfMTA0/MDAxNjAzNjcxOTc5NTk0.Q2LH7hJUMeT8VV7jg83jbdAFaHQ6R9PJWcSG5BdOwkMg.c0CCatvl67k7oE3crTPlyWHVe513pXUiVakSISb7lN8g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "세라봇"
+            }
+        },
+        "articleId": 23379,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 100674040,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100674040,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1597978790000,
+                    "writer": {
+                        "id": "khjeh0521",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDFfNDEg/MDAxNTg4MzEzOTQwNTE1.4q-Novz5Sw4qAAv2d2F7sK9Va-I5S1uhjqjcy9CdTa4g.zGZrguOhyCVObH7FGz3qLOURdHN3ACvk05_CVV91N70g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "럭스"
+                    }
+                },
+                {
+                    "content": "randomFile 제가만든 함수네요. 굳",
+                    "id": 100675547,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100675547,
+                    "updateDate": 1597979788000,
+                    "writer": {
+                        "id": "dltpals0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "so easy"
+                    }
+                },
+                {
+                    "content": "덕분에 완성할수 있었어요^^",
+                    "id": 100684145,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100675547,
+                    "updateDate": 1597985237000,
+                    "writer": {
+                        "id": "spleewk",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjZfMTA0/MDAxNjAzNjcxOTc5NTk0.Q2LH7hJUMeT8VV7jg83jbdAFaHQ6R9PJWcSG5BdOwkMg.c0CCatvl67k7oE3crTPlyWHVe513pXUiVakSISb7lN8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "세라봇"
+                    }
+                },
+                {
+                    "content": "오오.. 서로 돕고돕는(?)",
+                    "id": 103119001,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100675547,
+                    "updateDate": 1600008575000,
+                    "writer": {
+                        "id": "rionbot",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "JSR"
+                    }
+                },
+                {
+                    "content": "와",
+                    "id": 100675802,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100675802,
+                    "updateDate": 1597979949000,
+                    "writer": {
+                        "id": "gigigia-1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTUz/MDAxNTk5NjEyNTg2MDgw.gz9LKfYQFlIU1Ih6Ro4ODKnP-r-LbWE_B5ROxm6GcN4g.AzxtviQvtDbkk0DawTj6adZ2Xc-ZL8piX8CadbcCd1Mg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "재승"
+                    }
+                },
+                {
+                    "content": ".normalize(\"NFD\") ㄴㄴ\r\n.normalize(\"NFKD\") ㅇㅇ",
+                    "id": 100692353,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100692353,
+                    "updateDate": 1597990863000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "님 강좌 보구 미약하게나마 배웠습니다. NFD도 잘되던데 NFKD가 낫나요?",
+                    "id": 100779049,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100692353,
+                    "updateDate": 1598069649000,
+                    "writer": {
+                        "id": "spleewk",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjZfMTA0/MDAxNjAzNjcxOTc5NTk0.Q2LH7hJUMeT8VV7jg83jbdAFaHQ6R9PJWcSG5BdOwkMg.c0CCatvl67k7oE3crTPlyWHVe513pXUiVakSISb7lN8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "세라봇"
+                    }
+                },
+                {
+                    "content": "정준 분해보다는 호환성 분해",
+                    "id": 100779266,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100692353,
+                    "replyMember": {
+                        "id": "spleewk",
+                        "nick": "세라봇"
+                    },
+                    "updateDate": 1598069829000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 100733596,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA4MjFfNzMg/MDAxNTk4MDE5NzM3ODI2.9AL5EwavGWwH8c5vj60XJX6RmTNK00UeQoKaTKFaYPsg.9b5n2UUKFckVfu_JZHzAVN2EqHeFUYFrkG1q6CXgWi8g.JPEG/A475611E-6BA9-4286-B355-D1792ECE3925.jpeg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "A475611E-6BA9-4286-B355-D1792ECE3925.jpeg",
+                        "height": 960,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA4MjFfNzMg/MDAxNTk4MDE5NzM3ODI2.9AL5EwavGWwH8c5vj60XJX6RmTNK00UeQoKaTKFaYPsg.9b5n2UUKFckVfu_JZHzAVN2EqHeFUYFrkG1q6CXgWi8g.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MjFfNzMg/MDAxNTk4MDE5NzM3ODI2.9AL5EwavGWwH8c5vj60XJX6RmTNK00UeQoKaTKFaYPsg.9b5n2UUKFckVfu_JZHzAVN2EqHeFUYFrkG1q6CXgWi8g.JPEG/A475611E-6BA9-4286-B355-D1792ECE3925.jpeg",
+                        "width": 540
+                    },
+                    "refId": 100733596,
+                    "updateDate": 1598019741000,
+                    "writer": {
+                        "id": "hajuhee01",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "hajuhee01"
+                    }
+                },
+                {
+                    "content": "/sdcard/어쩌고저쩌고 넣어야...",
+                    "id": 100778472,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100733596,
+                    "updateDate": 1598069246000,
+                    "writer": {
+                        "id": "spleewk",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjZfMTA0/MDAxNjAzNjcxOTc5NTk0.Q2LH7hJUMeT8VV7jg83jbdAFaHQ6R9PJWcSG5BdOwkMg.c0CCatvl67k7oE3crTPlyWHVe513pXUiVakSISb7lN8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "세라봇"
+                    }
+                }
+            ],
+            "last": {
+                "id": 106050827,
+                "refId": 106050827
+            },
+            "next": {
+                "id": 100776991,
+                "refId": 100776991
+            }
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "자음퀴즈",
+            "초성퀴즈",
+            "초성게임",
+            "세라봇",
+            "카톡봇"
+        ]
+    }
+}

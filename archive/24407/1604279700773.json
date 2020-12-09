@@ -1,0 +1,280 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-044553cf-4f3b-4a25-bb0e-44845e856a9c\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ced39e87-0ea5-4ebe-b4b8-47bb5df3488b\"><span style=\"color:#ff0010;\" class=\"se-fs- se-ff-   \" id=\"SE-89ac8270-2e13-48ff-b7fa-be7eed3fcb74\"><b>아마 깃허브에 먼저올리고 올리긴 했습니다. 만약에 홍보 등 카페 규칙에 문제가 있으면 내리도록 하겠습니다.</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-4c8a3a46-4a70-4ca7-b7a8-178f2c1a09c3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-2c297d2f-e4e5-491d-98d4-b1ccca48a095\">해당 코드는 아래의 깃허브 GIST에도 공유중입니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-oglink se-l-text\" id=\"SE-8adec16e-3bfd-4ba9-876f-30f121d3db0f\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-oglink se-l-text se-section-align-\">\n                            <div class=\"se-module se-module-oglink\">\n                                <a href=\"https://gist.github.com/gunyu1019/120fb748a8e057999d8964a44b7890a2\" class=\"se-oglink-info\" target=\"_blank\">\n                                    <div class=\"se-oglink-info-container\">\n                                        <strong class=\"se-oglink-title\">pubg bot에 활용된 테스트 입니다. 매치 기록을 정리후 불러오는 코드이며, PUBG API를 기반으로 작성되었습니다.</strong>\n\n                                        <p class=\"se-oglink-summary\">pubg bot에 활용된 테스트 입니다. 매치 기록을 정리후 불러오는 코드이며, PUBG API를 기반으로 작성되었습니다. - pubg_match.py</p>\n                                        <p class=\"se-oglink-url\">gist.github.com</p>\n                                    </div>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_oglink\", \"id\" :\"SE-8adec16e-3bfd-4ba9-876f-30f121d3db0f\", \"data\" : {\"link\" : \"https://gist.github.com/gunyu1019/120fb748a8e057999d8964a44b7890a2\", \"isVideo\" : \"false\", \"thumbnail\" : \"https://dthumb-phinf.pstatic.net/?src&#x3D;%22https%3A%2F%2Fgithub.githubassets.com%2Fimages%2Fmodules%2Fgists%2Fgist-og-image.png%22&amp;type&#x3D;ff120\"}}'></script>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-1e0954e7-d016-4480-a9a4-5333d54476c1\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">import requests\nimport json\nimport datetime\n\nfrom bs4 import BeautifulSoup\nfrom pytz import timezone\n\ndef time_num(playtime): #시간 계산, 불필요한 월단위, 일단위 등의 제거\n    if playtime.month &#x3D;&#x3D; 1:\n        if playtime.day &#x3D;&#x3D; 1:\n            if playtime.hour &#x3D;&#x3D; 0:\n                if  playtime.minute &#x3D;&#x3D; 0:\n                    return str(playtime.second)  + &quot;초&quot;\n                else:\n                    return str(playtime.minute)  + &quot;분 &quot; + str(playtime.second)  + &quot;초&quot;\n            else:\n                return str(playtime.hour)  + &quot;시간 &quot; + str(playtime.minute)  + &quot;분 &quot; + str(playtime.second)  + &quot;초&quot;\n        else:\n            return str(playtime.day-1)  + &quot;일 &quot; + str(playtime.hour)  + &quot;시간 &quot; + str(playtime.minute)  + &quot;분 &quot; + str(playtime.second)  + &quot;초&quot;\n    else:\n        return str(playtime.month-1)  + &quot;일 &quot; + str(playtime.day-1)  + &quot;일 &quot; + str(playtime.hour)  + &quot;시간 &quot; + str(playtime.minute)  + &quot;분 &quot; + str(playtime.second)  + &quot;초&quot;\n\nurl &#x3D; &quot;https://api.pubg.com/shards/steam/matches/10bbb1ac-c928-4950-b64d-ed34afcb6da3&quot;\nheader &#x3D; {\n  &quot;Accept&quot;: &quot;application/vnd.api+json&quot;\n}\nr &#x3D; requests.get(url, headers&#x3D;header)\nhtml &#x3D; r.json()\n#account.bdc1a3b57b714f578b86969133f99ac3\t\nplayer_nickname1 &#x3D; &quot;account.b039b707768b4fd68c9873c87699a443&quot;\t\nplayer_nickname2 &#x3D; &quot;kimblue&quot;\n\n\ndef player(html,t,user_name):\n    if type(html) &#x3D;&#x3D; dict:\n        json_data &#x3D; html\n    else:\n        json_data &#x3D; json.loads(html)\n    included &#x3D; json_data[&quot;included&quot;]\n    for i in included:\n        if i[&#x27;type&#x27;] &#x3D;&#x3D; &quot;participant&quot;:\n            if i[&#x27;attributes&#x27;][&#x27;stats&#x27;][&#x27;playerId&#x27;] &#x3D;&#x3D; user_name and t &#x3D;&#x3D; &#x27;player_id&#x27;:\n                return i\n            elif i[&#x27;id&#x27;] &#x3D;&#x3D; user_name and t &#x3D;&#x3D; &#x27;id&#x27;:\n                return i\n\nmap_cache &#x3D; html[&quot;data&quot;][&quot;attributes&quot;][&quot;mapName&quot;]\n\nuser &#x3D; player(html, &#x27;player_id&#x27;, player_nickname1)\nmatch_user_id &#x3D; user[&#x27;id&#x27;]\nincluded &#x3D; html[&quot;included&quot;]\nkill &#x3D; user[&quot;attributes&quot;][&quot;stats&quot;][&#x27;kills&#x27;]\nassist &#x3D; user[&quot;attributes&quot;][&quot;stats&quot;][&#x27;assists&#x27;]\nDBNOs &#x3D; user[&quot;attributes&quot;][&quot;stats&quot;][&quot;DBNOs&quot;]\ndistance &#x3D; round((user[&quot;attributes&quot;][&quot;stats&quot;][&quot;walkDistance&quot;]+user[&quot;attributes&quot;][&quot;stats&quot;][&quot;swimDistance&quot;]+user[&quot;attributes&quot;][&quot;stats&quot;][&quot;rideDistance&quot;])/1000,3)\ndeathType &#x3D; user[&quot;attributes&quot;][&quot;stats&quot;][&quot;deathType&quot;]\ntimeSurvived &#x3D; user[&quot;attributes&quot;][&quot;stats&quot;][&quot;timeSurvived&quot;]\nplaytime &#x3D; datetime.datetime.fromtimestamp(float(timeSurvived),timezone(&#x27;UTC&#x27;))\nr_playtime &#x3D; time_num(playtime)\n\ndeathT &#x3D; [&quot;alive&quot;, &quot;byplayer&quot;, &quot;byzone&quot;, &quot;suicide&quot;, &quot;logout&quot;]\ndeathA &#x3D; [&quot;생존&quot;,&quot;유저&quot;,&quot;블루존&quot;,&quot;자살&quot;,&quot;로그 아웃&quot;]\nmap_name&#x3D;{\n    &quot;Desert_Main&quot;: &quot;미라마&quot;,\n    &quot;DihorOtok_Main&quot;: &quot;비켄디&quot;,\n    &quot;Erangel_Main&quot;: &quot;에란겔&quot;,\n    &quot;Baltic_Main&quot;: &quot;에란겔 (리마스터)&quot;,\n    &quot;Range_Main&quot;: &quot;캠프 자칼&quot;,\n    &quot;Savage_Main&quot;: &quot;사녹&quot;,\n    &quot;Summerland_Main&quot;: &quot;카라킨&quot;\n}\nfor i in range(5):\n    if deathType &#x3D;&#x3D; deathT[i]:\n        deathType &#x3D; deathA[i]\n        break\n\nfor i in included:\n    if i[&#x27;type&#x27;] &#x3D;&#x3D; &quot;roster&quot;:\n        for j in i[&#x27;relationships&#x27;][&#x27;participants&#x27;][&#x27;data&#x27;]:\n            if j[&#x27;id&#x27;] &#x3D;&#x3D; match_user_id:\n                team &#x3D; i\nrank &#x3D; team[&#x27;attributes&#x27;][&#x27;stats&#x27;][&#x27;rank&#x27;]\nwon &#x3D; team[&#x27;attributes&#x27;][&#x27;won&#x27;]\nteam_list &#x3D; team[&quot;relationships&quot;][&quot;participants&quot;][&quot;data&quot;]\npeople &#x3D; []\nfor i in team_list:\n    people.append(player(html, &#x27;id&#x27;, i[&#x27;id&#x27;])[&#x27;attributes&#x27;][&#x27;stats&#x27;][&#x27;name&#x27;])\n\nprint(f&quot;{rank}등 \\t 우승여부: {won}\\n팀: {people}\\n플레이시간: {r_playtime}\\n이동한거리:{distance}\\nDBNO: {DBNOs}회,어시스트: {assist}회\\n죽은 유형: {deathType}&quot;)\n</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-1e0954e7-d016-4480-a9a4-5333d54476c1\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-cd63025c-19ed-4062-9680-56b22162cd58\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-65b28187-0938-4f5e-9da5-c4f6d5cbe466\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7b2a53c7-9c18-4412-ad1e-61be7c20ff91\"><b>파이썬으로 제작하였으며, PUBG API를 기반으로 만들었습니다. </b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-532d88b5-2755-47a4-9341-5da9f7257be6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-972a3a08-0818-4a20-85a3-008a9c7c52ff\"><b>url &#x3D; &quot;</b></span><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-46bd1a23-b5da-4dc6-9f72-ce7307a46dae\"><a href=\"https://api.pubg.com/shards/steam/matches/10bbb1ac-c928-4950-b64d-ed34afcb6da3&quot;\" class=\"se-link\" target=\"_blank\"><b>https://api.pubg.com/shards/steam/matches/10bbb1ac-c928-4950-b64d-ed34afcb6da3&quot;</b></a></span><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a9df113a-65bf-4d13-8ce5-97b7411974e6\"><b> &lt;- matches/ 뒷부분에 </b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a1c7b480-0533-4591-9f5c-5d3a2be27e73\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-05f9c651-42f5-406b-bfd7-423acd068c05\"><b>​</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-067a57f9-dc1e-4a9e-8297-876d4cf72ff4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-ae65a7dc-20dc-4b2e-b520-2ee06a352d02\"><b>매치ID 가 들어가야합니다. 해당값은 PUBG-API/player를 사용하시면 쉽게 구할수 있습니다.</b></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-33af4447-63c8-4c75-8b57-3866adc35f66\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:721px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-33af4447-63c8-4c75-8b57-3866adc35f66\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA5MDhfMTQy/MDAxNTk5NTU0NzU3NjUx.01rZeLk5Qd0iG1uYYvIBsCe-eyXLQQg5kHjwnaRlCUcg.BvV1qPTTb03qUabqDDB-bG8EM5RsYAfb_KXbf-U9dpUg.PNG/image.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA5MDhfMTQy/MDAxNTk5NTU0NzU3NjUx.01rZeLk5Qd0iG1uYYvIBsCe-eyXLQQg5kHjwnaRlCUcg.BvV1qPTTb03qUabqDDB-bG8EM5RsYAfb_KXbf-U9dpUg.PNG/image.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-e0e2f1d3-975b-4074-a37a-bb5ccfae4b4c\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-13f62759-214d-4c63-8781-a739a4429936\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-e598afc7-c197-44fc-9aa3-3869ac06a76c\"><b>player_nickname1 에는 유저의 UUID가 들어가며 , 위 API와 동일한 API로 쉽게 구할수 있습니다.</b></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-e16cb311-9b54-4584-923b-44d16840c382\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:658px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-e16cb311-9b54-4584-923b-44d16840c382\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA5MDhfMjU0/MDAxNTk5NTU0ODI5ODAw.g-qMFl5lPIY_ktCr3u473IlmEmyAenOA-rG-SMldgvcg.L8A86GeltfL4QX05FgIwiYes4KHoMn0ZJwRL8_nE3iwg.PNG/image.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA5MDhfMjU0/MDAxNTk5NTU0ODI5ODAw.g-qMFl5lPIY_ktCr3u473IlmEmyAenOA-rG-SMldgvcg.L8A86GeltfL4QX05FgIwiYes4KHoMn0ZJwRL8_nE3iwg.PNG/image.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-13d9702b-d83f-482c-96a9-c6bc468b0cdf\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-03295ac8-1d0c-4d6a-840d-e40d3428439b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7557ac8d-c22a-4b5f-ad58-8ea055320005\"><b>player_nickname2 에는 검색할 유저의 닉네임이 들어갑니다. </b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ad5695a5-5c72-47a3-86b3-27e8069ddfdb\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a06af71b-bde1-4993-a18b-6409a4a55c35\"><b>​</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-2ee82097-e750-427a-b764-a86f7fdb1a0e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-d5f326d7-d8ee-4c63-9678-55bb35cc43ca\"><b>matches data 내로 들어가는 값은 그 유저가 플레이한 순으로 정렬되며, id값을 링크에 대입하시면됩니다.</b></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-e5374bba-f350-42a1-92a6-417ae205a851\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:402px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-e5374bba-f350-42a1-92a6-417ae205a851\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA5MDhfOTAg/MDAxNTk5NTU0OTczNDAy.Y25GV8i2ZK3i64cdcAjzyTGwSWthFcfDvXC1uINKwUkg.RyoXmUP0b_UEogZAlGgGDL1UHRZ2_LdyeKgoeS2jNRIg.PNG/image.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA5MDhfOTAg/MDAxNTk5NTU0OTczNDAy.Y25GV8i2ZK3i64cdcAjzyTGwSWthFcfDvXC1uINKwUkg.RyoXmUP0b_UEogZAlGgGDL1UHRZ2_LdyeKgoeS2jNRIg.PNG/image.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-d2f447d1-ae91-432d-88c9-8ec436570c40\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-00040612-fc26-4216-9130-3b79784a7731\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-4adaf173-1ca5-4de2-81bd-3189c08dbf2e\"><b>정상적으로 작동하면 이렇게 출력됩니다. 잘 응용하시면 아래의 사진처럼 만드실수 있습니다.</b></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-5d06b707-512e-462d-beaa-db9fb8076842\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:333px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-5d06b707-512e-462d-beaa-db9fb8076842\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA5MDhfNzQg/MDAxNTk5NTU0OTE2MDY5.P7DLfBsp_jxjc-7ndsiXK_zCpwuseEChpMAn3Y1zOGEg.lsqg5cuYdgJZX2xFoXZlqC6TgwyfUvHHmvrpZdvTCAMg.PNG/image.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA5MDhfNzQg/MDAxNTk5NTU0OTE2MDY5.P7DLfBsp_jxjc-7ndsiXK_zCpwuseEChpMAn3Y1zOGEg.lsqg5cuYdgJZX2xFoXZlqC6TgwyfUvHHmvrpZdvTCAMg.PNG/image.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-0dd30df7-cebf-48f5-b3de-4f1607393fec\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1214dee5-8daa-4ce2-b7f4-0d359f6e0073\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-92334bcc-49fb-4383-a15c-08ab6f520076\"><b>성공해서 응용하면 이렇게 만들수 있습니다. (저 위에 검색하는 정보와 다른 정보입니다.)</b></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005F5700000000",
+            "head": "중급",
+            "headId": 102,
+            "id": 24407,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 152,
+            "refArticleId": 24407,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "(파이썬) 배틀그라운드 매치 전적",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1599555007367,
+            "writer": {
+                "id": "gunyu1019",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA3MzFfMTYw/MDAxNTk2MTM2NjUyMzI5.yI9VtUAEPgER_4MqobUkxuon7YlzDUfX5pY6mKhOlQUg.2CPG6u2IVSAwk9m0lGpHm_iEk_ktxXEtvHyVHvkMwuIg.PNG.gunyu1019/YBOT.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "아두이노 하는 사람"
+            }
+        },
+        "articleId": 24407,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "깃헙 올리시는 분 많아요!",
+                    "id": 102576840,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 102576840,
+                    "updateDate": 1599555639000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Future"
+                    }
+                },
+                {
+                    "content": "아항! 디버그나 테스트에 사용했던 코드 슬슬풀어볼려고요.",
+                    "id": 102576911,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102576840,
+                    "updateDate": 1599555709000,
+                    "writer": {
+                        "id": "gunyu1019",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA3MzFfMTYw/MDAxNTk2MTM2NjUyMzI5.yI9VtUAEPgER_4MqobUkxuon7YlzDUfX5pY6mKhOlQUg.2CPG6u2IVSAwk9m0lGpHm_iEk_ktxXEtvHyVHvkMwuIg.PNG.gunyu1019/YBOT.png"
+                        },
+                        "nick": "아두이노 하는 사람"
+                    }
+                },
+                {
+                    "content": "def time_num(playtime):\na = []\nif playtime.month-1: a.append(str(playtime.month-1)+\"개월\")\nif playtime.day-1: a.append(str(playtime.day-1)+\"일\")\nif playtime.hour: a.append(str(playtime.hour)+\"시\")\nif playtime.minute: a.append(str(playtime.minute)+\"분\")\na.append(str(playtime.second)+\"초\")\nreturn ' '.join(a)\n\n#테스트 안해봄",
+                    "id": 102581047,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 102581047,
+                    "updateDate": 1599558696000,
+                    "writer": {
+                        "id": "kenis7",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200309_221/kenis7_1583741688026EvIWn_JPEG/image.jpg"
+                        },
+                        "nick": "Steve28"
+                    }
+                },
+                {
+                    "content": "오 좋은 조언 감사합니다.",
+                    "id": 102597945,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102581047,
+                    "updateDate": 1599570084000,
+                    "writer": {
+                        "id": "gunyu1019",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA3MzFfMTYw/MDAxNTk2MTM2NjUyMzI5.yI9VtUAEPgER_4MqobUkxuon7YlzDUfX5pY6mKhOlQUg.2CPG6u2IVSAwk9m0lGpHm_iEk_ktxXEtvHyVHvkMwuIg.PNG.gunyu1019/YBOT.png"
+                        },
+                        "nick": "아두이노 하는 사람"
+                    }
+                },
+                {
+                    "content": "def time_num(playtime):\na, M, D, H, m = [], playtime.month-1, playtime.day-1, playtime.hour, playtime.minute\nif M: a.append(str(M)+\"개월\")\nif M or D: a.append(str(D)+\"일\")\nif M or D or H: a.append(str(H)+\"시간\")\nif M or D or H or m: a.append(str(m)+\"분\")\na.append(playtime.second+\"초\")\nreturn ' '.join(a)\n\n위 코드대로 하면 1일 0시간 5분 일때 1일 5분 같이 떠서 아두이노님이 구현하신거와 똑같이 출력되도록 다시 만들어봤습니다 :)",
+                    "id": 102603235,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102581047,
+                    "replyMember": {
+                        "id": "gunyu1019",
+                        "nick": "아두이노 하는 사람"
+                    },
+                    "updateDate": 1599572885000,
+                    "writer": {
+                        "id": "kenis7",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200309_221/kenis7_1583741688026EvIWn_JPEG/image.jpg"
+                        },
+                        "nick": "Steve28"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

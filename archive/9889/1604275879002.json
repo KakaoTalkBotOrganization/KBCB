@@ -1,0 +1,219 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 13pt;\">const scriptName = &quot;오목&quot;;&nbsp;</span></div><p dir=\"ltr\">\r\nfunction response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\r\n<br />\r\n importPackage(java.lang);<br />\r\nimportPackage(<a target=\"_blank\">java.io</a>);</p>\r\n<p dir=\"ltr\">const GAME_TIMER_OUT = 30;<br />\r\nconst ROOM_TIMER_OUT = 60;</p>\r\n<p dir=\"ltr\">let gameMap = [<br />\r\n [&apos;┏&apos;,3,3,3,3,3,3,3,3,3,3,3,3,3,&apos;┓&apos;],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n [&apos;┗&apos;,5,5,5,5,5,5,5,5,5,5,5,5,5,&apos;┛&apos;]];</p>\r\n<p dir=\"ltr\"> gameMapSize = 15,</p>\r\n<p dir=\"ltr\"> gamePower = false,<br />\r\n gameFirst = true,<br />\r\n gameTurn = 1,<br />\r\n <br />\r\n gamePosX = 0,<br />\r\n gamePosY = 0,<br />\r\n <br />\r\n gameStartTime = &quot;&quot;,<br />\r\n <br />\r\n gamePlayerList = [],<br />\r\n gamePlayerStone = [],<br />\r\n <br />\r\n gameTimerCount = 0,<br />\r\n gameTimerPower = false,<br />\r\n gameTimerShield = 3,</p>\r\n<p dir=\"ltr\"> roomName = &quot;&quot;,<br />\r\n roomCreat = false,<br />\r\n roomTimerCount = 0,<br />\r\n roomTimerPower = false;<br />\r\n <br />\r\nconst Bot = {};</p>\r\n<p dir=\"ltr\">const Game =<br />\r\n{<br />\r\n setMapClear : function()<br />\r\n {<br />\r\n  // initialization</p>\r\n<p dir=\"ltr\">  gameMap = [<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&apos;┏&apos;,3,3,3,3,3,3,3,3,3,3,3,3,3,&apos;┓&apos;],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [6,0,0,0,0,0,0,0,0,0,0,0,0,0,4],<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&apos;┗&apos;,5,5,5,5,5,5,5,5,5,5,5,5,5,&apos;┛&apos;]];<br />\r\n },</p>\r\n<p dir=\"ltr\"> start : function()<br />\r\n {<br />\r\n  Game.stopRoomTimer();</p>\r\n<p dir=\"ltr\">  Thread.sleep(5000);</p>\r\n<p dir=\"ltr\">  gameStartTime = new Date();</p>\r\n<p dir=\"ltr\">  Game.startGameTimer();<br />\r\n },</p>\r\n<p dir=\"ltr\"> off : function()<br />\r\n {<br />\r\n  Game.stopRoomTimer();<br />\r\n  Game.stopGameTimer();</p>\r\n<p dir=\"ltr\">  Game.setMapClear();</p>\r\n<p dir=\"ltr\">  gameMapSize = 15,</p>\r\n<p dir=\"ltr\">  gamePower = false,<br />\r\n  gameFirst = true,<br />\r\n  gameTurn = 1,<br />\r\n  <br />\r\n  gamePosX = 0,<br />\r\n  gamePosY = 0,<br />\r\n  <br />\r\n  gameStartTime = &quot;&quot;,<br />\r\n  <br />\r\n  gamePlayerList = [],<br />\r\n  gamePlayerStone = [],<br />\r\n  <br />\r\n  gameTimerCount = 0,<br />\r\n  gameTimerPower = false,<br />\r\n  gameTimerShield = 3,</p>\r\n<p dir=\"ltr\">  roomName = &quot;&quot;,<br />\r\n  roomCreat = false,<br />\r\n  roomTimerCount = 0,<br />\r\n  roomTimerPower = false;<br />\r\n },</p>\r\n<p dir=\"ltr\"> restart : function() <br />\r\n {<br />\r\n  Game.setMapClear();</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gamePlayerStone = [0, 0];</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gameFirst = true;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gamePosX = 0;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gamePosY = 0;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gameTurn = 1;</p>\r\n<p dir=\"ltr\">  gameTimerCount = 0;<br />\r\n },</p>\r\n<p dir=\"ltr\"> /* ----------------------------------- Timer ---------------------------------- */</p>\r\n<p dir=\"ltr\"> startGameTimer : function()<br />\r\n {<br />\r\n  gameTimerPower = true;</p>\r\n<p dir=\"ltr\">  new Thread <br />\r\n  ({ <br />\r\n   run : function() { try <br />\r\n   {<br />\r\n    while (gameTimerPower)<br />\r\n    {<br />\r\n     Thread.sleep(1000);<br />\r\n     <br />\r\n     if (gameTimerCount &gt;= GAME_TIMER_OUT)<br />\r\n     {<br />\r\n      Game.setNextTurn();</p>\r\n<p dir=\"ltr\">      Bot.replyRoom<br />\r\n      (<br />\r\n       &quot;시간이 초과되어 자동으로 턴이 넘어갑니다.\\n&quot; +<br />\r\n       &quot;현재 플레이어 : &quot; + Game.getNowPlayer() + &quot;(&quot; + Game.getNowStone() + &quot;)&quot;<br />\r\n      );<br />\r\n     }<br />\r\n     else <br />\r\n     {<br />\r\n      gameTimerCount ++;<br />\r\n      <br />\r\n      ((gameTimerCount - GAME_TIMER_OUT) == 20) ? Bot.replyRoom(&quot;20초 남았습니다.&quot;) :<br />\r\n      ((gameTimerCount - GAME_TIMER_OUT) == 10) ? Bot.replyRoom(&quot;10초 남았습니다.&quot;) : null;<br />\r\n     }<br />\r\n    }<br />\r\n   }<br />\r\n   catch(e) <br />\r\n   { <br />\r\n    Bot.replyRoom<br />\r\n    (<br />\r\n     &quot;TIMER ERROR!\\n\\n&quot; +<br />\r\n     &quot;Error Code : &quot; + e <br />\r\n    );<br />\r\n   }<br />\r\n  }}).start();<br />\r\n },</p>\r\n<p dir=\"ltr\"> startRoomTimer : function()<br />\r\n {<br />\r\n  roomTimerPower = true;</p>\r\n<p dir=\"ltr\">  new Thread<br />\r\n  ({ <br />\r\n   run : function() { try<br />\r\n   {<br />\r\n    while (roomTimerPower)<br />\r\n    {<br />\r\n     Thread.sleep(1000);<br />\r\n      <br />\r\n     if ((roomTimerCount &gt;= ROOM_TIMER_OUT) &amp;&amp; (!gamePower))<br />\r\n     {<br />\r\n      Bot.replyRoom(&quot;60초가 지나 자동으로 방을 삭제합니다.&quot;);<br />\r\n      <a target=\"_blank\">Game.off</a>(); break;<br />\r\n     }<br />\r\n     else <br />\r\n     {<br />\r\n      roomTimerCount ++; </p>\r\n<p dir=\"ltr\">      ((roomTimerCount - ROOM_TIMER_OUT) == 30) ? Bot.replyRoom(&quot;30초 후 방이 삭제됩니다.&quot;) : <br />\r\n      ((roomTimerCount - ROOM_TIMER_OUT) == 10) ? Bot.replyRoom(&quot;10초 후 방이 삭제됩니다.&quot;) : null;<br />\r\n     } <br />\r\n    }<br />\r\n   }<br />\r\n   catch(e) <br />\r\n   { <br />\r\n    Bot.reply<br />\r\n    (<br />\r\n     &quot;ROOM TIMER ERROR\\n\\n&quot; +<br />\r\n     &quot;Error : &quot; + e <br />\r\n    );<br />\r\n   }<br />\r\n  }}).start();<br />\r\n },</p>\r\n<p dir=\"ltr\"> stopGameTimer : function()<br />\r\n {<br />\r\n  gameTimerCount = 0;<br />\r\n  gameTimerPower = false;<br />\r\n },</p>\r\n<p dir=\"ltr\"> stopRoomTimer : function()<br />\r\n {<br />\r\n  roomTimerCount = 0;<br />\r\n  roomTimerPower = false;<br />\r\n },</p>\r\n<p dir=\"ltr\"> /* ---------------------------------------------------------------------------- */</p>\r\n<p dir=\"ltr\"> getMapText : function() <br />\r\n {<br />\r\n  let posText = [&quot;①&quot;,&quot;②&quot;,&quot;③&quot;,&quot;④&quot;,&quot;⑤&quot;,&quot;⑥&quot;,&quot;⑦&quot;,&quot;⑧&quot;,&quot;⑨&quot;,&quot;⑩&quot;,&quot;⑪&quot;,&quot;⑫&quot;,&quot;⑬&quot;,&quot;⑭&quot;,&quot;⑮&quot;],<br />\r\n   vertical = [], horizontal = [], num = 0, i, posX, posY, mapText = &quot;&quot;;<br />\r\n  <br />\r\n  for (i = 0 ; i &lt; gameMapSize ; i ++)<br />\r\n  {<br />\r\n   vertical[i] = posText[i];<br />\r\n   horizontal[i] = posText[i];<br />\r\n  }</p>\r\n<p dir=\"ltr\">  horizontal = &quot;⊙&quot; + horizontal + &quot;\\n&quot;;<br />\r\n  mapText = &quot;&quot; + horizontal;</p>\r\n<p dir=\"ltr\">  for (posX = 0 ; posX &lt; gameMapSize ; posX ++) <br />\r\n  { <br />\r\n   for (posY = 0 ; posY &lt; gameMapSize ; posY ++) <br />\r\n   { <br />\r\n    if (!posY) { mapText += vertical[num ++]; } <br />\r\n   } <br />\r\n   mapText += gameMap[posX]; <br />\r\n   <br />\r\n   if (posX != (gameMapSize - 1)) { mapText += &quot;\\n&quot;; }<br />\r\n  }</p>\r\n<p dir=\"ltr\">  return &quot;\\n\\n&quot; + mapText.replace(/,/g,&quot;&quot;).replace(/0/g,&quot;╋&quot;).replace(/1/g,&quot;●&quot;).replace(/2/g,&quot;○&quot;).replace(/3/g,&quot;┳&quot;).replace(/4/g,&quot;┫&quot;).replace(/5/g,&quot;┻&quot;).replace(/6/g,&quot;┣&quot;); <br />\r\n },</p>\r\n<p dir=\"ltr\"> /* ---------------------------------------------------------------------------- */</p>\r\n<p dir=\"ltr\"> printEventMap : function() <br />\r\n {<br />\r\n  var time = Math.floor((new Date() - gameStartTime) / 1000),<br />\r\n   minute = Math.floor(time / 60), second = time % 60,</p>\r\n<p dir=\"ltr\">   minuteText = ((String(minute).length &gt; 1) ? minute : &apos;0&apos; + minute) + &quot;분 &quot;,<br />\r\n   secondText = ((String(second).length &gt; 1) ? second : &apos;0&apos; + second) + &quot;초&quot;,<br />\r\n  <br />\r\n   timeText = (minute == 0) ? secondText + &quot; &quot; : &quot; &quot; + minuteText + secondText,<br />\r\n   ballText = (gamePlayerStone[0] == 10 &amp;&amp; gamePlayerStone[1] == 9) ? (&quot;흑 &quot; + gamePlayerStone[0] + &quot; 백 &quot; + &apos;0&apos; + gamePlayerStone[1]) : <br />\r\n   ((gamePlayerStone[1] &gt; 9) ? (&quot;흑 &quot; + gamePlayerStone[0] + &quot; 백 &quot; + gamePlayerStone[1]) : (&quot;흑 &quot; + gamePlayerStone[0] + &quot; 백 &quot; + gamePlayerStone[1])),<br />\r\n  <br />\r\n   messageText = &quot;현재 순서 : &quot; + Game.getNowPlayer() + &quot; (&quot; + Game.getNowStone() + &quot;)\\n\\n&quot; + &quot;[ &quot; + timeText + &quot; : &quot; + ballText + &quot; ]&quot;;<br />\r\n  <br />\r\n  Bot.replyRoom<br />\r\n  (<br />\r\n   messageText + Game.getMapText().substring(1) + &quot;\\n\\n&quot; + <br />\r\n   &quot;좌표 ( &quot; + gamePosX + &quot; , &quot; + gamePosY + &quot; ) 에 돌을 두었습니다.&quot;<br />\r\n  );<br />\r\n },</p>\r\n<p dir=\"ltr\"> printWinEvent : function()<br />\r\n {<br />\r\n  Bot.replyRoom(Game.getMapText().substring(2, Game.getMapText().length));<br />\r\n  Bot.replyRoom(&quot;승자는 &quot; + Game.getNextStone() + &quot; 을 두신 [ &quot; + Game.getNextPlayer() + &quot; ] 님 입니다!&quot;);<br />\r\n  <a target=\"_blank\">Game.off</a>();<br />\r\n },</p>\r\n<p dir=\"ltr\"> /* ---------------------------------------------------------------------------- */<br />\r\n <br />\r\n checkStone : function(posX, posY)<br />\r\n {<br />\r\n  if (gameFirst)<br />\r\n  {<br />\r\n   if (posX == 8 &amp;&amp; posY == 8)<br />\r\n   {<br />\r\n    gameFirst = false; <br />\r\n    return true; <br />\r\n   }<br />\r\n   else <br />\r\n   { <br />\r\n    Bot.replyRoom(&quot;첫 수는 가운데에만 둘 수 있습니다. \\n\\n좌표 : ( 8 , 8 )&quot;); <br />\r\n    return false; <br />\r\n   }<br />\r\n  }<br />\r\n  else if (!posX || !posY) <br />\r\n  { <br />\r\n   Bot.replyRoom(&quot;값을 입력해주세요&quot;); <br />\r\n   return false; <br />\r\n  }<br />\r\n  else if (isNaN(posX) || isNaN(posY)) <br />\r\n  { <br />\r\n   Bot.replyRoom(&quot;숫자만 입력해주세요.&quot;); <br />\r\n   return false; <br />\r\n  }<br />\r\n  else if (1 &gt; posX || posX &gt; 15 || 1 &gt; posY || posY &gt; 15) <br />\r\n  { <br />\r\n   Bot.replyRoom(&quot;입력 범위를 초과했습니다\\n&quot; + &quot;1 ~ 15 사이의 값을 입력해주세요.&quot;); <br />\r\n   return false; <br />\r\n  }<br />\r\n  else if (gameMap[posY - 1][posX - 1] == 1 || gameMap[posY - 1][posX - 1] == 2) <br />\r\n  { <br />\r\n   Bot.replyRoom(&quot;이미 돌이 있습니다.&quot;); <br />\r\n   return false; <br />\r\n  }<br />\r\n  else { return true; }<br />\r\n },</p>\r\n<p dir=\"ltr\"> checkWin : function()<br />\r\n {<br />\r\n  var score = 0, posX, posY;<br />\r\n      <br />\r\n  for (posX = 2 ; posX &lt; (gameMapSize - 2) ; posX ++)<br />\r\n  {<br />\r\n   for (posY = 0 ; posY &lt; gameMapSize ; posY ++)<br />\r\n   {<br />\r\n     if   (gameMap[posY][posX - 2] == 1 &amp;&amp; gameMap[posY][posX - 1] == 1 &amp;&amp; gameMap[posY][posX] == 1 &amp;&amp; gameMap[posY][posX + 1] == 1 &amp;&amp; gameMap[posY][posX + 2] == 1) { score ++; }<br />\r\n     else if (gameMap[posY][posX - 2] == 2 &amp;&amp; gameMap[posY][posX - 1] == 2 &amp;&amp; gameMap[posY][posX] == 2 &amp;&amp; gameMap[posY][posX + 1] == 2 &amp;&amp; gameMap[posY][posX + 2] == 2) { score ++; }&nbsp;&nbsp; <br />\r\n    else if (gameMap[posX - 2][posY] == 1 &amp;&amp; gameMap[posX - 1][posY] == 1 &amp;&amp; gameMap[posX][posY] == 1 &amp;&amp; gameMap[posX + 1][posY] == 1 &amp;&amp; gameMap[posX + 2][posY] == 1) { score ++; }<br />\r\n     else if (gameMap[posX - 2][posY] == 2 &amp;&amp; gameMap[posX - 1][posY] == 2 &amp;&amp; gameMap[posX][posY] == 2 &amp;&amp; gameMap[posX + 1][posY] == 2 &amp;&amp; gameMap[posX + 2][posY] == 2) { score ++; }<br />\r\n   }<br />\r\n  }<br />\r\n  for (posX = 2 ; posX &lt; (gameMapSize - 2) ; posX ++)<br />\r\n  {<br />\r\n   for (posY = 2 ; posY &lt; (gameMapSize - 2) ; posY ++)<br />\r\n   {<br />\r\n     if   (gameMap[posY - 2][posX - 2] == 1 &amp;&amp; gameMap[posY - 1][posX - 1] == 1 &amp;&amp; gameMap[posY][posX] == 1 &amp;&amp; gameMap[posY + 1][posX + 1] == 1 &amp;&amp; gameMap[posY + 2][posX + 2] == 1) { score ++; }<br />\r\n     else if (gameMap[posY - 2][posX - 2] == 2 &amp;&amp; gameMap[posY - 1][posX - 1] == 2 &amp;&amp; gameMap[posY][posX] == 2 &amp;&amp; gameMap[posY + 1][posX + 1] == 2 &amp;&amp; gameMap[posY + 2][posX + 2] == 2) { score ++; }&nbsp; <br />\r\n    else if (gameMap[posY + 2][posX - 2] == 1 &amp;&amp; gameMap[posY + 1][posX - 1] == 1 &amp;&amp; gameMap[posY][posX] == 1 &amp;&amp; gameMap[posY - 1][posX + 1] == 1 &amp;&amp; gameMap[posY - 2][posX + 2] == 1) { score ++; }<br />\r\n     else if (gameMap[posY + 2][posX - 2] == 2 &amp;&amp; gameMap[posY + 1][posX - 1] == 2 &amp;&amp; gameMap[posY][posX] == 2 &amp;&amp; gameMap[posY - 1][posX + 1] == 2 &amp;&amp; gameMap[posY - 2][posX + 2] == 2) { score ++; }<br />\r\n   }<br />\r\n  }<br />\r\n  return (score &gt; 0) ? true : false; <br />\r\n },<br />\r\n <br />\r\n /* ---------------------------------------------------------------------------- */</p>\r\n<p dir=\"ltr\"> setRoomCreat : function(room)<br />\r\n {<br />\r\n  roomName = room;<br />\r\n  roomCreat = true;</p>\r\n<p dir=\"ltr\">  Game.startRoomTimer();<br />\r\n },<br />\r\n <br />\r\n setPlayerAdd : function(player)<br />\r\n {<br />\r\n  gamePlayerList.push(player);<br />\r\n  gamePlayerStone.push(0);<br />\r\n },</p>\r\n<p dir=\"ltr\"> setMapStone : function(posX, posY)<br />\r\n {<br />\r\n  gamePosX = posX;<br />\r\n  gamePosY = posY;<br />\r\n  <br />\r\n  gamePlayerStone[gameTurn - 1] ++;<br />\r\n  gameMap[posY - 1][posX - 1] = ((gameTurn == 1) ? 1 : 2);</p>\r\n<p dir=\"ltr\">  Game.setNextTurn();<br />\r\n },</p>\r\n<p dir=\"ltr\"> setNextTurn : function()<br />\r\n {<br />\r\n  gameTimerCount = 0;<br />\r\n  gameTurn = (gameTurn == 1) ? 2 : 1;</p>\r\n<p dir=\"ltr\">  Game.checkWin() ? Game.printWinEvent() : Game.printEventMap(); <br />\r\n },</p>\r\n<p dir=\"ltr\"> main : function(room, message, sender)<br />\r\n {<br />\r\n  let input = message.split(&quot; &quot;)[0] == &quot;!&quot;,<br />\r\n   command = message.charAt(0) == &quot;.&quot;;</p>\r\n<p dir=\"ltr\">  (command) ? Game.command(room, message, sender) : null;<br />\r\n  if (gamePower &amp;&amp; input)<br />\r\n  {<br />\r\n   let posX = Number(message.split(&quot; &quot;)[1]),<br />\r\n    posY = Number(message.split(&quot; &quot;)[2]), num = 0;</p>\r\n<p dir=\"ltr\">   // gamePlayerList.length = 2<br />\r\n   for (num = 0 ; num &lt; 2 ; num ++)<br />\r\n   {<br />\r\n    if (sender == gamePlayerList[num] &amp;&amp; (gameTurn - 1) == num)<br />\r\n    {<br />\r\n     if (Game.checkStone(posX, posY))<br />\r\n     {<br />\r\n      Game.setMapStone(posX, posY);<br />\r\n     }<br />\r\n    }<br />\r\n   }<br />\r\n  }<br />\r\n },</p>\r\n<p dir=\"ltr\"> getNowPlayer : () =&gt; { return gamePlayerList[gameTurn - 1]; },<br />\r\n getNowStone : () =&gt; { return ((gameTurn == 1) ? &quot;흑&quot; : &quot;백&quot;); },</p>\r\n<p dir=\"ltr\"> getNextPlayer : () =&gt; { return gamePlayerList[(gameTurn == 1) ? 1 : 0]; },<br />\r\n getNextStone : function() { return ((gameTurn == 1) ? &quot;백&quot; : &quot;흑&quot;); },</p>\r\n<p dir=\"ltr\"> command : function(room, message, sender)<br />\r\n {<br />\r\n  var command = message.charAt(0),<br />\r\n   input = message.substr(1).split(&quot; &quot;)[0],</p>\r\n<p dir=\"ltr\">   printMessage = function(type)<br />\r\n   {<br />\r\n    switch (type) <br />\r\n    {<br />\r\n     case 1 : Bot.replyRoom(&quot;이미 생성된 방이 있습니다.&quot;); break;<br />\r\n     case 2 : Bot.reply(&quot;생성된 방이 없습니다.&quot;); break;<br />\r\n     case 3 : Bot.reply(&quot;오목 게임이 생성된 채팅방에서만 입력이 가능합니다.&quot;); break;<br />\r\n     case 4 : Bot.replyRoom(&quot;이미 오목 게임이 진행중입니다.&quot;); break;<br />\r\n     case 5 : Bot.replyRoom(&quot;진행중인 게임이 없습니다.&quot;); break;<br />\r\n     case 6 : Bot.replyRoom(&quot;2명 이상이 참가해야 게임 시작이 가능합니다.&quot;); break;<br />\r\n     case 7 : Bot.replyRoom(&quot;방장만 입력이 가능합니다.&quot;); break;<br />\r\n     case 8 : Bot.replyRoom(&quot;중복 참여로 참가가 거부되었습니다.&quot;); break;<br />\r\n     case 11 : Bot.replyRoom(&quot;게임에 참가중인 상태가 아닙니다.&quot;); break;<br />\r\n     case 12 : Bot.replyRoom(&quot;인원이 초과되었습니다.&quot;);<br />\r\n    }<br />\r\n   },<br />\r\n   <br />\r\n   roomManager&nbsp; = gamePlayerList[0],<br />\r\n   roomCheck  = (roomName == room),<br />\r\n   managerCheck = (roomManager == sender),<br />\r\n   playerCheck&nbsp; = (gamePlayerList.indexOf(sender) != -1);<br />\r\n  <br />\r\n  if (command == &quot;.&quot;) { if (input == &quot;도움말&quot;)<br />\r\n  {<br />\r\n   Bot.reply<br />\r\n   (<br />\r\n    &quot;&lt; 오목 도움말 &gt;\\n\\n&quot; +<br />\r\n    &quot;● 게임시작 방법 : 생성 &gt; 참가 (자동시작)\\n&quot; +<br />\r\n    &quot;● 게임 방법 : ! x좌표 y좌표\\n&quot; +<br />\r\n    &quot;● .판 / .맵 / .종료 / . 재시작&quot;<br />\r\n   );<br />\r\n  }<br />\r\n  else if (input == &quot;생성&quot;) { if (!roomCreat)<br />\r\n  {<br />\r\n   Game.setPlayerAdd(sender);<br />\r\n   Game.setRoomCreat(room);</p>\r\n<p dir=\"ltr\">   Bot.replyRoom<br />\r\n   (<br />\r\n    &quot;[ &quot; + sender + &quot; ] 님이 오목 게임을 생성하였습니다.\\n\\n&quot; + <br />\r\n    &quot;게임 참가를 원하시면 \\&quot;.참가\\&quot;를 입력 해 주세요.&quot;<br />\r\n   );<br />\r\n  } else printMessage(1); }<br />\r\n  else if (input == &quot;참가&quot;) { if (roomCreat) { if (roomCheck) { if (!gamePower) { if(!playerCheck) { if (gamePlayerList.length &lt; 2) <br />\r\n  {<br />\r\n   Game.setPlayerAdd(sender);<br />\r\n    <br />\r\n   Bot.replyRoom<br />\r\n   (<br />\r\n    &quot;[ &quot; + sender + &quot; ] 님이 오목에 참가하셨습니다.\\n\\n&quot; + <br />\r\n    &quot;5초 뒤 게임이 시작됩니다.&quot;<br />\r\n   );</p>\r\n<p dir=\"ltr\">   Game.start();</p>\r\n<p dir=\"ltr\">   Bot.replyRoom<br />\r\n   (<br />\r\n    &quot;게임을 시작합니다!\\n\\n&quot; +<br />\r\n    &quot;&lt; 플레이어 목록 &gt;\\n&quot; +<br />\r\n    &quot;흑 : &quot; + gamePlayerList[0] + &quot;님\\n&quot; + <br />\r\n    &quot;백 : &quot; + gamePlayerList[1] + &quot;님\\n\\n&quot; +<br />\r\n    Game.getMapText().substring(2, Game.getMapText().length)<br />\r\n   ); <br />\r\n  } else printMessage(12); } else printMessage(8); } else printMessage(4); } else printMessage(3); } else printMessage(2); }<br />\r\n  else if (input == &quot;판&quot; || input == &quot;맵&quot;) { if (roomCreat)<br />\r\n  {<br />\r\n   Bot.replyRoom(Game.getMapText().substring(2, Game.getMapText().length)); <br />\r\n  } else printMessage(2); }<br />\r\n  else if (input == &quot;종료&quot; || input == &quot;재시작&quot;) { if (roomCheck) { if (managerCheck) { if (gamePower)<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (input == &quot;종료&quot;)<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bot.replyRoom(&quot;게임이 종료됩니다.&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a target=\"_blank\">Game.off</a>();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (input == &quot;재시작&quot;)<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bot.replyRoom(&quot;현재 인원으로 게임을 재시작합니다.&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Game.restart();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />\r\n  } else printMessage(5); } else printMessage(7); } else printMessage(3); }}<br />\r\n },<br />\r\n};</p>\r\n<p dir=\"ltr\">function response(room, message, sender, isGroupChat, replier) { try <br />\r\n{<br />\r\n Bot.replyRoom = (chatting) =&gt; { Api.replyRoom(roomName, chatting); };<br />\r\n Bot.reply = (chatting) =&gt; { replier.reply(chatting); };</p>\r\n<p dir=\"ltr\"> Game.main(room, message, sender);<br />\r\n}<br />\r\ncatch(e) <br />\r\n{ <br />\r\n Bot.replyRoom<br />\r\n (<br />\r\n  &quot;Error : &quot; + <a target=\"_blank\">e.name</a> + &quot;\\n\\n&quot; + <br />\r\n  &quot;Content : &quot; + e.message + &quot;\\n\\n&quot; + <br />\r\n  &quot;Line : &quot; + e.lineNumber<br />\r\n );<br />\r\n}}</p>\r\n<p dir=\"ltr\">function onStartCompile()<br />\r\n{<br />\r\n Game.stopRoomTimer();<br />\r\n Game.stopGameTimer();<br />\r\n};<br />\r\n \r\n<br />\r\n}</p><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 어떤 부분을 수정해야 오목판 크기를 설정할수있죠?</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000026A100000000",
+            "id": 9889,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 154,
+            "refArticleId": 9889,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "어떤걸 수정해야 오목판 크기를 설정할수있죠?",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1578590206000,
+            "writer": {
+                "id": "jinftreg",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "김지훈"
+            }
+        },
+        "articleId": 9889,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "무슨 소리죠?",
+                    "id": 78051928,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78051928,
+                    "updateDate": 1578597993000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "누가 봐도 오목판처럼 생긴 이차원 배열을 수정하시면 될거긴 한데\r\n알고리즘에 따라 오류가 나던지, 아니던지가 되겠네요",
+                    "id": 78080898,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78080898,
+                    "updateDate": 1578625999000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "그 밑에 맵 사이즈도..",
+                    "id": 78080989,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78080898,
+                    "updateDate": 1578626076000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "ㅇㅅㅇ",
+                    "id": 78083029,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78083029,
+                    "updateDate": 1578627816000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

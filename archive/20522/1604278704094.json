@@ -1,0 +1,166 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div><b>=&gt; <font color=\"#7d7d7d\">클로저란 무엇인가</font></b></div><div><font color=\"#7d7d7d\"><br /></font></div><div><b>강좌 내용</b></div><div><b>=&gt; 주의 : 이 강좌는 초심자에게는 권하지 않습니다.</b></div><div><b><br /></b></div><div><b>클로저가 무엇인지를 알아보기 위해선&nbsp;</b></div><div><b>먼저 내부함수와 외부함수가 뭔지를 알아야 한다.</b></div><div><b><br /></b></div><div><b>내부함수란 말 그대로 함수 내에서 정의된 함수를 말한다.</b></div><div><b>외부함수는 내부함수를 정의한 함수를 말한다.</b></div><div><b><br /></b></div><div><b>코드를 보면서 추가 설명하겠다.</b></div><div><b><br /></b></div><div><b>function outer() {&nbsp; &nbsp;//outer 는 외부함수</b></div><div><b>&nbsp; var a = 10;&nbsp; &nbsp;</b></div><div><b>&nbsp; function inner() {&nbsp; &nbsp;//inner 는 내부함수</b></div><div><b>&nbsp; &nbsp; replier.reply(a);&nbsp; &nbsp;//outer의 지역변수를 사용할수 있음!</b></div><div><b>&nbsp; }</b></div><div><b>&nbsp; inner();</b></div><div><b>}</b></div><div><b>outer(); //10을 출력한다.</b></div><div><b><br /></b></div><div><b>여기서 중요한것은 내부함수가 외부함수의 지역변수를 사용할수 있다는 점이다.</b></div><div><b><br /></b></div><div><b>심지어 외부함수가 return을 하고 함수 밖으로 나가도</b></div><div><b>내부함수는 외부함수의 지역변수를 사용할수 있다!</b></div><div><b>(원래는 함수 밖으로 나가면 지역변수도 사라진다.)</b></div><div><b><br /></b></div><div><b>다음 코드를 보면서 자세하게 설명하겠다.</b></div><div><b><br /></b></div><div><b>function hello(name) {</b></div><div><b>&nbsp; var a = &quot;Hello, &quot;;</b></div><div><b>&nbsp; return function() {&nbsp; //함수도 값으로 쓸수 있으므로 리턴값이 될수 있다.</b></div><div><b>&nbsp; &nbsp; replier.reply(a + name);</b></div><div><b>&nbsp; }</b></div><div><b>}</b></div><div><b>var hello1 = hello(&quot;도미&quot;); //함수를 값으로 쓸수 있으므로 변수에 넣는게 가능하다.</b></div><div><b>var hello2 = hello(&quot;성빈&quot;);</b></div><div><b>hello1(); //Hello, 도미 를 출력한다.</b></div><div><b>hello2(); //Hello, 성빈 을 출력한다.</b></div><div><b><br /></b></div><div><b>var hello1 = hello(&quot;도미&quot;); 에서 hello1에 들어간건 무엇일까?</b></div><div><b><br /></b></div><div><b>바로 hello 함수의 리턴값인&nbsp;</b><b>function() {&nbsp;</b><b>replier.reply(a + name);</b><b>&nbsp;} 이게 들어갔다.</b></div><div><b>그뒤에 hello 함수는 종료됬다.(return을 했으니까 당연하다.)</b></div><div><b><br /></b></div><div><b>그리고 밑에 있는 hello1(); 에서&nbsp;</b><b>replier.reply(a + name);를 실행했다.</b></div><div><b>분명히 hello 함수는 종료되었지만 hello 함수의 지역변수를 사용하고있다!</b></div><div><b><br /></b></div><div><span style=\"font-size: 13.3333px;\"><b>(그냥 replier.reply(a + name)를 하면 에러가 발생한다.)</b></span></div><div><b><br /></b></div><div><span style=\"font-size: 13.3333px;\"><b>또 다른 신기한점은 hello1와 hello2 둘다&nbsp;</b></span></div><div><b>function() {&nbsp;</b><b>replier.reply</b><b>(a + name);</b><b>&nbsp;} 이 함수를 리턴값으로 받았다.</b></div><div><b><br /></b></div><div><b>그러나 hello1과 hello2를 실행한 결과는 다르다!</b></div><div><b><br /></b></div><div><b>그 이유는 내부함수가&nbsp;</b><b>외부함수가 호출되었을때의 환경을 기억하고 있기 때문에</b></div><div><b>(여기서는 내부함수가 a 와 name 값을 기억했다.)</b></div><div><b><br /></b></div><div><b>똑같은 name 변수를 사용하지만</b></div><div><span style=\"font-size: 13.3333px;\"><b>hello1에 있는 name은 &quot;도미&quot; 가 되고&nbsp;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>hello2에 있는 name은 &quot;성빈&quot; 이 되는것이다.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 13.3333px;\"><b>이런식으로 내부함수를 쓰는걸 클로저라고 한다.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 13.3333px;\"><b>클로저는 좀 고급기술이기 때문에 이해하기가 힘들수 있다.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>그러니 지금 이해가 잘 안되도 걱정하지 말라.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>(필자도 이해가 잘 안되서 3번이나 공부했다.)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 13.3333px;\"><b>이렇게 함수지향 강좌는 끝이 났다.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>이 강좌에서는 함수지향의 기본을 다루는게 목표여서</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>세밀한 부분은 들어가지 않았다.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>(사실 필자도 그정도로 잘 알고 있지 않아서 강좌를 쓸수가 없다는게 함정 ㅋㅋ)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>그러니 관심이 있다면 한번 검색해보는것도 좋을것 같다.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 13.3333px;\"><b>다음 강좌부터는 객체지향에 대해서 설명하겠다.</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 13.3333px;\"><b>//질문은 댓글로 받고있습니다</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>긴글 읽어주셔서 감사합니다!</b></span></div><div><br /></div><div><b><br /></b></div><div><br /></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000502A00000000",
+            "head": "중급",
+            "headId": 20,
+            "id": 20522,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 60,
+            "refArticleId": 20522,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "함수지향과 객체지향(6) - 클로저를 알아보자",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1593491887413,
+            "writer": {
+                "id": "choi0108-",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "choi0108"
+            }
+        },
+        "articleId": 20522,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "https://cafe.naver.com/nameyee/20393\n\n클로저 예시로 오목 funtion Omok",
+                    "id": 95304729,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95304729,
+                    "updateDate": 1593522532000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

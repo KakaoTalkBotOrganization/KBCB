@@ -1,0 +1,168 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-size:10pt;\"><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">API를 호출할 페이지와 스크립트로 가져오기</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><b>화폐 단위는 더 지정 가능하며 저는 제한을 두어서 몇가지가 없습니다.</b></div><div><b>ㄴ 코드 더러워요</b></div><div><b><br /></b></div><div><b><font color=\"#ffaa00\">index.php</font></b></div><div><div style=\"\">&lt;?php</div><div style=\"\"><span style=\"white-space:pre\"> </span>$rt = $_GET[&apos;type&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$dst = $_GET[&apos;dst&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$bot = $_GET[&apos;bot&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$calc = $_GET[&apos;calc&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$dbg = $_GET[&apos;dbg&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$chk;</div><div style=\"\"><span style=\"white-space:pre\"> </span>$kocalc = explode(&quot;,&quot; , $dst);</div><div style=\"\"><br /></div><div style=\"\"><span style=\"white-space:pre\"> </span>if ($dst == &quot;JPY&quot; or $dst == &quot;엔&quot;) {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$selm = &quot;엔&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$dst = &quot;JPY&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$chk = 1;</div><div style=\"\"><span style=\"white-space:pre\"> </span>}else if ($dst == &quot;USD&quot; or $dst == &quot;달러&quot;) {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$selm = &quot;달러&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$dst = &quot;USD&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$chk = 1;</div><div style=\"\"><span style=\"white-space:pre\"> </span>}else if ($dst == &quot;CNY&quot; or $dst == &quot;위안&quot;) {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$selm = &quot;위안&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$dst = &quot;CNY&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$chk = 1;</div><div style=\"\"><span style=\"white-space:pre\"> </span>}else if ($dst == &quot;EUR&quot; or $dst == &quot;유로&quot;) {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$selm = &quot;유로&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$dst = &quot;EUR&quot;;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$chk = 1;</div><div style=\"\"><span style=\"white-space:pre\"> </span>} else if ($kocalc[0] == &quot;원&quot;) {</div><div style=\"\"><span style=\"white-space:pre\"> </span>} else {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$chk = 2;</div><div style=\"\"><span style=\"white-space:pre\"> </span>}</div><div style=\"\"><span style=\"white-space:pre\"> </span></div><div style=\"\"><span style=\"white-space:pre\"> </span>if($chk == 1) {</div><div style=\"\"><br /></div><div style=\"\"><span style=\"white-space:pre\"> </span>$str = file_get_contents(&apos;<a href=\"https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRW\" target=\"_blank\">https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRW</a>&apos;.$dst);</div><div style=\"\"><span style=\"white-space:pre\"> </span>$json = json_decode($str, true);</div><div style=\"\"><span style=\"white-space:pre\"> </span>$country = $json[0][&apos;country&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$pv = $json[0][&apos;provider&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$exdate = $json[0][&apos;date&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$extime = $json[0][&apos;time&apos;];</div><div style=\"\"><span style=\"white-space:pre\"> </span>$timm = $exdate. &quot; &quot; .$extime;</div><div style=\"\"><span style=\"white-space:pre\"> </span>$bp = $json[0][&apos;basePrice&apos;].&quot;원&quot;;</div><div style=\"\"><span style=\"white-space:pre\"> </span>$cr = $json[0][&apos;currencyUnit&apos;]. &quot;&quot; .$selm;</div><div style=\"\"><span style=\"white-space:pre\"> </span>$cp = $json[0][&apos;changePrice&apos;].&quot;원&quot;;</div><div style=\"\"><span style=\"white-space:pre\"> </span>$chr = round($json[0][&apos;changeRate&apos;]*100,2);</div><div style=\"\"><span style=\"white-space:pre\"> </span>if ($cp &gt; 0) { $cp = &quot;▲ &quot;.$cp;</div><div style=\"\"><span style=\"white-space:pre\"> </span>} else if ($cp &lt; 0) { $cp = &quot;▼ &quot;.$cp;</div><div style=\"\"><span style=\"white-space:pre\"> </span>}</div><div style=\"\"><span style=\"white-space:pre\"> </span></div><div style=\"\">if ($dst == &quot;JPY&quot;) {</div><div style=\"\"><span style=\"white-space:pre\"> </span>if(strlen($calc) == 1) {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$ctem = &apos;0.0&apos;.$calc;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$calmoney = round($bp*$ctem,2);</div><div style=\"\"><span style=\"white-space:pre\"> </span>} else if(strlen($calc) == 2) {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$ctem = &apos;0.&apos;.$calc;</div><div style=\"\"><span style=\"white-space:pre\">  </span>$calmoney = round($bp*$ctem,2);</div><div style=\"\"><span style=\"white-space:pre\"> </span>} else {</div><div style=\"\"><span style=\"white-space:pre\">  </span>$calmoney = number_format((round($bp,2) * $calc)/100);</div><div style=\"\"><span style=\"white-space:pre\"> </span>}&nbsp;</div><div style=\"\"><span style=\"white-space:pre\"> </span></div><div style=\"\">} else {</div><div style=\"\"><span style=\"white-space:pre\"> </span>$calmoney = number_format($bp * $calc);</div><div style=\"\"><span style=\"white-space:pre\"> </span>}</div><div style=\"\"><br /></div><div style=\"\">if($rt==&quot;json&quot;) {</div><div style=\"\"><span style=\"white-space:pre\"> </span>header(&apos;Content-type: application/json&apos;);</div><div style=\"\"><span style=\"white-space:pre\"> </span>$arr = array(&apos;국가&apos; =&gt; $country, &apos;시간&apos; =&gt; $timm, &apos;제공&apos; =&gt; $pv, &apos;현재 가격&apos; =&gt; $bp, &apos;대상 국가 기준&apos; =&gt; $cr, &apos;가격 변동&apos; =&gt; $cp, &apos;변동 비율&apos; =&gt; $chr.&apos;%&apos;, &apos;계산 결과&apos; =&gt; $calmoney.&apos;원&apos;);</div><div style=\"\"><span style=\"white-space:pre\"> </span>echo json_encode($arr,JSON_UNESCAPED_UNICODE);</div><div style=\"\">} else if($bot==&quot;1&quot;) {</div><div style=\"\"><span style=\"white-space:pre\"> </span></div><div style=\"\"><span style=\"white-space:pre\"> </span>echo &apos;국가: &apos;.$country.&apos;\\시간: &apos;. $timm. &apos;\\제공: &apos; .$pv. &apos;\\현재 가격: &apos; .$bp. &apos;\\대상 기준: &apos;. $cr, &apos;\\가격 변동: &apos;. $cp. &apos;\\변동 비율: &apos;. $chr.&apos;%&apos;;</div><div style=\"\"><span style=\"white-space:pre\"> </span>echo &apos;\\ \\계산 결과: &apos;.$calmoney.&apos;원&apos;;</div><div style=\"\">}&nbsp;</div><div style=\"\">else {</div><div style=\"\"><span style=\"white-space:pre\"> </span>?&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;html&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;head&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;meta charset=&quot;utf-8&quot;&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;title&gt;봇 API - 환율 정보 확인(&lt;?php echo &quot;대상 단위: &quot;.$selm ?&gt;)&lt;/title&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;/head&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;body&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;div id=&quot;content&quot;&gt;</div><div style=\"\"><span style=\"white-space:pre\"> </span>&lt;?php</div><div style=\"\"><span style=\"white-space:pre\"> </span>$temnm = &quot;기준 국가: &quot;.$country.&quot;&lt;br&gt;기준 시간: &quot;.$timm.&quot;&lt;br&gt;제공 업체: &quot;.$pv.&quot;&lt;br&gt;한화 기준: &quot;.$bp.&quot;&lt;br&gt;&quot;.$selm.&quot;화 기준: &quot;.$cr.&quot;&lt;br&gt;가격 변동: &quot;.$cp.&quot;&lt;br&gt;변동 비율: &quot;. $chr .&apos;%&lt;br&gt;계산 결과: &apos;.$calmoney.&apos;원&apos;;</div><div style=\"\"><span style=\"white-space:pre\"> </span></div><div style=\"\"><span style=\"white-space:pre\"> </span>print_r($temnm);</div><div style=\"\"><span style=\"white-space:pre\"> </span>echo &quot;&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;<span style=\"white-space:pre\"> </span>&quot;;</div><div style=\"\"><span style=\"white-space:pre\"> </span></div><div style=\"\">}</div><div style=\"\">}else{</div><div style=\"\"><span style=\"white-space:pre\"> </span>echo &quot;지원하지 않는 단위 에요 ㅠ.ㅠ&quot;;</div><div style=\"\"><span style=\"white-space:pre\"> </span>}</div><div style=\"\"><span style=\"white-space:pre\"> </span></div><div style=\"\"><span style=\"white-space:pre\"> </span>?&gt;</div><div style=\"font-weight: bold;\"><br /></div></div><div><br /></div><div>봇 스크립트</div><div><br /></div><div><div>if(msg.indexOf(&quot;!환율 &quot;) == 0) {</div><div>let chk = msg.substr(4);</div><div>let key = chk.split(&quot; &quot;);</div><div>&nbsp;</div><div>try{&nbsp;</div><div>let link = Utils.getWebText(&quot;<a href=\"https://주소/index.php?dst=\" target=\"_blank\">https://주소/index.php?dst=</a>&quot;+key[0]+&quot;&amp;bot=1&quot;+&quot;&amp;calc=&quot;+key[1]);</div><div>let str = link.split(&quot;&lt;div id=\\&quot;content\\&quot;&gt;&quot;)[1].split(&quot;&lt;&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/gi, &quot;&quot;).trim().replace(/\\\\/g,&quot;\\n&quot;);</div><div>replier.reply(str);</div><div>} catch(e) {</div><div>replier.reply(&quot;[오류]서버와 통신할 수 없습니다.&quot;);</div><div>}}</div><div>&nbsp;</div></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000031D200000000",
+            "id": 12754,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 132,
+            "refArticleId": 12754,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "php를 이용한 환율 정보[두나무] 가져오기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583461695980,
+            "writer": {
+                "id": "q5515",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA3MDFfMjk5/MDAxNTMwNDA1NDg5NzUz.uTIO5oG4Nc0kKbDhkYGbCmYJDojIpWGZLRqaKV9oIjQg.Dfjky_VG4JqxNM-I9PeZgVA7gp23Oq59agixOwV3P6sg.PNG.q5515/%25BF%25A9%25BD%25C5%25B4%25D4.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "새하얀구름"
+            }
+        },
+        "articleId": 12754,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

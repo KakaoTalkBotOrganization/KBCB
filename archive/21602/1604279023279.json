@@ -1,0 +1,434 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [],
+            "contentHtml": "<p>function response(room, msg, sender, isGroupChat, replier, ImageDB) {\r\n\r\n\r\nif (msg.indexOf (&quot;!날씨 &quot;) == 0) {\r\n\r\nvar where = msg.substr (4);\r\n\r\ntry {\r\n\r\nvar link = org.jsoup.Jsoup.connect(&quot;https://search.naver.com/search.naver?sm=tab_hty.top&amp;where=nexearch&amp;query=&quot; + where + &quot; 날씨&quot;).get();\r\n\r\nvar today_weather_mainTab = link.select(&quot;div.today_area._mainTabContent&quot;);\r\n//메인탭\r\n\r\nvar today_temp_c = today_weather_mainTab.select(&quot;span.todaytemp&quot;).text();\r\n//현재 기온\r\n\r\nvar today_temp_summary = today_weather_mainTab.select(&quot;p.cast_txt&quot;).text();\r\n//날씨 요약\r\n\r\n\r\n//최저, 최대\r\nvar today_temp_min = today_weather_mainTab.select(&quot;span.min&quot;);\r\nvar today_temp_minC = today_temp_min.select(&quot;span.num&quot;).text();\r\n\r\nvar today_temp_max = today_weather_mainTab.select(&quot;span.max&quot;);\r\nvar today_temp_maxC = today_temp_max.select(&quot;span.num&quot;).text();\r\n\r\n\r\n//체감온도\r\nvar today_sensible = today_weather_mainTab.select(&quot;span.sensible&quot;);\r\nvar today_sensibleC = today_sensible.select(&quot;span.num&quot;).text();\r\n\r\n\r\n//미세, 초미세먼지\r\nvar today_dust = today_weather_mainTab.select(&quot;dl.indicator&quot;);\r\nvar today_dust_data = today_dust.select(&quot;dd.lv2&quot;);\r\nvar today_dust_ug = today_dust_data.select(&quot;span.num&quot;).text();\r\nvar today_dust_final = today_dust_ug.substring(0,5);\r\n\r\n\r\n//if (today_dust_ug.substring(0,2) &lt;= 30) {\r\n//replier.reply(today_dust_final + &quot; 좋음&quot;);\r\n//} else if (30 &lt; today_dust_ug.substring(0,2) &lt;= 80) {\r\n//replier.reply(today_dust_final + &quot; 보통&quot;);\r\n//} else if (80 &lt; today_dust_ug.substring(0,2) &lt;= 150) {\r\n//replier.reply(today_dust_final + &quot; 나쁨&quot;);\r\n//} else if (today_dust_ug.substring(0,2) &gt; 150) {\r\n//replier.reply(today_dust_final + &quot; 매우나쁨&quot;);\r\n//}\r\n\r\n\r\n//습도\r\nvar today_humidity = today_weather_mainTab.select(&quot;div.info_list.humidity._tabContent&quot;);\r\nvar today_humidity_now = today_humidity.select(&quot;li.on.now&quot;);\r\nvar today_humidity_percent = today_humidity_now.select(&quot;dd.weather_item._dotWrapper&quot;).text();\r\n\r\n\r\n//강수\r\nvar today_rain = today_weather_mainTab.select(&quot;div.info_list.rainfall._tabContent&quot;);\r\nvar today_rain_now = today_rain.select(&quot;li.on.now&quot;);\r\nvar today_rain_percent = today_rain_now.select(&quot;dd.weather_item._dotWrapper&quot;).text();\r\n\r\n\r\n//풍향\r\nvar today_wind = today_weather_mainTab.select(&quot;div.info_list.wind._tabContent&quot;);\r\nvar today_wind_now = today_wind.select(&quot;li.on.now&quot;);\r\nvar today_wind_percent = today_wind_now.select(&quot;dd.weather_item._dotWrapper&quot;).text();\r\nvar today_wind_direction = today_wind_now.select(&quot;span.wt_status&quot;).text();\r\n\r\n//replier.reply (today_wind_direction);\r\nreplier.reply(where+&quot;의 날씨 정보\\n\\n&quot;+today_temp_summary\r\n+&quot;\\n현재기온 : &quot; + today_temp_c+&quot;&deg;C\\n최저/최대기온 : &quot; + today_temp_minC+&quot;/&quot;+today_temp_maxC+&quot;&deg;C\\n체감온도 : &quot; + today_sensibleC +&quot;&deg;C\\n습도 : &quot;&nbsp;\r\n&nbsp;&nbsp; + today_humidity_percent + &quot;\\n강수확률 : &quot; + today_rain_percent + &quot;\\n풍속 : &quot; + today_wind_direction + &quot; &quot; + today_wind_percent);\r\n\r\n} catch (e) {\r\nreplier.reply (&quot;날씨 정보 가져오기 실패.\\n()님께 오류메시지 발송합니다.&quot;);\r\n}\r\n}\r\n}&nbsp;</p><p>&nbsp;</p><p>그대로 복사하셔서 사용하시면 됩니당&nbsp;</p><p>사용법은 !날씨 (지역)입력하시면 잘 작동할꺼에요!!</p><p>+질문 내일의 날씨기능같은것도 추가가 가능할까요..?</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000546200000000",
+            "head": "카톡봇",
+            "headId": 83,
+            "id": 21602,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 481,
+            "refArticleId": 21602,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "날씨기능 소스 공유합니당",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595463749550,
+            "writer": {
+                "id": "dughdhk0826",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "줜이"
+            }
+        },
+        "articleId": 21602,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "다른 소스에 7일 이내랑 어제 날씨 알려주는 소스 있어요 검색 ㄱㄱ",
+                    "id": 97657604,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97657604,
+                    "updateDate": 1595473201000,
+                    "writer": {
+                        "id": "vicoki123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMjk0/MDAxNTgwNTI4MTM4MTY3.k0ST66LKqkwN0ncHoJJTuUEWNiB3hhYf1zJ5wboJ5Jgg.BVpV2tjCcnHHeQ3WdPPpKOsvGGS4N9ENpkKs4BNQgHkg.PNG/Laco-1.png"
+                        },
+                        "nick": "라코봇"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 97728314,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97728314,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1595519577000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "복사해서붙여넣기하니,한줄에다넣어지네요ㅜㅜㅜ이럴땐어떻게해야하나요?!에러코드4요ㅠ",
+                    "id": 100014457,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100014457,
+                    "updateDate": 1597452666000,
+                    "writer": {
+                        "id": "tjdgns679900",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200918_99/tjdgns679900_1600397468522sy6xw_JPEG/image.jpg"
+                        },
+                        "nick": "추억은방울방울"
+                    }
+                },
+                {
+                    "content": "봇 어떤거 쓰시나요?  에러내용도 보여주세요:)",
+                    "id": 100019469,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100014457,
+                    "updateDate": 1597456052000,
+                    "writer": {
+                        "id": "dughdhk0826",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "줜이"
+                    }
+                },
+                {
+                    "content": "메신저봇쓰구요.한줄에다집어넣어져서...",
+                    "id": 100020623,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA4MTVfMjUw/MDAxNTk3NDU2ODY0MzQ0.jygmigwKFWDlaAn9rHhFgIAhY-1c-JM1P2-Q0CJyY8gg.i1T1pB59plNlIFspo_hg6_ArkvLc8gMD51y7zUo5kU8g.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 1280,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA4MTVfMjUw/MDAxNTk3NDU2ODY0MzQ0.jygmigwKFWDlaAn9rHhFgIAhY-1c-JM1P2-Q0CJyY8gg.i1T1pB59plNlIFspo_hg6_ArkvLc8gMD51y7zUo5kU8g.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MTVfMjUw/MDAxNTk3NDU2ODY0MzQ0.jygmigwKFWDlaAn9rHhFgIAhY-1c-JM1P2-Q0CJyY8gg.i1T1pB59plNlIFspo_hg6_ArkvLc8gMD51y7zUo5kU8g.JPEG/externalFile.jpg",
+                        "width": 720
+                    },
+                    "refId": 100020623,
+                    "updateDate": 1597456864000,
+                    "writer": {
+                        "id": "tjdgns679900",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200918_99/tjdgns679900_1600397468522sy6xw_JPEG/image.jpg"
+                        },
+                        "nick": "추억은방울방울"
+                    }
+                },
+                {
+                    "content": "missing }",
+                    "id": 100636837,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100020623,
+                    "updateDate": 1597944896000,
+                    "writer": {
+                        "id": "waterwolf1532",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjlfMjU4/MDAxNTk2MDE1NzQxNDI1.PfJzMMk5AU613vzaoF8VHxr7VUmgr8uPvO7A6wLj6icg.nq_sqN5mzy82e3qR9F-wkhgv338e9PczsqQ8w-lJm-Ig.JPEG/externalFile.jpg"
+                        },
+                        "nick": "음음"
+                    }
+                },
+                {
+                    "content": "혹시  이런식으로 위에 두개가 더 뜨는데 이건 파싱된사이트가 구조가 변경되어 그런가여 ?",
+                    "id": 100820261,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA4MjJfMTU4/MDAxNTk4MTAxMjczNjA2.6dRC1PN_Z9cEtXZI9at2niWvE9uej86MRZ-jy-WsOwIg.GEd59UcT7lt0rVJTgbgG6BwFDqF7mTRu3dyBuFefBu4g.JPEG/KakaoTalk_20200822_220053475.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "KakaoTalk_20200822_220053475.jpg",
+                        "height": 569,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA4MjJfMTU4/MDAxNTk4MTAxMjczNjA2.6dRC1PN_Z9cEtXZI9at2niWvE9uej86MRZ-jy-WsOwIg.GEd59UcT7lt0rVJTgbgG6BwFDqF7mTRu3dyBuFefBu4g.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MjJfMTU4/MDAxNTk4MTAxMjczNjA2.6dRC1PN_Z9cEtXZI9at2niWvE9uej86MRZ-jy-WsOwIg.GEd59UcT7lt0rVJTgbgG6BwFDqF7mTRu3dyBuFefBu4g.JPEG/KakaoTalk_20200822_220053475.jpg",
+                        "width": 960
+                    },
+                    "refId": 100820261,
+                    "updateDate": 1598101299000,
+                    "writer": {
+                        "id": "wjdwo150",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ㅇ정재"
+                    }
+                },
+                {
+                    "content": "흐음 다시 새로 만들어서 업로드 해드릴께요ㅎ",
+                    "id": 101556994,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100820261,
+                    "updateDate": 1598707166000,
+                    "writer": {
+                        "id": "dughdhk0826",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "줜이"
+                    }
+                },
+                {
+                    "content": "앗 댓글봐주시다니 감사해요 ㅠㅠ",
+                    "id": 101557046,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100820261,
+                    "replyMember": {
+                        "id": "dughdhk0826",
+                        "nick": "줜이"
+                    },
+                    "updateDate": 1598707195000,
+                    "writer": {
+                        "id": "wjdwo150",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ㅇ정재"
+                    }
+                },
+                {
+                    "content": "아니에요 답변이 너무 늦었네요...하핳 날씨를 파싱하고 싶으신거죠?",
+                    "id": 101557297,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100820261,
+                    "replyMember": {
+                        "id": "wjdwo150",
+                        "nick": "ㅇ정재"
+                    },
+                    "updateDate": 1598707322000,
+                    "writer": {
+                        "id": "dughdhk0826",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "줜이"
+                    }
+                }
+            ],
+            "last": {
+                "id": 100820261,
+                "refId": 100820261
+            },
+            "next": {
+                "id": 101557405,
+                "refId": 100820261
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

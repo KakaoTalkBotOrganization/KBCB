@@ -1,0 +1,379 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b></div><div class=\"NHN_Writeform_Main\"><div><b>=&gt;&nbsp;<font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">채팅기록 저장 &amp;&amp; 불러오기</span></font></b></div><div><b>지금까지 질문만 한것 같아서 간단한 소스 하나 공유해 봅니다. 주석없는 소스는 아래 첨부해 두었습니다.(고인물분들께서는 주석 설명이 틀려도 너그럽게 용서(?)해 주시면 감사하겠습니다.)</b></div><div><b>제가 만들면서 참고한 게시글들입니다. 초보분들은 이 게시글 먼저 보시고 소스 보시면 이해하시기 수월하실 거에요.</b></div><div><b>파일 생성, 저장, 불러오기, 삭제에 관한 게시글:&nbsp;<a href=\"https://cafe.naver.com/nameyee/3513\" target=\"_blank\">https://cafe.naver.com/nameyee/3513</a></b></div><div><b>객체 개념을 잡아주는 게시글:&nbsp;<a href=\"https://cafe.naver.com/nameyee/4908,\" target=\"_blank\">https://cafe.naver.com/nameyee/4908,</a>&nbsp;<a href=\"https://cafe.naver.com/nameyee/8232\" target=\"_blank\">https://cafe.naver.com/nameyee/8232</a></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b><span style=\"font-size: 10pt;\">&nbsp;</span></div><div>fs = FileStream</div><div>Lw=&quot;\\u200b&quot;.repeat(500)&nbsp;<font color=\"#7d7d7d\">//공백문자를 500번 사용한다는 뜻으로 전달하는 메세지를 전체보기...형식으로 전송합니다</font></div><div><span style=\"font-size: 10pt;\">function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</span></div><div>var day = new Date();&nbsp;</div><div>var today = day.getDay();&nbsp;<font color=\"#7d7d7d\">//오늘의 요일 불러오기(일요일은0, 월요일은1,화요일은2... 형식입니다)</font></div><div>var 시 = day.getHours();&nbsp;<font color=\"#7d7d7d\">//시각</font></div><div>var 분 = day.getMinutes();&nbsp;<font color=\"#7d7d7d\">//분</font></div><div>msg = msg.replace(/\\u202E/g,&quot;&quot;)&nbsp;&nbsp;</div><div>sender = sender.replace(/\\u202E/g,&quot;&quot;)</div><div>path = &quot;sdcard/chatreport/&quot;+room+&quot;.txt&quot;&nbsp;<font color=\"#7d7d7d\">//대화내용을 저장할 경로입니다. sdcard/chatreport에 객체형식으로 저장됩니다.</font></div><div>path1 =&nbsp; &quot;sdcard/chatreport/count.txt&quot;&nbsp;<font color=\"#7d7d7d\">//횟수(아래 나옵니다)를 저장할 경로입니다. sdcard/chatreport에 count.txt라는 이름으로 저장됩니다.</font></div><div>path2 = &quot;sdcard/chatreport/type2/&quot;+room+&quot;.txt&quot;&nbsp;<font color=\"#7d7d7d\">//대화내용을 저장하는 경로입니다. sdcard/chatreprot/type2에 {[]}형식으로 저장됩니다.</font></div><div>path3 = &quot;sdcard/chatreport/day.txt&quot;&nbsp;<font color=\"#7d7d7d\">//요일을 저장할 경로입니다. sdcard/chatreport에 day.txt라는 이름으로 저장됩니다.</font></div><div><br /></div><div>if<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;</span><span style=\"font-size: 10pt;\">) {</span></div><div>if(fs.read(path)==null) fs.write(path,&quot;{}&quot;);&nbsp;<font color=\"#7d7d7d\">//path에 저장된 파일이 없다면 객체 형식으로 생성합니다.</font></div><div>if(fs.read(path1)==null) fs.write(path1,&quot;{}&quot;);</div><div>if(fs.read(path2)==null) fs.write(path2,&quot;{}&quot;);</div><div>if(fs.read(path3)==null) fs.write(path3,&quot;{}&quot;);</div><div>json = JSON.parse(fs.read(path));<font color=\"#7d7d7d\">&nbsp;//json에 path에 저장된 내용을 집어넣습니다.</font></div><div>jsin = JSON.parse(fs.read(path1));&nbsp;</div><div>jsona = JSON.parse(fs.read(path2));</div><div>dday = JSON.parse(fs.read(path3));</div><div><br /></div><div>if(json[sender] == undefined) {&nbsp;<font color=\"#7d7d7d\">//만약 json에서 sender의 값이 정의되지 않았다면</font></div><div>json[sender] = {};&nbsp;<font color=\"#7d7d7d\">//sender의 값을 객체형식으로 생성합니다.({보낸이:{}})</font></div><div>json[sender][&quot;name&quot;] = sender;&nbsp;<font color=\"#7d7d7d\">//sender의 값인 name의 값을 sender로 정의합니다.(<span style=\"font-size: 13.3333px;\">{보낸이:{&quot;name&quot;: &quot;보낸이&quot;}})</span></font></div><div>json[sender][&quot;chat&quot;] = [];&nbsp;<font color=\"#7d7d7d\">//sender의 또다른 값인 chat의 값을 배열형식으로 생성합니다.<span style=\"font-size: 13.3333px;\">(</span><span style=\"font-size: 13.3333px;\">{</span></font><span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">보낸이:{&quot;name&quot;: &quot;보낸이&quot;,&quot;chat&quot;: []}})</span></div><div>}</div><div><br /></div><div>if(jsin[sender] == undefined) {</div><div>jsin[sender] = {};&nbsp;<font color=\"#7d7d7d\">//sender의 값을 객체형식으로 생성합니다.({&quot;보낸이&quot;:{}})</font></div><div>jsin[sender][&quot;delete&quot;] = 0;&nbsp;<font color=\"#7d7d7d\">//sender의 값인 delete의 값을 0으로 놓습니다.<span style=\"font-size: 13.3333px;\">({&quot;보낸이&quot;:{&quot;delete&quot;:0}})</span></font></div><div>}</div><div><br /></div><div>if(jsona[room] == undefined) jsona[room] = [];&nbsp;<font color=\"#7d7d7d\">//jsona에서 room의 값이 지정되지 않았다면 room의 값을 배열형식으로 생성합니다. ({&quot;방이름&quot;:[]})</font></div><div><font color=\"#7d7d7d\"><br /></font></div><div>if(dday[&quot;day&quot;] == undefined) {</div><div>dday[&quot;day&quot;] = today;&nbsp;<font color=\"#7d7d7d\">//&quot;day&quot;의 값을 today(위에서 정의했습니다.)로 지정해줍니다.({&quot;day&quot;:today의 값})</font></div><div>}</div><div><br /></div><div>fs.write(path3, JSON.stringify(dday))&nbsp;<font color=\"#7d7d7d\">//path3에 위치한 문서(day.txt)에 오늘의 날짜를 업데이트(?) 해 줍니다.</font></div><div>check = dday[&quot;day&quot;]&nbsp;<font color=\"#7d7d7d\">//check에 &quot;day&quot;의 값을 넣어줍니다.</font></div><div>if(check != today) {&nbsp;<font color=\"#7d7d7d\">//만약 원래 기록되어 있던 &quot;day&quot;의 값과 today의 값이 다르다면(요일이 다르다면)</font></div><div>dday[&quot;day&quot;] = today&nbsp;<font color=\"#7d7d7d\">//&quot;day&quot;의 값을 today값으로 바꿔줍니다.</font></div><div>fs.write(path3, JSON.stringify(dday))&nbsp;<font color=\"#7d7d7d\">//변경사항을 path3에 위치한 문서에 업데이트합니다.</font></div><div>fs.remove(path1);&nbsp;<font color=\"#7d7d7d\">//횟수를 초기화합니다.(path1에 저장된 문서를 제거합니다.)</font></div><div>}</div><div><br /></div><div>json[sender][&quot;chat&quot;].push(&quot;[&quot;+sender+&quot;]&quot;+&quot; [&quot;+시+&quot;:&quot;+분+&quot;] &quot;+msg)&nbsp;<font color=\"#7d7d7d\">//sender의 값인 &quot;chat&quot;의 값에 &apos;[sender] [몇시:몇분] 채팅내용&apos; 형식으로 집어넣습니다.(</font><font color=\"#7d7d7d\" style=\"font-size: 13.3333px;\">{</font><span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">보낸이:{&quot;name&quot;: &quot;보낸이&quot;,&quot;chat&quot;: [&quot;[보낸이] [몇시:몇분] 대화내용&quot;]}})</span></div><div>fs.write(path, JSON.stringify(json))&nbsp;<font color=\"#7d7d7d\">//path에 저장된 문서에 채팅기록을 실시간으로 업데이트합니다.</font></div><div>jsona[room].push(&quot;[&quot;+sender+&quot;]&quot;+&quot; [&quot;+시+&quot;:&quot;+분+&quot;] &quot;+msg)&nbsp;</div><div>fs.write(path2, JSON.stringify(jsona))</div><div>}</div><div><br /></div><div>try{</div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)&nbsp;</span><span style=\"font-size: 10pt;\">&amp;&amp;msg.startsWith(&quot;!채팅.&quot;)) {&nbsp;</span><font color=\"#7d7d7d\" style=\"font-size: 10pt;\">//특정 유저가 보낸 메세지를 최신순-&gt;오래된순 형식으로 보여줍니다.</font></div><div>nickname = msg.substr(4)&nbsp;<font color=\"#7d7d7d\">//메세지의 4번째단어까지 지웁니다.(지워지는 단어: !채팅.)</font></div><div>chat = json[nickname][&quot;chat&quot;]&nbsp;<font color=\"#7d7d7d\">//chat에 저장된 nickname(유저)의 값인 &quot;chat&quot;의 값을 집어넣습니다.</font></div><div>chat1 = chat.reverse().slice(0,11)&nbsp;<font color=\"#7d7d7d\">//chat1에 특정유저가 보낸 최근 메세지 10개를 집어넣습니다.</font></div><div>if(chat.length&gt;1) {<font color=\"#7d7d7d\">&nbsp;//만약 caht의 길이가 1보다 길다면</font></div><div>replier.reply(nickname+&quot;님이 최근에 보낸 채팅입니다(최신순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.join(&quot;\\n\\n&quot;))&nbsp;<font color=\"#7d7d7d\">//chat1을 출력합니다.</font></div><div>} else {<font color=\"#7d7d7d\">&nbsp;//아니면(1보다 길지 않다면)</font></div><div>replier.reply(&quot;해당 유저의 채팅기록이 존재하지 않습니다!&quot;)</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)&nbsp;</span>&amp;&amp;msg.startsWith(&quot;!챗.&quot;)) {&nbsp;<span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">//특정 유저가 보낸 메세지를 오래된순-&gt;최신순 형식으로 보여줍니다.</span></div><div>nickname = msg.substr(3)&nbsp;</div><div>chat = json[nickname][&quot;chat&quot;]&nbsp;</div><div>chat1 = chat.reverse().slice(0,11)&nbsp;</div><div>if(chat.length&gt;1) {</div><div>replier.reply(nickname+&quot;님이 최근에 보낸 채팅입니다(오래된순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.reverse().join(&quot;\\n\\n&quot;))</div><div>} else {</div><div>replier.reply(&quot;해당 유저의 채팅기록이 존재하지 않습니다!&quot;)</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)</span>&nbsp;&amp;&amp;msg.startsWith(&quot;!!채팅.&quot;)) {</div><div>nickname = msg.substr(5)</div><div>chat = json[nickname][&quot;chat&quot;]</div><div>chat1 = chat.reverse().slice(0,21)&nbsp;<span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">//chat1에 특정 유저가 보낸 메세지 20개를 집어넣습니다.</span></div><div>if(chat.length&gt;1) {</div><div>replier.reply(nickname+&quot;님이 최근에 보낸 채팅입니다(최신순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.join(&quot;\\n\\n&quot;))</div><div>}else{</div><div>replier.reply(&quot;해당 유저의 채팅기록이 존재하지 않습니다!&quot;);</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)</span>&nbsp;&amp;&amp;msg.startsWith(&quot;!!챗.&quot;)) {&nbsp;</div><div>nickname = msg.substr(4)</div><div>chat = json[nickname][&quot;chat&quot;]</div><div>chat1 = chat.reverse().slice(0,21)&nbsp;</div><div>if(chat.length&gt;1) {</div><div>replier.reply(nickname+&quot;님이 최근에 보낸 채팅입니다(오래된순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.reverse().join(&quot;\\n\\n&quot;))</div><div>}else{</div><div>replier.reply(&quot;해당 유저의 채팅기록이 존재하지 않습니다!&quot;);</div><div>}</div><div>}</div><div><br /></div><div>} catch(e) {</div><div>replier.reply(&quot;존재하지 않는 유저입니다! 이름을 다시 확인해주세요.&quot;)</div><div>}&nbsp;&nbsp;</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)</span>&nbsp;&amp;&amp;msg == &quot;!채팅&quot;)&nbsp; {&nbsp;<span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">//현재 방에서 온 메세지를 최신순-&gt;오래된순 형식으로 보여줍니다.</span></div><div>chat = jsona[room] //<font color=\"#7d7d7d\">chat에 jsona의 room의 값을 집어넣습니다.</font></div><div>chat1= chat.reverse().slice(1,11)&nbsp;<span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">//chat1에 현재방에서 최근에 온 메세지 10개를 집어넣습니다.</span></div><div>if(chat.length&gt;1) {</div><div>replier.reply(&quot;방 &quot;+room+&quot;의 최근 채팅리스트입니다(최신순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.join(&quot;\\n\\n&quot;))</div><div>} else {</div><div>replier.reply(&quot;채팅방의 채팅기록이 존재하지 않습니다!&quot;);</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)</span>&nbsp;&amp;&amp;msg == &quot;!챗&quot;)&nbsp; {&nbsp;<span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">//현재 방에서 온 메세지를 오래된순-&gt;최신순 형식으로 보여줍니다.</span></div><div>chat = jsona[room]&nbsp;</div><div>chat1= chat.reverse().slice(1,11)</div><div>if(chat.length&gt;1) {</div><div>replier.reply(&quot;방 &quot;+room+&quot;의 최근 채팅리스트입니다(오래된순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.reverse().join(&quot;\\n\\n&quot;))</div><div>} else {</div><div>replier.reply(&quot;채팅방의 채팅기록이 존재하지 않습니다!&quot;);</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)</span>&nbsp;&amp;&amp;msg == &quot;!!채팅&quot;) {&nbsp;<span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">//현재 방에서 온 메세지를 오래된순-&gt;최신순 형식으로 보여줍니다.</span></div><div>chat = jsona[room]</div><div>chat1 = chat.reverse().slice(1,21)&nbsp;<span style=\"color: rgb(125, 125, 125); font-size: 13.3333px;\">//chat1에 현재방에서 최근에 온 메세지 20개를 집어넣습니다.</span></div><div>if(chat.length&gt;1) {</div><div>replier.reply(&quot;방 &quot;+room+&quot;의 최근 채팅리스트입니다(최신순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.join(&quot;\\n\\n&quot;))</div><div>} else {</div><div>replier.reply(&quot;채팅방의 채팅기록이 존재하지 않습니다!&quot;);</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)</span>&nbsp;&amp;&amp;msg == &quot;!!챗&quot;) {</div><div>chat = jsona[room]</div><div>chat1 = chat.reverse().slice(1,21)</div><div>if(chat.length&gt;1) {</div><div>replier.reply(&quot;방 &quot;+room+&quot;의 최근 채팅리스트입니다(오래된순):\\n&quot;+Lw+&quot;\\n&quot;+chat1.reverse().join(&quot;\\n\\n&quot;))</div><div>} else {</div><div>replier.reply(&quot;채팅방의 채팅기록이 존재하지 않습니다!&quot;);</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;</span><span style=\"font-size: 10pt;\">) {</span></div><div>chat = jsona[room]</div><div>if(chat.length &gt; 500){&nbsp;<font color=\"#7d7d7d\">//만약 chat의 길이가 500을 넘는다면(저장된 대화량이 500을 넘는다면)</font></div><div>replier.reply(&quot;채팅수가 500을 넘어 채팅기록이 자동으로 삭제 되었습니다.&quot;)&nbsp;</div><div>fs.remove(path2)<font color=\"#7d7d7d\">&nbsp;//해당방의 채팅기록을 자동으로 삭제합니다.</font></div><div>fs.remove(path)</div><div>}</div><div>}</div><div><br /></div><div>if(<span style=\"font-size: 13.3333px;\">(room ==&quot;원하는방1&quot; || room == &quot;원하는방2&quot;)</span>&nbsp;&amp;&amp;msg.startsWith(&quot;!삭제&quot;)) {&nbsp;<font color=\"#7d7d7d\">//저장된 메세지를 삭제하는 명령어입니다.</font></div><div>chat = jsin[sender][&quot;delete&quot;]++&nbsp;<font color=\"#7d7d7d\">//!삭제 명령어를 사용했다면 sender의 값인 &quot;delete&quot;의 값을 +1 해주고, 이를 chat에 집어넣습니다.</font></div><div>fs.write(path1, JSON.stringify(jsin))&nbsp;<font color=\"#7d7d7d\">//바뀐정보를 path1에 위치한 문서에 업데이트해줍니다.</font></div><div>if(chat&lt;2) {&nbsp;<font color=\"#7d7d7d\">//만약 chat이(&quot;delete&quot;의 값) 2보다 작다면</font></div><div>fs.remove(path)&nbsp;<font color=\"#7d7d7d\">//현재방의 채팅기록을 삭제합니다.</font></div><div>fs.remove(path2)</div><div>replier.reply(&quot;메세지가 성공적으로 삭제되었습니다&quot;)</div><div>} else if(chat&gt;= 2) {&nbsp;<font color=\"#7d7d7d\">//만약 chat이 2보다 크다면(!삭제 명령어를 2번 이상 사용했다면) 삭제를 불가능하게 해 줍니다. 이는 번번한 삭제를 방지하기 위한 것이며, 사용여부는 자유입니다.</font></div><div>replier.reply(sender+&quot;님은 이미 2번이상 채팅을 삭제하셨습니다! 채팅삭제는 각 사람마다 하루에 최대 2번 가능합니다.&quot;)</div><div>}</div><div>}</div><div>}</div><div><br /></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000241600000000",
+            "id": 9238,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 491,
+            "refArticleId": 9238,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[소스공유] 채팅기록 저장 && 불러오기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1577015072783,
+            "writer": {
+                "id": "junyoungbae02",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "프로그"
+            }
+        },
+        "articleId": 9238,
+        "attaches": [
+            {
+                "extension": "txt",
+                "fullName": "채팅기록.카페용.txt",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "채팅기록.카페용.txt",
+                "size": 5475,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/bf2aa3196d5a3286a94f2b1a24cebcc5653770/20191222_141_cafefile/29537083_1577017843041_remHgS_txt/%EC%B1%84%ED%8C%85%EA%B8%B0%EB%A1%9D.%EC%B9%B4%ED%8E%98%EC%9A%A9.txt?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 76483541,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 76483541,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57172f8181a7f-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57172f8181a7f/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1577015213000,
+                    "writer": {
+                        "id": "delay1599",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "별명을 입력해주세요"
+                    }
+                },
+                {
+                    "content": "rm = '(room ==\"원하는방1\" || room == \"원하는방2\")'\r\n\r\n와\r\n\r\nif(rm) {\r\n\r\n이거 제대로 작동 안합니다\r\n문자열은 boolean으로 나타내면 무조건 참이기 때문에...(공백이 아닌 이상)\r\nroom조건 성립 안하고 모든 방에 적용됩니다",
+                    "id": 76486973,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 76486973,
+                    "updateDate": 1577017398000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "zzzzzzzzzzzz",
+                    "id": 76487110,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76486973,
+                    "updateDate": 1577017466000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "그렇군요..수정하겠습니다",
+                    "id": 76487371,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76486973,
+                    "updateDate": 1577017613000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "수정했습니다. 지적 감사합니다",
+                    "id": 76487916,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76486973,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-8-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_8.png",
+                        "width": 129
+                    },
+                    "updateDate": 1577017951000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 76487975,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76486973,
+                    "replyMember": {
+                        "id": "junyoungbae02",
+                        "nick": "프로그"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1577017963000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "참고로 이프문은 안에 있는 것이 참인지만 보기 때문에\r\nrm에서 ' 2개만 땠어도 작동할 거에요",
+                    "id": 76488119,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76486973,
+                    "replyMember": {
+                        "id": "junyoungbae02",
+                        "nick": "프로그"
+                    },
+                    "updateDate": 1577018045000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "하나 더 배워갑니다. 감사드려요ㅎㅎ",
+                    "id": 76488185,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76486973,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1577018086000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

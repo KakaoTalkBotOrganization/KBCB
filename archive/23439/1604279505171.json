@@ -1,0 +1,347 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-ef813ae9-7bd3-4ba5-8450-48a714f000b5\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-eb29e2ff-2322-4cde-b445-5c65a7e24591\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7918e2d7-ff6e-4de5-95d3-445ad7aa591f\">아래 소스는 </span><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-54fa039d-2898-412a-b087-13daa048e32c\"><a href=\"https://freesugar.tistory.com/37\" class=\"se-link\" target=\"_blank\">https://freesugar.tistory.com/37</a></span><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7ff767ba-353f-435d-b19c-2ff6cae02131\"> 에 있는거 가져다 쓴거에요.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-b9ee6ce5-25e4-40ff-84c3-20c8a874cb23\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">import base64\nfrom Crypto.Cipher import AES\n\n\nBS &#x3D; 16\npad &#x3D; lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS).encode()\nunpad &#x3D; lambda s: s[:-ord(s[len(s) - 1:])]\n\ndef iv():\n    &quot;&quot;&quot;\n    The initialization vector to use for encryption or decryption.\n    It is ignored for MODE_ECB and MODE_CTR.\n    &quot;&quot;&quot;\n    return chr(0) * 16\n\nclass AESCipher(object):\n    &quot;&quot;&quot;\n    https://github.com/dlitz/pycrypto\n    &quot;&quot;&quot;\n\n    def __init__(self, key):\n        self.key &#x3D; key\n        # self.key &#x3D; hashlib.sha256(key.encode()).digest()\n\n    def encrypt(self, message):\n        &quot;&quot;&quot;\n        It is assumed that you use Python 3.0+\n        , so plaintext&#x27;s type must be str type(&#x3D;&#x3D; unicode).\n        &quot;&quot;&quot;\n        message &#x3D; message.encode()\n        raw &#x3D; pad(message)\n        cipher &#x3D; AES.new(self.key.encode(&quot;utf8&quot;), AES.MODE_CBC, iv().encode(&quot;utf8&quot;))\n        enc &#x3D; cipher.encrypt(raw)\n        return base64.b64encode(enc).decode(&#x27;utf-8&#x27;)\n\n    def decrypt(self, enc):\n        enc &#x3D; base64.b64decode(enc)\n        cipher &#x3D; AES.new(self.key.encode(&quot;utf8&quot;), AES.MODE_CBC, iv().encode(&quot;utf8&quot;))\n        dec &#x3D; cipher.decrypt(enc)\n        return unpad(dec).decode(&#x27;utf-8&#x27;)</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-b9ee6ce5-25e4-40ff-84c3-20c8a874cb23\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-4fb63102-a345-49b9-8aff-bcd8cb157b32\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dccd0e29-9ce6-4979-93cb-414d3bcf71a3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-66a43d9d-7049-49df-b4df-06e36f5ee587\">지금 카카오 링크를 파이썬으로 구현 중인데, 지금 authenticate() 부분에서 막혀요오....</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc5a0d6-622f-4255-9312-75242b9e1189\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5da5207c-68af-4700-bb8a-fd2145c7ebfe\">보니까, cryptoKey가 128bit, 192bit, 256bit 어디 하나에도 속하지 않아서 지금 이걸 어찌 암호화해야하나..... 하고 있어요오....</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3f551d77-9aa7-4271-8543-19af2b713db4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cfe69da6-d2f9-49e0-9be1-48a2926bec19\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-b004f6f0-bcce-4be4-8b22-b3be8fff988e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6f3368d9-7931-4d68-ae68-bd09321ebfc9\">CryptoJS 의 AES에서는 key의 크기에 상관없이 암호화가 되던데 이걸 어떻게 파이썬에서 똑같은 방식으로 암호화를 할 수 있나요?</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-e50cce77-d55b-4ffd-bb92-a9ef2d1f32b7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-663a4595-eaca-4cad-a2f7-995a2f0fac58\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cc403761-5ecd-4436-9234-715975194411\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-0eaf4f03-2901-4ccb-b510-8bd077ffbb3f\">지금 아래처럼 했더니 에러가 나가지고;;;</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-eb93c708-78bf-4df7-94c3-db2dcbfd095a\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">def authenticate():\n    print(self.cryptoKey)\n    response &#x3D; requests.post(&#x27;https://accounts.kakao.com/weblogin/authenticate.json&#x27;,\n                             headers&#x3D;{\n                                 &#x27;User-Agent&#x27;: self.static[&quot;ua&quot;],\n                                 &#x27;Referer&#x27;: self.loginReferer\n                             },\n                             data&#x3D;{\n                                 &quot;os&quot;: &#x27;web&#x27;,\n                                 &quot;webview_v&quot;: &#x27;2&#x27;,\n                                 &quot;email&quot;: AESCipher(self.cryptoKey[:32]).encrypt(id),\n                                 &quot;password&quot;: AESCipher(self.cryptoKey[:32]).encrypt(password),\n                                 &quot;continue&quot;: urllib.parse.quote(\n                                     self.loginReferer.split(&#x27;continue&#x3D;&#x27;)[1].encode(&quot;utf-8&quot;)),\n                                 &quot;third&quot;: &#x27;false&#x27;,\n                                 &quot;k&quot;: &#x27;true&#x27;\n                             },\n                             cookies&#x3D;self.cookies)\n    print(response.text)</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-eb93c708-78bf-4df7-94c3-db2dcbfd095a\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-9cd1e9ea-e55b-4b53-bdfc-a7fe32346518\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6e529d9d-a0a3-49cd-a39e-54896ad2fa51\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-e257f2b7-3b09-441b-9854-571963292613\">이랬더니, {&quot;status&quot;:-484} ....</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005B8F00000000",
+            "id": 23439,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 105,
+            "refArticleId": 23439,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "파이썬에서는 AES 어떻게 하나요오.... ㅠ",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1598085124703,
+            "writer": {
+                "id": "pak_hyun",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "OtakoidTony"
+            }
+        },
+        "articleId": 23439,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "고인물 ㄷㄷ",
+                    "id": 100799158,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100799158,
+                    "updateDate": 1598085250000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "카링 소스 보고 따라하는 수준 밖에 안되는 거시와요;; (이거 팩트)",
+                    "id": 100799394,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100799158,
+                    "updateDate": 1598085417000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "ㄷㄷ",
+                    "id": 100799410,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100799158,
+                    "replyMember": {
+                        "id": "pak_hyun",
+                        "nick": "OtakoidTony"
+                    },
+                    "updateDate": 1598085426000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html\n어라..?",
+                    "id": 100800201,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": true,
+                    "refId": 100800201,
+                    "updateDate": 1598086016000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "Its keys can be 128, 192, or 256 bits long.",
+                    "id": 100802379,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100800201,
+                    "updateDate": 1598087936000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "https://github.com/brix/crypto-js/blob/develop/src/aes.js\r\n자바스크립트 구조를 파이썬으로 일일히 옮기면 되지 않을까요? 아니면 js2py 모듈 같은걸로 파이썬에서 저 코드채로 실행시켜서 쓸수도 있지 않을까요?",
+                    "id": 100809839,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100809839,
+                    "updateDate": 1598094598000,
+                    "writer": {
+                        "id": "kenis7",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200309_221/kenis7_1583741688026EvIWn_JPEG/image.jpg"
+                        },
+                        "nick": "Steve28"
+                    }
+                },
+                {
+                    "content": "이번에 카링을 파이썬으로 구현해볼까 하다가 저도 이부분에서 막혀서 왔네요.\n이 댓글이 얼마나 멍청한 소리인지 지금 깨달았습니다....",
+                    "id": 105863222,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100809839,
+                    "updateDate": 1602499613000,
+                    "writer": {
+                        "id": "kenis7",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200309_221/kenis7_1583741688026EvIWn_JPEG/image.jpg"
+                        },
+                        "nick": "Steve28"
+                    }
+                },
+                {
+                    "content": "https://stackoverflow.com/questions/41432896/cryptojs-aes-encryption-and-java-aes-decryption\n자바 코드 참고해보셔요",
+                    "id": 100850972,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100850972,
+                    "updateDate": 1598139750000,
+                    "writer": {
+                        "id": "aidenkor",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTNfMjM0/MDAxNTk5OTgzNjcyMTAy.nPYLAEsagoL0HlO-W_SN_Cz7fmfxXBU-MNw67q92LsEg.MIYVbyA3RxdmR6R4_wiJMp1kFv5wFwTsdd677rnvyIcg.PNG/logo-small.png"
+                        },
+                        "nick": "delta"
+                    }
+                },
+                {
+                    "content": "ㄷ..",
+                    "id": 100875290,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA4MjNfMTkz/MDAxNTk4MTU4NTg5NTkx.HNyiR1snOwMg8BnEJT8Vv8WwzpnjMZ_fEDadDF3mZzYg.RXkqUHKde1L1r7d8tykFkTClPl-y8lH8faW9QeCVaGkg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2400,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA4MjNfMTkz/MDAxNTk4MTU4NTg5NTkx.HNyiR1snOwMg8BnEJT8Vv8WwzpnjMZ_fEDadDF3mZzYg.RXkqUHKde1L1r7d8tykFkTClPl-y8lH8faW9QeCVaGkg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MjNfMTkz/MDAxNTk4MTU4NTg5NTkx.HNyiR1snOwMg8BnEJT8Vv8WwzpnjMZ_fEDadDF3mZzYg.RXkqUHKde1L1r7d8tykFkTClPl-y8lH8faW9QeCVaGkg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 100875290,
+                    "updateDate": 1598158590000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

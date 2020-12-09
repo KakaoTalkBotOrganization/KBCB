@@ -1,0 +1,353 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 (새카봇, 젤브봇, 메신져봇, 닼토봇, 기타)</b><div><b>=&gt; 파란봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><b><br /></b></div><table border=\"1\"><tbody><tr><td><div class=\"pers_nick_area\"><table border=\"1\"><tbody><tr><td><a href=\"https://cafe.naver.com/ArticleList.nhn?search.clubid=29537083&amp;search.menuid=31&amp;search.boardtype=L#\" target=\"_blank\">July07</a><span style=\"display: inline-block; margin-left: 2px;\">님의 관리자 소스</span></td></tr></tbody></table><br /></div><div class=\"pers_nick_area\"><br /></div><div class=\"pers_nick_area\"><br /></div><div class=\"pers_nick_area\"><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">const scriptName=&quot;Admin_Script.js&quot;;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\"><br /></span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">/*</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">DotoriBot - Admin Script</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">Copyright Goromong 2018, All rights reserved.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&lt;작동 방식&gt;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">1. 첫번째로 배열에 관리자 이름을 넣고 저장하면 폴더에 관리자 이름이 저장됨.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">2. 그 다음부터는 폴더에서 관리자 이름을 불러온다.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">3. 최고 관리자는 삭제에서 무조건 방어됩니다.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">4. 관리자 초기화는 관리자 권한이 없어도 진행 가능합니다. (인증 코드 필요)</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">5. 관리자 추가한 다음 인증을 무조건 해야 다른 관리자 관리 명령어 사용 가능.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">6. 관리자 명령어는 첫번째로 관리자 데이터에 명령어를 입력한 사람의 이름이 있는지 확인한 다음 두번째로 프로필 사진 데이터의 해시코드를 비교해서 인증을 진행한다.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&lt;가이드라인&gt;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">- 개발자의 허락 없이 소스 코드 무단 배포 금지, 자기가 만든 것마냥 행세해도 죽창 날립니다. 그런 짓 하지마세요</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">- 소스 사용시 원작자를 밝혀주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; ex) 이 봇은 Goromong의 관리자 관리 소스를 사용하였습니다.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&lt;라이선스&gt;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">이 소스에는 LGPL 3.0이 적용되어있습니다.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">one line to give the library&apos;s name and an idea of what it does.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">Copyright Goromong 2018 All rights reserved.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">This library is free software; you can redistribute it and/or</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">modify it under the terms of the GNU Lesser General Public</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">License as published by the Free Software Foundation; either</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">version 2.1 of the License, or (at your option) any later version.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">This library is distributed in the hope that it will be useful,</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&nbsp; See the GNU</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">Lesser General Public License for more details.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">You should have received a copy of the GNU Lesser General Public</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">License along with this library; if not, write to the Free Software</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA&nbsp; 02110-1301&nbsp; USA</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">*/</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\"><br /></span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">var Permit_Code = [&quot;&quot;];</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">var Admin = [&quot;RuinTheBen&quot;] //(관리자 이름)에 자신의 톡 이름을 넣고 한번 저장한다음 아래에 있는 소스 한줄에 있는 //를 제거해주세요</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">var Admin=eval(DataBase.getDataBase(&quot;봇_관리자&quot;)) // 관리자 목록을 불러오는 폴더 이름 : 봇_관리자</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\"><br /></span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">function isAdmin(name) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; return Admin.indexOf(name) != -1;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">}</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">function getWifiSpeed() {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; var wifiManager = Api.getContext().getSystemService(android.content.Context.WIFI_SERVICE);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; var wifiInfo = wifiManager.getConnectionInfo();</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if (wifiInfo != null) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; return wifiInfo.getLinkSpeed();</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">}</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\"><br /></span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">let AlarmManager = Api.getContext().getSystemService(android.content.Context.ALARM_SERVICE);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">let mm = (AlarmManager.ELAPSED_REALTIME_WAKEUP, android.os.SystemClock.elapsedRealtime());</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">let sec = (mm/1000) % 60;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">let min = (mm/(1000*60)) % 60;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">let hr = (mm/(1000*60*60)) % 24;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; var isCharging = Device.isCharging()?&quot;밥 먹는중!&quot;:&quot;배터리 사용중&quot;;</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; var access_code = Math.floor(Math.random()*100000);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; msg = msg.trim();</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf(&quot;=관리자 추가&quot;) == 0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) == java.lang.String(ImageDB.getProfileImage()).hashCode()){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Admin.push(msg.substr (8));</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + msg.substr (8) + &quot;님이 관리자로 추가되었습니다!\\n정상적인 명령어 사용을 위해 =관리자 인증 명령어를 사용해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;Dotori Log : &quot; + msg.substr (8) + &quot;의 관리자 권한이 생성됨.&quot;); //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) != java.lang.String(ImageDB.getProfileImage()).hashCode()) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님의 인증 정보가 올바르지 않아 등록 취소되었습니다.\\n=관리자 인증 명령어로 인증 정보를 변경해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; } else{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님은 관리자 권한이 없습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf(&quot;=관리자 인증&quot;) == 0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;Dotori Log : 데이터 변경 인증 코드가 발급되었습니다! 인증 코드 : &quot; + access_code); //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 봇 개발자님의 폰에 인증 코드가 전송되었습니다.\\n관리자분에게 문의 후 =확인 (인증번호) 명령어를 통해 인증을 완료해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permit_Code.push(access_code);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; } else{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님은 관리자 권한이 없습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf(&quot;=확인&quot;)==0 &amp;&amp; isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; var access = msg.substr (4);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(Permit_Code == access) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 인증 확인 되었습니다!\\n&quot; + sender + &quot;님의 데이터 반영중...&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DataBase.removeDataBase(&quot;봇_관리자/&quot; + sender);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DataBase.setDataBase(&quot;봇_관리자/&quot; + sender,java.lang.String(ImageDB.getProfileImage()).hashCode());</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님의 인증 정보 변경됨!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permit_Code = [];</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; } else if(Permit_Code != access){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 인증코드가 일치하지 않습니다!\\n확인 후 다시 인증을 요청해주세요.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permit_Code = [];</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf(&quot;=관리자 삭제&quot;) == 0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) == java.lang.String(ImageDB.getProfileImage()).hashCode()){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; name = msg.substr (8);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(Admin.indexOf(name) == -1) return Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + name + &quot;님은 관리자 데이터에 존재하지 않습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(name == &quot;(관리자 이름)&quot; || name == &quot;(관리자 이름)&quot; || name == &quot;(관리자 이름)&quot;) return Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + name + &quot;님은 최고 관리자이므로 삭제할 수 없습니다.&quot;); //관리자 하나로 지정하셔도 상관 없습니다.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Admin.splice(Admin.indexOf(name), 1);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DataBase.removeDataBase(&quot;봇_관리자/&quot;+name);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + name + &quot;님의 관리자 권한이 삭제되었습니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;Dotori Log : &quot; + name + &quot;의 관리자 권한이 소멸됨.&quot;); //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) != java.lang.String(ImageDB.getProfileImage()).hashCode()) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님의 인증 정보가 올바르지 않아 삭제 취소되었습니다.\\n=관리자 인증 명령어로 인증 정보를 변경해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; } else{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님은 관리자 권한이 없습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf(&quot;=관리자 목록&quot;)==0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, Admin);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; try{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(msg == &quot;=관리자 저장&quot;) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DataBase.setDataBase(&quot;봇_관리자&quot;, Admin.toSource());</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 성공적으로 관리자 데이터를 저장했습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; } catch(e){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 저장 도중 치명적인 오류가 발생하여 관리자방에 로그를 전송합니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;스크립트 에러\\n에러내용 : &quot;+e+&quot;\\n에러난 코드줄 : &quot;+e.lineNumber) //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; try{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(msg == &quot;=관리자 불러오기&quot;) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Admin = eval(DataBase.getDataBase(&quot;봇_관리자&quot;));</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 성공적으로 관리자 데이터를 로드했습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; } catch(e){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 불러오기 도중 치명적인 오류가 발생하여 관리자방에 로그를 전송합니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;스크립트 에러\\n에러내용 : &quot;+e+&quot;\\n에러난 코드줄 : &quot;+e.lineNumber) //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; try{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(msg == &quot;=관리자 초기화&quot;) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;Dotori Log : 초기화 인증 코드가 발급되었습니다! 인증 코드 : &quot; + access_code); //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 봇 개발자님의 폰에 인증 코드가 전송되었습니다.\\n관리자분에게 문의 후 =초기화 확인 (인증번호) 명령어를 통해 인증을 완료해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permit_Code.push(access_code);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;=초기화 확인&quot;)==0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var access = msg.substr (8);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(Permit_Code == access) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 인증 확인 되었습니다!\\n관리자 데이터 초기화를 진행합니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DataBase.removeDataBase(&quot;봇_관리자&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Admin = [&quot;도토리&quot;];</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DataBase.setDataBase(&quot;봇_관리자&quot;, Admin.toSource());</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 성공적으로 관리자 데이터를 초기화했습니다!\\n관리자 데이터 저장을 위해 인증을 다시 진행해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permit_Code = [];</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if(Permit_Code != access){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 인증코드가 일치하지 않습니다!\\n확인 후 다시 초기화를 진행해주세요.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Permit_Code = [];</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; } catch(e){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: 초기화 도중 치명적인 오류가 발생하여 관리자방에 로그를 전송합니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;스크립트 에러\\n에러내용 : &quot;+e+&quot;\\n에러난 코드줄 : &quot;+e.lineNumber); //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf (&quot;=봇 정보&quot;) == 0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) == java.lang.String(ImageDB.getProfileImage()).hashCode()){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;====================\\nBot Name : (봇 이름)\\nBot Version : (봇 버전)\\nBot Battery Percent : &quot; + Device.getBatteryLevel() + &quot;%\\nBot Battery Status : &quot; + isCharging + &quot;\\nBot Network Speed : &quot; + getWifiSpeed() + &quot;Mb/s\\nBot Running Time : &quot;+Math.floor(hr) + &quot;시간 &quot; + Math.floor(min) +&quot;분 &quot;+Math.floor(sec)+&quot;초\\n====================\\n★ 이 봇은 Goromong의 관리자 관리 소스를 사용하였습니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) != java.lang.String(ImageDB.getProfileImage()).hashCode()) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님의 인증 정보가 올바르지 않아 정보가 비공개되었습니다.\\n=관리자 인증 명령어로 인증 정보를 변경해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; } else{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님은 관리자 권한이 없습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf (&quot;=봇 시작&quot;) == 0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(Api.isOn(&quot;Main.js&quot;) == true) return Api.replyRoom(room, &quot;&#128736;&#65039;System :: 이미 봇이 켜져있습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) == java.lang.String(ImageDB.getProfileImage()).hashCode()){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply (&quot;&#128736;&#65039;System :: 도토리 봇 시작 준비중.........&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.compile(&quot;Main.js&quot;); // 키고자 하는 스크립트 이름 고치세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.on(&quot;Main.js&quot;); // 키고자 하는 스크립트 이름 고치세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply (&quot;&#128736;&#65039;System :: 도토리 봇 가동 완료&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) != java.lang.String(ImageDB.getProfileImage()).hashCode()) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님의 인증 정보가 올바르지 않아 시작 취소되었습니다.\\n=관리자 인증 명령어로 인증 정보를 변경해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; } else{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님은 관리자 권한이 없습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf (&quot;=봇 종료&quot;) == 0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(Api.isOn(&quot;Main.js&quot;) == false) return Api.replyRoom(room, &quot;&#128736;&#65039;System :: 이미 봇이 꺼져있습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) == java.lang.String(ImageDB.getProfileImage()).hashCode()){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply (&quot;&#128736;&#65039;System :: 도토리 봇을 종료합니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.unload(&quot;Main.js&quot;); // 끄고자 하는 스크립트 이름 고치세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.off(&quot;Main.js&quot;); // 끄고자 하는 스크립트 이름 고치세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) != java.lang.String(ImageDB.getProfileImage()).hashCode()) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님의 인증 정보가 올바르지 않아 종료 취소되었습니다.\\n=관리자 인증 명령어로 인증 정보를 변경해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; } else{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님은 관리자 권한이 없습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf (&quot;=봇 재부팅&quot;) == 0) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; if(isAdmin(sender)) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) == java.lang.String(ImageDB.getProfileImage()).hashCode()){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply (&quot;&#128736;&#65039;System :: 모든 기능을 끄고 도토리 봇을 재부팅합니다.&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.unload(&quot;Main.js&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; java.lang.Thread.sleep(1*1000);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.off(&quot;Main.js&quot;); // 재부팅 하고자 하는 스크립트 이름 고치세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;&#128736;&#65039;System :: 도토리 봇 재부팅중........&quot;)</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.compile(&quot;Main.js&quot;); // 재부팅 하고자 하는 스크립트 이름 고치세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; java.lang.Thread.sleep(1*1000);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.on(&quot;Main.js&quot;); // 재부팅 하고자 하는 스크립트 이름 고치세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;&#128736;&#65039;System :: 도토리 봇 재부팅 성공!&quot;)</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if(DataBase.getDataBase(&quot;봇_관리자/&quot; + sender) != java.lang.String(ImageDB.getProfileImage()).hashCode()) {</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님의 인증 정보가 올바르지 않아 재부팅 취소되었습니다.\\n=관리자 인증 명령어로 인증 정보를 변경해주세요!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else{</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(room, &quot;&#128736;&#65039;System :: &quot; + sender + &quot;님은 관리자 권한이 없습니다!&quot;);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\"><br /></span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; if(msg.indexOf(&quot;=관리자 호출 &quot;)==0){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; var noti_alert = msg.substring(8);</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;관리자를 호출하였습니다!&quot;)</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; &nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;Dotori Alert Sender : &quot; + sender + &quot; // 사유 : &quot; + msg.substring(8)); //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; }</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">}</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">function onStartCompile(){</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; DataBase.setDataBase(&quot;봇_관리자&quot;, Admin.toSource());</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">&nbsp; &nbsp; Api.replyRoom(&quot;카트 Ruin길드 톡방&quot;, &quot;Dotori Log : 자동으로 관리자 배열이 저장됨.&quot;); //로그를 남길 오픈채팅 방이름을 지정해주세요.</span></div><div class=\"pers_nick_area\"><span style=\"font-size: 13px;\">}</span></div></div></td></tr></tbody></table><div><b>질문내용</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>관리자를 배열에 추가시켯는데도 관리 권한이 없다고 뜨네요..</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>이유가 뭔지 모르겟네요..</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000007E500000000",
+            "id": 2021,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 627,
+            "refArticleId": 2021,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": " July07님의 관리자 소스 질문",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1556447918113,
+            "writer": {
+                "id": "dlwndks124",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20160218_291/dlwndks124_1455761035361nUmux_PNG/%25C4%25AB%25C6%25E4%25B9%25CC%25B4%25CF%25B7%25CE%25B0%25ED.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "mjhyyy"
+            }
+        },
+        "articleId": 2021,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "var Permit_Code = [];\r\n\r\nvar Admin = [\"(관리자 이름)\"] //(관리자 이름)에 자신의 톡 이름을 넣고 한번 저장한다음 아래에 있는 소스 한줄에 있는 //를 제거해주세요\r\n\r\n//var Admin=eval(DataBase.getDataBase(\"봇_관리자\")) // 관리자 목록을 불러오는 폴더 이름 : 봇_관리자\r\n\r\n\r\n자 여기서 저 (관리자 이름)을 빼고 자신의 이름을 넣은 후, 한 번 저장하고 //var Admin=eval(DataBase 어쩌구를 지워주세요 그럼 됩니다",
+                    "id": 58312838,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 58312838,
+                    "updateDate": 1556448684000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Alpha"
+                    }
+                },
+                {
+                    "content": "조만간 관리자소스 올려야지",
+                    "id": 58332397,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58312838,
+                    "updateDate": 1556463171000,
+                    "writer": {
+                        "id": "port_side0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "주현명"
+                    }
+                },
+                {
+                    "content": "음.. 해결되셨나?",
+                    "id": 58314121,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 58314121,
+                    "updateDate": 1556449821000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Alpha"
+                    }
+                },
+                {
+                    "content": "음.. 해결 되셨나요?",
+                    "id": 58315881,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 58315881,
+                    "updateDate": 1556451570000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Alpha"
+                    }
+                },
+                {
+                    "content": "네 ㅎㅎ 감사히 잘 해결되었습니다.",
+                    "id": 58320327,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58315881,
+                    "updateDate": 1556455225000,
+                    "writer": {
+                        "id": "dlwndks124",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_291/dlwndks124_1455761035361nUmux_PNG/%25C4%25AB%25C6%25E4%25B9%25CC%25B4%25CF%25B7%25CE%25B0%25ED.png"
+                        },
+                        "nick": "mjhyyy"
+                    }
+                },
+                {
+                    "content": "혹시 파싱좀 도움받을수있을까요?",
+                    "id": 58320494,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58315881,
+                    "updateDate": 1556455360000,
+                    "writer": {
+                        "id": "dlwndks124",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_291/dlwndks124_1455761035361nUmux_PNG/%25C4%25AB%25C6%25E4%25B9%25CC%25B4%25CF%25B7%25CE%25B0%25ED.png"
+                        },
+                        "nick": "mjhyyy"
+                    }
+                },
+                {
+                    "content": "음.. 파싱은 제가 아닌 CUBE님한테..",
+                    "id": 58326533,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58315881,
+                    "replyMember": {
+                        "id": "dlwndks124",
+                        "nick": "mjhyyy"
+                    },
+                    "updateDate": 1556459612000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Alpha"
+                    }
+                },
+                {
+                    "content": "왜자꾸 파싱이래ㅐㅐㅐ",
+                    "id": 58332424,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58315881,
+                    "replyMember": {
+                        "id": "kimsiyoon4202",
+                        "nick": "Alpha"
+                    },
+                    "updateDate": 1556463188000,
+                    "writer": {
+                        "id": "port_side0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "주현명"
+                    }
+                },
+                {
+                    "content": "이거 그냥 막 쓰면 안돼는 소스였나요?",
+                    "id": 58320755,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 58320755,
+                    "updateDate": 1556455584000,
+                    "writer": {
+                        "id": "dnwjdqls1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MDZfMTU1/MDAxNTYyNDA0Mjg1MjAy.ZQisI0z9-dCtkFRWxvD6XSju9_fu1MnOel4oqVZg4Rcg.OevkYVlrnYii_xW6GhQ1QLO_ZNV-SQRXdURb8ciN3iYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "dnwjdqls1234"
+                    }
+                },
+                {
+                    "content": "네",
+                    "id": 58326546,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 58320755,
+                    "updateDate": 1556459620000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Alpha"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

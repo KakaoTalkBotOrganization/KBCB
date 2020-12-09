@@ -1,0 +1,352 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<p>var hk = [&quot;해적이 나왔다!\\n\\n[ 벌칙 뽑기 ]로 벌칙 수행&quot;,&quot;다행이다. 안 나왔네&quot;,&quot;아.. 아쉽다..안 나왔다 ㅜ&quot;,&quot;애노의 부탁! 벌칙 수행!&quot;,&quot;해적이 나왔다!!\\n\\n「 벌칙 수행 」으로 벌칙 수행!! 키키&quot;,&quot;오 안 나왔네..아쉽다&quot;,&quot;해적아조시 점프!\\n\\n[ 벌칙 수행 ] 으로 벌칙 수행!!&quot;,&quot;어라 해적아조씨.. 외출하기 싫은가..&quot;];<br />var ch = [&quot;흑기사 요청&quot;,&quot;아무한테나 사랑한다 말하기&quot;,&quot;쌩얼 보여주기&quot;,&quot;흑역사 얘기하기&quot;,&quot;애노 칭찬하기\\n(이건 벌칙이 아닌데..)&quot;,&quot;애교 부리기&quot;,&quot;치킨 쏘기&quot;,&quot;노래 or 춤&quot;,&quot;친구 손잡아주기&quot;,&quot;난 멋있어 or 예뻐 큰 소리로 3번 말하기&quot;];<br />var st = false; //게임시작<br />var chst = false; //벌칙시작<br />var py = []; //플레이<br />var pym = 10; //max<br />var ok = []; //공격 배열<br />var t = 0; //turn<br />var l = []; //방장<br />var r = []; //방<br />var bl = &quot;\\u200b&quot;.repeat(500); //전보ㄱ(?)<br /><br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br />if(msg == &quot;해적 룰렛&quot;){<br />if(st == false){<br />if(chst == false){<br />replier.reply(&quot;친구의 벌칙을 보러 오셨군요?&quot;+bl+&quot;\\n\\n&middot; 해적룰렛은 누구든 재미있게 할수 있어요! 검만 꽂으면요(?)\\n\\n*규칙{\\n\\n최대인원은 10명이며 한턴에 1개씩 넣을 수 있다.\\n\\n 명령어 : 위 or 아래 (번호)&quot;);<br />st = false;<br />chst = false;<br />}<br />}<br />}<br />if(msg == &quot;방생성&quot;){<br />if(st == true){<br />replier.reply(&quot;게임중에는 방을 생성할 수 없습니다&quot;);<br />} else {<br />if(r == &quot;&quot;){<br />if(l == &quot;&quot;){<br />py.push(sender);<br />l.push(sender);<br />r.push(room);<br />m++;<br />replier.reply(sender+&quot; 님의 방을 생성했어요!\\n\\n[ 참가 ]를 하시면 참가가 가능해요!&quot;);<br />}<br />}<br />}<br />}<br />if(msg.startsWith(&quot;참가&quot;)){<br />if(st == true){<br />replier.reply(&quot;이미 게임이 시작했어요&quot;);<br />}else{<br />if(r == &quot;&quot;){<br />replier.reply(&quot;방이 없네요? 방부터 만들어주세요!&quot;);<br />} else {<br />if(py.indexOf(sender)!=-1){<br />replier.reply(&quot;이미 참여하고 계셔요!&quot;);<br />} else {<br />if(py.length == pym){<br />replier.reply(&quot;방이 꽉 찼어요! 좀 기다리세요!&quot;);<br />} else {<br />py.push(sender);<br />replier.reply(&quot;방에 참가 하셨어요!\\n현재 참가 인원\\n\\n&quot;+py.join(&quot;\\n&quot;));<br />}<br />}<br />}<br />}<br />}<br />if(msg == &quot;나가기&quot;){<br />if(st == true){<br />replier.reply(&quot;게임 플레이중에는 나가면 안되요!!&quot;);<br />} else {<br />if(r == &quot;&quot;){<br />replier.reply(&quot;방없어서 나갈때도 없어요..&quot;);<br />} else {<br />if(sender == l){<br />replier.reply(&quot;방장이 나가서 게임을 없앱니다.&quot;);<br />r = [];<br />l = [];<br />py = [];<br />} else {<br />if(room == r){<br />if(py.indexOf(sender)!=-1){<br />o = py.indexOf(sender);<br />py.splice(o,1);<br />replier.reply(sender+&quot;님이 나갔어요!\\n 현재 인원 : &quot;+m+ &quot; 명&quot;);<br />} else {<br />replier.reply(sender+&quot;님은 아직 참가하지 않았어요!&quot;);<br />}<br />}<br />}<br />}<br />}<br />}<br />if(msg == &quot;인원&quot;){<br />replier.reply(&quot;인원목록입니다!&quot;+bl+&quot;\\n\\n&quot;+py.join(&quot;\\n&quot;));<br />}<br />if(msg == &quot;시작&quot;){<br />if(st == true){<br />replier.reply(&quot;이미 시작한 거시에오.&quot;);<br />} else {<br />if(r == &quot;&quot;){<br />replier.reply(&quot;방이 없어 시작할수 없는 거시에오.&quot;);<br />} else {<br />if(sender != l){<br />replier.reply(sender+ &quot; 님은 방장이 아닌 거시에오.&quot;);<br />} else {<br />if(py.length == 1){<br />replier.reply(&quot;혼자선 못해요!!&quot;);<br />} else {<br />if(room == r){<br />if(sender == l){<br />if(st == false){<br />replier.reply(&quot;해적아조씨를 꽂는 중입니다&quot;);<br />java.lang.Thread.sleep(2000);<br />replier.reply(&quot;꽂았어요!! 시작하죠!!&quot;);<br />st = true;<br />}<br />}<br />}<br />}<br />}<br />}<br />}<br />}<br />if(msg.startsWith(&quot;위 &quot;)){<br />il = Number(msg.replace(&quot;위 &quot;,&quot;칸&quot;));<br />if(st == false){<br />replier.reply(&quot;게임이 시작하지 않았어요! 방장 불러!!&quot;);<br />} else {<br />if(sender != py[t]){<br />replier.reply(sender+ &quot; 님의 차례가 아니예요!&quot;);<br />} else {<br />if(msg == ok){<br />replier.reply(&quot;그 자리엔 이미 칼이 꽂혀있습니다&quot;);<br />} else {<br />if(st == true){<br />if(room == r){<br />if(sender == py[t]){<br />ok.push(msg);<br />t++;<br />replier.reply(hk[Math.floor(Math.random() * 9)]);<br />}<br />}<br />}<br />}<br />}<br />}<br />}<br />if(msg.startsWith(&quot;아래 &quot;)){<br />il = Number(msg.replace(&quot;아래 &quot;,&quot;칸&quot;));<br />if(st == false){<br />replier.reply(&quot;게임이 시작하지 않았어요! 방장 불러!!&quot;);<br />} else {<br />if(sender != py[t]){<br />replier.reply(sender+ &quot; 님의 차례가 아니예요!&quot;);<br />} else {<br />if(msg == ok){<br />replier.reply(&quot;그 자리엔 이미 칼이 꽂혀있습니다!&quot;);<br />} else {<br />if(st == true){<br />if(room == r){<br />if(sender == py[t]){<br />ok.push(msg);<br />t++;<br />replier.reply(hk[Math.floor(Math.random() * 9)]);<br />}<br />}<br />}<br />}<br />}<br />}<br />}<br />if(msg == &quot;벌칙 수행&quot;){<br />if(chst == false){<br />if(st == true){<br />replier.reply(ch[Math.floor(Math.random() * 10)]+ &quot;이(가) 나왔네요 하와와!&quot;);<br />java.lang.Thread.sleep(5000);<br />replier.reply(&quot;벌칙 수행으로 게임이 끝났습니다! 다시하고 싶으신가요?\\n\\n1.Y\\n2.N&quot;);<br />st = false;<br />chst = true;<br />Api.compile(&quot;해적 룰렛&quot;);<br />ch = false;<br />}<br />}<br />}<br />if(msg == &quot;Y&quot;){<br />if(st == true){<br />replier.reply(&quot;게임 플레이 중엔 불가능합니다&quot;);<br />} else {<br />if(r == &quot;&quot;){<br />if(l == &quot;&quot;){<br />py.push(sender);<br />r.push(room);<br />l.push(sender);<br />replier.reply(&quot;방을 만들었어요! [ 참가 ]로 참여하세요!&quot;);<br />}<br />}<br />}<br />}<br />if(msg == &quot;N&quot;){<br />if(st == true){<br />replier.reply(&quot;게임 도중엔 나갈 수 없어요!&quot;);<br />} else {<br />replier.reply(&quot;알겠습니다! 여기서 끝낼 게요!&quot;);<br />Api.compile(&quot;해적 룰렛&quot;);<br />}<br />}<br />}/*흑흑 더럽네 참고 : 해적이 나와도 못 나간다!<br />애노는 제 봇 이름*/</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003E5000000000",
+            "id": 15952,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 135,
+            "refArticleId": 15952,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "해룰",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586701650330,
+            "writer": {
+                "id": "yhs-1277",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "SP"
+            }
+        },
+        "articleId": 15952,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 87231293,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87231293,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1586704236000,
+                    "writer": {
+                        "id": "larrykmcho",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20191110_202/larrykmcho_1573354894091u86ye_PNG/image.png"
+                        },
+                        "nick": "지풍"
+                    }
+                },
+                {
+                    "content": "^^>",
+                    "id": 87231358,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87231293,
+                    "updateDate": 1586704268000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP"
+                    }
+                },
+                {
+                    "content": "오 이거 보고 무언가를 깨달았습니다?",
+                    "id": 88748105,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88748105,
+                    "updateDate": 1587991319000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                },
+                {
+                    "content": "다↑?",
+                    "id": 88748272,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88748105,
+                    "updateDate": 1587991418000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP"
+                    }
+                },
+                {
+                    "content": "32 m defind\n",
+                    "id": 96614791,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96614791,
+                    "updateDate": 1594620910000,
+                    "writer": {
+                        "id": "hohoho507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MzBfMTI2/MDAxNTk4NzkwNjE5MzY5.-ayjHJhWBdW7og6ilXdyId4f3S7W2QedHq67zDLmp5og.JPm_SY9feZHg0IAU0JhUUbXq54La77y8KMlY3jyKiEwg.JPEG/1598695844238.jpg"
+                        },
+                        "nick": "봇초보입니당"
+                    }
+                },
+                {
+                    "content": "오타가 있네요",
+                    "id": 96615330,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96614791,
+                    "updateDate": 1594621342000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP"
+                    }
+                },
+                {
+                    "content": "일단 m++ 지우니 됬네요\n근데 몇 부터 몇까지 있나요 \n위는 몇부터 몇까지 있고\n아래는 얼마나 있는지‥",
+                    "id": 96615924,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96614791,
+                    "replyMember": {
+                        "id": "yhs-1277",
+                        "nick": "SP"
+                    },
+                    "updateDate": 1594621802000,
+                    "writer": {
+                        "id": "hohoho507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MzBfMTI2/MDAxNTk4NzkwNjE5MzY5.-ayjHJhWBdW7og6ilXdyId4f3S7W2QedHq67zDLmp5og.JPm_SY9feZHg0IAU0JhUUbXq54La77y8KMlY3jyKiEwg.JPEG/1598695844238.jpg"
+                        },
+                        "nick": "봇초보입니당"
+                    }
+                },
+                {
+                    "content": "음 아마 무한대 일걸요",
+                    "id": 96616080,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96614791,
+                    "replyMember": {
+                        "id": "hohoho507",
+                        "nick": "봇초보입니당"
+                    },
+                    "updateDate": 1594621924000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

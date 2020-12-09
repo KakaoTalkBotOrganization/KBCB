@@ -1,0 +1,325 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">심심해서 만든 간단한 광질 미니게임</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><b>const player = {};</b></div><div style=\"\"><b>const ore = [</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;돌&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:100,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:0,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;평범한 돌이다. 별이 5개 장수돌침대 제작에 쓰인다고 한다.&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;석영&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:300,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:1,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;일반 돌맹이들보단 값이 나간다는 석영이다. 100% 자연산!&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;철&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:500,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:2,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;철이다. 자주쓰이는 광물중 하나이다.&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;청금석&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:600,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:3,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;마인크래프트에서 봤던 광물이다. 뭔지는 나도 모른다&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;구리&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:800,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:4,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;어디서 &apos;구리구리&apos;한 냄새가 나는거 같지 않아?&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;은&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:1000,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:5,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;&apos;은&apos;은 악마를 물리친다고 잘 알려져있다.&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;금&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:2000,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:6,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;매우 비싸고 희귀한 광물이다.&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;백금&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:3500,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:7,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;이름부터 간지나는 광물이다.&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; n:&quot;다이아몬드&quot;,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v:5000,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; r:8,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a:&quot;주 성분은 탄소로 이루어져있으며 매우 단단하다. 가공하면 비싸게 팔린다.&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; },</b></div><div style=\"\"><b>&nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>];</b></div><div style=\"\"><b>response=args=&gt;{</b></div><div style=\"\"><b>&nbsp; &nbsp; if(player[args.sender]){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(player[args.sender].l &lt;= Date.now() &amp;&amp; player[args.sender].st &lt; 5){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; player[args.sender].st += ((Date.now() - player[args.sender].l)/600000|0)+1;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; player[args.sender].l =&nbsp; Date.now()+600000;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(args.msg == &quot;.광질&quot;){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let t = ore[Math.random()*ore.length|0];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(player[args.sender].st &gt; 0 ){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(player[args.sender].power &gt;= t.r){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; args.replier.reply(&quot;[광물 &quot;+t.n+&quot;을 캤습니다.]&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;\\n&quot;+&quot;돈 :: &quot;+t.v+&quot; UP | &quot;+&quot;설명 :: &quot;+t.a);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; player[args.sender].m += t.v;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }else{</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; args.replier.reply(&quot;[광물 &quot;+t.n+&quot;을 캐려다가 힘이 부족하여 실패하였습니다.]&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; player[args.sender].st--;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else args.replier.reply(&quot;[스테미나가 부족합니다. (스테미나 차는데 남은시간 : &quot;+((player[args.sender].l - Date.now())|0)+&quot;초)]&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(args.msg == &quot;.돈&quot;)args.replier.reply(&quot;[현재 &quot;+args.sender+&quot;님은 &quot;+player[args.sender].m+&quot;원 소유하고 있습니다.]&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(args.msg == &quot;.스테미나&quot;)args.replier.reply(&quot;[현재 &quot;+args.sender+&quot;님은 &quot;+player[args.sender].st+&quot;스테미나를 소유하고 있습니다.]&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(args.msg == &quot;.강화&quot;)args.replier.reply(player[args.sender].m &gt;= player[args.sender].power*1000?((player[args.sender].m - player[args.sender].power*1000),( player[args.sender].power++),&quot;[&quot;+args.sender+&quot;님이 &quot;+ player[args.sender].power*1000+&quot;원을 사용하려 힘이 1올랐습니디.]&quot;):&quot;[돈이 부족합니다.]&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; }else{</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(args.msg == &quot;.광질&quot;){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; args.replier.reply(&quot;[광질 게임에 오신것을 환영합니다. &quot;+args.sender+&quot;님]&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; player[args.sender] = {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; st:5,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; inventory:[],</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; power:1,</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; l:Date.now()+600000,m:0</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; };</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>}</b></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000029A300000000",
+            "id": 10659,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 221,
+            "refArticleId": 10659,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "간단한 광질 게임 소스 [초급]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1580309857783,
+            "writer": {
+                "id": "chahyunwooa",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "인사봇 마스터"
+            }
+        },
+        "articleId": 10659,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "역시시소님ㅁㅊㄷ",
+                    "id": 79676444,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79676444,
+                    "updateDate": 1580309867000,
+                    "writer": {
+                        "id": "baejy1375",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Nub"
+                    }
+                },
+                {
+                    "content": "님 진짜 왜 그래요?",
+                    "id": 79676598,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79676444,
+                    "updateDate": 1580309976000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "인사봇 마스터"
+                    }
+                },
+                {
+                    "content": "히익",
+                    "id": 79678975,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79676444,
+                    "replyMember": {
+                        "id": "baejy1375",
+                        "nick": "Nub"
+                    },
+                    "updateDate": 1580311346000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "인사봇 마스터"
+                    }
+                },
+                {
+                    "content": "재성합니다",
+                    "id": 79678988,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79676444,
+                    "replyMember": {
+                        "id": "chahyunwooa",
+                        "nick": "인사봇 마스터"
+                    },
+                    "updateDate": 1580311356000,
+                    "writer": {
+                        "id": "baejy1375",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Nub"
+                    }
+                },
+                {
+                    "content": "인클루드나 살리지",
+                    "id": 79682356,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79682356,
+                    "updateDate": 1580314569000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "오우 아이디어3이 구현되었다 !\r\n",
+                    "id": 79815032,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79815032,
+                    "updateDate": 1580441958000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 95350681,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95350681,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1593565824000,
+                    "writer": {
+                        "id": "chanjin080320",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Blue box"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

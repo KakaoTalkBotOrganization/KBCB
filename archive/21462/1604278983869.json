@@ -1,0 +1,231 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>/**카링관련글방지오류 많음주의(주석처리해둠)*/<br />수정금지(허용해준사람외)[special thanks명단]<br />봇폴더는 sdcard/Bots으로 설정되어있습니다(그렇게 해두세요 아니면 골치아파요)<br />봇키지 마세요, 디버그룸에서 실행하세요<br />카링소스 사용시, 넷환경에서 작업해주세요.<br />넷안되는데 안된다고 찡찡대지 마시고요.<br />카링노가다하기 귀찮아서 그런건 안비밀*/<br />FS=FileStream;//FileStream<br />lpath=&quot;sdcard/*README.txt&quot;;//건드리지마세요<br />botpath=&quot;sdcard/Bots&quot;;//봇저장경로<br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName){<br />if(msg.startsWith(&quot;!소스태그:&quot;)){<br />sc=msg.split(&quot;:&quot;);//:건너뛰기<br />if(sc[2]==&quot;[시계]&quot;/**sc[2]즉, :를 2번건너뛴게 시계라면*/){<br />java.io.File(botpath, &quot;시계&quot;).mkdir();//경로만들기, 즉 폴더만들기*/<br />clockpath=&quot;sdcard/Bots/시계/&quot;;//패스생성<br />java.io.File(clockpath, &quot;modules&quot;).mkdir();//경로만들기<br />java.io.File(clockpath, &quot;DebugRoom&quot;).mkdir();//경로만들기<br />pewa=&quot;sdcard/Bots/시계/bot.json&quot;;//패스생성<br />FS.write(pewa, &quot;{\\n \\&quot;main\\&quot;: \\&quot;시계.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);//bot.json작성<br />paath=&quot;sdcard/Bots/시계/시계.js&quot;;//패스생성<br />replier.reply(&quot;성공&quot;);//성공만 반환.....<br />FS.write(paath, &quot;function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+sc[1]+&quot;\\&quot;){\\nday=new Date();\\nvar b=day.getHours();\\nvar a=day.getMinutes();\\nreplier.reply(b+\\&quot;시\\&quot;+a+\\&quot;분\\&quot;);\\n}\\n} &quot;);//js파일작성<br />}else if(sc[2]==&quot;[보낸사람]&quot;/**이건보낸사람이라면*/){<br />java.io.File(botpath, &quot;보낸사람&quot;).mkdir();//여기부터주석생략<br />senderpath=&quot;sdcard/Bots/보낸사람&quot;;<br />java.io.File(senderpath, &quot;modules&quot;).mkdir();<br />java.io.File(senderpath, &quot;DebugRoom&quot;).mkdir();<br />senderjson=&quot;sdcard/Bots/보낸사람/bot.json&quot;;<br />FS.write(senderjson, &quot;{\\n \\&quot;main\\&quot;: \\&quot;보낸사람.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);<br />peath=&quot;sdcard/Bots/보낸사람/보낸사람.js&quot;;<br />replier.reply(&quot;성공&quot;);<br />FS.write(peath, &quot;function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+sc[1]+&quot;\\&quot;){\\nreplier.reply(sender);\\n}\\n} &quot;);<br />}else if(sc[2]==&quot;[방]&quot;){<br />java.io.File(botpath, &quot;방&quot;).mkdir();<br />roompath=&quot;sdcard/Bots/방&quot;;<br />java.io.File(roompath, &quot;modules&quot;).mkdir();<br />java.io.File(roompath, &quot;DebugRoom&quot;).mkdir();<br />pq=&quot;sdcard/Bots/방/방.js&quot;;<br />roomjson=&quot;sdcard/Bots/방/bot.json&quot;;<br />FS.write(roomjson, &quot;{\\n \\&quot;main\\&quot;: \\&quot;방.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);<br />replier.reply(&quot;성공&quot;);<br />FS.write(pq, &quot;function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+sc[1]+&quot;\\&quot;){\\nreplier.reply(room);\\n}\\n} &quot;);<br />}else if(sc[2]==&quot;[월]&quot;/**이건월이라면*/){<br />java.io.File(botpath, &quot;월&quot;).mkdir();<br />monthpath=&quot;sdcard/Bots/월&quot;;<br />java.io.File(monthpath, &quot;modules&quot;).mkdir();<br />java.io.File(monthpath, &quot;DebugRoom&quot;).mkdir();<br />ak=&quot;sdcard/Bots/월/월.js&quot;;<br />monthjson=&quot;sdcard/Bots/월/bot.json&quot;;<br />FS.write(monthjson, &quot;{\\n \\&quot;main\\&quot;: \\&quot;월.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);<br />replier.reply(&quot;성공&quot;);<br />FS.write(ak, &quot;Fay=new Date();\\nvar b=Fay.getMonth();\\nvar c=b+1;\\nfunction response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+sc[1]+&quot;\\&quot;){\\nreplier.reply(c);\\n}\\n} &quot;);<br />}else if(sc[2].startsWith(&quot;[토스트] &quot;)/**이건토스트로 시작된다면*/){<br />d=sc[2].substring(6);<br />java.io.File(botpath, &quot;토스트&quot;).mkdir();<br />toastpath=&quot;sdcard/Bots/토스트&quot;;<br />java.io.File(toastpath, &quot;DebugRoom&quot;).mkdir();<br />java.io.File(toastpath, &quot;modules&quot;).mkdir();<br />toastjson=&quot;sdcard/Bots/토스트/bot.json&quot;;<br />FS.write(toastjson, &quot;{\\n \\&quot;main\\&quot;: \\토스트.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);<br />dee=&quot;sdcard/Bots/토스트/토스트.js&quot;;<br />replier.reply(&quot;성공&quot;);<br />FS.write(dee, &quot;function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+sc[1]+&quot;\\&quot;){\\nApi.showToast(\\&quot;&quot;+d+&quot;\\&quot;);\\n}\\n} &quot;);<br />}<br />}else if (msg.startsWith(&quot;!소스:&quot;)/**단자응*/){<br />as=msg.split(&quot;:&quot;);<br />java.io.File(botpath, &quot;자동응답&quot;).mkdir();<br />replierpath=&quot;sdcard/Bots/자동응답&quot;;<br />java.io.File(replierpath, &quot;modules&quot;).mkdir();<br />java.io.File(replierpath, &quot;DebugRoom&quot;).mkdir();<br />replierjson=&quot;sdcard/Bots/자동응답/bot.json&quot;;<br />FS.write(replierjson, &quot;{\\n \\&quot;main\\&quot;: \\&quot;자동응답.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);<br />pat=&quot;sdcard/Bots/자동응답/자동응답.js&quot;;<br />replier.reply(&quot;성공&quot;);<br />FS.write(pat, &quot;function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+as[1]+&quot;\\&quot;){\\nreplier.reply(\\&quot;&quot;+as[2]+&quot;\\&quot;);\\n}\\n} &quot;);<br />}else if(msg.startsWith(&quot;!소스미니게임:&quot;)/**미니게임류*/){ <br />ds=msg.split(&quot;:&quot;);<br />if(ds[2]==&quot;업다운&quot;/**업다운*/){<br />java.io.File(botpath, &quot;업다운&quot;).mkdir();<br />updownpath=&quot;sdcard/Bots/업다운&quot;;<br />java.io.File(updownpath, &quot;modules&quot;).mkdir();<br />java.io.File(updownpath, &quot;DebugRoom&quot;).mkdir();<br />updownjson=&quot;sdcard/Bots/bot.json&quot;;<br />FS.write(updownjson, &quot;{\\n \\&quot;main\\&quot;: \\&quot;업다운.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);<br />u=&quot;sdcard/Bots/업다운/업다운.js&quot;;<br />replier.reply(&quot;성공&quot;);<br />FS.write(u, &quot;player=[];\\nstart=false;\\nchance=20;\\nnum=Math.floor(Math.random()*100+1);\\nfunction response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+ds[1]+&quot;\\&quot;){\\nreplier.reply(sender+\\&quot;님, 업다운이 시작되었습니다.(1/1)\\&quot;);\\nplayer.push(sender);\\nif(player.indexOf(sender)!=-1&amp;&amp;msg&gt;num){\\nreplier.reply(\\&quot;down!\\n남은 기회:\\&quot;+chance+\\&quot;번\\&quot;);\\nchance--;\\n}else if(player.indexOf(sender)!=-1&amp;&amp;msg&lt;num){\\nreplier.reply(\\&quot;up!\\n남은 기회:\\&quot;+chance+\\&quot;번\\&quot;);\\nchance--;}else if(player.indexOf(sender)!=-1&amp;&amp;msg==num){\\nreplier.reply(\\&quot;정답!\\&quot;);\\nplayer.pop(sender);\\nchance=20;\\n}else if(player.indexOf(sender)!=-1&amp;&amp;msg==\\&quot;!포기\\&quot;){\\nreplier.reply(\\&quot;포기하였습니다.\\n정답은\\&quot;+num+\\&quot;이었습니다.\\&quot;);\\nplayer.pop(sender);\\nchance=20;\\n}\\n}\\nif(chance==0){\\nreplier.reply(\\&quot;탈락!\\&quot;);\\nplayer.pop(sender);\\n}\\n}&quot;);<br />}else if(ds[2]==&quot;가위바위보&quot;/**가위바위보*/){<br />java.io.File(botpath, &quot;가위바위보&quot;).mkdir();<br />peeeth=&quot;sdcard/Bots/가위바위보/가위바위보.js&quot;;<br />gamepath=&quot;sdcard/Bots/가위바위보&quot;;<br />java.io.File(gamepath, &quot;modules&quot;).mkdir();<br />java.io.File(gamepath, &quot;DebugRoom&quot;).mkdir();<br />replier.reply(&quot;성공&quot;);<br />gamejson=&quot;sdcard/Bots/가위바위보/bot.json&quot;;<br />FS.write(gamejson, &quot;{\\n \\&quot;main\\&quot;: \\&quot;가위바위보.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n \\&quot;useBabel\\&quot;: false\\n }\\n}&quot;);<br />FS.write(peeethth, &quot;num=Math.floor(Math.random()*3+1);\\nfunction response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\\nif(msg==\\&quot;&quot;+ds[1]+&quot;\\&quot;){\\nif(num==1){\\nreplier.reply(가위!);\\n}if(num==2){\\nreplier.reply( 바위!);\\n}if(num==3){\\nreplier.reply(보!);\\n}\\n}\\n}&quot;);<br />}<br />}else /**if(msg.startsWith(&quot;!소스카링:&quot;)&amp;&amp;msg.indexOf(&quot;!템플릿:&quot;)){<br />replier.reply(&quot;자스키를 입력해주세요.&quot;);<br />jskey=[];<br />account=[];<br />password=[];<br />templete=msg.split(&quot;!템플릿:&quot;);<br />if(msg){<br />jskey.push(msg);<br />replier.reply(&quot;계정과비밀번호를 입력해주세요.\\n※백도어 그런거 없습니다※\\n입력형식:\\n계정:(계정):비번:(비번)&quot;);<br />if(msg.startsWith(&quot;계정:&quot;)){<br />acont=msg.split(&quot;:&quot;);<br />account.push(acount[1]);<br />password.push(acount[3]);<br />replier.reply(&quot;자스키:&quot;+jskey+&quot;계정:&quot;+account+&quot;비번:&quot;+password);<br />}<br />}<br />dks=msg.split(&quot;:&quot;);<br />data=org.jsoup.Jsoup.connect(&quot;http://kalingjs.kro.kr&quot;).get().toString();<br />results=data.replace(/&lt;[^&gt;]+&gt;/g,&apos;&apos;).split(&apos;\\n&apos;);<br />dat=org.jsoup.Jsoup.connect(&quot;http://cryptojs.kro.kr&quot;).get().toString();<br />result=dat.replace(/&lt;[^&gt;]+&gt;/g,&apos;&apos;).split(&apos;\\n&apos;);<br />java.io.File(botpath, &quot;카링&quot;).mkdir();<br />kalingpath=&quot;sdcard/Bots/카링&quot;;<br />java.io.File(kalingpath, &quot;modules&quot;.mkdir();<br />kalinmodulepath=&quot;sdcard/Bots/카링/modules/aling.js&quot;;<br />cryptomodulath=&quot;sdcard/Bots/카링/modules/crypto.js&quot;;<br />FS.write(kalingmodulepath, results);<br />FS.write(cryptomodulepath, result);<br />java.io.File(kalingpath, &quot;DebugRoom&quot;).mkdir();<br />replier.reply(&quot;성공&quot;);<br />kalingjs=&quot;sdcard/Bots/카링/카링.js&quot;;<br />kalingjson=&quot;sdcard/Bots/카링/bot.json&quot;;<br />FS.write(kalingjson, &quot;{\\n \\&quot;main\\&quot;: \\&quot;카링.js\\&quot;,\\n \\&quot;option\\&quot;: {\\n \\&quot;apiLevel\\&quot;: 1,\\n \\&quot;useUnifiedParams\\&quot;: false,\\n\\&quot;useBabel\\&quot;: false\\n \\}\\n}&quot;); st kalingModule = require(\\&apos;kaling\\&apos;).Kakao();\\nconst Kakao = new kalingModule;\\nKakao.init(\\&apos;&quot;+jskey+&quot;\\&apos;);\\nKakao.login(\\&apos;&quot;+account+&quot;\\&apos;,\\&apos;&quot;+password+&quot;\\&apos;);\\nfunction response(room, msg, sender, isGroupChat, replier, imageDB, packageName) { \\nif(msg==\\&quot;&quot;+dks[1]+&quot;\\&quot;){\\nKakao.send(room, \\n{ \\n\\&quot;link_ver\\&quot;: \\&quot;4.0\\&quot;, \\n\\&quot;template_object\\&quot;:\\n{\\n\\&quot;object_type&quot;: \\&quot;feed\\&quot; ,\\n\\&quot;button_title\\&quot;: \\&quot;&quot;temple2]+&quot;\\&quot;, \\n\\n\\&quot;content\\&quot;: {\\n\\&quot;title\\&quot;: \\&quot;&quot;+templete[1]+&quot;\\&quot;, \\n\\&quot;image_url\\&quot;: \\&quot;&quot;+templete[5]+&quot;\\&quot;, \\n\\&quot;link\\&quot;: \\n{\\n\\&quot;web_url\\&quot;: \\&quot;&quot;+templete[3]+&quot;\\&quot;,\\n\\&quot;mobile_web_url\\&quot;: \\&quot;&quot;+templete[4]+&quot;\\&quot;\\n},\\n\\&quot;description\\&quot;: \\&quot;&quot;+templete[6]+&quot;\\&quot; \\n},\\n\\n\\&quot;buttons\\&quot;: [\\n{ \\n\\&quot;title\\&quot;: \\&quot;&quot;+templete[2]+&quot;\\&quot;, \\n\\&quot;link\\&quot;: \\n{ \\n\\&quot;web_url\\&quot;: \\&quot;&quot;+templete[3]+&quot;\\&quot;, \\n\\&quot;mobile_web_url\\&quot;: \\&quot;&quot;+templete[4]+&quot;\\&quot; \\n}\\n}\\n] \\n}\\n}\\n);\\n}\\n}&quot;);*/<br />}else if(msg.startsWith(&quot;!소스파싱:&quot;)){<br />q=msg.split(&quot;:&quot;);<br />java.io.File(botpath, &quot;파싱&quot;).mkdir();<br />pasingpath=&quot;sdcard/Bots/파싱&quot;;<br />java.io.File(pasingpath, &quot;DebugRoom&quot;).mkdir();<br />java.io.File(pasingpath, &quot;modules&quot;).mkdir();<br /><br />}<br />if(msg==&quot;!소스메이커 도움말&quot;){<br />replier.reply(&quot;--------------------------------------------\\n소스메이커 도움말\\n--------------------------------------------\\n소스메이커 V2.0\\n--------------------------------------------가능한것:인사봇,태그(단순)\\n--------------------------------------------형식:!소스태그:(말한다면에 들어갈부분):(태그)\\n!패치노트로 패치노트확인가능\\n태그는 [시계],[보낸사람]&lt;==이것외에도 많음(!태그), 태그를 쓰지않을시\\n!소스:으로 시작\\n미니게임일시 !소스미니게임:~~:~~\\nspecial thanks:zz,마일로&quot;);<br />FS.write(lpath, &quot;이 소스메이커의 주인은 활동명 마동석입니다.&quot;);<br />}<br />if(msg==&quot;!패치노트&quot;){<br />replier.reply(&quot;패치노트입니다.\\n?월??일 개발시작\\n6월19일 태그제작\\n6월20일 태그제작오류:토스트,알림창\\n6월21일 토스트개발,미니게임 업다운추가\\n6월 27일 FileStream이용하여 js도 출력(경로-sdcard(내장메모리))\\n6월28일쯤-봇을 만들어줌\\n6월29일-파싱소스문제발생, 제거, 주석만듦&quot;);<br />}<br />if(msg==&quot;!태그&quot;){<br />replier.reply(&quot;대부분 닼토님의 초록봇에서 영감을 얻어 제작되었습니다.\\n[시계]&lt;==시간을 알려줍니다.\\n[보낸사람]&lt;==보낸사람을 말합니다.\\n[방]&lt;==방을 말합니다.\\n[월]&lt;==월을 말합니다.&quot;);<br />}<br />}<br />/**<br />made by<br />신봉선==마동석<br />*/</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000053D600000000",
+            "head": "카톡봇",
+            "headId": 83,
+            "id": 21462,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 311,
+            "refArticleId": 21462,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "깃헙에 올리려다 (귀차니즘 땜에)못올려서 여기다 올립니다아",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595226290490,
+            "writer": {
+                "id": "janghs307",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마동석"
+            }
+        },
+        "articleId": 21462,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "카링관련글일시, 지웁죠",
+                    "id": 97342972,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97342972,
+                    "updateDate": 1595226377000,
+                    "writer": {
+                        "id": "janghs307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "마동석"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 97344767,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MjBfOTQg/MDAxNTk1MjI3NzA0Nzc2.Te3FwoqdkO_ODwTiliWkDVGcfwrRIzsAEMacQnNcIpYg.JcXTChEzxKL2Hocp1nMmA305Si7QJMEgKT56vRS5XIsg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 763,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA3MjBfOTQg/MDAxNTk1MjI3NzA0Nzc2.Te3FwoqdkO_ODwTiliWkDVGcfwrRIzsAEMacQnNcIpYg.JcXTChEzxKL2Hocp1nMmA305Si7QJMEgKT56vRS5XIsg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA3MjBfOTQg/MDAxNTk1MjI3NzA0Nzc2.Te3FwoqdkO_ODwTiliWkDVGcfwrRIzsAEMacQnNcIpYg.JcXTChEzxKL2Hocp1nMmA305Si7QJMEgKT56vRS5XIsg.JPEG/externalFile.jpg",
+                        "width": 1125
+                    },
+                    "refId": 97344767,
+                    "updateDate": 1595227705000,
+                    "writer": {
+                        "id": "joonsama2004",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                        },
+                        "nick": "EliF"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

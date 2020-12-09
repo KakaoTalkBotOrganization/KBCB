@@ -1,0 +1,168 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-f525efc5-dfb5-11ea-a9fc-89755f12e43e\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76935785-dfba-11ea-a9fc-d9813f1f64bc\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76935784-dfba-11ea-a9fc-47e2299f378b\">*DB 접근이 가능한 사람만 사용하실 수 있는 소스입니다.*</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76937e97-dfba-11ea-a9fc-17ca76225618\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76935786-dfba-11ea-a9fc-83d74124c4a5\">원래</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76937e99-dfba-11ea-a9fc-652b040b0743\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76937e98-dfba-11ea-a9fc-0f2a64caafda\">~~WHERE chat_id&#x3D;~~</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76937e9b-dfba-11ea-a9fc-73ab5bd1fbef\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76937e9a-dfba-11ea-a9fc-3f1906b3ff09\">를 쓰면 되지만 오류가 많아 직접 만든 소스입니다..</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76937e9d-dfba-11ea-a9fc-f5e1e014d3cc\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76937e9c-dfba-11ea-a9fc-79dc30e133c6\">DB.getChatJson(count)은 getChatJson(count)함수를 가져온 것 뿐이고요 보면 아시다시피 굉장히 비효율적인 소스인건 팩트입니다..</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76937e9f-dfba-11ea-a9fc-cb92ea9bdef5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76937e9e-dfba-11ea-a9fc-c703efd3b26e\">좀 더 효율적인 소스를 만들고 싶은 것은 사실이나.. ㅈ번째 줄에서 말했던 구문 오류가 자주나서 모든 채팅의 _id(채팅 순서) 최대값(즉, 가장 최근에 온 채팅번호)을 가져와서 getChatJson(count)을 통해 모든 채팅기록을 가져오고, getChatJson(count)는 객체이므로 이 값의 &quot;chat_id&quot;의 값이 자신이 지정한 chat_id일 시, push하여 특정 chat_id를 가진 값에서의 채팅기록을 가져올수 있는 것입니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76937ea1-dfba-11ea-a9fc-79ae153d78cb\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76937ea0-dfba-11ea-a9fc-db03337e8540\">또한 함수이름은 그냔 임의로 지정한 것입니다. 똑같이 getChatJson을 하면 같은 이름의 함수가 있는 것이라 혼돈이 올 수 있기 때문입니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-76937ea3-dfba-11ea-a9fc-d36f7ef9c77a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-76937ea2-dfba-11ea-a9fc-bdbc1b675ae8\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5b5-dfba-11ea-a9fc-c3239ce3993e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5b4-dfba-11ea-a9fc-81a9d2317367\">function getChatJsonchat(count, chat_id) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5b7-dfba-11ea-a9fc-9b3b7c124f9f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5b6-dfba-11ea-a9fc-078d1844d41f\">    var re &#x3D; [], res &#x3D; [];</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5b9-dfba-11ea-a9fc-27856c3c0b99\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5b8-dfba-11ea-a9fc-f1e9a8ebbd99\">    let b &#x3D; db.rawQuery(&quot;SELECT * FROM chat_logs&quot;, null);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5bb-dfba-11ea-a9fc-fb1738d4ba65\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5ba-dfba-11ea-a9fc-d936d380683b\">    b.moveToLast();</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5bd-dfba-11ea-a9fc-7bc33c966b98\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5bc-dfba-11ea-a9fc-df7a6053a3b3\">    a &#x3D; b.getString(0);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5bf-dfba-11ea-a9fc-39f7bd0d3c46\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5be-dfba-11ea-a9fc-6b0640a392aa\">    result &#x3D; DB.getChatJson(a);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5c1-dfba-11ea-a9fc-fd5569c6570e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5c0-dfba-11ea-a9fc-a76a2244ddca\">    for (i &#x3D; 0; i &lt; a; i++) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693a5c3-dfba-11ea-a9fc-ed03ca164950\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693a5c2-dfba-11ea-a9fc-713362b36247\">        if (result[i][&quot;chat_id&quot;] &#x3D;&#x3D; chat_id) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693cbd5-dfba-11ea-a9fc-a927ea103c1e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693cbd4-dfba-11ea-a9fc-3931e302b106\">            res.push(result[i]);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693cbd7-dfba-11ea-a9fc-a156f1b1580e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693cbd6-dfba-11ea-a9fc-e3d93c904708\">        }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693cbd9-dfba-11ea-a9fc-f3d88f90266a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693cbd8-dfba-11ea-a9fc-e9254887d462\">    }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693cbdb-dfba-11ea-a9fc-47fb87dfb28f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693cbda-dfba-11ea-a9fc-4da389ec0288\">    for (i &#x3D; 0; i &lt; count; i++) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693cbdd-dfba-11ea-a9fc-fbd09c4046cb\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693cbdc-dfba-11ea-a9fc-7b21a00918c4\">        re.push(res[i]);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693cbdf-dfba-11ea-a9fc-bb9c9b9b1600\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693cbde-dfba-11ea-a9fc-2517ed3ef43d\">    }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693cbe1-dfba-11ea-a9fc-bb33bcffb466\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693cbe0-dfba-11ea-a9fc-03fdd6cc9eac\">    return re;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693f2f3-dfba-11ea-a9fc-39134c791c53\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693f2f2-dfba-11ea-a9fc-c9bbbfdaef58\">}</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693f2f5-dfba-11ea-a9fc-0bd2407c6cb8\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693f2f4-dfba-11ea-a9fc-c37e0a613c5f\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693f2f7-dfba-11ea-a9fc-19fdfbe31fee\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693f2f6-dfba-11ea-a9fc-6f3543461c7e\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693f2f9-dfba-11ea-a9fc-55b3e9706982\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693f2f8-dfba-11ea-a9fc-8777d81a8e06\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7693f2fb-dfba-11ea-a9fc-5f42ae1fba9d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7693f2fa-dfba-11ea-a9fc-cb723369c560\">p.s. 현재 DB봇이 이보에 걸려있습니다ㅜㅜ ssoh173810 친추 및 도배 해주시면 감사하겠습니다ㅜㅜ</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000059CE00000000",
+            "id": 22990,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 208,
+            "refArticleId": 22990,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "getChatJson(count,chat_id) 구현",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1597579479327,
+            "writer": {
+                "id": "ssoh1738",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "kiffvincentius"
+            }
+        },
+        "articleId": 22990,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,328 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<p>기본적으로 파일을 쓰는 것은 알파님께서 공유해주신 소스에 있긴 한데<br />제가 만들고 싶은 기능은<br /><br />건의문이 여러개니 그 파일들에 1, 2, 3...처럼순서대로 번호(아이디)를 매기고 만약 특정 아이디를 가지고 있는 파일을 삭제하면 그 파일을 뺀 나머지 파일들이 빠진 번호 없이 다시 1, 2, 3...순서대로 번호를 매기는 기능을 만들고 싶습니다..<br /><br />그리고 텍스트 파일의 이름을 가져오는 방법도 알고 싶습니다.<br /><br /><br />밑에는 소스입니다.<br />const scrpitName = &quot;test.js&quot;;<br />const sdcard_f = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();<br />const nn = &quot;\\u200b&quot;.repeat(500)<br />var 관리자 = [];<br />var 로그인관리자 = &quot;DEBUGSENDER&quot;;<br />var 관리자수=0;<br />var cnt=0;<br /><br />var 건의문 = &quot;/sdcard/katalkbot/Database/suggestions/&quot;;<br />var 건의문목록 = &quot;/sdcard/katalkbot/Database/suggestions/&quot;;<br /><br />var FS = FileStream;<br />var m=0;<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />    try {<br />        if(!msg.indexOf(&quot;/건의문 작성 &quot;)){<br />            var GSG = msg.split(&quot;/건의문 작성 &quot;)[1].split(&quot;, &quot;)[0];<br />            cnt++;<br />            var amolla = msg.split(&quot;, &quot;)[1];<br />            var editor = sender;<br />            var 시간 = new Date().toLocaleString();<br />            var 시간2 = 시간.replace(&quot;GMT+09:00&quot;,&quot;&quot;);<br /><br />            //FS.append(건의문 + &quot;목록.txt&quot;, &quot;\\n&quot;+GSG+&quot;&quot;);<br />            FS.write(건의문 + cnt+&quot;::| &quot;+GSG + &quot;.txt&quot; , &quot;[&quot; + editor + &quot;]님의 글&quot; + &quot;\\n&quot; + 시간2 + &quot;작성\\n&quot; + amolla);<br /><br />            replier.reply(&quot;작성되었습니다.&quot;)<br />        }<br />        if(sender == 관리자 &amp;&amp; msg.indexOf(&quot;/건의문 삭제 &quot;)!=-1){<br />            var gesigul = msg.substr(8);<br />            FS.remove(건의문 + cnt+&quot;::| &quot;+gesigul + &quot;.txt&quot;)<br />            replier.reply(&quot;삭제되었습니다.&quot;)<br />            cnt--;<br />        }<br /><br />        if(!msg.indexOf(&quot;/건의문 보기 &quot;)){<br />            var gsgn = msg.substr(8);<br />            var gny = FS.read(건의문 + gsgn + &quot;.txt&quot;)<br />            replier.reply(&quot;전체보기를 눌러주세요!\\n&quot; + &quot;\\u200b&quot;.repeat(500) + &quot;\\n&quot; + gny)<br />        }<br /><br />        if(msg == &quot;/관리자&quot;&amp;&amp;sender == 로그인관리자&amp;&amp;관리자수== 0){<br />            관리자.push(sender);<br />            관리자수++;<br />            replier.reply(&quot;인증되었습니다.&quot;)<br />        }<br />        else if(msg == &quot;/관리자&quot; &amp;&amp; 관리자수==1)<br />            replier.reply(&quot;이미 관리자 인증을 하셨습니다.&quot;)<br /><br />        if(msg == &quot;/관리자 해제&quot;){<br />            index = 관리자.indexOf(sender);<br />            관리자.splice(index, 1);<br />            replier.reply(&quot;해제되었습니다.&quot;)<br />        }<br /><br />        if(msg == &quot;/관리자리스트&quot;)<br />            replier.reply(&quot;&quot; + 관리자.join(&quot;\\n&quot;))<br />        if(msg == &quot;/목록&quot;){<br />            var dir = new java.io.File(sdcard_f + &quot;/katalkbot/Database/suggestions/&quot;);<br />            var index_f = &quot;&quot;<br />            var files = dir.list();<br />            files.sort();<br />            for (var i in files)<br />                index_f += files[i];<br />            var wordList = index_f.replace(/.txt/g, &quot;\\n&quot;);<br />            replier.reply(&quot;[ 선정봇 ]\\n건의문 목록입니다.\\n&quot;+ nn + &quot;현재 건의문 수: &quot;+cnt+&quot;\\n&quot;+wordList);<br />        }<br />    }<br />    catch(e){<br />        replier.reply(&quot;건의문이 존재하지 않습니다.\\nError code: &quot;+e)<br />    }<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000B5A00000000",
+            "id": 2906,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 170,
+            "refArticleId": 2906,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "텍스트 파일을 이용한 건의문(수정)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1559636015623,
+            "writer": {
+                "id": "rk3125gsm",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjJfMjI1/MDAxNTg0ODcxNzkxODIw.G6ERiQ8x4gHN4aSlhG5btBLGGSKmBCTX3aXQpA8Nt0Ig.WDFT8W_jcIFI_ufUY1WNZLLaWxaCYfAAKUss1E_hy9wg.JPEG.rk3125gsm/%25BF%25CF%25BC%25BA%25BA%25BB%2B%25282%2529.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "네넨"
+            }
+        },
+        "articleId": 2906,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "어랏!? 유튜브에서 C언어와 CMD팁 알려주셨던 네넨님이시닷!!!?!??!!!",
+                    "id": 60989111,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "updateDate": 1559641746000,
+                    "writer": {
+                        "id": "pkhpkh031919",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Mcwefo"
+                    }
+                },
+                {
+                    "content": "?????",
+                    "id": 60989492,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "updateDate": 1559642150000,
+                    "writer": {
+                        "id": "rk3125gsm",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjJfMjI1/MDAxNTg0ODcxNzkxODIw.G6ERiQ8x4gHN4aSlhG5btBLGGSKmBCTX3aXQpA8Nt0Ig.WDFT8W_jcIFI_ufUY1WNZLLaWxaCYfAAKUss1E_hy9wg.JPEG.rk3125gsm/%25BF%25CF%25BC%25BA%25BA%25BB%2B%25282%2529.jpg"
+                        },
+                        "nick": "네넨"
+                    }
+                },
+                {
+                    "content": "흑역사를...",
+                    "id": 60989505,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "updateDate": 1559642167000,
+                    "writer": {
+                        "id": "rk3125gsm",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjJfMjI1/MDAxNTg0ODcxNzkxODIw.G6ERiQ8x4gHN4aSlhG5btBLGGSKmBCTX3aXQpA8Nt0Ig.WDFT8W_jcIFI_ufUY1WNZLLaWxaCYfAAKUss1E_hy9wg.JPEG.rk3125gsm/%25BF%25CF%25BC%25BA%25BA%25BB%2B%25282%2529.jpg"
+                        },
+                        "nick": "네넨"
+                    }
+                },
+                {
+                    "content": "앗.. 흑역사 였나요..? 죄송합니답..!",
+                    "id": 60990242,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "replyMember": {
+                        "id": "rk3125gsm",
+                        "nick": "네넨"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-8-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_8.png",
+                        "width": 129
+                    },
+                    "updateDate": 1559643003000,
+                    "writer": {
+                        "id": "pkhpkh031919",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Mcwefo"
+                    }
+                },
+                {
+                    "content": "초등학교때 만든거에요",
+                    "id": 60990260,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "replyMember": {
+                        "id": "pkhpkh031919",
+                        "nick": "Mcwefo"
+                    },
+                    "updateDate": 1559643026000,
+                    "writer": {
+                        "id": "rk3125gsm",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjJfMjI1/MDAxNTg0ODcxNzkxODIw.G6ERiQ8x4gHN4aSlhG5btBLGGSKmBCTX3aXQpA8Nt0Ig.WDFT8W_jcIFI_ufUY1WNZLLaWxaCYfAAKUss1E_hy9wg.JPEG.rk3125gsm/%25BF%25CF%25BC%25BA%25BA%25BB%2B%25282%2529.jpg"
+                        },
+                        "nick": "네넨"
+                    }
+                },
+                {
+                    "content": "저도 당시 네넨님 영상을 보며 배워서..ㅎ 기억에 남았네요.!",
+                    "id": 60990298,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "replyMember": {
+                        "id": "rk3125gsm",
+                        "nick": "네넨"
+                    },
+                    "updateDate": 1559643073000,
+                    "writer": {
+                        "id": "pkhpkh031919",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Mcwefo"
+                    }
+                },
+                {
+                    "content": "감사합니다.. 대학교 가서 유튜브 제대로 할려고요 ㅠ...",
+                    "id": 60990324,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "replyMember": {
+                        "id": "pkhpkh031919",
+                        "nick": "Mcwefo"
+                    },
+                    "updateDate": 1559643105000,
+                    "writer": {
+                        "id": "rk3125gsm",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjJfMjI1/MDAxNTg0ODcxNzkxODIw.G6ERiQ8x4gHN4aSlhG5btBLGGSKmBCTX3aXQpA8Nt0Ig.WDFT8W_jcIFI_ufUY1WNZLLaWxaCYfAAKUss1E_hy9wg.JPEG.rk3125gsm/%25BF%25CF%25BC%25BA%25BA%25BB%2B%25282%2529.jpg"
+                        },
+                        "nick": "네넨"
+                    }
+                },
+                {
+                    "content": "그러시군요..  힘내세요! 응원합니다 ㅎㅎ",
+                    "id": 60990360,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60989111,
+                    "replyMember": {
+                        "id": "rk3125gsm",
+                        "nick": "네넨"
+                    },
+                    "updateDate": 1559643148000,
+                    "writer": {
+                        "id": "pkhpkh031919",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Mcwefo"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

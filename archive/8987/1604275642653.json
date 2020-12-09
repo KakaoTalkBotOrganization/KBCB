@@ -1,0 +1,400 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 27,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">채팅로그를 저장합니다.</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">&nbsp; rooms에 방이름적으시면 되구요</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">메신저봇R에서 작동됩니다</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">json파일형식으로 각방이름 로그 저장합니다.</span></font></b></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>점점 새로운걸 배워가면서 소스가 노가다를 덜하네요ㅎ</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>(소스 한번 바꾼건 안비밀...)</b></span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>참,이 소스는 채팅로그확인소스와 세트로 돌아갑니다.</b></span></font></div><div><br /></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><div><span style=\"font-size: 17.3333px;\"><b>var rooms=[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;e&quot;,&quot;도배&quot;];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var data=[];</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>var saving=false;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>String.prototype.replaceAll = function (org, dest) {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; return this.split(org).join(dest);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>const folder = new java.io.File(sdcard + &quot;/대화저장/&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>folder.mkdirs();//sd카드에 학습 폴더를 생성합니다&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>const blank = &quot;\\u200b&quot;.repeat(501);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function savej(folderName, fileName, dta) { //파일 읽기 함수 제작&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; try</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; FileStream.write(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName,JSON.stringify(dta));</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; return true;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; catch(e)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; { return false;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function readj(folderName, fileName) { //파일 읽기 함수 제작&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; try{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; return JSON.parse(FileStream.read(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName));</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; catch(e)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;return &quot;error&quot;;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function filecreate(folderName, fileName)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;var p=new java.io.File(&quot;sdcard/&quot;+folderName+&quot;/&quot;+fileName);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;return p.createNewFile();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function 저장(msg,room,sender,hashcode)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var today=new Date();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var year=today.getFullYear();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var month=today.getMonth()+1;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(month&lt;10){month=&quot;0&quot;+month;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var day=today.getDate();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(day&lt;10){day=&quot;0&quot;+day;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var hours=today.getHours();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var min=today.getMinutes();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var sec= today.getSeconds();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var dat=year+&quot;.&quot;+month+&quot;.&quot;+day;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; var time=hours+&quot;:&quot;+min+&quot;:&quot;+sec;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; if(data[room]==undefined||data[room]==&quot;&quot;)data[room]=readj(&quot;대화저장&quot;,room+&quot;v2.txt&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; if(data[room][&quot;msgs&quot;]==undefined){data[room][&quot;msgs&quot;]=[];}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; data[room][&quot;msgs&quot;].push({&quot;msg&quot;:msg,&quot;day&quot;:dat,&quot;time&quot;:time,&quot;sender&quot;:sender,&quot;hashcode&quot;:hashcode});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;savej(&quot;대화저장&quot;,room+&quot;v2.txt&quot;,data[room]);&nbsp; &nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp;}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(rooms.indexOf(room)!=-1)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; {&nbsp; while(saving)</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; {}</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;if(filecreate(&quot;대화저장&quot;,room+&quot;v2.txt&quot;))</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;{</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;savej(&quot;대화저장&quot;,room+&quot;v2.txt&quot;,{});</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;Json파일생성&quot;);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; }&nbsp;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; saving=true;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; var hashcode=java.lang.String(ImageDB.getProfileImage()).hashCode();</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 저장(msg,room,sender,hashcode);</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; saving=false;</b></span></div><div><span style=\"font-size: 17.3333px;\"><b>&nbsp; }</b></span></div><div><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 17.3333px;\"><b>}</b></span></div></div></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000231B00000000",
+            "id": 8987,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 159,
+            "refArticleId": 8987,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "채팅로그 저장소스입니다",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1576324272187,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 8987,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "var room에 d가 빠졌닼ㅋ",
+                    "id": 75839561,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75839561,
+                    "updateDate": 1576324696000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "d에서 나와서요ㅋㅋㅋㅋ",
+                    "id": 75839601,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75839561,
+                    "updateDate": 1576324744000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "명령어가 뭐죠??",
+                    "id": 75839791,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75839791,
+                    "updateDate": 1576324940000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "저장하는 소스..",
+                    "id": 75840011,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75839791,
+                    "updateDate": 1576325141000,
+                    "writer": {
+                        "id": "jeongyeongjun9",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "비브라늄 수저"
+                    }
+                },
+                {
+                    "content": "앜ㅋ 소스 두개가 같이 올라오니까 했갈리넼ㅋ",
+                    "id": 75840071,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75839791,
+                    "replyMember": {
+                        "id": "jeongyeongjun9",
+                        "nick": "비브라늄 수저"
+                    },
+                    "updateDate": 1576325209000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "2개가 한세트에요\r\n둘다 있어야 작동하는소스ㅋ",
+                    "id": 75840092,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75839791,
+                    "replyMember": {
+                        "id": "smleeclan",
+                        "nick": "minimcpe0624"
+                    },
+                    "updateDate": 1576325232000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "근데 왜 로구 저장 소스는 복붙 해도 되는데 로그 소스는 복붙하면 컴파일이 안돼죠?",
+                    "id": 75840325,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75839791,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1576325457000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "혹시나해서 말인데요...\r\n전부 복사되신게 맞나요?\r\n한번에 복사되던가 모르겠네요",
+                    "id": 75840538,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75839791,
+                    "replyMember": {
+                        "id": "smleeclan",
+                        "nick": "minimcpe0624"
+                    },
+                    "updateDate": 1576325686000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "감사합니다!!\r\n나눠서 복사하니 되네욥!!",
+                    "id": 75840672,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75839791,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1576325835000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                },
+                {
+                    "content": "여기 뭐 파일 같은거 생성해야 저장이 되나요??",
+                    "id": 76159475,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 76159475,
+                    "updateDate": 1576672438000,
+                    "writer": {
+                        "id": "smleeclan",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "minimcpe0624"
+                    }
+                }
+            ],
+            "last": {
+                "id": 76935103,
+                "refId": 76935103
+            },
+            "next": {
+                "id": 76162443,
+                "refId": 76159475
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

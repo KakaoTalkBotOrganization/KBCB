@@ -1,0 +1,439 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 38,
+            "contentElements": [],
+            "contentHtml": "<p><span style=\"font-size: 17.3333px;\"><a href=\"https://saroro.develope.dev/omokTool.php\" target=\"_blank\" title=\"새창으로 열림\">https://saroro.develope.dev/omokTool.php를</a> 이용했습니다(제 api)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">showImage 부분에 카링으로 보내는거 만드시면 됩니다</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\"><br /></span></p><p><span style=\"font-size: 17.3333px;\"><a href=\"https://cafe.naver.com/nameyee/21931\" target=\"_blank\">https://cafe.naver.com/nameyee/21931</a></span></p><p><br /></p><p>업데이트</p><p><br /></p><p><br /></p><p><br /></p><p><span style=\"font-size: 17.3333px;\">녹는 앱님 감사드립니다 덕분에 오류를 찾았네요</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"color:#1565C0;\">function</span> Omok(bp,wp){<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> stoneList = [];<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> blackPlayer = bp;<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> whitePlayer = wp;<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">var</span> isBlackTurn = <span style=\"color:#1565C0;\">true</span>;<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">const</span> code = <span style=\"color:#FFA000;\">&quot;abcdefghijklmnop&quot;</span>;<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">function</span> resetBoard(){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stoneList = [];<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">function</span> getInfo(){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> result = org.jsoup.Jsoup.connect(<span style=\"color:#FFA000;\">&quot;<a href=\"https://saroro.develope.dev/omokTool.php\" target=\"_blank\">https://saroro.develope.dev/omokTool.php</a>&quot;</span>).requestBody(JSON.stringify({<span style=\"color:#FFA000;\">&quot;stone&quot;</span> : stoneList, <span style=\"color:#FFA000;\">&quot;showForbid&quot;</span> : <span style=\"color:#1565C0;\">true</span>&nbsp;&nbsp; })).post().text();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> JSON.parse(result);<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">function</span> setPlayer(b,w){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; blackPlayer = b;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; whitePlayer = w;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">function</span> showImage(room, url){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#8BC34A;\">/*카링 부분은 직접 짜세요 */</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">function</span> setStone(user,room, x,y){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> turnUser = isBlackTurn ? blackPlayer : whitePlayer;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(turnUser !== user ||!x||!y){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#1565C0;\">false</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> checker = JSON.stringify([x,y]); <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">for</span>(<span style=\"color:#1565C0;\">var</span> i <span style=\"color:#1565C0;\">in</span> stoneList){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>( checker == JSON.stringify( stoneList[i] )){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#FFA000;\">&quot;이미 돌이 있습니다&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stoneList.push([x,y]);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">var</span> result = getInfo();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">var</span> res = result.status;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">var</span> url = result.image;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> te = isNaN(x) ? x : code[x-<span style=\"color:#BF360C;\">1</span>];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> text =<span style=\"color:#FFA000;\">&quot;&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> win = <span style=\"color:#1565C0;\">false</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">switch</span>(res){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">case</span> <span style=\"color:#FFA000;\">&quot;Invaild&quot;</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stoneList.pop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#FFA000;\">&quot;잘못된 명령입니다&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">case</span> <span style=\"color:#FFA000;\">&quot;Occupied&quot;</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stoneList.pop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#FFA000;\">&quot;이미 돌이 있습니다&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">case</span> <span style=\"color:#FFA000;\">&quot;6&quot;</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stoneList.pop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#FFA000;\">&quot;6 목입니다&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">case</span> <span style=\"color:#FFA000;\">&quot;44&quot;</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stoneList.pop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#FFA000;\">&quot;44 입니다&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">case</span> <span style=\"color:#FFA000;\">&quot;33&quot;</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stoneList.pop();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#FFA000;\">&quot;33 입니다&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">case</span> <span style=\"color:#FFA000;\">&quot;bWins&quot;</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text= blackPlayer+<span style=\"color:#FFA000;\">&quot;의 승리&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; win = <span style=\"color:#1565C0;\">true</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">break</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">case</span> <span style=\"color:#FFA000;\">&quot;wWins&quot;</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text= whitePlayer+<span style=\"color:#FFA000;\">&quot;의 승리&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; win =<span style=\"color:#1565C0;\">true</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">break</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">default</span>:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text = te+<span style=\"color:#FFA000;\">&quot;&quot;</span>+y+<span style=\"color:#FFA000;\">&quot;에 착수&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; isBlackTurn = !isBlackTurn;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; showImage(room, win ? url.replace(/\\d/g,<span style=\"color:#FFA000;\">&quot;_&quot;</span>) : url);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> text;</p><p dir=\"ltr\">&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span>{ <span style=\"color:#FFA000;\">&quot;setStone&quot;</span> : (user,room, x,y) =&gt; setStone(user,room, x,y),<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#FFA000;\">&quot;reset&quot;</span> : _=&gt;resetBoard(),<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#FFA000;\">&quot;setPlayer&quot;</span> : (b,w) =&gt; setPlayer(b,w),<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#FFA000;\">&quot;showImage&quot;</span> : (room, url) =&gt; showImage(room,url)<br />&nbsp;&nbsp;&nbsp; };&nbsp;</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">}<br /><span style=\"color:#1565C0;\">let</span> admin =<span style=\"color:#FFA000;\">&quot;&quot;</span>;<br /><span style=\"color:#1565C0;\">let</span> black =<span style=\"color:#FFA000;\">&quot;&quot;</span>;<br /><span style=\"color:#1565C0;\">let</span> white = <span style=\"color:#FFA000;\">&quot;&quot;</span>;<br /><span style=\"color:#1565C0;\">let</span> state = <span style=\"color:#BF360C;\">0</span>;<br /><span style=\"color:#1565C0;\">let</span> game = <span style=\"color:#1565C0;\">new</span> Omok(black,white);<br /><span style=\"color:#1565C0;\">function</span> response(room, msg, sender, isGroupChat, replier, ImageDB){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(msg ==<span style=\"color:#FFA000;\">&quot;.오목 방&quot;</span>){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(state === <span style=\"color:#BF360C;\">0</span>){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#FFA000;\">&apos;방을 만들었습니다&nbsp; .참가 를 입력해 참가하세요&apos;</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; admin = sender;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state = <span style=\"color:#BF360C;\">1</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">else</span>{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#FFA000;\">&quot;이미 누군가 방을 팠네요 .참가 를 입력하세요&quot;</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">else</span> <span style=\"color:#1565C0;\">if</span>(msg ==<span style=\"color:#FFA000;\">&quot;.취소&quot;</span> &amp;&amp; state ==<span style=\"color:#BF360C;\">1</span>){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#FFA000;\">&quot;취소했네요&quot;</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state = <span style=\"color:#BF360C;\">0</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; admin =<span style=\"color:#FFA000;\">&quot;&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">else</span> <span style=\"color:#1565C0;\">if</span>(msg ==<span style=\"color:#FFA000;\">&quot;.참가&quot;</span> &amp;&amp; admin != sender&amp;&amp;state==1){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(Math.random() &lt;<span style=\"color:#BF360C;\">0</span><span style=\"color:#BF360C;\">.</span><span style=\"color:#BF360C;\">5</span> ){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; black = sender;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; white = admin;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">else</span>{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; black = admin;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; white = sender;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; game.setPlayer(black,white);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; game.showImage(room,<span style=\"color:#FFA000;\">&quot;<a href=\"https://saroro.develope.dev/omok.php/\" target=\"_blank\">https://saroro.develope.dev/omok.php/</a>&quot;</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#FFA000;\">&quot;흑:&quot;</span>+black+<span style=\"color:#FFA000;\">&apos;\\n백:&apos;</span>+white+&quot;\\n이제 시작합니다&quot;);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state =<span style=\"color:#BF360C;\">2</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(state == <span style=\"color:#BF360C;\">2</span> &amp;&amp;msg.startsWith(<span style=\"color:#FFA000;\">&quot;.&quot;</span>)&amp;&amp; (sender == black || sender ==white)){<br />&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> cmd = msg.replace(<span style=\"color:#FFA000;\">&quot;.&quot;</span>, <span style=\"color:#FFA000;\">&quot;&quot;</span>).split(<span style=\"color:#FFA000;\">&quot;,&quot;</span>)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">let</span> res = game.setStone(sender,room,cmd[<span style=\"color:#BF360C;\">0</span>],cmd[<span style=\"color:#BF360C;\">1</span>]);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(res){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(res);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(res.includes(<span style=\"color:#FFA000;\">&quot;의 승리&quot;</span>)){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; game.reset();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state = <span style=\"color:#BF360C;\">0</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; black = <span style=\"color:#FFA000;\">&quot;&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; white = <span style=\"color:#FFA000;\">&quot;&quot;</span>;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; <br />}</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">카카오톡 봇 오목 소스입니다.</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">메봇에서는 정상 실행되는거 확인했습니다. 초록봇은 모르겠네요 ㅠㅠㅠ</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">버그나 오류 있으면 댓글로 부탁드리겠습니다</p><p><span style=\"font-size: 17.3333px;\"></span></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004FA900000000",
+            "id": 20393,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 839,
+            "refArticleId": 20393,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "오목 api를 이용한 카톡 봇 오목 소스(카링은 알아서)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1593259873900,
+            "writer": {
+                "id": "hbhj4633",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "사로로"
+            }
+        },
+        "articleId": 20393,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 94991707,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94991707,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1593260051000,
+                    "writer": {
+                        "id": "leo8689123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTVfMjAy/MDAxNjAyNzU2MzM5Mjk0.VCUdAzc_EcgSwgnDBjS9sco0TWE-F4Y-_wTYF_1lDSEg.XrVK6wBjLbhXuyPC6IGGOVEza1lW2NLfft-HIDuL3Egg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "뜨거운 앱"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 94991728,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94991728,
+                    "sticker": {
+                        "height": 105,
+                        "id": "kin-31-145-150",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/kin/original_31.png",
+                        "width": 101
+                    },
+                    "updateDate": 1593260066000,
+                    "writer": {
+                        "id": "choho0327",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MTZfMTEg/MDAxNTkyMjM4ODI5NjU2.Q8dwixhud4Izb3cWGmGI9aXV7iamN1oBkInKT5guiKgg.NiwRar-HWe1ErnKq4v8FyAlfaRPb358-weeQ_H8ao9og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "윤동원"
+                    }
+                },
+                {
+                    "content": "ㄷㄷ",
+                    "id": 94991729,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94991729,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1593260067000,
+                    "writer": {
+                        "id": "hohoho903",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTZfMTE5/MDAxNjAwMjEyNTg5NTQz.MHHhGlh72dSebjhqTTAeeBClIRue0xCv6Much5qghIEg.ZNftNds_3oU7bkY3ebc9YpTznuvjqxCDQ-csSMlNi6gg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ACTIVE"
+                    }
+                },
+                {
+                    "content": "ㅎㄷㄷ",
+                    "id": 94991785,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94991785,
+                    "updateDate": 1593260104000,
+                    "writer": {
+                        "id": "applle9",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjJfMTg1/MDAxNTkyODMwNjkwODU3.1RZ5A9XVmOZ2w-MTZRiVEDfMGlvmE6blFtylA9eULGog.F1hA8QnkJYLslIg-Kxj8ZXjpbniZZdb_5pTnOZF-TkMg.JPEG/1592830635224.jpg"
+                        },
+                        "nick": "리류"
+                    }
+                },
+                {
+                    "content": "room is not defined",
+                    "id": 94996331,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94996331,
+                    "updateDate": 1593263241000,
+                    "writer": {
+                        "id": "app6460",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200429_60/app6460_15880928481294n5kD_PNG/image.png"
+                        },
+                        "nick": "녹는 앱"
+                    }
+                },
+                {
+                    "content": "?? 몇번줄에서 뜨나요??",
+                    "id": 94996550,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94996331,
+                    "updateDate": 1593263353000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "제가 잘못 설정한걸까요",
+                    "id": 94996918,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MjdfMjM1/MDAxNTkzMjYzNTA0ODIz.MddyCcDOIiNqIPoeLSVP8eP6nSYA7boGsM_ZWsy6zYwg.lqrqOK4-AiOPaoLta60NbdJAN0DCnZsC7v0yCNn1wNMg.JPEG/20200627_221131.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "20200627_221131.jpg",
+                        "height": 454,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA2MjdfMjM1/MDAxNTkzMjYzNTA0ODIz.MddyCcDOIiNqIPoeLSVP8eP6nSYA7boGsM_ZWsy6zYwg.lqrqOK4-AiOPaoLta60NbdJAN0DCnZsC7v0yCNn1wNMg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA2MjdfMjM1/MDAxNTkzMjYzNTA0ODIz.MddyCcDOIiNqIPoeLSVP8eP6nSYA7boGsM_ZWsy6zYwg.lqrqOK4-AiOPaoLta60NbdJAN0DCnZsC7v0yCNn1wNMg.JPEG/20200627_221131.jpg",
+                        "width": 1080
+                    },
+                    "refId": 94996331,
+                    "replyMember": {
+                        "id": "hbhj4633",
+                        "nick": "사로로"
+                    },
+                    "updateDate": 1593263536000,
+                    "writer": {
+                        "id": "app6460",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200429_60/app6460_15880928481294n5kD_PNG/image.png"
+                        },
+                        "nick": "녹는 앱"
+                    }
+                },
+                {
+                    "content": "소스 댓글로 적어주실 수 있나요?",
+                    "id": 94997209,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94996331,
+                    "replyMember": {
+                        "id": "app6460",
+                        "nick": "녹는 앱"
+                    },
+                    "updateDate": 1593263678000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "function Omok(bp, wp) {\n  let stoneList = [];\n  let blackPlayer = bp;\n  let whitePlayer = wp;\n  var isBlackTurn = true;\n  const code = \"abcdefghijklnmop\";\n  function resetBoard() {\n    stoneList = [];\n  }\n  function getInfo() {\n    let result = org.jsoup.Jsoup.connect(\"https://saroro.develope.dev/omokTool.php\").requestBody(JSON.stringify({\n  \"stone\": stoneList, \n  \"showForbid\": true})).post().text();\n    return JSON.parse(result);\n  }\n  function setPlayer(b, w) {\n    blackPlayer = b;\n    whitePlayer = w;\n  }\n  function showImage(room, url) {\n    /*카링 부분은 직접 짜세요 */\n\n    Kakao.send(room, {\n  \"link_ver\": \"4.0\", \n  \"template_id\": (24256), \n  \"template_args\": {\n  THU: url}}, \"custom\");\n  }\n  function setStone(user, x, y) {\n    let turnUser = isBlackTurn ? blackPlayer : whitePlayer;\n    if (turnUser !== user || !x || !y) {\n      return false;\n    }\n    let checker = JSON.stringify([x, y]);\n    for (var i in stoneList) {\n      if (checker == JSON.stringify(stoneList[i])) {\n        return \"이미 돌이 있습니다\";\n      }\n    }\n    stoneList.push([x, y]);\n    var result = getInfo();\n    var res = result.status;\n    var url = result.image;\n    let te = isNaN(x) ? x : code[x - 1];\n    let text = \"\";\n    let win = false;\n    switch (res) {\n      case \"Invaild\":\n        stoneList.pop();\n        return \"잘못된 명령입니다\";\n      case \"Occupied\":\n        stoneList.pop();\n        return \"이미 돌이 있습니다\";\n      case \"6\":\n        stoneList.pop();\n        return \"6 목입니다\";\n      case \"44\":\n        stoneList.pop();\n        return \"44 입니다\";\n      case \"33\":\n        stoneList.pop();\n        return \"33 입니다\";\n      case \"bWins\":\n        text = blackPlayer + \"의 승리\";\n        win = true;\n        break;\n      case \"wWins\":\n        text = whitePlayer + \"의 승리\";\n        win = true;\n        break;\n      default:\n        text = te + \"\" + y + \"에 착수\";\n        isBlackTurn = !isBlackTurn;\n    }\n    showImage(room, win ? url.replace(/\\d/g, \"_\") : url);\n    return text;\n  }\n  return {\n  \"setStone\": (user, x, y) => setStone(user, x, y), \n  \"reset\": _ => resetBoard(), \n  \"setPlayer\": (b, w) => setPlayer(b, w), \n  \"showImage\": (room, url) => showImage(room, url)};\n}\nlet admin = \"\";\nlet black = \"\";\nlet white = \"\";\nlet state = 0;\nlet game = new Omok(black, white);\nfunction response(room, msg, sender, isGroupChat, replier, ImageDB) {\n  if (msg == \"%오목 방\") {\n    if (state === 0) {\n      replier.reply('방을 만들었습니다\\xa0 %참가 를 입력해 참가하세요\\n\\nThanks to 사로로님');\n      admin = sender;\n      state = 1;\n    } else {\n      replier.reply(\"이미 누군가 방을 팠네요 %참가 를 입력하세요\");\n    }\n  } else if (msg == \"%취소\" && state == 1) {\n    replier.reply(\"취소\");\n    state = 0;\n    admin = \"\";\n  } else if (msg == \"%참가\" && admin != sender) {\n    if (Math.random() < 0.5) {\n      black = sender;\n      white = admin;\n    } else {\n      black = admin;\n      white = sender;\n    }\n    game.setPlayer(black, white);\n    game.showImage(room, \"https://saroro.develope.dev/omok.php/\");\n    replier.reply(\"흑:\" + black + '\\n백:' + white);\n    state = 2;\n  }\n  if (state == 2 && msg.startsWith(\"%\") && (sender == black || sender == white)) {\n    let cmd = msg.replace(\"%\", \"\").split(\",\");\n    let res = game.setStone(sender, cmd[0], cmd[1]);\n    if (res) {\n      replier.reply(res);\n      if (res.includes(\"의 승리\")) {\n        game.reset();\n        state = 0;\n        black = \"\";\n        white = \"\";\n      }\n    }\n  }\n}\n",
+                    "id": 94997669,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94996331,
+                    "replyMember": {
+                        "id": "hbhj4633",
+                        "nick": "사로로"
+                    },
+                    "updateDate": 1593263933000,
+                    "writer": {
+                        "id": "app6460",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200429_60/app6460_15880928481294n5kD_PNG/image.png"
+                        },
+                        "nick": "녹는 앱"
+                    }
+                },
+                {
+                    "content": "수정한건 명령어 부분뿐",
+                    "id": 94997715,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94996331,
+                    "replyMember": {
+                        "id": "app6460",
+                        "nick": "녹는 앱"
+                    },
+                    "updateDate": 1593263959000,
+                    "writer": {
+                        "id": "app6460",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200429_60/app6460_15880928481294n5kD_PNG/image.png"
+                        },
+                        "nick": "녹는 앱"
+                    }
+                }
+            ],
+            "last": {
+                "id": 99842054,
+                "refId": 99842054
+            },
+            "next": {
+                "id": 94998265,
+                "refId": 94996331
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

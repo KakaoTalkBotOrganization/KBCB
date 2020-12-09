@@ -1,0 +1,375 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 13,
+            "contentElements": [],
+            "contentHtml": "<p>먼저 자료형부터 알아봅시다.<br />자료형이란, 그 자료의 형태를 말합니다. 그게 뭔 개소리냐구요? 한번 알아봅시다.<br /><br />문자열(String) : 문자열입니다. 우리가 흔히 보는 &quot;이런것&quot; 들을 말합니다.<br />숫자(Number) : 숫자입니다. 쌍따옴표나 따옴표를 쓰지 않고 숫자만 쓰면 그 자료형은 숫자입니다.<br />논리값(Boolean) : 참과 거짓, 즉 true와 false를 말합니다.<br />객체(Object) : 곧 배우러 갑니당<br />배열(Array) : 1편에서 배웠으니 패스 (참고로 얘도 객체임)<br />함수(Function) : 얘도 2편에서 배웠으니 패스<br />기타 : NaN, undefiend, null<br /><br />typeof (내용)<br />내용의 자료형을 알아볼 수 있는 녀석입니다.<br /><br />형변환이란 자료형을 바꿔주는 것입니다. 굳이 바꾸는 이유는, 숫자에서 1 + 1의 결과는 2 이지만, 문자열에서 1 + 1의 결과는 11이 됩니다. 그러니까,<br />1 + 1 = 2<br />&quot;1&quot; + 1 = &quot;11&quot;<br />1 + &quot;1&quot; = &quot;11&quot;<br />&quot;1&quot; + &quot;1&quot; = &quot;11&quot;<br />이렇게 됩니다<br /><br />먼저, 자료형을 문자열로 바꾸는 방법을 알아보겠습니다.<br /><br />String(값);<br />값.toString();<br />값 + &quot;&quot;;<br /><br />예를 들자면, String(1) 의 결과는 &quot;1&quot;<br />true.toString() 의 결과는 &quot;true&quot;<br />false+&quot;&quot; 의 결과는 &quot;false&quot;<br /><br />이번에는 자료형을 숫자로 바꾸는 방법을 알아보겠습니다.<br /><br />Number(값);<br />parseInt(값);<br />parseFloat(값);<br />값 * 1;<br />값 &divide; 1;<br />값 + 1 - 1;<br />Math.pow(값, 1);<br /><br />겁나게 많아보이지만, 4번째까지만 알아둬도 상관없습니당<br />Number(&quot;1.5&quot;) = 1.5<br />parseInt(&quot;1.234&quot;) = 1<br />parseFloat(&quot;1.234&quot;) = 1.234<br />&quot;15&quot; * 1 = 15<br /><br />Number(&quot;한글&quot;) = NaN<br />Number(&quot;전 숫자애오&quot;) = NaN<br /><br />참고로, 허수도 NaN으로 나옵니다!<br />Math.sqrt(값) 은 값의 제곱근을 구해주는데, 값에 음수를 넣으면 NaN이 된다는 것입니다.<br /><br />자료형을 논리값으로 바꿔주는 Boolean(값) 도 있습니다.<br /><br />Boolean(1) = true<br />Boolean(0) = false<br />Boolean(!1) = false<br />Boolean(!!1) = true<br />Boolean(null) = false<br />Boolean(NaN) = false<br /><br />느낌표의 의미는 부정, not을 의미합니다.<br /><br />이제 객체에 대해 알아볼까요?<br />객체는 json이라고 불리며, 특정한 경우에서는 배열보다 더욱 효율적입니다. 텍스트 RPG를 만들때 필수인 녀석입니다.<br />배열의 형태는 [값, 값, 값....] 이어서 특정 값을 인용할땐 숫자를 쓰거나 indexOf로 값을 알아내서 인용해야 했습니다.<br />하지만 이 객체라는 녀석은 {키 : 값, 키 : 값...} 이렇게 생겨서, 특정 값을 인용할땐 그 값의 키만 쓰면 됩니다.<br />배열에서 인용할땐 배열[number] 로 썼었는데, 객체도 똑같습니다. 객체[키] 로 쓰거나, 객체.키 로 점을 사용해도 됩니다. 예시 소스를 봅시당<br /><br />var hong = {&quot;name&quot; : &quot;홍길동&quot;, &quot;age&quot; : 20, &quot;gender&quot; : &quot;남&quot;};<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />if (msg == &quot;/홍길동&quot;) {<br />replier.reply(&quot;이름 : &quot;+hong.name+&quot;\\n나이 : &quot;+hong.age+&quot;세\\n성별 : &quot;+hong.gender);<br />}<br />}<br /><br />소스를 해석하자면, 채팅 내용이 /홍길동 이라면 홍길동의 정보를 답장합니다. 답장 내용은,<br />이름 : 홍길동<br />나이 : 20세<br />성별 : 남<br />이렇게 답장하겠네요!<br /><br />객체는 활용도가 높습니다. 객체 안에 객체를 넣을 수도 있습니다. 예제 소스를 더 강화(?)시켜보자면, <br /><br />var people = [{&quot;name&quot; : &quot;홍길동&quot;, &quot;age&quot; : 20, &quot;gender&quot; : &quot;남&quot;}, {&quot;name&quot; : &quot;임꺽정&quot;, &quot;age&quot; : 25, &quot;gender&quot; : &quot;남&quot;}, {&quot;name&quot; : &quot;김간장&quot;, &quot;age&quot; : 30, &quot;gender&quot; : &quot;여&quot;}, {&quot;name&quot; : &quot;두둥탁&quot;, &quot;age&quot; : 5, &quot;gender&quot; : &quot;여&quot;}];<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />if (msg == &quot;/사람들&quot;) {<br />var arr = []; //빈 배열<br />for (var a in people) {<br />arr.push(&quot;이름 : &quot;+people[a].name+&quot;\\n나이 : &quot;+people[a].age+&quot;세\\n성별 : &quot;+people[a].gender);<br />}<br />replier.reply(&quot;사람들 목록&quot;+Utils.compress()+&quot;\\n\\n&quot;+arr.join(&quot;\\n\\n&quot;));<br />}<br />}<br /><br />Utils.compress() 는 닼토봇에만 있는 함수인데, 투명문자 1000개를 반환해서 전체보기로 만들어주는 함수입니다. 닼토봇 말고 다른 봇들은 &quot;\\u200b&quot;.repeat(500) 쓰시면 됩니다. 이건 투명문자 500개를 반환합니다<br />소스를 해석하자면, 채팅 내용이 /사람들 이면 빈 배열에 사람 정보를 몽땅 집어넣고 엔터를 두개 넣어서 합쳐서 답장해줍니다. 간단히 말하면 사람들 정보를 말해주네용<br /><br />이 객체는 문자열로 저장할 수도 있고, 문자열을 다시 객체로 만들 수 있습니다. 예제 소스에 있는 people을 예로 들자면, <br /><br />var a = JSON.stringify(people);<br />var b = JSON.parse(a);<br /><br />변수 a에는 객체가 아닌 문자열로 되어있는 people이 저장되어있고, 변수 b에는 a를 다시 객체로 바꿔서 저장하겠네요!<br /><br />강좌가 끝났습니다!<br />생각보다 객체가 별로 쓸 게 없네요..<br />다음 강좌는 파싱 강좌인데.. 예제를 어떻게 할 지..<br /><br />그럼 이만</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000C4A00000000",
+            "head": "초급",
+            "headId": 5,
+            "id": 3146,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 699,
+            "refArticleId": 3146,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "(라이노 엔진) 자바스크립트 기초 강의 (3) - 자료형과 객체",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1560232054540,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음 BOT"
+            }
+        },
+        "articleId": 3146,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "배열도 객체입니다   배열만으로 json가능합니다",
+                    "id": 61474672,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61474672,
+                    "updateDate": 1560232663000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "아하 배열만으로도 json이 가능하군요... 좋은 정보 감사합니당",
+                    "id": 61475235,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61474672,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-5-154-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_5.png",
+                        "width": 107
+                    },
+                    "updateDate": 1560233201000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "심볼형 Symbol(sym);",
+                    "id": 61480105,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61480105,
+                    "updateDate": 1560238450000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Sh"
+                    }
+                },
+                {
+                    "content": "뭔지 모르는....그것도 자료형인가요?",
+                    "id": 61484278,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61480105,
+                    "updateDate": 1560242679000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "그래서 자바스크립트가 뭐에요?",
+                    "id": 61485079,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61485079,
+                    "updateDate": 1560243413000,
+                    "writer": {
+                        "id": "rlawldud7130",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "지영은빛"
+                    }
+                },
+                {
+                    "content": "당신이 겁나 잘하는거요",
+                    "id": 61485694,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61485079,
+                    "updateDate": 1560243981000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "ㅇㅁㅇ....?",
+                    "id": 61498097,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61485079,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음 BOT"
+                    },
+                    "updateDate": 1560257499000,
+                    "writer": {
+                        "id": "rlawldud7130",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "지영은빛"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 61497161,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61497161,
+                    "updateDate": 1560256716000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "예를 들어서 사람에 대한 정보를 저장하고 싶을때, 사람 이름으로 된 배열 안에 정보를 집어넣는 방법과 json을 활용하는 방법이 있습니다. 하지만 배열 안에 정보를 집어넣는다면 배열의 개수가 많아지고 특정 값을 인용하기도 어렵지만, json은 한개 안에 이름과 기타 등등의 정보를 넣고 키 값도 정할 수 있어서 더 간단하고, 키를 이용해서 원하는 값을 호출할 수 있습니다",
+                    "id": 61502081,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61497161,
+                    "updateDate": 1560260537000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "아 제가 효율을 따질때 코드가 간단한지랑 코드 작성자의 측면에서만 봤는데 저런 경우에서는 배열이 훨씬 좋네요..좋은 정보 감사합니당",
+                    "id": 61516896,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61497161,
+                    "replyMember": {
+                        "id": "matt9316",
+                        "nick": "JusticeHui"
+                    },
+                    "updateDate": 1560290802000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                }
+            ],
+            "last": {
+                "id": 83331459,
+                "refId": 83331459
+            },
+            "next": {
+                "id": 62607259,
+                "refId": 62607259
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

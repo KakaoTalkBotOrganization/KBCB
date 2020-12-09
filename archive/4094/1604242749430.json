@@ -1,0 +1,217 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>(5 - X 강좌들은 파싱을 더 잘 할 수 있도록 도와주는 강좌들이므로, 자신의 파싱 실력이 뛰어나다 하면 스킵하셔도 됩니다)<br /><br />이번 시간에는 더 효율적이고 더 나은 HTML 파싱 방법들을 알아보겠습니다.<br />일단 HTML 파싱을 할 때 주로 태그를 먼저 끔살(?)시켜두고 파싱하시는 분들이 많은데, 이렇게 하면 파싱 난이도가 매우 올라갈 수 있습니다.<br /><br />이유를 설명해드리자면, 만약 자신이 날씨를 가져오고 싶은데 태그를 지웠을 때 날씨 정보들 사이에 고정된 값이 없으면 어디에서 끊고 어디를 바꿔야 할 지 모르죠. 하지만 태그는 고정되어 있는 경우가 많으며, 살짝 바뀌기도 하지만 태그명은 항상 고정되어 있기 때문에 자를 곳이 확실히 보이기 때문에 태그를 살려두고 파싱을 하는게 더 쉽습니다. 한 가지 더, 제발 띄어쓰기랑 줄바꿈 다 삭제하고 파싱하지마요. 가독성이 떨어지는건 말 할 필요도 없고 자신이 파싱할 때에도 가독성이 떨어져서 더 헷갈립니다.<br /><br />그리고 여기서 더 나아가서 Jsoup을 활용하면, Utils.getWebText를 쓰는것보다 더 간단합니다. Utils.getWebText에서 split 서너번 하고 복잡한 정규식으로 replace 많이 하는것 보다 Jsoup에서 select 한두번과 text만으로 끝이기 때문입니다.<br /><br />그리고 한 가지 말씀드릴게 있다면, Utils.getWebText 파싱방법에서 가끔 전체를 짜집기하면서 파싱하시는 분들이 많은데, 이러면 소스가 너무 복잡해집니다. 부분적으로 한개씩 자르고 변수에 담아서 최종정리하는게 훨 나아요!<br /><br />이제부터 파싱하는 소스의 구조와 구체적으로 값을 뽑아오는 방법을 알려드리겠습니다.<br /><br />&bull; Utils.getWebText 방법<br />소스 구조)<br /><br />var parse1 = Utils.getWebText(링크); //필요하면 split으로 자르기<br />//parse2, parse3으로 쭉쭉 이어나가기<br />/* 예를 들면<br />var parse2 = parse1.split(거시기)[0].split(뭐시기)[1];<br />var parse3 = parse1.split(알랄라)[0].split(랄랄라)[1];<br />이런식이죠 */<br />replier.reply(parse2+&quot;\\n&quot;+parse3...)<br /><br />간단한 구조는 이렇습니다.<br />parse1 변수를 만들어서 거기에 HTML을 저장해놓고, 그 뒤 다른 변수(여기서는 parse2, parse3 등등)에 parse1을 구체적으로 잘라서 저장한 뒤, 변수들 모두 합쳐주면 됩니다. 반복적인 작업을 많이 하는 경우에는 (예 : 실검, 블로그글 목록, 카페글 목록, 주간날씨 등) 빈 배열을 만들고 for문에서 배열에 push하는 방식으로 하면 됩니다.<br /><br />예외처리를 할 때에는 try - catch문으로 감싸서 예외처리 하거나, 어떤 특정 값이 null일때 예외처리를 하면 됩니다.<br /><br />구체적으로 자를 때에는 어떻게 해야 할까요? 구체적으로 자를 때에는, 원하는 값 양 옆의 태그를 기준으로 잘라주시면 됩니다. 만약 양 옆의 태그가 앞에 또 있었어서 원하는 결과를 뽑기 어렵다면, 양 옆의 태그 앞부분을 잘라준 뒤 또 자르면 됩니다. 만약 사이사이에 태그가 있다면 그건 정규식으로 학살(?) 해버리자구요!<br /><br />지금은 예제를 들면서 변수이름을 parse1, parse2 등등으로 했지만, 사실 변수 이름은 값에 대한 걸로 해주는게 좋아요! (예를 들면 게임이름 담아놓은 변수는 gameTitle, 랭킹 담아놓은 변수에는 ranking 등..)<br /><br /><br />&bull; Jsoup 사용하는 방법<br />소스 구조)<br /><br />var parse1 = org.jsoup.Jsoup.connect(링크) //필요하면 select<br />//다른 변수들 만들어서 쭉쭉쭉~<br />/* 예를 들면<br />var parse2 = parse1.select(불불붋).text();<br />var parse3 = parse1.select(삉쀙뽕).text();<br />이런식 */<br />replier.reply(parse2+&quot;\\n&quot;+parse3...)<br /><br />이런 구조로 하시면 됩니다. select는 만능이라(?) 더 말할 필요도 없겠네요. 마찬가지로 반복적인 작업시 for문 이용!<br />예외처리는 size를 체크해서 0일때 예외처리 하면 됩니다.<br /><br />지금 봤을때 무슨 말인지 모르겠어도 앞으로 올라올 예제들을 보면서 이해하면 됩니당<br /><br />강좌 끝<br />이번엔 설명을 살짝 못한 감이 있네요. 죄송합니당<br />다음번엔 예고했다시피 파싱 예제들을 올릴겁니다!<br />그럼 이만.<br /><br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000FFE00000000",
+            "head": "중급",
+            "headId": 20,
+            "id": 4094,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 575,
+            "refArticleId": 4094,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "(라이노 엔진) 자바스크립트 기초 강의 (5 - 1) - 더 나은 파싱 방법들 알아보기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1564225215157,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음 BOT"
+            }
+        },
+        "articleId": 4094,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "좋은글이네요. 배워갑니다.",
+                    "id": 78354810,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78354810,
+                    "updateDate": 1578920936000,
+                    "writer": {
+                        "id": "leeus3",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDEwMDVfMjM1/MDAxNjAxODg1MDg4NzQ3.aHH8mCjfw4HhapiAtboKnGxpnaruJi3LGOgpu64NN6kg.QqNLu2uDxuUvZCPkBWBTgDBVqFQEwW84tShM7pxsFcEg.JPEG.leeus3/images.jpg"
+                        },
+                        "nick": "아미타"
+                    }
+                },
+                {
+                    "content": "헐.. 좋은 글로 봐주셨다니 정말 감사드려요",
+                    "id": 78355029,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78354810,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-5-154-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_5.png",
+                        "width": 107
+                    },
+                    "updateDate": 1578921051000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "얼음님 덕분에 많이 배워갑니다.~",
+                    "id": 87814187,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87814187,
+                    "updateDate": 1587198750000,
+                    "writer": {
+                        "id": "ghdwls31023",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110118_296/ghdwls31023_1295305670363_2BNqAn_jpg/main2.jpg"
+                        },
+                        "nick": "엣지오"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

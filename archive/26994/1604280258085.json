@@ -1,0 +1,431 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 18,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-c881fae4-1abb-11eb-b3c9-61fff7a3a89a\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd45e22-1b2f-11eb-90bf-29e0dc2229b5\"><span style=\"color:#0076C8;\" class=\"se-fs- se-ff-   \" id=\"SE-dcd45e20-1b2f-11eb-90bf-f3b43fecc9f3\"><b>존댓말, 반말의 횟수를 알려주는 아주 멋진(?) 소스 V4 입니다. 이번엔 찐으로 마지막 버전이고 추가안된 존댓말이 있으면 알아서 추가해주시면 감사하겠습니당</b></span><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd45e21-1b2f-11eb-90bf-1f5c1fe5a6f3\"><b>​</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd45e24-1b2f-11eb-90bf-459eb19b4208\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd45e23-1b2f-11eb-90bf-a1faf870a291\"><b>​</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd48537-1b2f-11eb-90bf-c5db3d5d62c4\"><span style=\"color:#F12F22;\" class=\"se-fs- se-ff-   \" id=\"SE-dcd48535-1b2f-11eb-90bf-499dbf296c25\"><b>+ 오늘의 말분석 추가</b></span><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd48536-1b2f-11eb-90bf-25b291f4be14\"><b>​</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd48539-1b2f-11eb-90bf-d3d8189d70b1\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd48538-1b2f-11eb-90bf-45c5374eb868\"><b>​</b></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4853c-1b2f-11eb-90bf-259278060ec7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4853a-1b2f-11eb-90bf-93d4eab88d83\"><b>명령어: &quot;말분석&quot;, &quot;분석초기화&quot;, &quot;오늘 말분석&quot;</b></span><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4853b-1b2f-11eb-90bf-abfe24d0cba6\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4ac4e-1b2f-11eb-90bf-2183e18c1072\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4ac4d-1b2f-11eb-90bf-b72e453cabdf\">-----------------------------------------------------------------------</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4ac50-1b2f-11eb-90bf-a310b828128a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4ac4f-1b2f-11eb-90bf-b9f2b449ead1\">let json &#x3D; {};</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4ac52-1b2f-11eb-90bf-eb9018ec1045\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4ac51-1b2f-11eb-90bf-6f4673ff76cb\">let FS &#x3D; FileStream;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4ac54-1b2f-11eb-90bf-edb41ad00599\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4ac53-1b2f-11eb-90bf-f150dbfe6f53\">let path &#x3D; &quot;sdcard/말분석/존댓말&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4ac56-1b2f-11eb-90bf-a30b0d7d4898\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4ac55-1b2f-11eb-90bf-092587c69864\">let path2 &#x3D; &quot;sdcard/말분석/반말&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4ac58-1b2f-11eb-90bf-9d16d647fb7a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4ac57-1b2f-11eb-90bf-017edd9590dc\">let path3 &#x3D; &quot;sdcard/말분석/ALL/존댓말.txt&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4d36a-1b2f-11eb-90bf-5bcf1f15f813\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4d369-1b2f-11eb-90bf-d1e467f0da4e\">let path4 &#x3D; &quot;sdcard/말분석/ALL/반말.txt&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4d36c-1b2f-11eb-90bf-eb648bf1b716\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4d36b-1b2f-11eb-90bf-51c8aa69af80\">let path5 &#x3D; &quot;sdcard/말분석/날짜별/존댓말&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4d36e-1b2f-11eb-90bf-fd868df0493a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4d36d-1b2f-11eb-90bf-a1b905965122\">let path6 &#x3D; &quot;sdcard/말분석/날짜별/반말&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4fa80-1b2f-11eb-90bf-cd8b49afa470\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4d36f-1b2f-11eb-90bf-21bb2cb1c11c\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4fa82-1b2f-11eb-90bf-dbf42d02eb77\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4fa81-1b2f-11eb-90bf-83a233dbeb82\">function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4fa84-1b2f-11eb-90bf-f5202a7f0e62\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4fa83-1b2f-11eb-90bf-39a3b49c78a8\">let t &#x3D; msg.replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/g, &#x27;&#x27;).slice(-1);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4fa86-1b2f-11eb-90bf-a12d7f4428bc\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4fa85-1b2f-11eb-90bf-bfad70f32e09\">let t2 &#x3D; msg.replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/g, &#x27;&#x27;).slice(-2);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4fa88-1b2f-11eb-90bf-d513a520c53a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4fa87-1b2f-11eb-90bf-6791a06f8b07\">let t3 &#x3D; msg.replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/g, &#x27;&#x27;).slice(-3);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd4fa8a-1b2f-11eb-90bf-a56e13828df0\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd4fa89-1b2f-11eb-90bf-5f34ebe083be\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5219c-1b2f-11eb-90bf-8f9cc1a989a9\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5219b-1b2f-11eb-90bf-f15a84836edc\"> if(t&#x3D;&#x3D;&quot;요&quot;||t&#x3D;&#x3D;&quot;죠&quot;||t&#x3D;&#x3D;&quot;여&quot;||t&#x3D;&#x3D;&quot;예&quot;||t&#x3D;&#x3D;&quot;네&quot;||t&#x3D;&#x3D;&quot;넵&quot;||t&#x3D;&#x3D;&quot;까&quot;||t2&#x3D;&#x3D;&quot;니다&quot;||t2&#x3D;&#x3D;&quot;네다&quot;||t2&#x3D;&#x3D;&quot;아뇨&quot;||t2&#x3D;&#x3D;&quot;에오&quot;||t2&#x3D;&#x3D;&quot;에용&quot;||t2&#x3D;&#x3D;&quot;시오&quot;||t3&#x3D;&#x3D;&quot;아니오&quot;||t3&#x3D;&#x3D;&quot;니다만&quot;){</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5219e-1b2f-11eb-90bf-092ecc903c8f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5219d-1b2f-11eb-90bf-b553a00dab9b\">    FileStream.append(path+&quot;/&quot;+sender+&quot;.txt&quot;,&quot;1&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd521a0-1b2f-11eb-90bf-21c111a46040\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5219f-1b2f-11eb-90bf-5fdd41de51b5\">    FileStream.append(path5+&quot;/&quot;+sender+&quot;/&quot;+new Date().getFullYear()+&quot;년 &quot;+(new Date().getMonth()+1)+&quot;월 &quot;+new Date().getDate()+&quot;일 &quot;+&quot;.txt&quot;, &quot;1&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd521a2-1b2f-11eb-90bf-3f116a5292c2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd521a1-1b2f-11eb-90bf-31ad56cd4d3f\">    FileStream.append(path3,&quot;1&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd521a4-1b2f-11eb-90bf-57f78527565a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd521a3-1b2f-11eb-90bf-1db1b39bf8a6\">  }else{</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd547b6-1b2f-11eb-90bf-8355a4ba2d12\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd547b5-1b2f-11eb-90bf-930ea53118b0\">    FileStream.append(path2+&quot;/&quot;+sender+&quot;.txt&quot;,&quot;1&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd547b8-1b2f-11eb-90bf-d1ce860069ff\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd547b7-1b2f-11eb-90bf-f3a9c6dc5d06\">    FileStream.append(path6+&quot;/&quot;+sender+&quot;/&quot;+new Date().getFullYear()+&quot;년 &quot;+(new Date().getMonth()+1)+&quot;월 &quot;+new Date().getDate()+&quot;일 &quot;+&quot;.txt&quot;, &quot;1&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd547ba-1b2f-11eb-90bf-812aa1c497b8\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd547b9-1b2f-11eb-90bf-999066e9913e\">    FileStream.append(path4,&quot;1&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd547bc-1b2f-11eb-90bf-d7d0c1ae416d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd547bb-1b2f-11eb-90bf-cd08b4923681\">  }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd547be-1b2f-11eb-90bf-31e2af7ee416\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd547bd-1b2f-11eb-90bf-374a9e6ff36f\">  if(msg&#x3D;&#x3D;&quot;오늘 말분석&quot;){</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd56ed0-1b2f-11eb-90bf-932fd1082248\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd56ecf-1b2f-11eb-90bf-e342882599d2\">    try{</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd56ed2-1b2f-11eb-90bf-5721eb9afee2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd56ed1-1b2f-11eb-90bf-f5ecb91a89c4\">    let p1 &#x3D; FileStream.read(path5+&quot;/&quot;+sender+&quot;/&quot;+new Date().getFullYear()+&quot;년 &quot;+(new Date().getMonth()+1)+&quot;월 &quot;+new Date().getDate()+&quot;일 &quot;+&quot;.txt&quot;).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd56ed4-1b2f-11eb-90bf-59b65555ca56\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd56ed3-1b2f-11eb-90bf-757127e0601e\">    let p2 &#x3D; FileStream.read(path6+&quot;/&quot;+sender+&quot;/&quot;+new Date().getFullYear()+&quot;년 &quot;+(new Date().getMonth()+1)+&quot;월 &quot;+new Date().getDate()+&quot;일 &quot;+&quot;.txt&quot;).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd56ed6-1b2f-11eb-90bf-e177281b0583\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd56ed5-1b2f-11eb-90bf-b399a51d71fc\">    replier.reply(&quot;[오늘의 말 분석 결과입니다]\\n(&quot;+new Date().getFullYear()+&quot;/&quot;+(new Date().getMonth()+1)+&quot;/&quot;+new Date().getDate()+&quot; 기준)\\n\\n&quot;+&quot;-&quot;.repeat(6)+sender+&quot;(개인)&quot;+&quot;-&quot;.repeat(6)+&quot;\\n존댓말: &quot;+p1+&quot;회 (&quot;+((p1/(p1+p2))*100).toFixed(2)+&quot;%)\\n반말: &quot;+p2+&quot;회 (&quot;+((p2/(p1+p2))*100).toFixed(2)+&quot;%)&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd56ed8-1b2f-11eb-90bf-5756f331b274\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd56ed7-1b2f-11eb-90bf-7d4b968c6e95\">  }catch(e){</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd595ea-1b2f-11eb-90bf-25b10c5a65f4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd595e9-1b2f-11eb-90bf-7767c92cf812\">    let p2 &#x3D; FileStream.read(path6 + &quot;/&quot; +sender + &quot;.txt&quot;).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd595ec-1b2f-11eb-90bf-bdfc8ad8b802\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd595eb-1b2f-11eb-90bf-335eb850f6d7\">    replier.reply(&quot;[오늘의 말 분석 결과입니다]\\n\\n&quot;+&quot;-&quot;.repeat(6)+sender+&quot;(개인)&quot;+&quot;-&quot;.repeat(6)+&quot;\\n존댓말: 0회 (0%)\\n반말: &quot;+p2+&quot;회 (100%)&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd595ee-1b2f-11eb-90bf-7d04616810ac\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd595ed-1b2f-11eb-90bf-753380d4ffd7\">  }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd595f0-1b2f-11eb-90bf-67fc6b0e21ba\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd595ef-1b2f-11eb-90bf-973d75c2fe3d\">  }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd595f2-1b2f-11eb-90bf-fb9c282fdd65\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd595f1-1b2f-11eb-90bf-f9c509eee592\">  if(msg&#x3D;&#x3D;&quot;말분석&quot;){</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5bd04-1b2f-11eb-90bf-e57fc85d9110\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5bd03-1b2f-11eb-90bf-cde87902f432\">    try{</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5bd06-1b2f-11eb-90bf-0ff0dd09f5fd\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5bd05-1b2f-11eb-90bf-6b2224332e06\">    let p1 &#x3D; FileStream.read(path + &quot;/&quot; +sender + &quot;.txt&quot;).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5bd08-1b2f-11eb-90bf-4be6318ece50\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5bd07-1b2f-11eb-90bf-ab3510192327\">    let p2 &#x3D; FileStream.read(path2 + &quot;/&quot; +sender + &quot;.txt&quot;).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5bd0a-1b2f-11eb-90bf-3de242cbf21f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5bd09-1b2f-11eb-90bf-d3129f258b47\">    let p3 &#x3D; FileStream.read(path3).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5bd0c-1b2f-11eb-90bf-e3a454c15d0e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5bd0b-1b2f-11eb-90bf-4324a43685e5\">    let p4 &#x3D; FileStream.read(path4).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5e41e-1b2f-11eb-90bf-354d5869f300\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5e41d-1b2f-11eb-90bf-5f47be881aba\">    replier.reply(&quot;[말 분석 결과입니다]\\n\\n&quot;+&quot;-&quot;.repeat(6)+sender+&quot;(개인)&quot;+&quot;-&quot;.repeat(6)+&quot;\\n존댓말: &quot;+p1+&quot;회 (&quot;+((p1/(p1+p2))*100).toFixed(2)+&quot;%)\\n반말: &quot;+p2+&quot;회 (&quot;+((p2/(p1+p2))*100).toFixed(2)+&quot;%)\\n\\n&quot;+&quot;-&quot;.repeat(6)+&quot;전체&quot;+&quot;-&quot;.repeat(6)+&quot;\\n존댓말: &quot;+p3+&quot;회 (&quot;+((p3/(p3+p4))*100).toFixed(2)+&quot;%)\\n반말: &quot;+p4+&quot;회 (&quot;+((p4/(p3+p4))*100).toFixed(2)+&quot;%)\\n\\n전체 이용자 대비 약 &quot;+((Math.round((p1/(p1+p2))*100))-(Math.round((p3/(p3+p4))*100)))+&quot;% 더 존댓말을 사용했습니다.&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5e420-1b2f-11eb-90bf-8b9f608720c6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5e41f-1b2f-11eb-90bf-d167da40b28f\">  }catch(e){</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5e422-1b2f-11eb-90bf-7f50172ddc6e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5e421-1b2f-11eb-90bf-db0a0a46bf2e\">    try{</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5e424-1b2f-11eb-90bf-490515a0b08d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5e423-1b2f-11eb-90bf-67fda74a49f5\">    let p2 &#x3D; FileStream.read(path2 + &quot;/&quot; +sender + &quot;.txt&quot;).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd5e426-1b2f-11eb-90bf-1daadaa31837\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd5e425-1b2f-11eb-90bf-a7663eaf3480\">    let p3 &#x3D; FileStream.read(path3).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd60b38-1b2f-11eb-90bf-55b71ff3da72\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd60b37-1b2f-11eb-90bf-eb7c15c75a5b\">    let p4 &#x3D; FileStream.read(path4).length;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd60b3a-1b2f-11eb-90bf-63b2bc846f1b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd60b39-1b2f-11eb-90bf-a7277f5f6a1e\">    replier.reply(&quot;[말 분석 결과입니다]\\n\\n&quot;+&quot;-&quot;.repeat(6)+sender+&quot;(개인)&quot;+&quot;-&quot;.repeat(6)+&quot;\\n존댓말: 0회 (0%)\\n반말: &quot;+p2+&quot;회 (100%)\\n\\n&quot;+&quot;-&quot;.repeat(6)+&quot;전체&quot;+&quot;-&quot;.repeat(6)+&quot;\\n존댓말: &quot;+p3+&quot;회 (&quot;+((p3/(p3+p4))*100).toFixed(2)+&quot;%)\\n반말: &quot;+p4+&quot;회 (&quot;+((p4/(p3+p4))*100).toFixed(2)+&quot;%)&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd60b3c-1b2f-11eb-90bf-a76dd38d88d0\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd60b3b-1b2f-11eb-90bf-6df42ab4fe99\">  }catch(e){</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd60b3e-1b2f-11eb-90bf-29d39c7f053f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd60b3d-1b2f-11eb-90bf-fbf3f36ac36e\">    replier.reply(&quot;전체 이용자의 말 분석 안에 최소 1개의 존댓말이 있어야 합니다.&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd60b40-1b2f-11eb-90bf-c3fa497a4bda\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd60b3f-1b2f-11eb-90bf-1d1675bcc9f0\">  }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd63252-1b2f-11eb-90bf-83b1fad719f2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd63251-1b2f-11eb-90bf-c5a92b310989\">  }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd63254-1b2f-11eb-90bf-1bf17be8806e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd63253-1b2f-11eb-90bf-e53bf0a29259\">  }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd63256-1b2f-11eb-90bf-b9c3ca0e8e1d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd63255-1b2f-11eb-90bf-35dd10adf55c\"> if (msg&#x3D;&#x3D;&quot;분석 초기화&quot;||msg&#x3D;&#x3D;&quot;분석초기화&quot;) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd63258-1b2f-11eb-90bf-11ab00fa11e5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd63257-1b2f-11eb-90bf-d16a3465f9b5\">   FileStream.remove(path+&quot;/&quot;+sender+&quot;.txt&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd6325a-1b2f-11eb-90bf-5b07052a121e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd63259-1b2f-11eb-90bf-8ba60077e9fa\">   FileStream.remove(path2+&quot;/&quot;+sender+&quot;.txt&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd6325c-1b2f-11eb-90bf-47cb91912134\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd6325b-1b2f-11eb-90bf-edc94b386caf\">   replier.reply(&quot;&#x27;&quot;+sender+&quot;&#x27;님의 말 분석이 초기화 되었습니다.&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd6596e-1b2f-11eb-90bf-eb9f1e946a44\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd6596d-1b2f-11eb-90bf-5581fe48baa8\">}\r</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd65970-1b2f-11eb-90bf-0b69344405e6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd6596f-1b2f-11eb-90bf-4bd3165e71a0\">}</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd65972-1b2f-11eb-90bf-03b3f5f5508c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd65971-1b2f-11eb-90bf-778215cb0b84\">-----------------------------------------------------------------------</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-c87a32b3-1abb-11eb-b3c9-2f5c4a94e1b8\">\n                    <div class=\"se-component-content se-component-content-extend\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" >\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-c87a32b3-1abb-11eb-b3c9-2f5c4a94e1b8\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMzBfMTAy/MDAxNjA0MDY4MzEzNTU1.BFNh6XtVVt5UhUKBpwinR5EL_C3jNN6Gxz5bffRt21cg.CW17l9CSFqkBh-kb_G439CGr4RBJrjLOhJSKq4Vvd3sg.JPEG/1604067756181.jpg\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMzBfMTAy/MDAxNjA0MDY4MzEzNTU1.BFNh6XtVVt5UhUKBpwinR5EL_C3jNN6Gxz5bffRt21cg.CW17l9CSFqkBh-kb_G439CGr4RBJrjLOhJSKq4Vvd3sg.JPEG/1604067756181.jpg?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-106573a9-1abc-11eb-b3c9-fd2c7c830f82\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd743d4-1b2f-11eb-90bf-cb0c2652adc4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd743d3-1b2f-11eb-90bf-4787bcffb7a7\">+ Created source summary article</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dcd76ae6-1b2f-11eb-90bf-c9e0d846a093\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-dcd76ae5-1b2f-11eb-90bf-4d5e01ade86a\"><a href=\"https://cafe.naver.com/nameyee/26200\" class=\"se-link\" target=\"_blank\">https://cafe.naver.com/nameyee/26200</a></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-oglink se-l-image\" id=\"SE-106329a2-1abc-11eb-b3c9-4310e17b3a7e\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-oglink se-l-image se-section-align-\">\n                            <div class=\"se-module se-module-oglink\">\n                                <a href=\"https://cafe.naver.com/nameyee/26200\" class=\"se-oglink-thumbnail\" target=\"_blank\">\n                                    <img src=\"https://dthumb-phinf.pstatic.net/?src&#x3D;%22https%3A%2F%2Fcafe.pstatic.net%2Fimg%2Fsns%2Fcafe_ogtag_270x270_160618.png%22&amp;type&#x3D;ff120\" class=\"se-oglink-thumbnail-resource\" alt=\"\" />\n                                </a>\n                                <a href=\"https://cafe.naver.com/nameyee/26200\" class=\"se-oglink-info\" target=\"_blank\">\n                                    <div class=\"se-oglink-info-container\">\n                                        <strong class=\"se-oglink-title\">만든 소스 총정리!!</strong>\n\n                                        <p class=\"se-oglink-summary\">1. TV프로그램 시청률 소스 https://cafe.naver.com/nameyee/25295 2. 노래추천 소스 https://cafe.naver.com/nameyee/...</p>\n                                        <p class=\"se-oglink-url\">cafe.naver.com</p>\n                                    </div>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_oglink\", \"id\" :\"SE-106329a2-1abc-11eb-b3c9-4310e17b3a7e\", \"data\" : {\"link\" : \"https://cafe.naver.com/nameyee/26200\", \"isVideo\" : \"false\", \"thumbnail\" : \"https://dthumb-phinf.pstatic.net/?src&#x3D;%22https%3A%2F%2Fcafe.pstatic.net%2Fimg%2Fsns%2Fcafe_ogtag_270x270_160618.png%22&amp;type&#x3D;ff120\"}}'></script>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000697200000000",
+            "head": "초급",
+            "headId": 103,
+            "id": 26994,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 130,
+            "refArticleId": 26994,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "존댓말, 반말 분리해주는 소스 V4 (진짜 최종판)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1604117796690,
+            "writer": {
+                "id": "woohyun1102",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMjdfMTk2/MDAxNjAzNzI0NzcyMTk2._6xDPxONv_ydw3Jt8SFUggItHNrGD94ae97kcR85Jy4g.rE_3KgR0bSJeljg8ZNbDUwTC3ay37iiIVWP16pjoHH4g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "WOOHYUN"
+            }
+        },
+        "articleId": 26994,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "최최최종 같은건가요(?)",
+                    "id": 107568023,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": true,
+                    "refId": 107568023,
+                    "updateDate": 1604118211000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "이번엔 찐입니다(?)",
+                    "id": 107568064,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107568023,
+                    "updateDate": 1604118252000,
+                    "writer": {
+                        "id": "woohyun1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjdfMTk2/MDAxNjAzNzI0NzcyMTk2._6xDPxONv_ydw3Jt8SFUggItHNrGD94ae97kcR85Jy4g.rE_3KgR0bSJeljg8ZNbDUwTC3ay37iiIVWP16pjoHH4g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "WOOHYUN"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 107568124,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDEwMzFfMjA2/MDAxNjA0MTE4MzE0NTM0.zZSo5QRJ7TZV2sxC8iZvgzmBNi0y2Cn3xmuFBruPwNIg.XCvj6tTrZjzWBdlEJquIimASLhFZzojyw-rKhD5EoGMg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 343,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDEwMzFfMjA2/MDAxNjA0MTE4MzE0NTM0.zZSo5QRJ7TZV2sxC8iZvgzmBNi0y2Cn3xmuFBruPwNIg.XCvj6tTrZjzWBdlEJquIimASLhFZzojyw-rKhD5EoGMg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMzFfMjA2/MDAxNjA0MTE4MzE0NTM0.zZSo5QRJ7TZV2sxC8iZvgzmBNi0y2Cn3xmuFBruPwNIg.XCvj6tTrZjzWBdlEJquIimASLhFZzojyw-rKhD5EoGMg.JPEG/externalFile.jpg",
+                        "width": 386
+                    },
+                    "refId": 107568124,
+                    "updateDate": 1604118314000,
+                    "writer": {
+                        "id": "92guswns6737",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfMjM3/MDAxNjA0MTE4NTA1NDYw.p-6d225m7mzyprfeGqvK9ipgB_DjV0U7sMRRpQAeHzAg.Lr1SYHK7aqefuh6gYQnlOSa3MLpsjuyjLP8vE8Faf3og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "NANOPress"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 107569583,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107569583,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1604119786000,
+                    "writer": {
+                        "id": "hozinryu",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200828_147/hozinryu_1598577910916IfMMA_PNG/image.png"
+                        },
+                        "nick": "알랑뿡까"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 107578912,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107569583,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1604130337000,
+                    "writer": {
+                        "id": "woohyun1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjdfMTk2/MDAxNjAzNzI0NzcyMTk2._6xDPxONv_ydw3Jt8SFUggItHNrGD94ae97kcR85Jy4g.rE_3KgR0bSJeljg8ZNbDUwTC3ay37iiIVWP16pjoHH4g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "WOOHYUN"
+                    }
+                },
+                {
+                    "content": "객체: 객무룩...ㅠㅠ",
+                    "id": 107569647,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107569647,
+                    "updateDate": 1604119862000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 107578920,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107569647,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-19-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_19.png",
+                        "width": 129
+                    },
+                    "updateDate": 1604130343000,
+                    "writer": {
+                        "id": "woohyun1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjdfMTk2/MDAxNjAzNzI0NzcyMTk2._6xDPxONv_ydw3Jt8SFUggItHNrGD94ae97kcR85Jy4g.rE_3KgR0bSJeljg8ZNbDUwTC3ay37iiIVWP16pjoHH4g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "WOOHYUN"
+                    }
+                },
+                {
+                    "content": "저거 줄이면 15줄정도로 끝날것같은데....",
+                    "id": 107569794,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107569794,
+                    "updateDate": 1604120025000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "ㄱㄱ",
+                    "id": 107570987,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107569794,
+                    "updateDate": 1604121655000,
+                    "writer": {
+                        "id": "hozinryu",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200828_147/hozinryu_1598577910916IfMMA_PNG/image.png"
+                        },
+                        "nick": "알랑뿡까"
+                    }
+                },
+                {
+                    "content": "저런거 안해요",
+                    "id": 107571002,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107569794,
+                    "replyMember": {
+                        "id": "hozinryu",
+                        "nick": "알랑뿡까"
+                    },
+                    "updateDate": 1604121670000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                }
+            ],
+            "last": {
+                "id": 107615155,
+                "refId": 107615155
+            },
+            "next": {
+                "id": 107571039,
+                "refId": 107569794
+            }
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

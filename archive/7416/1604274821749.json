@@ -1,0 +1,439 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 578,
+                            "service": "CAFE",
+                            "style": "width:720px; height:578px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTExMDZfMjM4/MDAxNTczMDMzMTA0MDcy.1tTR8OTpOQRkdA6D1iWdrgw7gINhaXIGgI7m6Ppdu24g.5Z2dHy-vQB3Yo49Zq0g8ty059_q8NVjxMSvVKkWkio4g.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1280,
+                            "service": "CAFE",
+                            "style": "width:720px; height:1280px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTExMDZfMjk0/MDAxNTczMDMzMTA0NTA1.FFesmXF6cWQ5pE0PFCSznWL3hRXmmZYNZkqxlpVSdKcg.FLRsSezIdAKJbfladLhN7NDAAWia8TTCcASa9XfTohAg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>객체 1개, 파일 1개만을 사용하여 효율성을 높혔습니다.<br />+ 사람 / 방 별 채팅 보기 가능.<br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />FS = FileStream<br />path = &quot;sdcard/chatreport/chats&quot;<br />all = &quot;All_Room_Chats&quot;<br />L = &quot;-&quot;.repeat(40)<br />Lw = &quot;\\u200b&quot;.repeat(500)<br /><br />back = true<br />admins = [&quot;어드민&quot;]<br /><br />function response (room, msg, sender, _, replier) {<br /><br />try {<br /><br />if (!FS.read(path)) FS.write(path, &quot;{}&quot;);<br /><br />if (msg) {<br /><br />json = JSON.parse(FS.read(path))<br /><br />json[room] == undefined&amp;&amp;(json[room] = []);<br /><br />json[all] == undefined&amp;&amp;(json[all] = []);<br /><br />msg = msg.replace(/\\u202E/g, &quot;&quot;)<br /><br />sender = sender.replace(/\\u202E/g, &quot;&quot;)<br /><br />json[room].push(sender+&quot; : &quot;+msg+&quot;\\n\\n(&quot;+new Date().toLocaleString().split(&quot;일 &quot;)[1].split(&quot; G&quot;)[0]+&quot;)&quot;)<br /><br />json[all].push(&quot;방 : &quot;+room+&quot; (&quot;+(room==sender?&quot;개인챗&quot;:&quot;그룹챗&quot;)+&quot;)\\n\\n&quot;+sender+&quot; : &quot;+msg+&quot;\\n\\n(&quot;+new Date().toLocaleString().split(&quot;일 &quot;)[1].split(&quot; G&quot;)[0]+&quot;)&quot;)<br /><br />FS.write(path, JSON.stringify(json))<br /><br />}<br /><br />//채팅 보기 (사람)<br /><br />if (msg.startsWith(&quot;채팅 보기&quot;)) {<br /><br />send = msg.substr(5).trim()<br /><br />if ((JSON.parse(FS.read(path))[all].filter(a=&gt;a.split(&quot;\\n\\n&quot;)[1].split(&quot; : &quot;)[0].trim() == send)).length!=0) {<br /><br />sendchat = JSON.parse(FS.read(path))[all].filter(a=&gt;a.split(&quot;\\n\\n&quot;)[1].split(&quot; : &quot;)[0].trim() == send)<br /><br />if (!back) {<br /><br />rep = L+&quot;\\n\\n&quot;+sendchat.join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />} else {<br /><br />rep = L+&quot;\\n\\n&quot;+sendchat.reverse().join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />}<br /><br />replier.reply(&quot;[!] &apos;&quot;+send+&quot;&apos; 님의 채팅 기록입니다.&quot;+Lw+&quot;\\n\\n총 &quot;+sendchat.length+&quot;개\\n\\n&quot;+rep)<br /><br />} else {<br /><br />replier.reply(&quot;[!] 해당 유저의 채팅 기록이 존재하지 않습니다!&quot;)<br /><br />}<br /><br />}<br /><br />//채팅 기록 (방)<br /><br />if (msg.startsWith(&quot;채팅 기록&quot;)) {<br /><br />ep = msg.substr(5).trim()<br /><br />if (ep == &quot;&quot;) {<br /><br />if (!back) {<br /><br />rep = L+&quot;\\n\\n&quot;+JSON.parse(FS.read(path))[room].join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />} else {<br /><br />rep = L+&quot;\\n\\n&quot;+JSON.parse(FS.read(path))[room].reverse().join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />}<br /><br />replier.reply(&quot;[!] &apos;&quot;+room+&quot;&apos; 의 채팅 기록입니다.&quot;+Lw+&quot;\\n\\n총 &quot;+(JSON.parse(FS.read(path))[room]).length+&quot;개\\n\\n&quot;+rep)<br /><br />} else if (ep == &quot;전체&quot;) {<br /><br />if (!back) {<br /><br />rep = L+&quot;\\n\\n&quot;+JSON.parse(FS.read(path))[all].join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />} else {<br /><br />rep = L+&quot;\\n\\n&quot;+JSON.parse(FS.read(path))[all].reverse().join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />}<br /><br />replier.reply(&quot;[!] 종합 채팅 기록입니다.&quot;+Lw+&quot;\\n\\n총 &quot;+(JSON.parse(FS.read(path))[all]).length+&quot;개\\n\\n&quot;+rep)<br /><br />} else {<br /><br />if (JSON.parse(FS.read(path))[ep]) {<br /><br />if (!back) {<br /><br />rep = L+&quot;\\n\\n&quot;+JSON.parse(FS.read(path))[ep].join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />} else {<br /><br />rep = L+&quot;\\n\\n&quot;+JSON.parse(FS.read(path))[ep].reverse().join(&quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;)+&quot;\\n\\n&quot;+L<br /><br />}<br /><br />replier.reply(&quot;[!] &apos;&quot;+ep+&quot;&apos; 의 채팅 기록입니다.&quot;+Lw+&quot;\\n\\n총 &quot;+(JSON.parse(FS.read(path))[ep]).length+&quot;개\\n\\n&quot;+rep)<br /><br />} else {<br /><br />replier.reply(&quot;[!] 해당 방의 채팅 기록이 존재하지 않습니다!&quot;)<br /><br />}<br /><br />}<br /><br />}<br /><br />if (msg == &quot;방 목록&quot;) {<br /><br />json = JSON.parse(FS.read(path))<br /><br />roomlist = Object.keys(json)<br /><br />roomlist.splice(roomlist.indexOf(all), 1)<br /><br />roomlist = roomlist.map(a=&gt;&quot;이름 : &quot;+a+&quot;\\n총 채팅 수 : &quot;+json[a].length+&quot;회&quot;)<br /><br />replier.reply(&quot;[!] 채팅 기록이 저장되어 있는 방 목록입니다.&quot;+Lw+&quot;\\n\\n총 &quot;+roomlist.length+&quot;개\\n\\n&quot;+roomlist.join(&quot;\\n\\n&quot;))<br /><br />}<br /><br />if (admins.indexOf(sender)!=-1) {<br /><br />if (msg.startsWith(&quot;채팅 초기화&quot;)) {<br /><br />ep = msg.substr(6).trim()<br /><br />if (ep == &quot;&quot;) {<br /><br />json = JSON.parse(FS.read(path))<br /><br />delete json[room]<br /><br />FS.write(path, JSON.stringify(json))<br /><br />replier.reply(&quot;[!] &apos;&quot;+room+&quot;&apos; 방의 채팅 기록이 초기화 되었습니다!&quot;)<br /><br />} else if (ep == &quot;전체&quot;) {<br /><br />FS.write(path, &quot;{}&quot;)<br /><br />replier.reply(&quot;[!] 모든 채팅 기록이 초기화 되었습니다!&quot;)<br /><br />} else {<br /><br />json = JSON.parse(FS.read(path))<br /><br />delete json[ep]<br /><br />FS.write(path, JSON.stringify(json))<br /><br />replier.reply(&quot;[!] &apos;&quot;+ep+&quot;&apos; 방의 채팅 기록이 초기화 되었습니다!&quot;)<br /><br />}<br /><br />}<br /><br />}<br /><br />} catch(e) {<br /><br />FS.write(path, &quot;{}&quot;)<br /><br />}<br /><br />}<br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br /><br /><br />&nbsp;</p>[[[CONTENT-ELEMENT-0]]]<br />[[[CONTENT-ELEMENT-1]]]<br /><p><br /><br /><br />채팅 기록<br />-&gt; 현재 방의 채팅 기록 확인<br /><br />채팅 기록 (방이름)<br />-&gt; 해당 방의 채팅 기록 확인<br /><br />채팅 기록 전체<br />-&gt; 모든 방의 채팅 기록 확인<br /><br />채팅 보기 (유저이름)<br />-&gt; 해당 유저의 채팅 기록 확인<br /><br />채팅 초기화<br />-&gt; 현재 방의 채팅 기록 초기화<br /><br />채팅 초기화 (방이름)<br />-&gt; 해당 방의 채팅 기록 초기화<br /><br />채팅 초기화 전체<br />-&gt; 모든 방의 채팅 기록 초기화<br /><br /><br /><br />소스 맨 위에<br />back = true<br />admins = [&quot;어드민&quot;]<br /><br />이렇게 되어있는데<br /><br />back = true<br />-&gt; 채팅 기록 뒤집은 순서로 보냄<br /><br />back = false<br />-&gt; 채팅 기록 순서대로 보냄<br /><br />admins 배열은 채팅기록 초기화를 할 수 있는 사람들입니다.<br />[&quot;가&quot;,&quot;나&quot;,&quot;다&quot;] 이런 식으로 추가하세요!<br /><br /><br /><br />*/<br />도미의 추천글<br /><br /><a href=\"https://cafe.naver.com/nameyee/6666\" target=\"_blank\">https://cafe.naver.com/nameyee/6666</a><br />인스타그램 유저 정보<br /><br /><a href=\"https://cafe.naver.com/nameyee/5735\" target=\"_blank\">https://cafe.naver.com/nameyee/5735</a><br />급식 정보 파싱<br /><br /><a href=\"https://cafe.naver.com/nameyee/5120\" target=\"_blank\">https://cafe.naver.com/nameyee/5120</a><br />나무위키 파싱<br /><br /><a href=\"https://cafe.naver.com/nameyee/4985\" target=\"_blank\">https://cafe.naver.com/nameyee/4985</a><br />노래방 번호 검색<br /><br /><a href=\"https://cafe.naver.com/nameyee/3880\" target=\"_blank\">https://cafe.naver.com/nameyee/3880</a><br />관리자 신청/수락<br /><br /><a href=\"https://cafe.naver.com/nameyee/3891\" target=\"_blank\">https://cafe.naver.com/nameyee/3891</a><br />자동학습<br /><br /><a href=\"https://cafe.naver.com/nameyee/4430\" target=\"_blank\">https://cafe.naver.com/nameyee/4430</a><br />초성 퀴즈<br /><br /><a href=\"https://cafe.naver.com/nameyee/4605\" target=\"_blank\">https://cafe.naver.com/nameyee/4605</a><br />넌센스 퀴즈<br /><br /><a href=\"https://cafe.naver.com/nameyee/4842\" target=\"_blank\">https://cafe.naver.com/nameyee/4842</a><br />맞춤법 퀴즈<br /><br /><a href=\"https://cafe.naver.com/nameyee/4809\" target=\"_blank\">https://cafe.naver.com/nameyee/4809</a><br />채팅기록<br /><br /><a href=\"https://cafe.naver.com/nameyee/4561\" target=\"_blank\">https://cafe.naver.com/nameyee/4561</a><br />JSFU*K 사용하기<br /><br />/*<br />(이 주석은 일부러 거꾸로 한거에요 아마도)</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001CF800000000",
+            "id": 7416,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 1805,
+            "refArticleId": 7416,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "채팅 기록 v 1.2 (리메이크 완결)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573033105217,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 7416,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 35468,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/dc49c073613f38e4c82e4b7c44a3daae0654aa488c/MjAxOTExMDZfMjM4/MDAxNTczMDMzMTA0MDcy.1tTR8OTpOQRkdA6D1iWdrgw7gINhaXIGgI7m6Ppdu24g.5Z2dHy-vQB3Yo49Zq0g8ty059_q8NVjxMSvVKkWkio4g.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 119514,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/4bde57e7f3adaf735fb9dcebd3344d3991c33ddf05/MjAxOTExMDZfMjk0/MDAxNTczMDMzMTA0NTA1.FFesmXF6cWQ5pE0PFCSznWL3hRXmmZYNZkqxlpVSdKcg.FLRsSezIdAKJbfladLhN7NDAAWia8TTCcASa9XfTohAg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "js",
+                "fullName": "테스트룸.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "테스트룸.js",
+                "size": 3733,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/8e1b9225340504b19c781f2b17f285f45406f880/20191106_18_cafefile/29537083_1573033297818_O69jPy_js/%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A3%B8.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "굿!",
+                    "id": 72846538,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72846538,
+                    "updateDate": 1573034329000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "멍뭉"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 72847052,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72847052,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1573034784000,
+                    "writer": {
+                        "id": "sihyunit",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "sihyuniT"
+                    }
+                },
+                {
+                    "content": "멋져용",
+                    "id": 72847812,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72847812,
+                    "updateDate": 1573035451000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "뒷북))\r\n닉네임 몇글자만 입력해도 자동완성 해서 찾게하려면 뭘 써야할까요...",
+                    "id": 84363236,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84363236,
+                    "updateDate": 1584352798000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수쿠키"
+                    }
+                },
+                {
+                    "content": "시작하는 단어로 하려면 filter 쪽에 startsWith, 비슷한 단어로 하려면\r\n유사도 함수 사용하시면 됩니다.",
+                    "id": 84363312,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84363236,
+                    "updateDate": 1584352853000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "아함 알겠습니다",
+                    "id": 84363330,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84363236,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1584352868000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수쿠키"
+                    }
+                },
+                {
+                    "content": "if (msg.startsWith(\"@채팅 보기 \")) {\r\n\r\nsend = msg.substr(7).trim()\r\n\r\nif ((JSON.parse(FS.read(path))[all].startsWith(a=>a.split(\"\r\n\r\n\")[1].split(\" : \")[0].trim() == send)).length!=0) {\r\n\r\nsendchat = JSON.parse(FS.read(path))[all].startsWith(a=>a.split(\"\r\n\r\n\")[1].split(\" : \")[0].trim() == send)\r\n",
+                    "id": 84363949,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84363236,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1584353255000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수쿠키"
+                    }
+                },
+                {
+                    "content": "filter를 전부 startsWith로 하는건가요",
+                    "id": 84366069,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84363236,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1584354785000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수쿠키"
+                    }
+                },
+                {
+                    "content": "맞나요",
+                    "id": 84363971,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84363971,
+                    "updateDate": 1584353265000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수쿠키"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

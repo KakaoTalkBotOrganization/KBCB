@@ -1,0 +1,164 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 400,
+                            "service": "CAFE",
+                            "style": "width: 740px; height: 400px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MTVfMjM4/MDAxNTg2OTUxNzQ4MTU3.PucwmR7RbJt0jT0SKvbEMNu2jeGuH7tXeIWgkx5YH5og.2KbrSPIwyQ5S_c9SzCDH-EBx_SApYIoKbNLSpEOg8Eog.PNG/Flask_MongoDB%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7.PNG",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp;</b><span style=\"font-size: 13.3333px;\">메신저봇</span></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;</b></div><div><b><font color=\"#3a32c3\">메신져봇 소스</font></b></div><div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; var reqJson = &apos;{&quot;sender&quot;:&quot;&apos; + sender + &apos;&quot;,&quot;msg&quot;:&quot;&apos; + msg + &apos;&quot;,&quot;room&quot;:&quot;&apos; + room +&apos;&quot;}&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; var url = &quot;<a href=\"http://192.168.0.9:5000/chatlogger/\" target=\"_blank\">http://192.168.0.9:5000/chatlogger/</a>&quot; + reqJson;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp;</b><font color=\"#ff0000\" style=\"\"><b><u>Utils.getWebText(url);</u></b></font></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><b><font color=\"#3a32c3\">Flask 파이썬 app.py 소스</font></b></div><div><div style=\"\"><b>@app.route(&apos;/chatlogger/&lt;msg&gt;&apos;)</b></div><div style=\"\"><b>def chat_logger(msg):</b></div><div style=\"\"><b>&nbsp; &nbsp; print(msg)</b></div><div style=\"\"><b>&nbsp; &nbsp; chat_log(msg)</b></div><div style=\"\"><b>&nbsp; &nbsp; return(&apos;&apos;,204)</b></div><div style=\"font-weight: bold;\"><br /></div></div><div style=\"font-weight: bold;\"><br /></div><div style=\"font-weight: bold;\"><br /></div><div style=\"font-weight: bold;\"><b><font color=\"#3a32c3\">Flask 파이썬 chatlogger.py 소스</font></b></div><div style=\"\"><div style=\"\"><b>from pymongo import MongoClient</b></div><div style=\"\"><b>from datetime import datetime</b></div><div style=\"\"><b>import json</b></div><div style=\"\"><br /></div><div style=\"\"><b>def chat_log(rawMsg):</b></div><div style=\"\"><b>&nbsp; &nbsp; now = str(datetime.now())</b></div><div style=\"\"><b>&nbsp; &nbsp; client = MongoClient(&apos;127.0.0.1&apos;,27017)</b></div><div style=\"\"><b>&nbsp; &nbsp; db = client[&apos;kakaobot&apos;]</b></div><div style=\"\"><b>&nbsp; &nbsp; col = db[&apos;chatlog&apos;]</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; msg = json.loads(rawMsg)</b></div><div style=\"\"><b>&nbsp; &nbsp; msg.update({&quot;datetime&quot;:now})</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; col.insert_one(msg)</b></div><div style=\"font-weight: bold;\"><br /></div><div style=\"font-weight: bold;\"><br /></div></div><div><b>질문내용</b></div><div><b>=&gt; <span style=\"font-size: 13.3333px;\">카톡에서 대화내용 -&gt; 메신져봇 -&gt; Flask 웹서버(파이썬) -&gt; MongoDB 저장 되게 만들었는데요.</span></b></div><div><b>메신져봇 에서&nbsp;</b><b><font color=\"#ff0000\">json 데이터를 Flask로 던지면서 404 에러</font>가 발생해요.</b></div><div><span style=\"font-size: 13.3333px;\"><b>ex)&nbsp;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>json 데이터 :&nbsp;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><a href=\"http://192.168.0.9:5000/chatlogger/{\" target=\"_blank\">http://192.168.0.9:5000/chatlogger/{</a>&quot;sender&quot;:&quot;서기&quot;,&quot;msg&quot;:&quot;하이&quot;,&quot;room&quot;:&quot;서기&quot;}</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><b><span style=\"font-size: 13.3333px;\">아래 스샷보면 GET 으로 한글깨진 데이터를 가져오긴 하거든요. 그런데 app.py에&nbsp;</span></b><b>&nbsp;print(msg) 찍어도 안찍혀요. 몽고디비에도 데이터가 안들어가구요. ㅠ 왜그럴까요?</b></div><div><br /></div><div><b>[[[CONTENT-ELEMENT-0]]]<br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003F0A00000000",
+            "id": 16138,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 99,
+            "refArticleId": 16138,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "json 데이터를 웹서버로 던지면서 404 에러",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586952036847,
+            "writer": {
+                "id": "setinboy",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "파이팅코로나"
+            }
+        },
+        "articleId": 16138,
+        "attaches": [
+            {
+                "extension": "PNG",
+                "fullName": "Flask_MongoDB스크린샷.PNG",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Flask_MongoDB스크린샷.PNG",
+                "size": 215540,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/20b53c8f98c5c41834d2b780b8502152faa856b43d/MjAyMDA0MTVfMjM4/MDAxNTg2OTUxNzQ4MTU3.PucwmR7RbJt0jT0SKvbEMNu2jeGuH7tXeIWgkx5YH5og.2KbrSPIwyQ5S_c9SzCDH-EBx_SApYIoKbNLSpEOg8Eog.PNG/Flask_MongoDB스크린샷.PNG?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

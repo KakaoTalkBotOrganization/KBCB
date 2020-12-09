@@ -1,0 +1,402 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 45,
+            "contentElements": [],
+            "contentHtml": "<p>const scriptName=&quot;아키네이터.js&quot;;<br />var time = 10000<br />//https://srv2.akinator.com:9156/ws/list?session=126&amp;signature=210800019&amp;step=25<br />//https://srv2.akinator.com:9156/ws/answer?session=126&amp;signature=210800019&amp;step=24&amp;answer=1<br />//https://srv2.akinator.com:9156/ws/new_session?partner=1&amp;player=102&amp;constraint=ETAT&lt;&gt;%27AV%27&amp;uid_ext_session=&amp;frontaddr=<br />answer=[&quot;예&quot;,&quot;아니요&quot;,&quot;모르겠습니다&quot;,&quot;그럴겁니다&quot;,&quot;아닐겁니다&quot;]<br />AL=getAL(answer)<br />var d={}<br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />replier.reply(d[sender]==undefined)<br />if(d[sender]==undefined){<br />try{<br />k=getKey()<br />if(k!=&quot;error&quot;)<br />replier.reply(&quot;키를 받아왔습니다.&quot;)<br />else{<br />replier.reply(&quot;에러 발생&quot;)<br />return<br />}<br />t=newsession(k[&quot;uid_ext_session&quot;],k[&quot;frontaddr&quot;])<br />if(t!=&quot;error&quot;)<br />replier.reply(&quot;세션을 만들었습니다.&quot;)<br />else{<br />replier.reply(&quot;에러 발생&quot;)<br />return<br />}<br />replier.reply(t.question)<br />replier.reply(AL)<br />d[sender]={&quot;k&quot;:k,&quot;t&quot;:t,&quot;step&quot;:0}<br />}catch(e){<br />replier.reply(&quot;에러발생&quot;)<br />Log.d(e)<br />d[sender]=undefined<br />}<br />return<br />}<br />if(d[sender].step&gt;25){<br />dd=getChar(d[sender][&quot;t&quot;].session,d[sender][&quot;t&quot;].signature,d[sender].step)<br />tmp=dd.name+&quot;\\n&quot;<br />tmp+=dd.description+&quot;\\n&quot;<br />tmp+=dd.imagePath<br />replier.reply(tmp)<br />d[sender]=undefined<br />}<br />gg=send(d[sender][&quot;t&quot;].session,d[sender][&quot;t&quot;].signature,d[sender].step,msg)<br />if(gg!=&quot;error&quot;){<br />replier.reply(gg.question)<br />replier.reply(AL)<br />d[sender].step+=1<br />}else{<br />replier.reply(&quot;에러발생&quot;)<br />}<br />}<br />function send(sessId,sigId,step,answerId){<br />try{<br />dd=org.jsoup.Jsoup.connect(&quot;https://srv2.akinator.com:9156/ws/answer&quot;).timeout(time).data(&quot;session&quot;,String(sessId)).data(&quot;signature&quot;,String(sigId)).data(&quot;step&quot;,step).data(&quot;answer&quot;,String(answerId)).ignoreContentType(true).get().body().text()<br />json=JSON.parse(dd)<br />Log.e(JSON.stringify(json))<br />return json.parameters<br />}catch(e){<br />Log.e(e)<br />return &quot;error&quot;<br />}<br />}<br />function getChar(sessId,sigId,step){<br />try{<br />json=JSON.parse(org.jsoup.Jsoup.connect(&quot;https://srv2.akinator.com:9156/ws/list&quot;).timeout(time).data(&quot;session&quot;,sessId).data(&quot;signature&quot;,sigId).data(&quot;step&quot;,step).ignoreContentType(true).get().body().text())<br />tmp={}<br />tmp[&quot;name&quot;]=json.parameters.elements[0].element.name<br />tmp[&quot;description&quot;]=json.parameters.elements[0].element.description<br />tmp[&quot;imagePath&quot;]=json.parameters.elements[0].element.absolute_picture_path<br />return tmp<br />}catch(e){<br />Log.e(e)<br />return &quot;error&quot;<br />}<br />}<br />function getAL(answer){<br />var a=&quot;&quot;<br />for(i=0;i&lt;answer.length;i++)<br />a+=i+&quot; &quot;+answer[i]+&quot;\\n&quot;<br />return a.trim()<br />}<br />function getKey(){<br />try{<br />dd=org.jsoup.Jsoup.connect(&quot;https://kr.akinator.mobi/game&quot;).timeout(time).get().html()<br />t={}<br />t[&quot;uid_ext_session&quot;]=/var uid_ext_session = &apos;(.*)&apos;;/g.exec(dd)[1]<br />t[&quot;frontaddr&quot;]=/var frontaddr = &apos;(.*)&apos;;/g.exec(dd)[1]<br />}catch(e){<br />Log.e(e)<br />return &quot;error&quot;<br />}<br />return t<br />}<br />function newsession(uid_ext_session,frontaddr){<br />try{<br />dd=JSON.parse(org.jsoup.Jsoup.connect(&quot;https://srv2.akinator.com:9156/ws/new_session&quot;).timeout(time).data(&quot;partner&quot;,1).data(&quot;player&quot;,&quot;RG&quot;).data(&quot;constraint&quot;,&quot;ETAT&lt;&gt;&apos;AV&apos;&quot;).data(&quot;uid_ext_session&quot;,uid_ext_session).data(&quot;frontaddr&quot;,frontaddr).ignoreContentType(true).get().body().text())<br />t={}<br />sig=dd.parameters.identification.signature<br />sess=dd.parameters.identification.session<br />que=dd.parameters.step_information.question<br />t[&quot;signature&quot;]=sig<br />t[&quot;session&quot;]=sess<br />t[&quot;question&quot;]=que<br />return t<br />}catch(e){<br />Log.e(e)<br />return &quot;error&quot;<br />}<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000104000000000",
+            "id": 4160,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 712,
+            "refArticleId": 4160,
+            "replyListOrder": "",
+            "scrapCount": 2,
+            "subject": "아키네이터 파싱",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1564504329040,
+            "writer": {
+                "id": "psksun4500",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "MatSoGeum"
+            }
+        },
+        "articleId": 4160,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "no if\r\n\r\n입력하는거 예외처리 안했어요\r\n\r\n타임아웃은 조정하세요",
+                    "id": 65212029,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 65212029,
+                    "updateDate": 1564504516000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                },
+                {
+                    "content": "if 해줘요 긴데",
+                    "id": 65212059,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 65212029,
+                    "updateDate": 1564504410000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "ㅋㅋㅋ미뗫고",
+                    "id": 65212041,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 65212041,
+                    "updateDate": 1564504359000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "힣",
+                    "id": 65212049,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 65212041,
+                    "updateDate": 1564504380000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                },
+                {
+                    "content": "마지막에는 timeout이라 undefined 흑",
+                    "id": 65212113,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA3MzFfNTEg/MDAxNTY0NTA0NTYyNzIz.84Gh3r_uODwTOSUNx1sYk2-Zt6ksgJ9Q8G3pTMTgM4Qg.6rFQO-Z-zwoDn-GMFnS54LDMTvkQxVeuzJ7F8pjV3agg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2615,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA3MzFfNTEg/MDAxNTY0NTA0NTYyNzIz.84Gh3r_uODwTOSUNx1sYk2-Zt6ksgJ9Q8G3pTMTgM4Qg.6rFQO-Z-zwoDn-GMFnS54LDMTvkQxVeuzJ7F8pjV3agg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA3MzFfNTEg/MDAxNTY0NTA0NTYyNzIz.84Gh3r_uODwTOSUNx1sYk2-Zt6ksgJ9Q8G3pTMTgM4Qg.6rFQO-Z-zwoDn-GMFnS54LDMTvkQxVeuzJ7F8pjV3agg.JPEG/externalFile.jpg",
+                        "width": 810
+                    },
+                    "refId": 65212113,
+                    "updateDate": 1564504563000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                },
+                {
+                    "content": "ㄷㄷ",
+                    "id": 65249439,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 65212113,
+                    "updateDate": 1564550282000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "지리네요\r\n중간에 imagePath is not defined떠요",
+                    "id": 65212513,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 65212513,
+                    "updateDate": 1564505573000,
+                    "writer": {
+                        "id": "a2611577",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "scap"
+                    }
+                },
+                {
+                    "content": "41번째줄",
+                    "id": 65212528,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 65212513,
+                    "updateDate": 1564505623000,
+                    "writer": {
+                        "id": "a2611577",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "scap"
+                    }
+                },
+                {
+                    "content": "dd.imagePath로 바꾸면 되요",
+                    "id": 65224353,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 65212513,
+                    "updateDate": 1564531633000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                },
+                {
+                    "content": "신기하다",
+                    "id": 65213351,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 65213351,
+                    "updateDate": 1564510801000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                }
+            ],
+            "last": {
+                "id": 68791322,
+                "refId": 68791322
+            },
+            "next": {
+                "id": 65218113,
+                "refId": 65218113
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

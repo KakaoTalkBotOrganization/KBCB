@@ -1,0 +1,232 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "예전에 만들던 HTV봇이 이미지 전송이 안되서 아쉬웠는데, 이제 카카오 링크도 지원해서 이미지도 불러오게 수정.<div><br /></div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #9cdcfe;\">Utils</span>.<span style=\"color: #dcdcaa;\">getHanimeJSON</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">function</span>&nbsp;(<span style=\"color: #9cdcfe;\">url</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">try</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">url</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">net</span>.<span style=\"color: #4ec9b0;\">URL</span>(<span style=\"color: #9cdcfe;\">url</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">con</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">url</span>.<span style=\"color: #dcdcaa;\">openConnection</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">con</span>.<span style=\"color: #dcdcaa;\">setRequestProperty</span>(<span style=\"color: #ce9178;\">&quot;User-Agent&quot;</span>,&nbsp;<span style=\"color: #ce9178;\">&quot;Mozilla/5.0&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">con</span>.<span style=\"color: #dcdcaa;\">setRequestProperty</span>(<span style=\"color: #ce9178;\">&apos;X-Directive&apos;</span>,&nbsp;<span style=\"color: #ce9178;\">&apos;api&apos;</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(<span style=\"color: #9cdcfe;\">con</span>&nbsp;!=&nbsp;<span style=\"color: #569cd6;\">null</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">con</span>.<span style=\"color: #dcdcaa;\">setConnectTimeout</span>(<span style=\"color: #b5cea8;\">5000</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">con</span>.<span style=\"color: #dcdcaa;\">setUseCaches</span>(<span style=\"color: #569cd6;\">false</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">isr</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">InputStreamReader</span>(<span style=\"color: #9cdcfe;\">con</span>.<span style=\"color: #dcdcaa;\">getInputStream</span>());</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">br</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">BufferedReader</span>(<span style=\"color: #9cdcfe;\">isr</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">str</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">br</span>.<span style=\"color: #dcdcaa;\">readLine</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">line</span>&nbsp;=&nbsp;<span style=\"color: #ce9178;\">&quot;&quot;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">while</span>&nbsp;((<span style=\"color: #9cdcfe;\">line</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">br</span>.<span style=\"color: #dcdcaa;\">readLine</span>())&nbsp;!=&nbsp;<span style=\"color: #569cd6;\">null</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">str</span>&nbsp;+=&nbsp;<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">line</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">isr</span>.<span style=\"color: #dcdcaa;\">close</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">br</span>.<span style=\"color: #dcdcaa;\">close</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">con</span>.<span style=\"color: #dcdcaa;\">disconnect</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;<span style=\"color: #4ec9b0;\">JSON</span>.<span style=\"color: #dcdcaa;\">parse</span>(<span style=\"color: #9cdcfe;\">str</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span style=\"color: #c586c0;\">catch</span>&nbsp;(<span style=\"color: #9cdcfe;\">e</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//Log.debug(e);</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;<span style=\"color: #ce9178;\">&quot;error&quot;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>};</div><br /><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">Hanime</span>(<span style=\"color: #9cdcfe;\">title</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">input_url</span>&nbsp;=&nbsp;<span style=\"color: #ce9178;\">&apos;<a href=\"https://members.hanime.tv/api/v5/hentai-videos/\" target=\"_blank\">https://members.hanime.tv/api/v5/hentai-videos/</a>&apos;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">title</span>.<span style=\"color: #dcdcaa;\">replaceAll</span>(<span style=\"color: #ce9178;\">&apos;&nbsp;&apos;</span>,&nbsp;<span style=\"color: #ce9178;\">&apos;-&apos;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">result</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Utils</span>.<span style=\"color: #dcdcaa;\">getHanimeJSON</span>(<span style=\"color: #9cdcfe;\">input_url</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">debug</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">result</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(<span style=\"color: #9cdcfe;\">result</span>&nbsp;!=&nbsp;<span style=\"color: #ce9178;\">&quot;error&quot;</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">video</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">result</span>.<span style=\"color: #9cdcfe;\">hentai_video</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">title</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">name</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">release</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">released_at</span>.<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&quot;T&quot;</span>)[<span style=\"color: #b5cea8;\">0</span>];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">description</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">description</span>.<span style=\"color: #dcdcaa;\">replace</span>(<span style=\"color: #d16969;\">/</span><span style=\"color: #ce9178;\">(</span><span style=\"color: #d16969;\">&lt;</span><span style=\"color: #ce9178;\">([^</span><span style=\"color: #d16969;\">&gt;</span><span style=\"color: #ce9178;\">]</span><span style=\"color: #d7ba7d;\">+</span><span style=\"color: #ce9178;\">)</span><span style=\"color: #d16969;\">&gt;</span><span style=\"color: #ce9178;\">)</span><span style=\"color: #d16969;\">/</span><span style=\"color: #569cd6;\">g</span>,&nbsp;<span style=\"color: #ce9178;\">&quot;&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">tags</span>&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">for</span>&nbsp;(<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">i</span>&nbsp;<span style=\"color: #569cd6;\">in</span>&nbsp;<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">hentai_tags</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">tags</span>.<span style=\"color: #dcdcaa;\">push</span>(<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">hentai_tags</span>[<span style=\"color: #9cdcfe;\">i</span>].<span style=\"color: #9cdcfe;\">text</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">tags</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">tags</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">brand</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">brand</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">cover</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">cover_url</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">this</span>.<span style=\"color: #9cdcfe;\">poster</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">video</span>.<span style=\"color: #9cdcfe;\">poster_url</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>}</div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000032D200000000",
+            "id": 13010,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 160,
+            "refArticleId": 13010,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "HTV 이미지 추가",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583724647390,
+            "writer": {
+                "id": "pak_hyun",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "OtakoidTony"
+            }
+        },
+        "articleId": 13010,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "HTV 이미지가 뭔가요?",
+                    "id": 85544976,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85544976,
+                    "updateDate": 1585296300000,
+                    "writer": {
+                        "id": "labyrinth428",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMTBfMjg2/MDAxNTc4NTgzMzg5MTIx.dv3kkPOc4VE9YtBFXEBga3_krfMcG-FpWYAWseqoISsg.0vAWKmYi-SiWUUeIhAZyGrY7ksCu6w-3TVu2LiLShrkg.JPEG/11880383_142188956119424_2156475469741310298_n.jpg"
+                        },
+                        "nick": "페르조나"
+                    }
+                },
+                {
+                    "content": "HTV라면...서..설마?",
+                    "id": 88133500,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88133500,
+                    "updateDate": 1587464986000,
+                    "writer": {
+                        "id": "pianoplayotaku101",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200929_12/pianoplayotaku101_16013600195557nMeE_JPEG/image.jpg"
+                        },
+                        "nick": "피아노 치는 스켈레톤"
+                    }
+                },
+                {
+                    "content": "끄덕",
+                    "id": 88985055,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88133500,
+                    "updateDate": 1588176865000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

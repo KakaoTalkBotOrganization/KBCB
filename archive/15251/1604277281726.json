@@ -1,0 +1,168 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"\"><div style=\"line-height: 19px;\"><div style=\"\"><div style=\"line-height: 19px;\"><div style=\"line-height: 19px;\"><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">String.prototype.trimAllLine&nbsp;=&nbsp;function(){</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;preData&nbsp;=&nbsp;this.trim().split(&quot;\\n&quot;),data&nbsp;=&nbsp;[];</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;for(var&nbsp;i=0;i&lt;preData.length;i++){</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;cash&nbsp;=&nbsp;preData[i].trim();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.push(cash);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;data.join(&quot;\\n&quot;);</span></div></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">}&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\"><br /></span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">Classification=function(기준/*[[30,&quot;좋음&quot;],[80,&quot;보통&quot;],[150,&quot;나쁨&quot;],[Infinity,&quot;매우&nbsp;나쁨&quot;]]*/,data)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;result=[];</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(let&nbsp;i=0;i&lt;data.length;i++)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(data[i]==&quot;-&quot;)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result.push(&quot;Error&quot;);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(let&nbsp;j=0;j&lt;기준.length;j++)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(기준[j][0]&gt;=data[i])&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result.push(기준[j][1]);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;result;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></div></div></div></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\"><br /></span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">Air=function(이름)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;mdata&nbsp;=Utils.getWebText(&quot;<a href=\"https://m.search.naver.com/search.naver?query=\" target=\"_blank\">https://m.search.naver.com/search.naver?query=</a>&quot;+encodeURIComponent(&quot;전국&nbsp;&quot;+이름)).replace(/(&lt;([^&gt;]+)&gt;)/g,&nbsp;&quot;&quot;).split(&quot;대기환경정보&quot;)[1].split(&quot;미세먼지&quot;)[3].split(&quot;단위&quot;)[0].trimAllLine();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mdata=이름==&quot;자외선&quot;?mdata.split(&quot;0&nbsp;~2&quot;)[0].trim():mdata;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;지역=mdata.replace(/[0-9]/g,&quot;&quot;).replace(/&nbsp;/g,&quot;&quot;).split(&quot;\\n&quot;),수치=mdata.replace(/[가-힇]/g,&quot;&quot;).replace(/&nbsp;/g,&quot;&quot;).split(&quot;\\n&quot;),통계=[];</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;단위=이름==&quot;자외선&quot;?&quot;&quot;:이름==&quot;오존&quot;?&quot;ppm&quot;:&quot;㎍/m&sup3;&quot;;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(이름==&quot;미세먼지&quot;)&nbsp;var&nbsp;등급=Classification([[30,&quot;&#128516;좋음&#128516;&quot;],[80,&quot;&#128552;보통&#128552;&quot;],[150,&quot;&#128545;나쁨&#128545;&quot;],[Infinity,&quot;&#128127;매우&nbsp;나쁨&#128127;&quot;]],수치);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(이름==&quot;초미세먼지&quot;)&nbsp;var&nbsp;등급=Classification([[15,&quot;&#128516;좋음&#128516;&quot;],[35,&quot;&#128552;보통&#128552;&quot;],[75,&quot;&#128545;나쁨&#128545;&quot;],[Infinity,&quot;&#128127;매우&nbsp;나쁨&#128127;&quot;]],수치);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(이름==&quot;오존&quot;)&nbsp;var&nbsp;등급=Classification([[0.03,&quot;&#128516;좋음&#128516;&quot;],[0.09,&quot;&#128552;보통&#128552;&quot;],[0.15,&quot;&#128545;나쁨&#128545;&quot;],[Infinity,&quot;&#128127;매우나쁨&#128127;&quot;]],수치);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(이름==&quot;자외선&quot;)&nbsp;var&nbsp;등급=Classification([[2,&quot;&#128516;낮음&#128516;&quot;],[5,&quot;&#128552;보통&#128552;&quot;],[7,&quot;&#128545;높음&#128545;&quot;],[10,&quot;&#128127;매우높음&#128127;&quot;],[Infinity,&quot;&#128128;위험&#128128;&quot;]],수치);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(이름==&quot;황사&quot;)&nbsp;var&nbsp;등급=Classification([[199,&quot;&#128516;보통&#128516;&quot;],[399,&quot;&#128552;약간나쁨&#128552;&quot;],[799,&quot;&#128545;나쁨&#128545;&quot;],[Infinity,&quot;&#128127;매우나쁨&#128127;&quot;]],수치);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(let&nbsp;i=0;i&lt;지역.length;i++)&nbsp;통계.push(지역[i]+&quot;&nbsp;:&nbsp;&quot;+등급[i].replace(/Error/g,&quot;&#10071;Error&#10071;&quot;)&nbsp;+&quot;&nbsp;(&quot;+수치[i]+단위+&quot;)&quot;);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&quot;[&nbsp;&quot;+이름+&quot;&nbsp;정보&nbsp;]&quot;+&quot;\\u200b&quot;.repeat(1000)+&quot;\\n&quot;+통계.join(&quot;\\n&quot;);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\"><br /></span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">/*</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">사용법 : Air(&quot;미세먼지&quot;); or Air(&quot;초미세먼지&quot;);</span><span style=\"background-color: rgb(255, 255, 255);\"> or Air(&quot;오존&quot;);</span><span style=\"background-color: rgb(255, 255, 255);\"> or Air(&quot;자외선&quot;);</span><span style=\"background-color: rgb(255, 255, 255);\"> or Air(&quot;황사&quot;);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">*/</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003B9300000000",
+            "id": 15251,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 44,
+            "refArticleId": 15251,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "미세먼지, 초미세먼지등 관련 정보 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585967871377,
+            "writer": {
+                "id": "dbsehgus0121",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "Green050121"
+            }
+        },
+        "articleId": 15251,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,371 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 13,
+            "contentElements": [],
+            "contentHtml": "<p>잘 사용하고있었는데 3~4일 사용하니까 지가 혼자 초기화가 되버리네영 ㅜㅜ<br />제가 따로 명령어 입력한적이없는데 왜그럴까요 ㅜ<br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />FS = FileStream;<br />path = &quot;sdcard/File/chatingLevel&quot;<br />all = &quot;\\u200b&quot;.repeat(500)<br /><br /><br />levelUp = 10<br />clearOwner = [&quot;&quot;]<br /><br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (FS.read(path)==null) FS.write(path, &quot;{}&quot;);<br /><br />if (msg) {<br /><br />rd = JSON.parse(FS.read(path))<br /><br />if (rd[room] == undefined) rd[room] = {};<br /><br />if (rd[room][sender] == undefined) {<br /><br />rd[room][sender] = {}<br />rd[room][sender][&quot;chats&quot;] = 0<br />rd[room][sender][&quot;level&quot;] = 0<br /><br />}<br /><br />bklv = rd[room][sender][&quot;level&quot;]<br /><br />rd[room][sender][&quot;chats&quot;]++<br /><br />rd[room][sender][&quot;level&quot;] = Number(rd[room][sender][&quot;chats&quot;])/levelUp|0<br /><br />nowlv = rd[room][sender][&quot;level&quot;]<br /><br />if (nowlv != bklv) {<br /><br />replier.reply<br /><br />}<br /><br />FS.write(path, JSON.stringify(rd))<br /><br />}<br /><br />if (msg == &quot;/내채팅&quot;) {<br /><br />rd = JSON.parse(FS.read(path))<br /><br />myChats = rd[room][sender][&quot;chats&quot;]<br /><br />myLevel = rd[room][sender][&quot;level&quot;]<br /><br />result = []<br /><br />for (i in rd[room]) result.push(rd[room][i]+&quot;\\n&quot;+rd[room][i][&quot;chats&quot;]);<br /><br />result.sort((a, b)=&gt;a.split(&quot;\\n&quot;)[1] - b.split(&quot;\\n&quot;)[1]).reverse()<br /><br />score = 0<br /><br />for (k in result) {<br /><br />if (result[k].split(&quot;\\n&quot;)[0] == sender) score = Number(k)+1<br /><br />}<br /><br />replier.reply(sender+&quot; (&quot;+(score==0?&quot;1&quot;:score)+&quot;위)\\n레벨 : &quot;+myLevel+&quot;\\n채팅 : &quot;+myChats+&quot;회&quot;)<br /><br />}<br /><br />if (msg == &quot;/채팅순위&quot;) {<br /><br />rd = JSON.parse(FS.read(path))<br /><br />result = []<br /><br />for (i in rd[room]) result.push(i+&quot;\\n레벨 : &quot;+rd[room][i][&quot;level&quot;]+&quot;\\n채팅 : &quot;+rd[room][i][&quot;chats&quot;]);<br /><br />result.sort((a, b)=&gt;a.split(&quot;: &quot;)[2] - b.split(&quot;: &quot;)[2]).reverse()<br /><br />for (j in result) result[j] = (Number(j)+1)+&quot;위 | &quot;+result[j];<br /><br />replier.reply(&quot;[!] 채팅 순위입니다.&quot;+all+&quot;\\n\\n방 : &quot;+room+(igc?&quot; (그룹챗)&quot;:&quot; (개인챗)&quot;)+&quot;\\n총 &quot;+result.length+&quot;명\\n\\n&quot;+result.join(&quot;\\n\\n&quot;))<br /><br />}<br /><br />if (msg == &quot;/채팅초기화&quot;) {<br /><br />if (clearOwner.indexOf(sender)!=-1) {<br /><br />FS.write(path, &quot;{}&quot;)<br /><br />replier.reply(&quot;[!] 초기화 되었습니다.&quot;)<br /><br />} else {<br /><br />replier.reply(&quot;[!] 지정된 관리자만 채팅을 초기화 할 수 있습니다.&quot;)<br /><br />}<br /><br />}<br /><br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000056E300000000",
+            "id": 22243,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 33,
+                "menuType": "B",
+                "name": "| 기타 질문 |"
+            },
+            "readCount": 170,
+            "refArticleId": 22243,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "채팅순위 도미님꺼 문의좀 드릴게요 ㅜㅜ",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1596453210097,
+            "writer": {
+                "id": "tlsaltjs21",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20140711_104/tlsaltjs21_1405077214452qC6Ox_JPEG/profileimage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "미자언니"
+            }
+        },
+        "articleId": 22243,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷ 어느 앱이 찌꺼기 자동청소 한거 아닐까요?",
+                    "id": 98807227,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98807227,
+                    "updateDate": 1596455015000,
+                    "writer": {
+                        "id": "choho0327",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MTZfMTEg/MDAxNTkyMjM4ODI5NjU2.Q8dwixhud4Izb3cWGmGI9aXV7iamN1oBkInKT5guiKgg.NiwRar-HWe1ErnKq4v8FyAlfaRPb358-weeQ_H8ao9og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "윤동원"
+                    }
+                },
+                {
+                    "content": "그런거없는데 ....ㅜㅜㅜ ㅜㅜㅜ흑...",
+                    "id": 98807314,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98807227,
+                    "updateDate": 1596455065000,
+                    "writer": {
+                        "id": "tlsaltjs21",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20140711_104/tlsaltjs21_1405077214452qC6Ox_JPEG/profileimage.jpg"
+                        },
+                        "nick": "미자언니"
+                    }
+                },
+                {
+                    "content": "FileStream인데 초기화라니",
+                    "id": 98815084,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "updateDate": 1596459594000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "모르겠어요 ㅜㅜ. 한 3~4일됬는데 다시 카운트가 되네영 ..ㅜ 소스문제는 안닌거죵 ??\r\n폰문제일까여 ㅜ",
+                    "id": 98815228,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "updateDate": 1596459652000,
+                    "writer": {
+                        "id": "tlsaltjs21",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20140711_104/tlsaltjs21_1405077214452qC6Ox_JPEG/profileimage.jpg"
+                        },
+                        "nick": "미자언니"
+                    }
+                },
+                {
+                    "content": "폰문제입니다",
+                    "id": 98815251,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "replyMember": {
+                        "id": "tlsaltjs21",
+                        "nick": "미자언니"
+                    },
+                    "updateDate": 1596459663000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "그렇군여 ! 감사합니다 ㅜ 폰 바꾸거나 알아봐야겐네여흑",
+                    "id": 98815304,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1596459685000,
+                    "writer": {
+                        "id": "tlsaltjs21",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20140711_104/tlsaltjs21_1405077214452qC6Ox_JPEG/profileimage.jpg"
+                        },
+                        "nick": "미자언니"
+                    }
+                },
+                {
+                    "content": "? 카톡봇땜에 폰을 바꾸시다니 ㄷㄷ 부자신가",
+                    "id": 98815335,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "replyMember": {
+                        "id": "tlsaltjs21",
+                        "nick": "미자언니"
+                    },
+                    "updateDate": 1596459703000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "아...좀 된걸로 사용하고있었던거라 공폰이라서 ㅎㅎㅎㅎ 상태가 안좋긴 했어용",
+                    "id": 98815388,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1596459732000,
+                    "writer": {
+                        "id": "tlsaltjs21",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20140711_104/tlsaltjs21_1405077214452qC6Ox_JPEG/profileimage.jpg"
+                        },
+                        "nick": "미자언니"
+                    }
+                },
+                {
+                    "content": "어라",
+                    "id": 98815623,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "replyMember": {
+                        "id": "tlsaltjs21",
+                        "nick": "미자언니"
+                    },
+                    "updateDate": 1596459844000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "왜용왜용 ㅠㅠ",
+                    "id": 98815682,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98815084,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1596459869000,
+                    "writer": {
+                        "id": "tlsaltjs21",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20140711_104/tlsaltjs21_1405077214452qC6Ox_JPEG/profileimage.jpg"
+                        },
+                        "nick": "미자언니"
+                    }
+                }
+            ],
+            "last": {
+                "id": 98815084,
+                "refId": 98815084
+            },
+            "next": {
+                "id": 98815719,
+                "refId": 98815084
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "어플 관련",
+                "headId": 33
+            },
+            {
+                "head": "프밍언어",
+                "headId": 59
+            },
+            {
+                "head": "답변 완료",
+                "headId": 100
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

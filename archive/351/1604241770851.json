@@ -1,0 +1,441 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 16,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1068,
+                            "service": "CAFE",
+                            "style": "width: 392px; height: 1068px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAxMDRfMTI3/MDAxNTQ2NTY1OTQ0ODUx.qiBFy6Muxyo43gPnNgc2W80mu1tINmL3iR98YiX4hSUg.1IySYqZUtj-c4a2vhFobnXmyNlw8eSo0D-9GBfOo_7Yg.PNG.r960701/KakaoTalk_Snapshot_20190104_103052.png",
+                            "width": 392
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">일단은 일정을 관리하는 용도로 만들기는 했지만 실상은 메모기능입니다.</font></span></div><div><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">약간의 자연어처리와 파일로 저장하고 확인 삭제할 수 있습니다.</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div><b><br /></b></div><div><b>var 일정;</b></div><div><b>var 등록확인=false;</b></div><div><b>var 등록시작=false;</b></div><div><b>var 등록자;</b></div><div><b>var 확인자;</b></div><div><b>const 긍정 = [&quot;예&quot;,&quot;응&quot;,&quot;yes&quot;,&quot;1&quot;,&quot;어&quot;,&quot;ok&quot;,&quot;그래&quot;,&quot;부탁&quot;,&quot;해줘&quot;];</b></div><div><b>const 부정 = [&quot;아니&quot;,&quot;no&quot;,&quot;2&quot;,&quot;싫어&quot;,&quot;괜찮아&quot;,&quot;아닌&quot;,&quot;아냐&quot;];</b></div><div><b>const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</b></div><div><b>var files = [];</b></div><div><b>var 목록 =&quot;&quot;</b></div><div><b>var 리스트 =&quot;&quot;</b></div><div><b>var 대상;</b></div><div><b>var dir = new java.io.File(sdcard+&quot;/katalkbot/Database/&quot;);</b></div><div><b><br /></b></div><div><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></div><div><b>&nbsp; &nbsp;if (msg.indexOf(&quot;일정&quot;)==0 &amp;&amp; msg.indexOf(&quot;등록&quot;)!=-1) {</b></div><div><b>&nbsp; &nbsp; &nbsp; if (등록확인 == false &amp;&amp; 등록시작 == false) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;일정을 등록하시겠습니까?\\n1.Yes&nbsp; &nbsp; &nbsp; 2.No&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;등록확인 = true;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;등록자 = sender;</b></div><div><b>&nbsp; &nbsp; &nbsp; } else if (등록시작 == true) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;이미 &quot;+등록자+&quot; 님께서 등록중입니다.&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; } else return;</b></div><div><b>&nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp;if (등록확인 == true &amp;&amp; sender == 등록자)&nbsp; &nbsp;{</b></div><div><b>&nbsp; &nbsp; &nbsp; if (긍정.indexOf(msg.toLowerCase())!=-1)&nbsp; &nbsp; {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;등록하실 제목 및 일정을 입력해주세요.\\n(엔터를 기준으로 인식합니다)&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;등록확인 = false;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;등록시작 = true;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</b></div><div><b>&nbsp; &nbsp; &nbsp; } else if (부정.indexOf(msg.toLowerCase())!=-1) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;등록을 취소합니다.&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;등록확인 = false;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;등록자 = &quot;&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp;if (sender == 등록자 &amp;&amp; 등록시작 == true)&nbsp; &nbsp;{</b></div><div><b>&nbsp; &nbsp; &nbsp; 일정 = msg.split(&quot;\\n&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;일정을 등록하였습니다.&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; java.lang.Thread.sleep(500);</b></div><div><b>&nbsp; &nbsp; &nbsp; replier.reply(일정.join(&quot;\\n&quot;));</b></div><div><b>&nbsp; &nbsp; &nbsp; DataBase.setDataBase(일정[0],일정.join(&quot;\\n&quot;));</b></div><div><b>&nbsp; &nbsp; &nbsp; 등록자 = &quot;&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; 등록시작 = false;</b></div><div><b>&nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp;if (msg.indexOf( &quot;일정&quot;)==0&amp;&amp;msg.indexOf(&quot;확인&quot;)!=-1 &amp;&amp; 등록확인 == false &amp;&amp; 등록시작 == false) {</b></div><div><b>&nbsp; &nbsp; &nbsp; 등록시작 = true;</b></div><div><b>&nbsp; &nbsp; &nbsp; 확인자 = sender;</b></div><div><b>&nbsp; &nbsp; &nbsp; var files = [];</b></div><div><b>&nbsp; &nbsp; &nbsp; var 목록 =&quot;&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; var 리스트 =&quot;&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; files = dir.list();</b></div><div><b>&nbsp; &nbsp; &nbsp; files.sort();</b></div><div><b>&nbsp; &nbsp; &nbsp; for(var i=0;i&lt;files.length;i++){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (files[i].indexOf(&quot;.bak&quot;)!=-1) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else 목록+=files[i];</b></div><div><b>&nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; 리스트 = 목록.replace(/.txt/g,&quot;\\n&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;어떤 일정을 확인하시겠습니까?\\n&quot;+리스트);</b></div><div><b>&nbsp; &nbsp; &nbsp; return;</b></div><div><b>&nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp;if (sender == 확인자 &amp;&amp; 등록시작 == true) {</b></div><div><b>&nbsp; &nbsp; &nbsp; var 대상;</b></div><div><b>&nbsp; &nbsp; &nbsp; msg == msg.split(&quot; &quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; files = dir.list();</b></div><div><b>&nbsp; &nbsp; &nbsp; files.sort();</b></div><div><b>&nbsp; &nbsp; &nbsp; for (var n=0;n&lt;files.length;n++) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (files[n].indexOf(msg)!=-1) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 대상 = files[n].replace(&quot;.txt&quot;,&quot;&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; if (대상!=undefined) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(DataBase.getDataBase(대상));</b></div><div><b>&nbsp; &nbsp; &nbsp; } else replier.reply(&quot;해당 제목을 가진 일정을 찾지 못하였습니다.&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; 확인자 = false;</b></div><div><b>&nbsp; &nbsp; &nbsp; 등록시작 = false;</b></div><div><b>&nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp;if (msg.indexOf(&quot;일정삭제&quot;)==0 &amp;&amp; 등록시작 == false) {</b></div><div><b>&nbsp; &nbsp; &nbsp; msg = msg.substr(5);</b></div><div><b>&nbsp; &nbsp; &nbsp; DataBase.removeDataBase(msg);</b></div><div><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;해당 일정을 삭제 하였습니다.&quot;);</b></div><div><b>&nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp; if (msg.indexOf(&quot;,e &quot;)==0) {</b></div><div><b>try {</b></div><div><b>&nbsp; &nbsp;replier.reply(eval(msg.substr(3)));</b></div><div><b>&nbsp; &nbsp;} catch(e) {replier.reply(e);}</b></div><div><b>}</b></div><div><b>}</b></div></div><div><b><br /></b></div><div><b>사용방법은</b></div><div><b>[[[CONTENT-ELEMENT-0]]]<br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000015F00000000",
+            "id": 351,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 733,
+            "refArticleId": 351,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "일정 관리(수정)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1546565968817,
+            "writer": {
+                "id": "r960701",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "카신"
+            }
+        },
+        "articleId": 351,
+        "attaches": [
+            {
+                "extension": "png",
+                "fullName": "KakaoTalk_Snapshot_20190104_103052.png",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "KakaoTalk_Snaps...90104_103052.png",
+                "size": 223901,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/9d088137221617a28f6b0c3b01e19ce74715eb3b/MjAxOTAxMDRfMTI3/MDAxNTQ2NTY1OTQ0ODUx.qiBFy6Muxyo43gPnNgc2W80mu1tINmL3iR98YiX4hSUg.1IySYqZUtj-c4a2vhFobnXmyNlw8eSo0D-9GBfOo_7Yg.PNG.r960701/KakaoTalk_Snapshot_20190104_103052.png?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 50748133,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50748133,
+                    "sticker": {
+                        "height": 101,
+                        "id": "nemo_and_friends-5-139-145",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/nemo_and_friends/original_5.png",
+                        "width": 97
+                    },
+                    "updateDate": 1546567510000,
+                    "writer": {
+                        "id": "ekdekd0909",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMDhfNzcg/MDAxNjAyMTUyMjY1NDU0.EkdohoPwl8PQjtVurAkatC1HV_lTeBH2SwqxOMbECa8g.I2kiN4kzxpaKSeVtXuRXIPFZLDMvQCUoMMCmsdYTzi8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "샤를"
+                    }
+                },
+                {
+                    "content": "냠 삭제기능은 셀푸 :)",
+                    "id": 50758080,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50758080,
+                    "updateDate": 1546580035000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "삭제 있",
+                    "id": 50758797,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50758080,
+                    "updateDate": 1546581174000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "에러나네영 삭제기능은 :)",
+                    "id": 50759844,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50758080,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1546582767000,
+                    "writer": {
+                        "id": "rlqordlekd",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "미카르덴"
+                    }
+                },
+                {
+                    "content": "어라라. 메신져봇에서 테스트할때 안났긴한데 스샷에두 있고.\r\n가져가셔서 에러가 나신다면야 셀프 수정! 데헷",
+                    "id": 50760150,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50758080,
+                    "replyMember": {
+                        "id": "rlqordlekd",
+                        "nick": "미카르덴"
+                    },
+                    "updateDate": 1546583324000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "저장할때 파일이 깨지는것 같아여 이유는 좀더봐야겠지만,\r\n그래서 등록 확인때 적어줘도 해당파일을 인식을못하네용 ㅎㅎ",
+                    "id": 50760258,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50758080,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1546583487000,
+                    "writer": {
+                        "id": "rlqordlekd",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "미카르덴"
+                    }
+                },
+                {
+                    "content": "수정완료",
+                    "id": 50762427,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50758080,
+                    "replyMember": {
+                        "id": "rlqordlekd",
+                        "nick": "미카르덴"
+                    },
+                    "updateDate": 1546586695000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "삭제도 안되고.. 확인도 안되고.. ㄸㄹㄹ",
+                    "id": 50760799,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50760799,
+                    "updateDate": 1546584270000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "DataBase 명령문이\r\n메신져봇에서만 쓸수있는 내장 함수입니다.\r\n제목 태그에도 있다시피 메신져봇전용 소스예요~",
+                    "id": 50761709,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50760799,
+                    "updateDate": 1546585611000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "당연히 파란메신저봇으로 했조..ㅎㅎ",
+                    "id": 50761743,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 50760799,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1546585646000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                }
+            ],
+            "last": {
+                "id": 82574298,
+                "refId": 82574298
+            },
+            "next": {
+                "id": 50762420,
+                "refId": 50760799
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

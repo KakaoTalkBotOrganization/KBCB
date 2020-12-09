@@ -1,0 +1,196 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 700,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MDRfMiAg/MDAxNTkzODY4ODgzNTA5.tdB8CCmmsOBGJULcJs7XNI1kkRdLomJcGRdIBycSgnIg.IOsV4blVLuZ7-3NnCRy0uCAPVYIv_ESEWPPxur_S8Icg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />Ll = &quot;&#9148;&quot;.repeat(40)<br />Lw = &quot;\\u200b&quot;.repeat(500)<br />FS = FileStream<br />path = &quot;sdcard/loanwordquiz/scores&quot;<br />FS.read(path) || FS.write(path, &quot;{}&quot;)<br />json = {}<br /><br />rooms = []<br />admins = []<br /><br />/*<br /><br />작동할 방들을 rooms 배열에 넣으시면 됩니다.<br />비워둘 시 모든 방 작동.<br /><br />초기화 명령어를 사용할 수 있는 사람들을 admins 배열에 넣으시면 됩니다.<br />비워둘 시 모든 사람 사용 가능.<br /><br />Made by doami<br />Made API by OVERWATCH<br />이소스는 도미님의 넌센스 퀴즈 와 오버워치님의 API를 이용하여 만들었습니다.<br /><br />*/<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (rooms.length &amp;&amp; rooms.indexOf(room) == -1) return;<br /><br />if (msg == &quot;/외래어퀴즈&quot; &amp;&amp; !json[room]) {<br />parse = JSON.parse(org.jsoup.Jsoup.connect(&quot;http://ykd4365.dothome.co.kr/quiz_enkr.php&quot;). ignoreContentType(true).get().text())<br />json[room] = [parse.문제1, parse.문제2, parse.번호]<br />replier.reply([<br />&quot;&bull; 다음중 맞는단어는?&quot;, Ll,<br />&quot;1. &quot;+json[room][0],<br />&quot;2. &quot;+json[room][1],<br />&quot;&quot;,<br />&quot;/정답 (번호)&quot;,<br />&quot;/포기&quot;, Ll<br />].join(&quot;\\n&quot;))<br />}<br /><br /><br /><br />if (msg == &quot;/포기&quot; &amp;&amp; json[room]) {<br />replier.reply([<br />&quot;&bull; 퀴즈를 포기하셨습니다!&quot;,<br />&quot;정답 : &quot;+json[room][2]+&quot;번 &quot;+json[room][Number(json[room][2])-1]<br />].join(&quot;\\n&quot;))<br />delete json[room]<br />}<br /><br />if (msg.startsWith(&quot;/정답&quot;) &amp;&amp; json[room]) {<br />input = msg.substr(4)<br />if (input == json[room][2]) {<br />replier.reply([<br />&quot;&bull; &apos;&quot;+sender+&quot;&apos; 님 정답!&quot;,<br />&quot;정답 : &quot;+json[room][2]+&quot;번 &quot;+json[room][Number(json[room][2])-1]<br />].join(&quot;\\n\\n&quot;))<br />delete json[room]<br />scores = JSON.parse(FS.read(path))<br />scores[room] = scores[room] || {}<br />scores[room][sender] = ++scores[room][sender] || 1<br />FS.write(path, JSON.stringify(scores, null, 4))<br />} else replier.reply(&quot;&bull; 틀렸습니다!&quot;)<br />}<br /><br />if (msg == &quot;/점수판&quot;) {<br />scores = JSON.parse(FS.read(path))<br />scores[room] = scores[room] || {}<br />result = Object.keys(scores[room]).sort((a, b) =&gt; scores[room][b] - scores[room][a]).map((k, i) =&gt; (i+1)+&quot;위 ) &quot;+k+&quot; | &quot;+scores[room][k]+&quot;점&quot;)<br />replier.reply(result.length?[&quot;&bull; 점수판 입니다.&quot;+Lw, Ll, result.join(&quot;\\n&quot;), Ll].join(&quot;\\n\\n&quot;):&quot;&bull; 기록된 점수가 없습니다!&quot;)<br />}<br /><br />if (!admins.length||(admins.length&amp;&amp;admins.indexOf(sender) != -1)) {<br />if (msg == &quot;/초기화&quot;) {<br />scores = JSON.parse(FS.read(path))<br />scores[room] = {}<br />FS.write(path, JSON.stringify(scores, null, 4))<br />replier.reply(&quot;&bull; 현재 방의 점수판이 초기화 되었습니다.&quot;)<br />}<br />}<br /><br />}<br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br /><br />이소스는 도미님의 넌센스퀴즈1.7버전 소스와 OVERWATCH님의 API을 이용하여 만들었습니다.<br />출처 : OVERWATCH님의 API :<a href=\"https://m.cafe.naver.com/nameyee/15822\" target=\"_blank\">https://m.cafe.naver.com/nameyee/15822</a><br />도미님의 넌센스퀴즈 : <a href=\"https://m.cafe.naver.com/nameyee/15771\" target=\"_blank\">https://m.cafe.naver.com/nameyee/15771</a><br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000050E900000000",
+            "id": 20713,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 349,
+            "refArticleId": 20713,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "외래어퀴즈(도미님소스+OVERWATCH님API사용)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1593868653940,
+            "writer": {
+                "id": "fkdlftjqj",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "왈"
+            }
+        },
+        "articleId": 20713,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 120955,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/63f67fcfdf85875b7791f4c3f41a651db9eb15f7ec/MjAyMDA3MDRfMiAg/MDAxNTkzODY4ODgzNTA5.tdB8CCmmsOBGJULcJs7XNI1kkRdLomJcGRdIBycSgnIg.IOsV4blVLuZ7-3NnCRy0uCAPVYIv_ESEWPPxur_S8Icg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

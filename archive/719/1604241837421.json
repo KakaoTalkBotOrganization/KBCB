@@ -1,0 +1,232 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [
+                {
+                    "json": {
+                        "audioUrl": "",
+                        "desc": "ScriptableKakaobot&#39;s script repository. Contribute to Su-Yong/ScriptableKakaobot-Script development by creating an account on GitHub.",
+                        "domain": "github.com",
+                        "from": "MOBILEWEB",
+                        "imageUrl": "https://dthumb-phinf.pstatic.net/?src=https://avatars0.githubusercontent.com/u/13764936?s=400&amp;v=4&amp;type=f220",
+                        "layout": "SIMPLE_IMAGE",
+                        "linkUrl": "https://github.com/Su-Yong/ScriptableKakaobot-Script",
+                        "truncatedDesc": "ScriptableKakaobot's script repository. Contribute to Su-Yong/ScriptableKakaobot-Script development by creating..",
+                        "truncatedTitle": "Su-Yong/ScriptableKakaobot-Script",
+                        "videoUrl": ""
+                    },
+                    "type": "LINK"
+                }
+            ],
+            "contentHtml": "<p>안녕하세요?<br />여러분들의 뇌에 기초적인 프로그래밍 구조를 넣어주기 위해서 온 SuYong입니다<br /><br />봇을 만들기전에 뭔저 사용방법을 익혀야겠죠? 이전까지 강좌가 키보드로 타자치는법을 알려준 강좌라면, 지금 제가쓰는 강좌는 타자를 &quot;잘&quot; 치게 해주는 강좌입니다.<br /><br />물론 타자를 못치셔도 상관없습니다.<br /><br />일단 이 강의는 프로그래밍에 필요한 대표적인 기술이나 개념을 제시하고, 그에대한 정의, 사용방법, 왜 사용하는가, 예시 순으로 나열할 예정입니다.(정의는 딱딱한 사전적 의미가아닌 제가 따로 명명할 예정입니다. 제대로 코딩을 배우고 싶은분들은 검색해서 제대로된 의미를 찾으세요!) 이것들을 이해하시면 다른 카카오봇에서 왜 API를 저렇게 귀찮고 힘들게 만들어놨는지 이해가 되실겁니다.<br /><br />깊숙히 알려주는 내용, 굳이 이런거까지 알아야해?라고 의문이 드는 내용은 [고급]이라고 표시를 하겠습니다 [고급&gt; 여기에 내용이 추가됩니다 &lt;고급] 이사이의 내용은 고급진 내용입니다.<br /><br />-----------------------------<br /><br />목차<br />* 변수<br />&gt; 기본<br />&gt; 자료형<br />&gt; 실전<br />* 함수<br />&gt; 기본<br />&gt; 익명함수 + arrow function<br />* 콜백<br />&gt; 기본<br />&gt; Promise<br />* <br /><br />-----------------------------<br /><br />3. 변수(Variable) - 실전<br /><br />변수의 기본과 자료형을 알았으니 이제 어떤식으로 사용해야하는지 알아야겠죠?<br /><br />&gt; 정의<br />디자인 패턴: 효율적이라고 생각되는 방법을 정형화시켜 이름붙인것들입니다.<br />객체: Object자료형<br /><br />&gt; 사용방법<br />변수를 효율적으로 사용하기 위해서는 자료형을 잘 활용해야합니다. 사실상 이편은 &quot;자료형 심화편&quot;이라고 봐도 무관하겠네요<br /><br />응용이 가장 많이 되는 자료형은 Object입니다.<br />Object는 객체라고 불리는데 나머지 자료형은 갯수가 한정되어있습니다<br /><br />Boolean은 true와 false로 2개<br />Number은 2^54 + 1개<br />null 1개<br />Undefined 1개<br /><br />[고급&gt;<br />+1개는 저번에 말했던 NaN입니다. 숫자가 아니다라는 의미를 가진 값이 숫자 자료형인건 좀 아이러니하죠<br /><br />2^54의 범위만큼 숫자를 쓸수 있다는 말은 -2^53 ~ 2^53범위만큼의 숫자를 쓸수 있다는 말입니다<br /><br />정확히는 Infinity와 -Infinity를 포함해서 -2^53 ~ 2^53개기때문에 -2^53 + 1 ~ 2^53 - 1만큼의 숫자를 표현할 수 있겠죠?<br />&lt;고급]<br /><br />로 갯수가 한정되어있습니다...<br /><br />Object만 빼고요.<br /><br />Object는 무한하게 많이 만들 수 있습니다. 어떤의미로 보면 진정한 변수라고 볼수 있겠죠. Object는 과연 무엇일까요?<br /><br />Object는 주머니라 보시면 됩니다. 주머니안에 여러가지 변수를 넣을수 있는거죠.<br /><br />예를들어<br /><br />var a = {<br />b: 1,<br />c: false,<br />d: &quot;!&quot;<br />}<br /><br />라고 a를 선언해봅시다. 이때 a는 Object입니다. 여기서 질문이 나올겁니다.<br /><br />아니 저번에 {}는 블록이라면서요!! 코드 뭉치들을 묶어주는게 {}라고 하지않았나요?<br /><br />라는 질문이 나오시겠죠. 그래서 객체를 만들때는<br /><br />var a = {<br />var b = 1<br />var c = false<br />var d = &quot;!&quot;<br />}<br /><br />라고 안하는겁니다.<br /><br />이제 슬슬 감이오셨죠? a는 Object자료형이고(주머니이고) 안에 b, c, d라는 변수를(돌멩이를) 가지고(넣어져) 있습니다.<br /><br />아까 제가 주머니에 비유한것으로 이해하려면 괄호부분을 읽으시면 됩니다.<br /><br />자 정리해봅시다 Object는 갯수가 무한하고 제일 많이쓰이는 진짜 변수같은 변수, 변수를 담는 변수라 보시면 됩니다.<br /><br />이제 자료형별로 어떻게 사용하는지 보죠. □□을 적으면 ○○라는 값을 가진다라고 설명하겠습니다.<br /><br />Boolean: 참/거짓<br />true 을 적으면 참<br />false를 적으면 거짓을 의미합니다<br /><br />Number: 숫자들<br />숫자들을 쓰시면 됩니다<br />Infinity를 적으면 무한대를 뜻합니다<br />NaN를 적으면 숫자가 아니다를 뜻합니다<br /><br />String: &quot;문자들&quot;<br />&quot;문자들&quot;의 형식으로 적으면 문자들 이라는 글자를 값으로 가집니다<br />&apos;asdf&apos;의 형식으로 적으면 asdf라는 글자를 값으로 가집니다<br /><br />null: null<br />null이라 적으시면 아무것도 없다는 값을 가집니다<br /><br />undefined: undefined<br />undefined라 적으시면 무슨값인지 모르는 값을 가집니다<br /><br />null과 undefined는 둘다 빈공간을 값으로 가진다고 보시면 됩니다. 근데 생긴것도 다르고 자료형도 다르니 다른용도로 쓰이겠죠?<br /><br />null과 undefined의 차이점은 사용자가 만든 빈공간(null)이냐 컴퓨터가 만든 빈공간(undefined)이냐로 구분됩니다<br /><br />Array: [값, 값, 값, ...]<br />[]안에 내용들을 적으면 그 내용들을 값으로 가집니다.<br /><br />얘도 주머니라 볼수있겠죠? 맞습니다. 얘는 Object 자료형입니다. (근데 보통 Array와 Object는 구분됩니다;; 포함관계가 아니라 다른 자료형으로 인식합니다)<br /><br />Object<br />{<br />이름: 값,<br />이름: 값,<br />// ... 여러개 적을수도 있습니다. 말했듯 Object는 갯수제한이 없기때문에 무한정 적을 수 있습니다<br />}<br />콤마(,)마다 하나의 변수를 선언한다고 생각하시면 됩니다<br /><br />저 안에 내장된 변수를 부르기 위해선 .이름 형식으로 사용하시면 됩니다.<br /><br />이해가 안된다고요? 예제보시면됩니다. 사람은 예제를 보면서 이해하는게 제일 잘되거든요<br /><br />&gt; 왜 쓰는가?<br />생략하도록 하겠습니다. 왜 쓰는지는 충분히 느끼셨을거라 믿습니다.<br /><br />&gt; 예제<br /><br />들어가기 앞서 /* */는 //의 확장판입니다 /* 여기 */에 들어가는 모든말은 코드에서 의미가 없습니다. 그냥 메모용입니다<br /><br />var a = {<br />b: &quot;Hello, &quot;,<br />c: &quot;world!&quot;,<br />d: {<br />e: &quot;이건 생각못했지?&quot;<br />f: false<br />}<br />}<br />/*이때 a는 문자열 자료형을 가진 변수 b, c를 가지고 Object자료형을 가진 변수 d를 가지고 있습니다.<br /><br />동시에 d는 문자열 변수 e, Boolean변수 f를 가집니다 */<br /><br />var b = a.b + a.c<br /><br />/* a.b는 a중에서 b라는 변수를 사용한다는 말입니다.<br />a.c도 a중에서 c라는 변수를 사용한다는 말입니다.<br /><br />따라서 변수 b는 &quot;Hello, world!&quot;라는 문자열을 값으로 가지고 있습니다. */<br /><br />a.d.f = a.b == a.d.e<br /><br />/* 이부분 정말 중요합니다 */<br />/* 처음보신분은 이렇게생각할겁니다.<br /><br />무슨 이딴... <br /><br />ㅎㅎ 괜찮아요 그럴수있습니다. ==는 왼쪽것과 오른쪽것이 같으면 true 다르면 false인 값을 가지는 연산자입니다. 연산자도 순서가 있다는 말입니다.<br /><br />a.d.f = (a.b == a.d.e) 이때 (a.b == a.d.e)는 true나 false라고 볼수있습니다. 따라서 a.d.f는 true또는 false의 값을 가진다고 볼수있겠네요!<br /><br />[고급&gt;<br />사실 서로 같다는 연산자는 ==가 아니라 ===입니다<br /><br />==는 자료형을 무시해서 같다고 체크를합니다 그니까<br />1 == &quot;1&quot;은 true인거죠<br />1 === &quot;1&quot;은 false고요<br />&lt;고급] */<br /><br />a = null<br /><br />/* a는 아무값도 안가집니다 라는 값을 가집니다<br /><br />이상하지만 넘어가주세요. 아무값을 안가지는건 아닙니다. null이란 값을 갖고 있으니까요 <br /><br />슬슬 다들 감이 오셨을거라 믿습니다.<br /><br />자신감이 생겼으면 여러 문서들을보면서 무슨 값을 가진 변수인지 생각해보는건 어떨까요?<br />*/<br /><br />------------------------------<br /><br />문서들중에서 추천드릴께 있습니다</p>[[[CONTENT-ELEMENT-0]]]<br /><p>여기서 한번 변수들이 뭔의미를 가지는지 한번 생각해보세요!<br /><br />간접홍보는 아닙니다...</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000002CF00000000",
+            "head": "응용",
+            "headId": 7,
+            "id": 719,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 207,
+            "refArticleId": 719,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "JS의 기초와 뼈대를 잡는 문법 강의 - 변수: 실전",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1549556343700,
+            "writer": {
+                "id": "tlatndyd2001",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzAxMTlfMjk1/MDAxNDg0NzU3NjU1OTg0.i3WaE6_UwjXL--if0A4KarFOoZKk_-azh0eEQkYBUrcg.WXqgCyCXaq9QDJxe6-QVsVXQzS0-gs9Shq_5aVtfCRcg.JPEG.tlatndyd2001/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "SuYong"
+            }
+        },
+        "articleId": 719,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "목차에 링크는 내일...이아니라 오늘 컴퓨터 키고 넣겠습니다ㅠㅠ",
+                    "id": 52686559,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52686559,
+                    "updateDate": 1549556376000,
+                    "writer": {
+                        "id": "tlatndyd2001",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzAxMTlfMjk1/MDAxNDg0NzU3NjU1OTg0.i3WaE6_UwjXL--if0A4KarFOoZKk_-azh0eEQkYBUrcg.WXqgCyCXaq9QDJxe6-QVsVXQzS0-gs9Shq_5aVtfCRcg.JPEG.tlatndyd2001/profileImage.jpg"
+                        },
+                        "nick": "SuYong"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 52686976,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 52686976,
+                    "sticker": {
+                        "height": 112,
+                        "id": "linebiz21_01-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/linebiz21_01/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1549557310000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "과연 다음 강의는 언제쯤?!",
+                    "id": 53068923,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 53068923,
+                    "updateDate": 1550032077000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

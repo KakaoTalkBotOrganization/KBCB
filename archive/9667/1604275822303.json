@@ -1,0 +1,356 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1210,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMDVfMTEw/MDAxNTc4MTcyMTMxMzg5.LhIp_dxTkj95PLeD4pva-D2Iz_yQWyg00s7zeNXnCj4g.bcIH4lcmOeiC8AFzpXqr0EEM5PCX5mBmXtE66CW2jMcg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1280,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMDVfMzUg/MDAxNTc4MTcyMTMyODgy.Na3JRndoHXNV99Cy2rt7LVxugOj-ioQlU0BuLMPBiKMg.4fCz1mir7Cv9uyNK6IJGfZeeaGvaDVIGn0PoxbZsQuwg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1280,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMDVfMTY4/MDAxNTc4MTcyMTMzNzI5.Jp8jQy6sT6w6VcVpmO7nO8xWN3hSRVpz0xQymtxIvT0g.osNKY5YRDvGPoiVY-3c14EAd8z9SXU5u3RpIV0ol0mUg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>Jsoup = org.jsoup.Jsoup<br />Lw = &quot;\\u200b&quot;.repeat(500)<br />L = &quot;&#9148;&quot;.repeat(50)<br />Ll = &quot;\\n\\n&quot;+L+&quot;\\n\\n&quot;<br />platform = &quot;pc&quot;<br /><br />operName = JSON.parse(Jsoup.connect(&quot;http://doami.dothome.co.kr/R6_OperNames.txt&quot;).get().text())<br />Ranks = JSON.parse(Jsoup.connect(&quot;http://doami.dothome.co.kr/R6_Ranks.txt&quot;).get().text())<br /><br />function response(room, msg, sender, _, replier) {<br /><br />if (msg.startsWith(&quot;/레식 전적 &quot;)) {<br /><br />try {<br /><br />nick = msg.substr(7)<br />arr = nick.split(&quot; &quot;)<br />if ([&quot;pc&quot;, &quot;psn&quot;, &quot;xbox&quot;].indexOf(arr[arr.length-1])!=-1) platform = arr.pop(), nick = arr.join(&quot; &quot;);<br />profile = Jsoup.connect(&quot;https://r6.tracker.network/profile/&quot;+platform+&quot;/&quot;+nick).get().select(&quot;.trn-profile&quot;)<br />img = profile.select(&quot;img&quot;).get(0).attr(&quot;src&quot;)<br />lrm = [0, 2, 1, 3].map(a =&gt; profile.select(&quot;.trn-defstat__value&quot;).get(a).text())<br />rank = Ranks[lrm[1]]?Ranks[lrm[1]]:&quot;UnRanked&quot;<br />operators = [1,2,3].map(a =&gt; operName[profile.select(&quot;img&quot;).get(a).attr(&quot;title&quot;)]).join(&quot;, &quot;)<br />g = [&quot;MatchesWon&quot;,&quot;WLRatio&quot;,&quot;KILLS&quot;,&quot;MeleeKills&quot;,&quot;BlindKills&quot;,&quot;Headshots&quot;,&quot;KDRatio&quot;,&quot;TimePlayed&quot;,&quot;MatchesPlayed&quot;,&quot;TotalXp&quot;].map(a =&gt; profile.select(&quot;.trn-card__content&quot;).get(6).select(&quot;div[data-stat=PVP&quot;+a+&quot;]&quot;).get(0).text())<br />get = a =&gt; {arr = [&quot;Wins&quot;,&quot;WLRatio&quot;,&quot;Kills&quot;,&quot;KillsPerMatch&quot;,&quot;KillsPerMinute&quot;,&quot;KDRatio&quot;,&quot;TimePlayed&quot;,&quot;Matches&quot;].map(b =&gt; profile.select(&quot;div[data-stat=&quot;+(a?&quot;Ranked&quot;:&quot;Casual&quot;)+b+&quot;]&quot;).get(0).text());return [&quot;[&quot;+(a?&quot;랭크&quot;:&quot;캐주얼&quot;)+&quot;]\\n&quot;,&quot;승리 : &quot;+arr[0]+&quot;회&quot;,&quot;승률 : &quot;+arr[1],&quot;킬 : &quot;+arr[2]+&quot;회&quot;,&quot;- 매치 당 평균 킬 : &quot;+arr[3],&quot;- 1분 당 평균 킬 : &quot;+arr[4],&quot;킬뎃 : &quot;+arr[5],&quot;플레이 타임 : &quot;+arr[6].replace(/[hms]/g, a =&gt; {return {&quot;h&quot;:&quot;시간&quot;, &quot;m&quot;:&quot;분&quot;, &quot;s&quot;:&quot;초&quot;}[a]}),&quot;매치 수 : &quot;+arr[7]+&quot;회&quot;+Ll].join(&quot;\\n&quot;)}<br />replier.reply([&quot;[!] &quot;+nick+&quot; 님의 정보&quot;+&quot;\\n&quot;+L+&quot;\\n&quot;,&quot;레벨 : &quot;+lrm[0],&quot;랭크 : &quot;+rank,&quot;최고 MMR : &quot;+(lrm[2]?lrm[2]:&quot;없음&quot;),&quot;평균 시즌 MMR : &quot;+lrm[3],&quot;주 오퍼레이터 : &quot;+operators+&quot;\\n\\n&quot;+L+Lw+&quot;\\n&quot;,&quot;프로필 : &quot;+img+Ll+&quot;[일반]\\n&quot;,&quot;승리 : &quot;+g[0]+&quot;회&quot;,&quot;승률 : &quot;+g[1],&quot;킬 : &quot;+g[2]+&quot;회&quot;,&quot;- 일반 킬 : &quot;+(g[2] - g[3] - g[4] - g[5])+&quot;회&quot;,&quot;- 근접 킬 : &quot;+g[3]+&quot;회&quot;,&quot;- 섬광 킬 : &quot;+g[4]+&quot;회&quot;,&quot;- 헤드샷 : &quot;+g[5]+&quot;회&quot;,&quot;킬뎃 : &quot;+g[6],&quot;플레이 타임 : &quot;+g[7].replace(/[hms]/g, a =&gt; {return {&quot;h&quot;:&quot;시간&quot;, &quot;m&quot;:&quot;분&quot;, &quot;s&quot;:&quot;초&quot;}[a]}),&quot;매치 수 : &quot;+g[8]+&quot;회&quot;,&quot;총 경험치 : &quot;+g[9]+Ll+get(0)+get(1).trim()].join(&quot;\\n&quot;))<br /><br />} catch (e) {<br /><br />replier.reply(&quot;[!] 해당 플레이어의 전적이 없습니다!\\n/레식 전적 (닉네임) (플랫폼)&quot;)<br /><br />}<br /><br />}<br /><br />}<br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />[[[CONTENT-ELEMENT-1]]]<br />[[[CONTENT-ELEMENT-2]]]<br /><p><br /><br />입력 방식<br />/레식 전적 (닉네임) (플랫폼)<br />플랫폼 종류는 pc/psn/xbox 고 안쓰면 기본값은 pc 입니다.<br /><br /><br />좀 많이 더러워요 허허....</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000025C300000000",
+            "id": 9667,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 193,
+            "refArticleId": 9667,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "레인보우 식스 전적 Jsoup",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1578172134293,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 9667,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 74753,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/78ed64d4c59b9c406c8aefd8e0067d02a2f00eec87/MjAyMDAxMDVfMTEw/MDAxNTc4MTcyMTMxMzg5.LhIp_dxTkj95PLeD4pva-D2Iz_yQWyg00s7zeNXnCj4g.bcIH4lcmOeiC8AFzpXqr0EEM5PCX5mBmXtE66CW2jMcg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 250424,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/02971eadb7e7e63a16f095a29a7c0778d88a749660/MjAyMDAxMDVfMzUg/MDAxNTc4MTcyMTMyODgy.Na3JRndoHXNV99Cy2rt7LVxugOj-ioQlU0BuLMPBiKMg.4fCz1mir7Cv9uyNK6IJGfZeeaGvaDVIGn0PoxbZsQuwg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 138666,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/bf2aa3196d5a3286a94f2b1a26c6bcc565376a/MjAyMDAxMDVfMTY4/MDAxNTc4MTcyMTMzNzI5.Jp8jQy6sT6w6VcVpmO7nO8xWN3hSRVpz0xQymtxIvT0g.osNKY5YRDvGPoiVY-3c14EAd8z9SXU5u3RpIV0ol0mUg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "함수형태로 주세요(?)",
+                    "id": 77638640,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77638640,
+                    "updateDate": 1578193765000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쿠키"
+                    }
+                },
+                {
+                    "content": "못 받아드시는 분들이 종종 계셔서",
+                    "id": 77638724,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77638640,
+                    "updateDate": 1578193845000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "ㅇㅎ...",
+                    "id": 77638733,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77638640,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1578193852000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쿠키"
+                    }
+                },
+                {
+                    "content": "저의 킬수는 NaN회더군요..",
+                    "id": 78020335,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78020335,
+                    "updateDate": 1578562797000,
+                    "writer": {
+                        "id": "applesjh55",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMTZfMTgy/MDAxNTc5MTExNDI5NjE2.w-Q5myQPhYLaeYOQAOd8Yet2q6gDCKycBcWz9gEhlSMg.pDrhoEF415XYP9Pkt_1RiGqmAuDDopS3PlkPWZ6clw0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "레몬냥이"
+                    }
+                },
+                {
+                    "content": "제 프로필을 검색해봤는데 자꾸 없는거라고 하는데 뭐가 문제일까요🤔",
+                    "id": 98575862,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98575862,
+                    "updateDate": 1596257999000,
+                    "writer": {
+                        "id": "hajahaer",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20191104_33/hajahaer_1572859297890gNGWd_JPEG/image.jpg"
+                        },
+                        "nick": "ScpBot"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

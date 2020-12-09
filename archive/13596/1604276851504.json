@@ -1,0 +1,337 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<p><span style=\"font-size: 17.3333px;\">저야 실력이 모자라서 사진불러오기밖에 못하지만 많은 api가 존재하고있습니다.</span></p><p><span style=\"font-size: 17.3333px;\">홈페이지에 가면 api목록이 있는 자료집도 있구요</span></p><p><span style=\"font-size: 17.3333px;\">(홈피에 있는 api가 최신이 아니라서 api경로는 거의 맞지않습니다 .</span></p><p><span style=\"font-size: 17.3333px;\">거기있는 api리스트받기 api는 경로가맞으니 이걸 사용해 api목록을 받으시고 그대로 사용하시는게 좋을겁니다.)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">일단 제가 사용하는api종류는</span></p><p>사진명령에서는 로그인,로그아웃,폴더목록가져오기정도이고</p><p>사진로그봇에서는 폴더목록,파일이동,폴더생성,파일명변경,파일복사정도였습니다.(얜 사진캐시를 긁어오는 부분이 리소스를 너무 많이먹어서 꺼놨습니다;;)</p><p>아래에 적은 예보다 훨씬많은 api가 존재하며 토렌트다운로드목록에 추가하기라던가 파일업로드,다운로드도 가능합니다.</p><p>(업로드는... 사용하지는 못했습니다. 뭐가 문제인지 &quot;알수없음&quot;에러를 반환해서...)</p><p>&nbsp;</p><p><span style=\"font-size: 17.3333px;\">//로그인합니다.</span></p><p><span style=\"font-size: 17.3333px;\">//sid를 받아와서 넣습니다.</span></p><p><span style=\"font-size: 17.3333px;\">var logins=JSON.parse(org.jsoup.Jsoup.connect(&quot;http://시놀로지주소:메인포트/webapi/auth.cgi?api=SYNO.API.Auth&amp;version=3&amp;method=login&amp;account=아이디&amp;passwd=비번&amp;session=FileStation&amp;format=sid&quot;).execute().body());</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(logins[&quot;success&quot;]==true)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; logins_sid=logins[&quot;data&quot;][&quot;sid&quot;];</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;서버 접속에 실패했습니다.\\n서버상태를 확인해주십시오.&quot;);</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 접속중=false;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}&nbsp; &nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">//경로안의 파일목록을 서버로요청하여 받아옵니다.</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var photoinfo=org.jsoup.Jsoup.connect(&quot;http://시놀주소:포트/webapi/entry.cgi&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;api&quot;,&quot;SYNO.FileStation.List&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;version&quot;,1)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;method&quot;,&quot;list&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;_sid&quot;,logins_sid)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;folder_path&quot;,&quot;파일목록을 받아오고싶은폴더경로&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .ignoreContentType(true)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .execute().body();</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">//sid를 반환하고 로그아웃합니다.</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;var logouts=JSON.parse(org.jsoup.Jsoup.connect(&quot;http://시놀주소:포트/webapi/auth.cgi?api=SYNO.API.Auth&amp;version=1&amp;method=logout&amp;session=FileStation&amp;_sid=&quot;+logins_sid).execute().body());</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; logins_sid=&quot;&quot;;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; 접속중=false;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></p><p><span style=\"font-size: 17.3333px;\">//원하는 경로에 폴더를 생성합니다</span></p><p><span style=\"font-size: 17.3333px;\">//생성을위한 시간이 약간필요합니다.</span></p><p><span style=\"font-size: 17.3333px;\">var prephofolder=org.jsoup.Jsoup.connect(&quot;http://시놀주소:포트번호/webapi/entry.cgi&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;api&quot;,&quot;SYNO.FileStation.CreateFolder&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;version&quot;,1)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;method&quot;,&quot;create&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;folder_path&quot;,&quot;폴더를 만들고픈 경로&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;name&quot;,&quot;폴더이름&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;_sid&quot;,logins_sid)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.ignoreContentType(true)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.execute().body();&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;java.lang.Thread.sleep(500);</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">//파일을 복사합니다</span></p><p><span style=\"font-size: 17.3333px;\">//역시 파일복사할 시간이 필요합니다</span>&nbsp;</p><p><span style=\"font-size: 17.3333px;\">var photocopy=org.jsoup.Jsoup.connect(&quot;http://시놀주소:포트/webapi/entry.cgi&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;api&quot;,&quot;SYNO.FileStation.CopyMove&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;version&quot;,1)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;method&quot;,&quot;start&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;path&quot;,&quot;원본이있는경로/파일명.확장자&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;overwrite&quot;,false)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//true시 같은이름이있으면 덮어씌웁니다.</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;dest_folder_path&quot;,&quot;옮길폴더경로)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;remove_src&quot;,false)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //true시 옮기고 원본은 삭제합니다.</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;_sid&quot;,logins_sid)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .ignoreContentType(true)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .execute().body();&nbsp;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; java.lang.Thread.sleep(1000);</span>&nbsp;</p><p>&nbsp;</p><p>//파일이름을 바꿉니다.</p><p>//역시 파일명변경에 시간이 필요합니다.</p><p><span style=\"font-size: 17.3333px;\">var photorename=org.jsoup.Jsoup.connect(&quot;http://시놀주소:포트/webapi/entry.cgi&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;api&quot;,&quot;SYNO.FileStation.Rename&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;version&quot;,1)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;method&quot;,&quot;rename&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;path&quot;,&quot;/경로/파일명.확장자&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;name&quot;,&quot;바꿀이름.확장자&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.data(&quot;_sid&quot;,logins_sid)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.ignoreContentType(true)</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.execute().body();</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;java.lang.Thread.sleep(1000);</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000351C00000000",
+            "id": 13596,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 85,
+                "menuType": "B",
+                "name": "| 소스 아이디어 |"
+            },
+            "readCount": 141,
+            "refArticleId": 13596,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "시놀로지 사용하시는분들 api도 활용하세요~",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584408478997,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 13596,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 84440806,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84440806,
+                    "updateDate": 1584414615000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "ㅋㅋㅋㅋㅋ 계정별권한설정이 가능해서 괜찮아요\n딱 그폴더만 권한줬어요",
+                    "id": 84452987,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84440806,
+                    "updateDate": 1584422419000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "크큭..",
+                    "id": 84710723,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84710723,
+                    "updateDate": 1584614572000,
+                    "writer": {
+                        "id": "lee101570",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lee101570"
+                    }
+                },
+                {
+                    "content": "ㅋㅋ",
+                    "id": 84726796,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84710723,
+                    "updateDate": 1584624543000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "잘먹겠습니닷(?)",
+                    "id": 84726840,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84710723,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1584624564000,
+                    "writer": {
+                        "id": "lee101570",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lee101570"
+                    }
+                },
+                {
+                    "content": "잘드시고 업로드 성공하시면 좀ㅋㅋㅋㅋ",
+                    "id": 84726947,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84710723,
+                    "replyMember": {
+                        "id": "lee101570",
+                        "nick": "lee101570"
+                    },
+                    "updateDate": 1584624620000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "ㅓ라 안해보셨는지요?",
+                    "id": 84727012,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84710723,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1584624655000,
+                    "writer": {
+                        "id": "lee101570",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lee101570"
+                    }
+                },
+                {
+                    "content": "업로드는 안되더라구요\n알수없음 에러 리턴ㅋㅋ",
+                    "id": 84727057,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84710723,
+                    "replyMember": {
+                        "id": "lee101570",
+                        "nick": "lee101570"
+                    },
+                    "updateDate": 1584624688000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "아앗...",
+                    "id": 84727135,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84710723,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1584624727000,
+                    "writer": {
+                        "id": "lee101570",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lee101570"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "카톡봇",
+                "headId": 87
+            },
+            {
+                "head": "디코봇",
+                "headId": 88
+            },
+            {
+                "head": "기타",
+                "headId": 89
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

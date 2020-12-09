@@ -1,0 +1,258 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-9352d225-201d-45e0-9d7a-12280a7e8268\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-dc38241d-7649-407c-8212-537361f08aff\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-4f016e50-d7ef-4cfb-9208-d9aa09d2b6db\">오늘은 Global Log 탭이나 Script Log 탭에 사용될 로그 아이템과 로그 탭을 구현해 보겠다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-744e53df-360c-4bdd-8ec6-96ced5831b6f\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-fe256bee-2a47-4453-9c0c-1d107f699349\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-14d8c881-4e6d-48da-a74e-2213eb5c1b69\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-1f54f5a5-f424-49d9-af1e-347eac6fb7d6\">제일 먼저 로그 아이템을 어떻게 구현할지 설계도를 그려봤다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-bcba574f-f45a-41c0-864c-59dc25a9bb00\">\n                    <div class=\"se-component-content se-component-content-fit\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-left\" >\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-bcba574f-f45a-41c0-864c-59dc25a9bb00\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MTJfMjEw/MDAxNTk3MjMwMzc0MzM2.glH7MuIY5M6d1HfNQpMcFw5siuCw0ZkbL1TIIhc2_G0g.-MxWA8g9UBKjXa-QGkyG6jVtudr062wOj9KbZAXGQRYg.JPEG/KakaoTalk_20200812_182952174.jpg\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA4MTJfMjEw/MDAxNTk3MjMwMzc0MzM2.glH7MuIY5M6d1HfNQpMcFw5siuCw0ZkbL1TIIhc2_G0g.-MxWA8g9UBKjXa-QGkyG6jVtudr062wOj9KbZAXGQRYg.JPEG/KakaoTalk_20200812_182952174.jpg?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-68cef30f-8e8a-49ba-ba56-07898f749887\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:2.0;\" id=\"SE-ac025bf8-d2bb-49cb-a945-e5279969db15\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-19f64c92-1aa5-4fc1-b4d6-13ec74f0591e\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:2.0;\" id=\"SE-1d9e7204-83e4-4883-b632-49c58daed4e4\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-5a6145c4-7942-4ccc-85da-d15ad73c78f5\">설계한 대로 작업을 시작해보겠다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:2.0;\" id=\"SE-bd2bbe0f-d382-4d96-95f8-a76398d4ab82\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-50b2c61c-baf1-445e-9c60-e377a380d9cb\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:2.0;\" id=\"SE-9a2122a4-23db-43f9-8358-9264eb0bcd51\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-67e2ad5f-bbd0-45ee-bbd7-613a534630e8\">일단 로그의 타입은 3가지다. (메신저 봇 R과 동일)</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-44cd7d1a-4d26-45e7-b406-a2101bec35e9\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">public class LogType\n{\n    public static final String ERROR &#x3D; &quot;error&quot;;\n    public static final String EVENT &#x3D; &quot;event&quot;;\n    public static final String DEBUG &#x3D; &quot;debug&quot;;\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-44cd7d1a-4d26-45e7-b406-a2101bec35e9\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-557e8de4-07f1-4a94-a984-1518b906d964\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:2.0;\" id=\"SE-b1d5f3c6-ca17-4a3e-991a-9c20860bbe29\"><span style=\"\" class=\"se-fs-fs13 se-ff-nanumgothic   \" id=\"SE-0c1ff3a0-c5cb-46cc-9c73-2e4f4672b3bd\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:2.0;\" id=\"SE-3f62c534-e5bf-4f64-8ae2-81fd391e37d2\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-38d6cb9d-67a7-4843-814a-a4f1c2a7f8d2\">이후 컴포넌트 클래스를 만들어 준다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-1eeed652-1331-449e-acec-ab78d76b47ec\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">public LogItem(String text, String date, String type)\n{\n\tthis.type &#x3D; type;\n\n\timage.setImage(ResourceUtils.getImage(type));\n\timage.setFitWidth(20);\n\timage.setFitHeight(20);\n\n\ttlabel.setText(text);\n\tdlabel.setText(date);\n\n\tpane.getChildren().addAll(tlabel, dlabel);\n\n\thbox.setPadding(new Insets(DEFAULT_PADDING));\n\thbox.setSpacing(10);\n\thbox.setFillHeight(true);\n\thbox.getStyleClass().add(type);\n\thbox.getChildren().addAll(image, pane);\n\n\tsetPrefHeight(DEFAULT_MIN_HEIGHT);\n\tgetChildren().add(hbox);\n\tgetStyleClass().add(DEFAULT_STYLE_CLASS);\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-1eeed652-1331-449e-acec-ab78d76b47ec\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-906762bb-9af8-4528-8559-71ef8d6d60ed\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-187a52b0-a517-4c2e-b93d-6a1c2c7e1db8\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-27b1f757-4c28-4964-8c5b-c86bc53bdca3\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-148c771c-244b-4cd4-b706-a3f9b6d183f6\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-4fba6a00-8822-4443-86e1-b52860aa611d\">각 타입마다 디자인을 지정할 수 있도록 Style Class를 추가해 준다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-342b7f27-a66c-479e-8b87-81faec023ce8\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-34f94cb7-a6ba-40cf-b79f-de06f53d2411\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-a5fbb89c-9135-4fb4-969a-a4599aacc6b6\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-e98ace51-43a8-41f9-bfed-fcb64ac02793\">이후 디자인을 입혀주면</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-58e3fff5-f207-4fc9-a83f-09365944f8c1\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">.log-item *\n{\n\t-fx-background-radius: 0 10 10 0;\n\t-fx-background-color: #2B2B2B;\n\t-fx-border-width: 0 0 0 3; // Color Bar\n}\n.log-item .event\n{\n\t-fx-border-color: #187BCD;\n}\n.log-item .error\n{\n\t-fx-border-color: #EA3C53;\n}\n.log-item .debug\n{\n\t-fx-border-color: #E05A00;\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-58e3fff5-f207-4fc9-a83f-09365944f8c1\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-cc364a6b-853c-4944-b3ed-5d22ab60397e\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5df504d2-f4b7-4adc-8edd-f702906ec34a\"><span style=\"color:#000000;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-fdb4e7c1-af80-455e-9f28-a30e86e419f5\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-94ed5941-1464-4814-852d-49f482879070\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-3a4d069a-ca28-4412-aa4d-73286f2a2171\">로그 아이템의 경우 추후 로그 기능을 구현할 때 쓰일 것이므로 지금은 간단한 테스트만 해준다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-6d37bb9c-d620-405a-865d-25f2028648a2\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:773px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-6d37bb9c-d620-405a-865d-25f2028648a2\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MTJfMjA2/MDAxNTk3MjMwNDU0MjU0.bCIVFZ6ED8ZZgWUUx0iI9DPcQ2UXGXRt3o58Oce24JMg.vrBlBmDBRLzPCv9i-XIkequ2i6ELR4OAvaMcM4raJOYg.PNG/image.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA4MTJfMjA2/MDAxNTk3MjMwNDU0MjU0.bCIVFZ6ED8ZZgWUUx0iI9DPcQ2UXGXRt3o58Oce24JMg.vrBlBmDBRLzPCv9i-XIkequ2i6ELR4OAvaMcM4raJOYg.PNG/image.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                            <div class=\"se-module se-module-text se-caption\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-2b51f6f4-4961-4467-88e2-9ca7225b3457\"><span style=\"\" class=\"se-fs- se-ff-system   \" id=\"SE-430d5e78-0874-443c-92a6-0ced009a3fa0\">테스트 사진</span></p></div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-86950958-003f-4282-93de-8567eadb3935\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-31fc0b7c-4670-40de-a7c0-f24c0d8c7085\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-164264f7-be88-470c-9502-b63fb68731b7\">왼쪽도 모서리를 둥글게 할지 고민이다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-3b441906-ed4b-4e1b-ad8d-0c26e0bc9add\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-07753131-7633-4863-abf6-67854871a342\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align-left \" style=\"line-height:2.0;\" id=\"SE-d9737f96-9fc7-4ceb-a860-654940daf22b\"><span style=\"color:#000000;background-color:#ffffff;\" class=\"se-fs-fs13 se-ff-nanumgothic  se-style-unset \" id=\"SE-79d0d93c-6fd5-4481-9643-399b1b8fe966\">다음에는 탭의 고정(Pin) 기능 및 좌측의 사이드 바를 구현해보겠다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000591000000000",
+            "head": "개발일지",
+            "headId": 96,
+            "id": 22800,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 81,
+                "menuType": "B",
+                "name": "| 메신저 봇 시뮬레이터 |"
+            },
+            "readCount": 90,
+            "refArticleId": 22800,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "로그 뷰 및 탭 구현 (8)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1597230473117,
+            "writer": {
+                "id": "ttyy3388",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMTFfMjQ0/MDAxNTgzOTEwNTc0NDY4.vU8bKegACIEfpYZYPII3dYHsbKShTtP8TI-LiWMv4jcg.VvXtHLAggISwo7chcygRmXxjIo73-Xtjp9zu4p0D5rgg.PNG.ttyy3388/SimulatorDark.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "브위"
+            }
+        },
+        "articleId": 22800,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷㄷ",
+                    "id": 99749381,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99749381,
+                    "updateDate": 1597231020000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "ㄷㄷ",
+                    "id": 99750018,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99750018,
+                    "updateDate": 1597231493000,
+                    "writer": {
+                        "id": "fdsa001213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "정시파이터"
+                    }
+                },
+                {
+                    "content": "ㄷㄷㄷㄷㄷㄷㄷ",
+                    "id": 99750302,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99750302,
+                    "updateDate": 1597231745000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "ㄷㄷㄷㄷㄷ",
+                    "id": 99752654,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99752654,
+                    "updateDate": 1597233528000,
+                    "writer": {
+                        "id": "adeninelove",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTlfMjg1/MDAxNTk3Nzk3Mjg4ODI5.LTG7-GNxrDXxcM4vMrAmuVyV85v36wHhWkluTgBwaH4g.hycDF0PDEcQODT-DMMn2hGraLk6kkjdHVFPZa1NZ6mYg.PNG/%ED%8F%AC%EB%A7%B7%EB%B3%80%ED%99%98_%EB%8F%84%EC%9C%A4-%EB%A1%9C%EA%B3%A0-2.png"
+                        },
+                        "nick": "도유니"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 99755979,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99755979,
+                    "updateDate": 1597235604000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "의견 감사합니다",
+                    "id": 99789808,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99755979,
+                    "updateDate": 1597272347000,
+                    "writer": {
+                        "id": "ttyy3388",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMTFfMjQ0/MDAxNTgzOTEwNTc0NDY4.vU8bKegACIEfpYZYPII3dYHsbKShTtP8TI-LiWMv4jcg.VvXtHLAggISwo7chcygRmXxjIo73-Xtjp9zu4p0D5rgg.PNG.ttyy3388/SimulatorDark.png"
+                        },
+                        "nick": "브위"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "개발일지",
+                "headId": 96
+            },
+            {
+                "head": "업데이트",
+                "headId": 97
+            },
+            {
+                "head": "배포",
+                "headId": 98
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

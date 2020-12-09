@@ -1,0 +1,324 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 500,
+                            "service": "CAFE",
+                            "style": "width: 462px; height: 500px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA0MTNfMTgw/MDAxNTU1MTI1ODkxNjM5.meRzxr9nmoNO9iI1rQSinZaO0HNfDZi8H5N_Zn3yTtIg.N-xFA4lxd0bWskMcnqJX9kwlx_1FeArx8rCcbbD5WnUg.JPEG.nettime007/1111.jpg",
+                            "width": 462
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;요리 레시피 검색</b></div><b></b></div><p>[[[CONTENT-ELEMENT-0]]]</p><p><strong><br /></strong></p><p><strong><br /></strong></p><b></b><p><b><a href=\"https://www.menupan.com/Cook/recipeview.asp?cookid='+no\" target=\"_blank\">https://www.menupan.com</a>&nbsp;에 등록되어 있는 레시피에서 검색해서 가져옵니다.</b></p><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>소스 코드</b></div><div class=\"NHN_Writeform_Main\"><b>=&gt; </b></div><div class=\"NHN_Writeform_Main\"><b>const scriptName=&quot;레시피.js&quot;;</b></div><div class=\"NHN_Writeform_Main\"><b>var all = &quot;\\u200b&quot;.repeat(500);</b></div><div class=\"NHN_Writeform_Main\"><b>var list = []</b></div><div class=\"NHN_Writeform_Main\"><b>var list2 = []</b></div><div class=\"NHN_Writeform_Main\"><b>var list3 = []</b></div><div class=\"NHN_Writeform_Main\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />&nbsp;<br />try {</b></div><div class=\"NHN_Writeform_Main\"><b>if(msg.indexOf(&quot;/레시피검색&quot;)==0) {<br />var cook0 = msg.substr(7)<br />var num = 0<br />var text = java.net.URLEncoder.encode(cook0,&quot;euc-kr&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>var co = Utils.getWebText(&quot;<a href=\"http://www.menupan.com/cook/recipere.asp?cname='+text\" target=\"_blank\">http://www.menupan.com/cook/recipere.asp?cname=&quot;+text</a>)</b></div><div class=\"NHN_Writeform_Main\"><b>.split(&quot;&lt;td height=\\&quot;20\\&quot; width=\\&quot;750\\&quot;&gt;&quot;)[1]</b></div><div class=\"NHN_Writeform_Main\"><b>.split(&quot;회사소개&quot;)[0]</b></div><div class=\"NHN_Writeform_Main\"><b>var co1 = co.split(&quot;검색결과수 :&quot;)[1].split(&quot;&lt;b&gt;&quot;)[1].split(&quot;&lt;/b&gt;&quot;)[0].trim();<br />var co2 = co.split(&quot;현재페이지 :&quot;)[1].split(&quot;&lt;b&gt;&quot;)[1].split(&quot;&lt;/b&gt;&quot;)[0]<br />var co3 = co2.split(&quot;/&quot;)[1].trim();</b></div><div class=\"NHN_Writeform_Main\"><b>if (co3 &gt; 1) {<br />num = co1<br />DataBase.setDataBase(&quot;menu&quot;,&quot;&quot;)<br />for (var j = 1 ; j &lt;= co3 ; j++){<br />var co = Utils.getWebText(&quot;<a href=\"https://www.menupan.com/Cook/recipere.asp?cname='+text+'&amp;page='+j\" target=\"_blank\">https://www.menupan.com/Cook/recipere.asp?cname=&quot;+text+&quot;&amp;page=&quot;+j</a>)</b></div><div class=\"NHN_Writeform_Main\"><b>.split(&quot;&lt;td height=\\&quot;20\\&quot; width=\\&quot;750\\&quot;&gt;&quot;)[1]</b></div><div class=\"NHN_Writeform_Main\"><b>.split(&quot;회사소개&quot;)[0]</b></div><div class=\"NHN_Writeform_Main\"><b>DataBase.appendDataBase(&quot;menu&quot;,co)</b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div><div class=\"NHN_Writeform_Main\"><b>list2 = DataBase.getDataBase(&quot;menu&quot;)<br />for (var i = 1;i &lt;= num; i++){<br />var menu = list2.split(&quot;&lt;span class=\\&quot;link\\&quot;&gt;&quot;)[i].split(&quot;&lt;/a&gt;&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)<br />var small = list2.split(&quot;&lt;td class=\\&quot;text_9pt\\&quot;&gt;&quot;)[i].split(&quot;&lt;&quot;)[0].replace(/&amp;nbsp/g,&quot;&quot;).replace(/;;;/g,&quot; &quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/회원만족도/g,&quot;&quot;)<br />var jae = list2.split(&quot;주재료:&quot;)[i].split(&quot;&lt;/td&gt;&quot;)[0]<br />var reci = list2.split(&quot;&lt;span class=\\&quot;link\\&quot;&gt;&lt;a href=\\&quot;javascript:goRecipeView(&quot;)[i].split(&quot;)&quot;)[0]<br />var link = &quot;<a href=\"https://www.menupan.com/Cook/recipeview.asp?cookid='+reci\" target=\"_blank\">https://www.menupan.com/Cook/recipeview.asp?cookid=&quot;+reci</a></b></div><div class=\"NHN_Writeform_Main\"><b>var data = i+&quot;. &quot;+menu + &quot;\\n요약 : &quot;+small+&quot;\\n주재료 : &quot;+jae+&quot;\\n레시피번호 : &quot;+reci+&quot;\\n링크주소 : &quot;+link</b></div><div class=\"NHN_Writeform_Main\"><b>list.push(data)<br />}</b></div><div class=\"NHN_Writeform_Main\"><b>replier.reply(cook0+&quot; 레시피 검색결과 :&quot;+ co1 +&quot;건\\n\\&quot;/레시피번호 숫자\\&quot; 로 자세히보기\\n★-레시피목록 전체보기-★\\n&quot;+all+&quot;\\n&quot;+list.join(&quot;\\n\\n&quot;));<br />DataBase.removeDataBase(&quot;menu&quot;)<br />list = []<br />} else {</b></div><div class=\"NHN_Writeform_Main\"><b>if(co1 &gt;15){<br />num = 15<br />} else {<br />num = co1<br />}</b></div><div class=\"NHN_Writeform_Main\"><b>for (var i = 1;i &lt;= num; i++){<br />var menu = co.split(&quot;&lt;span class=\\&quot;link\\&quot;&gt;&quot;)[i].split(&quot;&lt;/a&gt;&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)<br />var small = co.split(&quot;&lt;td class=\\&quot;text_9pt\\&quot;&gt;&quot;)[i].split(&quot;회원만족도&quot;)[0].replace(/&amp;nbsp/g,&quot;&quot;).replace(/;;;/g,&quot; &quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)<br />var jae = co.split(&quot;주재료:&quot;)[i].split(&quot;&lt;/td&gt;&quot;)[0]<br />var reci = co.split(&quot;&lt;span class=\\&quot;link\\&quot;&gt;&lt;a href=\\&quot;javascript:goRecipeView(&quot;)[i].split(&quot;)&quot;)[0]<br />var link = &quot;<a href=\"https://www.menupan.com/Cook/recipeview.asp?cookid='+reci\" target=\"_blank\">https://www.menupan.com/Cook/recipeview.asp?cookid=&quot;+reci</a></b></div><div class=\"NHN_Writeform_Main\"><b>var data = i+&quot;. &quot;+menu + &quot;\\n요약 : &quot;+small+&quot;\\n주재료 : &quot;+jae+&quot;\\n레시피번호 : &quot;+reci+&quot;\\n링크주소 : &quot;+link</b></div><div class=\"NHN_Writeform_Main\"><b>list.push(data)</b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div><div class=\"NHN_Writeform_Main\"><b>replier.reply(cook0+&quot; 레시피 검색결과 :&quot;+ co1 +&quot;건\\n\\&quot;/레시피번호 숫자\\&quot; 로 자세히보기\\n★-레시피 목록 전체보기-★\\n&quot;+all+&quot;\\n&quot;+list.join(&quot;\\n\\n&quot;));</b></div><div class=\"NHN_Writeform_Main\"><b>list = []</b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div><div class=\"NHN_Writeform_Main\"><b>}<br />} catch(e) {</b></div><div class=\"NHN_Writeform_Main\"><b>replier.reply(&quot;검색 결과가 없거나 오류 발생&quot;); <br />}</b></div><div class=\"NHN_Writeform_Main\"><b><br />try {<br />if(msg.indexOf(&quot;/레시피번호&quot;)==0){<br />var no = msg.substr(6)</b></div><div class=\"NHN_Writeform_Main\">var name = Utils.getWebText(&quot;<a href=\"https://www.menupan.com/Cook/recipeview.asp?cookid='+no\" target=\"_blank\">https://www.menupan.com/Cook/recipeview.asp?cookid=&quot;+no</a>)</div><p><br /></p><p>.split(&quot;&lt;div class=\\&quot;wrap_top\\&quot;&gt;&quot;)[1]</p><p>.split(&quot;&lt;h2&gt;&quot;)[1]<br />.split(&quot;&lt;/h2&gt;&quot;)[0]</p><p><br />var jaeryo = Utils.getWebText(&quot;<a href=\"https://www.menupan.com/Cook/recipeview.asp?cookid='+no\" target=\"_blank\">https://www.menupan.com/Cook/recipeview.asp?cookid=&quot;+no</a>)</p><p>.split(&quot;div class=\\&quot;infoTable\\&quot;&gt;&quot;)[1]</p><p>.split(&quot;&lt;/div&gt;&quot;)[0]</p><p>.replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)</p><p>.replace(/ /g,&quot;&quot;)</p><p>.replace(/\\n/g,&quot;&quot;)</p><p>var bun = jaeryo.split(&quot;분량&quot;)[1].split(&quot;주재료&quot;)[0]<br />var ju = jaeryo.split(&quot;주재료&quot;)[1].split(&quot;부재료&quot;)[0]<br />var sub = jaeryo.split(&quot;부재료&quot;)[1].split(&quot;양념&quot;)[0]<br />var so = jaeryo.split(&quot;양념&quot;)[1]</p><p>jaeryo = &quot;분량 :&quot;+bun+&quot;\\n주재료 : &quot;+ju+&quot;\\n부재료 : &quot;+sub+&quot;\\n양념 : &quot;+so<br />jaeryo = jaeryo.replace(/undefined/g,&quot;&quot;)</p><p>var url = Utils.getWebText(&quot;<a href=\"https://www.menupan.com/Cook/recipeview.asp?cookid='+no\" target=\"_blank\">https://www.menupan.com/Cook/recipeview.asp?cookid=&quot;+no</a>)</p><p>.split(&quot;&lt;div class=\\&quot;wrap_recipe\\&quot;&gt;&quot;)[1]</p><p>.split(&quot;&lt;div class=\\&quot;wrap_review\\&quot;&gt;&quot;)[0]</p><p><br />var num1 = []</p><p>num1 = url.split(&quot;레시피 쓰기&quot;)</p><p>var j = num1.length</p><p>for(var i = 1; i &lt;j; i++){</p><p>var memo = url.split(&quot;&lt;dt&gt;&quot;)[i].split(&quot;&lt;/dt&gt;&quot;)[0]</p><p>list3.push(memo)<br />}</p><p>replier.reply(name +&quot;레시피\\n재료정보\\n&quot;+jaeryo+&quot;\\n★-조리순서 전체보기-★\\n&quot;+all+&quot;\\n&quot;+list3.join(&quot;\\n&quot;))<br />list3 = []</p><p>}<br />}catch(e) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;레시피번호를 다시 확인해주세요&quot;)<br />}</p><p><br /></p><p><br />}</p><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000006BD00000000",
+            "id": 1725,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 365,
+            "refArticleId": 1725,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "요리 레시피 검색",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1555125958943,
+            "writer": {
+                "id": "nettime007",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "까칠한까칠"
+            }
+        },
+        "articleId": 1725,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "1111.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "1111.jpg",
+                "size": 99815,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/f267ee5a467978cde00463546e8cf788287a84df/MjAxOTA0MTNfMTgw/MDAxNTU1MTI1ODkxNjM5.meRzxr9nmoNO9iI1rQSinZaO0HNfDZi8H5N_Zn3yTtIg.N-xFA4lxd0bWskMcnqJX9kwlx_1FeArx8rCcbbD5WnUg.JPEG.nettime007/1111.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㅇㅂㅇ!",
+                    "id": 57242863,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 57242863,
+                    "updateDate": 1555147929000,
+                    "writer": {
+                        "id": "im0423023",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ㅇㅂㅇ"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 57244227,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 57244227,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1555150130000,
+                    "writer": {
+                        "id": "gmldnr777",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "단짱구"
+                    }
+                },
+                {
+                    "content": "미친 내가 귀찮아서 때려 치운걸 만들어버리시네",
+                    "id": 57268235,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 57268235,
+                    "updateDate": 1555174991000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "감사합니다~!",
+                    "id": 57468042,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 57468042,
+                    "updateDate": 1555419968000,
+                    "writer": {
+                        "id": "jobsupport",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MTlfMTAw/MDAxNTg5ODY0NzYwNDg1.86apo55rW4zfd70isM4ePR6ts7p1pE953ZvQbpyz8_Eg.MdvPRDigZbwaLC-NhqigLi0HRpTXRDKktFfcIs8b-jog.JPEG.jobsupport/papers.co-vh55-march-apple-event-blue-pattern-1024x768.jpg"
+                        },
+                        "nick": "링디"
+                    }
+                },
+                {
+                    "content": "검색은 왜 안될까요? 주소 바꿔가면서 해봐도 결과 값을 못 찾네요 ㅠ",
+                    "id": 59868777,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA1MjBfMjIy/MDAxNTU4MzMyNzQ4MTk5.71JNUIC8VwEnnEV8jJQ7WAKnhyNdI3xrhmt9pEOZt6wg.6AUgM-FLqfAh0CZMZ2kN2lN_bQPDwRlq3RKreXoL4vQg.JPEG.cbmass/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 1527,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA1MjBfMjIy/MDAxNTU4MzMyNzQ4MTk5.71JNUIC8VwEnnEV8jJQ7WAKnhyNdI3xrhmt9pEOZt6wg.6AUgM-FLqfAh0CZMZ2kN2lN_bQPDwRlq3RKreXoL4vQg.JPEG.cbmass/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA1MjBfMjIy/MDAxNTU4MzMyNzQ4MTk5.71JNUIC8VwEnnEV8jJQ7WAKnhyNdI3xrhmt9pEOZt6wg.6AUgM-FLqfAh0CZMZ2kN2lN_bQPDwRlq3RKreXoL4vQg.JPEG.cbmass/externalFile.jpg",
+                        "width": 1066
+                    },
+                    "refId": 59868777,
+                    "updateDate": 1558334682000,
+                    "writer": {
+                        "id": "cbmass",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20150411_10/cbmass_1428678954802WTt1M_JPEG/ICECREAM_BBC_thumb%5B2%5D.jpg"
+                        },
+                        "nick": "서울퍼렐"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

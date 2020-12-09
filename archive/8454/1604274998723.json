@@ -1,0 +1,310 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "엄청 지저분합니다(?)<div><br /></div><div>잉여로워 보이는 부분, 단순화 가능한 부분 지적해주시면 감사하겠습니다.</div><div>파이썬 입니다</div><div><br /></div><div><pre><span style=\"color:#cc7832;\">import </span>re<br /><span style=\"color:#cc7832;\">import </span>requests<br /><span style=\"color:#cc7832;\">import </span>json<br /><br /><span style=\"color:#cc7832;\">def </span><span style=\"color:#ffc66d;\">get_html</span>(url):<br />   _html = <span style=\"color:#6a8759;\">&quot;&quot;<br /></span><span style=\"color:#6a8759;\">   </span>resp = requests.get(url)<br />   <span style=\"color:#cc7832;\">if </span>resp.status_code == <span style=\"color:#6897bb;\">200</span>:<br />      _html = resp.text<br />   <span style=\"color:#cc7832;\">return </span>_html<br /><span style=\"color:#cc7832;\">def </span><span style=\"color:#ffc66d;\">get_next_text</span>(word<span style=\"color:#cc7832;\">,</span>gap=<span style=\"color:#6897bb;\">1</span>):<br />   coordinates = nahaha.index(word)<br />   value = nahaha[coordinates+gap]<br />   <span style=\"color:#cc7832;\">return </span>value<br /><span style=\"color:#cc7832;\">def </span><span style=\"color:#ffc66d;\">between</span>(word1<span style=\"color:#cc7832;\">,</span>word2):<br />   res = nahaha[nahaha.index(word1):nahaha.index(word2)+<span style=\"color:#6897bb;\">1</span>]<br />   <span style=\"color:#cc7832;\">return </span>res<br /><span style=\"color:#cc7832;\">def </span><span style=\"color:#ffc66d;\">get_rawdata</span>(<span style=\"color:#808080;\">link</span>):<br /><br /><span style=\"color:#cc7832;\">def </span><span style=\"color:#ffc66d;\">get_form</span>(<span style=\"color:#808080;\">link</span>):<br /><br /><br /><br /><span style=\"color:#cc7832;\">from </span>bs4 <span style=\"color:#cc7832;\">import </span>BeautifulSoup<br /><span style=\"color:#808080;\">#fw = open(&apos;sample.txt&apos;, &apos;w&apos;)<br /></span>poke_group = <span style=\"color:#8888c6;\">dict</span>()<br />tosearch = <span style=\"color:#8888c6;\">list</span>(<span style=\"color:#8888c6;\">range</span>(<span style=\"color:#6897bb;\">1</span><span style=\"color:#cc7832;\">,</span><span style=\"color:#6897bb;\">650</span>))+<span style=\"color:#8888c6;\">list</span>(<span style=\"color:#8888c6;\">range</span>(<span style=\"color:#6897bb;\">808</span><span style=\"color:#cc7832;\">,</span><span style=\"color:#6897bb;\">810</span>))<br /><br /><span style=\"color:#cc7832;\">for </span>i <span style=\"color:#cc7832;\">in </span>tosearch:<br />   currentnum = i<br />   <span style=\"color:#cc7832;\">try</span>:<br />      exception = <span style=\"color:#cc7832;\">False<br /></span><span style=\"color:#cc7832;\">      </span>form =[<span style=\"color:#6a8759;\">&quot;Form = N/A&quot;</span>]<br />      URL = <span style=\"color:#6a8759;\">&quot;https://pokemon.gameinfo.io/ko/pokemon/&quot; </span>+ <span style=\"color:#8888c6;\">str</span>(i)<br />      html = get_html(URL)<br />      soup = BeautifulSoup(html<span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&apos;html.parser&apos;</span>)<br />      content = re.sub(<span style=\"color:#6a8759;\">&apos;&lt;.+?&gt;&apos;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&apos;&apos;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#8888c6;\">str</span>(soup)<span style=\"color:#cc7832;\">, </span><span style=\"color:#6897bb;\">0</span>)<br />      nahaha = content.splitlines()  <span style=\"color:#808080;\"># 빈줄지우고 내용 리스트로<br /></span><span style=\"color:#808080;\">      </span>nahaha = [x.strip() <span style=\"color:#cc7832;\">for </span>x <span style=\"color:#cc7832;\">in </span>nahaha <span style=\"color:#cc7832;\">if </span><span style=\"color:#8888c6;\">len</span>(x) &gt; <span style=\"color:#6897bb;\">1</span>]  <span style=\"color:#808080;\"># 리스트에서 빈값 제거<br /></span><span style=\"color:#808080;\">      </span>nahaha = nahaha[<span style=\"color:#6897bb;\">75</span>:]<br />      <span style=\"color:#cc7832;\">if </span><span style=\"color:#8888c6;\">len</span>(nahaha[<span style=\"color:#6897bb;\">1</span>]) &gt; <span style=\"color:#6897bb;\">1</span>:<br />         form = nahaha[<span style=\"color:#6897bb;\">3</span>:nahaha.index(<span style=\"color:#6a8759;\">&quot;Table of contents&quot;</span>) - <span style=\"color:#6897bb;\">1</span>]<span style=\"color:#808080;\">#                                                                             폼생성(list)<br /></span><span style=\"color:#808080;\"><br /></span><span style=\"color:#808080;\"><br /></span><span style=\"color:#808080;\">      </span>stat_meta = get_next_text(<span style=\"color:#6a8759;\">&quot;var lang_url = &apos;ko&apos;;&quot;</span>)<br />      poke_num = stat_meta.split(<span style=\"color:#6a8759;\">&quot;id: &quot;</span>)[<span style=\"color:#6897bb;\">1</span>].split(<span style=\"color:#6a8759;\">&quot;,&quot;</span>)[<span style=\"color:#6897bb;\">0</span>]<span style=\"color:#808080;\">#                                                                                   도감번호,이름,스탯 생성<br /></span><span style=\"color:#808080;\">      </span>poke_name = stat_meta.split(<span style=\"color:#6a8759;\">&quot;name: &apos;&quot;</span>)[<span style=\"color:#6897bb;\">1</span>].split(<span style=\"color:#6a8759;\">&quot;&apos;&quot;</span>)[<span style=\"color:#6897bb;\">0</span>]<br />      poke_stat = stat_meta.split(<span style=\"color:#6a8759;\">&quot;stats: &quot;</span>)[<span style=\"color:#6897bb;\">1</span>].split(<span style=\"color:#6a8759;\">&quot;, form&quot;</span>)[<span style=\"color:#6897bb;\">0</span>]<br /><br />      efl = between(<span style=\"color:#6a8759;\">&quot;유효 데미지&quot;</span><span style=\"color:#cc7832;\">,<br /></span><span style=\"color:#cc7832;\">                    </span><span style=\"color:#6a8759;\">&apos;These moves are calculated using type advantages / disadvantages, and including STAB. Click here for more info &raquo;&apos;</span>)<br />      effective_pokemon_list = [<span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(efl[<span style=\"color:#6897bb;\">1</span>:<span style=\"color:#6897bb;\">5</span>])<span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(efl[<span style=\"color:#6897bb;\">5</span>:<span style=\"color:#6897bb;\">9</span>])<span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(efl[<span style=\"color:#6897bb;\">9</span>:<span style=\"color:#6897bb;\">13</span>])<span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(efl[<span style=\"color:#6897bb;\">13</span>:<span style=\"color:#6897bb;\">17</span>])<span style=\"color:#cc7832;\">,<br /></span><span style=\"color:#cc7832;\">                                </span><span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(efl[<span style=\"color:#6897bb;\">17</span>:<span style=\"color:#6897bb;\">21</span>])]<span style=\"color:#808080;\">#                                                                                   유효 포켓몬 생성<br /></span><span style=\"color:#808080;\"><br /></span><span style=\"color:#808080;\">      </span>bm = between(<span style=\"color:#6a8759;\">&quot;모든 반격 포켓몬&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;방어&quot;</span>)<br />      basic_moves_atk = [<span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(bm[<span style=\"color:#6897bb;\">3</span>:<span style=\"color:#6897bb;\">5</span>])<span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(bm[<span style=\"color:#6897bb;\">5</span>:<span style=\"color:#6897bb;\">7</span>])]<span style=\"color:#808080;\">#                                                                         기본공격, 기본방어 생성<br /></span><span style=\"color:#808080;\"><br /></span><span style=\"color:#808080;\">      </span>bm = between(<span style=\"color:#6a8759;\">&quot;방어&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;모두 보기 &raquo;&quot;</span>)<br />      basic_moves_def = [<span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(bm[<span style=\"color:#6897bb;\">1</span>:<span style=\"color:#6897bb;\">3</span>])<span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(bm[<span style=\"color:#6897bb;\">3</span>:<span style=\"color:#6897bb;\">5</span>])]<br /><br />      weakness = between(<span style=\"color:#6a8759;\">&quot;Vulnerable to&hellip;&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;Resistant to&hellip;&quot;</span>)<br />      weakness = [x.replace(<span style=\"color:#6a8759;\">&quot;deals 256% damage.&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;256%&quot;</span>).replace(<span style=\"color:#6a8759;\">&quot;deals 160% damage.&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;160%&quot;</span>) <span style=\"color:#cc7832;\">for </span>x <span style=\"color:#cc7832;\">in </span>weakness]<br /><br />      quan = <span style=\"color:#8888c6;\">int</span>((<span style=\"color:#8888c6;\">len</span>(weakness) - <span style=\"color:#6897bb;\">2</span>) / <span style=\"color:#6897bb;\">3</span>)<br />      weak = []<br />      <span style=\"color:#cc7832;\">for </span>i <span style=\"color:#cc7832;\">in </span><span style=\"color:#8888c6;\">range</span>(<span style=\"color:#6897bb;\">1</span><span style=\"color:#cc7832;\">, </span>quan + <span style=\"color:#6897bb;\">1</span>):<br />         weak.append(<span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(weakness[<span style=\"color:#6897bb;\">3 </span>* i - <span style=\"color:#6897bb;\">2</span>:<span style=\"color:#6897bb;\">3 </span>* i]))<br />      vulnerable_to = weak <span style=\"color:#808080;\">#                                                                                                                  약점 생성<br /></span><span style=\"color:#808080;\"><br /></span><span style=\"color:#808080;\">      </span><span style=\"color:#cc7832;\">if </span><span style=\"color:#6a8759;\">&quot;진화 계산기 &raquo;&quot; </span><span style=\"color:#cc7832;\">in </span>nahaha:<br />         resistto = between(<span style=\"color:#6a8759;\">&quot;Resistant to&hellip;&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;진화 계산기 &raquo;&quot;</span>)<br />         quan = <span style=\"color:#8888c6;\">int</span>((<span style=\"color:#8888c6;\">len</span>(resistto) - <span style=\"color:#6897bb;\">2</span>) / <span style=\"color:#6897bb;\">3</span>)<br />      <span style=\"color:#cc7832;\">elif </span><span style=\"color:#6a8759;\">&quot;Standard game image&quot; </span><span style=\"color:#cc7832;\">in </span>nahaha:<br />         resistto = between(<span style=\"color:#6a8759;\">&quot;Resistant to&hellip;&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;Standard game image&quot;</span>)<br />         quan = <span style=\"color:#8888c6;\">int</span>((<span style=\"color:#8888c6;\">len</span>(resistto) - <span style=\"color:#6897bb;\">2</span>) / <span style=\"color:#6897bb;\">3</span>) - <span style=\"color:#6897bb;\">1<br /></span><span style=\"color:#6897bb;\">         </span>exception = <span style=\"color:#6a8759;\">&quot;Yes1&quot;<br /></span><span style=\"color:#6a8759;\">      </span><span style=\"color:#cc7832;\">else</span>:<br />         resistto = between(<span style=\"color:#6a8759;\">&quot;Resistant to&hellip;&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;정보&quot;</span>)<br />         quan = <span style=\"color:#8888c6;\">int</span>((<span style=\"color:#8888c6;\">len</span>(resistto) - <span style=\"color:#6897bb;\">2</span>) / <span style=\"color:#6897bb;\">3</span>) +<span style=\"color:#6897bb;\">1<br /></span><span style=\"color:#6897bb;\">         </span>exception = <span style=\"color:#6a8759;\">&quot;Yes2&quot;<br /></span><span style=\"color:#6a8759;\">      </span>resistto = [<br />         x.replace(<span style=\"color:#6a8759;\">&quot;deals 63% damage.&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;63%&quot;</span>).replace(<span style=\"color:#6a8759;\">&quot;deals 39% damage.&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;39%&quot;</span>).replace(<span style=\"color:#6a8759;\">&quot;deals 24% damage.&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;24%&quot;</span>)<br />         <span style=\"color:#cc7832;\">for </span>x <span style=\"color:#cc7832;\">in </span>resistto]<br />      resist = []<br />      <span style=\"color:#cc7832;\">for </span>i <span style=\"color:#cc7832;\">in </span><span style=\"color:#8888c6;\">range</span>(<span style=\"color:#6897bb;\">1</span><span style=\"color:#cc7832;\">, </span>quan + <span style=\"color:#6897bb;\">1</span>):<br />         resist.append(<span style=\"color:#6a8759;\">&quot;-&quot;</span>.join(resistto[<span style=\"color:#6897bb;\">3 </span>* i - <span style=\"color:#6897bb;\">2</span>:<span style=\"color:#6897bb;\">3 </span>* i]))<br />      temp =[]<br />      <span style=\"color:#cc7832;\">for </span>i <span style=\"color:#cc7832;\">in </span>resist:<br />         <span style=\"color:#cc7832;\">if </span><span style=\"color:#6a8759;\">&quot;%&quot; </span><span style=\"color:#cc7832;\">in </span>resist[resist.index(i)] <span style=\"color:#cc7832;\">and </span><span style=\"color:#8888c6;\">len</span>(i)&lt;<span style=\"color:#6897bb;\">20</span>:<br />            temp.append(resist[resist.index(i)])<br />      resist_to = temp<span style=\"color:#808080;\">#                                                                                                                   저항 생성<br /></span><span style=\"color:#808080;\">      </span><span style=\"color:#cc7832;\">if </span>poke_num == <span style=\"color:#6a8759;\">&quot;235&quot;</span>:<br />         basic_moves_atk<span style=\"color:#cc7832;\">,</span>basic_moves_def = [<span style=\"color:#6a8759;\">&quot;N/A&quot;</span><span style=\"color:#cc7832;\">,</span><span style=\"color:#6a8759;\">&quot;0dps&quot;</span>]<span style=\"color:#cc7832;\">,</span>[<span style=\"color:#6a8759;\">&quot;N/A&quot;</span><span style=\"color:#cc7832;\">,</span><span style=\"color:#6a8759;\">&quot;0dps&quot;</span>]<br /><br />      result = <span style=\"color:#6a8759;\">&quot;이름: &quot; </span>+ poke_name +<span style=\"color:#6a8759;\">&quot;   &quot;</span>+<span style=\"color:#8888c6;\">str</span>(form)+ <span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">도감번호: &quot; </span>+ poke_num + <span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">효과적인 포켓몬&quot; </span>+ <span style=\"color:#8888c6;\">str</span>(effective_pokemon_list) + <span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">공격: &quot; </span>+ <span style=\"color:#8888c6;\">str</span>(<br />         basic_moves_atk) + <span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">방어: &quot; </span>+ <span style=\"color:#8888c6;\">str</span>(<br />         basic_moves_def) + <span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">약점: &quot; </span>+ <span style=\"color:#8888c6;\">str</span>(vulnerable_to) + <span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">저항: &quot; </span>+ <span style=\"color:#8888c6;\">str</span>(resist_to)<br />      <span style=\"color:#8888c6;\">print</span>(result)<br /><br />      poke = <span style=\"color:#8888c6;\">dict</span>()<br />      poke[<span style=\"color:#6a8759;\">&quot;도감번호&quot;</span>] = currentnum<br />      poke[<span style=\"color:#6a8759;\">&quot;폼&quot;</span>]=form<br />      poke[<span style=\"color:#6a8759;\">&quot;유효포켓몬&quot;</span>] = effective_pokemon_list<br />      poke[<span style=\"color:#6a8759;\">&quot;약점&quot;</span>] = vulnerable_to<br />      poke[<span style=\"color:#6a8759;\">&quot;저항&quot;</span>] = resist_to<br />      poke_group[poke_name] = poke<br /><br /><br /><br />      <span style=\"color:#808080;\">#fw.write(result + &quot;\\n&quot;)<br /></span><span style=\"color:#808080;\">      #fw.write(&quot;-&quot; * 200 + &quot;\\n&quot;)<br /></span><span style=\"color:#808080;\">      #print(str(currentnum)+&quot;successfully processed\\n\\n&quot;)<br /></span><span style=\"color:#808080;\">   </span><span style=\"color:#cc7832;\">except</span>:<br />      <span style=\"color:#8888c6;\">print</span>(<span style=\"color:#6a8759;\">&quot;----------------------------------------error occurred at&quot;</span>+<span style=\"color:#8888c6;\">str</span>(currentnum))<br /><span style=\"color:#cc7832;\">with </span><span style=\"color:#8888c6;\">open</span>(<span style=\"color:#6a8759;\">&quot;example.json&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#6a8759;\">&quot;w&quot;</span><span style=\"color:#cc7832;\">, </span><span style=\"color:#aa4926;\">encoding</span>=<span style=\"color:#6a8759;\">&quot;utf-8&quot;</span>) <span style=\"color:#cc7832;\">as </span>fp:<br />    json.dump(poke_group<span style=\"color:#cc7832;\">, </span>fp<span style=\"color:#cc7832;\">, </span><span style=\"color:#aa4926;\">ensure_ascii</span>=<span style=\"color:#cc7832;\">False, </span><span style=\"color:#aa4926;\">indent</span>=<span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">\\t</span><span style=\"color:#6a8759;\">&quot;</span>)<br /><br /><span style=\"color:#808080;\">#fw.close()</span></pre></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000210600000000",
+            "id": 8454,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 228,
+            "refArticleId": 8454,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "개인 프로젝트(포켓몬고)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575100758880,
+            "writer": {
+                "id": "kyleok",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "kyleok"
+            }
+        },
+        "articleId": 8454,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "야레야레 파이썬이라니",
+                    "id": 74715005,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74715005,
+                    "updateDate": 1575101334000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 74715076,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74715076,
+                    "updateDate": 1575101409000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "soup 내장기능이 있을텐데 몰라서 자바스크립트 파싱하는 마냥 더럽게해서여...ㅋㅋㅋ",
+                    "id": 74716289,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74715076,
+                    "updateDate": 1575102815000,
+                    "writer": {
+                        "id": "kyleok",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "kyleok"
+                    }
+                },
+                {
+                    "content": "열정이 느껴진다.",
+                    "id": 74727353,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74727353,
+                    "updateDate": 1575115851000,
+                    "writer": {
+                        "id": "jsptree",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사과님"
+                    }
+                },
+                {
+                    "content": "오홍이",
+                    "id": 74758786,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74758786,
+                    "updateDate": 1575165396000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "으어 저도 언젠간 복잡한 걸 만들 수 있게 열심히 공부해야겠어요",
+                    "id": 80335348,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80335348,
+                    "updateDate": 1580947201000,
+                    "writer": {
+                        "id": "lldoshinll",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "별명12341"
+                    }
+                },
+                {
+                    "content": "어떻게 사용하나요?",
+                    "id": 80657482,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80657482,
+                    "updateDate": 1581241907000,
+                    "writer": {
+                        "id": "hoyoon6381",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190916_37/hoyoon6381_1568642293507R4idt_JPEG/image.jpg"
+                        },
+                        "nick": "hoy"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

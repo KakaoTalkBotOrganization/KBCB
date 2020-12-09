@@ -1,0 +1,292 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "style": "width:1080px; height:2340px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MjVfMjEw/MDAxNTkzMDg0NzE0MjIw.KpP6jcU7qwB2H3x1E9XX-jmD45hir9jKF8o20I72lXEg.udNGcIETI88CPwoeLP5rTEkU3j9aqFC1ImzBAEC1Ajog.JPEG/Screenshot_20200625-194915_MessengerBot.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "style": "width:1080px; height:2340px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MjVfNDUg/MDAxNTkzMDg0NzYyNzY3.JQeC_nq3j198y630Ru6zi59plB4hyMblOcvzCeG_edUg.TDLEcfQRHhNr9WHRuPrQ-cp_WEkV-HqubSoyM6xC4D0g.JPEG/Screenshot_20200625-194918_MessengerBot.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>&nbsp;</p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">모 챗방에서 *니코동 검색을하면 검색결과 링크만 뱉길레</span></p><p>&nbsp;</p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&quot;그냥 파싱을 하면 어떨까?&quot; 라는 생각으로 만들었습니다.</span></p><p dir=\"ltr\"><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">[소스코드]</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">function nicovideo_search(search) {</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; var result = [];</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; var base = org.jsoup.Jsoup.connect(&quot;https://sp.nicovideo.jp/search/&quot; + encodeURIComponent(search) + &quot;?cp_in=srch_header&quot;).get().select(&quot;li.video-list-item.list-table&quot;);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; for (var i = 0; ; i++) {</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; try {</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var a = base.get(i);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var title = a.attr(&quot;data-title&quot;);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var uploader = a.attr(&quot;data-owner_name&quot;);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var link = a.select(&quot;a.video-item-area&quot;).attr(&quot;href&quot;).split(&quot;?&quot;)[0];</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var date = a.select(&quot;span.video-item-date&quot;).text().replace(&quot;投稿&quot;, &quot;&quot;);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var b = org.jsoup.Jsoup.connect(link).get().select(&quot;span.no_filter.show_only_when_expanded&quot;);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var viewer = b.get(0).text();</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var comment = b.get(1).text();</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var mylist = b.get(2).text();</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result.push(&quot;제목 : &quot; + title + &quot;\\n업로더 : &quot; + uploader + &quot;\\n니코동 링크 : &quot; + link +</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;\\n업로드 날짜 : &quot; + date + &quot;\\n조회수 : &quot; + viewer + &quot;\\n댓글 수 : &quot; + comment +</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;\\n마이리스트(재생목록)에 담긴 수 : &quot; + mylist);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; } catch (e) {</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; }</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; }</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; if(result.length != 0) return result.join(&quot;\\n&quot; + &quot;-&quot;.repeat(35) + &quot;\\n&quot;);</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp; &nbsp; return null;</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">}</span></p><p dir=\"ltr\"><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">[사용 방법]</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">nicovideo_search(검색어)로 검색하며 니코동이 일본사이트므로 영어/일본어로 검색해야 합니다.</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">검색결과가 있다면</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">(내용)</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">-----------------------------------</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">(내용)</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">...</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">식으로 나오고 없다면 null를 반환합니다.</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">그리고 이 소스는 엄청나게 느린 속도를 자랑합니다(?)</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">왜냐하면 그냥 검색결과 사이트에서 뜯으면 조회수 같은게 일본어로 축약 되서 &quot;12.5만&quot; 이런식으로 나오지만 동영상 안에 들어가면 &quot;125,000&quot;로 제대로 나와서 동영상 안에 들어가서 뜯기에 속도가 느으으립니다.</span></p><p dir=\"ltr\"><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">[작동 예시]</span></p><p>&nbsp;</p><p dir=\"ltr\">[[[CONTENT-ELEMENT-0]]]</p><p>&nbsp;</p><p dir=\"ltr\">[[[CONTENT-ELEMENT-1]]]</p><p><strike><span style=\"font-size: 13pt;\">솔직히 말하면 이분 우타이테 작곡가겸 보컬인데 저 이분 팬입니다</span></strike></p><p><strike><br /></strike></p><p>&nbsp;</p>\r\n<p dir=\"ltr\"><span style=\"font-size: 13pt;\">[예시&nbsp;소스]</span><br /><span style=\"font-size: 13pt;\">\r\nif(msg.split(&quot;&nbsp;&quot;)[0]&nbsp;==&nbsp;&quot;!니코동&quot;){var&nbsp;rsl=nicovideo_search(msg.substr(4));&nbsp;if(rsl&nbsp;!=&nbsp;null)&nbsp;replier.reply(&quot;니코동&nbsp;검색&nbsp;결과입니다.\\n&quot;+&quot;\\u200b&quot;.repeat(500)+rsl);&nbsp;else&nbsp;replier.reply(&quot;검색결과가&nbsp;없습니다.&quot;);}</span><br /><span style=\"font-size: 13pt;\">\r\n----------------------------------------</span><br /><span style=\"font-size: 13pt;\">\r\n*니코동 : </span><span style=\"font-size: 13pt;\">티비플의 기반인(개인적인 의견입니다. 아닐수도 있음) </span><span style=\"font-size: 13pt;\">일본의 한 영상공유 사이트, 티비플처럼 서브컬쳐 문화고 구름도 코맨트로 구현되있다. 다만 다른점으론 구름처럼 원하는 위치에 놀순 없고 흘러간다는 것과 유료화가 살짝 있다는거?</span></p><p>&nbsp;</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004F4B00000000",
+            "head": "파싱",
+            "headId": 72,
+            "id": 20299,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 223,
+            "refArticleId": 20299,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "니코동 검색 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1593084935083,
+            "writer": {
+                "id": "bass90301",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "bass9030"
+            }
+        },
+        "articleId": 20299,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "Screenshot_20200625-194915_MessengerBot.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_2020...MessengerBot.jpg",
+                "size": 302932,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/9a0f8630221110a5886c0b3005e79be04012ec1b/MjAyMDA2MjVfMjEw/MDAxNTkzMDg0NzE0MjIw.KpP6jcU7qwB2H3x1E9XX-jmD45hir9jKF8o20I72lXEg.udNGcIETI88CPwoeLP5rTEkU3j9aqFC1ImzBAEC1Ajog.JPEG/Screenshot_20200625-194915_MessengerBot.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "Screenshot_20200625-194918_MessengerBot.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_2020...MessengerBot.jpg",
+                "size": 604666,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/8510992e380e0fba9773142f1af884ff5f0df3ac/MjAyMDA2MjVfNDUg/MDAxNTkzMDg0NzYyNzY3.JQeC_nq3j198y630Ru6zi59plB4hyMblOcvzCeG_edUg.TDLEcfQRHhNr9WHRuPrQ-cp_WEkV-HqubSoyM6xC4D0g.JPEG/Screenshot_20200625-194918_MessengerBot.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 94801948,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94801948,
+                    "updateDate": 1593085825000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "평양산스입니다",
+                    "id": 94803041,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94801948,
+                    "replyMember": {
+                        "id": "tomohong06",
+                        "nick": "NullPointerException"
+                    },
+                    "updateDate": 1593086628000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass9030"
+                    }
+                },
+                {
+                    "content": "와... 저거 유튭 파싱소스 수정한거같이보인다...(가독성 좋음)",
+                    "id": 94813884,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94813884,
+                    "updateDate": 1593092922000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

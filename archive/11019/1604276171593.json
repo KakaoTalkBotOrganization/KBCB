@@ -1,0 +1,391 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><p dir=\"ltr\"><font color=\"#1565c0\">(소스 공유 창 찾았는데 인사봇은 안된다네욤 머쓱..)</font></p><p dir=\"ltr\"><font color=\"#1565c0\"><br /></font></p><p>&nbsp;<span style=\"font-size: 17.3333px; color: rgb(21, 101, 192);\">function</span><span style=\"font-size: 17.3333px;\">&nbsp;</span><span style=\"font-size: 17.3333px;\">response(room, msg, sender, isGroupChat, replier, ImageDB) {</span></p><p dir=\"ltr\" style=\"font-size: 17.3333px;\"><span style=\"color: rgb(21, 101, 192);\">if</span>(msg ==&nbsp;<span style=\"color: rgb(255, 160, 0);\">&quot;/국내&quot;</span>)<br /><span style=\"color: rgb(21, 101, 192);\">if</span>(room ==&nbsp;<span style=\"color: rgb(255, 160, 0);\">&quot;알&quot;</span>){<br /><span style=\"color: rgb(21, 101, 192);\">var</span>&nbsp;data = Utils.getWebText(<span style=\"color: rgb(255, 160, 0);\">&quot;http://ncov.mohw.go.kr/bdBoardList.do?brdId=1&amp;brdGubun=12&quot;</span>);<br />data = data.replace(/&lt;[^&gt;]+&gt;/g,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>);</p><p dir=\"ltr\" style=\"font-size: 17.3333px;\">data = data.split(<span style=\"color: rgb(255, 160, 0);\">&quot;확진자 이동경로&quot;</span>)[<span style=\"color: rgb(191, 54, 12);\">1</span>]<br />data = data.split(<span style=\"color: rgb(255, 160, 0);\">&quot;질병관리본부 관련기관 바로가기&quot;</span>)[<span style=\"color: rgb(191, 54, 12);\">0</span>];<br />data = data.trim();<br />data = data.split(<span style=\"color: rgb(255, 160, 0);\">&quot;\\n&quot;</span>);&nbsp;</p><p dir=\"ltr\" style=\"font-size: 17.3333px;\"><span style=\"color: rgb(21, 101, 192);\">var</span>&nbsp;data2 = [];<br /><span style=\"color: rgb(21, 101, 192);\">for</span>(<span style=\"color: rgb(21, 101, 192);\">var</span>&nbsp;n =<span style=\"color: rgb(191, 54, 12);\">0</span>; n &lt; data.<span style=\"color: rgb(21, 101, 192);\">length</span>; n++) {<br />data[n] = data[n].trim();<br /><span style=\"color: rgb(21, 101, 192);\">if</span>(data[n] !=<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>) data2 += data[n]+<span style=\"color: rgb(255, 160, 0);\">&quot;\\n&quot;</span>;<br />}<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;&amp;nbsp;&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>)</p><p dir=\"ltr\" style=\"font-size: 17.3333px;\">data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;16번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;[16번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;15번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[15번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;14번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[14번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;13번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[13번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;12번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[12번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;8번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[8번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;10번째, 11번째환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[10번째, 11번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;9번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[9번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;8번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[8번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;7번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[7번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;5번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[5번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;6번째 환자 이동 경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[6번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;4번째 확진 환자 이동경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[4번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;3번째 확진 환자 이동경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[3번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;2번째 확진 환자 이동경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[2번째 환자 이동 경로]&quot;</span>)<br />data2 = data2.replace(<span style=\"color: rgb(255, 160, 0);\">&quot;1번째 확진 환자 이동경로 등&quot;</span>,<span style=\"color: rgb(255, 160, 0);\">&quot;\\n[1번째 환자 이동 경로]&quot;</span>)</p><p dir=\"ltr\" style=\"font-size: 17.3333px;\"><span style=\"font-size: 17.3333px; color: rgb(21, 101, 192);\">function</span><span style=\"font-size: 17.3333px;\">&nbsp;response(room, msg, sender, isGroupChat, replier, ImageDB) {</span>&nbsp;</p><p dir=\"ltr\" style=\"font-size: 17.3333px;\">replier.reply(&nbsp;<span style=\"color: rgb(255, 160, 0);\">&quot;&quot;</span>&nbsp;+ data2 + &quot;\\nㄹㅍ&quot;);</p><p dir=\"ltr\" style=\"font-size: 17.3333px;\">}}</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">인사봇이라 소스공유가 안보여요.. 아마두..?</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">몇몇분이 도와주셔서 만든 소스!</p><p style=\"font-size: 17.3333px;\">가져가시려면 갖고 가서도 되는데 함정 찾아서 지우셔야해요!</p><p style=\"font-size: 17.3333px;\">헤헤 질문에 답해주셔서 감사합니다! 꺄륵</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">소스공유 카테로 가니까 인사봇이 답변을 못드리네요..ㅠ</p><p style=\"font-size: 17.3333px;\">17,18번분 올라오면 제가 수정하여 올려드리겠습니다</p><p style=\"font-size: 17.3333px;\">아니면 저 위에&nbsp;</p><p style=\"font-size: 17.3333px;\"><span style=\"font-size: 17.3333px;\">data2 = data2.replace(</span><span style=\"font-size: 17.3333px; color: rgb(255, 160, 0);\">&quot;16번째 환자 이동 경로 등&quot;</span><span style=\"font-size: 17.3333px;\">,</span><span style=\"font-size: 17.3333px; color: rgb(255, 160, 0);\">&quot;[16번째 환자 이동 경로]&quot;</span><span style=\"font-size: 17.3333px;\">)를 복붙해서 16을 17로 바꿔도 괜찮습니다.</span>&nbsp;</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">답글을 못 쓴다니!! 쾅ㅋ(((</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">소스 초급인지 중급인지는 제가 설정하지 못 하였어여..</p><p style=\"font-size: 17.3333px;\">아마 파싱때문에 중급 간것같아요</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002B0B00000000",
+            "id": 11019,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 229,
+            "refArticleId": 11019,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "우한폐렴 국내 확진자 파싱",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1580906746107,
+            "writer": {
+                "id": "yih2776",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "레몬펭귄"
+            }
+        },
+        "articleId": 11019,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이제 18명인데..\r\n그리고 지금 2번째 환자 퇴원하셨다네욥",
+                    "id": 80301854,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80301854,
+                    "updateDate": 1580906824000,
+                    "writer": {
+                        "id": "minicr",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "미니"
+                    }
+                },
+                {
+                    "content": "저 사이트에는 17번 환자님 부터는 없으시더라구요..\n2번째 환자는 표기할게요! 소식 감사드립니다!",
+                    "id": 80302667,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80301854,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1580907353000,
+                    "writer": {
+                        "id": "yih2776",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                        },
+                        "nick": "레몬펭귄"
+                    }
+                },
+                {
+                    "content": "이런 리스폰스가 두개라니\r\n",
+                    "id": 80303268,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80303268,
+                    "updateDate": 1580907689000,
+                    "writer": {
+                        "id": "tkarjfl63",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMThfMjA1/MDAxNTc0MDgwMDg2NTk5.jP7H67JytbfSdzCvd8ap40e8fQDZr3aR1vJ6_r9855cg.J7JDpNFR_HLbVwO386pCiEz0v9F6JofuKwe1v9s9Ixwg.JPEG/1573459727495.jpg"
+                        },
+                        "nick": "옛날은댕이"
+                    }
+                },
+                {
+                    "content": "으악 들켜따!",
+                    "id": 80306380,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80303268,
+                    "updateDate": 1580909498000,
+                    "writer": {
+                        "id": "yih2776",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                        },
+                        "nick": "레몬펭귄"
+                    }
+                },
+                {
+                    "content": "밑에를 없애면 되겠군",
+                    "id": 80306456,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80303268,
+                    "replyMember": {
+                        "id": "yih2776",
+                        "nick": "레몬펭귄"
+                    },
+                    "updateDate": 1580909540000,
+                    "writer": {
+                        "id": "minicr",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "미니"
+                    }
+                },
+                {
+                    "content": "끄앙 쉿쉿!!",
+                    "id": 80307402,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80303268,
+                    "replyMember": {
+                        "id": "minicr",
+                        "nick": "미니"
+                    },
+                    "updateDate": 1580910027000,
+                    "writer": {
+                        "id": "yih2776",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                        },
+                        "nick": "레몬펭귄"
+                    }
+                },
+                {
+                    "content": "그럼 1718번째가 추가가되면  소스도 추가해줘야하나요?  알아서 받아오는게 아니라",
+                    "id": 80307427,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80307427,
+                    "updateDate": 1580910041000,
+                    "writer": {
+                        "id": "phjun93",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "강아쥐"
+                    }
+                },
+                {
+                    "content": "for (i=0; i<8; i++) {\r\ndata2 = data2.replace(\" \", \"\")\r\n}",
+                    "id": 80308951,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80308951,
+                    "updateDate": 1580910942000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "반복문 익혀두세여",
+                    "id": 80310515,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80310515,
+                    "updateDate": 1580911833000,
+                    "writer": {
+                        "id": "fbtkdqja112",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200829_126/fbtkdqja112_1598657201500jUbjR_JPEG/image.jpg"
+                        },
+                        "nick": "인디벨"
+                    }
+                },
+                {
+                    "content": "이건 초급 소스 아닌가 읍읍..",
+                    "id": 80317163,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80317163,
+                    "updateDate": 1580915554000,
+                    "writer": {
+                        "id": "tkdgjs6897",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMTAx/MDAxNTgwNTY3MzYzMTY2.XUeAx5gDTLB-IBBj-2Sb8BmdLVmtTF2Nn9PAkRw4GV0g.zno8J23Z--_f3x3V5V7N7r0O_Pxr4lA1SAktuNttGIIg.JPEG/1552227072327.jpg"
+                        },
+                        "nick": "상헌굿"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

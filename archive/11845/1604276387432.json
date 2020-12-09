@@ -1,0 +1,180 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p style=\"font-size: 17.3333px;\">필자도 배우면서 가르치니 오류가 있을 수도 있습니다.</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">먼저 생성자 함수부터 배워보죠</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">객체를 지정하는 방식은 흔히 2가지입니다</p><p style=\"font-size: 17.3333px;\">1. 객체 리터럴</p><p style=\"font-size: 17.3333px;\">a = {&quot;사로로&quot;:&quot;맑은물&quot;,&quot;닥토&quot;:&quot;고물&quot;}</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">//<span style=\"font-size: 17.3333px;\">{&quot;사로로&quot;:&quot;맑은물&quot;,&quot;닥토&quot;:&quot;고물&quot;}</span></p><p style=\"font-size: 17.3333px;\">2. 생성자 함수</p><p style=\"font-size: 17.3333px;\">function User(a,b){</p><p style=\"font-size: 17.3333px;\">&nbsp; &nbsp;this.사로로 = a</p><p style=\"font-size: 17.3333px;\">&nbsp; &nbsp;<span style=\"font-size: 17.3333px;\">this.닥토 = b</span></p><p style=\"font-size: 17.3333px;\">}</p><p style=\"font-size: 17.3333px;\">a = new User(&quot;맑은물&quot;,&quot;고물&quot;)</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">//<span style=\"font-size: 17.3333px;\">{&quot;사로로&quot;:&quot;맑은물&quot;,&quot;닥토&quot;:&quot;고물&quot;}</span></p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">위 두개 결과는 같을겁니다? 근데 좀 차이가 있긴 해요. 자세한건 검색해보세요 전 두번째 방법을 사용할겁니다.</p><p style=\"font-size: 17.3333px;\">&nbsp;</p><p style=\"font-size: 17.3333px;\">일단 다음과 같이 해보져</p><p style=\"font-size: 17.3333px;\">&nbsp;<span style=\"color: rgb(147, 161, 161); font-size: 13pt;\">/*생성자 함수는 대문자로 시작</span></p><p dir=\"ltr\">\r\n<span style=\"color:#93A1A1;\">이건 프로그래머끼리의 약속</span><br />\r\n<span style=\"color:#93A1A1;\">*/</span></p><p dir=\"ltr\"><span style=\"color:#93A1A1;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"color:#268BD2;\">function</span> <span style=\"color:#269186;\">CurrMax</span>(curr, max){ <br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.curr = curr<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.max = max<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#93A1A1;\">//curr 현재 max 최대치</span><br />\r\n}<br />\r\n<span style=\"color:#268BD2;\">function</span> <span style=\"color:#269186;\">PhySpec</span>(obj){<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.phy = obj.phy<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.spec = obj.spec<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#93A1A1;\">//phy 물리 spec 특수</span><br />\r\n}</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\"><span style=\"color:#268BD2;\">var</span> basic = <span style=\"color:#268BD2;\">function</span>(name,lv, hp,mp,&nbsp; attack, defense, speed){<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.name = name <span style=\"color:#93A1A1;\">//유저</span><br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.lv = lv, <span style=\"color:#93A1A1;\">//레벨</span><br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.hp = <span style=\"color:#268BD2;\">new</span> <span style=\"color:#269186;\">CurrMax</span>(hp,hp),<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.mp = <span style=\"color:#268BD2;\">new</span> <span style=\"color:#269186;\">CurrMax</span>(mp, mp),<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.exp = <span style=\"color:#268BD2;\">new</span> <span style=\"color:#269186;\">CurrMax</span>(<span style=\"color:#93A1A1;\">0</span>, <span style=\"color:#93A1A1;\">100</span>), <span style=\"color:#93A1A1;\">//레벨 1일때 100&nbsp; 모으면 레벨업</span><br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.attack =&nbsp;&nbsp; <span style=\"color:#268BD2;\">new</span> <span style=\"color:#269186;\">PhySpec</span>(attack), <span style=\"color:#93A1A1;\">//{phy :값, spec:값}</span><br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.defense = <span style=\"color:#268BD2;\">new</span> <span style=\"color:#269186;\">PhySpec</span>(defense),<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">this</span>.speed= speed <span style=\"color:#93A1A1;\">//이속</span><br />\r\n}</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">이렇게 하고&nbsp;</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">let saro = new basic(&quot;사로로&quot;,1,40,20,{&quot;phy&quot;:20, &quot;spec&quot;:10},&nbsp;<span style=\"font-size: 17.3333px;\">{&quot;phy&quot;:20, &quot;spec&quot;:10},30)</span></p><p dir=\"ltr\"><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"font-size: 17.3333px;\">해보죠&nbsp;</span></p><p dir=\"ltr\"><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"font-size: 17.3333px;\">결과는 이리 나올겁니다.</span></p><p dir=\"ltr\">{<br />\r\n&nbsp;&nbsp;&nbsp; &quot;name&quot;: &quot;사로로&quot;,<br />\r\n&nbsp;&nbsp;&nbsp; &quot;lv&quot;: 1,<br />\r\n&nbsp;&nbsp;&nbsp; &quot;hp&quot;: {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;curr&quot;: 40,<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;max&quot;: 40<br />\r\n&nbsp;&nbsp;&nbsp; },<br />\r\n&nbsp;&nbsp;&nbsp; &quot;mp&quot;: {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;curr&quot;: 20,<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;max&quot;: 20<br />\r\n&nbsp;&nbsp;&nbsp; },<br />\r\n&nbsp;&nbsp;&nbsp; &quot;exp&quot;: {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;curr&quot;: 0,<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;max&quot;: <a target=\"_blank\">100</a><br />\r\n&nbsp;&nbsp;&nbsp; },<br />\r\n&nbsp;&nbsp;&nbsp; &quot;attack&quot;: {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;phy&quot;: 20,<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;spec&quot;: 10<br />\r\n&nbsp;&nbsp;&nbsp; },<br />\r\n&nbsp;&nbsp;&nbsp; &quot;defense&quot;: {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;phy&quot;: 20,<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;spec&quot;: 10<br />\r\n&nbsp;&nbsp;&nbsp; },<br />\r\n&nbsp;&nbsp;&nbsp; &quot;speed&quot;: 30<br />\r\n}</p><p dir=\"ltr\">&nbsp;</p><p dir=\"ltr\">음 성공했군요 이렇게 기초적인건 끝냈습니다. 다음번엔&nbsp; <span style=\"font-size: 17.3333px;\">prototype 상속을 이용해</span>&nbsp;유저정보 및 몬스터 정보를 만들어보죠</p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp;</span></p><p dir=\"ltr\"><span style=\"font-size: 13pt;\">&nbsp;</span></p><div><span style=\"font-size: 17.3333px;\"><br /></span></div><p style=\"font-size: 17.3333px;\">&nbsp;</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002E4500000000",
+            "id": 11845,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 171,
+            "refArticleId": 11845,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": " RPG 제작기 1편 기초적인 객체 생성(생성자 함수)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582374318177,
+            "writer": {
+                "id": "hbhj4633",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "사로로"
+            }
+        },
+        "articleId": 11845,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 81967098,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81967098,
+                    "updateDate": 1582384503000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "new가 더 짧으므로 패스",
+                    "id": 81977101,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81967098,
+                    "updateDate": 1582406079000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "그냥 new 쓸래요",
+                    "id": 81983651,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 81967098,
+                    "updateDate": 1582417739000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,233 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-00e89ae8-4cfe-4907-a045-ebdbe2654fc1\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-253f28c3-5864-4231-83d8-f655fef044b1\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-ff0b4e2d-a421-46c2-98b8-336940ee3807\">네이버의 사자성어 퀴즈를 파싱해서 가져오는 형식인 거시에요</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-9cae7062-3fb9-4d3d-984c-659c91378302\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7770c829-94df-4864-9d68-9d194c882482\">소스가 다소 지저분할 수 있는 거시에요</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7ffce48b-cf79-45eb-ad02-bd3dcd7b3b96\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-bda825f6-eb32-44c1-931e-9496b8e8fb43\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-default\" id=\"SE-84972128-523c-4aed-812e-9459b9b4dd35\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-default\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">FS &#x3D; FileStream;\npath &#x3D; &quot;sdcard/File/q.txt&quot;;\nfunction response(room, msg, sender, isGroupChat, replier) {\n  if (FS.read(path) &#x3D;&#x3D; null) {\n    FS.write(path, &quot;{}&quot;);\n  }\n  if (msg) {\n    rd &#x3D; JSON.parse(FS.read(path));\n    if (rd[room] &#x3D;&#x3D; undefined) {\n      rd[room] &#x3D; {};\n      rd[room][&#x27;first&#x27;] &#x3D; 0;\n      rd[room][&#x27;count&#x27;] &#x3D; 0;\n      rd[room][&#x27;qu&#x27;] &#x3D; null;\n      rd[room][&#x27;ans1_q&#x27;] &#x3D; null;\n      rd[room][&#x27;ans1_t&#x27;] &#x3D; null;\n      rd[room][&#x27;ans2_q&#x27;] &#x3D; null;\n      rd[room][&#x27;ans2_t&#x27;] &#x3D; null;\n      rd[room][&#x27;ans3_q&#x27;] &#x3D; null;\n      rd[room][&#x27;ans3_t&#x27;] &#x3D; null;\n    }\n    if (rd[room][sender] &#x3D;&#x3D; undefined) {\n      rd[room][sender] &#x3D; {};\n      rd[room][sender][&quot;score&quot;] &#x3D; 0;\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[사자성어 쌉뉴비] &#x27;;\n    }\n    if (rd[room][&#x27;first&#x27;] &#x3D;&#x3D; 0) {\n      rd[room][&#x27;first&#x27;] &#x3D; 1;\n      replier.reply(&#x27;어디선가 소스를 주워왔을 &#x27; + sender + &#x27;님을 위한 사용법 안내&#x27; + &#x27;\\u200b&#x27;.repeat(500) + &#x27;\\n\\n&quot;!사자성어&quot;를 입력하면 문제가 출제됩니다. 가끔 같은 문제가 나올 수 있습니다\\n문제는 모두 객관식이며, 1~3번까지의 선택지가 있습니다\\n\\n&quot;!정답 (번호)&quot;의 형식으로 정답을 입력합니다\\n&quot;!성어기록&quot;을 입력하면 퀴즈를 맞춘 횟수를 확인할 수 있고, 뒤에 닉네임을 적으면 해당 닉네임을 가진 사람의 기록을 확인할 수 있습니다\\n\\n이 메시지는 채팅방별로 1회만 전송됩니다&#x27;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 10 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[사자성어 쌉뉴비] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[사자성어 뉴비] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 25 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[사자성어 뉴비] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[성어 초보] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 50 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[성어 초보] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[성어 일반인] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 80 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[사자성어 일반인] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[성어 은둔고수] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 125 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[성어 은둔고수] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[사자성어 고수] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 200 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[사자성어 고수] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[성어 초고수] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 300 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[사자성어 초고수] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[사자성어 달인] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 450 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[사자성어 달인] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[사자성어 장인] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 700 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[사자성어 장인] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[성어 마스터] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (rd[room][sender][&#x27;score&#x27;] &gt;&#x3D; 1000 &amp;&amp; rd[room][sender][&#x27;class&#x27;] &#x3D;&#x3D; &#x27;[성어 마스터] &#x27;) {\n      rd[room][sender][&#x27;class&#x27;] &#x3D; &#x27;[내가 사자성어다] &#x27;;\n      replier.reply(&quot;새로운 칭호를 획득했습니다!&quot;);\n    }\n    if (msg &#x3D;&#x3D; &quot;!성어기록&quot;) {\n      replier.reply(rd[room][sender][&quot;class&quot;] + sender + &quot;님은 &quot; + rd[room][sender][&quot;score&quot;] + &quot;회 맞추셨습니다&quot;);\n    }\n    if (msg.startsWith(&quot;!성어기록 &quot;) &amp;&amp; msg !&#x3D; &quot;!성어기록 &quot;) {\n      object &#x3D; msg.substr(6);\n      try {\n        replier.reply(rd[room][object][&quot;class&quot;] + object + &quot;님은 &quot; + rd[room][object][&quot;score&quot;] + &quot;회 맞추셨습니다&quot;);\n      }      catch (e) {\n  replier.reply(&quot;정보를 찾을 수 없습니다&quot;);\n}\n    }\n    if (msg &#x3D;&#x3D; &quot;!사자성어&quot; &amp;&amp; rd[room][&#x27;count&#x27;] &#x3D;&#x3D; 0) {\n      var a &#x3D; Math.floor(Math.random() * 10);\n      rd[room][&#x27;count&#x27;] &#x3D; 1;\n      base &#x3D; org.jsoup.Jsoup.connect(&#x27;https://search.naver.com/search.naver?where&#x3D;nexearch&amp;sm&#x3D;tab_etc&amp;mra&#x3D;blo3&amp;query&#x3D;%EC%82%AC%EC%9E%90%EC%84%B1%EC%96%B4%ED%80%B4%EC%A6%88&amp;fbclid&#x3D;IwAR14WMmlKPWeYXcSpK0DiY8w9Zn_CP4NKJz8IMPKRWUHxFNVgRkuFM9yHFk&#x27;).get().select(&#x27;div[class&#x3D;content_area _content_area]&#x27;);\n      rd[room][&#x27;qu&#x27;] &#x3D; base.select(&#x27;div.quiz_txt &#x27;).get(a).text();\n      ans_data &#x3D; base.select(&#x27;ul.answer_lst&#x27;).get(a).select(&#x27;a&#x27;);\n      ans1 &#x3D; ans_data.get(0);\n      rd[room][&#x27;ans1_q&#x27;] &#x3D; ans1.text();\n      rd[room][&#x27;ans1_t&#x27;] &#x3D; ans1.attr(&#x27;data-is-correct&#x27;);\n      ans2 &#x3D; ans_data.get(1);\n      rd[room][&#x27;ans2_q&#x27;] &#x3D; ans2.text();\n      rd[room][&#x27;ans2_t&#x27;] &#x3D; ans2.attr(&#x27;data-is-correct&#x27;);\n      ans3 &#x3D; ans_data.get(2);\n      rd[room][&#x27;ans3_q&#x27;] &#x3D; ans3.text();\n      rd[room][&#x27;ans3_t&#x27;] &#x3D; ans3.attr(&#x27;data-is-correct&#x27;);\n      replier.reply(rd[room][&#x27;qu&#x27;] + &quot;\\n\\n1번: &quot; + rd[room][&#x27;ans1_q&#x27;] + &quot;\\n2번: &quot; + rd[room][&#x27;ans2_q&#x27;] + &quot;\\n3번: &quot; + rd[room][&#x27;ans3_q&#x27;]);\n    } else if (msg &#x3D;&#x3D; &quot;!사자성어&quot;) {\n      replier.reply(&quot;이미 문제가 진행중입니다!&quot;);\n      replier.reply(rd[room][&#x27;qu&#x27;] + &quot;\\n\\n1번: &quot; + rd[room][&#x27;ans1_q&#x27;] + &quot;\\n2번: &quot; + rd[room][&#x27;ans2_q&#x27;] + &quot;\\n3번: &quot; + rd[room][&#x27;ans3_q&#x27;]);\n    }\n    if (msg.startsWith(&quot;!정답 &quot;) &amp;&amp; rd[room][&quot;count&quot;] &#x3D;&#x3D; 1) {\n      msg &#x3D; msg.substr(4);\n      ans &#x3D; rd[room][&#x27;ans&#x27; + msg + &#x27;_t&#x27;];\n      if (ans &#x3D;&#x3D; 1) {\n        replier.reply(sender + &quot;님 정답입니다!&quot;);\n        rd[room][&#x27;count&#x27;] &#x3D; 0;\n        rd[room][sender][&quot;score&quot;]++;\n      } else {\n        replier.reply(&quot;아쉽게도 오답입니다...&quot;);\n      }\n    }\n    FS.write(path, JSON.stringify(rd));\n  }\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-84972128-523c-4aed-812e-9459b9b4dd35\"}'></script>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-de437b83-95c8-4f71-ad0e-f72dfb391ba4\">\n                    <div class=\"se-component-content se-component-content-extend\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" >\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-de437b83-95c8-4f71-ad0e-f72dfb391ba4\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA4MjVfMTkw/MDAxNTk4MzQ2NDM4Nzgx.VRbjifPMVGZwGLT5_13EdlytNrxIHY0WHyH-yWZJokQg.hdlrPZ-kdwQ2YME86QjobgxLuYCBP0XKFnECXvHSQ7Ug.JPEG/KakaoTalk_20200825_180647792.jpg\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA4MjVfMTkw/MDAxNTk4MzQ2NDM4Nzgx.VRbjifPMVGZwGLT5_13EdlytNrxIHY0WHyH-yWZJokQg.hdlrPZ-kdwQ2YME86QjobgxLuYCBP0XKFnECXvHSQ7Ug.JPEG/KakaoTalk_20200825_180647792.jpg?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                            <div class=\"se-module se-module-text se-caption\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1be981b2-58dc-491d-b5f9-d498a311b33e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5130ae87-9d40-42f7-9002-04e60c97a9eb\">이런 식으로 작동하는 거시에요</span></p></div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-ae9de538-d02c-457e-a5ba-d6d73218cbcb\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-d2026290-39bf-4d32-bce8-fc04adb05d31\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6fa40008-12ce-43c3-ac96-88aa2e92106f\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005C3200000000",
+            "head": "미니게임",
+            "headId": 70,
+            "id": 23602,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 286,
+            "refArticleId": 23602,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "사자성어퀴즈 소-스 (문제는 사실상 무한대...?)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1598346597120,
+            "writer": {
+                "id": "gyugyum",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20200225_84/gyugyum_1582590379416e6wUY_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "헤히"
+            }
+        },
+        "articleId": 23602,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "재밋게 잘 사용하겠습니다\n고맙습니다",
+                    "id": 101381714,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101381714,
+                    "updateDate": 1598546131000,
+                    "writer": {
+                        "id": "heuk_",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA5MTdfMjAg/MDAxNjAwMjc2MzU4NTQy.3xiO501Zd70LPQFDGhkEiil89RAsIgIM4HIWbw_kXcwg.CtErrg3kXOus-g_m6hq1OxPi1oiuri5Le9kR2W0__RQg.JPEG.heuk_/profileImage.jpg"
+                        },
+                        "nick": "삼칠"
+                    }
+                },
+                {
+                    "content": "시작이 안되던데용..",
+                    "id": 101477834,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101477834,
+                    "updateDate": 1598626143000,
+                    "writer": {
+                        "id": "pjs090220",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "꽃녀리"
+                    }
+                },
+                {
+                    "content": "시작이안되네용..",
+                    "id": 102242866,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 102242866,
+                    "updateDate": 1599280453000,
+                    "writer": {
+                        "id": "xormr456",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "다거다거"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

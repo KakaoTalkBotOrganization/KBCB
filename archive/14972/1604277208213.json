@@ -1,0 +1,308 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<p></p><p dir=\"ltr\"><span style=\"color:#268BD2;\">function</span> <span style=\"color:#000000;\">response</span>(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){&nbsp;<br />\r\n<span style=\"color:#268BD2;\">var</span> day = <span style=\"color:#268BD2;\">new</span> <span style=\"color:#269186;\">Date</span>();<br />\r\n<span style=\"color:#268BD2;\">var</span> month=<span style=\"color:#269186;\">String</span>(<span style=\"color:#000000;\">day.getMonth()+</span><span style=\"color:#000000;\"><span style=\"color:#93A1A1;\">1</span></span>);<br />\r\n<span style=\"color:#268BD2;\">var</span> date=<span style=\"color:#269186;\">String</span>(<span style=\"color:#000000;\">day.getDate()</span>);<br />\r\n&nbsp;<span style=\"background-color:#FFAA00;\">root=</span><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;sdcard/채팅기록/&quot;</span></span><span style=\"background-color:#FFAA00;\">+room</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#268BD2;\">if</span>(<span style=\"color:#269186;\">FileStream</span>.read(<span style=\"color:#000000;\">root</span>) !=&nbsp;<span style=\"color:#268BD2;\">null</span>){<br />\r\njson = JSON.parse(<span style=\"color:#000000;\"><span style=\"color:#269186;\">FileStream</span></span><span style=\"color:#000000;\">.read(</span><span style=\"color:#000000;\"><span style=\"color:#000000;\">root</span></span><span style=\"color:#000000;\">)</span>);<br />\r\n<span style=\"color:#268BD2;\">if</span>(json[<span style=\"color:#93A1A1;\">0</span>] !=date){<br />\r\n<span style=\"color:#269186;\">FileStream</span>.remove(<span style=\"color:#000000;\">root</span>);<br />\r\n}<br />\r\n}<br />\r\n<span style=\"color:#268BD2;\">if</span>&nbsp;(<span style=\"color:#269186;\">FileStream</span>.read(<span style=\"color:#000000;\">root</span>)==<span style=\"color:#268BD2;\">null</span>) {<br />\r\n<span style=\"color:#269186;\">FileStream</span>.write(<span style=\"color:#000000;\">root</span>,&nbsp;<span style=\"color:#000000;\"><span style=\"color:#269186;\">&quot;[]&quot;</span></span>);<br />\r\n<span style=\"color:#268BD2;\">var</span>&nbsp;da=<span style=\"color:#268BD2;\">new</span>&nbsp;<span style=\"color:#269186;\">Date</span>();<br />\r\n<span style=\"color:#268BD2;\">var</span>&nbsp;<span style=\"background-color:#FFAA00;\">day</span>=da.getDate();<br />\r\njson = JSON.parse(<span style=\"color:#000000;\"><span style=\"color:#269186;\">FileStream</span></span><span style=\"color:#000000;\">.read(</span><span style=\"color:#000000;\"><span style=\"color:#000000;\">root</span></span><span style=\"color:#000000;\">)</span>);<br />\r\njson.push(<span style=\"color:#000000;\">day</span>);<br />\r\n<span style=\"color:#269186;\">FileStream</span>.write(<span style=\"color:#000000;\">root</span>,&nbsp;<span style=\"color:#000000;\">JSON.stringify(</span><span style=\"color:#000000;\"><span style=\"color:#000000;\">json</span></span><span style=\"color:#000000;\">)</span>);<br />\r\n}<br />\r\n<span style=\"color:#268BD2;\">if</span>(msg){<br />\r\njson = JSON.parse(<span style=\"color:#000000;\"><span style=\"color:#269186;\">FileStream</span></span><span style=\"color:#000000;\">.read(</span><span style=\"color:#000000;\"><span style=\"color:#000000;\">root</span></span><span style=\"color:#000000;\">)</span>);<br />\r\njson.push(<span style=\"color:#000000;\">sender+</span><span style=\"color:#000000;\"><span style=\"color:#269186;\">&quot;:&quot;</span></span><span style=\"color:#000000;\">+msg</span>);<br />\r\n<span style=\"color:#269186;\">FileStream</span>.write(<span style=\"color:#000000;\">root</span>,&nbsp;<span style=\"color:#000000;\">JSON.stringify(</span><span style=\"color:#000000;\"><span style=\"color:#000000;\">json</span></span><span style=\"color:#000000;\">)</span>);<br />\r\n}<br />\r\n<span style=\"color:#268BD2;\">if</span>(msg.trim()==<span style=\"color:#269186;\">&quot;채팅기록!&quot;</span>){<br />\r\n<span style=\"color:#268BD2;\"><span style=\"background-color:#FFAA00;\">var</span></span><span style=\"background-color:#FFAA00;\">&nbsp;a=</span><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;&quot;</span></span><br />\r\n<span style=\"color:#268BD2;\">for</span>(i=<span style=\"color:#93A1A1;\">1</span>; i&lt;json.length; i++){<br />\r\n<span style=\"background-color:#FFAA00;\">a=json[i]+</span><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;\\n━━━━━━━━━━━━━━━━━━━━━━━\\n&quot;</span></span><span style=\"background-color:#FFAA00;\">+a</span><br />\r\n}<br />\r\n<span style=\"color:#268BD2;\">let</span>&nbsp;quantity=json.length-<span style=\"color:#93A1A1;\">1</span><br />\r\n<span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#000000;\"><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;[채팅로그]\\n&quot;</span></span></span><span style=\"color:#000000;\"><span style=\"background-color:#FFAA00;\">+</span></span><span style=\"color:#000000;\"><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;\\u200b&quot;</span></span></span><span style=\"color:#000000;\"><span style=\"background-color:#FFAA00;\">.repeat(</span></span><span style=\"color:#000000;\"><span style=\"color:#000000;\"><span style=\"color:#93A1A1;\"><span style=\"background-color:#FFAA00;\">500</span></span></span></span><span style=\"color:#000000;\"><span style=\"background-color:#FFAA00;\">)+room+</span></span><span style=\"color:#000000;\"><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;\\n(&quot;</span></span></span><span style=\"color:#000000;\"><span style=\"background-color:#FFAA00;\">+month+</span></span><span style=\"color:#000000;\"><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;월&quot;</span></span></span><span style=\"color:#000000;\"><span style=\"background-color:#FFAA00;\">+date+</span></span><span style=\"color:#000000;\"><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;일)\\n총 &quot;</span></span></span><span style=\"color:#000000;\"><span style=\"background-color:#FFAA00;\">+quantity+</span></span><span style=\"color:#000000;\"><span style=\"color:#269186;\"><span style=\"background-color:#FFAA00;\">&quot;개의 대화\\n━━━━━━━━━━━━━━━━━━━━━━━\\n&quot;</span></span></span><span style=\"color:#000000;\"><span style=\"background-color:#FFAA00;\">+a</span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n}<br />\r\n}</p>&nbsp;<p></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003A7C00000000",
+            "id": 14972,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 263,
+            "refArticleId": 14972,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "배터리를 덜 잡아먹는 채팅기록 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585806461820,
+            "writer": {
+                "id": "josephk0812",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAzMTdfNDIg/MDAxNTg0NDQyNDQ5MDM3.ROxwb7sGrQJ_WF2vaN9nQzY86S90MC2S0jofEMPWSgog.8XgEW0etU_W4GMZ1Ba75ht8yTCVbNnhcERu6FtnsVHEg.JPEG/20191129_230800.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "ailla"
+            }
+        },
+        "articleId": 14972,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 86158107,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86158107,
+                    "updateDate": 1585806863000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "함수 호출될때만 비교하는거라 while문보다 배터리를 덜 잡아먹습니다",
+                    "id": 86159137,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86158107,
+                    "updateDate": 1585807610000,
+                    "writer": {
+                        "id": "josephk0812",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMTdfNDIg/MDAxNTg0NDQyNDQ5MDM3.ROxwb7sGrQJ_WF2vaN9nQzY86S90MC2S0jofEMPWSgog.8XgEW0etU_W4GMZ1Ba75ht8yTCVbNnhcERu6FtnsVHEg.JPEG/20191129_230800.jpg"
+                        },
+                        "nick": "ailla"
+                    }
+                },
+                {
+                    "content": "?누가 채팅기록을 while문 돌려서 해요",
+                    "id": 86159737,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86158107,
+                    "replyMember": {
+                        "id": "josephk0812",
+                        "nick": "ailla"
+                    },
+                    "updateDate": 1585808049000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "while문으로 돌리는 채팅기록이 없지만....큼큼",
+                    "id": 86164271,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86158107,
+                    "replyMember": {
+                        "id": "josephk0812",
+                        "nick": "ailla"
+                    },
+                    "updateDate": 1585811418000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "리셋 할때 while 돌리지 않나요..?",
+                    "id": 86173734,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86158107,
+                    "replyMember": {
+                        "id": "junyoungbae02",
+                        "nick": "프로그"
+                    },
+                    "updateDate": 1585818160000,
+                    "writer": {
+                        "id": "josephk0812",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMTdfNDIg/MDAxNTg0NDQyNDQ5MDM3.ROxwb7sGrQJ_WF2vaN9nQzY86S90MC2S0jofEMPWSgog.8XgEW0etU_W4GMZ1Ba75ht8yTCVbNnhcERu6FtnsVHEg.JPEG/20191129_230800.jpg"
+                        },
+                        "nick": "ailla"
+                    }
+                },
+                {
+                    "content": "음 전혀요..?",
+                    "id": 86174459,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86158107,
+                    "replyMember": {
+                        "id": "josephk0812",
+                        "nick": "ailla"
+                    },
+                    "updateDate": 1585818675000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

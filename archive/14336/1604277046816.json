@@ -1,0 +1,313 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>cCho = [ &quot;ㄱ&quot;, &quot;ㄲ&quot;, &quot;ㄴ&quot;, &quot;ㄷ&quot;, &quot;ㄸ&quot;, &quot;ㄹ&quot;, &quot;ㅁ&quot;, &quot;ㅂ&quot;, &quot;ㅃ&quot;, &quot;ㅅ&quot;, &quot;ㅆ&quot;, &quot;ㅇ&quot;, &quot;ㅈ&quot;, &quot;ㅉ&quot;, &quot;ㅊ&quot;, &quot;ㅋ&quot;, &quot;ㅌ&quot;, &quot;ㅍ&quot;, &quot;ㅎ&quot;]<br />cJung = [ &quot;ㅏ&quot;, &quot;ㅐ&quot;, &quot;ㅑ&quot;, &quot;ㅒ&quot;, &quot;ㅓ&quot;, &quot;ㅔ&quot;, &quot;ㅕ&quot;, &quot;ㅖ&quot;, &quot;ㅗ&quot;, &quot;ㅘ&quot;, &quot;ㅙ&quot;, &quot;ㅚ&quot;, &quot;ㅛ&quot;, &quot;ㅜ&quot;, &quot;ㅝ&quot;, &quot;ㅞ&quot;, &quot;ㅟ&quot;, &quot;ㅠ&quot;, &quot;ㅡ&quot;, &quot;ㅢ&quot;, &quot;ㅣ&quot; ]<br />cJong = [ &quot;&quot;, &quot;ㄱ&quot;, &quot;ㄲ&quot;, &quot;ㄳ&quot;, &quot;ㄴ&quot;, &quot;ㄵ&quot;, &quot;ㄶ&quot;, &quot;ㄷ&quot;, &quot;ㄹ&quot;, &quot;ㄺ&quot;, &quot;ㄻ&quot;, &quot;ㄼ&quot;, &quot;ㄽ&quot;, &quot;ㄾ&quot;, &quot;ㄿ&quot;, &quot;ㅀ&quot;, &quot;ㅁ&quot;, &quot;ㅂ&quot;, &quot;ㅄ&quot;, &quot;ㅅ&quot;, &quot;ㅆ&quot;, &quot;ㅇ&quot;, &quot;ㅈ&quot;, &quot;ㅊ&quot;, &quot;ㅋ&quot;, &quot;ㅌ&quot;, &quot;ㅍ&quot;, &quot;ㅎ&quot; ]<br />eng = &quot;qwertyuiopasdfghjklzxcvbnm&quot;<br />kor = &quot;ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔㅁㄴㅇㄹㅎㅗㅓㅏㅣㅋㅌㅊㅍㅠㅜㅡ&quot;<br />filt = {<br />&quot;ㄲ&quot;: &quot;R&quot;,<br />&quot;ㄸ&quot;: &quot;E&quot;,<br />&quot;ㅃ&quot;: &quot;Q&quot;,<br />&quot;ㅆ&quot;: &quot;T&quot;,<br />&quot;ㅉ&quot;: &quot;W&quot;,<br />&quot;ㄳ&quot;: &quot;ㄱㅅ&quot;,<br />&quot;ㄵ&quot;: &quot;ㄴㅈ&quot;,<br />&quot;ㄶ&quot;: &quot;ㄴㅎ&quot;,<br />&quot;ㄺ&quot;: &quot;ㄹㄱ&quot;,<br />&quot;ㄻ&quot;: &quot;ㄹㅁ&quot;,<br />&quot;ㄼ&quot;: &quot;ㄹㅂ&quot;,<br />&quot;ㄽ&quot;: &quot;ㄹㅅ&quot;,<br />&quot;ㄾ&quot;: &quot;ㄹㅌ&quot;,<br />&quot;ㄿ&quot;: &quot;ㄹㅍ&quot;,<br />&quot;ㅀ&quot;: &quot;ㄹㅎ&quot;,<br />&quot;ㅄ&quot;: &quot;ㅂㅅ&quot;,<br />&quot;ㅘ&quot;: &quot;ㅗㅏ&quot;,<br />&quot;ㅙ&quot;: &quot;ㅗㅐ&quot;,<br />&quot;ㅚ&quot;: &quot;ㅗㅣ&quot;,<br />&quot;ㅝ&quot;: &quot;ㅜㅓ&quot;,<br />&quot;ㅞ&quot;: &quot;ㅜㅔ&quot;,<br />&quot;ㅟ&quot;: &quot;ㅜㅣ&quot;,<br />&quot;ㅢ&quot;: &quot;ㅡㅣ&quot;<br />}<br /><br />String.prototype.ko2en = function() {<br />r = this<br />return r.split(&quot;&quot;).map(str =&gt; {<br />cnt = str.length<br />if (str.match(/[ㄱ-ㅎ가-힣]/)) {<br />chars = []<br />var cCode<br />for (i = 0; i &lt; cnt; i++) {<br />cCode = str.charCodeAt(i)<br />if (cCode &lt; 0xAC00 || cCode &gt; 0xD7A3) {<br />chars.push(str.charAt(i))<br />continue<br />}<br />cCode = str.charCodeAt(i) - 0xAC00<br />jong = cCode % 28<br />jung = ((cCode - jong) / 28) % 21<br />cho = (((cCode - jong) / 28) - jung) / 21<br />chars.push(cCho[cho], cJung[jung])<br />cJong[jong] &amp;&amp; chars.push(cJong[jong])<br />}<br />return chars.map(e =&gt; filt[e] ? filt[e] : ((typeof e) == Array ? e.join(&quot;&quot;) : e)).join(&quot;&quot;).split(&quot;&quot;).map(e =&gt; eng[kor.indexOf(e)]?eng[kor.indexOf(e)]:e).join(&quot;&quot;)<br />}<br />return str<br />}).join(&quot;&quot;)<br />}<br /><br /><br />리스폰스 밖에 위에꺼 정의해두시고<br />문자열.ko2en() 하시면 됩니다.<br /><br />&quot;안녕&quot;.ko2en()<br />-&gt; &quot;dkssud&quot;<br /><br /><a href=\"https://cafe.naver.com/nameyee/14327\" target=\"_blank\">https://cafe.naver.com/nameyee/14327</a><br />여기서 아이디어 얻어왔고<br /><br /><a href=\"https://medium.com/@laziel/javascript-한글-초성-중성-종성-분리-38ad1227aa90\" target=\"_blank\">https://medium.com/@laziel/javascript-한글-초성-중성-종성-분리-38ad1227aa90</a><br />해당 글 함수 참고했습니다.<br /><br />영어 -&gt; 한글은 다른 누군가가 해주실 거에요 ..!</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000380000000000",
+            "id": 14336,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 209,
+            "refArticleId": 14336,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "한영 번역기 (안녕 =&gt; dkssud)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585364540653,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "도미 doami2005"
+            }
+        },
+        "articleId": 14336,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오 이건 타이핑 그대로를 번역하는거군요. 신박하네요.",
+                    "id": 85614183,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85614183,
+                    "updateDate": 1585364665000,
+                    "writer": {
+                        "id": "jsptree",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사과님"
+                    }
+                },
+                {
+                    "content": "비밀 암호를 만들 수 있겠군\r\n그럼 이제 역번역을 하셔야죠",
+                    "id": 85614437,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85614437,
+                    "updateDate": 1585364884000,
+                    "writer": {
+                        "id": "khjeh0521",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDFfNDEg/MDAxNTg4MzEzOTQwNTE1.4q-Novz5Sw4qAAv2d2F7sK9Va-I5S1uhjqjcy9CdTa4g.zGZrguOhyCVObH7FGz3qLOURdHN3ACvk05_CVV91N70g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "럭s봇"
+                    }
+                },
+                {
+                    "content": "냠",
+                    "id": 85614901,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85614901,
+                    "updateDate": 1585365291000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "영한은 여기서!\r\nhttps://cafe.naver.com/nameyee/13391",
+                    "id": 85615368,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85615368,
+                    "updateDate": 1585365709000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "ㅘ!",
+                    "id": 85616449,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85616449,
+                    "updateDate": 1585366480000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "무명"
+                    }
+                },
+                {
+                    "content": "와!",
+                    "id": 85640194,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85640194,
+                    "updateDate": 1585388832000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP"
+                    }
+                },
+                {
+                    "content": "어떻게사용하나요?",
+                    "id": 105294228,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 105294228,
+                    "updateDate": 1601958659000,
+                    "writer": {
+                        "id": "jsk080825",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MzBfMTU0/MDAxNjAxNDIzNDIyMzI5.kbOxEj3b6WHYE6U_6YVMcT6M9VhcvlwvsYM2ufqkswEg.8Q88s6pcB9uWmcWSQYZY8mmmWXkfcWsnlVYsdfjmz0sg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "신기방기"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

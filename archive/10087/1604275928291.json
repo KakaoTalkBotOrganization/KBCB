@@ -1,0 +1,388 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 19,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">스레드풀을 이용한 연습</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #0000ff;\">const</span> yourPhonesCoreNumber = <span style=\"color: #09885a;\">4</span>; <span style=\"color: #aaaaaa;\">// change it</span></div><br /><div><span style=\"color: #0000ff;\">const</span> modules = [</div><div>  <span style=\"color: #0000ff;\">function</span>(){</div><div>    <span style=\"color: #0000ff;\">if</span>(<span style=\"color: #0000ff;\">this</span>.getMsg() == <span style=\"color: #a31515;\">&quot;안녕&quot;</span>)<span style=\"color: #0000ff;\">this</span>.getReplier().reply(<span style=\"color: #a31515;\">&quot;안녕&quot;</span>);</div><div>  },</div><div>  <span style=\"color: #0000ff;\">function</span>(){</div><div>    <span style=\"color: #aaaaaa;\">//add more functions</span></div><br /><div>  }</div><div>];</div><br /><div><span style=\"color: #0000ff;\">const</span> threadPool = java.util.concurrent.<span style=\"color: #008080;\">Executors</span>.newFixedThreadPool(yourPhonesCoreNumber),</div><div>updateThread = java.lang.<span style=\"color: #008080;\">Thread</span>({run:<span style=\"color: #0000ff;\">function</span>(){</div><div>  <span style=\"color: #0000ff;\">while</span>(!java.lang.<span style=\"color: #008080;\">Thread</span>.sleep(<span style=\"color: #09885a;\">333</span>)){</div><div>    update();</div><div>  }</div><div>}});</div><br /><div><span style=\"color: #0000ff;\">const</span> <span style=\"color: #008080;\">Args</span> = <span style=\"color: #0000ff;\">function</span>(args){</div><div>  <span style=\"color: #0000ff;\">this</span>.args = args;</div><div>  <span style=\"color: #0000ff;\">this</span>.id = ++<span style=\"color: #0000ff;\">this</span>.number;</div><div>  <span style=\"color: #0000ff;\">this</span>.isRun = <span style=\"color: #0000ff;\">false</span>;</div><div>}</div><br /><div><span style=\"color: #008080;\">Args</span>.prototype.number = <span style=\"color: #09885a;\">0</span>;</div><br /><div><span style=\"color: #008080;\">Args</span>.prototype.getSender = <span style=\"color: #0000ff;\">function</span>(){</div><div>  <span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">this</span>.args.sender||<span style=\"color: #a31515;\">&quot;[SENDER]&quot;</span></div><div>}</div><div><span style=\"color: #008080;\">Args</span>.prototype.getMsg = <span style=\"color: #0000ff;\">function</span>(){</div><div>  <span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">this</span>.args.msg||<span style=\"color: #a31515;\">&quot;[MSG]&quot;</span></div><div>}</div><div><span style=\"color: #008080;\">Args</span>.prototype.getRoom = <span style=\"color: #0000ff;\">function</span>(){</div><div>  <span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">this</span>.args.room||<span style=\"color: #a31515;\">&quot;[ROOM]&quot;</span></div><div>}</div><div><span style=\"color: #008080;\">Args</span>.prototype.getProfileCode = <span style=\"color: #0000ff;\">function</span>(){</div><div>  <span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">this</span>.args.imageDB.getProfileImage()||<span style=\"color: #a31515;\">&quot;[Image]&quot;</span></div><div>}</div><div><span style=\"color: #008080;\">Args</span>.prototype.getReplier= <span style=\"color: #0000ff;\">function</span>(){</div><div>  <span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">this</span>.args.replier||{reply:log.d};</div><div>}</div><br /><div><span style=\"color: #008080;\">Args</span>.prototype.submit = <span style=\"color: #0000ff;\">function</span>(){</div><div>  <span style=\"color: #0000ff;\">if</span>(<span style=\"color: #0000ff;\">this</span>.isRun)<span style=\"color: #0000ff;\">return</span> <span style=\"color: #0000ff;\">false</span>;</div><div>  <span style=\"color: #0000ff;\">this</span>.isRun = <span style=\"color: #0000ff;\">true</span>;</div><div>  <span style=\"color: #0000ff;\">const</span> <span style=\"color: #008080;\">Buffer</span> = [],ctx = <span style=\"color: #0000ff;\">this</span>;</div><div>  <span style=\"color: #0000ff;\">for</span>(<span style=\"color: #0000ff;\">let</span> a <span style=\"color: #0000ff;\">of</span> modules){</div><div>    <span style=\"color: #008080;\">Buffer</span>.push(<span style=\"color: #0000ff;\">new</span> java.lang.<span style=\"color: #008080;\">Runnable</span>({run:<span style=\"color: #0000ff;\">function</span>(){</div><div>      a.call(ctx);</div><div>    }}))</div><div>  }</div><div>  <span style=\"color: #008080;\">Buffer</span>.forEach(e=&gt;threadPool.submit(e));</div><div>}</div><br /><div><span style=\"color: #0000ff;\">function</span> update(){</div><div>  <span style=\"color: #aaaaaa;\">/* </span></div><div><span style=\"color: #aaaaaa;\">  something todo</span></div><div><span style=\"color: #aaaaaa;\">  */</span></div><div>}</div><br /><div><span style=\"color: #0000ff;\">function</span> response(args){</div><div>  <span style=\"color: #0000ff;\">const</span> run = <span style=\"color: #0000ff;\">new</span> <span style=\"color: #008080;\">Args</span>(args);</div><div>  run.submit()</div><div>}</div><br /><div><span style=\"color: #0000ff;\">function</span> onStartCompile(){</div><div>  threadPool.shutdownNow();</div><div>  updateThread.interrupt();</div><div>}</div><div>updateThread.start();</div><br /></div></div><div><b>//모듈 함수들은 계속 출시됩니다.</b></div><div><b><br /></b></div><div><b>근데 이게 왜 고급소스에 올라간거임..</b></div><div><b>이거 ㄹㅇ 초급소스 그자체인데;</b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000276700000000",
+            "id": 10087,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 417,
+            "refArticleId": 10087,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "정말로 간단한 최적화된 인사봇 소스 [초급]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1579084633923,
+            "writer": {
+                "id": "chahyunwooa",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "시소1119"
+            }
+        },
+        "articleId": 10087,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 78523882,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78523882,
+                    "updateDate": 1579085090000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 카렠ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
+                    "id": 78552573,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78523882,
+                    "updateDate": 1579117772000,
+                    "writer": {
+                        "id": "labyrinth428",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMTBfMjg2/MDAxNTc4NTgzMzg5MTIx.dv3kkPOc4VE9YtBFXEBga3_krfMcG-FpWYAWseqoISsg.0vAWKmYi-SiWUUeIhAZyGrY7ksCu6w-3TVu2LiLShrkg.JPEG/11880383_142188956119424_2156475469741310298_n.jpg"
+                        },
+                        "nick": "페르조나"
+                    }
+                },
+                {
+                    "content": "(?)",
+                    "id": 78523960,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78523960,
+                    "updateDate": 1579085171000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "시소1119"
+                    }
+                },
+                {
+                    "content": "어디서 배움 읍읍",
+                    "id": 78524075,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78524075,
+                    "updateDate": 1579085293000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "구글링 독학(?)",
+                    "id": 78524198,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78524075,
+                    "updateDate": 1579085421000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "시소1119"
+                    }
+                },
+                {
+                    "content": "ㄷ",
+                    "id": 78524213,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78524075,
+                    "replyMember": {
+                        "id": "chahyunwooa",
+                        "nick": "시소1119"
+                    },
+                    "updateDate": 1579085435000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "yourPhonesCoreNumber에 정확히 무엇이 들어가야 하는 건가요?",
+                    "id": 78524908,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78524908,
+                    "updateDate": 1579086145000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "CPU 코어갯수요",
+                    "id": 78525278,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78524908,
+                    "updateDate": 1579086540000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "시소1119"
+                    }
+                },
+                {
+                    "content": "아하 감사합니다",
+                    "id": 78525368,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78524908,
+                    "replyMember": {
+                        "id": "chahyunwooa",
+                        "nick": "시소1119"
+                    },
+                    "updateDate": 1579086640000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "이 아조시는 정말",
+                    "id": 78525197,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78525197,
+                    "updateDate": 1579086447000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                }
+            ],
+            "last": {
+                "id": 78584153,
+                "refId": 78584153
+            },
+            "next": {
+                "id": 78525261,
+                "refId": 78525261
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

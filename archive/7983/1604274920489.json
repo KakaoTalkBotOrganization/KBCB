@@ -1,0 +1,231 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">로또 정보를 불러오거나 등수를 확인하는 소스</span></font></b></div><div><b>rooms에 사용할 방 넣으시고</b></div><div><b>&nbsp;.로또하시면 최신로또번호가</b></div><div><b>&nbsp;.로또 숫자 하시면 그 회차 로또번호가&nbsp;</b></div><div><b>&nbsp;.로또 숫자 숫자 하시면 그사이회차 로또번호목록이</b></div><div><b>&nbsp;.로또 숫자x6하시면 적은 숫자가 이번회차 몇등인지 알려줍니다.</b></div><div><b>자연수말고는 못쓰구요.</b></div><div><b>숫자갯수안맞거나 로또번호입력에 45이상0이하도 못씁니다.</b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div>var rooms=[&quot;a&quot;,&quot;b&quot;];&nbsp;</div><div>String.prototype.replaceAll = function (org, dest) {\r\n    return this.split(org).join(dest);\r\n}</div><div>\r\nvar blank = &quot;\\u200b&quot;.repeat(501);&nbsp;</div><div>\r\n\r\n//로또번호불러오기</div><div>\r\nfunction lotto_new()&nbsp;</div><div>{&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var lotto_page = &quot;https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=로또&quot;;</div><div>&nbsp; &nbsp; var lottono;\r\n    var lotto = &quot;로또 당첨번호&quot; + blank;\r\n    var date = org.jsoup.Jsoup.connect(lotto_page).get().select(&quot;div[class=&apos;lot_date&apos;]&quot;).text().replace(&quot;추첨&quot;, &quot;&quot;).replace(&quot; 지급기한 1년&quot;, &quot;&quot;);&nbsp;</div><div>&nbsp; &nbsp; lotto += &quot;\\n최신 &quot; + org.jsoup.Jsoup.connect(lotto_page).get().select(&quot;h3[class=&apos;hc&apos;]&quot;).text().replace(&quot;당첨번호&quot;, &quot;&quot;);</div><div>&nbsp; &nbsp; lotto += &quot;\\n추첨일: &quot; + date;\r\n    lotto += &quot;\\n&quot; + org.jsoup.Jsoup.connect(lotto_page).get().select(&quot;div[class=&apos;lot_num&apos;]&quot;).text();&nbsp;</div><div>&nbsp; &nbsp; return lotto;</div><div>&nbsp;}&nbsp;</div><div><br /></div><div>function lotto_money(one, two, three, four, five, six)&nbsp;</div><div>{&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var lotto_page = &quot;https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=로또&quot;;</div><div>&nbsp; &nbsp; var select_no = [one, two, three, four, five, six];\r\n    var lottono = org.jsoup.Jsoup.connect(lotto_page).get().select(&quot;div[class=&apos;lot_num&apos;]&quot;).text().replace(&quot;+ &quot;, &quot;&quot;);&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var lotto = lottono.split(&quot; &quot;);&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var collect = 0;\r\n    var bonus = false;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var 등수 = 0;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var talk = &quot;로또 당첨확인&quot; + blank + &quot;\\n&quot;;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var same_no = false;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;var 범위초과 = false;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;for (var k = 0; k &lt; 6; k++)&nbsp;</div><div>&nbsp; &nbsp; {&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (var l = 0; l &lt; 6; l++)&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; {&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (select_no[l] == select_no[k])&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (l != k)&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {\r\n                    same_no = true;\r\n                }&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</div><div>&nbsp; &nbsp; &nbsp;}&nbsp;</div><div>&nbsp; &nbsp; &nbsp;for (var i = 0; i &lt; 6; i++)&nbsp;</div><div>&nbsp; &nbsp; &nbsp;{&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; if (select_no[i] &gt; 45 || select_no[i] &lt; 1)&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{ 범위초과 = true; }&nbsp;</div><div>&nbsp; &nbsp; &nbsp; }&nbsp;</div><div>&nbsp; &nbsp; &nbsp;for (var i = 0; i &lt; 6; i++)&nbsp;</div><div>&nbsp; &nbsp; &nbsp;{&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; for (var j = 0; j &lt; 6; j++)&nbsp;</div><div>&nbsp; &nbsp; &nbsp;{</div><div>&nbsp; &nbsp; &nbsp; &nbsp;if (select_no[j] == lotto[i])&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { collect++; }&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;talk += &quot;입력번호: &quot; + one + &quot; &quot; + two + &quot; &quot; + three + &quot; &quot; + four + &quot; &quot; + five + &quot; &quot; + six;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;talk += &quot;\\n당첨번호: &quot; + lottono + &quot;\\n\\n&quot;;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;for (var j = 0; j &lt; 6; j++)&nbsp;</div><div>&nbsp; &nbsp; &nbsp;{&nbsp;</div><div>&nbsp; &nbsp; &nbsp; &nbsp; i<span style=\"font-size: 13pt;\">f (select_no[j] == lotto[6])&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{\r\n            bonus = true;\r\n        }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; if (collect &lt; 3)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;{ talk += &quot;아쉽지만 꽝입니다.&quot; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; if (collect == 3)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;{\r\n        talk += &quot;축하합니다. 5등 당첨입니다.&quot;\r\n    }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; if (collect == 4)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;{\r\n        talk += &quot;축하합니다. 4등 당첨입니다.&quot;\r\n    }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; if (collect == 5)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;{&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; if (bonus == true)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; { talk += &quot;축하합니다. 2등 당첨입니다.&quot; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; else&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; { talk += &quot;축하합니다. 3등 당첨입니다.&quot; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;if (collect == 6)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; {</span><span style=\"font-size: 13pt;\">talk += &quot;축하합니다. 1등 당첨입니다.&quot;\r\n    }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; if (same_no == true)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp;{ talk = &quot;동일한 번호가 입력되었습니다.\\n확인해주시길 바랍니다.&quot;; }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;if (범위초과 == true)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp;{&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;talk = &quot;로또번호의 범위가 초과되었습니다.\\n로또는 1~45까지의 번호를 사용합니다.&quot;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; return talk;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">\r\nfunction lotto(lot_first, lot_last)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">{&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;var lotto_page;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;var lottono;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;var lotto = &quot;로또 당첨번호 목록&quot; + blank;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;for (var i = 0; i &lt;= lot_last - lot_first; i++)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;{&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; try&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var temp = (i + parseInt(lot_first, 10));&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lotto_page = &quot;https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=로또+&quot; + temp + &quot;회&quot;;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var date = org.jsoup.Jsoup.connect(lotto_page).get().select(&quot;div[class=&apos;lot_date&apos;]&quot;).text();&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (date == &quot;&quot; || date == null)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ break; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; lotto += &quot;\\n\\n&quot; + temp + &quot;회 로또\\n당첨번호 : &quot;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lotto += org.jsoup.Jsoup.connect(lotto_page).get().select(&quot;div[class=&apos;lot_num&apos;]&quot;).text();&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lotto += &quot;\\n&quot; + date;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (e)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (lotto == (&quot;로또 당첨번호 목록&quot; + blank))&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span><span style=\"font-size: 13pt;\">lotto = &quot;로또번호를 가져오는데 실패했습니다.&quot;; }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; if (lotto == (&quot;로또 당첨번호 목록&quot; + blank))</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{ lotto = &quot;로또번호를 가져오는데 실패했습니다.&quot;; }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return lotto;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;}&nbsp;</span></div><div><span style=\"font-size: 13pt;\">\r\n\r\nfunction response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">{&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; var talk;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; if(rooms.indexOf(room)!=-1)</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp;{&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp;if (msg.indexOf(&quot;.&quot;) == 0)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; {</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; msg= msg.substring(1);&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; if (talk == null)//로또시작&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (msg.indexOf(&quot;로또&quot;) == 0)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var 검사 = msg;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;, &quot;로또&quot;, &quot; &quot;];&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (var i = 0; i &lt; 허용단어.length; i++)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (검사.indexOf(허용단어[i]) != -1)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{\r\n                        검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);\r\n                    }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (검사 == &quot;&quot;)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {\r\n                    var wmsg = msg.trim() + &quot; &quot;;&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var wmsg2 = wmsg.split(&quot; &quot;);&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (wmsg2.length == 2)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { talk = lotto_new(); }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (wmsg2.length == 3)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { talk = lotto(wmsg2[1], wmsg2[1]); }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (wmsg2.length == 4)&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ talk = lotto(wmsg2[1], wmsg2[2]); }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (wmsg2.length == 8)</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { talk = lotto_money(wmsg2[1], wmsg2[2], wmsg2[3], wmsg2[4], wmsg2[5], wmsg2[6]); }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (wmsg2.length &lt; 8 &amp;&amp; wmsg2.length &gt; 4)</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{ talk = &quot;.로또 = 최신번호\\n.로또 회차 = 회차당첨번호\\n.로또 회차1 회차2 = 회차1~2까지의 당첨번호\\n.로또 1 2 3 4 5 6 = 로또 당첨여부확인&quot;; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { talk = &quot;로또는 자연수이외의 숫자를 사용하는 회차나 번호가 없습니다.&quot;; }</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (talk != null)//메세지전송부&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{\r\n            replier.reply(talk);\r\n        }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}&nbsp;</span></div><div><span style=\"font-size: 13pt;\">&nbsp; &nbsp; }&nbsp;</span></div><div><span style=\"font-size: 13pt;\">}</span></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001F2F00000000",
+            "id": 7983,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 225,
+            "refArticleId": 7983,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "로또정보+등수소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573983661887,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 7983,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "45초과 0미만 이요... 이상 이하면 해당 정수가 포함이라는 의미가 되요",
+                    "id": 73700634,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73700634,
+                    "updateDate": 1573992950000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "JS카톡챗봇"
+                    }
+                },
+                {
+                    "content": "저 범위일때 작동이 아니라 저 범위일때 범위초과감지에요\r\n즉 외부로 뻗는게 맞다는거죠",
+                    "id": 73725391,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73700634,
+                    "updateDate": 1574031516000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "찾고 있었는데 잘되네요.\r\n정말 고맙습니다.",
+                    "id": 73706074,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73706074,
+                    "updateDate": 1573996665000,
+                    "writer": {
+                        "id": "kyyk112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "부활"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

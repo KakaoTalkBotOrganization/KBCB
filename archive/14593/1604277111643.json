@@ -1,0 +1,208 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Menlo, Monaco, 'Courier New', monospace; font-size: 12px; line-height: 18px; white-space: pre;\"><div><span style=\"color: #569cd6;\">const</span> <span style=\"color: #9cdcfe;\">scriptName</span> = <span style=\"color: #ce9178;\">&quot;chat_log&quot;</span>;</div><div><span style=\"color: #6a9955;\">/**</span></div><div><span style=\"color: #6a9955;\"> * (string) room</span></div><div><span style=\"color: #6a9955;\"> * (string) sender</span></div><div><span style=\"color: #6a9955;\"> * (boolean) isGroupChat</span></div><div><span style=\"color: #6a9955;\"> * (void) replier.reply(message)</span></div><div><span style=\"color: #6a9955;\"> * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환</span></div><div><span style=\"color: #6a9955;\"> * (string) imageDB.getProfileBase64()</span></div><div><span style=\"color: #6a9955;\"> * (string) packageName</span></div><div><span style=\"color: #6a9955;\"> */</span></div><div><span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">chatLog</span> = <span style=\"color: #569cd6;\">new</span> <span style=\"color: #4ec9b0;\">Array</span>();</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">response</span>(<span style=\"color: #9cdcfe;\">room</span>, <span style=\"color: #9cdcfe;\">msg</span>, <span style=\"color: #9cdcfe;\">sender</span>, <span style=\"color: #9cdcfe;\">isGroupChat</span>, <span style=\"color: #9cdcfe;\">replier</span>, <span style=\"color: #9cdcfe;\">imageDB</span>, <span style=\"color: #9cdcfe;\">packageName</span>) {</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">day</span> = <span style=\"color: #569cd6;\">new</span> <span style=\"color: #4ec9b0;\">Date</span>();</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">bot</span> = <span style=\"color: #ce9178;\">&quot;[YoonAi]&quot;</span>;</div><br /><div>  <span style=\"color: #c586c0;\">if</span> (!(<span style=\"color: #9cdcfe;\">room</span> <span style=\"color: #569cd6;\">in</span> <span style=\"color: #9cdcfe;\">chatLog</span>)) {</div><div>    <span style=\"color: #9cdcfe;\">chatLog</span>[<span style=\"color: #9cdcfe;\">room</span>] = <span style=\"color: #b5cea8;\">1</span>;</div><div>    <span style=\"color: #9cdcfe;\">DataBase</span>.<span style=\"color: #dcdcaa;\">setDataBase</span>(<span style=\"color: #ce9178;\">&quot;Chat_log/&quot;</span> + <span style=\"color: #9cdcfe;\">room</span>, <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">[2020/&quot;</span> + (<span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getMonth</span>() + <span style=\"color: #b5cea8;\">1</span>) + <span style=\"color: #ce9178;\">&quot;/&quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getDate</span>() + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getHours</span>() + <span style=\"color: #ce9178;\">&quot;:&quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getMinutes</span>() + <span style=\"color: #ce9178;\">&quot;:&quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getSeconds</span>() + <span style=\"color: #ce9178;\">&quot;]</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #9cdcfe;\">sender</span> + <span style=\"color: #ce9178;\">&quot; : &quot;</span> + <span style=\"color: #9cdcfe;\">msg</span> + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>);</div><div>  } <span style=\"color: #c586c0;\">else</span> {</div><div>    <span style=\"color: #9cdcfe;\">DataBase</span>.<span style=\"color: #dcdcaa;\">setDataBase</span>(<span style=\"color: #ce9178;\">&quot;Chat_log/&quot;</span> + <span style=\"color: #9cdcfe;\">room</span>, <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">[2020/&quot;</span> + (<span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getMonth</span>() + <span style=\"color: #b5cea8;\">1</span>) + <span style=\"color: #ce9178;\">&quot;/&quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getDate</span>() + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getHours</span>() + <span style=\"color: #ce9178;\">&quot;:&quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getMinutes</span>() + <span style=\"color: #ce9178;\">&quot;:&quot;</span> + <span style=\"color: #9cdcfe;\">day</span>.<span style=\"color: #dcdcaa;\">getSeconds</span>() + <span style=\"color: #ce9178;\">&quot;]</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #9cdcfe;\">sender</span> + <span style=\"color: #ce9178;\">&quot; : &quot;</span> + <span style=\"color: #9cdcfe;\">msg</span> + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #9cdcfe;\">DataBase</span>.<span style=\"color: #dcdcaa;\">getDataBase</span>(<span style=\"color: #ce9178;\">&quot;Chat_log/&quot;</span> + <span style=\"color: #9cdcfe;\">room</span>));</div><div>    <span style=\"color: #9cdcfe;\">chatLog</span>[<span style=\"color: #9cdcfe;\">room</span>]++;</div><div>  }</div><br /><div>  </div><br /><br /><div>  <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">indexOf</span>(<span style=\"color: #ce9178;\">&quot;@채팅내용&quot;</span>) == <span style=\"color: #b5cea8;\">0</span>) {</div><div>    <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">chat</span> = <span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">replace</span>(<span style=\"color: #ce9178;\">&quot;@채팅내용&quot;</span>, <span style=\"color: #ce9178;\">&quot;&quot;</span>);</div><div>    <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">chat</span> == <span style=\"color: #ce9178;\">&quot;&quot;</span>) {</div><div>      <span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #9cdcfe;\">bot</span> + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #9cdcfe;\">room</span> + <span style=\"color: #ce9178;\">&quot;의 최근 채팅내용입니다.</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&#9196; 아래 전체보기 눌러주세요! &#9196;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&quot;</span> + <span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\u200b</span><span style=\"color: #ce9178;\">&apos;</span>.<span style=\"color: #dcdcaa;\">repeat</span>(<span style=\"color: #b5cea8;\">500</span>) + <span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&apos;</span> + <span style=\"color: #ce9178;\">&quot; &#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;</span><span style=\"color: #d7ba7d;\">\\n\\n\\n\\n</span><span style=\"color: #ce9178;\">&quot;</span> + <span style=\"color: #9cdcfe;\">DataBase</span>.<span style=\"color: #dcdcaa;\">getDataBase</span>(<span style=\"color: #ce9178;\">&quot;Chat_log/&quot;</span> + <span style=\"color: #9cdcfe;\">room</span>));</div><div>    }</div><div>  }</div><br /><div>  </div><br /><div>  <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">chatLog</span>[<span style=\"color: #9cdcfe;\">room</span>] == <span style=\"color: #b5cea8;\">300</span>) {</div><div>    <span style=\"color: #9cdcfe;\">DataBase</span>.<span style=\"color: #dcdcaa;\">setDataBase</span>(<span style=\"color: #9cdcfe;\">room</span>, <span style=\"color: #ce9178;\">&quot;&quot;</span>);</div><div>    <span style=\"color: #9cdcfe;\">chatLog</span>[<span style=\"color: #9cdcfe;\">room</span>] = <span style=\"color: #b5cea8;\">0</span>;</div><div>  }</div><br /><div>}</div><br /><div><span style=\"color: #6a9955;\">//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.</span></div><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onCreate</span>(<span style=\"color: #9cdcfe;\">savedInstanceState</span>, <span style=\"color: #9cdcfe;\">activity</span>) {</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">textView</span> = <span style=\"color: #569cd6;\">new</span> <span style=\"color: #4ec9b0;\">android</span>.<span style=\"color: #4ec9b0;\">widget</span>.<span style=\"color: #4ec9b0;\">TextView</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>  <span style=\"color: #9cdcfe;\">textView</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;Hello, World!&quot;</span>);</div><div>  <span style=\"color: #9cdcfe;\">textView</span>.<span style=\"color: #dcdcaa;\">setTextColor</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Color</span>.<span style=\"color: #9cdcfe;\">DKGRAY</span>);</div><div>  <span style=\"color: #9cdcfe;\">activity</span>.<span style=\"color: #dcdcaa;\">setContentView</span>(<span style=\"color: #9cdcfe;\">textView</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onStart</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onResume</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onPause</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onStop</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000390100000000",
+            "id": 14593,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 77,
+            "refArticleId": 14593,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "채팅로그",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585667204783,
+            "writer": {
+                "id": "yoonhyouka",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "윤빙과"
+            }
+        },
+        "articleId": 14593,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 85987034,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85987034,
+                    "updateDate": 1585667234000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "히이잌 등업해야햇...",
+                    "id": 85987121,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85987034,
+                    "updateDate": 1585667275000,
+                    "writer": {
+                        "id": "yoonhyouka",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "윤빙과"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

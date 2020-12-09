@@ -1,0 +1,284 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp;</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">var reset;</span></div><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">const FS = FileStream;</span><br /><br /><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">var 순위 = 0;</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">var 목록 = [];</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">var 출석 = [];</span><br /><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">var Lw = &quot;\\u200b&quot;.repeat(500);</span><br /><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</span><br /><br /><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">if(msg == &quot;/출첵&quot;||msg == &quot;/출석&quot;){</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">if(출석.indexOf(sender) == -1) {</span><br /><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">출석.push(sender);</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">순위 ++;</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">목록.push(&quot;[&quot;+순위+&quot;등] &quot;+sender);</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">replier.reply(sender+&quot;님이 &quot;+순위+&quot;등으로 출석하셨습니다!!!&quot;);</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">}</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">else</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">if(msg == &quot;/출첵&quot;||msg == &quot;/출석&quot;){</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">replier.reply(sender+&quot;님은 이미 출석체크를 하셨습니다&quot;);</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">}</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">}</span><br /><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">if(msg == &quot;/출석목록&quot;){</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">replier.reply(&quot;오늘의 출석목록입니다&quot;+Lw+&quot;\\n\\n\\n&quot;+목록.join(&quot;\\n\\n&quot;));</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">}</span><br /><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">if(msg) {</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">var day = new Date();</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">reset = ((day.getMonth() + 1) + &quot;월 &quot; + day.getDate() + &quot;일&quot;);</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">if(reset != FS.read(&quot;sdcard/출석체크/날짜.txt&quot;)) {</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">FS.write(&quot;sdcard/출석체크/날짜.txt&quot;, reset);&nbsp;</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">순위 = 0;</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">목록 = [];</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">출석 = [];</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">}</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">else return;</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">}</span><br /><span style=\"color: rgb(17, 17, 17); font-family: AppleSDGothicNeo-Regular, sans-serif; font-size: 16.996px;\">}</span><br /><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 컴파일하면 초기화 되는데 안되게하는법있을까요?</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000053EB00000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 21483,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 413,
+            "refArticleId": 21483,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "출석소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595258618253,
+            "writer": {
+                "id": "jin_walker",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "진워커"
+            }
+        },
+        "articleId": 21483,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "fs",
+                    "id": 97394189,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97394189,
+                    "updateDate": 1595258683000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "출석체크할때 파일로 저장되게 만들어야죠",
+                    "id": 97394490,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97394490,
+                    "updateDate": 1595258950000,
+                    "writer": {
+                        "id": "leej_m",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20111031_179/leej_m_1319993786549_64Rj6l_jpg/%B5%A5%B8%B6_00000.jpg"
+                        },
+                        "nick": "deadmau5"
+                    }
+                },
+                {
+                    "content": "filestream",
+                    "id": 97395019,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97395019,
+                    "updateDate": 1595259324000,
+                    "writer": {
+                        "id": "adeninelove",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTlfMjg1/MDAxNTk3Nzk3Mjg4ODI5.LTG7-GNxrDXxcM4vMrAmuVyV85v36wHhWkluTgBwaH4g.hycDF0PDEcQODT-DMMn2hGraLk6kkjdHVFPZa1NZ6mYg.PNG/%ED%8F%AC%EB%A7%B7%EB%B3%80%ED%99%98_%EB%8F%84%EC%9C%A4-%EB%A1%9C%EA%B3%A0-2.png"
+                        },
+                        "nick": "도유니"
+                    }
+                },
+                {
+                    "content": "파일스트림",
+                    "id": 97397609,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97397609,
+                    "updateDate": 1595262501000,
+                    "writer": {
+                        "id": "yhs-1277",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Eungo"
+                    }
+                },
+                {
+                    "content": "컴파일 할 때 출석이라는 문자열이 다시 초기화되서 그러는건데 파일스트림 이용하시면 편하긴 합니다\n저는 아직 초보라 DataBase명령어 자주쓰기는 하는데 DB로 하던 파일스트림을 하시던 매일 파일을 지워주셔야 할겁니다",
+                    "id": 97399624,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97399624,
+                    "updateDate": 1595272749000,
+                    "writer": {
+                        "id": "miw1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMzIg/MDAxNTk3OTI0MDgxMTYw.-IPZ636gUrEQsLRV-qHLlAaSIB5HZ08bykGERPJmQ5Ag.UUXTYrgtezEivsnQGfcJrMcSvbr5hdOu1kRX0NTckIIg.PNG.miw1102/%25ED%258D%25BC%25EB%259F%25AC%25EB%25A6%25AC.png"
+                        },
+                        "nick": "modabada"
+                    }
+                },
+                {
+                    "content": "filestream정의 해두고 안쓰는건 머지",
+                    "id": 97401836,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97401836,
+                    "updateDate": 1595281958000,
+                    "writer": {
+                        "id": "janghs307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "마동석"
+                    }
+                },
+                {
+                    "content": "아쓰시는구나",
+                    "id": 97401855,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97401836,
+                    "updateDate": 1595281989000,
+                    "writer": {
+                        "id": "janghs307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MjlfNDQg/MDAxNTkzNDE4NjY0ODAx.WLZXWiYpqy_HEBHgjG-OASX5t3iuJ1U4-EVbrCQhlJIg.21b6pfIceAAtJq9SCXQ5lIOHFVMPg5I-e6GB_ZTyIPAg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "마동석"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

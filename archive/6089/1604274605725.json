@@ -1,0 +1,296 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp;카카오톡 봇+</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><b>&nbsp;&nbsp; &nbsp;var checkings = []<br />&nbsp;&nbsp;&nbsp; var checknumber = 0<br />&nbsp;&nbsp;&nbsp; var list = &quot;&quot;<br />&nbsp;&nbsp;&nbsp; let user = &quot;&quot;<br />&nbsp;&nbsp;&nbsp; var auto = 0<br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {<br />if (room == &quot;정신병원 오덕 수감실&quot;) {<br />&nbsp;&nbsp;&nbsp; if (msg.trim() == &quot;/출석&quot;)&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user = sender<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var i = 0; i&lt;50; i++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (checkings[i] == user) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checknumber++;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (checknumber == 0) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checkings.push(user)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(user + &quot;님 출석 완료!!!&quot;);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (checknumber == 1) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;이미 출석이 완료되었습니다.&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checknumber = 0<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; if (msg.trim() == &quot;/출석부&quot;) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (checkings.length == 0) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;아무도 출석하지 않았습니다&quot;);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (checkings.length &gt; 0) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list= &quot;&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var j = 0; j&lt;checkings.length; j++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list += &quot;\\n&quot; + checkings[j];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(room + &quot;[출석부]&quot; + list);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; if (msg.trim(&quot; &quot;)[0] == &quot;/auto&quot;) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (msg.trim(&quot; &quot;)[1] == &quot;on&quot;) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; auto = 0;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (msg.trim(&quot; &quot;)[1] == &quot;off&quot;) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; auto = 1;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; if (msg.trim() == &quot;-----출석부 리셋-----&quot;) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checkings = []<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checknumber = 0<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list = &quot;&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;출석부가 초기화 되었습니다.&quot;);<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; if (msg.trim() == &quot;/출석관련정보&quot;) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;[출석 명령어]\\n&quot; + &quot;/출석\\n&quot; + &quot;/출석부\\n\\n&quot; + &quot;[출석부 초기화]\\n&quot; + &quot;매일 12시~3시&quot;);<br />&nbsp;&nbsp;&nbsp; }<br />}<br />}<br />function&nbsp;secondTick()&nbsp;{<br />&nbsp;&nbsp;&nbsp; if (auto == 0 &amp;&amp; checkings != []) {<br />&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;var&nbsp;day&nbsp;=&nbsp;new&nbsp;Date();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(day.getHours()==&apos;0&apos;&amp;&amp;day.getMinutes()==&apos;0&apos;){ <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checkings = []<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checknumber = 0<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list = &quot;&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;출석부가 초기화 되었습니다.&quot;);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; }<br /></b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt;&nbsp;어디가 잘못됀건지 리로드가 안돼요 어디가 문제인건가요??</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.33px; background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000017C900000000",
+            "id": 6089,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 874,
+            "refArticleId": 6089,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[소스질문]카카오톡 봇+ 소스 문제좀 알려주세요",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1570283206890,
+            "writer": {
+                "id": "0403cjhqwertyuiop",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "봇 사용자"
+            }
+        },
+        "articleId": 6089,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오류가 뭐에요?",
+                    "id": 70390078,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70390078,
+                    "updateDate": 1570283319000,
+                    "writer": {
+                        "id": "williameom0826",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDJfMTU1/MDAxNTg1Nzg4NjczNzY1.P0yIN6FJ_f49z-WPSTHegCrZTR-B-hK8YwVgconwsFEg.4fBP8ETOdeLTnaf5v2Ph6SpT27lsVPpHwd2jGpiufPEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "williameom"
+                    }
+                },
+                {
+                    "content": "오류내용 보여줘요",
+                    "id": 70390113,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70390113,
+                    "updateDate": 1570283339000,
+                    "writer": {
+                        "id": "a2611577",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "scap"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 70390192,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEwMDVfOTIg/MDAxNTcwMjgzMzkxNjA1.LCXZ-fK2g5slJ2-wJj1Z6F7sHuTHj8JHMrmT43dwHecg.Hnu9ImvUo6LqN33dTBCIG1taQB8P6Wob3oNVjuEpjo0g.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 4128,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTEwMDVfOTIg/MDAxNTcwMjgzMzkxNjA1.LCXZ-fK2g5slJ2-wJj1Z6F7sHuTHj8JHMrmT43dwHecg.Hnu9ImvUo6LqN33dTBCIG1taQB8P6Wob3oNVjuEpjo0g.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTEwMDVfOTIg/MDAxNTcwMjgzMzkxNjA1.LCXZ-fK2g5slJ2-wJj1Z6F7sHuTHj8JHMrmT43dwHecg.Hnu9ImvUo6LqN33dTBCIG1taQB8P6Wob3oNVjuEpjo0g.JPEG/externalFile.jpg",
+                        "width": 2322
+                    },
+                    "refId": 70390192,
+                    "updateDate": 1570283392000,
+                    "writer": {
+                        "id": "0403cjhqwertyuiop",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "봇 사용자"
+                    }
+                },
+                {
+                    "content": "이렇게 떠요",
+                    "id": 70390199,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70390199,
+                    "updateDate": 1570283397000,
+                    "writer": {
+                        "id": "0403cjhqwertyuiop",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "봇 사용자"
+                    }
+                },
+                {
+                    "content": "맨 뒤에 중괄호 하나 추가하세요....",
+                    "id": 70390313,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70390199,
+                    "updateDate": 1570283470000,
+                    "writer": {
+                        "id": "hanjw0126",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMDVfMTMy/MDAxNTcyOTQ4MzkwMjg0.L8lKL3iyb9xCa8Aj0Gj-wBulwo8J27Md1JXjwKNMImsg.vyhFq9tY0EXdyfJY-R0EjtspM3f6UQ7TKj2ZRJfog_sg.GIF/36F826E8-7C71-45E8-8FCB-96A64E52D154.gif"
+                        },
+                        "nick": "몽키s"
+                    }
+                },
+                {
+                    "content": "오 됐네요",
+                    "id": 70390395,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70390395,
+                    "updateDate": 1570283519000,
+                    "writer": {
+                        "id": "0403cjhqwertyuiop",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "봇 사용자"
+                    }
+                },
+                {
+                    "content": "감사합니다",
+                    "id": 70390401,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70390401,
+                    "updateDate": 1570283523000,
+                    "writer": {
+                        "id": "0403cjhqwertyuiop",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "봇 사용자"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

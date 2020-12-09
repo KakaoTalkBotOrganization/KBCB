@@ -1,0 +1,279 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 731,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTExMTdfMjA0/MDAxNTczOTgwMTY5NDAy.yy4UjcxLkkEYjG_WfBZZJjdfZd6Hnp8qU9-9ZZxEC_Ig.5yJouyn5LqHmdaWgnOr5x_Q-X478b70fi5yVm0-jU_8g.JPEG/externalFile.jpg",
+                            "width": 627
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>VerticalGraph = array =&gt; {<br />&nbsp;&nbsp;&nbsp; Add = array =&gt; {<br />    &nbsp;&nbsp;&nbsp; let n=0;<br /><br />    &nbsp;&nbsp;&nbsp; for (i of array)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  n += i;<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return n == 0 ? 1 : Math.floor(n);<br />&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp; getAlphabet = (number, interstitial, isJson, array1, array2) =&gt; {<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; //const Alphabet = &quot;0ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;<br />        const Alphabet = &quot;0&#9398;&#9399;&#9400;&#9401;&#9402;&#9403;&#9404;&#9405;&#9406;&#9407;&#9408;&#9409;&#9410;&#9411;&#9412;&#9413;&#9414;&#9415;&#9416;&#9417;&#9418;&#9419;&#9420;&#9421;&#9422;&#9423;&quot;;<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; let Result = [];<br /><br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (number &lt; 1 || number &gt; 26)<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;    &nbsp; return;<br /><br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (isJson) {<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; number; i++)<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Result.push(Alphabet[i + 1] + &quot; : &quot; + array1[i] + &quot; (&quot; + array2[i] + &quot;)&quot;);<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return Result.join(&quot;\\n&quot;);<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; else if(!isJson) {<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; for (let i = 0; i &lt; number; i++)<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; //Result.push(i % 3 == 0 ? &quot; &quot; + Alphabet[i + 1] : Alphabet[i + 1]);<br />                Result.push(Alphabet[i + 1]);<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; //return Result.join(&quot; &quot;.repeat(interstitial));<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; return Result.join(&quot; &quot;.repeat(interstitial - 1));<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp; const Stick = &quot;▒&#9601;&#9602;&#9603;&#9604;&#9605;&#9607;&#9608;&quot;;<br />&nbsp;&nbsp;&nbsp; let DataKey = Object.keys(array[0]);<br />    let DataValue = DataKey.map(m =&gt; array[0][m]);<br />&nbsp;&nbsp;&nbsp; let Graph = [];<br /><br />    for (let i = 0; i &lt; 10; i++)<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Graph.push(&quot;▒&quot;.repeat(DataKey.length).split(&quot;&quot;));<br /><br />&nbsp;&nbsp;&nbsp; for (let i in DataKey) {<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; let Data = Math.floor((DataValue[i] / Add(DataValue)) * 100);<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; let DataIndex = 9 - (Math.floor(Data / 8));<br />        DataIndex = DataIndex &lt; 0 ? 0 : DataIndex;<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Graph[DataIndex][i] = Stick[Math.floor((Data &lt; 1 ? 0 : Data) % 8)];<br /><br />        for (let j = DataIndex + 1; j &lt; 10; j++)<br />            Graph[j][i] = Stick[7];<br />    }<br /><br />    let Result = [];<br /><br />    for (let i of Graph)<br />        Result.push(i.join(&quot; &quot;.repeat(array[1])));<br />&nbsp;&nbsp;&nbsp; Result.push(getAlphabet(DataKey.length, 4, false, null, null));<br />&nbsp;&nbsp;&nbsp; Result.push(&quot;\\n&quot; + getAlphabet(DataKey.length, null, true, DataKey, DataValue));<br />    return Result.join(&quot;\\n&quot;);<br />}<br /><br />/*<br />사용법 : VerticalGraph(array)<br />    array = [{&quot;알파도&quot;:1,&quot;성빈&quot;:2,&quot;맛소금&quot;:3,&quot;마른얼음&quot;:4,&quot;고인물 바지&quot;:5,&quot;민호&quot;:6,&quot;여노&quot;:7,&quot;프레타&quot;:8,&quot;도미&quot;:9,&quot;새름&quot;:10}, 3(간격)]<br />해결된 점 : 그래프 상의 표기 오류 수정<br />    약간의 오차 수정<br />    알파벳 밀려남 해결<br />    자료값이 너무 클 경우 나타나는 오류 수정<br />    단독 자료 + 자료값이 0일 때 나타나는 오류 수정<br />    유니코드 변경<br />주의 : 작동 원리는 100분율 입니다.<br />*/<br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001F2700000000",
+            "id": 7975,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 225,
+            "refArticleId": 7975,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[함수] 수직 막대그래프",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573980170020,
+            "writer": {
+                "id": "dsy2761",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_888.gif",
+                "memberLevelName": "부 매니저",
+                "nick": "AlphaDo"
+            }
+        },
+        "articleId": 7975,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 134762,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/c356df6c7f2127fbd73154635bbcc7b9194bb557ec/MjAxOTExMTdfMjA0/MDAxNTczOTgwMTY5NDAy.yy4UjcxLkkEYjG_WfBZZJjdfZd6Hnp8qU9-9ZZxEC_Ig.5yJouyn5LqHmdaWgnOr5x_Q-X478b70fi5yVm0-jU_8g.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷ",
+                    "id": 73688058,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73688058,
+                    "updateDate": 1573981454000,
+                    "writer": {
+                        "id": "jty0606",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEwMTVfMjU0/MDAxNTcxMDY3NzA1ODk1.6TzIRkwvDHePKRpP1ZBheIvO05VllqSIk-gChjLLqCkg.pkmMZ52xhVVrdF6QKqdqao056FZasHirGEN1a9UTqfQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇재밌다"
+                    }
+                },
+                {
+                    "content": "고여버렸군 당신",
+                    "id": 73693306,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73693306,
+                    "updateDate": 1573986835000,
+                    "writer": {
+                        "id": "jeongyeon13751",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수123"
+                    }
+                },
+                {
+                    "content": "개고인물 ㄷ",
+                    "id": 73700735,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73700735,
+                    "updateDate": 1573993036000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "Sjy0916"
+                    }
+                },
+                {
+                    "content": "으 고인물 ㅌㅌ",
+                    "id": 73710021,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73710021,
+                    "updateDate": 1573999355000,
+                    "writer": {
+                        "id": "yyt2010",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "샤넬"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

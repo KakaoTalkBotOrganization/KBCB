@@ -1,0 +1,278 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 501,
+                            "service": "CAFE",
+                            "style": "width: 335px; height: 501px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MDNfNTAg/MDAxNTg1ODg3NTgwMjM3.hjrrYxfLT6BVZZtMwVc5Lku3C-7hMEMrVsnDb4BVjYMg.ZlMBVOWIpToPARzKGVwUYuVFf0cpbSHx6-lWP7zKFHAg.PNG/%EB%A1%A4%EC%98%88%EC%A0%9C.png",
+                            "width": 335
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "OVERWATCH님이 롤 전적 만드신거 참고하여 소스 짜보았습니다.<div>해당글 :&nbsp;<font color=\"#666666\" face=\"돋움\"><span style=\"display: inline-block; margin-top: 3px; font-size: 11px; overflow-wrap: break-word; text-align: -webkit-right;\"><a href=\"https://cafe.naver.com/nameyee/13601\" target=\"_blank\" title=\"새창으로 열림\">https://cafe.naver.com/nameyee/13601</a></span></font></div><div><font color=\"#666666\" face=\"돋움\"><br /></font></div><div><font color=\"#666666\" face=\"돋움\">[[[CONTENT-ELEMENT-0]]]<br /></font></div><div><br /></div><div><div>const kalingModule = require(&apos;kaling&apos;).Kakao();</div><div>const Kakao = new kalingModule;</div><div>Kakao.init(&apos;[인증키]&apos;);</div><div>Kakao.login(&apos;[카톡ID]&apos;,&apos;[카톡PW]&apos;);</div><div>importClass(org.jsoup.Jsoup);</div><div><br /></div><div>function getHTML(link) {</div><div>&nbsp; return Jsoup.parse(Jsoup.connect(link).get())</div><div>}</div><div><br /></div><div>function response(room, msg, sender, isGroupChat, replier, imageDB) {</div><div>&nbsp; if(msg == null) return</div><div>&nbsp;&nbsp;</div><div>&nbsp; if(msg.indexOf(&quot;!롤 &quot;)!=-1){</div><div>&nbsp; &nbsp; try{</div><div>&nbsp; &nbsp; &nbsp;var name=msg.substr(3)</div><div>&nbsp; &nbsp; &nbsp;</div><div>&nbsp; &nbsp; &nbsp;var Mainlink = &quot;<a href=\"https://www.op.gg/summoner/userName\\=\" target=\"_blank\">https://www.op.gg/summoner/userName\\=</a>&quot;+name+&quot;&amp;l=ko_KR&quot;</div><div>&nbsp; &nbsp; &nbsp;var Redirectlink = &quot;summoner/userName=&quot;+name+&quot;&amp;l=ko_KR&quot;</div><div>&nbsp; &nbsp; &nbsp;var data = getHTML(Mainlink)</div><div>&nbsp; &nbsp; &nbsp;var tierimage = &quot;https:&quot;+data.select(&quot;div.medal&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)</div><div>&nbsp; &nbsp; &nbsp;var tiername = data.select(&quot;.TierRankinfo &gt; .TierRank&quot;).get(0).text()</div><div>&nbsp; &nbsp; &nbsp;</div><div>&nbsp; &nbsp; &nbsp;var firstwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.GameResult&quot;).get(0).text()</div><div>&nbsp; &nbsp; &nbsp;var firstcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)</div><div>&nbsp; &nbsp; &nbsp;var firstchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)</div><div>&nbsp; &nbsp; &nbsp;var firstkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.KDA &gt; .KDA&quot;).text()</div><div>&nbsp; &nbsp; &nbsp;var firstcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(0).select(&quot;.CS &gt; .CS&quot;).text()</div><div>&nbsp; &nbsp;&nbsp;</div><div>&nbsp; &nbsp; &nbsp;var secondwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.GameResult&quot;).get(0).text()</div><div>&nbsp; &nbsp; &nbsp;var secondcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)</div><div>&nbsp; &nbsp; &nbsp;var secondchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)</div><div>&nbsp; &nbsp; &nbsp;var secondkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.KDA &gt; .KDA&quot;).text()</div><div>&nbsp; &nbsp; &nbsp;var secondcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(1).select(&quot;.CS &gt; .CS&quot;).text()</div><div>&nbsp; &nbsp; &nbsp;</div><div>&nbsp; &nbsp; &nbsp;var thirdwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.GameResult&quot;).get(0).text()</div><div>&nbsp; &nbsp; &nbsp;var thirdcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)</div><div>&nbsp; &nbsp; &nbsp;var thirdchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)</div><div>&nbsp; &nbsp; &nbsp;var thirdkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.KDA &gt; .KDA&quot;).text()</div><div>&nbsp; &nbsp; &nbsp;var thirdcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.CS &gt; .CS&quot;).text()</div><div>&nbsp; &nbsp;&nbsp;</div><div>&nbsp; &nbsp; &nbsp;var forthwins = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.GameResult&quot;).get(0).text()</div><div>&nbsp; &nbsp; &nbsp;var forthcham = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.ChampionImage&quot;).select(&quot;[src]&quot;).attr(&quot;alt&quot;)</div><div>&nbsp; &nbsp; &nbsp;var forthchamimg = &quot;https:&quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.Championimage&quot;).select(&quot;[src]&quot;).attr(&quot;src&quot;)</div><div>&nbsp; &nbsp; &nbsp;var forthkda = data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(3).select(&quot;.KDA &gt; .KDA&quot;).text()</div><div>&nbsp; &nbsp; &nbsp;var forthcs = &quot;CS &quot;+data.select(&quot;.GameItemList &gt; .GameItemWrap&quot;).get(2).select(&quot;.CS &gt; .CS&quot;).text()</div><div>&nbsp;&nbsp;</div><div>&nbsp; &nbsp; &nbsp;json ={&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_id&quot;:22414,&quot;template_args&quot;:{header:&quot;롤 전적 최근 4게임&quot;, title1:name, detail1:tiername, image1:tierimage, title2:firstwins+&quot; l &quot;+firstcham, detail2:firstkda+&quot; l &quot;+firstcs, image2:firstchamimg, title3:secondwins+&quot; l &quot;+secondcham, detail3:secondkda+&quot; l &quot;+secondcs, image3:secondchamimg, title4:thirdwins+&quot; l &quot;+thirdcham, detail4:thirdkda+&quot; l &quot;+thirdcs, image4:thirdchamimg, title5:forthwins+&quot; l &quot;+forthcham, detail5:forthkda+&quot; l &quot;+forthcs, image5:forthchamimg, mobile_link:Redirectlink, web_link:Redirectlink}}</div><div>&nbsp; &nbsp; &nbsp;return Kakao.send(room, json, &quot;custom&quot;)</div><div>&nbsp; &nbsp; }</div><div>&nbsp; &nbsp; catch(e) {</div><div>&nbsp; &nbsp; &nbsp; replier.reply(&quot;정보가 없습니다..!&quot;)</div><div>&nbsp; &nbsp; }</div><div>&nbsp; } //if msg</div><div>} // function</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003B1A00000000",
+            "id": 15130,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 348,
+            "refArticleId": 15130,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "OVERWATCH님의 글을 보고 만든 롤 전적 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585887500473,
+            "writer": {
+                "id": "kaneyja",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "Asri"
+            }
+        },
+        "articleId": 15130,
+        "attaches": [
+            {
+                "extension": "png",
+                "fullName": "롤예제.png",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "롤예제.png",
+                "size": 48153,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/0e9b12a1bbefea361afc99ae967e0d70d486789a80/MjAyMDA0MDNfNTAg/MDAxNTg1ODg3NTgwMjM3.hjrrYxfLT6BVZZtMwVc5Lku3C-7hMEMrVsnDb4BVjYMg.ZlMBVOWIpToPARzKGVwUYuVFf0cpbSHx6-lWP7zKFHAg.PNG/롤예제.png?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "?",
+                    "id": 86266784,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86266784,
+                    "updateDate": 1585891159000,
+                    "writer": {
+                        "id": "ykd4365",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "OVERWATCH"
+                    }
+                },
+                {
+                    "content": "오버워치님 글보고 비슷하게 만들어봣어요ㅎㅎㅎㅎ",
+                    "id": 86283936,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86266784,
+                    "updateDate": 1585903458000,
+                    "writer": {
+                        "id": "kaneyja",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Asri"
+                    }
+                },
+                {
+                    "content": ".select()에 관해 강좌나와있는 게시글은 없나용?",
+                    "id": 86355577,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86355577,
+                    "updateDate": 1585973407000,
+                    "writer": {
+                        "id": "bukbeomjun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzEyMjNfNjYg/MDAxNTE0MDAzMjA1MTU2.JXRM-B2utIB9qpHEVcA05KS7gpywvE8-cSzKibDQDWYg.MkiovG93LUvLKbnxgnfTVZE-JxaWv9RsHNwV9xzhtMQg.PNG.bukbeomjun/%25BA%25CE%25B5%25E9.PNG"
+                        },
+                        "nick": "보들"
+                    }
+                },
+                {
+                    "content": "왼쪽 강좌 관련 메뉴에서 select 검색하시면 강좌 여러가지 잇네요 ㅎㅎ",
+                    "id": 86536687,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86355577,
+                    "updateDate": 1586137819000,
+                    "writer": {
+                        "id": "kaneyja",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Asri"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,305 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임) 타자게임</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><div><span style=\"font-size: 17.3333px;\">/**</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">이용 라이선스</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">타자게임 &copy; 2020 타키, All rights reserved.</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">이 스크립트는 Violet XF님의 메신저봇R에서 제작되었습니다.</span></div><div><span style=\"font-size: 17.3333px;\">타 애플리케이션과의 호환성을 장담할 수 없습니다.</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">이 스크립트에는 delta님의 kaling.js, crypto.js 모듈이 사용되었습니다.</span></div><div><span style=\"font-size: 17.3333px;\">해당 모듈들은 아래 링크에서 확인하실 수 있습니다.</span></div><div><span style=\"font-size: 17.3333px;\"><a href=\"https://cafe.naver.com/nameyee/12321/\" target=\"_blank\">https://cafe.naver.com/nameyee/12321/</a></span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">이 스크립트에는 크리에이티브 커먼즈 저작자표시-비영리-동일조건변경허락 라이선스(CC BY-NC-SA)가 적용되었습니다.</span></div><div><span style=\"font-size: 17.3333px;\">해당 라이선스를 위반할 시 법적 처벌을 받으실 수 있습니다.</span></div><div><span style=\"font-size: 17.3333px;\">자세한 내용은 아래 링크에서 확인하실 수 있습니다.</span></div><div><span style=\"font-size: 17.3333px;\"><a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">* 본인의 영어실력이 개판인지라 문법이고 뭐고 신경안씀</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">This script was made from MessengerBot R by Violet XF.</span></div><div><span style=\"font-size: 17.3333px;\">I can&apos;t gurantee compatibility with other applications.</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">kaling.js and crypto.js modules by delta were used for this script.</span></div><div><span style=\"font-size: 17.3333px;\">You can see those modules at the link below.</span></div><div><span style=\"font-size: 17.3333px;\"><a href=\"https://cafe.naver.com/nameyee/12321/\" target=\"_blank\">https://cafe.naver.com/nameyee/12321/</a></span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">Creative Commons BY-NC-SA License has been applied to this script&nbsp;</span></div><div><span style=\"font-size: 17.3333px;\">You may be legally punished for violating this license.</span></div><div><span style=\"font-size: 17.3333px;\">You can find more information at the link below.</span></div><div><span style=\"font-size: 17.3333px;\"><a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">**/</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">const kalingModule = require(&apos;kaling&apos;).Kakao();</span></div><div><span style=\"font-size: 17.3333px;\">const Kakao = new kalingModule();</span></div><div><span style=\"font-size: 17.3333px;\">Kakao.init(&apos;KEY&apos;);</span></div><div><span style=\"font-size: 17.3333px;\">Kakao.login(&apos;ID&apos;, &apos;PW&apos;);</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">const words=[&quot;사랑의 첫 번째 의무는 상대방에 귀기울이는 것이다. -마더 테레사&quot;,&quot;나는 행동이 사람의 생각을 가장 훌륭하게 해석해 준다고 늘 생각해왔다. -존 로크&quot;,&quot;누구에게나 친구는 어느 누구에게도 친구가 아니다. -아리스토텔레스&quot;,&quot;진정한 책을 만났을 때는 틀림이 없다. 그것은 사랑에 빠지는 것과도 같다. -크리스토퍼 몰리&quot;,&quot;인간의 감정은 누군가를 만날 때와 헤어질 때 가장 순수하며 가장 빛난다. -장 폴 리히터&quot;,&quot;미래를 예측하는 최선의 방법은 미래를 창조하는 것이다. -알랜 케이&quot;,&quot;크로스컨트리는 인간이 할 수 있는 비행에 가장 근접한 운동이다. -조지프 밴더스텔&quot;,&quot;사람이 유머감각이 있는 게 아니다. 유머 감각이 사람을 움직이는 것이다. -래리 갤버트&quot;,&quot;모든 고귀한 일은 찾기 드문만큼 하기도 어렵다. -바뤼흐 스피노자&quot;,&quot;우리가 이룬 것만큼, 이루지 못한 것도 자랑스럽습니다. -스티브 잡스&quot;,&quot;스스로를 존경하면 다른 사람도 당신을 존경할 것이다. -공자&quot;,&quot;우정이라는 기계에 잘 정제된 예의라는 기름을 바르는 것은 현명하다. -콜레트&quot;,&quot;모든 언행을 칭찬하는 자보다 결점을 친절하게 말해주는 친구를 가까이하라. -소크라테스&quot;,&quot;친구는 있다가도 없고, 없다가도 있을 수 있지만, 적은 계속 는다. -토마스 존스&quot;];</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">var num=null;</span></div><div><span style=\"font-size: 17.3333px;\">var game=false;</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">function start(msg,room) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; if(game==true) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; Kakao.send(room, { &quot;link_ver&quot;: &quot;4.0&quot;, &quot;template_object&quot;: { &quot;object_type&quot;: &quot;feed&quot;, &quot;button_title&quot;: &quot;&quot;, &quot;content&quot;: { &quot;title&quot;: &quot;게임이 이미 진행중입니다!&quot;, &quot;image_url&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;LINK&quot;, &quot;mobile_web_url&quot;: &quot;LINK&quot; }, &quot;description&quot;: &quot;잠시만 기다려주세요.&quot; }, &quot;buttons&quot;: [{ &quot;title&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;&quot;, &quot;mobile_web_url&quot;: &quot;&quot; } }] } });</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp; &nbsp; return;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;}</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;num=Math.floor(Math.random() * words.length);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;game=true;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;Kakao.send(room, { &quot;link_ver&quot;: &quot;4.0&quot;, &quot;template_object&quot;: { &quot;object_type&quot;: &quot;feed&quot;, &quot;button_title&quot;: &quot;&quot;, &quot;content&quot;: { &quot;title&quot;: &quot;타자를 시작합니다. 4초 후 나오는 문장을 타자하세요.&quot;, &quot;image_url&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;LINK&quot;, &quot;mobile_web_url&quot;: &quot;LINK&quot; }, &quot;description&quot;: &quot;&quot; }, &quot;buttons&quot;: [{ &quot;title&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;&quot;, &quot;mobile_web_url&quot;: &quot;&quot; } }] } });</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;java.lang.Thread.sleep(4000);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;Kakao.send(room, { &quot;link_ver&quot;: &quot;4.0&quot;, &quot;template_object&quot;: { &quot;object_type&quot;: &quot;feed&quot;, &quot;button_title&quot;: &quot;&quot;, &quot;content&quot;: { &quot;title&quot;: words[num], &quot;image_url&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;LINK&quot;, &quot;mobile_web_url&quot;: &quot;LINK&quot; }, &quot;description&quot;: &quot;복사 붙여넣기는 양심있게 합니다 ^^&quot; }, &quot;buttons&quot;: [{ &quot;title&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;&quot;, &quot;mobile_web_url&quot;: &quot;&quot; } }] } });</span></div><div><span style=\"font-size: 17.3333px;\">}</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">function finish(msg,room,sender) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; Kakao.send(room, { &quot;link_ver&quot;: &quot;4.0&quot;, &quot;template_object&quot;: { &quot;object_type&quot;: &quot;feed&quot;, &quot;button_title&quot;: &quot;&quot;, &quot;content&quot;: { &quot;title&quot;: &quot;축하합니다!&quot;, &quot;image_url&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;LINK&quot;, &quot;mobile_web_url&quot;: &quot;LINK&quot; }, &quot;description&quot;: &quot;타이퍼는 &quot;+sender+&quot; 입니다!&quot; }, &quot;buttons&quot;: [{ &quot;title&quot;: &quot;&quot;, &quot;link&quot;: { &quot;web_url&quot;: &quot;&quot;, &quot;mobile_web_url&quot;: &quot;&quot; } }] } });</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;num=null;</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;game=false;</span></div><div><span style=\"font-size: 17.3333px;\">}</span></div><div><span style=\"font-size: 17.3333px;\"><br /></span></div><div><span style=\"font-size: 17.3333px;\">function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;if(msg==words[num] &amp;&amp; game==true) finish(msg,room,sender);</span></div><div><span style=\"font-size: 17.3333px;\">&nbsp; &nbsp;if(msg==&quot;ㄹ타자게임&quot;) start(msg,room);</span></div><div><span style=\"font-size: 17.3333px;\">}</span></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b>===============</b></div><div><b><br /></b></div><div><b>2차수정 및 배포는 자유이나, 원작자를 표시하시기 바랍니다. 상업적 이용은 금지!</b></div><div><b><br /></b></div><div><b>카링에 필요한 모듈들은 위 링크에서 받으실 수 있을거에요(아마도요 등급이 안되서 볼 수가 없는..)</b></div><div><b><br /></b></div><div><b>사진으로 해서 복붙을 막을 순 있지만 귀찮..아니 시간이 없어서 못했습니다 ㅠㅜ</b></div><div><b><br /></b></div><div><b>예쁘게(?) 만들었어요</b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000353C00000000",
+            "id": 13628,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 355,
+            "refArticleId": 13628,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "타자게임",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584438097000,
+            "writer": {
+                "id": "yisimgok",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAxMDVfMTc3/MDAxNTc4MTg0OTQ4MzI3.eok9H5YfiHd4kTJCHmBwqV1r9aws1NJi8UP4V0bSOsog.-WdtCOmjiS1iWvDSXMBtVmnJ4oPfL-LUby1UYMMN63sg.PNG/%EC%9E%90%EC%BA%90.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "타키"
+            }
+        },
+        "articleId": 13628,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "음.. 오류",
+                    "id": 84479601,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84479601,
+                    "updateDate": 1584439359000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "음.. 모듈 적용하셨나요..?",
+                    "id": 84479757,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84479601,
+                    "updateDate": 1584439459000,
+                    "writer": {
+                        "id": "yisimgok",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDVfMTc3/MDAxNTc4MTg0OTQ4MzI3.eok9H5YfiHd4kTJCHmBwqV1r9aws1NJi8UP4V0bSOsog.-WdtCOmjiS1iWvDSXMBtVmnJ4oPfL-LUby1UYMMN63sg.PNG/%EC%9E%90%EC%BA%90.png"
+                        },
+                        "nick": "타키"
+                    }
+                },
+                {
+                    "content": "잘 작동 !",
+                    "id": 84479865,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84479601,
+                    "replyMember": {
+                        "id": "yisimgok",
+                        "nick": "타키"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1584439533000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "이거 참조해서 타수 표시기능 넣어서 카페에 소스 공유해도 될까요?",
+                    "id": 84720061,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84720061,
+                    "updateDate": 1584620498000,
+                    "writer": {
+                        "id": "km8192",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "에벱"
+                    }
+                },
+                {
+                    "content": "네네!",
+                    "id": 84730138,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84720061,
+                    "updateDate": 1584626382000,
+                    "writer": {
+                        "id": "yisimgok",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDVfMTc3/MDAxNTc4MTg0OTQ4MzI3.eok9H5YfiHd4kTJCHmBwqV1r9aws1NJi8UP4V0bSOsog.-WdtCOmjiS1iWvDSXMBtVmnJ4oPfL-LUby1UYMMN63sg.PNG/%EC%9E%90%EC%BA%90.png"
+                        },
+                        "nick": "타키"
+                    }
+                },
+                {
+                    "content": "템플릿은 만들어야하져",
+                    "id": 85130344,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85130344,
+                    "updateDate": 1584973635000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "리얼청정수둔"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

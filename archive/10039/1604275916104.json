@@ -1,0 +1,190 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<p>//나지도 않는 오류를 수정해 달라고 해서 봤더니 처음에 추가된 DropNum이 catch로 안 잡아짐...<br />var player=[];<br />var num=[];<br />var power=false;<br />var DropNum=&apos;123456789&apos;.split(&apos;&apos;);<br />response=(room,msg,sender,isGroupChat,replier)=&gt;{<br />say=s=&gt;replier.reply(s);<br />NextTurn=_=&gt;{player.shift();player.push(sender);var l=num[0];num.shift();num.push(l);say(player.map((s,p)=&gt;&apos;[ &apos;+s+&apos; 님의 숫자 ]\\n&apos;+num[p]).join(&apos;\\n&apos;));say(&apos;[ 드랍된 숫자 ]\\n&apos;+DropNum.join(&apos;, &apos;));say(&apos;차례: &apos;+player[0]);}<br />if (msg==&apos;/포런스넘버&apos;&amp;&amp;!power)say(&apos;/포런 참가&apos;);<br />if (msg==&apos;/포런 참가&apos;&amp;&amp;!power){if (player.indexOf(sender)!=-1){say(&apos;이미 참가돼 있습니다!&apos;);return;};say(&apos;참가됐습니다!&apos;);player.push(sender);var q=[];for (var s=0;s&lt;10;s++){var g=Math.floor(Math.random()*10);if (q.indexOf(g)==-1){q.push(g);}else s--;}num.push(q.join(&apos;&apos;));}<br />if (msg==&apos;/포런 시작&apos;&amp;&amp;!power){if (player.length&lt;2){say(&apos;게임을 시작하는 데 2명 이상의 플레이어가 요구됩니다.&apos;);return;};say(&apos;게임을 시작합니다.\\n자신의 턴일 때 &lsquo;/drop (num)&rsquo;명령어로 자신의 숫자를 떨어트릴 수 있으며 &lsquo;/catch (num)&rsquo;명령어로 떨어진 숫자를 가져 올 수 있습니다.\\n자신의 숫자를 0123456789로 만들면 승리합니다.&apos;);power=true;say(player.map((s,p)=&gt;&apos;[ &apos;+s+&apos; 님의 숫자 ]\\n&apos;+num[p]).join(&apos;\\n&apos;));say(&apos;[ 드랍된 숫자 ]\\n&apos;+DropNum.join(&apos;, &apos;));say(&apos;차례: &apos;+player[0]);}<br />if (msg.indexOf(&apos;/&apos;)==0&amp;&amp;power&amp;&amp;player[0]==sender){<br />msg=msg.slice(1);<br />if (msg.indexOf(&apos;drop &apos;)==0){<br />var f=msg.split(&apos; &apos;)[1];<br />if (!f||isNaN(f))return;<br />if (num[player.indexOf(sender)].split(&apos;&apos;).indexOf(f)==-1){say(&apos;그런 숫자는 &apos;+sender+&apos; 님이 소지하고 있지 않습니다.&apos;);return;}<br />var sendernum=num[player.indexOf(sender)];<br />if (sendernum.length&lt;8){say(&apos;더 이상 드랍할 수 없을 정도로 소지한 숫자의 양이 적습니다.&apos;);return;}<br />var k=sendernum.split(&apos;&apos;)<br />k.splice(sendernum.indexOf(f),1);<br />num[player.indexOf(sender)]=k.join(&apos;&apos;);<br />DropNum.push(f);<br />NextTurn();<br />}<br />if (msg.indexOf(&apos;catch &apos;)==0){<br />var f=msg.split(&apos; &apos;)[1];<br />if (!f||isNaN(f))return;<br />if (DropNum.indexOf(f)==-1){say(&apos;그런 숫자는 드랍되지 않았습니다.&apos;);return;}<br />if (num[player.indexOf(sender)].length&gt;11){<br />say(&apos;가지고 있는 숫자의 양이 너무 많습니다.&apos;);<br />return;<br />}<br />DropNum.splice(DropNum.indexOf(f),1);<br />num[player.indexOf(sender)]+=f;<br />NextTurn();<br />}<br />}<br />if (num[player.indexOf(sender)]==&apos;0123456789&apos;&amp;&amp;power){<br />say(sender+&apos; 님의 숫자가 0123456789가 되었습니다.\\n&apos;+sender+&apos; 님의 승리입니다!&apos;);<br />power=false;<br />player=[];<br />num=[];<br />DropNum=&apos;123456789&apos;.split(&apos;&apos;);<br />}<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000273700000000",
+            "id": 10039,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 36,
+            "refArticleId": 10039,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "포런스 넘버 오류 수정",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1578961317193,
+            "writer": {
+                "id": "kjsbus5",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "구름"
+            }
+        },
+        "articleId": 10039,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "초봅니다.",
+                    "id": 85104000,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85104000,
+                    "updateDate": 1584959015000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

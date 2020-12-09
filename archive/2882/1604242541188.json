@@ -1,0 +1,433 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 16,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 231,
+                            "service": "CAFE",
+                            "style": "width: 305px; height: 231px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA2MDNfMjkg/MDAxNTU5NTMzMDY2NTEy.hAJKSHCAIE8Iby91kXe5vYse4ZqgGKtQH03VcKm02HAg.WbKLraMruyxbsu6T_lNdUs62FrCUc3PsTOaoDoM_Rjkg.PNG/%EC%BA%A1%EC%B2%98.PNG",
+                            "width": 305
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; 프리코네 가챠 시뮬</b></div><div><b>[[[CONTENT-ELEMENT-0]]]<br /></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div>var girin = 0;</div><div><br /></div><div>function response(room, msg, sender, isGroupChat, replier, ImageDB)<br />{<br />&nbsp;var namu = msg.split(&quot; &quot;);<br />&nbsp;<br />&nbsp;if(msg == &quot;/프리코네&quot;){ <br />&nbsp;&nbsp; girin = 0;<br />&nbsp;&nbsp; var stat = read(&quot;priconne&quot;,sender);<br />&nbsp;&nbsp; if (stat != undefined){<br />&nbsp;&nbsp;&nbsp;&nbsp; stat = stat.split(&quot;,&quot;);<br />&nbsp;&nbsp; } else {<br />&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; save(&quot;priconne&quot;,sender,&quot;0,0&quot;);<br />&nbsp;&nbsp;&nbsp; stat = read(&quot;priconne&quot;,sender);<br />&nbsp;&nbsp;&nbsp; stat = stat.split(&quot;,&quot;);<br />&nbsp;&nbsp; }<br />&nbsp;&nbsp; stat[0] = stat[0] * 1;<br />&nbsp;&nbsp; stat[1] = stat[1] * 1;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var result = &quot;&quot;;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var i = 1; i &lt; 11; i++){<br />&nbsp;&nbsp;&nbsp;&nbsp; if(i != 10){<br />&nbsp;&nbsp;&nbsp; if (i % 2 == 0){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result = result + priconne(i)+&quot;\\n&quot;;<br />&nbsp;&nbsp;&nbsp;} else {<br />&nbsp;&nbsp;&nbsp;result = result + priconne(i)+&quot;\\t&quot;;&nbsp; <br />&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp; } else {<br />&nbsp;&nbsp;&nbsp;result = result + priconne(i);<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp; }<br />&nbsp;&nbsp; girin = girin * 1;<br />&nbsp;&nbsp; <br />&nbsp;&nbsp; stat[0] = stat[0]+10;<br />&nbsp;&nbsp; stat[1] = stat[1]+girin;<br />&nbsp;&nbsp; <br />&nbsp;&nbsp; var per = ((stat[1] / stat[0]) * 100).toFixed(2);<br />&nbsp;&nbsp; var money = (stat[0] / 10) * 27000;<br />&nbsp;&nbsp; replier.reply(&quot;[&quot;+sender+&quot;님의 확률]\\n&quot;+&quot;ㆍ뽑은 횟수 : &quot;+stat[0]+&quot;번\\nㆍ총 획득 ★3 : &quot;+stat[1]+&quot;개 (&quot;+per+&quot;%)\\n\\n&quot;+result+&quot;\\n\\nㆍ가챠 환산 금액 : &quot;+addComma(money)+&quot;원&quot;);</div><div>&nbsp;&nbsp; save(&quot;priconne&quot;,sender,stat[0]+&quot;,&quot;+stat[1]);</div><div>&nbsp;<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp; <br />&nbsp;&nbsp; if(namu[0] == &quot;/가챠삭제&quot;){<br />&nbsp;&nbsp;&nbsp; if(sender == &quot;name&quot;){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; save(&quot;priconne&quot;,namu[1],&quot;0,0&quot;);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;가챠기록 삭제 완료&quot;);<br />&nbsp;&nbsp;&nbsp; } <br />&nbsp;&nbsp;&nbsp; else {<br />&nbsp;&nbsp; repiler.reply(&quot;권한 부족!&quot;)<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp; }<br /><div>}</div><div><br /></div><div>function priconne(i){<br />&nbsp;var num = Math.random();<br />&nbsp;var chara = &quot;&quot;;<br />&nbsp;if (num &lt;= 0.025){<br />&nbsp;&nbsp;chara = &quot;3성&quot;;<br />&nbsp;} else if (num &lt;= 0.180){<br />&nbsp;&nbsp;chara = &quot;2성&quot;;<br />&nbsp;} else {<br />&nbsp;&nbsp;chara = &quot;1성&quot;;<br />&nbsp;}<br />&nbsp;<br />&nbsp;//마지막 뽑기는 1성안나옴<br />&nbsp;if (i == 10){<br />&nbsp;&nbsp;if(num &lt;= 0.025){<br />&nbsp;&nbsp;&nbsp;chara = &quot;3성&quot;;<br />&nbsp;&nbsp;} else {<br />&nbsp;&nbsp;&nbsp;chara = &quot;2성&quot;;<br />&nbsp;&nbsp;}<br />&nbsp;}<br />&nbsp;<br />&nbsp;if (chara == &quot;1성&quot;){<br />&nbsp;&nbsp;chara = randomItem(star1);<br />&nbsp;} else if (chara == &quot;2성&quot;){<br />&nbsp;&nbsp;chara = randomItem(star2);<br />&nbsp;} else if (chara == &quot;3성&quot;){<br />&nbsp;&nbsp;chara = randomItem(star3);<br />&nbsp;&nbsp;girin = girin + 1;<br />&nbsp;}<br />&nbsp;<br />&nbsp;return chara;<br />}</div><div><br /></div><div>function randomItem(a) {<br />&nbsp; return a[Math.floor(Math.random() * a.length)];<br />}</div><div><br /></div><div>function addComma(num) {<br />&nbsp; var regexp = /\\B(?=(\\d{3})+(?!\\d))/g;<br />&nbsp; return num.toString().replace(regexp, &apos;,&apos;);<br />}<b></b><br /></div></div><div><b><br /></b></div><div><b>캐릭터 배열 따로 빼는거 귀찮아서 그냥 배열에 다 때려박았습니다.</b></div><div><b>그 부분 보기 싫으시면 고쳐서 쓰심되고요</b><br /></div><div><b><br /></b></div><div><b>배열에 띄어쓰기는 2열로 나열했을때 그나마 보기 편할려고 그렇게해놨습니다.</b></div><div><b>너무길어서 첨부파일에 등록해놈</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>+ 2019.06.24</b></div><div><br /></div><div>priconne.js 로 파일 바꿨습니다.</div><div>잘모르시겠으면 파일받아서 바로 돌리시면됩니다.</div><div><span style=\"background-color: rgb(153, 220, 255);\"><b></b>(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000B4200000000",
+            "id": 2882,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 400,
+            "refArticleId": 2882,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "프리코네 가챠 시뮬레이터",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1559533264550,
+            "writer": {
+                "id": "wireless__",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Findragon"
+            }
+        },
+        "articleId": 2882,
+        "attaches": [
+            {
+                "extension": "PNG",
+                "fullName": "캡처.PNG",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "캡처.PNG",
+                "size": 7957,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/cb5ed764742b2ff3df395c6b50b6cbb11143bd5ff6/MjAxOTA2MDNfMjkg/MDAxNTU5NTMzMDY2NTEy.hAJKSHCAIE8Iby91kXe5vYse4ZqgGKtQH03VcKm02HAg.WbKLraMruyxbsu6T_lNdUs62FrCUc3PsTOaoDoM_Rjkg.PNG/캡처.PNG?type=attachment"
+            },
+            {
+                "extension": "js",
+                "fullName": "priconne.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "priconne.js",
+                "size": 4651,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/4adf56e6f2adae725eb8ddead1374a3090c23cdeef/20190624_225_cafefile/29537083_1561386615825_qBH1X1_js/priconne.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㅗㅝ",
+                    "id": 60905792,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60905792,
+                    "updateDate": 1559550249000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "ㅗㅜㅑ",
+                    "id": 60999358,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60999358,
+                    "updateDate": 1559653203000,
+                    "writer": {
+                        "id": "jeongyeongjun9",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "비브라늄 수저"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 61831517,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61831517,
+                    "updateDate": 1560651645000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "쥬얼 구매항목 보시면 1500쥬얼에 27000원으로 판매중이라 10연차당 27000원으로 했습니다",
+                    "id": 61833846,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61831517,
+                    "updateDate": 1560654168000,
+                    "writer": {
+                        "id": "wireless__",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Findragon"
+                    }
+                },
+                {
+                    "content": "save read 함수를 검색으로 카페에서 찾아봤는데 이해가 부족하네요..ㅠㅠ 따로 내부봇 폴더에 priconne를 만들어둬야하는건가요?",
+                    "id": 61850183,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61850183,
+                    "updateDate": 1560675492000,
+                    "writer": {
+                        "id": "shinlevel",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180121_175/shinlevel_1516513319625GoSo0_GIF/__%283%29.gif"
+                        },
+                        "nick": "GWONIA"
+                    }
+                },
+                {
+                    "content": "메신저봇 쓰시는거면 제가 올린 js 파일에다가 save read 함수만 추가하셔서 쓰심될텐데용 \r\n\r\nsave read 함수는 찾으신거죠? 그걸 share.js 안에 넣고 돌리시면됩니다",
+                    "id": 61850289,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61850183,
+                    "updateDate": 1560675642000,
+                    "writer": {
+                        "id": "wireless__",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Findragon"
+                    }
+                },
+                {
+                    "content": "어려우시면 집가서 보내드리겠습니다",
+                    "id": 61850571,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61850183,
+                    "updateDate": 1560676035000,
+                    "writer": {
+                        "id": "wireless__",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Findragon"
+                    }
+                },
+                {
+                    "content": "핫 감사합니다ㅠㅠ 어제 처음 시작해본거라 어렵네요",
+                    "id": 61854822,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61850183,
+                    "replyMember": {
+                        "id": "wireless__",
+                        "nick": "Findragon"
+                    },
+                    "updateDate": 1560681383000,
+                    "writer": {
+                        "id": "shinlevel",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180121_175/shinlevel_1516513319625GoSo0_GIF/__%283%29.gif"
+                        },
+                        "nick": "GWONIA"
+                    }
+                },
+                {
+                    "content": "메일로 보내드릴게요 에러나시면 답글달아주세요",
+                    "id": 61880165,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61850183,
+                    "replyMember": {
+                        "id": "shinlevel",
+                        "nick": "GWONIA"
+                    },
+                    "updateDate": 1560701273000,
+                    "writer": {
+                        "id": "wireless__",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Findragon"
+                    }
+                },
+                {
+                    "content": "보내주신걸로 조금 만지다보니 잘 되네요!\r\n질문 하나만 더드리고싶은데.. 카톡 닉네임에 / 문자가 들어가면 에러가 뜨던데 이부분은 바꿀수 있을까요?",
+                    "id": 61883306,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61850183,
+                    "replyMember": {
+                        "id": "wireless__",
+                        "nick": "Findragon"
+                    },
+                    "updateDate": 1560722660000,
+                    "writer": {
+                        "id": "shinlevel",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180121_175/shinlevel_1516513319625GoSo0_GIF/__%283%29.gif"
+                        },
+                        "nick": "GWONIA"
+                    }
+                }
+            ],
+            "last": {
+                "id": 76595684,
+                "refId": 76595684
+            },
+            "next": {
+                "id": 61892983,
+                "refId": 61850183
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,176 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신져봇 R</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 13pt;\">Jsoup = org.jsoup.Jsoup</span></div><p dir=\"ltr\">\r\nFS = FileStream<br />\r\npath = &quot;sdcard/ChatRpg/json&quot;<br />\r\nLw = &quot;\\u200b&quot;.repeat(500)<br />\r\nLl = &quot;&#9148;&quot;.repeat(50)<br />\r\nTiers = {0:&quot;뉴비&quot;, 1:&quot;브론즈&quot;, 2:&quot;실버&quot;, 3:&quot;골드&quot;, 4:&quot;플래티넘&quot;, 5:&quot;다이아몬드&quot;, 6:&quot;마스터&quot;, 7:&quot;그랜드 마스터&quot;}</p>\r\n<p dir=\"ltr\">var allsee = new Array(1000).join(String.fromCharCode(847));</p>\r\n<p dir=\"ltr\">isUser = (json, user) =&gt; Object.keys(json).indexOf(user)!=-1</p>\r\n<p dir=\"ltr\">addDP = (json, user, DP) =&gt; json[user][&quot;DP&quot;] += DP&nbsp;</p>\r\n<p dir=\"ltr\">response = (room, msg, sender, _, replier) =&gt; {</p>\r\n<p dir=\"ltr\">if (room != &quot;방이름&quot;) return;<br />\r\nif (!FS.read(path)) FS.write(path, &quot;{}&quot;);</p>\r\n<p dir=\"ltr\">//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>\r\n<p dir=\"ltr\">json = JSON.parse(FS.read(path))</p>\r\n<p dir=\"ltr\">json[sender] || (json[sender] = {})<br />\r\njson[sender][&quot;title&quot;] || (json[sender][&quot;title&quot;] = &quot;&quot;)<br />\r\njson[sender][&quot;chat&quot;] || (json[sender][&quot;chat&quot;] = 0)<br />\r\njson[sender][&quot;level&quot;] || (json[sender][&quot;level&quot;] = 0)<br />\r\njson[sender][&quot;tier&quot;] || (json[sender][&quot;tier&quot;] = Tiers[0])<br />\r\njson[sender][&quot;DP&quot;] || (json[sender][&quot;DP&quot;] = 0)<br />\r\njson[sender][&quot;count&quot;] || (json[sender][&quot;count&quot;] = 0)<br />\r\njson[sender][&quot;recent&quot;] || (json[sender][&quot;recent&quot;] = &quot;0.0&quot;)</p>\r\n<p dir=\"ltr\">json[sender][&quot;chat&quot;]++</p>\r\n<p dir=\"ltr\">FS.write(path, JSON.stringify(json, null, 4))</p>\r\n<p dir=\"ltr\">//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>\r\n<p dir=\"ltr\">if (msg == &quot;//도움말&quot;) {<br />\r\nreplier.reply(&quot;&bull; RPG 도움말 입니다.&quot;+allsee+&quot;\\n&quot;+<br />\r\n&quot;\\n&quot;+&quot;//내 정보&quot;+&quot;\\n&quot;+<br />\r\n&quot;//출석&quot;+&quot;\\n&quot;+<br />\r\n&quot;//출석 목록&quot;+&quot;\\n&quot;+<br />\r\n&quot;//칭호 (바꿀 칭호) (가격은 300 DP입니다.)&quot;+&quot;\\n&quot;+<br />\r\n&quot;//환전 (액수)&quot;+&quot;\\n&quot;+&quot;//송금 (대상) (액수)&quot;+&quot;\\n\\n&quot;+&quot;채팅 횟수=돈 (//환전으로 받기 가능)\\n&quot;);<br />\r\n}</p>\r\n<p dir=\"ltr\">if (msg == &quot;//출석&quot;) {</p>\r\n<p dir=\"ltr\">json = JSON.parse(FS.read(path))<br />\r\nday = new Date();<br />\r\nnowDate = (day.getMonth()+1)+&quot;.&quot;+day.getDate()</p>\r\n<p dir=\"ltr\">if (json[sender][&quot;recent&quot;] != nowDate) {</p>\r\n<p dir=\"ltr\">json[sender][&quot;count&quot;]++<br />\r\njson[sender][&quot;recent&quot;] = nowDate<br />\r\naddDP(json, sender, 100)<br />\r\nFS.write(path, JSON.stringify(json, null, 4))<br />\r\nreplier.reply(&quot;&bull; &quot;+sender+&quot; 님 \\n&quot;+nowDate.replace(&quot;.&quot;, &quot;월 &quot;)+&quot;일 출석 완료!\\n출석 보상으로 100 DP를 획득했습니다.&quot;)</p>\r\n<p dir=\"ltr\">} else replier.reply(&quot;&bull; 이미 오늘 출석을 하셨습니다!&quot;)</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">if (msg.replace(/ /g, &quot;&quot;) == &quot;//출석목록&quot;) {</p>\r\n<p dir=\"ltr\">json = JSON.parse(FS.read(path))<br />\r\nday = new Date()<br />\r\nnowDate2 = (day.getMonth()+1)+&quot;.&quot;+day.getDate()<br />\r\narr = Object.keys(json).filter(a =&gt; json[a][&quot;recent&quot;] == nowDate2).map((a, b) =&gt; (b+1)+&quot;. &quot;+a)<br />\r\nreplier.reply(&quot;&bull; 오늘 출석 목록입니다.&quot;+Lw+&quot;\\n\\n&quot;+arr.join(&quot;\\n&quot;))</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">if (msg.replace(/ /g, &quot;&quot;) == &quot;//내정보&quot;) {</p>\r\n<p dir=\"ltr\">json = JSON.parse(FS.read(path))[sender]<br />\r\ntitle = json[&quot;title&quot;]<br />\r\nchat = json[&quot;chat&quot;]<br />\r\nDP = json[&quot;DP&quot;]<br />\r\ncount = json[&quot;count&quot;]<br />\r\nrecent = json[&quot;recent&quot;]==&quot;0.0&quot;?&quot;없음&quot;:json[&quot;recent&quot;].replace(&quot;.&quot;, &quot;월 &quot;)+&quot;일&quot;<br />\r\nresult = &quot;&bull; &quot;+sender+&quot; 님의 정보\\n&quot;+Ll+&quot;\\n\\n&quot;+<br />\r\n(title?title+&quot;\\n&quot;:&quot;&quot;)+<br />\r\n&quot;채팅 : &quot;+chat+&quot;회\\n&quot;+<br />\r\n&quot;DP : &quot;+DP+&quot;\\n&quot;+<br />\r\n&quot;출석 : &quot;+count+&quot;회\\n&quot;+<br />\r\n&quot;최근 출석 : &quot;+recent+&quot;\\n&quot;+<br />\r\n&quot;\\n&quot;+Ll<br />\r\nreplier.reply(result)</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">if (msg.startsWith(&quot;//칭호&quot;)) {</p>\r\n<p dir=\"ltr\">tag = msg.substr(3).trim()<br />\r\njson = JSON.parse(FS.read(path))</p>\r\n<p dir=\"ltr\">if (json[sender][&quot;DP&quot;] &gt;= 300) {<br />\r\nif (tag.length&amp;&amp;tag.length&lt;=20) {</p>\r\n<p dir=\"ltr\">json = JSON.parse(FS.read(path))<br />\r\njson[sender][&quot;title&quot;] = tag<br />\r\naddDP(json, sender, -300)<br />\r\nreplier.reply(&quot;&bull; 300 DP를 사용하여 칭호를 바꿨습니다!\\n변경된 칭호 : &apos;&quot;+tag+&quot;&apos;&quot;)<br />\r\nFS.write(path, JSON.stringify(json, null, 4)) </p>\r\n<p dir=\"ltr\">} else replier.reply(&quot;&bull; 칭호는 0~20자 사이로만 등록이 가능합니다!&quot;)<br />\r\n} else replier.reply(&quot;&bull; &quot;+(300 - json[sender][&quot;DP&quot;])+&quot;DP가 부족합니다!&quot;)</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\">if (msg.startsWith(&quot;//환전&quot;)) {</p>\r\n<p dir=\"ltr\">much = Number(msg.substr(3).replace(&quot;DP&quot;, &quot;&quot;).trim())<br />\r\njson = JSON.parse(FS.read(path))</p>\r\n<p dir=\"ltr\">if (!isNaN(much)&amp;&amp;Number.isInteger(much)&amp;&amp;much &gt; 0) {<br />\r\nif (json[sender][&quot;chat&quot;] &gt;= much) {</p>\r\n<p dir=\"ltr\">json[sender][&quot;chat&quot;] -= much<br />\r\njson[sender][&quot;DP&quot;] += much<br />\r\n<span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; 환전이 완료되었습니다!\\n현재 DP : &quot;</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">+json[sender][</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;DP&quot;</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">]</span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n<span style=\"background-color:#FFAA00;\">FS.write(</span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">path</span></span><span style=\"background-color:#FFAA00;\">, </span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">JSON.stringify(</span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">json</span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">, </span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">null</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">, </span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">4</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">)</span></span><span style=\"background-color:#FFAA00;\">)</span></p>\r\n<p dir=\"ltr\">}<span style=\"color:#CB772F;\"> else </span><span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; 채팅량이 부족합니다!&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n}<span style=\"color:#CB772F;\"> else </span><span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; 자연수량만 환전이 가능합니다!&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span>&nbsp;</p>\r\n<p dir=\"ltr\">}</p>\r\n<p dir=\"ltr\"><span style=\"color:#CB772F;\">if</span> (msg.startsWith(<span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;//송금 &quot;</span></span>)) {</p>\r\n<p dir=\"ltr\"><span style=\"background-color:#FFAA00;\">m = msg.substr(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">4</span></span></span><span style=\"background-color:#FFAA00;\">).split(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot; &quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n<span style=\"background-color:#FFAA00;\">sendcoin = </span><span style=\"color:#7A9EC2;\"><span style=\"background-color:#FFAA00;\">Number</span></span><span style=\"background-color:#FFAA00;\">(</span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">m.pop()</span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n<span style=\"background-color:#FFAA00;\">sendper = m.join(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot; &quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#CB772F;\">if</span> (!isNaN(<span style=\"color:#FFFFFF;\">sendcoin</span>)&amp;&amp;<span style=\"color:#7A9EC2;\">Number</span>.isInteger(<span style=\"color:#FFFFFF;\">sendcoin</span>)&amp;&amp;sendcoin &gt; <span style=\"color:#6897BB;\">0</span>) {</p>\r\n<p dir=\"ltr\"><span style=\"background-color:#FFAA00;\">json = JSON.parse(</span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">FS.read(</span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">path</span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">)</span></span><span style=\"background-color:#FFAA00;\">)</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#CB772F;\">if</span> (json[sender][<span style=\"color:#A5C25C;\">&quot;DP&quot;</span>] &gt;= sendcoin) {<br />\r\n<span style=\"color:#CB772F;\">if</span> (isUser(<span style=\"color:#FFFFFF;\">json</span>, <span style=\"color:#FFFFFF;\">sendper</span>)) {<br />\r\n<span style=\"color:#CB772F;\">if</span> (sender != sendper) {</p>\r\n<p dir=\"ltr\"><span style=\"background-color:#FFAA00;\">json[sender][</span><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;DP&quot;</span></span><span style=\"background-color:#FFAA00;\">] -= sendcoin</span><br />\r\n<span style=\"background-color:#FFAA00;\">json[sendper][</span><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;DP&quot;</span></span><span style=\"background-color:#FFAA00;\">] += sendcoin</span><br />\r\n<span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; &quot;</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">+sender+</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot; 님이 &quot;</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">+sendper+</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot; 님에게 &quot;</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">+sendcoin+</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;DP 를 보냈습니다!&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n<span style=\"background-color:#FFAA00;\">FS.write(</span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">path</span></span><span style=\"background-color:#FFAA00;\">, </span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">JSON.stringify(</span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">json</span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">, </span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">null</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">, </span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">4</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">)</span></span><span style=\"background-color:#FFAA00;\">)</span></p>\r\n<p dir=\"ltr\">}<span style=\"color:#CB772F;\"> else </span><span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; 자기 자신에게는 송금할 수 없습니다.&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n}<span style=\"color:#CB772F;\"> else </span><span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; 존재하지 않는 유저입니다.&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n}<span style=\"color:#CB772F;\"> else </span><span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; DP 가 부족합니다.&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n}<span style=\"color:#CB772F;\"> else </span><span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; 자연수로만 입력해 주세요.&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span></p>\r\n<p dir=\"ltr\">}&nbsp;</p>\r\n<p dir=\"ltr\"><span style=\"background-color:#FFAA00;\">}</span><br />\r\n</p><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 여기서 //환전을 하면 &quot;자연수량만 환전이 가능합니다!&quot; 라고만 말하고 환전이 되지 않아요.</b></div><div><b>예전에는 잘됬는데 실수로 무언가를 건드린것 같기도 하고...도와주세요</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000032AA00000000",
+            "id": 12970,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 220,
+            "refArticleId": 12970,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "도미님의 RPG 소스 오류",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583669504700,
+            "writer": {
+                "id": "rainbowssuk1453",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "조헌"
+            }
+        },
+        "articleId": 12970,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "그럼 도미님 올린거 다시 복붙해서 쓰세요 파일로 불러오는거라 초기화 안됩니다",
+                    "id": 83528611,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83528611,
+                    "updateDate": 1583669815000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "초급게시글 죽돌이"
+                    }
+                },
+                {
+                    "content": "도미님 께서 RPG 소스 올리신 오픈채팅방이 없어졌어요\n도미님이 그때 RPG 접으신다면서 뿌리시고 나가셔서..",
+                    "id": 83530105,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83528611,
+                    "updateDate": 1583670634000,
+                    "writer": {
+                        "id": "rainbowssuk1453",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "조헌"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,315 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMjhfMzAg/MDAxNTgwMTcyNDk2OTgy.sB9UKzLwZzrww4tbJTA8LFcmDYpWpIn5zEArLAYSzokg.EIYQYBCjlsV1bYBaNMUlyu7G11fjkcdwcn9CeAdHxXgg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMjhfMTUz/MDAxNTgwMTcyNDk4Njcy.wAJJgVwbbbX6rUcphXuR1ZWT0e1M42gZpNf_cxB4hJ4g.Xe5x71v-Jy29E-w3fnG4xgT1b7GrQCdr6pRgJ0ZdcHcg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMjhfMTQ4/MDAxNTgwMTcyNTAwNDM1.8Jcxv6rpEO9qjEdB7TmQGUtn1Q55l93lFYhUaL09L8Yg.JWYIKTilYhlFfNmR5WSJE5J5fXszlrMfWkk9bhyH7k0g.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1603,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMjhfMTMx/MDAxNTgwMTcyNTAyMDkz.93CDH2gq3bPRyJZgo0ZrLijzBfBIRhax3BB1RFg9kYMg.06wN2NZBrASps0aa7yqLtFkDytu2ZANbOoB3u_N1thUg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>/*봇 명령어들 정리하다가 그냥 버리긴 아까워서 공유합니당. 예전에 만든거여서 허점투성이ㅎ..<br />사진 밑에 첨부되어 있습니다*/<br /><br />function result(room){<br />회의결과=[];<br />let n=0;<br />for(i in conference[room]){<br />회의결과.push(&quot;[&quot;+n+&quot;] &quot;+i+&quot;\\n결과: &quot;+conference[room][i][&quot;해결&quot;]);<br />n++;<br />}<br />delete conference[room];<br />fs.write(path, JSON.stringify(conference));<br />return 회의결과.join(&quot;\\n\\n&quot;);<br />}<br />path =&quot;sdcard/conference/회의.txt&quot;;<br />fs = FileStream; Lw=&quot;\\u200b&quot;.repeat(500);<br />room샌더=[]; room취소확인=false; Preroom=[];회의room=[];<br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />try{<br />//회의<br />if(fs.read(path)==null) fs.write(path,&quot;{}&quot;);<br />conference = JSON.parse(fs.read(path)); <br />if(conference[room]==undefined) conference[room]={};<br />if(msg.startsWith(&quot;!주제추가.&quot;)){<br />conference[room][msg.substr(6)]={};<br />conference[room][msg.substr(6)][&quot;주제&quot;]=msg.substr(6);  <br />conference[room][msg.substr(6)][&quot;해결&quot;]=[];<br />fs.write(path,JSON.stringify(conference));<br />replier.reply(&quot;회의주제가 추가되었습니다&quot;);<br />}<br />if(msg.startsWith(&quot;!주제삭제.&quot;)){<br />if(conference[room][msg.substr(6)]!=undefined){<br />delete conference[room][msg.substr(6)];<br />fs.write(path,JSON.stringify(conference));<br />replier.reply(&quot;회의주제가 삭제되었습니다&quot;);<br />}else if(conference[room][msg.substr(6)]==undefined){<br />replier.reply(&quot;존재하지 않는 회의주제입니다!&quot;);<br />}<br />}<br />if(msg==&quot;!회의종료&quot;&amp;&amp;회의room.length&gt;0) {<br />해결횟수=0;<br />for(i in conference[room]){<br />if(conference[room][i][&quot;해결&quot;]!=&quot;&quot;)해결횟수++;<br />}<br />if(해결횟수 != 회의room.length&amp;&amp;회의room.length!=0) {<br />room샌더.push(sender);<br />replier.reply(&quot;To: &quot;+sender+&quot;\\n아직 해결되지 않은 주제가 있습니다! 이대로 종료하시겠습니까?(종료하시려면 &apos;ㅇ&apos; 혹은 &apos;예&apos;를, 취소하시려면 아무 글자나 입력하십시오)&quot;);<br />room취소확인=true; Preroom.push(room);<br />return;<br />} else if(해결횟수 == 회의room.length&amp;&amp;room.length!=0) {<br />replier.reply(&quot;회의가 종료되었습니다!&quot;);<br />replier.reply(&quot;회의결과입니다:\\n&quot;+result(room));<br />} <br />}<br />if(Preroom==room&amp;&amp;sender==room샌더&amp;&amp;room취소확인==true) {<br />if(msg==&quot;ㅇ&quot;||msg==&quot;예&quot;) {<br />replier.reply(&quot;회의가 종료되었습니다!&quot;);<br />replier.reply(&quot;회의결과입니다:\\n&quot;+result(room));<br />} else {<br />replier.reply(&quot;회의종료가 취소되었습니다&quot;);<br />}<br />room취소확인=false;room샌더=[];Preroom=[];<br />}<br />if(msg==&quot;!회의주제&quot;) {<br />회의room=[];<br />let n=0;<br />for(i in conference[room]){<br />if(conference[room][i][&quot;해결&quot;]==&quot;&quot;){<br />회의room.push(&quot;[&quot;+n+&quot;] &quot;+i);<br />}else {<br />회의room.push(&quot;[&quot;+n+&quot;] [해결됨] &quot;+i);<br />}<br />n++;<br />}<br />if(회의room.length&gt;0) {<br />replier.reply(&quot;회의주제입니다: \\n&quot;+회의room.join(&quot;\\n&quot;).trim());<br />} else {<br />replier.reply(&quot;회의주제가 존재하지 않습니다! &apos;!주제추가.내용&apos;을 입력해 회의주제를 추가하세요!&quot;);<br />}<br />}<br />if(msg.startsWith(&quot;!해결&quot;)&amp;&amp;msg.indexOf(&quot;.&quot;)!=-1) {<br />if(회의room.length&gt;msg.substr(3).split(&quot;.&quot;)[0]){<br />if(conference[room][회의room[msg.substr(3).split(&quot;.&quot;)[0]].split(&quot;] &quot;)[1]][&quot;해결&quot;] == &quot;&quot;){<br />conference[room][회의room[msg.substr(3).split(&quot;.&quot;)[0]].split(&quot;] &quot;)[1]][&quot;해결&quot;].push(msg.split(&quot;.&quot;)[1]);<br />fs.write(path, JSON.stringify(conference));<br />replier.reply(&quot;주제 [&quot;+회의room[msg.substr(3).split(&quot;.&quot;)[0]].split(&quot;] &quot;)[1]+&quot;]의 결과가 추가되었습니다!&quot;);<br />} else {<br />replier.reply(회의room[msg.substr(3).split(&quot;.&quot;)[0]].split(&quot;] &quot;)[1]+&quot;의 결과가 [&quot;+conference[room][회의room[msg.substr(3).split(&quot;.&quot;)[0]].split(&quot;] &quot;)[1]][&quot;해결&quot;]+&quot;]에서 [&quot;+msg.split(&quot;.&quot;)[1]+&quot;]으로 변경되었습니다&quot;);<br />conference[room][회의room[msg.substr(3).split(&quot;.&quot;)[0]].split(&quot;] &quot;)[1]][&quot;해결&quot;] = [];<br />conference[room][회의room[msg.substr(3).split(&quot;.&quot;)[0]].split(&quot;] &quot;)[1]][&quot;해결&quot;].push(msg.split(&quot;.&quot;)[1]);<br />fs.write(path, JSON.stringify(conference));<br />}<br />} else if(회의room.length&lt;=msg.substr(2).split(&quot;.&quot;)[0]) {<br />replier.reply(&quot;존재하지 않는 주제입니다. 다시한번 확인해 주세요&quot;);<br />}<br />해결횟수=0;<br />for(i in conference[room]){<br />if(conference[room][i][&quot;해결&quot;]!=&quot;&quot;)해결횟수++;<br />}<br />if(해결횟수 == 회의room.length&amp;&amp;회의room.length!=0) {<br />replier.reply(&quot;회의가 종료되었습니다!&quot;);<br />replier.reply(&quot;회의결과입니다:\\n&quot;+result(room));<br />}<br />}<br />}catch(e){<br />replier.reply(e+&quot;\\nErrorline: &quot;+e.lineNumber);<br />}}<br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />[[[CONTENT-ELEMENT-1]]]<br />[[[CONTENT-ELEMENT-2]]]<br />[[[CONTENT-ELEMENT-3]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000293C00000000",
+            "id": 10556,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 250,
+            "refArticleId": 10556,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[소스공유] 회의 명령어",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1580172503167,
+            "writer": {
+                "id": "junyoungbae02",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "프로그"
+            }
+        },
+        "articleId": 10556,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 182761,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/c257de6d7e2126fad63055625abcc9bc184ab456e7/MjAyMDAxMjhfMzAg/MDAxNTgwMTcyNDk2OTgy.sB9UKzLwZzrww4tbJTA8LFcmDYpWpIn5zEArLAYSzokg.EIYQYBCjlsV1bYBaNMUlyu7G11fjkcdwcn9CeAdHxXgg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 185624,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/6bfe77c7d48f8f537f99fccbf3156015b1e31dfff8/MjAyMDAxMjhfMTUz/MDAxNTgwMTcyNDk4Njcy.wAJJgVwbbbX6rUcphXuR1ZWT0e1M42gZpNf_cxB4hJ4g.Xe5x71v-Jy29E-w3fnG4xgT1b7GrQCdr6pRgJ0ZdcHcg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 192985,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/06931aa9bce5e23e12f491a69e780d78dc8e709261/MjAyMDAxMjhfMTQ4/MDAxNTgwMTcyNTAwNDM1.8Jcxv6rpEO9qjEdB7TmQGUtn1Q55l93lFYhUaL09L8Yg.JWYIKTilYhlFfNmR5WSJE5J5fXszlrMfWkk9bhyH7k0g.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 210866,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/97028b3a281c1da8856106320fe690ed4d1fe144/MjAyMDAxMjhfMTMx/MDAxNTgwMTcyNTAyMDkz.93CDH2gq3bPRyJZgo0ZrLijzBfBIRhax3BB1RFg9kYMg.06wN2NZBrASps0aa7yqLtFkDytu2ZANbOoB3u_N1thUg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "역시 프로그님 크으..",
+                    "id": 79519047,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79519047,
+                    "updateDate": 1580174133000,
+                    "writer": {
+                        "id": "labyrinth428",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMTBfMjg2/MDAxNTc4NTgzMzg5MTIx.dv3kkPOc4VE9YtBFXEBga3_krfMcG-FpWYAWseqoISsg.0vAWKmYi-SiWUUeIhAZyGrY7ksCu6w-3TVu2LiLShrkg.JPEG/11880383_142188956119424_2156475469741310298_n.jpg"
+                        },
+                        "nick": "페르조나"
+                    }
+                },
+                {
+                    "content": "ㅓ라",
+                    "id": 79520254,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79519047,
+                    "updateDate": 1580174830000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

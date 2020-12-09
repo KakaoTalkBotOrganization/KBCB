@@ -1,0 +1,292 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<p><br /><br />const scriptName=&quot;주식.js&quot;;<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />if(room!=&quot;백꿈 길톡방&quot; &amp;&amp; room.indexOf(&quot;Dragon&quot;)==-1){<br />var a = Utils.getWebText(&quot;https://www.wpws.kr/hangang/&quot;).split(&quot;&lt;/i&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0];<br />var b = Math.floor(Math.random() * 100) + 1;<br />var c = Math.floor(Math.random() * 80) + 21; <br />var d = Math.floor(Math.random() * 980) + 21; <br />var e = DataBase.getDataBase(sender);<br />var f = 100-c;<br />var g = f/100;<br />var h = 100+d;<br />var i = h/100;<br />var PlayerMoney = DataBase.getDataBase(sender);<br />var VIPmembers = DataBase.getDataBase(&quot;VIPmemberlist&quot;);<br />var VIPmemberids = DataBase.getDataBase(&quot;VIPmemberidlist&quot;);<br />var abc = msg.substr(6).trim();<br /><br />if(PlayerMoney!=null){<br /><br />if(msg.indexOf(&quot;/주식&quot;)==0 &amp;&amp; sender.indexOf(&quot;&#1757;1급_청정수&#1757;&quot;)==-1 &amp;&amp; java.lang.String(ImageDB.getProfileImage()).hashCode()!=-269923161){<br />    if(PlayerMoney!=9223372036854776000 &amp;&amp; PlayerMoney&gt;=100){<br />        try{<br />                if(b&gt;0 &amp;&amp; b&lt;=30){<br />                    replier.reply(&quot;[ &quot;+sender+&quot; ] 님의 주식이 폭락했습니다! \\n하락율은 &quot;+c+&quot;% 입니다! \\n현재 한강수온은 &quot;+a+&quot;입니다!&quot;);<br />                    DataBase.setDataBase(sender,e*g);<br />                }<br />                if(b&gt;30 &amp;&amp; b&lt;=75){<br />                replier.reply(&quot;[ &quot;+sender+&quot; ] 님의 주식이 큰 변화가 없습니다. \\n존버는 승리한다.&quot;);<br />                }<br />                if(b&gt;75 &amp;&amp; b&lt;=100){<br />                    replier.reply(&quot;[ &quot;+sender+&quot; ] 님의 주식이 떡상했습니다! \\n상승률은 &quot;+d+&quot;% 입니다! \\n가즈아아아아아아!&quot;);<br />                    DataBase.setDataBase(sender,e*i);<br />                }<br />            }<br />        catch(e){<br />            replier.reply(&quot;&#9888;&#65039;ERROR&#9888;&#65039;&quot;);<br />        }<br />    }<br />    if(PlayerMoney&gt;=9223372036854776000){<br />        replier.reply(&quot;[ &quot;+sender+&quot; ] 님은\\n주식 자산 최대치를 달성하셨습니다!\\n이젠 하면 손해에요!&quot;);<br />        replier.reply(&quot;제 주인 [ &#1757;1급_청정수&#1757; ] 님의 프로필로\\n갠톡을 보내셔서 VIP방 링크를\\n받으세요!&quot;);<br />    }<br />    if(PlayerMoney&lt;100){<br />    replier.reply(&quot;[ &quot;+sender+&quot; ] 님의 자산이 100만원 미만이네요!\\n[ /한강입수 ] 로 리셋하세요!&quot;);<br />    }<br />}<br /><br />    if(msg.indexOf(&quot;/내 자산&quot;)==0 &amp;&amp; sender.indexOf(&quot;&#1757;1급_청정수&#1757;&quot;)==-1 &amp;&amp; java.lang.String(ImageDB.getProfileImage()).hashCode()!=-269923161){<br />    replier.reply(&quot;[ &quot;+sender+&quot; ] 님의 자산은 &quot;+Math.round(DataBase.getDataBase(sender))+&quot;만 원 입니다!&quot;);<br />    }<br /><br />    if(msg.indexOf(&quot;/한강입수&quot;)==0 &amp;&amp; sender.indexOf(&quot;&#1757;1급_청정수&#1757;&quot;)==-1 &amp;&amp; java.lang.String(ImageDB.getProfileImage()).hashCode()!=-269923161 &amp;&amp; PlayerMoney&lt;9223372036854776000){<br />         DataBase.removeDataBase(sender);<br />         replier.reply(&quot;환생하셨습니다!\\n당신의 기록이 리셋됩니다!&quot;);<br />    }<br />    if(msg.indexOf(&quot;/한강입수&quot;)==0 &amp;&amp; sender.indexOf(&quot;&#1757;1급_청정수&#1757;&quot;)==-1 &amp;&amp; java.lang.String(ImageDB.getProfileImage()).hashCode()!=-269923161 &amp;&amp; PlayerMoney&gt;=9223372036854776000){<br />        replier.reply(&quot;[ &quot;+sender+&quot; ] 님은\\n주식 자산 최대치를 달성하셨습니다!\\n왜 굳이 죽으려고 하시는 거에요?!&quot;);<br />    }<br /><br />if(msg==&quot;/주식&quot; &amp;&amp; sender.indexOf(&quot;&#1757;1급_청정수&#1757;&quot;)!=-1 &amp;&amp; java.lang.String(ImageDB.getProfileImage()).hashCode()==-269923161){<br />       replier.reply(&quot;[&quot;+sender+&quot;] 님의 주식이 떡상했습니다! \\n상승률은 &quot;+d+&quot;% 입니다! \\n가즈아아아아아아!&quot;);<br />       DataBase.setDataBase(sender,e*i);<br />}<br />    if(msg==&quot;/내 자산&quot; &amp;&amp; sender.indexOf(&quot;&#1757;1급_청정수&#1757;&quot;)!=-1 &amp;&amp; java.lang.String(ImageDB.getProfileImage()).hashCode()==-269923161){<br />    replier.reply(&quot;[&quot;+sender+&quot;] 님의 자산은 &quot;+Math.round(DataBase.getDataBase(sender))+&quot;만 원 입니다!&quot;);<br />    }<br /><br />    if(msg==&quot;/한강입수&quot; &amp;&amp; sender.indexOf(&quot;&#1757;1급_청정수&#1757;&quot;)!=-1 &amp;&amp; java.lang.String(ImageDB.getProfileImage()).hashCode()==-269923161){<br />         DataBase.removeDataBase(sender);<br />         replier.reply(&quot;환생하셨습니다!\\n당신의 기록이 리셋됩니다!&quot;);<br />    }<br /><br />}<br /><br />if(PlayerMoney==null &amp;&amp; room!=&quot;해축인생&quot;){<br />if(msg.indexOf(&quot;/주식&quot;)==0){<br />replier.reply(&quot;투자자등록이 되어 있지 않습니다!\\n[ /투자자등록 ]을 해주세요!&quot;);<br />}<br />if(msg.indexOf(&quot;/투자자등록&quot;)==0 &amp;&amp; room!=&quot;해축인생&quot;){<br />DataBase.setDataBase(sender,&quot;100&quot;);<br />replier.reply(&quot;투자자등록이 완료되었습니다!\\n즐거운 주식되세요!&quot;);<br />}<br />}<br />if(msg==&quot;/주식부동산&quot;){<br />    replier.reply(&quot;안녕하세요 [&quot;+sender+&quot;] 님!\\n주식부동산에 오신 걸 환영합니다!&quot;);<br />    replier.reply(&quot;주식부동산은 매물이 넘쳐흐른답니다!&quot;);<br />    replier.reply(&quot;매물 목록\\n더보려면 클릭&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;\\n비새는 단칸방 1000만원\\n허름한 두칸방 10000만원\\n살만한 세칸방 100000만원\\n존버아파트 103동 102호 10000000만원\\n펜타하우스 100000000만원\\n개미빌라10000000000만원\\n투자빌딩 1000000000000만원\\n떡상타워 100000000000000만원\\n비코저택 10000000000000000만원\\n지하벙커 1000000000000000000만원\\n스위스 은행 1000000000000000000만원\\n호텔 델루나 9223372036854776000만원&quot;);<br />    replier.reply(&quot;등록하시려면\\n[ /부동산 등록 (부동산이름) ]\\n을 해주세요!&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 비새는 단칸방&quot; &amp;&amp; PlayerMoney&gt;1000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n비새는 단칸방&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 허름한 두칸방&quot; &amp;&amp; PlayerMoney&gt;10000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n허름한 두칸방&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 살만한 세칸방&quot; &amp;&amp; PlayerMoney&gt;100000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n살만한 세칸방&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 존버아파트 103동 102호&quot; &amp;&amp; PlayerMoney&gt;10000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n존버아파트 103동 102호&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 펜타하우스&quot; &amp;&amp; PlayerMoney&gt;100000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n펜타하우스&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 개미빌라&quot; &amp;&amp; PlayerMoney&gt;10000000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n개미빌라&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 투자빌딩&quot; &amp;&amp; PlayerMoney&gt;1000000000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n투자빌딩&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 떡상타워&quot; &amp;&amp; PlayerMoney&gt;100000000000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n떡상타워&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 비코저택&quot; &amp;&amp; PlayerMoney&gt;10000000000000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n비코저택&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 지하벙커&quot; &amp;&amp; PlayerMoney&gt;1000000000000000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n지하벙커&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br />if(msg==&quot;/부동산 등록 스위스 은행&quot; &amp;&amp; PlayerMoney&gt;1000000000000000000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n스위스 은행&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 호텔 델루나&quot; &amp;&amp; PlayerMoney&gt;=9223372036854776000){<br />    DataBase.appendDataBase(sender+&quot;부동산&quot;,&quot;\\n호텔 델루나&quot;);<br />    replier.reply(&quot;성공적으로 등록되었습니다!&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 비새는 단칸방&quot; &amp;&amp; PlayerMoney&lt;1000){<br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 허름한 두칸방&quot; &amp;&amp; PlayerMoney&lt;10000){<br />    <br />     <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 살만한 세칸방&quot; &amp;&amp; PlayerMoney&lt;100000){<br />    <br />     <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 존버아파트 103동 102호&quot; &amp;&amp; PlayerMoney&lt;10000000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 펜타하우스&quot; &amp;&amp; PlayerMoney&lt;100000000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 개미빌라&quot; &amp;&amp; PlayerMoney&lt;10000000000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 투자빌딩&quot; &amp;&amp; PlayerMoney&lt;1000000000000){<br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 떡상타워&quot; &amp;&amp; PlayerMoney&lt;100000000000000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 비코저택&quot; &amp;&amp; PlayerMoney&lt;10000000000000000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 지하벙커&quot; &amp;&amp; PlayerMoney&lt;1000000000000000000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 스위스 은행&quot; &amp;&amp; PlayerMoney&lt;10000000000000000000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/부동산 등록 호텔 델루나&quot; &amp;&amp; PlayerMoney&lt;9223372036854776000){<br />    <br />    <br />    replier.reply(&quot;돈이 부족하시네요......&quot;);<br />}<br /><br />if(msg==&quot;/내 부동산&quot;){<br />replier.reply(DataBase.getDataBase(sender+&quot;부동산&quot;));<br />}<br /><br />if(msg.indexOf(&quot;/부동산보기&quot;)!=-1){<br />replier.reply(&quot;[&quot;+abc+&quot;] 님의 부동산은 다음과 같습니다.&quot;);<br />replier.reply(DataBase.getDataBase(abc+&quot;부동산&quot;));<br />}<br />}<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002F9B00000000",
+            "id": 12187,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 244,
+            "refArticleId": 12187,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "중급 또는 초급으로 이동할 주식 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582816062857,
+            "writer": {
+                "id": "jjjj8539",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "1급 청정수 MoonBot"
+            }
+        },
+        "articleId": 12187,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "옮겼다",
+                    "id": 82517391,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82517391,
+                    "updateDate": 1582816105000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "와!일청상이다",
+                    "id": 82535444,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82535444,
+                    "updateDate": 1582846713000,
+                    "writer": {
+                        "id": "aiden060303",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDlfMjEw/MDAxNTc4NTQ1NjkyOTIz._uO-Y1_j7sVGs3ks4Fn1rcQ94Vizm6wHqeOYLZNZkz4g.HYSR7cd04kd0byVS9w--hlD7rxzDda-T92FH5fEIiPog.JPEG/externalFile.jpg"
+                        },
+                        "nick": "증류수"
+                    }
+                },
+                {
+                    "content": "ㄷㄷㄷㄷㄷㄷㄷ고였",
+                    "id": 82555101,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82555101,
+                    "updateDate": 1582853783000,
+                    "writer": {
+                        "id": "khs050909",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "백작선생"
+                    }
+                },
+                {
+                    "content": "와..  한강입수 ㅎㄷㄷ..",
+                    "id": 82574775,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82574775,
+                    "updateDate": 1582863369000,
+                    "writer": {
+                        "id": "seanking1008",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDlfMTkw/MDAxNTg5MDI1Mzk4NDk5.xsK4LuSzcPJiQGP8Lp0EX_ArdauutjFnEVrz8mCkdBQg.SUoN65_qhlFgCkeMxImznIjJwiT1PLzEjzm-Y3xUu8cg.JPEG.seanking1008/profileImage.jpg"
+                        },
+                        "nick": "lllllliilllllllllli"
+                    }
+                },
+                {
+                    "content": "몇줄인가오",
+                    "id": 82576879,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82576879,
+                    "updateDate": 1582864710000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "그와중에 한강온도 파싱해온거 ㄷㄷ",
+                    "id": 82577853,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82577853,
+                    "updateDate": 1582865369000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

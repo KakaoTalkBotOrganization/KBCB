@@ -1,0 +1,140 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<p>관리자 권한을 주면 자꾸 에러가 발생합니다</p><p>&nbsp;</p><p>관리자 권한을 줬다고 메세지 나오고 스크립트 꺼지면서</p><p>&nbsp;</p><p>25에러가 뜹니다..</p><p>&nbsp;</p><p>혹시 아시는분 계신가요</p><p>&nbsp;</p><p>var sd = &quot;/storage/emulated/0&quot;;</p><p>var Admins = {};</p><p>var request = [];</p><p>var process = 0; //0 - x, 1 - 번호 입력대기, 2 - y &amp; n 입력대기</p><p>var now = 0;</p><p>function isAdmin(name, code) {</p><p>try{</p><p>Admins = JSON.parse(FileStream.read(sd+&quot;/Admin/admins.txt&quot;));</p><p>}catch(e){ Admins={};}</p><p>for(var i in Admins) {</p><p>if(name == i &amp;&amp; code == Admins[i]) return true;</p><p>}</p><p>return false;</p><p>}</p><p>function response(room, msg, sender, isG, replier, ImageDB){</p><p>if(room == &quot;/*요기에 승인처리할 방의 이름을*/&quot;) {</p><p>if(msg == &quot;cancel&quot; &amp;&amp; process != 0) {</p><p>replier.reply(&quot;진행중인 작업을 강제종료하고 대기모드로 변환합니다.&quot;);</p><p>process = 0;</p><p>return;</p><p>}</p><p>if(process == 2) {</p><p>switch(msg.toUpperCase()) {</p><p>case &quot;Y&quot; :</p><p>replier.reply(now+&quot;님의 관리자 요청을 승인하였습니다.&quot;);</p><p>Admins[now] = request[now];</p><p>FileStream.write(sd+&quot;/Admin/admins.txt&quot;,JSON.stringify(Admins));</p><p>request.splice(request.indexOf(now),1);</p><p>process = 1;</p><p>break;</p><p>case &quot;N&quot; :</p><p>replier.reply(now+&quot;님의 관리자 요청을 거부하였습니다.&quot;);</p><p>request.splice(request.indexOf(now),1);</p><p>process = 1;</p><p>break;</p><p>default :</p><p>replier.reply(&quot;올바른 명령이 아닙니다.&quot;);</p><p>process = 1;</p><p>break;</p><p>}</p><p>}</p><p>if(process == 1) {</p><p>if(!isNaN(msg)) {</p><p>if(msg &lt;= request.length &amp;&amp; msg &gt;= 1) {</p><p>replier.reply(request[msg-1]+&quot;님의 관리자 요청을 승인하시겠습니까?(Y/N)&quot;);</p><p>process = 2</p><p>now = request[msg-1];</p><p>}</p><p>}</p><p>}</p><p>if(msg == &quot;/관리자 요청처리&quot;) {</p><p>if(process == 0) {</p><p>var result = &quot;&quot;;</p><p>for(var i = 0; i &lt; request.length; i++) {</p><p>result += &quot;\\n&quot;+&quot;[&quot;+(i+1)+&quot;] &quot;+request[i]+&quot; - &quot;+request[request[i]];</p><p>}</p><p>replier.reply(&quot;관리자 요청 목록입니다.&quot;+result);</p><p>process = 1;</p><p>}</p><p>else {</p><p>replier.reply(&quot;이미 처리가 진행중입니다. 작업을 중지하시려면 \\&quot;cancel\\&quot;을 입력해주세요&quot;);</p><p>}</p><p>}</p><p>if(msg.indexOf(&quot;/관리자 박탈 &quot;) == 0) {</p><p>if(Admins[msg.substr(8)]) {</p><p>replier.reply(msg.substr(8)+&quot;님의 관리자 권한을 박탈합니다.&quot;);</p><p>delete Admins[msg.substr(8)];</p><p>FileStream.write(sd+&quot;/Admin/admins.txt&quot;,JSON.stringify(Admins));</p><p>}</p><p>else replier.reply(msg.substr(8)+&quot;님은 관리자가 아닙니다.&quot;);</p><p>}</p><p>}</p><p>if(msg == &quot;/관리자 요청&quot;) {</p><p>if(!isAdmin(sender, java.lang.String(ImageDB.getProfileImage()).hashCode())) {</p><p>if(request.indexOf(sender) == -1) {</p><p>replier.reply(sender+&quot;님의 관리자 요청이 확인되었습니다.\\n요청이 승인될 때까지 기다려주세요.&quot;);</p><p>request.push(sender);</p><p>request[sender] = java.lang.String(ImageDB.getProfileImage()).hashCode();</p><p>}</p><p>else replier.reply(sender+&quot;님은 이미 관리자 요청 승인대기 상태입니다.\\n요청이 승인될 때까지 기다려주세요.&quot;);</p><p>}</p><p>else replier.reply(&quot;이미 관리자인 대상입니다.\\n본인이 아니라면 닉네임 변경 후 다시 시도해주세요.&quot;)</p><p>}</p><p>if(msg == &quot;/관리자 목록&quot;) {</p><p>result = &quot;&quot;;</p><p>for(var i in Admins) {</p><p>result += &quot;\\n&quot;+&quot;[&quot;+i+&quot;] : &quot;+Admins[i];</p><p>}</p><p>replier.reply(&quot;봇의 관리자 목록입니다.&quot;+result);</p><p>}</p><p>}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000256800000000",
+            "id": 9576,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 64,
+            "refArticleId": 9576,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "25 에러가 나는 이유 혹시 아시나요 ..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1577960721587,
+            "writer": {
+                "id": "bonzoby",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "호랑나비"
+            }
+        },
+        "articleId": 9576,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오류 문구 스크린샷 해주세요",
+                    "id": 77434642,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77434642,
+                    "updateDate": 1577961987000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

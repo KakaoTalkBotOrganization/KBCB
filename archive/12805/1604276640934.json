@@ -1,0 +1,271 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div><b>=&gt; <font color=\"#7d7d7d\">API2</font></b></div><div><font color=\"#7d7d7d\"><br /></font></div><div><b>강좌 내용</b></div><div><b>=&gt; </b>메봇R에 존재하는 API2 사용법에 대해 알아봅시다.&nbsp;<span style=\"font-size: 10pt;\">먼저 API2가 뭔지부터 알아봐야 할 것 같네요..!&nbsp;</span></div><div><span style=\"font-size: 10pt;\">API2는 기존의 카톡봇 작동 방식(레거시 API라고 불립니다.)과는 색다른 방식(?)으로 작동합니다. 기존의 방식이 response 함수를 호출하는 반면, API2에서는 Bot이라는 객체에 종류별 리스너를 추가해주는 방식입니다.</span></div><div><br /></div><div>이제 본격적으로 사용하는 방법에 대해 알아봅시다.</div><div><br /></div><div>위에서 말했듯이, Bot 객체에 종류별 리스너를 추가해줘야 합니다. Bot 객체는 스크립트 한 개당 한 개를 갖고 있습니다. 현재 스크립트에 할당된 Bot 객체를 가져오려면 BotManager라는 객체를 사용해야합니다!</div><div><br /></div><div>const Bot = BotManager.getCurrentBot();</div><div><br /></div><div>BotManager의 getCurrentBot 메서드는 현재 스크립트에 할당된 Bot을 가져옵니다.</div><div>이제 이 Bot을 가지고 쪼물딱쪼물딱 놀아보겠습니다.</div><div>위에서 종류별 리스너를 추가한다고 했죠? 리스너를 추가하는 방법을 알아봅시다.</div><div><br /></div><div>Bot.addListener(이벤트이름, 리스너);</div><div>이 메소드는 해당 이벤트가 발생했을 때 호출될 이벤트 리스너를 추가합니다. 이벤트 종류는 여러가지가 있는데, 이번 시간에는 메시지 수신 이벤트 리스너에 대해 파봅시다.</div><div><br /></div><div>메시지 수신 이벤트 이름은 다음과 같습니다: Event.MESSAGE ( = &quot;message&quot;)</div><div>그리고 이 이벤트 리스너에 넘어오는 매개변수는 메시지 정보와 답장 메서드를 담고 있는 객체인데, 소스를 작성하면서 한 번 살펴보도록 하죠. 제가 예시 소스를 작성해드리도록 하겠습니다.</div><div><br /></div><div><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #0000ff;\">function</span> onMessage(msg) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #0000ff;\">if</span> (msg.content == <span style=\"color: #a31515;\">&quot;야 마얼봇&quot;</span>) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg.reply(msg.author.name + <span style=\"color: #a31515;\">&quot;, 왜?&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #0000ff;\">if</span> (msg.content == <span style=\"color: #a31515;\">&quot;이 방 이름 뭐임?&quot;</span>) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg.reply(msg.room + <span style=\"color: #a31515;\">&quot; 임&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #0000ff;\">if</span> (msg.content == <span style=\"color: #a31515;\">&quot;해시코드 뽑아와봐라&quot;</span>) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg.reply(<span style=\"color: #a31515;\">&quot;니 해시코드 내가 뽑아야되냐? 열라귀찮누;;&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;java.lang.<span style=\"color: #008080;\">Thread</span>.sleep(<span style=\"color: #09885a;\">1000</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg.reply(<span style=\"color: #0000ff;\">new</span> java.lang.<span style=\"color: #008080;\">String</span>(msg.author.avatar.getBase64()).hashCode());</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>}</div><div><span style=\"color: #008080;\">Bot</span>.addListener(<span style=\"color: #008080;\">Event</span>.<span style=\"color: #008080;\">MESSAGE</span>, onMessage);</div></div></div><div><br /></div><div>복잡해보이지만, 간단합니다.</div><div>먼저 매개변수에 대해 설명을 하자면, msg에는 위에서 말했듯이 객체가 담겨있습니다. msg.content에는 수신된 메시지 내용이 담겨있고, msg.author에는 보낸 사람의 정보, msg.reply 메서드를 통해 답장할 수 있습니다.</div><div>msg.author.name으로 보낸사람 이름, msg.author.avatar.getBase64() 메서드를 통해 사용자의 프로필사진을 base64로 인코딩하여 가져올 수 있습니다.</div><div>그리고 맨 밑에 addListener를 통해 onMessage 함수를 메시지 수신 이벤트 리스너에 추가하는 것을 볼 수 있습니다.</div><div><br /></div><div>따라서 저 소스가 어떻게 작동하냐면, &apos;야 마얼봇&apos; 을 보낼 경우 보낸 사람의 닉네임을 인용하여 왜? 라고 답장하고, 이 방 이름을 물어보면 방 이름을 답장하고, 해시코드 뽑아보라고 하면 대충 뽑아주고...뭐 그런 식입니다.</div><div><b><br /></b></div><div>다음에는 Event.COMMAND 이벤트에 대해 알아보겠습니다.</div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000320500000000",
+            "head": "초급",
+            "headId": 5,
+            "id": 12805,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 389,
+            "refArticleId": 12805,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[메봇R] 따끈따끈한 API2 사용법을.araboza (1)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583497566633,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음"
+            }
+        },
+        "articleId": 12805,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "으앙 복귀마려워요 ㅠㅠ",
+                    "id": 83346618,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83346618,
+                    "updateDate": 1583497770000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "산하"
+                    }
+                },
+                {
+                    "content": "ㄱㄱㄱㄱㄱ",
+                    "id": 83346764,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83346618,
+                    "updateDate": 1583497853000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 83399516,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83399516,
+                    "updateDate": 1583554535000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "cowfly..",
+                    "id": 83399535,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83399516,
+                    "updateDate": 1583554539000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "음...리스폰스 아닌곳에서 sender마려우면 쓰라는건ㄱ...",
+                    "id": 84400860,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84400860,
+                    "updateDate": 1584375031000,
+                    "writer": {
+                        "id": "kksu0307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjVfNTkg/MDAxNTg1MTAzMjc4MzM3.ICF5vHNeMOOZXJsPqmK_RUokBQgEmy9Exz66yvQRLvgg.zTKZsx6cQDbb34GPw950MtHdZ9cH5x5hZW-B088C6Kkg.JPEG.kksu0307/profileImage.jpg"
+                        },
+                        "nick": "shurieL"
+                    }
+                },
+                {
+                    "content": "감사합니다.~ 안그래도 뭘 어떻게 해야 하는건가 했는데 얼음님 덕분에 감잡고 있습니다.",
+                    "id": 87771614,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87771614,
+                    "updateDate": 1587154482000,
+                    "writer": {
+                        "id": "ghdwls31023",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110118_296/ghdwls31023_1295305670363_2BNqAn_jpg/main2.jpg"
+                        },
+                        "nick": "엣지오"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

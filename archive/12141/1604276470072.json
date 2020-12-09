@@ -1,0 +1,227 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>아래 소스대로하니깐&nbsp;</p><p>봇이&nbsp;&nbsp;</p><p>[봇]</p><p>가르치기한말</p><p>&nbsp;</p><p>&nbsp;</p><p>이렇게 말을 하는데 봇글자를 빼려면 아래소스서 어케해야하나요??</p><p>&nbsp;</p><p>const COMPRESS = &quot;\\u200b&quot;.repeat(500)</p><p>const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</p><p>let folder = new java.io.File(sdcard + &quot;/DB/&quot;);</p><p>folder.mkdirs();</p><p>&nbsp;</p><p>function save(fol, file, str) {</p><p>&nbsp; &nbsp;var c = new java.io.File(sdcard + &quot;/&quot; + fol + &quot;/&quot; + file);</p><p>&nbsp; &nbsp;var d = new java.io.FileOutputStream(c);</p><p>&nbsp; &nbsp;var e = new java.lang.String(str);</p><p>&nbsp; &nbsp;d.write(e.getBytes());</p><p>&nbsp; &nbsp;d.close();</p><p>}</p><p>&nbsp;</p><p>function read(fol, file) {</p><p>&nbsp; &nbsp;var b = new java.io.File(sdcard + &quot;/&quot; + fol + &quot;/&quot; + file);</p><p>&nbsp; &nbsp;if (!(b.exists())) return null;</p><p>&nbsp; &nbsp;var c = new java.io.FileInputStream(b);</p><p>&nbsp; &nbsp;var d = new java.io.InputStreamReader(c);</p><p>&nbsp; &nbsp;var e = new java.io.BufferedReader(d);</p><p>&nbsp; &nbsp;var f = e.readLine();</p><p>&nbsp; &nbsp;var g = &quot;&quot;;</p><p>&nbsp; &nbsp;while ((g = e.readLine()) != null) {</p><p>&nbsp; &nbsp; &nbsp; f += &quot;\\n&quot; + g;</p><p>&nbsp; &nbsp;}</p><p>&nbsp; &nbsp;c.close();</p><p>&nbsp; &nbsp;d.close();</p><p>&nbsp; &nbsp;e.close();</p><p>&nbsp; &nbsp;return f.toString();</p><p>}</p><p>let words = [&quot;씨발&quot;, &quot;비속어&quot;, &quot;섹스&quot;, &quot;세엑스&quot;, &quot;sex&quot;];</p><p>&nbsp;</p><p>function response(room, msg, sender, isGroupChat, replier, ImageDB) {</p><p>&nbsp; &nbsp;var 비속어감지 = false;</p><p>&nbsp; &nbsp;if (!msg.indexOf(&quot;/가르치기 &quot;)) {</p><p>&nbsp; &nbsp; &nbsp; var study = msg.substring(6).split(&quot;=&quot;)</p><p>&nbsp; &nbsp; &nbsp; for (var n in words) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (study[0].indexOf(words[n]) != -1) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;부적절 한 말 감지.\\n&quot; + &quot;*&quot; + words[n].substr(1) + &quot;때문에 추가시킬 수 없습니다.&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 비속어감지 = true;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else if (study[1].indexOf(words[n]) != -1) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;부적절 한 말 감지.\\n&quot; + &quot;*&quot; + words[n].substr(1) + &quot;때문에 추가시킬 수 없습니다.&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 비속어감지 = true;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else if (study[1] === &quot;&quot; || study[0] === &quot;&quot;) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;잘못입력 하셨습니다.\\n/가르치기 (가르칠 말)=(가르칠 내용) 으로 해주세요.&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 비속어감지 = true;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p><p>&nbsp; &nbsp; &nbsp; }</p><p>&nbsp; &nbsp; &nbsp; if (비속어감지 === false) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var talk2 = read(&quot;DB&quot;, study[0] + &quot;.txt&quot;)</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (talk2 === null) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;새로운 말을 배웠어요!.&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var folder = new java.io.File(sdcard + &quot;/DB/&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; folder.mkdirs();</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; save(&quot;DB&quot;, study[0].trim() + &quot;.txt&quot;, study[1]);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n이미 배운말이예요.&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</p><p>&nbsp; &nbsp; &nbsp; }</p><p>&nbsp; &nbsp;}</p><p>&nbsp; &nbsp;var talk = read(&quot;DB&quot;, msg + &quot;.txt&quot;)</p><p>&nbsp; &nbsp;if (talk !== null) {</p><p>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n&quot; + talk);</p><p>&nbsp; &nbsp; &nbsp; save(&quot;DB&quot;, msg + &quot;.txt&quot;, talk)</p><p>&nbsp; &nbsp;}</p><p>&nbsp; &nbsp;if (!msg.indexOf(&quot;/학습제거&quot;)) {</p><p>&nbsp; &nbsp; &nbsp; var del = read(&quot;DB&quot;, msg.substr(6) + &quot;.txt&quot;);</p><p>&nbsp; &nbsp; &nbsp; if (del == null) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;배우지 않은 말입니다.&quot;);</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</p><p>&nbsp; &nbsp; &nbsp; } else {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(msg.substr(6) + &quot;의 학습내용 : &quot; + read(&quot;DB&quot;, msg.substr(6) + &quot;.txt&quot;));</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;new java</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .io</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .File(&quot;sdcard/DB/&quot; + msg.substr(6) + &quot;.txt&quot;)</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .delete()</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .reply(&quot;학습을 제거하였습니다.&quot;);</p><p>&nbsp; &nbsp; &nbsp; }</p><p>&nbsp; &nbsp;}</p><p>&nbsp; &nbsp;if (msg.indexOf(&quot;가르친말목록&quot;) === 0) {</p><p>&nbsp; &nbsp; &nbsp; var dir = new java.io.File(sdcard + &quot;/DB/&quot;);</p><p>&nbsp; &nbsp; &nbsp; var index = &quot;&quot;</p><p>&nbsp; &nbsp; &nbsp; var files = dir.list();</p><p>&nbsp; &nbsp; &nbsp; files.sort();</p><p>&nbsp; &nbsp; &nbsp; for (var i in files) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;index += files[i];</p><p>&nbsp; &nbsp; &nbsp; }</p><p>&nbsp; &nbsp; &nbsp; var wordList = index.replace(/.txt/g, &quot;\\n&quot;);</p><p>&nbsp; &nbsp; &nbsp; replier.reply(&quot;[봇]\\n배운말목록입니다.\\n&quot; + COMPRESS + wordList);</p><p>&nbsp; &nbsp;}</p><p>}</p><p>&nbsp;</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002F6D00000000",
+            "id": 12141,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 236,
+            "refArticleId": 12141,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "가르치기소스 좀 봐주세요",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582789383333,
+            "writer": {
+                "id": "whwotjd202",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA0MTlfMTU1/MDAxNTg3MjgwOTQyODIw.vQzaZc761BiU3Lg-elfD699zvhtJ9_DGawaP6dx5JBAg.ef8_yNodfuE1IWeyYWeBSSD1pjVf4KPmohv57aTH2PMg.JPEG/Screenshot_20170707-075801.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "싱글라이더"
+            }
+        },
+        "articleId": 12141,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "const COMPRESS = \"\\u200b\".repeat(500)\r\nconst sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();\r\nlet folder = new java.io.File(sdcard + \"/DB/\");\r\nfolder.mkdirs();\r\n \r\nfunction save(fol, file, str) {\r\n   var c = new java.io.File(sdcard + \"/\" + fol + \"/\" + file);\r\n   var d = new java.io.FileOutputStream(c);\r\n   var e = new java.lang.String(str);\r\n   d.write(e.getBytes());\r\n   d.close();\r\n}\r\n \r\nfunction read(fol, file) {\r\n   var b = new java.io.File(sdcard + \"/\" + fol + \"/\" + file);\r\n   if (!(b.exists())) return null;\r\n   var c = new java.io.FileInputStream(b);\r\n   var d = new java.io.InputStreamReader(c);\r\n   var e = new java.io.BufferedReader(d);\r\n   var f = e.readLine();\r\n   var g = \"\";\r\n   while ((g = e.readLine()) != null) {\r\n      f += \"\\n\" + g;\r\n   }\r\n\r\n   c.close();\r\n   d.close();\r\n   e.close();\r\n   return f.toString();\r\n}\r\n\r\nlet words = [\"씨발\", \"비속어\", \"섹스\", \"세엑스\", \"sex\"];\r\n\r\nfunction response(room, msg, sender, isGroupChat, replier, ImageDB) {\r\n\r\n   var 비속어감지 = false;\r\n   if (!msg.indexOf(\"/가르치기 \")) {\r\n      var study = msg.substring(6).split(\"=\")\r\n      for (var n in words) {\r\n         if (study[0].indexOf(words[n]) != -1) {\r\n            replier.reply(\"부적절 한 말 감지.\\n\" + \"*\" + words[n].substr(1) + \"때문에 추가시킬 수 없습니다.\");\r\n            비속어감지 = true;\r\n            break;\r\n         } else if (study[1].indexOf(words[n]) != -1) {\r\n            replier.reply(\"부적절 한 말 감지.\\n\" + \"*\" + words[n].substr(1) + \"때문에 추가시킬 수 없습니다.\");\r\n            비속어감지 = true;\r\n            break;\r\n         } else if (study[1] === \"\" || study[0] === \"\") {\r\n            replier.reply(\"잘못입력 하셨습니다.\\n/가르치기 (가르칠 말)=(가르칠 내용) 으로 해주세요.\");\r\n            비속어감지 = true;\r\n            break;\r\n         }\r\n      }\r\n      if (비속어감지 === false) {\r\n         var talk2 = read(\"DB\", study[0] + \".txt\")\r\n         if (talk2 === null) {\r\n            replier.reply(\"새로운 말을 배웠어요!.\");\r\n            var folder = new java.io.File(sdcard + \"/DB/\");\r\n            folder.mkdirs();\r\n            save(\"DB\", study[0].trim() + \".txt\", study[1]);\r\n         } else {\r\n            replier.reply(\"이미 배운말이예요.\");\r\n\r\n         }\r\n\r\n      }\r\n\r\n   }\r\n\r\n   var talk = read(\"DB\", msg + \".txt\")\r\n   if (talk !== null) {\r\n      replier.reply(talk);\r\n      save(\"DB\", msg + \".txt\", talk)\r\n   }\r\n   if (!msg.indexOf(\"/학습제거\")) {\r\n      var del = read(\"DB\", msg.substr(6) + \".txt\");\r\n      if (del == null) {\r\n         replier.reply(\"배우지 않은 말입니다.\");\r\n         return;\r\n      } else {\r\n         replier.reply(msg.substr(6) + \"의 학습내용 : \" + read(\"DB\", msg.substr(6) + \".txt\"));\r\n         new java\r\n            .io\r\n            .File(\"sdcard/DB/\" + msg.substr(6) + \".txt\")\r\n            .delete()\r\n         replier\r\n            .reply(\"학습을 제거하였습니다.\");\r\n      }\r\n\r\n   }\r\n   if (msg.indexOf(\"가르친말목록\") === 0) {\r\n      var dir = new java.io.File(sdcard + \"/DB/\");\r\n      var index = \"\"\r\n      var files = dir.list();\r\n      files.sort();\r\n      for (var i in files) {\r\n         index += files[i];\r\n\r\n      }\r\n      var wordList = index.replace(/.txt/g, \"\\n\");\r\n      replier.reply(\"배운말목록입니다.\\n\" + COMPRESS + wordList);\r\n\r\n   }\r\n\r\n}\r\n\r\n \r\n\r\n",
+                    "id": 82474497,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 82474497,
+                    "updateDate": 1582790454000,
+                    "writer": {
+                        "id": "pauljjang410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "그린스크린"
+                    }
+                },
+                {
+                    "content": "감사합니다ㅜㅜㅜ",
+                    "id": 82474651,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82474497,
+                    "updateDate": 1582790460000,
+                    "writer": {
+                        "id": "whwotjd202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTlfMTU1/MDAxNTg3MjgwOTQyODIw.vQzaZc761BiU3Lg-elfD699zvhtJ9_DGawaP6dx5JBAg.ef8_yNodfuE1IWeyYWeBSSD1pjVf4KPmohv57aTH2PMg.JPEG/Screenshot_20170707-075801.jpg"
+                        },
+                        "nick": "싱글라이더"
+                    }
+                },
+                {
+                    "content": "그냥 [봇] 이라는 말을 지운것 뿐이에요..",
+                    "id": 82475047,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82474497,
+                    "replyMember": {
+                        "id": "whwotjd202",
+                        "nick": "싱글라이더"
+                    },
+                    "updateDate": 1582790703000,
+                    "writer": {
+                        "id": "pauljjang410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "그린스크린"
+                    }
+                },
+                {
+                    "content": "그렇군요... 제가 지웠을땐 안됐어서 질문드린건데 엄한걸 지웠었나봅니다",
+                    "id": 82475131,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 82474497,
+                    "replyMember": {
+                        "id": "pauljjang410",
+                        "nick": "그린스크린"
+                    },
+                    "updateDate": 1582790751000,
+                    "writer": {
+                        "id": "whwotjd202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTlfMTU1/MDAxNTg3MjgwOTQyODIw.vQzaZc761BiU3Lg-elfD699zvhtJ9_DGawaP6dx5JBAg.ef8_yNodfuE1IWeyYWeBSSD1pjVf4KPmohv57aTH2PMg.JPEG/Screenshot_20170707-075801.jpg"
+                        },
+                        "nick": "싱글라이더"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

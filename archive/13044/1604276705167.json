@@ -1,0 +1,145 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "&gt;<p>메신저봇r인데 사람마다 명령어를 쓸 수 있는 세번의 기회를 주고 한번 쓸때 마다 그사람의 기회가 줄어들고 하루마다 리셋되게 해주실 수 있나요? 컴파일 해도 기회가 다시 차지 않으면 좋지만 그렇지 않아도 됩니다. 부탁드립니다.</p><p><br /></p><p><br /></p><p>테스트는 안해봤으니 안되면 추가 질문해주세요.</p><p>복붙 말고 첨부 파일 넣어도 되요. 똑같은 거에요.</p><p>Here</p><p>&gt;</p><p><br /></p><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #569cd6;\">const</span>&nbsp;<span style=\"color: #9cdcfe;\">scriptName</span>=<span style=\"color: #ce9178;\">&quot;답변입니다&quot;</span>;</div><br /><div><span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">isSet</span>=<span style=\"color: #569cd6;\">false</span>;</div><div><span style=\"color: #6a9955;\">//컴파일&nbsp;하고&nbsp;다시&nbsp;실행하신건지&nbsp;체크하는&nbsp;변수입니다.</span></div><br /><div><span style=\"color: #6a9955;\">//객체쓰면&nbsp;도망가실까봐&nbsp;객체는&nbsp;안쓰겠습니다;</span></div><div><span style=\"color: #6a9955;\">//(쓰면&nbsp;더&nbsp;쉬운ㄷ....)</span></div><div><span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">counts</span>=[];<span style=\"color: #6a9955;\">//유저별&nbsp;id와&nbsp;명령어&nbsp;횟수를&nbsp;담을&nbsp;배열</span></div><div><span style=\"color: #6a9955;\">//위의&nbsp;배열안에&nbsp;&quot;유저&nbsp;id/횟수&quot;의&nbsp;형식으로&nbsp;담아서&nbsp;쓸겁니다.</span></div><br /><div><span style=\"color: #569cd6;\">const</span>&nbsp;<span style=\"color: #9cdcfe;\">Master</span>;</div><div><span style=\"color: #569cd6;\">const</span>&nbsp;<span style=\"color: #9cdcfe;\">MasterName</span>;</div><div><span style=\"color: #6a9955;\">//여기에&nbsp;마스터를&nbsp;등록할&nbsp;겁니다.(마스터&nbsp;전용&nbsp;명령어를&nbsp;쓰기&nbsp;위함임과&nbsp;동시에&nbsp;첫&nbsp;작동시&nbsp;오류&nbsp;방지를&nbsp;위한&nbsp;겁니다.)</span></div><br /><div><span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">password</span>=<span style=\"color: #ce9178;\">&quot;인증시&nbsp;사용할&nbsp;비밀번호를&nbsp;써주세요.&quot;</span>;</div><br /><div><span style=\"color: #569cd6;\">const</span>&nbsp;<span style=\"color: #9cdcfe;\">path</span>=<span style=\"color: #ce9178;\">&quot;여기에&nbsp;원하시는&nbsp;저장&nbsp;경로를&nbsp;써주세요.(예시&gt;&nbsp;/storage/emulated/0/UsersData/Users.txt)&quot;</span>;</div><div><span style=\"color: #6a9955;\">/*경로&nbsp;쓰실&nbsp;때&nbsp;참고!&nbsp;/storage/emulated/0/까지가&nbsp;내부저장소&nbsp;기본&nbsp;경로입니다.</span></div><div><span style=\"color: #6a9955;\">고로&nbsp;위의&nbsp;경로는&nbsp;내부저장소-UsersData라는&nbsp;폴더-Users라는&nbsp;텍스트&nbsp;파일</span></div><div><span style=\"color: #6a9955;\">저장은&nbsp;txt기반으로&nbsp;합니다.(txt로&nbsp;해야&nbsp;혹시&nbsp;수정해야&nbsp;될&nbsp;경우에&nbsp;편리합니다.)*/</span></div><br /><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">response</span>(<span style=\"color: #9cdcfe;\">room</span>,&nbsp;<span style=\"color: #9cdcfe;\">msg</span>,&nbsp;<span style=\"color: #9cdcfe;\">sender</span>,&nbsp;<span style=\"color: #9cdcfe;\">isGroupChat</span>,&nbsp;<span style=\"color: #9cdcfe;\">replier</span>,&nbsp;<span style=\"color: #9cdcfe;\">imageDB</span>){</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(!<span style=\"color: #9cdcfe;\">isSet</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(!<span style=\"color: #9cdcfe;\">FileStream</span>.<span style=\"color: #dcdcaa;\">read</span>(<span style=\"color: #9cdcfe;\">path</span>)){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">FileStream</span>.<span style=\"color: #dcdcaa;\">write</span>(<span style=\"color: #9cdcfe;\">path</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//만약&nbsp;경로에&nbsp;파일이&nbsp;없다면,(첫&nbsp;실행시&nbsp;또는&nbsp;삭제시)&nbsp;파일을&nbsp;자동으로&nbsp;생성합니다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//!는&nbsp;정의되어&nbsp;있지&nbsp;않다,&nbsp;또는&nbsp;없다&nbsp;정도로&nbsp;생각하시면&nbsp;될&nbsp;것&nbsp;같습니다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">counts</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">FileStream</span>.<span style=\"color: #dcdcaa;\">read</span>(<span style=\"color: #9cdcfe;\">path</span>).<span style=\"color: #dcdcaa;\">toString</span>().<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&apos;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//저장된&nbsp;파일은</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//유저1&nbsp;id/횟수</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//유저2&nbsp;id/횟수</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//이런&nbsp;형식인데요,&nbsp;이걸&nbsp;split(&apos;\\n&apos;)으로&nbsp;엔터를&nbsp;기준을&nbsp;잘라서&nbsp;counts배열에&nbsp;넣어줍시다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">isSet</span>=<span style=\"color: #569cd6;\">true</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">id</span>=<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">lang</span>.<span style=\"color: #dcdcaa;\">String</span>(<span style=\"color: #9cdcfe;\">imageDB</span>.<span style=\"color: #dcdcaa;\">getProfileImage</span>()).<span style=\"color: #dcdcaa;\">hashCode</span>();</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">who</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">for</span>(<span style=\"color: #9cdcfe;\">i</span>&nbsp;<span style=\"color: #569cd6;\">in</span>&nbsp;<span style=\"color: #9cdcfe;\">counts</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">i</span>].<span style=\"color: #dcdcaa;\">indexOf</span>(<span style=\"color: #9cdcfe;\">id</span>)!=-<span style=\"color: #b5cea8;\">1</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">who</span>=<span style=\"color: #9cdcfe;\">i</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(!<span style=\"color: #9cdcfe;\">who</span>&amp;&amp;<span style=\"color: #9cdcfe;\">id</span>!=<span style=\"color: #9cdcfe;\">Master</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//새로운&nbsp;유저라면&nbsp;새로&nbsp;등록.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">counts</span>.<span style=\"color: #dcdcaa;\">push</span>(<span style=\"color: #9cdcfe;\">id</span>+<span style=\"color: #ce9178;\">&quot;/3&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">who</span>=<span style=\"color: #9cdcfe;\">counts</span>.<span style=\"color: #9cdcfe;\">length</span>-<span style=\"color: #b5cea8;\">1</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">indexOf</span>(<span style=\"color: #ce9178;\">&apos;인증&apos;</span>)==<span style=\"color: #b5cea8;\">0</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">Matster</span>){<span style=\"color: #c586c0;\">return</span>;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//이미&nbsp;마스터가&nbsp;있다면,&nbsp;안받아줍니다.</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">password</span>==<span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">substring</span>(<span style=\"color: #b5cea8;\">3</span>)){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//인증&nbsp;하실때&nbsp;「인증&nbsp;[비밀번호]」이렇게&nbsp;치시면&nbsp;됩니다.</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">Master</span>=<span style=\"color: #9cdcfe;\">id</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//imageDB.getProfileImage()하시면&nbsp;프로필&nbsp;사진을&nbsp;괴에에엥장히&nbsp;긴&nbsp;base64코드로&nbsp;반환해주는데요,</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//java.lang.String().hashCode()로&nbsp;짧은&nbsp;암호로&nbsp;변형&nbsp;한겁니다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">MasterName</span>=<span style=\"color: #9cdcfe;\">sender</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//비밀번호를&nbsp;맞췄으니&nbsp;마스터로&nbsp;등록.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">try</span>{</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #dcdcaa;\">Check</span>(<span style=\"color: #9cdcfe;\">who</span>)||<span style=\"color: #9cdcfe;\">id</span>==<span style=\"color: #9cdcfe;\">Master</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">switch</span>(<span style=\"color: #9cdcfe;\">msg</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">case</span>&nbsp;<span style=\"color: #ce9178;\">&apos;.저장&apos;</span>:</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">id</span>!=<span style=\"color: #9cdcfe;\">Master</span>){<span style=\"color: #c586c0;\">return</span>;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//끄기&nbsp;전에&nbsp;꼭&nbsp;저장&nbsp;하세요.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">Save</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;저장&nbsp;완료!&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">break</span>;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">case</span>&nbsp;<span style=\"color: #ce9178;\">&apos;.테스트&apos;</span>:</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;테스트용&nbsp;명령어입니다.</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">명령어&nbsp;횟수&nbsp;차감(-1)&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">Use</span>(<span style=\"color: #9cdcfe;\">who</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">break</span>;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">case</span>&nbsp;<span style=\"color: #ce9178;\">&apos;.재고&apos;</span>:</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;명령어&nbsp;횟수가&nbsp;얼마나&nbsp;남았는지&nbsp;확인!</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">(명령어&nbsp;횟수를&nbsp;사용하지&nbsp;않습니다.)</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">sender</span>+<span style=\"color: #ce9178;\">&quot;님은&nbsp;앞으로&nbsp;&quot;</span>+<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">who</span>].<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\/</span><span style=\"color: #ce9178;\">&apos;</span>)[<span style=\"color: #b5cea8;\">1</span>]+<span style=\"color: #ce9178;\">&quot;번&nbsp;남으셨어요.&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">break</span>;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//여기&nbsp;사이에&nbsp;명령어를&nbsp;위&nbsp;양식대로&nbsp;씁니다.</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">default</span>:</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">break</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span style=\"color: #c586c0;\">catch</span>(<span style=\"color: #9cdcfe;\">error</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #9cdcfe;\">error</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//try{}catch{}문은&nbsp;오류가&nbsp;있을&nbsp;시에&nbsp;어떻게&nbsp;할지에&nbsp;관한&nbsp;구문입니다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//오류가&nbsp;날&nbsp;경우&nbsp;오류&nbsp;내용을&nbsp;방으로&nbsp;보내줍니다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>}</div><br /><br /><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">Save</span>(){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//저장입니다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">save</span>=<span style=\"color: #9cdcfe;\">counts</span>.<span style=\"color: #dcdcaa;\">join</span>(<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&apos;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">FileStream</span>.<span style=\"color: #dcdcaa;\">write</span>(<span style=\"color: #9cdcfe;\">path</span>,&nbsp;<span style=\"color: #9cdcfe;\">save</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//엔터로&nbsp;짤라서&nbsp;배열화&nbsp;했으니&nbsp;다시&nbsp;엔터를&nbsp;붙여주면&nbsp;되겠죠.</span></div><div>}</div><br /><br /><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">Check</span>(<span style=\"color: #9cdcfe;\">num</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//횟수&nbsp;재고&nbsp;소진&nbsp;여부를&nbsp;확인합니다.</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">id</span>=<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">num</span>].<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\/</span><span style=\"color: #ce9178;\">&apos;</span>)[<span style=\"color: #b5cea8;\">0</span>];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">left</span>=<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">num</span>].<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\/</span><span style=\"color: #ce9178;\">&apos;</span>)[<span style=\"color: #b5cea8;\">1</span>];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//배열이&nbsp;&quot;유저&nbsp;id/횟수의&nbsp;형식이니&nbsp;이번에&nbsp;/로&nbsp;짤라&nbsp;줍시다.&quot;;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//따옴표&nbsp;안에서&nbsp;특수문자를&nbsp;사용할&nbsp;때는&nbsp;보통&nbsp;앞에&nbsp;\\(역슬래시&nbsp;또는&nbsp;원(한화)기호)를&nbsp;붙여줍니다.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//짜른&nbsp;후에&nbsp;배열에서&nbsp;0,1중&nbsp;0(첫&nbsp;번째&nbsp;항목)은&nbsp;유저의&nbsp;id일거고,&nbsp;1(두&nbsp;번째&nbsp;항목)을&nbsp;가져오면&nbsp;해당&nbsp;유저의&nbsp;남은&nbsp;횟수겠죠.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">left</span>&lt;=<span style=\"color: #b5cea8;\">0</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//0이하면&nbsp;거짓을&nbsp;반환</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;<span style=\"color: #569cd6;\">true</span>;</div><div>}</div><br /><br /><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">Use</span>(<span style=\"color: #9cdcfe;\">num</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//횟수&nbsp;사용</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">countLeft</span>=(<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">num</span>].<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\/</span><span style=\"color: #ce9178;\">&apos;</span>)[<span style=\"color: #b5cea8;\">1</span>]*<span style=\"color: #b5cea8;\">1</span>)-<span style=\"color: #b5cea8;\">1</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">num</span>]=<span style=\"color: #9cdcfe;\">id</span>+<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\/</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">countLeft</span>*<span style=\"color: #b5cea8;\">1</span>;</div><div>}</div><br /><br /><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">Give</span>(<span style=\"color: #9cdcfe;\">num</span>,<span style=\"color: #9cdcfe;\">count</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//충전</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">let</span>&nbsp;<span style=\"color: #9cdcfe;\">countLeft</span>=(<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">num</span>].<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\/</span><span style=\"color: #ce9178;\">&apos;</span>)[<span style=\"color: #b5cea8;\">1</span>]*<span style=\"color: #b5cea8;\">1</span>)+<span style=\"color: #9cdcfe;\">count</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">counts</span>[<span style=\"color: #9cdcfe;\">num</span>]=<span style=\"color: #9cdcfe;\">id</span>+<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\/</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #9cdcfe;\">countLeft</span>*<span style=\"color: #b5cea8;\">1</span>;</div><div>}</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000032F400000000",
+            "id": 13044,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 21,
+                "menuType": "B",
+                "name": "| 소스 요청 |"
+            },
+            "readCount": 215,
+            "refArticleId": 13024,
+            "replyListOrder": "1",
+            "scrapCount": 0,
+            "subject": "소스 요청 합니다. 고인물분들을 기달립니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583754096120,
+            "writer": {
+                "id": "littledanny",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "닉넴421"
+            }
+        },
+        "articleId": 13044,
+        "attaches": [
+            {
+                "extension": "js",
+                "fullName": "index.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "index.js",
+                "size": 5038,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/83169f283c0809bc9175122614ff80f9590bf58c/20200309_63_cafefile/29537083_1583754092163_KBmlY0_js/index.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": true,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "카톡봇",
+                "headId": 84
+            },
+            {
+                "head": "디코봇",
+                "headId": 85
+            },
+            {
+                "head": "기타",
+                "headId": 86
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

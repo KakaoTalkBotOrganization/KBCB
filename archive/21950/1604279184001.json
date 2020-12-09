@@ -1,0 +1,265 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>타자 마스터라는 사이트에서 가져왔습니다.</p><p>타수 기준이 명확히 나와있지 않아, 정확하지 않을수 있습니다.</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><span style=\"font-size: 17.3333px;\">const scriptName=&quot;타자게임.js&quot;;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">var F=FileStream;</span></p><p><span style=\"font-size: 17.3333px;\">var b=[];</span></p><p><span style=\"font-size: 17.3333px;\">var blank=&quot;\\u200b&quot;.repeat(501)</span></p><p><span style=\"font-size: 17.3333px;\">var time={}</span></p><p><span style=\"font-size: 17.3333px;\">var able={}</span></p><p><span style=\"font-size: 17.3333px;\">var random1=0;</span></p><p><span style=\"font-size: 17.3333px;\">var random2=0;</span></p><p><span style=\"font-size: 17.3333px;\">var mission={}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">function timer(a){</span></p><p><span style=\"font-size: 17.3333px;\">new java.lang.Thread(new java.lang.Runnable(){</span></p><p><span style=\"font-size: 17.3333px;\">run: () =&gt; {</span></p><p><span style=\"font-size: 17.3333px;\">while(able[a]==false){</span></p><p><span style=\"font-size: 17.3333px;\">java.lang.Thread.sleep(1000);</span></p><p><span style=\"font-size: 17.3333px;\">time[a]++;</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp; }).start();</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">const CHOSEONGS = [&apos;ㄱ&apos;, &apos;ㄲ&apos;, &apos;ㄴ&apos;, &apos;ㄷ&apos;, &apos;ㄸ&apos;, &apos;ㄹ&apos;, &apos;ㅁ&apos;, &apos;ㅂ&apos;, &apos;ㅃ&apos;, &apos;ㅅ&apos;, &apos;ㅆ&apos;, &apos;ㅇ&apos;, &apos;ㅈ&apos;, &apos;ㅉ&apos;, &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">const JUNGSEONGS = [&apos;ㅏ&apos;, &apos;ㅐ&apos;, &apos;ㅑ&apos;, &apos;ㅒ&apos;, &apos;ㅓ&apos;, &apos;ㅔ&apos;, &apos;ㅕ&apos;, &apos;ㅖ&apos;, &apos;ㅗ&apos;, &apos;ㅘ&apos;, &apos;ㅙ&apos;, &apos;ㅚ&apos;, &apos;ㅛ&apos;, &apos;ㅜ&apos;, &apos;ㅝ&apos;, &apos;ㅞ&apos;, &apos;ㅟ&apos;, &apos;ㅠ&apos;, &apos;ㅡ&apos;, &apos;ㅢ&apos;, &apos;ㅣ&apos;];</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">const JONGSEONGS = [&apos;&apos;, &apos;ㄱ&apos;, &apos;ㄲ&apos;, &apos;ㄳ&apos;, &apos;ㄴ&apos;, &apos;ㄵ&apos;, &apos;ㄶ&apos;, &apos;ㄷ&apos;, &apos;ㄹ&apos;, &apos;ㄺ&apos;, &apos;ㄻ&apos;, &apos;ㄼ&apos;, &apos;ㄽ&apos;, &apos;ㄾ&apos;, &apos;ㄿ&apos;, &apos;ㅀ&apos;, &apos;ㅁ&apos;, &apos;ㅂ&apos;, &apos;ㅄ&apos;, &apos;ㅅ&apos;, &apos;ㅆ&apos;, &apos;ㅇ&apos;, &apos;ㅈ&apos;, &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">var A = {}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">function driver(p, q){</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">text = p</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">for(var key in text){</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">var a = text.charCodeAt(key);</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">var b = a-0xAC00;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">var c = b%28;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">var d = ((b-c)/28)%21;&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">var e = parseInt(((b-c)/28)/21);&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">A[q].push(CHOSEONGS[e],JUNGSEONGS[d],JONGSEONGS[c]);</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">if(msg==&quot;!타자게임&quot;&amp;&amp;mission[sender]==undefined){</span></p><p><span style=\"font-size: 17.3333px;\">A[sender]=[]</span></p><p><span style=\"font-size: 17.3333px;\">var 임시=Math.floor(Math.random()*33)</span></p><p><span style=\"font-size: 17.3333px;\">if(임시==23){</span></p><p><span style=\"font-size: 17.3333px;\">임시=7</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">var 배열=JSON.parse(Utils.getWebText(&quot;http://www.tajamaster.com/ex3_1.php?txt=&quot;+임시+&quot;&amp;ttt=ex3_1&quot;).split(&quot;tStrs=&quot;)[1].split(&quot;;&quot;)[0])</span></p><p><span style=\"font-size: 17.3333px;\">var 임시1=Math.floor(Math.random()*배열.length)</span></p><p><span style=\"font-size: 17.3333px;\">mission[sender]=배열[임시1]</span></p><p><span style=\"font-size: 17.3333px;\">able[sender]=true</span></p><p><span style=\"font-size: 17.3333px;\">replier.reply(&quot;타자게임을 준비합니다\\n준비된 글자수는 &quot;+mission[sender].split(&quot;&quot;).length+&quot;개 입니다.\\n!타자시작 을 써서 시작하세요!&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">if(msg==&quot;!타자시작&quot;){</span></p><p><span style=\"font-size: 17.3333px;\">if(able[sender]==true){</span></p><p><span style=\"font-size: 17.3333px;\">replier.reply(&quot;[&quot;+mission[sender].replace(/ /g,&quot; \\u200b&quot;)+&quot;]&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">time[sender]=0</span></p><p><span style=\"font-size: 17.3333px;\">able[sender]=false</span></p><p><span style=\"font-size: 17.3333px;\">timer(sender)</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">if(msg){</span></p><p><span style=\"font-size: 17.3333px;\">if(msg!=&quot;!타자게임&quot;){</span></p><p><span style=\"font-size: 17.3333px;\">if(msg!=&quot;!타자시작&quot;){</span></p><p><span style=\"font-size: 17.3333px;\">if(able[sender]==false){</span></p><p><span style=\"font-size: 17.3333px;\">if(mission[sender]!=undefined){</span></p><p><span style=\"font-size: 17.3333px;\">if(msg.includes(&quot;\\u200b&quot;)==false){</span></p><p><span style=\"font-size: 17.3333px;\">replier.reply(&quot;game set!&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">var 임시=mission[sender].split(&quot;&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">var 임시1=msg.split(&quot;&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">var 일치개수=0</span></p><p><span style=\"font-size: 17.3333px;\">for(let i=0; i&lt;임시1.length; i++){</span></p><p><span style=\"font-size: 17.3333px;\">if(임시[i] == 임시1[i]){</span></p><p><span style=\"font-size: 17.3333px;\">일치개수++</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">driver(msg,sender)</span></p><p><span style=\"font-size: 17.3333px;\">var 에이값=A[sender].length</span></p><p><span style=\"font-size: 17.3333px;\">var 메시지값=msg.split(&quot;&quot;).length</span></p><p><span style=\"font-size: 17.3333px;\">var 임시2=Number(에이값-Number(에이값-메시지값))</span></p><p><span style=\"font-size: 17.3333px;\">var 결과=Number(Number(임시2/time[sender])*60)</span></p><p><span style=\"font-size: 17.3333px;\">able[sender]=undefined</span></p><p><span style=\"font-size: 17.3333px;\">replier.reply(&quot;타수:&quot;+Math.floor(결과)+&quot;\\n오타수: &quot;+Number(메시지값-일치개수))</span></p><p><span style=\"font-size: 17.3333px;\">mission[sender]=undefined</span></p><p><span style=\"font-size: 17.3333px;\">replier.reply(&quot;소요시간: &quot;+time[sender])</span></p><p><span style=\"font-size: 17.3333px;\">}else{</span></p><p><span style=\"font-size: 17.3333px;\">replier.reply(&quot;꼼수 방지 프로그램이 당신의 꼼수를 잡아냈습니다&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">replier.reply(&quot;game set!&quot;)</span></p><p><span style=\"font-size: 17.3333px;\">able[sender]=undefined</span></p><p><span style=\"font-size: 17.3333px;\">mission[sender]=undefined</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p><p><span style=\"font-size: 17.3333px;\">&nbsp;</span></p><p><span style=\"font-size: 17.3333px;\">}</span></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000055BE00000000",
+            "head": "미니게임",
+            "headId": 70,
+            "id": 21950,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 345,
+            "refArticleId": 21950,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "타자게임",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595950304110,
+            "writer": {
+                "id": "jjes1302",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "흐미"
+            }
+        },
+        "articleId": 21950,
+        "attaches": [
+            {
+                "extension": "js",
+                "fullName": "타자게임.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "타자게임.js",
+                "size": 2850,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/fd68e154447677c2ef0b6c57628df88727758bdf/20200729_287_cafefile/29537083_1595950213787_2EquOQ_js/%ED%83%80%EC%9E%90%EA%B2%8C%EC%9E%84.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "굳",
+                    "id": 98217541,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98217541,
+                    "updateDate": 1595950950000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "wow",
+                    "id": 98218206,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98218206,
+                    "updateDate": 1595951506000,
+                    "writer": {
+                        "id": "chosuyoung0413",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "수영"
+                    }
+                },
+                {
+                    "content": "혹시 복사해서 여기에 올려주실수 있나용? ㅠ 전 들어가면 이상하게 떠성 ㅠ",
+                    "id": 98278193,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98278193,
+                    "updateDate": 1596004630000,
+                    "writer": {
+                        "id": "hajuhee01",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "hajuhee01"
+                    }
+                },
+                {
+                    "content": "소스 주워갑니다 ㅇㅅㅇ",
+                    "id": 100586559,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100586559,
+                    "updateDate": 1597910396000,
+                    "writer": {
+                        "id": "tojaden",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODAyMjZfMTY4/MDAxNTE5NjM3NzA0MDE2.qpUkFeQuK_SPQxSqc7a54lbYgL07pTt3M0Tn20oBlCIg.NUZ2aeXRTw22dBVSqt42kFLdakjDoGkPyxkOIwwqZo4g.JPEG.tojaden/%25C5%25C2%25B1%25D8%25B1%25E2.jpg"
+                        },
+                        "nick": "흑화한인간"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

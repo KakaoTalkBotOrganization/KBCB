@@ -1,0 +1,340 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-1eb80eb6-139a-4eb1-81c1-7d6f3ea69d6c\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-f5abfb95-6b5d-4595-bd8a-0e60280740f1\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-2f2c6c6b-d85d-4e33-9400-f4a87ebaccf8\">본인이 작성한 코드인가요? : 네 (반반)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-bf606cc9-25c7-4391-912c-24bc1759ad81\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-73b38968-be3f-4298-a3e4-1f5734255589\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-700c26d0-419f-4e05-9e2f-80b57162e931\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-034137bf-8588-4ca6-991a-9f875c4335e3\">검색 여부 : O</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-d903d2a2-8ef5-4f89-ab29-b5709a04f947\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a9468e03-2f7d-4bf6-a893-9be4c6bd47cb\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3acc3cc3-2981-4178-b5ab-29dd626a369d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-07632ecd-ac19-46ef-8b5f-5e6fdf632e49\">전체소스 : </span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_stripe\" id=\"SE-5e403741-988c-40c4-8c26-ac0c47feb292\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_stripe\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">const scriptName&#x3D;&quot;게시판알림.js&quot;;\n\n\nrooms &#x3D; &quot;방1&quot; ;\nrooms2 &#x3D; &quot;방2&quot; ;\nloop &#x3D; false;\nstop &#x3D; false;\n\nfunction response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){\n\n//////////////////////////////\n////// 기존의 제목 확인 //////\nvar elchBoard &#x3D; org.jsoup.Jsoup.connect(&quot;https://korea.elchronicle.io/board&quot;).ignoreContentType(true).get();\noldtitleLength &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-title &gt; a&#x27;).toArray()[0].toString().split(&#x27;&gt;&#x27;).length;\n\n   if ( oldtitleLength &#x3D;&#x3D; 9 ){\n   oldboardTitle &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-title &gt; a&#x27;).toArray()[0].toString().split(&#x27;&gt;&#x27;)[4].split(&#x27;&lt;span&#x27;)[0];\n   oldboardTitle &#x3D; oldboardTitle.trim(); //제목\n   }\n\n\n   else if (oldtitleLength &#x3D;&#x3D; 7) {\n   oldboardTitle &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-title &gt; a&#x27;).toArray()[0].toString().split(&#x27;&gt;&#x27;)[2].split(&#x27;&lt;span&#x27;)[0].split(&#x27;\\n&#x27;)[1];\n   oldboardTitle &#x3D; oldboardTitle.trim(); //제목\n   }\n \n///////////////////////////////////////  \n/////// 방 확인, 루프문, 딜레이 ///////\n\nif (room &#x3D;&#x3D; rooms || room &#x3D;&#x3D; rooms2) {\n   if (!loop) {\n      loop &#x3D; true\n   \n   while (loop) {\n         \n   java.lang.Thread.sleep(2000);\n\n///////////////////////////////////\n////// 딜레이 이후 제목 확인 //////\nvar elchBoard &#x3D; org.jsoup.Jsoup.connect(&quot;https://korea.elchronicle.io/board&quot;).ignoreContentType(true).get();\n\n         \ntitleLength &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-title &gt; a&#x27;).toArray()[0].toString().split(&#x27;&gt;&#x27;).length;\n\nif ( titleLength &#x3D;&#x3D; 9 ){\nboardTitle &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-title &gt; a&#x27;).toArray()[0].toString().split(&#x27;&gt;&#x27;)[4].split(&#x27;&lt;span&#x27;)[0];\nboardTitle &#x3D; boardTitle.trim(); //제목\n}\n\n\nelse if (titleLength &#x3D;&#x3D; 7) {\nboardTitle &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-title &gt; a&#x27;).toArray()[0].toString().split(&#x27;&gt;&#x27;)[2].split(&#x27;&lt;span&#x27;)[0].split(&#x27;\\n&#x27;)[1];\nboardTitle &#x3D; boardTitle.trim(); //제목\n}\n\n/////////////////////////\n////// 제목 비교 ////////\nif (oldboardTitle !&#x3D; boardTitle) {\n\nboardUser &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-user&#x27;).text(); //유저\n\nboardLink &#x3D; elchBoard.select(&#x27;div.kboard-list &gt; table &gt; tbody &gt; tr:nth-child(3) &gt; td.kboard-list-title &gt; a&#x27;).toArray()[0].toString().split(&#x27;&gt;&#x27;)[0].split(&#x27;&quot;&#x27;)[1].replace(&quot;amp;&quot;,&quot;&quot;);\nboardLink &#x3D;  &#x27;https://korea.elchronicle.io&#x27; + boardLink // 링크\n\n\nreplier.reply(&quot;• 자유게시판 새글 알림&quot; + &#x27;\\n&#x27; + &quot;제목 : &quot; + boardTitle + &#x27;\\n&#x27; + &quot;작성자 : &quot; + boardUser + &#x27;\\n&#x27; + &quot;링크 : &quot; + boardLink);\n\noldboardTitle &#x3D; boardTitle; // 제목 갱신\n}\n         \nif (stop) break;\n      }\n   }\n}\n\n   }\n\n\nfunction onStartCompile() {\nstop &#x3D; true;\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-5e403741-988c-40c4-8c26-ac0c47feb292\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-e5a80193-d163-4653-a808-3651e3378ce2\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-bb0afb18-1e4b-4888-8bbc-6fc413c380c7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7cffb1b0-0b57-469f-8a66-82c5af76f925\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6dacfc40-e905-4b20-862a-a78693d1d63b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-d8ff258f-e60c-45f5-9a0c-fcc37c6e02d8\">이 코드인데 </span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3f4209aa-6d36-4074-9bf4-58a8ff1da6ae\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-50e1dd4b-81ee-4bd6-9df6-4360ee1c488b\">1. 잘 기능하다가 어느순간 보면 오류가 생겨서 비활성화 되어있고,</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-4feae380-a8be-40e2-91d3-4a86e601a5d4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-d37248ff-746e-4ee0-973e-e548b950ab06\">  (org.mozilla.javascript.WrappedException: Wrapped java.net.SocketException: socket is closed)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a4c50f3e-0522-4208-9bed-9fd01e24427f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6904d010-0c52-4ebb-a63c-3c3c73397a2b\">2. 방 두개에서 돌아가게 설정했는데 한 곳에만 답장하는 오류가 있었습니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-15957240-9257-4ce1-86d5-286ff33066d3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6a5fc4a8-ada1-4150-a732-508112a8f0f1\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-c756e2b1-fc36-47b4-85d5-ab06196fdceb\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-059b7a8e-0b5b-4125-8f72-ffebec028e9f\">파싱? 은 제가 해봤는데 루프 돌리는 부분은 도미님 글을 참고해서 루프쪽에 대해 잘 모르긴 합니다..</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-8ce0bd63-f329-410a-b273-36fb834c606b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-97b8edac-4821-4d7f-ba3b-a5d223ffaf26\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1d5a50eb-6f77-4974-bbc5-05b64b0755ac\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-22fc15e9-eaa0-40c2-89d5-e9411beaf035\">간단하게 필요한 부분의 코드 설명을 하자면,</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-56b9ebf6-4692-417c-8c40-ffc5585f5768\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cddd91a0-a77c-4130-90f0-91a3327add74\">핸드폰게임 사이트의 자유게시판 새 글 알림인데</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-829cf62d-4a7d-482d-8e0f-f951d241fae5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-2d274773-4f1c-4d4c-a506-139b86d5e99b\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-31eb284a-c7c8-4e65-a48a-0c30e5e4644e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6cfd6139-f66e-4b86-9b7c-fff2dfe470ae\">글을 올린지 2일 이내의 글들은 New라는 부분이 생겨 titleLength(oldtitleLength)가 달라지고, </span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1240b6a6-7c29-4727-990f-7bb23d54e379\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3aa80adf-a184-4f48-bc00-73543434a358\">거기서 글의 제목을 긁어오는 부분의 위치가 달라져서 if문을 사용했습니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-66ffdbf4-f647-4ad7-9b7d-3344c6e360b6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-b4669287-1451-4a59-89de-cd8645352a85\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6df2cdf3-4f71-43e3-87bd-5ac7d10b4561\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-263508f6-52fa-468b-9558-2ffb67c715ed\">그리고 루프문은 제가 이해하기로는, while문이 들어가기 전에 한번 긁어 온뒤,</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-f975e0e1-4712-412d-a03a-c43710059d74\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-41737ad4-b3ec-4bf2-b5ad-50afc82eb580\">딜레이를 주고 다시 긁어왔을 때 다른 것을 확인한다고 생각해서 저렇게 만들어 보았습니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000618D00000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 24973,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 77,
+            "refArticleId": 24973,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "특정 게임사이트 게시판 새글 알림 오류..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1600570568387,
+            "writer": {
+                "id": "rustic606",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "분량"
+            }
+        },
+        "articleId": 24973,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오류로그는 여기에서 확인 하실수 있습니다",
+                    "id": 103779068,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA5MjBfMjYz/MDAxNjAwNTcwODEzNzg2.cpP9cys4i_GHPYwopdrsRaLbieBnG7Cjfst5kERrZI4g.mhWzhFbcVkIvFXKpL3EbAw2ajtv1vhFPFX1Gu0wqWqgg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": true,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 583,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA5MjBfMjYz/MDAxNjAwNTcwODEzNzg2.cpP9cys4i_GHPYwopdrsRaLbieBnG7Cjfst5kERrZI4g.mhWzhFbcVkIvFXKpL3EbAw2ajtv1vhFPFX1Gu0wqWqgg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA5MjBfMjYz/MDAxNjAwNTcwODEzNzg2.cpP9cys4i_GHPYwopdrsRaLbieBnG7Cjfst5kERrZI4g.mhWzhFbcVkIvFXKpL3EbAw2ajtv1vhFPFX1Gu0wqWqgg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 103779068,
+                    "updateDate": 1600570814000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "확인해서 수정해서 올렸습니다! 감사해요 ㅎㅎ",
+                    "id": 103779106,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 103779068,
+                    "updateDate": 1600570849000,
+                    "writer": {
+                        "id": "rustic606",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "분량"
+                    }
+                },
+                {
+                    "content": "음... 봇의 네트워크가 불안정하나보네요 try...catch...로 처리하시면 될 것 같슴니다.",
+                    "id": 103782371,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": true,
+                    "refId": 103782371,
+                    "updateDate": 1600573949000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "혹시 제가 잘 몰라서 그런데 조금만 자세히 설명해주실 수 있나요?",
+                    "id": 103783117,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 103782371,
+                    "updateDate": 1600574603000,
+                    "writer": {
+                        "id": "rustic606",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "분량"
+                    }
+                },
+                {
+                    "content": "소스파일 설정에서 오류나도 안꺼지게 하는 설정 켜보세요",
+                    "id": 103787337,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 103787337,
+                    "updateDate": 1600578142000,
+                    "writer": {
+                        "id": "smart_tomy",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "KroKr"
+                    }
+                },
+                {
+                    "content": "일단 설정했어요! 저 오류는 딱히 코드의 문제가 아니라 인터넷 문제인가요?",
+                    "id": 103789221,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 103787337,
+                    "updateDate": 1600580077000,
+                    "writer": {
+                        "id": "rustic606",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "분량"
+                    }
+                },
+                {
+                    "content": "ㄷ",
+                    "id": 103789374,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 103789374,
+                    "updateDate": 1600580200000,
+                    "writer": {
+                        "id": "rionbot",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "JSR"
+                    }
+                },
+                {
+                    "content": "response 밑에 try {\r\n맨 밑 괄호 위에 } catch(e) {}\r\n\r\n예시\r\nfunction response(room, msg, sender, isGroupChat, replier, imageDB) {\r\ntry {\r\n//~~~~~\r\n} catch(e) {}\r\n}",
+                    "id": 103857533,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 103857533,
+                    "updateDate": 1600644187000,
+                    "writer": {
+                        "id": "kjsbus5",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190207_109/kjsbus5_1549511613231EdTTV_JPEG/image.jpg"
+                        },
+                        "nick": "구름"
+                    }
+                },
+                {
+                    "content": "try-catch 구문을 남발하는 행위는 권장되지 않습니다.",
+                    "id": 103876085,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 103857533,
+                    "updateDate": 1600654418000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

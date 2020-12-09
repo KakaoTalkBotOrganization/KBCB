@@ -1,0 +1,402 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 17,
+            "contentElements": [],
+            "contentHtml": "<div><span style=\"font-family: Arial;\">반갑습니다! OnTheWay 입니다.</span></div><div><span style=\"font-family: Arial;\">벌써 올해 2019년도 끝나가네요! 좋은 연말 보내시길 바랍니다.</span></div><div><span style=\"font-family: Arial;\">이번 글은 저의 첫 강좌입니다. 다소 가독성이 좋지 못하더라도 이해해 주시길 바래요!</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;여러분들은 자바스크립트에서 데이터를 저장하고 싶었던 적이 있나요? 많은 숙련자 분들이 &apos;JSON&apos; 이라는 포맷의 사용을 권하지만, 이 &apos;JSON&apos;을 어렵게 생각하시는 입문자 분들이 많이 계십니다. 과연 &apos;JSON&apos;이란 무엇일까요? JSON의 개념부터 자바스크립트에서의 활용 방법까지, 함께 알아봅시다!</span></div><div><br /></div><div><span style=\"font-family: Arial;\"><font color=\"#ff0000\">&nbsp;* &apos;JS&apos;는 JavaScript(자바스크립트) 입니다.</font></span></div><div><br /></div><div><span style=\"font-family: Arial;\"><b>&nbsp;[ 목차 ]</b></span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;1. JSON이란 무엇인가</span></div><div><span style=\"font-family: Arial;\">&nbsp;2. JSON의 표기법</span></div><div><span style=\"font-family: Arial;\">&nbsp;3. JS에서 JSON의 사용 방법</span></div><div><span style=\"font-family: Arial;\">&nbsp;4. 다른 언어에서의 JSON 활용 팁</span></div><div><br /></div><div><span style=\"font-family: Arial;\"><b>&nbsp;[ 1. JSON이란 무엇인가 ]</b></span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;JSON은 &apos;JavaScript Object Notation (JS 객체 표기법)&apos;의 약칭으로, 이름에 걸맞게 JS의 객체 문법과 매우 유사합니다. 한마디로 JS에서 파생된 포맷이라는 뜻이죠. 또한 JSON은 JS의 객체와 동일한 &apos;키(이름)&apos;-&apos;값&apos;의 형태인 &apos;트리 구조&apos;를 사용하고 있습니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;JSON의 특징은 알겠는데, 그래서 JSON을 사용해야 하는 이유가 무엇일까요?</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;우선, 다른 포맷에 비해 표기법이 매우 간단합니다. JS에서 JSON이 널리 사용되기 이전에는 &apos;XML&apos;이라는 포맷을 주로 사용하고 있었어요. 당시 XML은 JSON보다 기능이 훨신 많았습니다. 다만 여러 속성을 가지는 데이터의 표기에는 좋았으나, 표기법이 길고 복잡하여 가독성이 저하되고 용량은 많이 차지했죠. 하지만 JSON은 간단한 트리 구조만으로 표기할 수 있어서 보기에도 좋고 용량도 상대적으로 작게 차지합니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;다음은, JSON의 트리 구조입니다. 트리 구조의 특성상 내부 데이터에 쉽고 빠르게 접근할 수 있죠. 단순히 해당 데이터의 위치와 &apos;키&apos;만 알고 있으면 돼요! 그 뿐만 아니라, 객체의 내부에 다른 객체를 중첩 구조로 넣을 수도 있습니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;JS에 어울리는 JSON, 사용해 볼만 하죠?</span></div><div><br /></div><div><span style=\"font-family: Arial;\"><b>&nbsp;[ 2. JSON의 표기법 ]</b></span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;JSON이 무엇인지는 알게 되었으니, 한번 JSON의 표기법을 알아봅시다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;먼저 알아볼 것은, JSON에서 값으로 사용 가능한 자료형입니다. JSON에는 Boolean(참/거짓), 숫자, 문자열, 객체, 배열 만을 사용할 수 있습니다. 당연하게도 JS의 함수는 자료형으로 사용할 수 없어요!</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;다음은, JSON에서 각 자료형을 표기하는 방법입니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; Boolean은 참일 경우 &apos;true&apos;, 거짓일 경우 &apos;false&apos;로 표기합니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 숫자는 정수와 실수 모두 사용 가능하며, &apos;0~9&apos; 및 &apos;.&apos; 문자로 표기합니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 문자열은 두 큰따옴표(&quot;) 사이에 표기합니다. 예: &quot; ... &quot;</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 객체는 두 중괄호({}) 사이에 표기합니다. 예: { ... }</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 배열은 두 대괄호([]) 사이에 표기합니다. 예: [ ... ]</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;마지막으로, 객체의 키-값 구조 및 배열을 사용하는 방법입니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 객체의 키-값 구조는 문자열인 키와 값으로 표기하며, 키와 값의 구분을 위해 콜론(:)을 사용합니다. 다른 데이터 사이에는 콤마(,)를 사용합니다. 예: &quot;키1&quot;: 값1, &quot;키2&quot;: 값2, &quot;키3&quot;: 값3</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 배열은 단순히 나열된 값을 콤마(,)로 구분하여 표기합니다. 예: 값1, 값2, 값3</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;아직도 잘 모르시겠나요? 백문이 불여일견! 아래의 샘플 JSON 소스를 봅시다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;{</span></div><div><span style=\"font-family: Arial;\">&nbsp; &nbsp; &nbsp;&quot;key1&quot;: true,</span></div><div><span style=\"font-family: Arial;\">&nbsp; &nbsp; &nbsp;&quot;key2&quot;: 123.456,</span></div><div><span style=\"font-family: Arial;\">&nbsp; &nbsp; &nbsp;&quot;key3&quot;: &quot;\\&quot;OK\\tHello\\nWorld!\\&quot;&quot;,</span></div><div><span style=\"font-family: Arial;\">&nbsp; &nbsp; &nbsp;&quot;key4&quot;: {</span></div><div><span style=\"font-family: Arial;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sub1&quot;: true</span></div><div><span style=\"font-family: Arial;\">&nbsp; &nbsp; &nbsp;},</span></div><div><span style=\"font-family: Arial;\">&nbsp; &nbsp; &nbsp;&quot;key5&quot;: [10, 100, 1000]</span></div><div><span style=\"font-family: Arial;\">&nbsp;}</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 키 &quot;key1&quot;: Boolean 자료형인 &apos;true&apos;가 값입니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 키 &quot;key2&quot;: 숫자 자료형인 실수 &apos;123.456&apos;이 값입니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 키 &quot;key3&quot;: 문자열 자료형인 &quot;\\&quot;OK\\tHello\\nWorld!\\&quot;&quot;가 값입니다. 이 문자열에서 역슬래시(\\)와 그 뒤의 문자는 &apos;이스케이스 시퀀스&apos;이며, 비교적 입력하기 어려운 문자를 표기하는 경우에 사용합니다. &apos;\\&quot;&apos;는 쌍따옴표(&quot;), &apos;\\t&apos;는 탭 문자, &apos;\\n&apos;은 개행 문자입니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 키 &quot;key4&quot;: 객체 자료형인 &apos;{ &quot;sub1&quot; : true }&apos;가 값입니다. 앞에서 설명한 중첩 구조입니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; 키 &quot;key5&quot;: 배열 자료형인 &apos;[10, 100, 1000]&apos;이 값입니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;위의 샘플 소스는 가독성을 위하여 각 계층에 따른 줄바꿈 및 들여쓰기를 사용했습니다. 반드시 필요한 것은 아니예요.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;더욱 상세한 문법은 </span><a href=\"https://www.json.org/json-en.html\" target=\"_blank\" title=\"새창으로 열림\"><span style=\"font-family: Arial;\">&lt;JSON 공식 사이트&gt;</span></a><span style=\"font-family: Arial;\">를 참조해 주시기 바랍니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;많이 어려우셨나요? 혹시 모르거나 궁금한 사항이 있다면 댓글로 알려주세요!</span></div><div><br /></div><div><span style=\"font-family: Arial;\"><b>&nbsp;[ 3. JS에서 JSON의 사용 방법 ]</b></span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;이제 JSON의 개념과 기본적인 표기법을 알았으니 JS에서 제대로 사용을 해야겠죠! JS에서는 JSON을 JS 객체로 안전하게 불러오기 위한 &apos;JSON.parse&apos; 메소드와, JS 객체를 다시 JSON으로 변환할 수 있는 &apos;JSON.stringify&apos; 메소드를 제공합니다. 절대 &apos;eval&apos; 등의 메소드로 JSON 소스 자체를 실행하지 마세요! 스크립트 보안에 매우 좋지 않습니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; JSON.parse(text): text의 JSON 소스를 JS 객체로 불러와서(파싱) 반환합니다.</span></div><div><span style=\"font-family: Arial;\">&nbsp;&gt; JSON.stringify(obj): JS 객체인 obj를 JSON 소스로 변환하여 문자열로 반환합니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;JSON 관련 메소드를 사용하여 반환된 JS 객체는 &apos;객체.키1.키2&apos; 또는 &apos;객체[&quot;키1&quot;][&quot;키2&quot;]&apos; 문법을 사용하여 값에 접근할 수 있습니다. 예를 들어, JSON &apos;{ &quot;a&quot;: 1234, &quot;b&quot;: { &quot;c&quot;: 4567, &quot;d&quot;: &quot;Hi&quot; }}&apos;에서 값 &quot;Hi&quot;를 얻고 싶은 경우, &apos;JSON.parse&apos; 메소드를 사용하여 JSON을 JS 객체로 불러온 뒤, &apos;객체.b.d&apos; 또는 &apos;객체[&quot;b&quot;][&quot;d&quot;]&apos;로 접근이 가능해요.</span></div><div><br /></div><div><span style=\"font-family: Arial;\"><b>&nbsp;[ 4. 다른 언어에서의 JSON 활용 팁 ]</b></span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;현재 JSON은 JS 이외에도 많은 언어에서 다양한 분야로 활용되고 있습니다. JS 이외의 언어에서는 외부 라이브러리로 JSON을 사용할 수 있어요. 하지만 라이브러리에 따라 내부 구조와 소스를 불러오는 속도가 다르며, 라이선스도 차이가 있어 상세한 검토가 필요할 수 있습니다. 또한, JSON에는 지원하는 자료형만 사용이 가능하다는 점을 알고 계시기 바랍니다.</span></div><div><br /></div><div><span style=\"font-family: Arial;\">&nbsp;긴 글이네요... 강좌 읽어주셔서 대단히 고맙습니다!</span></div><div><span style=\"font-family: Arial;\">&nbsp;글에 대한 모든 피드백은 모두 받습니다!</span></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000235F00000000",
+            "id": 9055,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 580,
+            "refArticleId": 9055,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "JS with JSON: JS에서 JSON의 완벽한 활용 방법",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1576427527107,
+            "writer": {
+                "id": "cafeworlds",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "OnTheWay"
+            }
+        },
+        "articleId": 9055,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 75927544,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75927544,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-18-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_18.png",
+                        "width": 129
+                    },
+                    "updateDate": 1576428013000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "성빈님 ㅠㅠ",
+                    "id": 75927570,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75927544,
+                    "updateDate": 1576428069000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 75927748,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75927544,
+                    "replyMember": {
+                        "id": "cafeworlds",
+                        "nick": "OnTheWay"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5911540a563ba-6-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5911540a563ba/original_6.png",
+                        "width": 129
+                    },
+                    "updateDate": 1576428383000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "좋네요",
+                    "id": 75927617,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75927617,
+                    "updateDate": 1576428168000,
+                    "writer": {
+                        "id": "baejy1375",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Nub"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 75927627,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75927617,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1576428186000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                },
+                {
+                    "content": "감사합니당",
+                    "id": 75928124,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75928124,
+                    "updateDate": 1576429655000,
+                    "writer": {
+                        "id": "x13re",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMTNfMTA0/MDAxNTc2MjEzOTUxMDk2.wEfR7Ap3poRUhcXS8sw0JPUuDwLfexqsYdqvaybHS-Eg.2FLLPT-3M_ZUWmvK8EZT9_r8nEuCLgkTax77zkhR75wg.PNG/externalFile.png"
+                        },
+                        "nick": "김각제"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 75928130,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75928124,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1576429672000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                },
+                {
+                    "content": "Q.쓰는데 몇 시간 걸리셨죠?",
+                    "id": 75937836,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75937836,
+                    "updateDate": 1576453872000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 75945888,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75937836,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-5-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_5.png",
+                        "width": 129
+                    },
+                    "updateDate": 1576458574000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 75971445,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75971445,
+                    "updateDate": 1576479703000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                }
+            ],
+            "last": {
+                "id": 90519094,
+                "refId": 90519094
+            },
+            "next": {
+                "id": 75971921,
+                "refId": 75971445
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "자바스크립트"
+        ]
+    }
+}

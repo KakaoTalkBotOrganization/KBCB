@@ -1,0 +1,403 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [],
+            "contentHtml": "<p>쿨칭님꺼 응용한거임!!<br />function response(room, msg, sender, isGroupChat, replier, ImageDB) {<br />try{<br />if (msg == &quot;/실검&quot;) {<br />var a = Utils.getWebText(&quot;http://www.naver.com&quot;)<br />.split(&quot;급상승 검색어 1~10위&quot;)[1]<br />.split(&quot;도움말&quot;)[0]<br />.replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)<br />.replace(/데이터랩 그래프 보기/g,&quot;&quot;)<br />.trim()<br />.replace(/^ +/gm,&quot;&quot;)<br />.replace(/\\n\\n/g,&quot;&quot;)<br /><br />var one = a.split(&quot; &quot;)[1].split(&quot;2&quot;)[0].trim();<br />var two = a.split(&quot;2 &quot;)[1].split(&quot;3&quot;)[0].trim();<br />var three = a.split(&quot;3 &quot;)[1].split(&quot;4&quot;)[0].trim();<br />var four = a.split(&quot;4 &quot;)[1].split(&quot;5&quot;)[0].trim();<br />var five = a.split(&quot;5 &quot;)[1].split(&quot;6&quot;)[0].trim();<br />var six = a.split(&quot;6 &quot;)[1].split(&quot;7&quot;)[0].trim();<br />var seven = a.split(&quot;7 &quot;)[1].split(&quot;8&quot;)[0].trim();<br />var eight = a.split(&quot;8 &quot;)[1].split(&quot;9&quot;)[0].trim();<br />var nine = a.split(&quot;9 &quot;)[1].split(&quot;10&quot;)[0].trim();<br />var ten = a.split(&quot;10 &quot;)[1].split(&quot;11&quot;)[0]<br />var eleven = a.split(&quot;11 &quot;)[1].split(&quot;12&quot;)[0].trim();<br />var twe = a.split(&quot;12 &quot;)[1].split(&quot;13&quot;)[0].trim();<br />var thir = a.split(&quot;13 &quot;)[1].split(&quot;14&quot;)[0].trim();<br />var fourteen = a.split(&quot;14 &quot;)[1].split(&quot;15&quot;)[0].trim();<br />var fifthteen = a.split(&quot;15 &quot;)[1].split(&quot;16&quot;)[0].trim();<br />var sixteen = a.split(&quot;16 &quot;)[1].split(&quot;17&quot;)[0].trim();<br />var seventeen = a.split(&quot;17 &quot;)[1].split(&quot;18&quot;)[0].trim();<br />var eighteen = a.split(&quot;18 &quot;)[1].split(&quot;19&quot;)[0].trim();<br />var ninteen = a.split(&quot;19 &quot;)[1].split(&quot;20&quot;)[0].trim();<br />var twenty = a.split(&quot;20 &quot;)[1].split(&quot;2019.&quot;)[0].trim();<br /><br />replier.reply(&quot;1위: &quot;+one+&quot;\\n2위: &quot;+two+&quot;\\n3위: &quot;+three+&quot;\\n4위: &quot;+four+&quot;\\n5위: &quot;+five+&quot;\\n6위: &quot;+six+&quot;\\n7위: &quot;+seven+&quot;\\n8위: &quot;<br />+eight+&quot;\\n9위 :&quot;+nine+&quot;\\n10위: &quot;+ten+&quot;\\n11위: &quot;+eleven+&quot;\\n12위: &quot;+twe+&quot;\\n13위: &quot;+thir+&quot;\\n14위: &quot;<br />+fourteen+&quot;\\n15위: &quot;+fifthteen+&quot;\\n16위: &quot;+sixteen+&quot;\\n17위: &quot;+seventeen+&quot;\\n18위: &quot;+eighteen+&quot;\\n19위: &quot;+ninteen+&quot;\\n20위: &quot;+twenty);<br />} <br />} catch(e){ <br />replier.reply(&quot;실검정보가 없습니다.&quot;); <br />}<br />}<br />이거 진짜 1위 2위하는법몰라서 개고생했지..<br /><br />function response(room, msg, sender, isGroupChat, replier) { <br />try { <br />if (msg.indexOf(&quot;/노래가사&quot;)==0) { <br />var u=Utils.getWebText(&quot;https://m.search.naver.com/search.naver?query=&quot;+msg.substr(6))<br />.split(&quot;&lt;div class=\\&quot;lyrics_txt\\&quot;&gt;&quot;)[1]//저거 위쪽을 다 자름<br />.split(&quot;div class=\\&quot;btn_box\\&quot;&gt;&quot;)[0]//저거 밑쪽을 다 자름<br />.replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)//정규식활용<br />.trim()<br />.replace(/^ +/gm,&quot;&quot;)<br />.replace(&quot;&lt;&quot;,&quot;&quot;)<br />replier.reply(u)<br />} <br />} catch(e){ <br />replier.reply(&quot;노래가사가 없습니다.&quot;); <br />}<br />}<br /><br /><br /><br />function response(room, msg, sender, isGroupChat, replier) { <br /><br />try { <br />if (msg.indexOf(&quot;/영화정보&quot;)==0) { <br />var u=Utils.getWebText(&quot;https://m.search.naver.com/search.naver?query=&quot;+msg.substr(6))<br />.split(&quot;&lt;h2 class=\\&quot;movie_title\\&quot;&gt;&quot;)[1]//저거 위쪽을 다 자름<br />.split(&quot; &lt;ul class=\\&quot;button_list\\&quot;&gt;&quot;)[0]//저거 밑쪽을 다 자름<br />.replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)//정규식활용<br />.trim()//공백 끔살<br />.replace(/^ +/gm,&quot;&quot;)<br />.replace(/\\n\\n/g,&quot;&quot;)<br />.replace(/&gt;/g,&quot;&quot;)<br />var title = u.split(&quot;개요&quot;)[0]<br />var gaeyo = u.split(&quot;개요&quot;)[1].split(&quot;개봉&quot;)[0].trim()<br />var gaebong = u.split(&quot;개봉&quot;)[1].split(&quot;평점&quot;)[0].trim()<br />var pyueng = u.split(&quot;평점&quot;)[1].split(&quot;관객수&quot;)[0].trim()<br />var gawng = u.split(&quot;관객수&quot;)[1].split(&quot;줄거리&quot;)[0].trim()<br />var julguri = u.split(&quot;줄거리&quot;)[1].split(&quot;더보기&quot;)[0].trim()<br />replier.reply(title+&quot;\\n개요: &quot;+gaeyo+&quot;\\n개봉일: &quot;+gaebong+&quot;\\n평점: &quot;+pyueng+&quot;\\n관객수: &quot;+gawng+&quot;\\n\\n줄거리: &quot;+julguri); //변수u를 불러옴<br />} <br />} catch(e){ <br />replier.reply(&quot;영화정보가 없습니다.&quot;); <br />}<br />}<br /><br />현재 상영작은 불가능</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000005C00000000",
+            "id": 92,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 744,
+            "refArticleId": 92,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "실검,영화정보,노래가사",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1542199032797,
+            "writer": {
+                "id": "kimjunghyo3495",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMjU3/MDAxNTk3ODY1MDQ0OTI1.a0lBTQIUKI8vr0COWiexJP7js6157sq703z9rTWDNgYg.xO10PGMrCLv0izt2cvr5ikWoArX8gl5FDGIXpNxhB4Ig.JPEG.kimjunghyo3495/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "Changa A"
+            }
+        },
+        "articleId": 92,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "아..앗  쿨칠이였어..",
+                    "id": 48297492,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 48297492,
+                    "updateDate": 1542199249000,
+                    "writer": {
+                        "id": "kimjunghyo3495",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMjU3/MDAxNTk3ODY1MDQ0OTI1.a0lBTQIUKI8vr0COWiexJP7js6157sq703z9rTWDNgYg.xO10PGMrCLv0izt2cvr5ikWoArX8gl5FDGIXpNxhB4Ig.JPEG.kimjunghyo3495/profileImage.jpg"
+                        },
+                        "nick": "Changa A"
+                    }
+                },
+                {
+                    "content": "에잉!",
+                    "id": 48300826,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 48297492,
+                    "updateDate": 1542203853000,
+                    "writer": {
+                        "id": "gundam7985",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjlfNTQg/MDAxNTU5MTM3MjM5MDAy.VYRKDZj5gdiB44aE--axWWP9NqMe3ElXsg56zW_HK1gg.hR3a8JepV5bPbP0gsytSySELnJ-yYpwIYpieScm5Ebkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "쿨칠"
+                    }
+                },
+                {
+                    "content": "엌",
+                    "id": 48309152,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 48297492,
+                    "replyMember": {
+                        "id": "gundam7985",
+                        "nick": "쿨칠"
+                    },
+                    "updateDate": 1542231035000,
+                    "writer": {
+                        "id": "kimjunghyo3495",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMjU3/MDAxNTk3ODY1MDQ0OTI1.a0lBTQIUKI8vr0COWiexJP7js6157sq703z9rTWDNgYg.xO10PGMrCLv0izt2cvr5ikWoArX8gl5FDGIXpNxhB4Ig.JPEG.kimjunghyo3495/profileImage.jpg"
+                        },
+                        "nick": "Changa A"
+                    }
+                },
+                {
+                    "content": "ㅁㅊ 노가다",
+                    "id": 48306115,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 48306115,
+                    "updateDate": 1542209928000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "이름을입력하지마세요"
+                    }
+                },
+                {
+                    "content": "함수따윈 모르는사람의 최후 ㅇㄴ..",
+                    "id": 48309156,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 48306115,
+                    "updateDate": 1542231068000,
+                    "writer": {
+                        "id": "kimjunghyo3495",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMjU3/MDAxNTk3ODY1MDQ0OTI1.a0lBTQIUKI8vr0COWiexJP7js6157sq703z9rTWDNgYg.xO10PGMrCLv0izt2cvr5ikWoArX8gl5FDGIXpNxhB4Ig.JPEG.kimjunghyo3495/profileImage.jpg"
+                        },
+                        "nick": "Changa A"
+                    }
+                },
+                {
+                    "content": "? 함수 몰라도 for문만 알면 되는데",
+                    "id": 48362041,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 48306115,
+                    "replyMember": {
+                        "id": "kimjunghyo3495",
+                        "nick": "Changa A"
+                    },
+                    "updateDate": 1542323946000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "이름을입력하지마세요"
+                    }
+                },
+                {
+                    "content": "for문은 무슨 숫자나오는것밖엔..",
+                    "id": 48362656,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 48306115,
+                    "replyMember": {
+                        "id": "wltjdqls5304",
+                        "nick": "이름을입력하지마세요"
+                    },
+                    "updateDate": 1542324644000,
+                    "writer": {
+                        "id": "kimjunghyo3495",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMjU3/MDAxNTk3ODY1MDQ0OTI1.a0lBTQIUKI8vr0COWiexJP7js6157sq703z9rTWDNgYg.xO10PGMrCLv0izt2cvr5ikWoArX8gl5FDGIXpNxhB4Ig.JPEG.kimjunghyo3495/profileImage.jpg"
+                        },
+                        "nick": "Changa A"
+                    }
+                },
+                {
+                    "content": "for(var i=0;i<100;i++) printf(\"이런거요?\");",
+                    "id": 48375830,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 48306115,
+                    "replyMember": {
+                        "id": "kimjunghyo3495",
+                        "nick": "Changa A"
+                    },
+                    "updateDate": 1542337421000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "이름을입력하지마세요"
+                    }
+                },
+                {
+                    "content": "ptintf 는 모르겠지만 앞은 맞어요",
+                    "id": 48383461,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 48306115,
+                    "replyMember": {
+                        "id": "wltjdqls5304",
+                        "nick": "이름을입력하지마세요"
+                    },
+                    "updateDate": 1542349202000,
+                    "writer": {
+                        "id": "kimjunghyo3495",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMjU3/MDAxNTk3ODY1MDQ0OTI1.a0lBTQIUKI8vr0COWiexJP7js6157sq703z9rTWDNgYg.xO10PGMrCLv0izt2cvr5ikWoArX8gl5FDGIXpNxhB4Ig.JPEG.kimjunghyo3495/profileImage.jpg"
+                        },
+                        "nick": "Changa A"
+                    }
+                },
+                {
+                    "content": "이거 왜....자기만 되나요??",
+                    "id": 53485589,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 53485589,
+                    "updateDate": 1550510106000,
+                    "writer": {
+                        "id": "saehyun1979",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "캥거루"
+                    }
+                }
+            ],
+            "last": {
+                "id": 56881254,
+                "refId": 56881254
+            },
+            "next": {
+                "id": 53485601,
+                "refId": 53485589
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

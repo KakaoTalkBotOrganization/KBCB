@@ -1,0 +1,204 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메봇R</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>FS = FileStream;</b></div><div><b>path = &quot;sdcard/봇data/커피주문&quot;;</b></div><div><b>all = &quot;\\u200b&quot;.repeat(500);</b></div><div><b><br /></b></div><div><b>clearOwner = [&quot;야옹이&quot;];</b></div><div><b>온도 = false;</b></div><div><b>스위치 = false;</b></div><div><b>//&nbsp;</b></div><div><b>답변=&quot;&quot;;</b></div><div><b><br /></b></div><div><b>function response (room, msg, sender, igc, replier, 답) {</b></div><div><b>&nbsp;&nbsp;</b></div><div><b>if (room.indexOf(&quot;테스터&quot;)==0) {</b></div><div><b>&nbsp;&nbsp;</b></div><div><b><br /></b></div><div><b>if (FS.read(path)==null) FS.write(path, &quot;{}&quot;);</b></div><div><b><br /></b></div><div><b>if (msg) {</b></div><div><b><br /></b></div><div><b>rd = JSON.parse(FS.read(path));</b></div><div><b><br /></b></div><div><b>if (rd[room] == undefined) rd[room] = {};</b></div><div><b><br /></b></div><div><b>if (rd[room][sender] == undefined) {</b></div><div><b><br /></b></div><div><b>rd[room][sender] = {};</b></div><div><b>rd[room][sender][&quot;money&quot;] = 0;</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b>FS.write(path, JSON.stringify(rd));</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b>if (msg == &quot;내 잔액&quot;) {</b></div><div><b><br /></b></div><div><b>rd = JSON.parse(FS.read(path));</b></div><div><b><br /></b></div><div><b>myMoney = rd[room][sender][&quot;money&quot;];</b></div><div><b><br /></b></div><div><b>result = [];</b></div><div><b><br /></b></div><div><b>for (i in rd[room]) result.push(rd[room][i]+&quot;\\n&quot;+rd[room][i][&quot;money&quot;]);</b></div><div><b><br /></b></div><div><b>result.sort((a, b)=&gt;a.split(&quot;\\n&quot;)[2] - b.split(&quot;\\n&quot;)[2]).reverse();</b></div><div><b><br /></b></div><div><b>replier.reply(&quot;&#128304;&quot;+sender+&quot;&#128304;&quot;+&quot;\\n잔액 : &quot;+myMoney+&quot; 원&quot;);</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b>if (msg == &quot;잔액조회&quot;) {</b></div><div><b><br /></b></div><div><b>rd = JSON.parse(FS.read(path));</b></div><div><b><br /></b></div><div><b>result = [];</b></div><div><b><br /></b></div><div><b>for (i in rd[room]) result.push(&quot;닉네임: &quot;+i+&quot; (잔액 : &quot;+rd[room][i][&quot;money&quot;]+&quot; 원)&quot;);</b></div><div><b><br /></b></div><div><b>replier.reply(&quot;[&#128285;] 멤버 잔액입니다.&quot;+all+&quot;\\n\\n총 &quot;+result.length+&quot;명\\n\\n&quot;+result.join(&quot;\\n\\n&quot;));</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b>if (msg == &quot;잔액 초기화&quot;) {</b></div><div><b><br /></b></div><div><b>if (clearOwner.indexOf(sender)!=-1) {</b></div><div><b><br /></b></div><div><b>FS.write(path, &quot;{}&quot;);</b></div><div><b><br /></b></div><div><b>replier.reply(&quot;[&#9883;] 모든 잔액이 초기화 되었습니다.&quot;);</b></div><div><b><br /></b></div><div><b>} else {</b></div><div><b><br /></b></div><div><b>replier.reply(&quot;[&#128683;] 주인장만 DB를 초기화 할 수 있습니다.&quot;);</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b>}</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>// SD카드 저장</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var folder = new java.io.File(sdcard+&quot;/주문목록/&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; folder.mkdirs();</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; function save(folderName,fileName,str) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var c=new java.io.File(sdcard+&quot;/&quot;+folderName+&quot;/&quot;+fileName); //경로지정</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var d=new java.io.FileOutputStream(c); // 지정경로에서 파일명c 출력</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var e=new java.lang.String(str);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; d.write(e.getBytes()); d.close();&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; function append(folderName,fileName,str) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileStream.read(sdcard+&quot;/&quot;+folderName+&quot;/&quot;+fileName);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileStream.append(sdcard+&quot;/&quot;+folderName+&quot;/&quot;+fileName,str);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; function read(folderName,fileName){&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var b=new java.io.File(sdcard+&quot;/&quot;+folderName+&quot;/&quot;+fileName);</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(!(b.exists())) return null;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var c=new java.io.FileInputStream(b);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var d=new java.io.InputStreamReader(c);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var e=new java.io.BufferedReader(d);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var f=e.readLine();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var g=&quot;&quot;; while((g=e.readLine())!=null){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; f+=&quot;\\n&quot;+g;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; c.close();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; d.close();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.close();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return f.toString();&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;</b></div><div><b>&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var day = new Date();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var call_day = &quot;2020년 &quot;+ (day.getMonth() + 1) + &quot;월 &quot; + day.getDate() + &quot;일 &quot;+</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; day.getHours() + &quot;시 &quot; + day.getMinutes() + &quot;분 &quot; + day.getSeconds() + &quot;초&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;주문하기&quot;) == 0 &amp;&amp; 스위치==false) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var order = msg.split(&quot;주문하기 &quot;)[1]; // 명령어 제거</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var option = order.split(&quot;,&quot;)[1]; // 쉼표 뒤에올 옵션</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var temperature = &quot;HOT&quot;; // Hot &amp; ICE 체크</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; order = order.split(&quot;,&quot;)[0]; // 쉼표 앞에 상품명</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; order = order.replace(/\\s/gi,&quot;&quot;); // (^\\\\p{Z}+|\\\\p{Z}+$) 공백제거 정규식</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // 옵션이 없을시 0원</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(option == undefined||option==&quot;&quot;) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; option=&quot;없음&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }//||temperature ==&quot;HOT&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp;//=============================================================&nbsp; &nbsp; &nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </b><span style=\"color: rgb(204, 0, 0);\"><b>if(온도==false){</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(msg == &quot;핫&quot;){</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; temperature = msg;</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 온도 = true;</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 스위치=true;</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }else {</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;숫자를 입력해주세요&quot;);</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 스위치 = false;</b></span></div><div><span style=\"color: rgb(204, 0, 0);\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div><b>&nbsp; &nbsp; &nbsp;//=========================================================&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/*&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(온도.contains(temperature) == 0){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(temperature ==&quot;HOT&quot;||&quot;hot&quot;||&quot;핫&quot;||&quot;따&quot; &gt; 0){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; temperature = &quot;HOT&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (temperature==&quot;ICE&quot;||&quot;ice&quot;||&quot;아이스&quot;||&quot;아&quot; &gt; 0){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; temperature = &quot;ICE&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; //    temperature == &quot;HOT&quot;||&quot;hot&quot;||&quot;핫&quot;||&quot;따&quot; ? temperature = &quot;HOT&quot; : temperature = &quot;ICE&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;옵션2:&quot; + temperature);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // 가격표 객체안에 상품명(key값)과 주문이 일치하는지 확인</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(Object.keys(가격표).indexOf(order) &gt;= 0) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;option = option.replace(/\\s/gi,&quot;&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rd[room][sender][&quot;money&quot;] = (rd[room][sender][&quot;money&quot;] - 가격표[order] - 옵션[option]);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var vks = rd[room][sender][&quot;money&quot;]; // 결과값 확인용 변수 (NaN 체크)</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(!isNaN(vks)){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FS.write(path, JSON.stringify(rd));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;\\&quot;&quot; + sender + &quot;\\&quot;님 &quot; + (가격표[order] + 옵션[option]) + &quot;원 결제 되었습니다.\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; + &quot;&#128176;남은잔액: &quot; + vks);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // 옵션 없을 시 제거, 있을 시 괄호로 묶어서 출력</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(option==&quot;없음&quot;){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; option=&quot;&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;option = &quot; (&quot;+option+&quot;)&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&apos;\\&quot;&apos; + sender + &quot;\\&quot;님,\\n 『&quot; + order + option + temperature + &quot;』주문완료.\\n\\n&quot; + call_day);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; append(&quot;주문목록&quot;,sender + &quot;_od.txt&quot;, &quot;\\n&quot; + order + option + &quot;\\n&quot; + call_day +&quot;\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; + &quot;=========================&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 일일주문.push(order + option +&quot;, [&quot;+sender+&quot;]&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; /*&nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(msg==&quot;테스트&quot;){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(잔액[sender]);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; save(&quot;주문목록&quot;, sender + &quot;.txt&quot;,  menu);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; */&nbsp;&nbsp;</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; var talk = read(&quot;주문목록&quot;,msg + &quot;.txt&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(talk !== null) {&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;【\\&quot;&quot; + msg.replace(&quot;_od&quot;,&quot;&quot;) + &quot;\\&quot;님의 주문내역】\\n\\n&quot; + talk) ;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; /*</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if (msg.indexOf(&quot;주문삭제&quot;) == 0) {&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new java.io.File(&quot;sdcard/주문목록/&quot; + msg.substr(5)+&quot;.txt&quot;).delete()</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(msg.substr(5) + &quot;주문을 삭제했습니다!&quot;);&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; */</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if (msg == &quot;주문내역&quot;) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var list = java.io.File(sdcard+&quot;/주문목록/&quot;).listFiles().join(&quot;\\n&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; list = list.replace(/\\/storage\\/emulated\\/0\\/주문목록\\//g,&quot;&quot;);</b></div><div><b>&nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;【주문내역】\\n&quot; + list);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; /*</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;잔액&quot;) == 0){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var r_money=[];</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for(var key in 잔액){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; r_money.push(key+&quot;:&quot;+ 잔액[key]);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;【예치금 잔액】\\n\\n&quot;+ r_money.join(&quot;\\n&quot;));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; */</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg==&quot;헬프&quot;){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;【커피주문 관련 명령어】\\n\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;1.주문하기 &apos;상품명&apos;,&apos;옵션&apos; (주문기능)\\n2.내 잔액 (자신의 잔액출력)\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;3.잔액조회 (멤버들의 잔액출력)\\n4.주문내역 (주문내역 파일명)\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;  - 대상자 &apos;닉네임&apos;_od 입력시,\\n    상세 주문내역 출력\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;5.요청사항 &apos;내용&apos; (주문 시 요청)\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;6.요청목록 (요청 목록 확인용)\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;7.주문관리 (오늘 주문한거)&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;요청사항&quot;)==0){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var request_option = msg.split(&quot; &quot;)[1];</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 요청사항.push(&quot;고객명: #&quot;+sender+&quot;&quot; + &quot;\\n요청내용: #&quot;+request_option);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(sender + &quot;님의 요청내용: \\&quot;&quot; +request_option + &quot;\\&quot;이(가) 등록되었습니다.&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg == &quot;요청목록&quot;) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;【&#10004;주문요청사항&#10071;】\\n\\n&quot; + 요청사항.join(&quot;\\n\\n&quot;));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b><br /></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg == &quot;주문관리&quot;) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;【오늘 주문한 상품】\\n\\n&quot; + 일일주문.join(&quot;\\n&quot;));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;/캐시충전&quot;)==0 &amp;&amp; clearOwner.indexOf(sender)==0){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var stm1 = msg.replace(&quot;/캐시충전 &quot;,&quot;&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var stm2 = stm1.split(&quot;,&quot;)[0];</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var stm3 = stm1.split(&quot;,&quot;)[1];</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; stm3=parseInt(stm3);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(stm2 + &quot;님의 잔액:&quot; + rd[room][stm2][&quot;money&quot;]);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rd[room][stm2][&quot;money&quot;] = rd[room][stm2][&quot;money&quot;]+stm3;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FS.write(path, JSON.stringify(rd));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(stm2 + &quot;님의 잔액:&quot; + rd[room][stm2][&quot;money&quot;] + &quot;으로 조정됨&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>}</b></div><div><b><br /></b></div><div><b>var 가격표=</b></div><div><b>{ // test:0,</b></div><div><b>&nbsp; 따아:1500,아아:1800,믹스커피:1800,카푸치노:2500,카페라떼:2500,미숫가루:2500,바닐라라떼:2800,</b></div><div><b>&nbsp; 헤즐넛라떼:2800,카라멜마끼야또:3000,카페모카:3000,콜드브루:3000,초코라떼:3000,녹차라떼:3000,</b></div><div><b>&nbsp; 홍차라떼:3000,복숭아아이스티:3000,딸기크러쉬:3000,망고크러쉬:3000,배크러쉬:3000,</b></div><div><b>&nbsp; 자두크러쉬:3000,복숭아크러쉬:3000,믹스커피프라페:3000,콜드브루라떼:3500,연유라떼:3500,</b></div><div><b>&nbsp; 고구마라떼:3500,토피넛라떼:3500,흑임자라떼:3500,오초민라떼:3500,딸기라떼:3500,딸바라떼:3500,</b></div><div><b>&nbsp; 유자차:3500,애플유자티:3500,자몽티:3500,레몬티:3500,진저라임티:3500,블랙티자몽:3500,</b></div><div><b>&nbsp; 플라워레몬:3500,딸기에이드:3500,블루레몬에이드:3500,애플망고에이드:3500,라임에이드:3500,</b></div><div><b>&nbsp; 청포도에이드:3500,오렌지에이드:3500,자몽에이드:3500,밀크쉐이크:3500,플레인요거트스무디:3500,</b></div><div><b>&nbsp; 딸기요거트스무디:3500,망고요거트스무디:3500,복숭아요거트스무디:3500,자두요거트스무디:3500,</b></div><div><b>&nbsp; 초코민트프라페:3500,녹차프라페:3500,자바칩프라페:3500,쿠키앤크림프라페:3500,</b></div><div><b>&nbsp; 멜팅초코:3800,멜팅녹차:3800,멜팅더블:3800,멜팅초코바나나:3800,</b></div><div><b>&nbsp; 멜팅초코딸기:3800,멜팅녹차딸기:3800,흑설탕버블티:3800,타로버블티:3800,밀크티버블티:3800,</b></div><div><b>&nbsp; 코코넛버블티:3800,수박크러쉬:4000,메론크러쉬:4000</b></div><div><b>};</b></div><div><b><br /></b></div><div><b>var 옵션=</b></div><div><b>{ 없음:0,</b></div><div><b>&nbsp; 샷추가:500,바닐라시럽추가:500,헤이즐넛시럽추가:500,휘핑추가:500,버블추가:500</b></div><div><b>};</b></div><div><b><br /></b></div><div><b>// var 온도 = [&quot;HOT&quot;,&quot;ICE&quot;,&quot;hot&quot;,&quot;핫&quot;,&quot;따&quot;,&quot;ice&quot;,&quot;아이스&quot;,&quot;아&quot;];</b></div><div><b><br /></b></div><div><b>var 일일주문=[];</b></div><div><b>var 요청사항=[];</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>================================</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt;&nbsp; 빨간글씨로 쓴지점에서 ICE</b><b>나 HOT을 입력받고 주문되게하고싶은데 어제부터 헤딩하면서 별짓 다해봐도 잘안되네요ㅠ 샷추가옵션같은거까진 정상작동</b></div><div><br /></div><div>※ 몇몇분들꺼 긁어와서 해결해보려다,</div><div>짬뽕이 되었습니다만..</div><div><br /></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 머머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003F5300000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 16211,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 228,
+            "refArticleId": 16211,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "커피주문받는 봇! (음료 온도 선택기능)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587108880553,
+            "writer": {
+                "id": "horangi777",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Simiken"
+            }
+        },
+        "articleId": 16211,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "제가 scanf 구현해둔거 있는데 그거 쓰시면 쉬울지도.",
+                    "id": 87732034,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87732034,
+                    "updateDate": 1587115453000,
+                    "writer": {
+                        "id": "littledanny",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "닉넴421"
+                    }
+                },
+                {
+                    "content": "replier.reply(\"어떤 커피를 주문하시겠습니까?\");\r\nvar an = scanf();\r\n이런식으로 쓰시면 된다능",
+                    "id": 87732094,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87732034,
+                    "updateDate": 1587118755000,
+                    "writer": {
+                        "id": "littledanny",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "닉넴421"
+                    }
+                },
+                {
+                    "content": "엌ㅋㅋㅋC언어갬성",
+                    "id": 87735792,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87732034,
+                    "replyMember": {
+                        "id": "littledanny",
+                        "nick": "닉넴421"
+                    },
+                    "updateDate": 1587118581000,
+                    "writer": {
+                        "id": "horangi777",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data32/2008/4/20/153/%E1%B3%D2%B3%E3%C1%D3%DB%28%BC%D2%B3%E0%BD%C3%B4%EB%29%5B%C5%C2%BF%AC%5D-horangi777.jpg"
+                        },
+                        "nick": "Simiken"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,209 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>본소스는 public Domain 소스입니다.<br />Michael Mathews. 라는 깃헙 유저가 작성하셨고<br />전 이분 소스 빌려왔었습니다.<br /><br />require 의 사용방법이면<br />node.js 랑 같은 방식이지만.<br />그냥 파일 주소를 적으면 되요.<br />sdcard 내부 아무대나...<br />index.js 를 가리키면되요..<br /><br />그런 초고급 소스를 공유합니다!<br />/*<br />    Rhino-Require is Public Domain<br />Written by Michael Mathews. Licensed as public domain.<br />    &lt;<a href=\"http://en.wikipedia.org/wiki/Public_Domain\" target=\"_blank\">http://en.wikipedia.org/wiki/Public_Domain</a>&gt;<br />    <br />    The author or authors of this code dedicate any and all copyright interest<br />    in this code to the public domain. We make this dedication for the benefit<br />    of the public at large and to the detriment of our heirs and successors. We<br />    intend this dedication to be an overt act of relinquishment in perpetuity of<br />    all present and future rights to this code under copyright law.<br /> */<br /><br />(function(global) {<br /><br />    var require = global.require = function(id) { /*debug*///console.log(&apos;require(&apos;+id+&apos;)&apos;);<br />        if (typeof arguments[0] !== &apos;string&apos;) throw &apos;USAGE: require(moduleId)&apos;;<br />        <br />        var moduleContent = &apos;&apos;,<br />            moduleUri;<br />        <br />        moduleUri = require.resolve(id);<br />        moduleContent = &apos;&apos;;<br />        <br />        if (require.cache[moduleUri]) {<br />          return require.cache[moduleUri];<br />        }<br /><br />        var file = new java.io.File(moduleUri);<br />        try {    <br />            var scanner = new java.util.Scanner(file).useDelimiter(&quot;\\\\Z&quot;);<br />            moduleContent = String( scanner.next() );<br />        }<br />        catch(e) {<br />            throw &apos;Unable to read file at: &apos;+moduleUri+&apos;, &apos;+e;<br />        }<br />        <br />        if (moduleContent) {<br />                try {<br />                    var f = new Function(&apos;require&apos;, &apos;exports&apos;, &apos;module&apos;, moduleContent),<br />                    exports = require.cache[moduleUri] || {},<br />                    module = { id: id, uri: moduleUri, exports: exports };<br />        <br />                <br />                    require._root.unshift(moduleUri);<br />                    f.call({}, require, exports, module);<br />                    require._root.shift();<br />                }<br />                catch(e) {<br />                    throw &apos;Unable to require source code from &quot;&apos; + moduleUri + &apos;&quot;: &apos; + e.toSource();<br />                }<br />                <br />                exports = module.exports || exports;<br />                require.cache[moduleUri] = exports;<br />        }<br />        else {<br />            throw &apos;The requested module cannot be returned: no content for id: &quot;&apos; + id + &apos;&quot; in paths: &apos; + require.paths.join(&apos;, &apos;);<br />        }<br />        <br />        return exports;<br />    }<br />    require._root = [&apos;&apos;];<br />    require.paths = [];<br />    require.cache = {}; // cache module exports. Like: {id: exported}<br />    <br />    var SLASH = Packages.java.io.File.separator;<br />    <br />    /** Given a module id, try to find the path to the associated module.<br />     */<br />    require.resolve = function(id) {<br />        // TODO: 1. load node core modules<br />        <br />        // 2. dot-relative module id, like &apos;./foo/bar&apos;<br />        var parts = id.match(/^(\\.?\\.(?:\\\\|\\/)|(?:\\\\|\\/))(.+)$/),<br />            isRelative = false,<br />            isAbsolute = false,<br />            basename = id;<br />        <br />        if (parts) {<br />            isRelative = parts[1] === &apos;./&apos; || parts[1] === &apos;.\\\\&apos; || parts[1] === &apos;../&apos; || parts[1] === &apos;..\\\\&apos;;<br />            isAbsolute = parts[1] === &apos;/&apos; || parts[1] === &apos;\\\\&apos;;<br />            basename = parts[2];<br />        }<br />        <br />        if (typeof basename !== &apos;undefined&apos;) {<br />            <br />            if (isAbsolute) {<br />                rootedId = id;<br />            }<br />            else {<br />        var root = (isRelative? toDir(require._root[0] || &apos;.&apos;) : &apos;.&apos;),<br />          rootedId = deDotPath(root + SLASH + id),<br />          uri = &apos;&apos;;<br />            }<br />            <br />            if ( uri = loadAsFile(rootedId) ) { }<br />            else if ( uri = loadAsDir(rootedId) ) { }<br />            else if ( uri = loadNodeModules(rootedId) ) { }<br />            else if ( uri = nodeModulesPaths(rootedId, &apos;rhino_modules&apos;) ) { }<br />            else if ( uri = nodeModulesPaths(rootedId, &apos;node_modules&apos;) ) { }<br />            <br />            if (uri !== &apos;&apos;) return toAbsolute(uri);<br />            <br />            throw &apos;Require Error: Not found.&apos;;<br />        }<br />    }<br />    <br />    /** Given a path, return the base directory of that path.<br />        @example toDir(&apos;/foo/bar/somefile.js&apos;); =&gt; &apos;/foo/bar&apos;<br />     */<br />    function toDir(path) {<br />        var file = new java.io.File(path);<br />        <br />        if (file.isDirectory()) {<br />          return path;<br />        }<br />        <br />        var parts = path.split(/[\\\\\\/]/);<br />        parts.pop();<br />        return parts.join(SLASH);<br />    }<br />    <br />    /** Returns true if the given path exists and is a file.<br />     */<br />    function isFile(path) {<br />        var file = new java.io.File(path);<br />        <br />        if (file.isFile()) {<br />           return true;<br />        }<br />        <br />        return false;<br />    }<br />    <br />    /** Returns true if the given path exists and is a directory.<br />     */<br />    function isDir(path) {<br />        var file = new java.io.File(path);<br />        <br />        if (file.isDirectory()) {<br />           return true;<br />        }<br />        <br />        return false;<br />    }<br />    <br />    /** Get the path of the current working directory<br />     */<br />    function getCwd() {<br />        return deDotPath( toDir( &apos;&apos;+new java.io.File(&apos;.&apos;).getAbsolutePath() ) );<br />    }<br />    <br />    function toAbsolute(relPath) {<br />        absPath = &apos;&apos;+new java.io.File(relPath).getAbsolutePath();<br />        absPath = deDotPath(absPath);<br />        return absPath;<br />    }<br />    <br />    function deDotPath(path) {<br />        return String(path)<br />      .replace(/(\\/|\\\\)[^\\/\\\\]+\\/\\.\\.(\\/|\\\\)/g, SLASH)<br />      .replace(/(\\/|\\\\)\\.(\\/|\\\\|$)/g, SLASH);<br />    }<br />    <br />    /** Assume the id is a file, try to find it.<br />     */<br />    function loadAsFile(id) {<br />        if ( isFile(id) ) { return id; }<br />        <br />        if ( isFile(id+&apos;.js&apos;) ) { return id+&apos;.js&apos;; }<br />        <br />        if ( isFile(id+&apos;.node&apos;) ) { throw &apos;Require Error: .node files not supported&apos;; }<br />    }<br />    <br />    /** Assume the id is a directory, try to find a module file within it.<br />     */<br />    function loadAsDir(id) {<br />        if (!isDir(id)) {<br />           return;<br />        }<br />        // look for the &quot;main&quot; property of the package.json file<br />        if ( isFile(id+SLASH+&apos;package.json&apos;) ) {<br />            var packageJson = readFileSync(id+SLASH+&apos;package.json&apos;, &apos;utf-8&apos;);<br />            eval( &apos;packageJson = &apos;+ packageJson);<br />            if (packageJson.hasOwnProperty(&apos;main&apos;)) {<br />                var main = deDotPath(id + SLASH + packageJson.main);<br />                return require.resolve(main);<br />            }<br />        }<br />        <br />        if ( isFile(id+SLASH+&apos;index.js&apos;) ) {<br />            return id+SLASH+&apos;index.js&apos;;<br />        }<br />    }<br />    <br />    function loadNodeModules(id) {<br />        var path,<br />            uri,<br />            cwd = getCwd(),<br />            dirs = cwd.split(SLASH),<br />            dir = dirs.join(SLASH);<br />        for (var i = 0, len = require.paths.length; i &lt; len; i++) {<br />            path = require.paths[i];<br />            path = deDotPath(dir + SLASH + path);<br />            if (isDir(path)) {<br />                path = deDotPath(path + SLASH + id);<br />                <br />                uri = loadAsFile(path);<br />                if (typeof uri !== &apos;undefined&apos;) {<br />                    return uri;<br />                }<br />                <br />                uri = loadAsDir(path);<br />                if (typeof uri !== &apos;undefined&apos;) {<br />                    return uri;<br />                }<br />            }<br />        }<br />    }<br />    <br />    function nodeModulesPaths(id, moduleFolder) {<br />        var cwd = getCwd(),<br />            dirs = cwd.split(SLASH),<br />            dir,<br />            path,<br />            filename,<br />            uri;<br /><br />        while (dirs.length) {<br />            dir = dirs.join(SLASH);<br />            path = dir+SLASH+moduleFolder;<br /><br />            if ( isDir(path) ) {<br />                filename = deDotPath(path+SLASH+id);<br />                <br />                if ( uri = loadAsFile(filename) ) {<br />                    uri = uri.replace(cwd, &apos;.&apos;);<br />                    return uri;<br />                }<br />                <br />                if ( uri = loadAsDir(filename) ) {<br />                    uri = uri.replace(cwd, &apos;.&apos;);<br />                    return uri;<br />                }<br />            }<br /><br />            dirs.pop();<br />        }<br />    }<br />    <br />    function readFileSync(filename, encoding, callback) {<br />        if (typeof arguments[1] === &apos;function&apos;) {<br />            encoding = null;<br />            callback = arguments[1];<br />        }<br />        <br />        encoding = encoding || java.lang.System.getProperty(&apos;file.encoding&apos;);<br />        <br />        try {<br />            var content = new java.util.Scanner(<br />                new java.io.File(filename),<br />                encoding<br />            ).useDelimiter(&quot;\\\\Z&quot;);<br />            <br />            return String( content.next() );<br />        }<br />        catch (e) {<br />            return &apos;&apos;;<br />        }<br />    }<br /><br />})(this);</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000392600000000",
+            "id": 14630,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 143,
+            "refArticleId": 14630,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "남들이 안갖고 저만의 require 소스.[퍼블릭 도메인 공유]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585670399203,
+            "writer": {
+                "id": "jomin398",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "jomin398"
+            }
+        },
+        "articleId": 14630,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이게머시여",
+                    "id": 85992565,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85992565,
+                    "updateDate": 1585670810000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "ㅋㅋ require 인거에요\r\n그것도 파일 경로로 가능해요",
+                    "id": 85993270,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85992565,
+                    "updateDate": 1585671808000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

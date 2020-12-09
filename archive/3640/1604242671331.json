@@ -1,0 +1,295 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1315,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA3MDVfMjc2/MDAxNTYyMjg4NDU5NjIx.tlIufblpZjLk9Mm9l8h3TTabbye48SV3AKpoeoOVHFQg.FEswrMl--BRYNgHiNArcX2mkiN9__1wBP9Vakgv0Gbgg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1315,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA3MDVfMjgg/MDAxNTYyMjg4NDYxOTIy.XijhgwbXR9Af39LKuQskNhZPN3h1aM69EjcR2G-2ltYg.DNAn2JgGRrzRxDd922cnT7HlH8RE9dN2Lyw6-dLcNxwg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>올해 3월달에 올라온 인디벨님의 배틀그라운드 전적검색을 보고 부분적으로 바꿔가며 공부하고있는데 너무어려워서 질문드립니다<br />롤&nbsp;op.gg같은경우if(msg.indexOf(&quot;/롤&nbsp;&quot;)==0){<br />var&nbsp;u&nbsp;=&nbsp;Utils.getWebText(&quot;https://www.op.gg/summoner/userName=&quot;+encodeURI(msg.substr(3)));</p>[[[CONTENT-ELEMENT-0]]]<br /><p>이렇게&nbsp;코드로&nbsp;전환되서&nbsp;명령어가&nbsp;들어가는건&nbsp;이해가&nbsp;되는데<br />배그bak.gg는</p>[[[CONTENT-ELEMENT-1]]]<br /><p>이렇게&nbsp;닉네임이&nbsp;바로&nbsp;표기가&nbsp;됩니다.<br />이럴때&nbsp;<br />if(doc.trim().indexOf(&quot;/배그&nbsp;&quot;)&nbsp;!==0)&nbsp;{<br />var&nbsp;doc&nbsp;=&nbsp;Utils.getWebText(&quot;https://dak.gg/profile/&quot;&nbsp;+&nbsp;nick&nbsp;+&nbsp;&quot;?hl=ko-KR&quot;,&nbsp;null,&nbsp;false,&nbsp;false);<br />이런&nbsp;명령어를&nbsp;쓰는게&nbsp;아닌거&nbsp;같은데&nbsp;어떻게&nbsp;적용해야할까요?<br /><br />아래에&nbsp;전체&nbsp;코드&nbsp;올립니다.<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />try {<br /> <br />if(doc.trim().indexOf(&quot;/배그 &quot;) !==0) {<br />var doc = Utils.getWebText(&quot;https://dak.gg/profile/&quot; + nick + &quot;?hl=ko-KR&quot;, null, false, false);<br />  <br />var solo = doc.split(&quot;&lt;section class=\\&quot;solo modeItem\\&quot;&gt;&quot;)[1].split(&quot;&lt;/section&gt;&quot;)[0];<br />if(solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;/div&gt;&quot;)[0].indexOf(&quot;grade-info&quot;) == -1) {<br />   solo = null;<br />  }<br />  <br />var duo = doc.split(&quot;&lt;section class=\\&quot;duo modeItem\\&quot;&gt;&quot;)[1].split(&quot;&lt;/section&gt;&quot;)[0];<br />if(duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;/div&gt;&quot;)[0].indexOf(&quot;grade-info&quot;) == -1) {<br />   duo = null;<br />   }<br />  <br />var squad = doc.split(&quot;&lt;section class=\\&quot;squad modeItem\\&quot;&gt;&quot;)[1].split(&quot;&lt;/section&gt;&quot;)[0];<br />if(squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;/div&gt;&quot;)[0].indexOf(&quot;grade-info&quot;) == -1) {<br />   squad = null;<br />  }<br />  <br />var result = [];<br />var str = &quot;&quot;;<br />  <br />  result[0] = doc.split(&quot;&lt;div class=\\&quot;userData\\&quot;&gt;&quot;)[1].split(&quot;&lt;p&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g, &quot;&quot;).trim().replace(&quot;: &quot;, &quot; : &quot;);<br />  result[1] = &quot;서버 : &quot; + doc.split(&quot;&lt;div class=\\&quot;regions\\&quot;&gt;&quot;)[1].split(&quot;class=\\&quot;active\\&quot;&gt;&quot;)[1].split(&quot;&gt;&quot;)[1].split(&quot;&lt;/a&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g, &quot;&quot;).replace(&quot;&lt;/a&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />  result[2] = doc.split(&quot;&lt;div class=\\&quot;seasons\\&quot;&gt;&quot;)[1].split(&quot;class=\\&quot;active\\&quot;&gt;&quot;)[1].split(&quot;&lt;a href&quot;)[1].split(&quot;&gt;&quot;)[1].split(&quot;&lt;&quot;)[0].trim() + &quot;\\n&quot;;<br />  <br />if(solo != null) {<br />  str += &quot;솔로 : &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;em&gt;&quot;)[1].split(&quot;&lt;/em&gt;&quot;)[0] + &quot;\\n=&gt; &quot; + doc.split(&quot;&lt;p class=\\&quot;grade-name\\&quot; style=\\&quot;font-size:11px;\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0] + &quot; / &quot; + solo.split(&quot;&lt;span class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;(&quot; + solo.split(&quot;&lt;span class=\\&quot;top\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;)&quot;.trim() + &quot;\\n=&gt; 킬뎃 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 승률 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[2].split(&quot;&lt;/p&gt;&quot;)[0] + &quot;\\n=&gt; 헤드샷 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[7].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 저격 &quot; + solo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[8].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;\\n\\n&quot;;<br />}<br />if(duo != null) {<br />   str += &quot;듀오 : &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;em&gt;&quot;)[1].split(&quot;&lt;/em&gt;&quot;)[0] + &quot;\\n=&gt;&quot; + duo.split(&quot;&lt;p class=\\&quot;grade-name\\&quot; style=\\&quot;font-size:11px;\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0] + &quot; / &quot; + duo.split(&quot;&lt;span class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;(&quot; + duo.split(&quot;&lt;span class=\\&quot;top\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;)&quot;.trim() + &quot;\\n=&gt; 킬뎃 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 승률 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[2].split(&quot;&lt;/p&gt;&quot;)[0] + &quot;\\n=&gt; 헤드샷 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[7].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 저격 &quot; + duo.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[8].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;\\n\\n&quot;;<br /> }<br />if(squad != null) {<br />   str += &quot;스쿼드 : &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;em&gt;&quot;)[1].split(&quot;&lt;/em&gt;&quot;)[0] + &quot;\\n=&gt;&quot; + squad.split(&quot;&lt;p class=\\&quot;grade-name\\&quot; style=\\&quot;font-size:11px;\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0] + &quot; / &quot; + squad.split(&quot;&lt;span class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;(&quot; + squad.split(&quot;&lt;span class=\\&quot;top\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0] + &quot;)&quot;.trim() + &quot;\\n=&gt; 킬뎃 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 승률 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[2].split(&quot;&lt;/p&gt;&quot;)[0] + &quot;\\n=&gt; 헤드샷 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[7].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;, 저격 &quot; + squad.split(&quot;&lt;h1&gt;&quot;)[1].split(&quot;&lt;p class=\\&quot;value\\&quot;&gt;&quot;)[8].split(&quot;&lt;/p&gt;&quot;)[0].trim() + &quot;\\n\\n&quot;;<br /> }<br /> <br /> str = str.substring(0, str.lastIndexOf(&quot;\\n\\n&quot;));<br />  <br />return nick + &quot;님의 배틀그라운드\\n\\n&quot; + result.join(&quot;\\n&quot;) + &quot;\\n&quot; + str + &quot;\\n\\ndak.gg/profile/&quot; + nick;<br /> }<br /> } catch (e) {<br />return nick + &quot; 유저를 찾을 수 없습니다.&quot;;<br /> }<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000E3800000000",
+            "id": 3640,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 182,
+            "refArticleId": 3640,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "자바를 알게된지 얼마되지않아 어렵습니다",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1562288462557,
+            "writer": {
+                "id": "mjwnsgur1502",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "3sp qsS"
+            }
+        },
+        "articleId": 3640,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 408977,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/c356df6c7f2127fbd731546358bec4bb194bb557ea/MjAxOTA3MDVfMjc2/MDAxNTYyMjg4NDU5NjIx.tlIufblpZjLk9Mm9l8h3TTabbye48SV3AKpoeoOVHFQg.FEswrMl--BRYNgHiNArcX2mkiN9__1wBP9Vakgv0Gbgg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 405740,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/e673fa405a6d6cd9f41077407d9be79c3c6e902f/MjAxOTA3MDVfMjgg/MDAxNTYyMjg4NDYxOTIy.XijhgwbXR9Af39LKuQskNhZPN3h1aM69EjcR2G-2ltYg.DNAn2JgGRrzRxDd922cnT7HlH8RE9dN2Lyw6-dLcNxwg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "자바가 아니라 자바스크립트에요\r\n파싱할 때는 인코딩 필요없어요 정찰대 진으로 넘기거나 encodeURI(\"정찰대 진\")으로 넘겨도 상관 무\r\n파싱부터 하지 마시고 기초부터 하시는 거 추천드립니다\r\n",
+                    "id": 63262203,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63262203,
+                    "updateDate": 1562290629000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "네 알겠습니다 마음만 급하다보니 기초적인 실수를 범했습니다 ㅠㅠ",
+                    "id": 63271301,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63262203,
+                    "updateDate": 1562297368000,
+                    "writer": {
+                        "id": "mjwnsgur1502",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "3sp qsS"
+                    }
+                },
+                {
+                    "content": "자바와 자바스크립트는 햄과 햄스터 차이",
+                    "id": 63271240,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63271240,
+                    "updateDate": 1562297292000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "앞으로는 재대로 말해야겠네요 ㅎ....ㅠㅠ",
+                    "id": 63271322,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63271240,
+                    "updateDate": 1562297390000,
+                    "writer": {
+                        "id": "mjwnsgur1502",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "3sp qsS"
+                    }
+                },
+                {
+                    "content": "팸과 스팸의 차이(?)",
+                    "id": 63333222,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63271240,
+                    "replyMember": {
+                        "id": "mjwnsgur1502",
+                        "nick": "3sp qsS"
+                    },
+                    "updateDate": 1562379603000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

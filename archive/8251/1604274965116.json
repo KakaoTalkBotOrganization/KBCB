@@ -1,0 +1,341 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><p>var d=1</p><p>var h=1</p><p>var blank = &quot;\\u200b&quot;.repeat(501)</p><p>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName){</p><p>&nbsp;</p><p>&nbsp;if(msg.startsWith(&quot;옵치전적&quot;)){</p><p>try{</p><p>var name=msg.substr(5).replace(/#/g,&quot;-&quot;)</p><p>&nbsp;</p><p>var code=Utils.getWebText(&quot;https://ow-api.com/v1/stats/pc/asia/&quot;+name+&quot;/profile&quot;)</p><p>var rank=code.split(&quot;ratings&quot;)[1]</p><p>if(code.includes(&quot;tank&quot;)){</p><p>var tank=code.split(&quot;ratings&quot;)[1].split(&quot;level&quot;)[1].split(&quot;role&quot;)[0].replace(/:/g,&quot;&quot;).replace(/{&quot;/g,&quot;&quot;).replace(/role/g,&quot;&quot;).replace(/level/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;) .replace(/,/g,&quot;&quot;)+&quot;점&quot;</p><p>d+=1</p><p>h+=1</p><p>}else{</p><p>var tank=&quot;안함&quot;</p><p>}</p><p>if(rank.includes(&quot;damage&quot;)){</p><p>var damage=code.split(&quot;ratings&quot;)[1].split(&quot;level&quot;)[d].split(&quot;role&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;).replace(/,/g,&quot;&quot;)+&quot;점&quot;</p><p>h+=1</p><p>}else{</p><p>var damage=&quot;안함&quot;</p><p>}</p><p>if(code.includes(&quot;support&quot;)){</p><p>var heal=code.split(&quot;ratings&quot;)[1].split(&quot;level&quot;)[h].split(&quot;role&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;).replace(/,/g,&quot;&quot;)+&quot;점&quot;</p><p>}else{</p><p>var heal=&quot;안함&quot;</p><p>}</p><p>&nbsp;</p><p>var competitive=code.split(&quot;competitiveStats&quot;)[1].split(&quot;endorsement&quot;)[0]</p><p>&nbsp;</p><p>if(competitive.includes(&quot;cards&quot;)){</p><p>var cards=competitive.split(&quot;cards&quot;)[1].split(&quot;,&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;)</p><p>}else{</p><p>var cards=&quot;없음&quot;</p><p>}</p><p>if(competitive.includes(&quot;medalsBronze&quot;)){</p><p>var bmedal=competitive.split(&quot;medalsBronze&quot;)[1].split(&quot;,&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;)</p><p>}else{</p><p>var bmedal=&quot;없음&quot;</p><p>}</p><p>if(competitive.includes(&quot;medalsSilver&quot;)){</p><p>var smedal=competitive.split(&quot;medalsSilver&quot;)[1].split(&quot;,&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;)</p><p>}else{</p><p>var smedal=&quot;없음&quot;</p><p>}</p><p>if(competitive.includes(&quot;medalsGold&quot;)){</p><p>var gmedal=competitive.split(&quot;medalsGold&quot;)[1].split(&quot;}&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;)</p><p>}else{</p><p>var gmedal=&quot;없음&quot;</p><p>}</p><p>if(competitive.includes(&quot;medals&quot;)){</p><p>var amedal=competitive.split(&quot;medals&quot;)[1].split(&quot;,&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;)</p><p>}else{</p><p>var amedal=&quot;없음&quot;</p><p>}</p><p>if(competitive.includes(&quot;played&quot;)){</p><p>var play= competitive.split(&quot;played&quot;)[1].split(&quot;,&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;)</p><p>}else{</p><p>var play=&quot;0&quot;</p><p>}</p><p>if(competitive.includes(&quot;won&quot;)){</p><p>var win=competitive.split(&quot;won&quot;)[1].split(&quot;}&quot;)[0].replace(/:/g,&quot;&quot;).replace(/&quot;/g,&quot;&quot;)</p><p>}else{</p><p>var win=&quot;0&quot;</p><p>}</p><p>&nbsp;</p><p>var lose=play-win</p><p>&nbsp;</p><p>var winwin=win/play</p><p>&nbsp;</p><p>//빠대</p><p>&nbsp;</p><p>var quick= code.replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;) .replace(/[\\n\\s]{2,}/g,&quot;\\n&quot;).split(&quot;quickPlayStats&quot;)[1] .split(&quot;rating&quot;)[0] .replace(/&quot;/g,&quot;&quot;) .replace(/:/g,&quot;&quot;) .replace(/{/g,&quot;&quot;) .replace(/}/g,&quot;&quot;)</p><p>if(quick.includes(&quot;awardscards&quot;)){</p><p>var qcards=quick .split(&quot;awardscards&quot;)[1] .split(&quot;,&quot;)[0]</p><p>}else{</p><p>var qcards=&quot;없음&quot;</p><p>}</p><p>if(quick.includes(&quot;medals&quot;)){</p><p>var qamedal=quick .split(&quot;medals&quot;)[1] .split(&quot;,&quot;)[0]</p><p>}else{</p><p>var qamedal=&quot;없음&quot;</p><p>}</p><p>if(quick.includes(&quot;medalsBronze&quot;)){</p><p>var qbmedal=quick .split(&quot;medalsBronze&quot;)[1] .split(&quot;,&quot;)[0]</p><p>}else{</p><p>var qbmedal=&quot;없음&quot;</p><p>}</p><p>if(quick.includes(&quot;medalsSilver&quot;)){</p><p>var qsmedal= quick .split(&quot;medalsSilver&quot;)[1] .split(&quot;,&quot;)[0]</p><p>}else{</p><p>var qsmedal=&quot;없음&quot;</p><p>}</p><p>if(quick.includes(&quot;medalsGold&quot;)){</p><p>var qgmedal= quick .split(&quot;medalsGold&quot;)[1] .split(&quot;,&quot;)[0]</p><p>}else{</p><p>var qgmedal=&quot;없음&quot;</p><p>}</p><p>if(quick.includes(&quot;gamesplayed&quot;)){</p><p>var qplay= quick .split(&quot;gamesplayed&quot;)[1] .split(&quot;,&quot;)[0]</p><p>}else{</p><p>var qplay=&quot;0&quot;</p><p>}</p><p>if(quick.includes(&quot;won&quot;)){</p><p>var qwin= quick .split(&quot;won&quot;)[1] .split(&quot;,&quot;)[0]</p><p>}else{</p><p>var qwin=&quot;0&quot;</p><p>}</p><p>var qlose=qplay-qwin</p><p>&nbsp;</p><p>var qwinwin=qwin/qplay</p><p>&nbsp;</p><p>replier.reply(msg.substr(5)+&quot;님의 옵치전적 입니다\\n&quot;+&quot;\\n탱커: &quot;+tank+&quot;\\n딜러: &quot;+damage+&quot;\\n힐러: &quot;+heal+blank+&quot;\\n\\n《경쟁》\\n칭찬카드 수: &quot;+cards+&quot;\\n동메달: &quot;+bmedal+&quot;\\n은메달: &quot;+smedal+&quot;\\n금메달: &quot;+gmedal+&quot;\\n총메달: &quot;+amedal+&quot;\\n플레이 횟수: &quot;+play+&quot;\\n승리: &quot;+win+&quot;\\n패배: &quot;+lose+&quot;\\n승률: &quot;+winwin+&quot;\\n\\n《빠대》\\n 칭찬카드 수: &quot;+qcards+&quot;\\n동메달: &quot;+qbmedal+&quot;\\n은메달: &quot;+qsmedal+&quot;\\n금메달: &quot;+qgmedal+&quot;\\n총메달: &quot;+qamedal+&quot;\\n플레이 횟수: &quot;+qplay+&quot;\\n승리: &quot;+qwin+&quot;\\n패배: &quot;+qlose+&quot;\\n승률: &quot;+qwinwin)</p><p>&nbsp;}catch(e){</p><p>replier.reply(&quot;오류가 났습니다 닉네임을 다시 확인해주세요&quot;)</p><p>&nbsp; &nbsp; &nbsp; }</p><p>}</p><p>&nbsp;</p><p>d=1</p><p>h=1</p><p>}</p><p>&nbsp;</p><p>훠우 많다</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000203B00000000",
+            "id": 8251,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 162,
+            "refArticleId": 8251,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "오버워치 전적 업글버전",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574618223153,
+            "writer": {
+                "id": "jjes1302",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "흐미"
+            }
+        },
+        "articleId": 8251,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "- 이동완료 -",
+                    "id": 74264984,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74264984,
+                    "updateDate": 1574618282000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "객체를 split으로..ㄷㄷ",
+                    "id": 74269934,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74269934,
+                    "updateDate": 1574636716000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "으니 왜안대징",
+                    "id": 74317709,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTExMjVfMjk1/MDAxNTc0Njc1MTg1MTkx.INt_HTl6xBWtZmrUKj9NcRwliVuh6DO2eEWTrBiE2_Eg.niL6iNZzxFST3C-2lkxdZQalYLkjvrt3_cy_vCV9IN8g.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2220,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTExMjVfMjk1/MDAxNTc0Njc1MTg1MTkx.INt_HTl6xBWtZmrUKj9NcRwliVuh6DO2eEWTrBiE2_Eg.niL6iNZzxFST3C-2lkxdZQalYLkjvrt3_cy_vCV9IN8g.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTExMjVfMjk1/MDAxNTc0Njc1MTg1MTkx.INt_HTl6xBWtZmrUKj9NcRwliVuh6DO2eEWTrBiE2_Eg.niL6iNZzxFST3C-2lkxdZQalYLkjvrt3_cy_vCV9IN8g.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 74317709,
+                    "updateDate": 1574675185000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "멍뭉"
+                    }
+                },
+                {
+                    "content": "아 api문제넹",
+                    "id": 74318056,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74317709,
+                    "updateDate": 1574675522000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "멍뭉"
+                    }
+                },
+                {
+                    "content": "배틀태그...",
+                    "id": 74322622,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74317709,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1574680273000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쿠키"
+                    }
+                },
+                {
+                    "content": "배틀태그 하고 FS로 저장한다음에",
+                    "id": 74322643,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74317709,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1574680288000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쿠키"
+                    }
+                },
+                {
+                    "content": "닉네임만 써도 배틀태그 생략할수 있기 하는게 좋음",
+                    "id": 74322656,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74317709,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1574680302000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쿠키"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

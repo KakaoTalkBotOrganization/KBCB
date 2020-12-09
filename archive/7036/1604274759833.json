@@ -1,0 +1,414 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 13,
+            "contentElements": [],
+            "contentHtml": "<p>[ 이전 버전입니다! <a href=\"https://cafe.naver.com/nameyee/8224\" target=\"_blank\" title=\"새창으로 열림\">최신 게시글</a>의 소스를 사용해 주세요! ]</p><p><br /></p><p> 최근들어, 안전하게 소스를 실행하는 &apos;세이프 이발&apos; 기능을 많은 카카오톡 봇이 가지고 있습니다. 이 기능은, 카카오톡 봇 어플처럼 직접 Rhino 엔진을 사용하여 자바스크립트 소스를 실행하는 방식을 사용하고 있어요.<br /><br /> 이번에 &apos;세이프 이발&apos; 기능의 중대한 취약점(?)이 발견 되었는데요, 이 취약점은 Rhino의 오류 객체 내부, &apos;rhinoException&apos; 이라는 자바 클래스를 통하여 다른 클래스에 접근할 수 있는 위험성을 가지고 있습니다.<br /><br />따라서 이번 취약점을 해결할 수 있는, 개선된 &apos;세이프 이발&apos; 함수를 제작하였습니다!<br /><br />---<br /><br />[ 소스 ]<br /><br />function runSafeEval(src) {<br /> var factory = org.mozilla.javascript.ContextFactory.getGlobal();<br /> var cx = factory.enterContext();<br /> var scope = cx.initSafeStandardObjects();<br /> var result;<br /> <br /> cx.setOptimizationLevel(-1);<br /> cx.setInstructionObserverThreshold(3000);<br /> cx.setMaximumInterpreterStackDepth(1000);<br /> cx.getWrapFactory().setJavaPrimitiveWrap(false);<br /> <br /> cx.setClassShutter(new org.mozilla.javascript.ClassShutter({<br />  visibleToScripts: function(fullClassName) {<br />   return false;<br />  }<br /> }));<br /> <br /> try {<br />  result = cx.evaluateString(scope, src, &quot;SafeEval.js&quot;, 1,  null);<br /> } catch (err) {<br />  result = err.toString();<br /> }<br /> <br /> cx.exit();<br /> <br /> return result;<br />}<br /><br />[ 사용법 ]<br /><br />runSafeEval(소스); // 소스 실행 결과를 반환합니다.<br /><br />---<br /><br />* Rhino의 &apos;ClassShutter&apos;는 자바 클래스 접근 자체를 방지합니다.<br /><br />많은 분들이 이 소스를 사용해 주셨으면 좋겠네요!</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001B7C00000000",
+            "id": 7036,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 328,
+            "refArticleId": 7036,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[Rhino] 개선된 세이프 이발(실행) 함수",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1572185612363,
+            "writer": {
+                "id": "cafeworlds",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "OnTheWay"
+            }
+        },
+        "articleId": 7036,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "!!!!",
+                    "id": 72071075,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72071075,
+                    "updateDate": 1572186028000,
+                    "writer": {
+                        "id": "jeongyeon13751",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청정수123"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 72071089,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 72071075,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57f2b52920a55-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57f2b52920a55/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572186040000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                },
+                {
+                    "content": "크암사합니다",
+                    "id": 72071436,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72071436,
+                    "updateDate": 1572186266000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "민soup"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 72076700,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72076700,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1572190268000,
+                    "writer": {
+                        "id": "doy0006",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data29/2007/12/9/39/cellphoneimg-doy0006.jpg"
+                        },
+                        "nick": "대기만성"
+                    }
+                },
+                {
+                    "content": "쌉고인물 ㄷㄷ",
+                    "id": 72080999,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72080999,
+                    "updateDate": 1572213322000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "저기 result에서\r\nSafeEval.js는 임의로 지정한 이름인가요?\r\n아니면 스크립트 명으로 바꿔주어야 하나요?",
+                    "id": 72120277,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72120277,
+                    "updateDate": 1572244383000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "변수 함수 넣는 법 까묵었어요\r\n알려주세요",
+                    "id": 73479586,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73479586,
+                    "updateDate": 1573726268000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "!!!",
+                    "id": 73479602,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73479586,
+                    "updateDate": 1573726284000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                },
+                {
+                    "content": "머였죠",
+                    "id": 73479637,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73479586,
+                    "replyMember": {
+                        "id": "cafeworlds",
+                        "nick": "OnTheWay"
+                    },
+                    "updateDate": 1573726318000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 73479651,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73479586,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-6-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_6.png",
+                        "width": 129
+                    },
+                    "updateDate": 1573726332000,
+                    "writer": {
+                        "id": "cafeworlds",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180531_48/cafeworlds_1527766192002qt168_PNG/image.png"
+                        },
+                        "nick": "OnTheWay"
+                    }
+                }
+            ],
+            "last": {
+                "id": 73487871,
+                "refId": 73487871
+            },
+            "next": {
+                "id": 73479695,
+                "refId": 73479586
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

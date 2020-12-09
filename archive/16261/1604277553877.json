@@ -1,0 +1,370 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇R</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt; 배우미님 던담 카링적용편</b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 소스 및 링크 정상이나 오류가 발생합니다</b></div><div><b>오류부분 ☆☆☆ 표시해두었습니다.</b></div><div><b>링크 정상여부 확인하였으나 실행시 null캐릭터 정보를 불러온다고 나오고, 그 링크를 수기로 입력하면 정상으로 로딩됩니다...</b></div><div><b>따끔한 조언 부탁드립니다 ㅠㅠ 어떻게해도 안되네요</b></div><div><b><br /></b></div><div><p dir=\"ltr\">const scriptName = &quot;던파이미지&quot;;<br />const kalingModule = require(&apos;kaling&apos;).Kakao();<br />const Kakao = new kalingModule;<br />Kakao.init(&apos;&apos;);//1강에서 얻은 Kakao Developers 자바스크립트 키<br />Kakao.login(&apos;&apos;, &apos;&apos;);//봇의 카카오계정(id,비밀번호)<br /><br />function changeD(Dam) {<br />&nbsp;&nbsp;&nbsp; var cd = Dam<br />&nbsp;&nbsp;&nbsp; var d = (cd + &quot;&quot;).replace(/,/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp; var arrd = [&quot;&quot;, &quot;만&quot;, &quot;억&quot;, &quot;조&quot;, &quot;경&quot;, &quot;해&quot;]<br />&nbsp;&nbsp;&nbsp; var changed = &quot;&quot;<br />&nbsp;&nbsp;&nbsp; var pattern = /(-?[0-9]+)([0-9]{4})/<br /><br />&nbsp;&nbsp;&nbsp; while (pattern.test(d)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d = d.replace(pattern, &quot;$1,$2&quot;)<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; var arrCnt = d.split(&quot;,&quot;).length - 1<br />&nbsp;&nbsp;&nbsp; for (var i = 0; i &lt; d.split(&quot;,&quot;).length; i++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (arrd[arrCnt] == undefined) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert(&quot;값의 수가 너무 큽니다.&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; changed += d.split(&quot;,&quot;)[i] + arrd[arrCnt] + &quot; &quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; arrCnt--<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; return changed<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, imageDB) {<br /><br />&nbsp;&nbsp;&nbsp; // 기본 던담실행은 던담 서버 닉네임 순으로 입력해야 작동<br />&nbsp;&nbsp;&nbsp; if (msg.indexOf(&quot;@던담&quot;) != -1) {&nbsp;&nbsp; // @던담 메세지가 있을시 실행<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 오류위치 분석용<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var chat = msg.split(&quot; &quot;)&nbsp;&nbsp; // 공백을 기준으로 자른데이터를 chat 변수에 저장<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var chaS = chat[1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 입력받은 [1] 번째 서버를 chaS 변수에 저장<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var chaN = chat[2]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 입력받은 [2] 번째 캐릭명을 chaN 변수에 저장<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 입력받은 서버가 존재하는서버인지 확인 다르게 입력받으려면 여기도 추가해줘야함<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (chaS != &quot;카인&quot; &amp;&amp; chaS != &quot;디레지에&quot; &amp;&amp; chaS != &quot;시로코&quot; &amp;&amp; chaS != &quot;프레이&quot; &amp;&amp; chaS != &quot;카시야스&quot; &amp;&amp; chaS != &quot;힐더&quot; &amp;&amp; chaS != &quot;안톤&quot; &amp;&amp; chaS != &quot;바칼&quot;) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;서버를 잘못입력하셨습니다.&quot; + &quot;\\n&quot; + &quot;@던담 서버 닉네임 을 다시 확인해주세요.&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return&nbsp;&nbsp; // 봇실행 강제 종료<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 캐릭터명 인식못하는 특수문자 링크주소에 맞게 변경<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/&amp;/g, &quot;%26&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/`/g, &quot;%60&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/#/g, &quot;%23&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/\\+/g, &quot;%2B&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/^/g, &quot;%2E&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/\\=/g, &quot;%3D&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/%/g, &quot;%25&quot;)<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 입력한 서버를 링크주소에 맞게 변경<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/카인/g, &quot;cain&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/디레지에/g, &quot;diregie&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/시로코/g, &quot;siroco&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/프레이/g, &quot;prey&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/카시야스/g, &quot;casillas&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/힐더/g, &quot;hilder&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/안톤/g, &quot;anton&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaS = chaS.replace(/바칼/g, &quot;bakal&quot;)<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 입력한 정보를 기반으로 던담에 정보요청<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b><font color=\"#ffffff\">☆☆☆ var u = Utils.getWebText(&quot;<a href=\"https://dundam.xyz/searchActionTest.jsp?server=\" target=\"_blank\">https://dundam.xyz/searchActionTest.jsp?server=</a>&quot;+chaS+&quot;&amp;name=&quot;+chaN)<br /></font></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 점검중일경우 실행<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (u.indexOf(&quot;점검중&quot;) != -1) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t = u.split(&quot;&lt;/div&gt;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t[6] = t[6].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g, &quot;&quot;).replace(/&nbsp; /g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t[7] = t[7].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g, &quot;&quot;).replace(/&nbsp; /g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(t[6] + &quot;\\n--------점검 시간-------\\n&quot; + t[7])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (u.indexOf(&quot;없습니다&quot;) != -1) {&nbsp;&nbsp; // 만약&nbsp; 불러온내용중 없습니다 라는 단어가 존재한다면 데이터가없으므로 강제종료<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;검색결과가 없습니다.&quot; + &quot;\\n&quot; + &quot;@던담 서버 닉네임 으로 확인하시고 다시입력해주세요.&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return&nbsp;&nbsp; // 봇실행 강제 종료<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var a = u.split(&quot;&lt;a href=\\&quot;&quot;)&nbsp;&nbsp; // a href기준으로 자른데이터를 a 변수에 저장<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var b = a[13].split(&quot;\\&quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b = b[0].replace(/amp;/g, &quot;&quot;)<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 입력한 정보를 기반으로 던파오프 링크가져오기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var u1 = Utils.getWebText(&quot;<a href=\"https://dunfaoff.com/CharacterSearchList.df?server=\" target=\"_blank\">https://dunfaoff.com/CharacterSearchList.df?server=</a>&quot; + chaS + &quot;&amp;id=&quot; + chaN)<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var a1 = u1.split(&quot;card text-center\\&quot; data-id=\\&quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var b1 = a1[1].split(&quot;\\&quot; data-&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //던파 오프 링크<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var dnof = (&quot;<a href=\"https://dunfaoff.com/SearchResult.df?server=\" target=\"_blank\">https://dunfaoff.com/SearchResult.df?server=</a>&quot; + chaS + &quot;&amp;characterid=&quot; + b1[0])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 던담 링크<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var dundam = (&quot;<a href=\"https://dundam.xyz/\" target=\"_blank\">https://dundam.xyz/</a>&quot; + b)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 던셋 링크<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bd = b.split(&quot;image=&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bd[1] = bd[1].replace(/&amp;search=true/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var dset = (&quot;<a href=\"https://dfset.me/view.php?serverId=\" target=\"_blank\">https://dfset.me/view.php?serverId=</a>&quot; + chaS + &quot;&amp;characterId=&quot; + bd[1])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 이미지 링크 잘라오기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var im = u.split(&quot;src=\\&quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; imageA = im[4].split(&quot;\\&quot;&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 실제 데이터 가져오기<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; u = Utils.getWebText(&quot;<a href=\"https://dundam.xyz/\" target=\"_blank\">https://dundam.xyz/</a>&quot; + b)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 캐릭터 메인정보<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chamain = u.split(&quot;&lt;font style=\\&quot;font-weight:bold\\&quot;&gt;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; 5; i++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chamain[i] = chamain[i].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var battle = true // 배크여부 체크<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ChaR = chamain[1]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ChaI = chamain[2]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ChaD = chamain[3]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ChaB = chamain[4]<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 캐릭터 장비정보<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaequip = u.split(&quot;&lt;td style=\\&quot;color: #efa900;\\&quot;&gt;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; 3; i++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaequip[i] = chaequip[i].split(&quot;&lt;/td&gt;&quot;)[0]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ChaW = chaequip[1]<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a = u.split(&quot;id=\\&quot;rogen&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b = a[1].split(&quot;&lt;/div&gt;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c = b[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c = c.trim()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c = c.split(&quot;\\n&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.pop()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var a = 0<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var Buf<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var n = 0; n &lt; c.length; n++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c[n] = c[n].trim()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (c[n].indexOf(&quot;총 딜&quot;) == 0) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a = n<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; send = u.split(&quot;id=\\&quot;sendbag&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; send1 = send[1].split(&quot;&lt;/div&gt;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; send2 = send1[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; send2 = send2.trim()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; send2 = send2.split(&quot;\\n&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; send2.pop()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var a2 = 0<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var n = 0; n &lt; send2.length; n++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; send2[n] = send2[n].trim()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (send2[n].indexOf(&quot;총 딜&quot;) == 0)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { a2 = n }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var r0 = changeD(c[a + 1])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var r1 = changeD(c[a + 2])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var s0 = changeD(send2[a2 + 1])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/%26/g, &quot;&amp;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chaN = chaN.replace(/%26/g, &quot;&amp;&quot;)<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ChaR.indexOf(&quot;헤카테&quot;) != -1 || ChaR.indexOf(&quot;세인트&quot;) != -1 || ChaR.indexOf(&quot;세라핌&quot;) != -1) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ChaR.indexOf(&quot;세인트&quot;) != -1) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ChaW.indexOf(&quot;십자가&quot;) != -1 || ChaW.indexOf(&quot;세크리&quot;) != -1 || ChaW.indexOf(&quot;영광&quot;) != -1) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d = u.split(&quot;총 합(2각)&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; battle = false<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (ChaR.indexOf(&quot;헤카테&quot;) != -1) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d = u.split(&quot;총 합 (편애)&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; battle = false<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d = u.split(&quot;총 합 (아리아)&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; battle = false<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (battle == false) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e = d[1].split(&quot;&lt;/td&gt;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f = e[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f = f.trim()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; buf = f<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kakao.send(room, { &quot;link_ver&quot;: &quot;4.0&quot;, &quot;template_object&quot;: { &quot;object_type&quot;: &quot;feed&quot;, &quot;button_title&quot;: &quot;&quot;, &quot;content&quot;: { &quot;title&quot;: ChaR, &quot;image_url&quot;: imageA, &quot;link&quot;: { &quot;web_url&quot;: dset, &quot;mobile_web_url&quot;: dset }, &quot;description&quot;: &quot;버프력(총합) : &quot; + buf }, &quot;buttons&quot;: [{ &quot;title&quot;: &quot;던담으로 보기&quot;, &quot;link&quot;: { &quot;web_url&quot;: dundam, &quot;mobile_web_url&quot;: dundam } }, { &quot;title&quot;: &quot;던오프로 보기&quot;, &quot;link&quot;: { &quot;web_url&quot;: dnof, &quot;mobile_web_url&quot;: dnof } }] } });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<span style=\"color:#CB772F;\"></span><br /><span style=\"color:#CB772F;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else </span>{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#7A9EC2;\">Kakao</span>.send(<span style=\"color:#FFFFFF;\">room</span>, <span style=\"color:#FFFFFF;\">{ </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;link_ver&quot;</span></span><span style=\"color:#FFFFFF;\">: </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;4.0&quot;</span></span><span style=\"color:#FFFFFF;\">, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;template_object&quot;</span></span><span style=\"color:#FFFFFF;\">: { </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;object_type&quot;</span></span><span style=\"color:#FFFFFF;\">: </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;feed&quot;</span></span><span style=\"color:#FFFFFF;\">, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;button_title&quot;</span></span><span style=\"color:#FFFFFF;\">: </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;content&quot;</span></span><span style=\"color:#FFFFFF;\">: { </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;title&quot;</span></span><span style=\"color:#FFFFFF;\">: ChaR, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;image_url&quot;</span></span><span style=\"color:#FFFFFF;\">: imageA, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;link&quot;</span></span><span style=\"color:#FFFFFF;\">: { </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;web_url&quot;</span></span><span style=\"color:#FFFFFF;\">: dset, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;mobile_web_url&quot;</span></span><span style=\"color:#FFFFFF;\">: dset }, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;description&quot;</span></span><span style=\"color:#FFFFFF;\">: </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;샌드백 : &quot;</span></span><span style=\"color:#FFFFFF;\"> + s0 + </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;\\n로젠(1시) : &quot;</span></span><span style=\"color:#FFFFFF;\"> + r1 }, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;buttons&quot;</span></span><span style=\"color:#FFFFFF;\">: [{ </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;title&quot;</span></span><span style=\"color:#FFFFFF;\">: </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;던담으로 보기&quot;</span></span><span style=\"color:#FFFFFF;\">, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;link&quot;</span></span><span style=\"color:#FFFFFF;\">: { </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;web_url&quot;</span></span><span style=\"color:#FFFFFF;\">: dundam, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;mobile_web_url&quot;</span></span><span style=\"color:#FFFFFF;\">: dundam } }, { </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;title&quot;</span></span><span style=\"color:#FFFFFF;\">: </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;던오프로 보기&quot;</span></span><span style=\"color:#FFFFFF;\">, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;link&quot;</span></span><span style=\"color:#FFFFFF;\">: { </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;web_url&quot;</span></span><span style=\"color:#FFFFFF;\">: dnof, </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;mobile_web_url&quot;</span></span><span style=\"color:#FFFFFF;\">: dnof } }] } }</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span style=\"color:#FF0000;\">catch</span> (<span style=\"color:#FFFFFF;\">e</span>) <span style=\"color:#FF0000;\">{</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"background-color:#FFAA00;\">text = </span><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;불러오는중 오류가 발생했습니다.\\n오류명:&quot;</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">switch</span> (e.lineNumber) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">25</span>: text += <span style=\"color:#A5C25C;\">&quot;데이터 불러오기시간이 초과했거나 캐릭터 정보를 찾을수없습니다.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">29</span>: text += <span style=\"color:#A5C25C;\">&quot;캐릭터 정보를 찾을수없습니다.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">31</span>: text += <span style=\"color:#A5C25C;\">&quot;캐릭터 정보를 찾을수없습니다.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">63</span>: text += <span style=\"color:#A5C25C;\">&quot;일시적인 오류로 정보불러오기에 실패했습니다.\\n잠시후 다시 시도해주세요.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">64</span>: text += <span style=\"color:#A5C25C;\">&quot;던파OFF 캐릭터 정보불러오기에 실패했습니다.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">96</span>: text += <span style=\"color:#A5C25C;\">&quot;던담 서버에서 데이터받아오기에 실패했습니다.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">112</span>: text += <span style=\"color:#A5C25C;\">&quot;무기정보가 없습니다.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">120</span>: text += <span style=\"color:#A5C25C;\">&quot;봇의 렘이 부족하여 정보불러오기에 실패했습니다. 관리자에게 문의하세요.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">case</span> <span style=\"color:#6897BB;\">163</span>: text += <span style=\"color:#A5C25C;\">&quot;십자가를 착용한 배틀홀리는 정보는 불러올수 없습니다.&quot;</span>; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#CB772F;\">default</span>: text += e.lineNumber; <span style=\"color:#CB772F;\"><span style=\"background-color:#FFAA00;\">break</span></span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">text</span></span><span style=\"background-color:#FFAA00;\">)</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; }<br /><span style=\"color:#FF0000;\">}</span></p></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003F8500000000",
+            "id": 16261,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 170,
+            "refArticleId": 16261,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "배우미님 던담 소스 질문드립니다",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587198826160,
+            "writer": {
+                "id": "yuki_ren",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "하루나리이"
+            }
+        },
+        "articleId": 16261,
+        "attaches": [
+            {
+                "extension": "js",
+                "fullName": "던파이미지.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "던파이미지.js",
+                "size": 10158,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/cc59d063732b28f4d83e5b6c54bcccb21644ba58e9/20200419_217_cafefile/29537083_1587287534017_APMpjz_js/%EB%8D%98%ED%8C%8C%EC%9D%B4%EB%AF%B8%EC%A7%80.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "default:text += e.lineNumber를\r\ndefault: text += e + \" \" + e.lineNunber;로 바꿔보시고 소스 재시도 하시고 나오는 오류 문구 출력해주세요.",
+                    "id": 87851362,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87851362,
+                    "updateDate": 1587223486000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "맨아래  소스말씀하신거죠?",
+                    "id": 87866586,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87851362,
+                    "updateDate": 1587256271000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                },
+                {
+                    "content": "이렇게하고 검색해도 똑같네요 case63에 설정한 문구가 나옵니다.",
+                    "id": 87866669,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MTlfMTA3/MDAxNTg3MjU2MzUwMjYx.R9qDXvWyF1asbccrPdIGv5mGzxCcPw1N_zgOwP9-oYEg.hsmUdFRLXuu0Dl-SsUXhOdjWdAxnCd8bVFf5TTWweikg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 4032,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA0MTlfMTA3/MDAxNTg3MjU2MzUwMjYx.R9qDXvWyF1asbccrPdIGv5mGzxCcPw1N_zgOwP9-oYEg.hsmUdFRLXuu0Dl-SsUXhOdjWdAxnCd8bVFf5TTWweikg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA0MTlfMTA3/MDAxNTg3MjU2MzUwMjYx.R9qDXvWyF1asbccrPdIGv5mGzxCcPw1N_zgOwP9-oYEg.hsmUdFRLXuu0Dl-SsUXhOdjWdAxnCd8bVFf5TTWweikg.JPEG/externalFile.jpg",
+                        "width": 3024
+                    },
+                    "refId": 87851362,
+                    "updateDate": 1587256783000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                },
+                {
+                    "content": "catch (e) {} 에서 괄호 안에 있는 거 전부 지우고\r\nreplier.reply(e + \" \" + e.lineNumber);로 바꿔보세영",
+                    "id": 87885151,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87851362,
+                    "replyMember": {
+                        "id": "yuki_ren",
+                        "nick": "하루나리이"
+                    },
+                    "updateDate": 1587270835000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "이렇게 나오네요",
+                    "id": 87885600,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87851362,
+                    "replyMember": {
+                        "id": "kookyunchan",
+                        "nick": "카톡우앙"
+                    },
+                    "updateDate": 1587271173000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                },
+                {
+                    "content": "InternalError: javax.net.ssl.SSLHandshakeException: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found. (던담2#63) 63",
+                    "id": 87885580,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87885580,
+                    "updateDate": 1587271162000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                },
+                {
+                    "content": "63번 줄이 머에영?",
+                    "id": 87885625,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87885580,
+                    "updateDate": 1587271191000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "var u = Utils.getWebText(\"https://dundam.xyz/searchActionTest.jsp?server=\"+chaS+\"&name=\"+chaN)",
+                    "id": 87887562,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 87885580,
+                    "replyMember": {
+                        "id": "kookyunchan",
+                        "nick": "카톡우앙"
+                    },
+                    "updateDate": 1587272913000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                },
+                {
+                    "content": "위에 본문처럼 직접 타이핑해서 링크들어가면 정상인데\r\nS N 값을 명령어로 입력하면 null 정보를 검색할수 없다고 홈페이지가 그렇게떠여\r\n",
+                    "id": 87886477,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 87886477,
+                    "updateDate": 1587271955000,
+                    "writer": {
+                        "id": "yuki_ren",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/data17/2006/6/18/90/20060611-1150037081753-yuki_ren.jpg"
+                        },
+                        "nick": "하루나리이"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

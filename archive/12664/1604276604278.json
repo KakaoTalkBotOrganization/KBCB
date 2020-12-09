@@ -1,0 +1,216 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">자동 달력</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><br /></div><div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName){</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>if(msg.trim()==&quot;/달력&quot;){</b></div><div style=\"\"><b>&nbsp; &nbsp; var mon = [&apos;X&apos;];var t = [&apos;X&apos;];var w = [&apos;X&apos;];var th = [&apos;X&apos;];var fri = [&apos;X&apos;];var sat = [&apos;X&apos;];var sun = [&apos;X&apos;];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var wk = {&apos;0&apos;:sun,&apos;1&apos;:mon,&apos;2&apos;:t,&apos;3&apos;:w,&apos;4&apos;:th,&apos;5&apos;:fri,&apos;6&apos;:sat}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var day = new Date();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var y = day.getYear()+1900</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var m = day.getMonth()+1</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(m&lt;10){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; m = &apos;0&apos;+String(m)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var c = 0;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; for(var i=1;i&lt;8;i++){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var n = &apos;0&apos;+String(i)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; wk[String(new Date(y+&apos;-&apos;+m+&apos;-&apos;+n).getDay())][0] = String.fromCharCode(9311+i)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(new Date(y+&apos;-&apos;+m+&apos;-&apos;+n).getDay()==&apos;6&apos;){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; wk[new Date(y+&apos;-&apos;+m+&apos;-&apos;+n).getDay()][0] = String.fromCharCode(9311+i)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; c = i;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var list = &quot;\\n| 일 | 월 | 화 | 수 | 목 | 금 | 토 |\\n&quot;+&quot;| &quot;+sun[0]+&quot; | &quot;+mon[0]+&quot; | &quot;+t[0]+&quot; | &quot;+w[0]+&quot; | &quot;+th[0]+&quot; | &quot;+fri[0]+&quot; | &quot;+sat[0]+&quot; |\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; for(var n = 0;n&lt;5;n++){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; list += &quot;| 0 | 0 | 0 | 0 | 0 | 0 | 0 |\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; var lis = list.replace(/[^0]/g,&quot;&quot;).length</b></div><div style=\"\"><b>&nbsp; &nbsp; var dada = 0;</b></div><div style=\"\"><b>&nbsp; &nbsp; var ne = 0</b></div><div style=\"\"><b>&nbsp; &nbsp; for(var ca=27;ca&lt;33;ca++){</b></div><div style=\"\"><b>&nbsp; &nbsp; var tms = String(new Date(y+&apos;-&apos;+m+&apos;-&apos;+ca).getDay())</b></div><div style=\"\"><b>&nbsp; &nbsp; if(tms.match(/[0-6]/)==null){</b></div><div style=\"\"><b>&nbsp; &nbsp; ne = 35-ca</b></div><div style=\"\"><b>&nbsp; &nbsp; break;</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; for(var si=c+1;si&lt;lis-ne;si++){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(si&lt;21){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dada = String.fromCharCode(9311+si)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dada = String.fromCharCode(12860+si)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; list = list.replace(&apos;0&apos;,dada)</b></div><div style=\"\"><b>&nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; list = list.replace(/0/g,&apos;X&apos;)</b></div><div style=\"\"><b>&nbsp; &nbsp; replier.reply(y+&apos;-&apos;+m+&quot;월 달력 &quot;+list+&apos;오늘 날짜 :&apos;+y+&apos;-&apos;+m+&apos;-&apos;+day.getDate())</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>}</b></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>사용중이던 봇을 갱신하면서 괜찮을것같은 코드를 가져와보았습니다.</b></div><div><b>달에 맞춰 자동으로 갱신되니 직접 수정할 필요는 없을듯 합니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000317800000000",
+            "id": 12664,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 236,
+            "refArticleId": 12664,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "자동으로 갱신되는 달력",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583374877417,
+            "writer": {
+                "id": "kyeong9743",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA2MjNfMjA5/MDAxNTYxMjE3NDM5OTM4.xGGNHpRB3cyVor3N8g6vz6hCJ7ykP1HjobHaMWebuhsg.Q-VBgfKBwzWsiGlg-UFEVysriPkmtOzNnhsjfb6s32Ig.PNG.kyeong9743/%25C4%25B8%25C3%25B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_110.gif",
+                "memberLevelName": "챗봇 하수",
+                "nick": "kyeong9743"
+            }
+        },
+        "articleId": 12664,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "잘 만들었당~",
+                    "id": 83199446,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83199446,
+                    "updateDate": 1583383976000,
+                    "writer": {
+                        "id": "hunji5698",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "김지훈쓰"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 88530997,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88530997,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1587798195000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Devil1234"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

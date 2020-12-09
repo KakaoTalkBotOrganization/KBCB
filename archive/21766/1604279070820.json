@@ -1,0 +1,345 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1315,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MjZfMjk4/MDAxNTk1NzMyOTI1ODg0.slKk5fuv8Zco22jRPWAEDC4gObnZnw4l0OADcpOTr8Yg.3HD755bYGerYHVAFOf0CcFyCcBYJtwYRriJcgkyjposg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>이분껀데:<a href=\"https://cafe.naver.com/nameyee/19713\" target=\"_blank\">https://cafe.naver.com/nameyee/19713</a><br /><br /><br />|소스|<br /><br /><br /><br />/*<br />[Kaling OTP] <br />Made By EliF<br />*/<br /><br />const kalingModule = require(&apos;kaling&apos;).Kakao();<br />const Kakao = new kalingModule();<br />Kakao.init(&apos;JS Key&apos;);<br />Kakao.login(&apos;E-Mail&apos;, &apos;Password&apos;);<br />var admin = [];<br />var otp = &quot;&quot;;<br />var timer = false;<br />var num = [&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;];<br />response = (room, msg, sender, isGroupChat, replier, ImageDB) =&gt; {<br />  var date = new Date();<br />  var year = date.getYear() + 1900;<br />  var month = date.getMonth() + 1;<br />  var day = date.getDate();<br />  var hour = date.getHours();<br />  var min = date.getMinutes();<br />  var sec = date.getSeconds();<br />  var nowDate = &quot;[&quot; + year + &quot;/&quot; + month + &quot;/&quot; + day + &quot; &quot; + hour + &quot;:&quot; + min + &quot;:&quot; + sec + &quot;]&quot;;<br />  var id = java.lang.String(ImageDB.getProfileImage()).hashCode();<br />  if (msg == &quot;/로그인&quot;) {<br />    if (timer != true) {<br />      if (admin.indexOf(sender + id) == -1) {<br />        var result = [];<br />        for (i = 1; i &lt; 7; i++) {<br />          result.push(num[Math.floor(Math.random() * num.length)]);<br />        }<br />        otp = result.join(&quot;&quot;);<br />        timer = true;<br />        Kakao.send(room, {<br />  &quot;link_ver&quot;: &quot;4.0&quot;, <br />  &quot;template_id&quot;: 30309, <br />  &quot;template_args&quot;: {<br />  &quot;title1&quot;: &quot;인증번호 6자리를 입력해주세요.&quot;, <br />  &quot;sub1&quot;: &quot;*30초 이내로 입력&quot;}}, &quot;custom&quot;);<br />        Kakao.send(&quot;인증번호방&quot;, {     //인증번호를 받을 방이름을 정확하게 입력<br />  &quot;link_ver&quot;: &quot;4.0&quot;, <br />  &quot;template_id&quot;: 30309, <br />  &quot;template_args&quot;: {<br />  &quot;title1&quot;: &quot;인증번호가 발급되었습니다.&quot;, <br />  &quot;sub1&quot;: &quot;[&quot; + otp + &quot;]  -&quot; + room + &quot;-&quot;}}, &quot;custom&quot;);<br />      } else <br />        replier.reply(&quot;이미 로그인하셨습니다.&quot;);<br />    } else <br />      replier.reply(&quot;몇초뒤에 인증번호\\n재요청을 해주세요.&quot;);<br />  }<br />  if (msg == otp &amp;&amp; otp != &quot;&quot;) {<br />    if (admin.indexOf(sender + id) == -1) {<br />      otp = &quot;&quot;;<br />      timer = false;<br />      admin.push(sender + id);<br />      Kakao.send(room, {<br />  &quot;link_ver&quot;: &quot;4.0&quot;, <br />  &quot;template_id&quot;: 30309, <br />  &quot;template_args&quot;: {<br />  &quot;title1&quot;: &quot;로그인 성공!&quot;, <br />  &quot;sub1&quot;: nowDate}}, &quot;custom&quot;);<br />      Kakao.send(&quot;방이름&quot;, {     //인증번호를 받을 방이름을 정확하게 입력<br />  &quot;link_ver&quot;: &quot;4.0&quot;, <br />  &quot;template_id&quot;: 30309, <br />  &quot;template_args&quot;: {<br />  &quot;title1&quot;: &quot;새로운 로그인  -&quot; + room + &quot;-&quot;, <br />  &quot;sub1&quot;: &quot;유저: &quot; + sender + &quot;\\n&quot; + nowDate}}, &quot;custom&quot;);<br />    } else {<br />      otp = &quot;&quot;;<br />      timer = false;<br />      replier.reply(&quot;이미 로그인하셨습니다.&quot;);<br />    }<br />  }<br />  while (timer) {<br />    java.lang.Thread.sleep(30000);     //인증시간 설정 (현재 30초)<br />    timer = false;<br />    if (otp != &quot;&quot;) {<br />      otp = &quot;&quot;;<br />      Kakao.send(room, {<br />  &quot;link_ver&quot;: &quot;4.0&quot;, <br />  &quot;template_id&quot;: 30309, <br />  &quot;template_args&quot;: {<br />  &quot;title1&quot;: &quot;인증번호 입력 시간이 만료되었습니다.&quot;, <br />  &quot;sub1&quot;: &quot;재요청을 해주세요.&quot;}}, &quot;custom&quot;);<br />    }<br />  }<br />  if (msg == &quot;/로그아웃&quot; &amp;&amp; admin.indexOf(sender + id) != -1) {<br />    admin.splice(admin.indexOf(sender + id), 1);<br />    Kakao.send(room, {<br />  &quot;link_ver&quot;: &quot;4.0&quot;, <br />  &quot;template_id&quot;: 30309, <br />  &quot;template_args&quot;: {<br />  &quot;title1&quot;: &quot;로그아웃 성공!&quot;, <br />  &quot;sub1&quot;: nowDate}}, &quot;custom&quot;);<br />  }<br />};<br /><br /><br />머가 이상한가요?<br /><br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000550600000000",
+            "id": 21766,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 180,
+            "refArticleId": 21766,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "머야 애 않되!!",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595732926317,
+            "writer": {
+                "id": "zzooyp",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTBfMTM0/MDAxNTkxNzU0MjI1NDYw.Oe5ck8QbGozoDkofotImRpVTnfS41rq9sqTG3uPCjU8g.IE7kiJn1os5-WwA2WjgyBbNlnbX9tQ_xIqD73_xXDP4g.JPEG.zzooyp/%3F%3F%3F+1.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "seol S2"
+            }
+        },
+        "articleId": 21766,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 69120,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/42d75eeefba3a67a56b0d5e2d53b493c98ca34d6e1/MjAyMDA3MjZfMjk4/MDAxNTk1NzMyOTI1ODg0.slKk5fuv8Zco22jRPWAEDC4gObnZnw4l0OADcpOTr8Yg.3HD755bYGerYHVAFOf0CcFyCcBYJtwYRriJcgkyjposg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "디버그룸에선 카링작동이 안됩니다",
+                    "id": 97940862,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97940862,
+                    "updateDate": 1595733120000,
+                    "writer": {
+                        "id": "yunhoo33",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "민초단"
+                    }
+                },
+                {
+                    "content": "근데",
+                    "id": 97941704,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97940862,
+                    "updateDate": 1595733894000,
+                    "writer": {
+                        "id": "zzooyp",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTBfMTM0/MDAxNTkxNzU0MjI1NDYw.Oe5ck8QbGozoDkofotImRpVTnfS41rq9sqTG3uPCjU8g.IE7kiJn1os5-WwA2WjgyBbNlnbX9tQ_xIqD73_xXDP4g.JPEG.zzooyp/%3F%3F%3F+1.jpg"
+                        },
+                        "nick": "seol S2"
+                    }
+                },
+                {
+                    "content": "디버깅 말고 다른분께 해보라고 했는데 않됬어요",
+                    "id": 97941749,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97940862,
+                    "updateDate": 1595733930000,
+                    "writer": {
+                        "id": "zzooyp",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTBfMTM0/MDAxNTkxNzU0MjI1NDYw.Oe5ck8QbGozoDkofotImRpVTnfS41rq9sqTG3uPCjU8g.IE7kiJn1os5-WwA2WjgyBbNlnbX9tQ_xIqD73_xXDP4g.JPEG.zzooyp/%3F%3F%3F+1.jpg"
+                        },
+                        "nick": "seol S2"
+                    }
+                },
+                {
+                    "content": "jskey, email, pass워드를 확실히 잘 넣었으며 카링 모듈이 있으며 오류가 발생하지 않으며 알림이 해당방에서 오나요?",
+                    "id": 97942172,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97940862,
+                    "replyMember": {
+                        "id": "zzooyp",
+                        "nick": "seol S2"
+                    },
+                    "updateDate": 1595734340000,
+                    "writer": {
+                        "id": "yunhoo33",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "민초단"
+                    }
+                },
+                {
+                    "content": "네",
+                    "id": 97940871,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97940871,
+                    "updateDate": 1595733130000,
+                    "writer": {
+                        "id": "zzooyp",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTBfMTM0/MDAxNTkxNzU0MjI1NDYw.Oe5ck8QbGozoDkofotImRpVTnfS41rq9sqTG3uPCjU8g.IE7kiJn1os5-WwA2WjgyBbNlnbX9tQ_xIqD73_xXDP4g.JPEG.zzooyp/%3F%3F%3F+1.jpg"
+                        },
+                        "nick": "seol S2"
+                    }
+                },
+                {
+                    "content": "알겠습니다",
+                    "id": 97940889,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97940889,
+                    "updateDate": 1595733142000,
+                    "writer": {
+                        "id": "zzooyp",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTBfMTM0/MDAxNTkxNzU0MjI1NDYw.Oe5ck8QbGozoDkofotImRpVTnfS41rq9sqTG3uPCjU8g.IE7kiJn1os5-WwA2WjgyBbNlnbX9tQ_xIqD73_xXDP4g.JPEG.zzooyp/%3F%3F%3F+1.jpg"
+                        },
+                        "nick": "seol S2"
+                    }
+                },
+                {
+                    "content": "모듈은있으신지.ㅡ?",
+                    "id": 98001743,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98001743,
+                    "updateDate": 1595776534000,
+                    "writer": {
+                        "id": "jinnyday0719",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMTcx/MDAxNjAyOTQ2MDIzMzAw.a1mEI4EpeDbk8J6sLw5CkdLqVQlDrpmoMOlCejozz7kg.JVmyla18yTNADc733cXr_-hOhQbVbhCC7xE1Bx6eBQIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "서진"
+                    }
+                },
+                {
+                    "content": "개그맨임?",
+                    "id": 98006600,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98006600,
+                    "updateDate": 1595784157000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "어머니에게우주8을"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 98012493,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98012493,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1595803681000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

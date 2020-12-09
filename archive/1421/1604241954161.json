@@ -1,0 +1,392 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 23,
+            "contentElements": [],
+            "contentHtml": "<p>딴봇 될수도?<br /><br />inputTainNumber=null;<br /><br />String.prototype.replaceAll=function (str1,str2) {<br />return String(this).split(str1).join(str2);<br />}<br /><br />function getHtml(url) {<br />return Utils.getWebText(url).replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;);<br />}<br /><br />function getTainInfo(msg) {<br />try {<br />zz=getHtml(&quot;https://m.search.daum.net/search?nil_mtopsearch=suggest&amp;sugo=10&amp;q=&quot;+tainSity[Number(msg)-1]+tainNumber+&quot;%ED%98%B8%EC%84%A0&amp;w=tot&amp;rq=&amp;o=1&quot;).split(/지하철노선도|펼쳐보기/)[1].match(/(.+) (오른쪽|왼쪽)/g).join (&quot;\\n&quot;).replace(/^ +| +$/gm,&quot;&quot;).split(&quot;\\n&quot;);<br />box=[];<br />for (check=0;check&lt;zz.length;check++) {<br />T=zz[check];<br />if (T.split(&quot; &quot;).length&gt;2) {<br />역=T.match(/[^ ]+/)+&quot;역&quot;;<br />환승역=T.replace(T.split(&quot; &quot;)[0],&quot;&quot;).split(&quot; &quot;);<br />환승역.pop();<br />환승역=&quot;\\n환승역 : &quot;+환승역.join(&quot;,&quot;).replaceAll(/, ?,/,&quot;&quot;).replace(/,$/,&quot;&quot;).replaceAll(&quot;,,&quot;,&quot;&quot;);<br />내리는문=&quot;\\n내리는문 : &quot;+T.match(/(오른쪽|왼쪽)/)[0];<br />if (환승역.trim()==&quot;환승역 :&quot;) {<br />box.push(역+내리는문);<br />}else {<br />box.push(역+환승역+내리는문);<br />}<br />}else {<br />box.push(T.replace(/ (오른쪽|왼쪽)$/,&quot;&quot;)+&quot;역\\n내리는문 : &quot;+T.match(/(오른쪽|왼쪽)$/)[0]);<br />}<br />}<br />tainSity=[];<br />tainNber=null;<br />inputTainNumber=null;<br />return box.join(&quot;\\n\\n&quot;);<br />}catch(e) {<br />return &quot;정확한 숫자를 입력해주세요.&quot;;<br />}<br />}<br /><br />tainSity=[];<br />tainNumber=null;<br /><br />function getSity(tain,name) {<br />try {<br />T=getHtml(&quot;https://m.search.daum.net/search?nil_mtopsearch=suggest&amp;sugo=10&amp;q=&quot;+tain+&quot;%ED%98%B8%EC%84%A0&amp;w=tot&amp;rq=&amp;o=1&quot;);<br />sity=T.split(/지하철노선도|펼쳐보기/)[1].trim().replace(/^ +| +$/gm,&quot;&quot;).split(&quot;\\n\\n&quot;)[0].split(&quot;\\n&quot;);<br />tainSity=sity;<br />tainNumber=tain;<br />box=[];<br />for (check in sity) {<br />if (isRealTain(sity[check]+tain)) {<br />box.push(box.length+1+&quot;. &quot;+sity[check]);<br />}<br />}<br />inputTainNumber=name;<br />return box.join(&quot;\\n&quot;);<br />}catch(e) {<br />return &quot;정확한 호선을 입력해주세요.&quot;<br />}<br />}<br /><br />function isRealTain(name) {<br />return getHtml(&quot;https://m.search.daum.net/search?DA=SH2&amp;w=tot&amp;q=&quot;+name+&quot;호선&quot;).split(&quot;내리는 문&quot;)[1]!=undefined<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />msg=msg.trim();<br />m=msg.split(&quot; &quot;)<br />if (m[0]==&quot;/T&quot;&amp;&amp;inputTainNumber==null) {<br />replier.reply(&quot;처리중....!&quot;);<br />replier.reply(getSity(m[1],sender));<br />return;<br />}<br />if (inputTainNumber==sender) {<br />replier.reply(getTainInfo(msg));<br />}<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000058D00000000",
+            "id": 1421,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 400,
+            "refArticleId": 1421,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "Train Data",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1553315321260,
+            "writer": {
+                "id": "qkralswo0825",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA4MjdfNzIg/MDAxNTM1Mzc0ODA1Mzcx.4fPPQyRh3gNOuCLhi__tQWMyX0gkFf03Mq0wZ377BhMg.26O6HkEnB0ZHkJ9pjOGX0MI9p-bH9ONpRk6_3gROFPIg.PNG.qkralswo0825/profileImage.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "이름을입력해주세요"
+            }
+        },
+        "articleId": 1421,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "소스 사용법좀..",
+                    "id": 55759198,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 55759198,
+                    "updateDate": 1553323557000,
+                    "writer": {
+                        "id": "dlwjddus4367",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "건전한정연상"
+                    }
+                },
+                {
+                    "content": "if (Data[0] == \".전철\"){\r\ngetTainInfo(Data[1]);\r\n}\r\n\r\n이거 일걸요 아마도",
+                    "id": 55759415,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55759198,
+                    "updateDate": 1553323923000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "/T 호선 -> 숫자입력",
+                    "id": 55762561,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55759198,
+                    "updateDate": 1553328704000,
+                    "writer": {
+                        "id": "qkralswo0825",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA4MjdfNzIg/MDAxNTM1Mzc0ODA1Mzcx.4fPPQyRh3gNOuCLhi__tQWMyX0gkFf03Mq0wZ377BhMg.26O6HkEnB0ZHkJ9pjOGX0MI9p-bH9ONpRk6_3gROFPIg.PNG.qkralswo0825/profileImage.png"
+                        },
+                        "nick": "이름을입력해주세요"
+                    }
+                },
+                {
+                    "content": "response 들어있으니 그냥 복붙해서 바로 사용하세요",
+                    "id": 55762670,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55759198,
+                    "replyMember": {
+                        "id": "jen71213",
+                        "nick": "리드"
+                    },
+                    "updateDate": 1553328828000,
+                    "writer": {
+                        "id": "qkralswo0825",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA4MjdfNzIg/MDAxNTM1Mzc0ODA1Mzcx.4fPPQyRh3gNOuCLhi__tQWMyX0gkFf03Mq0wZ377BhMg.26O6HkEnB0ZHkJ9pjOGX0MI9p-bH9ONpRk6_3gROFPIg.PNG.qkralswo0825/profileImage.png"
+                        },
+                        "nick": "이름을입력해주세요"
+                    }
+                },
+                {
+                    "content": "네 감사합니다",
+                    "id": 55762812,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55759198,
+                    "replyMember": {
+                        "id": "qkralswo0825",
+                        "nick": "이름을입력해주세요"
+                    },
+                    "updateDate": 1553328983000,
+                    "writer": {
+                        "id": "dlwjddus4367",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "건전한정연상"
+                    }
+                },
+                {
+                    "content": "히익",
+                    "id": 55798457,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55759198,
+                    "replyMember": {
+                        "id": "qkralswo0825",
+                        "nick": "이름을입력해주세요"
+                    },
+                    "updateDate": 1553391731000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "//입력예시 \"/T 인천1\"\r\n//1. 수도권 이라며 리스트? 답변이 뜰탠데 여기서 \"1\"을 입력해주세요\r\n// 그럼 인천 1호선 정보가 다나와요...",
+                    "id": 55818367,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55759198,
+                    "updateDate": 1553417682000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "소스상 /T 숫자 -> 다음 숫자입력으로 보이는데",
+                    "id": 55760577,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 55760577,
+                    "updateDate": 1553326097000,
+                    "writer": {
+                        "id": "surbjun",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "CUBE"
+                    }
+                },
+                {
+                    "content": "엌",
+                    "id": 55798470,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 55760577,
+                    "updateDate": 1553391739000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "정확한 숫자를 입력하라만 나오네",
+                    "id": 58414607,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 58414607,
+                    "updateDate": 1556561399000,
+                    "writer": {
+                        "id": "doqmflrkrk32",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDRfMjcw/MDAxNTg1OTc5ODAwNTUz.VfKiu2xL4E35pGdfEKNQciCBuMEIQdP9ZRRTApbGCc0g.CJ2Pl0l_obxjq4RWsjKuR8ib-FwXJj8Ux1wuZ4uhJ20g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "시노미야 카구야"
+                    }
+                }
+            ],
+            "last": {
+                "id": 65762617,
+                "refId": 65762617
+            },
+            "next": {
+                "id": 58856784,
+                "refId": 58856784
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

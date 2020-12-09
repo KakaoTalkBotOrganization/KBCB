@@ -1,0 +1,439 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-code se-l-code_black\" id=\"SE-4fcb0ae5-79eb-4afd-84f8-c34b7c5fdd91\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">importPackage(java.util);\nimportClass(java.lang.Thread);\nimportClass(org.jsoup.Jsoup);\n\nvar timer, timerTask;\n\nconst mySchool &#x3D; &#x27;학교&#x27;; //자신의 학교명\nconst myRoom &#x3D; &#x27;방이름&#x27;; //작동할 방 (개인톡)\nconst getLunch &#x3D; (school) &#x3D;&gt; {\n   const map &#x3D; new HashMap;\n   const response &#x3D; Jsoup.connect(&#x27;https://m.search.naver.com/search.naver?query&#x3D;&#x27; + encodeURIComponent(school + &#x27; 급식&#x27;))\n      .get();\n   const info &#x3D; response.select(&#x27;.menu_info&#x27;);\n   if (info.isEmpty()) return null;\n   info.forEach(e &#x3D;&gt;\n      map.put(e.select(&#x27;strong&#x27;)\n         .text()\n         .slice(0, -5),\n         e.select(&#x27;li&#x27;)\n         .html())\n   );\n   return map;\n};\n\nif (!timer) {\n   timer &#x3D; new Timer();\n   timerTask &#x3D; new TimerTask({\n      run: function() {\n         var date &#x3D; new Date();\n         var time &#x3D; date.toLocaleDateString()\n            .slice(6);\n         if (date.getHours() &#x3D;&#x3D;&#x3D; 7 &amp; date.getMinutes() &#x3D;&#x3D;&#x3D; 0) {\n            var lunch &#x3D; getLunch(mySchool);\n            var now &#x3D; lunch.keySet()\n               .toArray()\n               .find(e &#x3D;&gt; e &#x3D;&#x3D; time);\n            Api.replyRoom(myRoom, &#x27;오늘의 급식입니다.\\n\\n&#x27; + lunch.get(now));\n            Thread.sleep(60000);\n         }\n      }\n   });\n   timer.scheduleAtFixedRate(timerTask, 0, 5);\n}\n\nconst onStartCompile &#x3D; () &#x3D;&gt; {\n   if (timer !&#x3D; null) timer.cancel();\n};\nconst response &#x3D; () &#x3D;&gt; {};</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-4fcb0ae5-79eb-4afd-84f8-c34b7c5fdd91\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-dd0c971e-1a8e-11eb-97c6-1bbd625a3383\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-fc3ebc49-1a8e-11eb-97c6-67c01a19bf78\"><span style=\"\" class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-fc3ebc48-1a8e-11eb-97c6-813376989c64\">꼭 자신의 학교이름과 작동할 방이름을 넣어주세요.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-fc3ebc4b-1a8e-11eb-97c6-8f4305e39161\"><span style=\"\" class=\"se-fs- se-ff-nanumsquare   \" id=\"SE-fc3ebc4a-1a8e-11eb-97c6-71ea202ff6fa\">오전 7시마다 작동합니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-dd03bd7d-1a8e-11eb-97c6-439efb459c47\">\n                    <div class=\"se-component-content se-component-content-extend\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" >\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-dd03bd7d-1a8e-11eb-97c6-439efb459c47\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMzBfNDQg/MDAxNjA0MDQ4Njk3OTgz.msHKNk8DDT2w8e0NWgyqzdFm7VyMqOjplVErfcfUG5Eg.n8d3ksyJHKOPIqKgByE79-hHJuQeOLtEzYtyqkMSghMg.JPEG/1604048641220.jpg\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMzBfNDQg/MDAxNjA0MDQ4Njk3OTgz.msHKNk8DDT2w8e0NWgyqzdFm7VyMqOjplVErfcfUG5Eg.n8d3ksyJHKOPIqKgByE79-hHJuQeOLtEzYtyqkMSghMg.JPEG/1604048641220.jpg?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000695F00000000",
+            "id": 26975,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 136,
+            "refArticleId": 26975,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "특정 시간 급식 알림 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1604048699520,
+            "writer": {
+                "id": "kiri9266",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "Kiri"
+            }
+        },
+        "articleId": 26975,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 107508417,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107508417,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57f2b52920a55-7-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57f2b52920a55/original_7.png",
+                        "width": 129
+                    },
+                    "updateDate": 1604048763000,
+                    "writer": {
+                        "id": "cks6878",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjE5/MDAxNjA0MDQ1NTA2MTQw.zluTudOurn5KgbAELCg3OxSzx1nEE53QRp6GeLf03IIg.kiSndKIY25M82ziJuVUILKtZwRdlMldJHfybcfmmMaIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "테스트봇"
+                    }
+                },
+                {
+                    "content": "ㅋㅋㅋㅋㅋ 학교 다니는 거의 모든 카페원들이 언젠가 생각하게 되는 특이점이네요. 학교 급식알림...",
+                    "id": 107508433,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107508433,
+                    "updateDate": 1604048777000,
+                    "writer": {
+                        "id": "elruien0604",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                        },
+                        "nick": "Iloahs Koine"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 107508440,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107508440,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1604048787000,
+                    "writer": {
+                        "id": "elruien0604",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTM2/MDAxNTc0Njk3NDIwODA0.B_yWxYktcQ2ZbBt5Ml8lF1OGD8QPMgd4G66fDpoXLfYg.VY05MqvVrF3X1pJ5MAOW4rv5HwpDN_UJk5wzP1NdM5wg.JPEG.elruien0604/profileImage.jpg"
+                        },
+                        "nick": "Iloahs Koine"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 107509057,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107509057,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1604049377000,
+                    "writer": {
+                        "id": "92guswns6737",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfMjM3/MDAxNjA0MTE4NTA1NDYw.p-6d225m7mzyprfeGqvK9ipgB_DjV0U7sMRRpQAeHzAg.Lr1SYHK7aqefuh6gYQnlOSa3MLpsjuyjLP8vE8Faf3og.JPEG/externalFile.jpg"
+                        },
+                        "nick": "NANOPress"
+                    }
+                },
+                {
+                    "content": "헉 안그래도 필요했는데",
+                    "id": 107510028,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107510028,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1604050150000,
+                    "writer": {
+                        "id": "along18",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfOTAg/MDAxNjA0MTUzODE1Njk2.QwGa7eo82RbjkVEaH0SU-NB7r9i50XGNEwIuP1noToQg.S3RgUHZgztY8ffKjM2uggQbDSV0Q2-j_YoZh8k8wHCkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "지빵"
+                    }
+                },
+                {
+                    "content": "타이머태스크 예제로도 훌륭하네요",
+                    "id": 107511138,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 107511138,
+                    "updateDate": 1604051087000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "트위치봇"
+                    }
+                },
+                {
+                    "content": "내일이 주말이라 null이라 뜨는거겠죠...?",
+                    "id": 107516371,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDEwMzBfNzUg/MDAxNjA0MDU2NDk2NDM2.hYOmgS0ZygIYBSlouEfGSOuQbOK8qAH95xfNQPYbAV0g.Dew3Rd2A5aJptPJBxsNtloq5XxAGQFf6zHGhC0Lzt4sg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 363,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDEwMzBfNzUg/MDAxNjA0MDU2NDk2NDM2.hYOmgS0ZygIYBSlouEfGSOuQbOK8qAH95xfNQPYbAV0g.Dew3Rd2A5aJptPJBxsNtloq5XxAGQFf6zHGhC0Lzt4sg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMzBfNzUg/MDAxNjA0MDU2NDk2NDM2.hYOmgS0ZygIYBSlouEfGSOuQbOK8qAH95xfNQPYbAV0g.Dew3Rd2A5aJptPJBxsNtloq5XxAGQFf6zHGhC0Lzt4sg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 107516371,
+                    "updateDate": 1604056496000,
+                    "writer": {
+                        "id": "chobotv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjhfMTIx/MDAxNTg4MDc4MjQ1MjI2.hPI89Uhs5A2uGVFGsr_egOMOmzSJdTiScPDT8tfjQOog.xIUHVGFgDHP4udmMnnBi0sKD7dQcNlXhp1t9o_xscBUg.JPEG.chobotv/profileImage.jpg"
+                        },
+                        "nick": "Cinise"
+                    }
+                },
+                {
+                    "content": "학교명 제대로 입력하셨는지 확인해주세요. XX중, XX고 등으로 입력 가능합니다.",
+                    "id": 107558480,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107516371,
+                    "updateDate": 1604109371000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "학교명 제대로 입력하고 명령어 치면 나오는 부분 지우고 시간 맞춰서 나오게 해도 null로 나오네요... \r\n일단 월요일까지 기다려볼라고요..ㅎㅎ",
+                    "id": 107575929,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107516371,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1604127445000,
+                    "writer": {
+                        "id": "chobotv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjhfMTIx/MDAxNTg4MDc4MjQ1MjI2.hPI89Uhs5A2uGVFGsr_egOMOmzSJdTiScPDT8tfjQOog.xIUHVGFgDHP4udmMnnBi0sKD7dQcNlXhp1t9o_xscBUg.JPEG.chobotv/profileImage.jpg"
+                        },
+                        "nick": "Cinise"
+                    }
+                },
+                {
+                    "content": "입력한 학교명이 XX중이라면,\r\n네이버 통합검색에서 XX중 급식이라고 치고 제대로 나오는지 확인해주세요",
+                    "id": 107575978,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 107516371,
+                    "replyMember": {
+                        "id": "chobotv",
+                        "nick": "Cinise"
+                    },
+                    "updateDate": 1604127489000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                }
+            ],
+            "last": {
+                "id": 107516371,
+                "refId": 107516371
+            },
+            "next": {
+                "id": 107576144,
+                "refId": 107516371
+            }
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

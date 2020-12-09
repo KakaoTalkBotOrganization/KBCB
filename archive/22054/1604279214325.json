@@ -1,0 +1,238 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<p>promise를 봇에서 쓰려고 소스 끌어와봤습니다.<br />그렇지만 class 가 내보내진것이기에<br />봇에선 오류가 나더라고요.<br />(class가 안되나봅니다.)<br /><br />class 로 내보내진 모듈 소스, 어떻게해야 일반화 시킬까요<br /><br />//모듈폴더<br />const MyPromise = class {<br />/** promise<br />* 출처 : <a href=\"https://p-iknow.netlify.app/js/custom-promise?fbclid=IwAR1CfIZjVqPBFMqKSpZkUfC5ddHnrEdeGlYuucuxM8xF53s-N1XmdirrGRI\" target=\"_blank\">https://p-iknow.netlify.app/js/custom-promise?fbclid=IwAR1CfIZjVqPBFMqKSpZkUfC5ddHnrEdeGlYuucuxM8xF53s-N1XmdirrGRI</a><br />*/<br />    constructor(executor) {<br />        this.state = &apos;pending&apos;;<br />        this.laterCalls = [];<br />        this.decidePromiseByMethod.bind(this);<br />        this.applyChangedState.bind(this);<br />        try {<br />            executor(this.resolve.bind(this), this.reject.bind(this));<br />        } catch (error) {<br />            this.reject(error);<br />        }<br />    }<br />    applyChangedState(value, state) {<br />        if(!(this.state === &apos;pending&apos;)) return;<br />        if(value instanceof MyPromise) {<br />            value.then(innerPromiseValue =&gt; {<br />                this.value = innerPromiseValue;<br />                this.status = state;<br />                this.laterCalls.forEach(latercall =&gt; latercall());<br />            });<br />        } else {<br />            this.value = value;<br />            this.state = state;<br />            this.laterCalls.forEach(latercall =&gt; latercall());<br />        }<br />    }<br />    decidePromiseByMethod(method, callback) {<br />        const state = method === &apos;then&apos; ? &apos;resolved&apos; : &apos;rejected&apos;;<br />        if(this.state === state) return new MyPromise(resolve =&gt; resolve(callback(this.value)));<br />        if(this.state === &apos;pending&apos;) return new MyPromise(resolve =&gt; {<br />            this.laterCalls.push(() =&gt; resolve(callback(this.value)));<br />        });<br />        return this;<br />    }<br />    resolve(value) {<br />        this.applyChangedState(value, &apos;resolved&apos;);<br />    }<br />    reject(value) {<br />        this.applyChangedState(value, &apos;rejected&apos;);<br />    }<br />    then(callback) {<br />        return this.decidePromiseByMethod(&apos;then&apos;, callback);<br />    }<br />    catch (callback) {<br />        return this.decidePromiseByMethod(&apos;catch&apos;, callback);<br />    }<br />};<br />module.exports = MyPromise;</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000562600000000",
+            "head": "카톡봇",
+            "headId": 84,
+            "id": 22054,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 21,
+                "menuType": "B",
+                "name": "| 소스 요청 |"
+            },
+            "readCount": 108,
+            "refArticleId": 22054,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "promise 구현시도 (출처참고)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1596111451400,
+            "writer": {
+                "id": "jomin398",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "jomin398"
+            }
+        },
+        "articleId": 22054,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "바벨 ㄱㄱㄱㄱㄱ",
+                    "id": 98418201,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98418201,
+                    "updateDate": 1596116136000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "아 모듈..",
+                    "id": 98418225,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98418201,
+                    "updateDate": 1596116147000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "바벨로 바뀐 소스를넣는다면 될지도(?)",
+                    "id": 98424296,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": true,
+                    "refId": 98418201,
+                    "updateDate": 1596119274000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "어라",
+                    "id": 98436574,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98436574,
+                    "updateDate": 1596132249000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "함수 프로토타입으로 잘 구현하면 될 것 같은디",
+                    "id": 98520619,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98520619,
+                    "updateDate": 1596201193000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "카톡봇",
+                "headId": 84
+            },
+            {
+                "head": "디코봇",
+                "headId": 85
+            },
+            {
+                "head": "기타",
+                "headId": 86
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

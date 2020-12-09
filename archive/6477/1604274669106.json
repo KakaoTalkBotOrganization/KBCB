@@ -1,0 +1,411 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-size:10pt;\"><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">URL과 PATH(파일이름,확장자 포함) 입력 시 해당 파일 다운로드 받아 내부저장소에 저장하는 소스</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b>인터넷에 여기저기 널려있는 관련소스들 짜집기한겁니다!</b></div><div><div style=\"background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"color: rgb(212, 212, 212);\"></div><div style=\"\"><div style=\"line-height: 19px;\"><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #c586c0;\">try</span></div><div style=\"color: rgb(212, 212, 212);\">{</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">url</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">net</span>.<span style=\"color: #9cdcfe;\">URL</span></div><div style=\"\"><font color=\"#d4d4d4\">&nbsp;&nbsp;&nbsp;</font><span style=\"color: rgb(156, 220, 254);\">url</span><font color=\"#d4d4d4\">&nbsp;=&nbsp;</font><span style=\"color: rgb(86, 156, 214);\">new</span><font color=\"#d4d4d4\">&nbsp;</font><span style=\"color: rgb(78, 201, 176);\">java</span><font color=\"#d4d4d4\">.</font><span style=\"color: rgb(78, 201, 176);\">net</span><font color=\"#d4d4d4\">.</font><span style=\"color: rgb(78, 201, 176);\">URL</span><font color=\"#d4d4d4\">(</font><span style=\"color: rgb(156, 220, 254);\">USER_REQUEST_URL</span><font color=\"#d4d4d4\">);&nbsp;</font><font color=\"#6a9955\">//&quot;</font><font color=\"#6cb858\"><a href=\"https://drive.google.com/uc?authuser=0&amp;id=&amp;export=download\" target=\"_blank\">https://drive.google.com/uc?authuser=0&amp;id=&amp;export=download</a></font><font color=\"#6a9955\">&quot;</font></div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">urlConn</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">net</span>.<span style=\"color: #9cdcfe;\">URLConnection</span></div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">urlConn</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">url</span>.<span style=\"color: #dcdcaa;\">openConnection</span>();</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">raw</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">io</span>.<span style=\"color: #9cdcfe;\">InputStream</span></div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">try</span>{</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">raw</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">urlConn</span>.<span style=\"color: #dcdcaa;\">getInputStream</span>()</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">buffer</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">io</span>.<span style=\"color: #9cdcfe;\">InputStream</span></div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">buffer</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">BufferedInputStream</span>(<span style=\"color: #9cdcfe;\">raw</span>);</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">reader</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">io</span>.<span style=\"color: #9cdcfe;\">Reader</span></div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">reader</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">InputStreamReader</span>(<span style=\"color: #9cdcfe;\">buffer</span>);</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">file</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">io</span>.<span style=\"color: #dcdcaa;\">File</span>(<span style=\"color: #9cdcfe;\">USER_REQUEST_PATH</span>)&nbsp;<span style=\"color: #6a9955;\">//&nbsp;&quot;/sdcard/temp/script.js&quot;</span></div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">fos</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">io</span>.<span style=\"color: #9cdcfe;\">FileOutputStream</span></div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">fos</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">FileOutputStream</span>(<span style=\"color: #9cdcfe;\">file</span>)</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">c</span>;</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">while</span>((<span style=\"color: #9cdcfe;\">c</span>=<span style=\"color: #9cdcfe;\">reader</span>.<span style=\"color: #dcdcaa;\">read</span>())!=-<span style=\"color: #b5cea8;\">1</span>)&nbsp;{</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">fos</span>.<span style=\"color: #dcdcaa;\">write</span>(<span style=\"color: #9cdcfe;\">c</span>)</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">fos</span>.<span style=\"color: #dcdcaa;\">close</span>()</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;}</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">catch</span>(<span style=\"color: #9cdcfe;\">error</span>)</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;{</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #9cdcfe;\">error</span>)</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;}</div><div style=\"color: rgb(212, 212, 212);\">}</div><div style=\"color: rgb(212, 212, 212);\"><span style=\"color: #c586c0;\">catch</span>(<span style=\"color: #9cdcfe;\">error</span>)</div><div style=\"color: rgb(212, 212, 212);\">{</div><div style=\"color: rgb(212, 212, 212);\">&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #9cdcfe;\">error</span>)</div><div style=\"color: rgb(212, 212, 212);\">}</div></div></div></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div><div><span style=\"background-color: rgb(153, 220, 255);\">넹</span></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000194D00000000",
+            "id": 6477,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 380,
+            "refArticleId": 6477,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "URL 파일 다운로드 소스!",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1571036731223,
+            "writer": {
+                "id": "ehdgns0509",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTA4MjJfMTgz/MDAxNTY2NDQyMjMxODU4.Xq0_u4gKEVfJOD44t1H0yOFso6KhfeFnnan_uJRPAfgg.Bbefds-n2lLgpJHrhurvCFR3j3bEIkZQFnrm2OSxIoIg.JPEG/gfl2-20190819-182005-000.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "XEROHN"
+            }
+        },
+        "articleId": 6477,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "어째 import만 됬어도 이렇게 코드가 더럽진 않았을 것 같은데... 아쉽네요\r\n",
+                    "id": 71043406,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "updateDate": 1571036775000,
+                    "writer": {
+                        "id": "ehdgns0509",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjJfMTgz/MDAxNTY2NDQyMjMxODU4.Xq0_u4gKEVfJOD44t1H0yOFso6KhfeFnnan_uJRPAfgg.Bbefds-n2lLgpJHrhurvCFR3j3bEIkZQFnrm2OSxIoIg.JPEG/gfl2-20190819-182005-000.jpg"
+                        },
+                        "nick": "XEROHN"
+                    }
+                },
+                {
+                    "content": "importPackage(java.net)\r\nimportPackage(java.io)",
+                    "id": 71044423,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "updateDate": 1571037772000,
+                    "writer": {
+                        "id": "edisondl",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180513_157/edisondl_1526219475484CynUF_PNG/image.png"
+                        },
+                        "nick": "Semicolon"
+                    }
+                },
+                {
+                    "content": "어?",
+                    "id": 71044439,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "replyMember": {
+                        "id": "edisondl",
+                        "nick": "Semicolon"
+                    },
+                    "updateDate": 1571037792000,
+                    "writer": {
+                        "id": "ehdgns0509",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjJfMTgz/MDAxNTY2NDQyMjMxODU4.Xq0_u4gKEVfJOD44t1H0yOFso6KhfeFnnan_uJRPAfgg.Bbefds-n2lLgpJHrhurvCFR3j3bEIkZQFnrm2OSxIoIg.JPEG/gfl2-20190819-182005-000.jpg"
+                        },
+                        "nick": "XEROHN"
+                    }
+                },
+                {
+                    "content": "아 안되네요. 아직 몇번 안해보긴 했는데, importpackage가 안먹는거 같습니다",
+                    "id": 71044998,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "replyMember": {
+                        "id": "edisondl",
+                        "nick": "Semicolon"
+                    },
+                    "updateDate": 1571038356000,
+                    "writer": {
+                        "id": "ehdgns0509",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjJfMTgz/MDAxNTY2NDQyMjMxODU4.Xq0_u4gKEVfJOD44t1H0yOFso6KhfeFnnan_uJRPAfgg.Bbefds-n2lLgpJHrhurvCFR3j3bEIkZQFnrm2OSxIoIg.JPEG/gfl2-20190819-182005-000.jpg"
+                        },
+                        "nick": "XEROHN"
+                    }
+                },
+                {
+                    "content": "읭 전 컴파일도 잘되고 실행도 잘되는데...",
+                    "id": 71045172,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "replyMember": {
+                        "id": "ehdgns0509",
+                        "nick": "XEROHN"
+                    },
+                    "updateDate": 1571038547000,
+                    "writer": {
+                        "id": "edisondl",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180513_157/edisondl_1526219475484CynUF_PNG/image.png"
+                        },
+                        "nick": "Semicolon"
+                    }
+                },
+                {
+                    "content": "MessengerBot맞으신가용",
+                    "id": 71045196,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "replyMember": {
+                        "id": "edisondl",
+                        "nick": "Semicolon"
+                    },
+                    "updateDate": 1571038570000,
+                    "writer": {
+                        "id": "ehdgns0509",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjJfMTgz/MDAxNTY2NDQyMjMxODU4.Xq0_u4gKEVfJOD44t1H0yOFso6KhfeFnnan_uJRPAfgg.Bbefds-n2lLgpJHrhurvCFR3j3bEIkZQFnrm2OSxIoIg.JPEG/gfl2-20190819-182005-000.jpg"
+                        },
+                        "nick": "XEROHN"
+                    }
+                },
+                {
+                    "content": "네 맞아요",
+                    "id": 71045337,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "replyMember": {
+                        "id": "ehdgns0509",
+                        "nick": "XEROHN"
+                    },
+                    "updateDate": 1571038719000,
+                    "writer": {
+                        "id": "edisondl",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180513_157/edisondl_1526219475484CynUF_PNG/image.png"
+                        },
+                        "nick": "Semicolon"
+                    }
+                },
+                {
+                    "content": "어... 음... 왜지 객체선언 잘못했나보네요",
+                    "id": 71045368,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71043406,
+                    "replyMember": {
+                        "id": "edisondl",
+                        "nick": "Semicolon"
+                    },
+                    "updateDate": 1571038747000,
+                    "writer": {
+                        "id": "ehdgns0509",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjJfMTgz/MDAxNTY2NDQyMjMxODU4.Xq0_u4gKEVfJOD44t1H0yOFso6KhfeFnnan_uJRPAfgg.Bbefds-n2lLgpJHrhurvCFR3j3bEIkZQFnrm2OSxIoIg.JPEG/gfl2-20190819-182005-000.jpg"
+                        },
+                        "nick": "XEROHN"
+                    }
+                },
+                {
+                    "content": "수정해야할곳이 한두군데가 아니네요. Reader들 close도 안해놨고 ㅋㅋㅋㅋ",
+                    "id": 71044871,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71044871,
+                    "updateDate": 1571038228000,
+                    "writer": {
+                        "id": "ehdgns0509",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjJfMTgz/MDAxNTY2NDQyMjMxODU4.Xq0_u4gKEVfJOD44t1H0yOFso6KhfeFnnan_uJRPAfgg.Bbefds-n2lLgpJHrhurvCFR3j3bEIkZQFnrm2OSxIoIg.JPEG/gfl2-20190819-182005-000.jpg"
+                        },
+                        "nick": "XEROHN"
+                    }
+                },
+                {
+                    "content": "function save(path,url){\r\ndata=org.jsoup.Jsoup.connect(url).ignoreContentType(true).execute().bodyAsBytes()\r\nout = (new java.io.FileOutputStream(new java.io.File(path)));\r\nout.write(data);\r\nout.close();\r\n}\r\n읍",
+                    "id": 71044952,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71044952,
+                    "updateDate": 1571038375000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                }
+            ],
+            "last": {
+                "id": 71052268,
+                "refId": 71052268
+            },
+            "next": {
+                "id": 71045017,
+                "refId": 71044952
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

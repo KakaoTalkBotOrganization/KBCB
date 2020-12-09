@@ -1,0 +1,396 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 14,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-04c07396-e70a-41a7-aa2b-cc96e23c019c\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1b726-0b72-11eb-86b9-c7db46bff754\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1b725-0b72-11eb-86b9-dba05aec584a\">Ev 객체를 수정하시면 됩니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-6f8db1c0-20d4-47a7-b6dd-ba47caf52e95\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">//명령어\nEv &#x3D; {\n    &quot;cmd&quot;: &quot;.&quot;, //명령어 접두사\n    &quot;timer&quot;: 3 //인증 제한 시간 (예) 3초 -&gt; 3\n};\n//Utils 객체 확장\nUtils.copy &#x3D; function(str) {\n    const clipboard &#x3D; Api.getContext().getSystemService(android.content.Context.CLIPBOARD_SERVICE);\n    return clipboard.setText(String(str));\n};\n//해시코드\nString.prototype.hash &#x3D; function() {\n    return new java.lang.String(this).hashCode();\n};\n//전역변수\nconst Lw &#x3D; &quot;​&quot;.repeat(500);\nvar administrator &#x3D; [];\nvar otp &#x3D; &quot;&quot;;\nvar timer &#x3D; false;\n\nfunction response(room, msg, sender, group, replier, imageDB) {\n    const imageId &#x3D; imageDB.getProfileImage().hash();\n    const userId &#x3D; sender.hash();\n    const userData &#x3D; sender + &quot; [ &quot; + (userId + imageId) + &quot; ]&quot;;\n    const chat &#x3D; msg.slice(Ev.cmd.length);\n    if (msg.startsWith(Ev.cmd)) {\n        if (chat &#x3D;&#x3D; &quot;등록&quot;) {\n            if (!timer) {\n                if (!administrator.includes(userData)) {\n                    otp &#x3D; Math.random().toString(36).substr(2, 11);\n                    timer &#x3D; true;\n                    replier.reply(&quot;OTP가 발급되었습니다. 클립보드에 복사된 코드를 입력해주세요&quot;);\n                    Utils.copy(Ev.cmd + otp);\n                } else\n                    replier.reply(sender + &quot;님은 이미 관리자로 등록되어 있습니다.&quot;);\n            } else\n                replier.reply(&quot;OTP 발급에 실패하였습니다. 잠시 후 다시 시도해주세요.&quot;);\n        }\n        if (chat &#x3D;&#x3D;&#x3D; otp &amp;&amp; otp.length !&#x3D; 0) {\n            if (!administrator.includes(userData)) {\n                otp &#x3D; &quot;&quot;;\n                timer &#x3D; false;\n                administrator.push(userData);\n                replier.reply(sender + &quot;님이 관리자로 등록되었습니다.&quot;);\n            } else {\n                otp &#x3D; &quot;&quot;;\n                timer &#x3D; false;\n                replier.reply(&quot;이미 로그인하셨습니다.&quot;);\n            }\n        }\n        while (timer) {\n            java.lang.Thread.sleep(Ev.timer * 1000);\n            timer &#x3D; false;\n            if (otp.length !&#x3D; 0) {\n                otp &#x3D; &quot;&quot;;\n                replier.reply(&quot;인증 시간을 초과하셨습니다.&quot;);\n            }\n        }\n        if (chat &#x3D;&#x3D; &quot;등록해제&quot;) {\n            if (administrator.includes(userData)) {\n                administrator.splice(administrator.indexOf(userData), 1);\n                replier.reply(sender + &quot;님의 관리자 등록이 해제되었습니다.&quot;);\n            }\n        }\n        if (chat &#x3D;&#x3D; &quot;관리자&quot;) {\n            let array &#x3D; administrator.map((e, i) &#x3D;&gt; ++i + &quot;. &quot; + e).join(&quot;\\n\\n&quot;);\n            if (array.length !&#x3D; 0) {\n                replier.reply(&quot;관리자 목록&quot; + Lw + &quot;\\n\\n&quot; + array);\n            } else\n                replier.reply(&quot;등록된 관리자가 없습니다.&quot;);\n        }\n        if (chat.startsWith(&quot;eval&quot;)) {\n            if (administrator.includes(userData)) {\n                let data &#x3D; chat.slice(4).trim();\n                try {\n                    replier.reply(eval(data));\n                } catch (e) {\n                    replier.reply([&quot;Error Code : &quot; + e.name\n                        , &quot;Content : &quot; + e.message\n                        , &quot;Line : #&quot; + e.lineNumber\n                    ].join(&quot;\\n\\n&quot;));\n                }\n            } else\n                replier.reply(&quot;당신은 관리자가 아닙니다.&quot;);\n        }\n    }\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-6f8db1c0-20d4-47a7-b6dd-ba47caf52e95\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-d1478a35-016e-4ff5-b22f-cc105c73a794\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de38-0b72-11eb-86b9-a7b1c63d4ae9\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de37-0b72-11eb-86b9-3f48ac6317d5\">사용법 : Ev 객체 안의 cmd가 . 이라면,</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de3a-0b72-11eb-86b9-2514a117bcf7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de39-0b72-11eb-86b9-3b1a78bc0828\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de3c-0b72-11eb-86b9-5db60f4b5af5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de3b-0b72-11eb-86b9-d36c53e53d1f\">.등록</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de3e-0b72-11eb-86b9-193d5da46d25\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de3d-0b72-11eb-86b9-b7cab5a2b867\">.등록해제</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de40-0b72-11eb-86b9-995b604d81d8\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de3f-0b72-11eb-86b9-35651853849d\">.관리자</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de42-0b72-11eb-86b9-b73b323fabd5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de41-0b72-11eb-86b9-a1b74106c308\">.eval</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de44-0b72-11eb-86b9-734044ac4bb3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de43-0b72-11eb-86b9-f11434f914b2\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de46-0b72-11eb-86b9-2dbdb4805d66\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de45-0b72-11eb-86b9-93c24ffd4a6a\">.를 딴거로 바꾸셔도 그대로 수정없이 사용 가능합니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de48-0b72-11eb-86b9-d3bc0d67ae48\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de47-0b72-11eb-86b9-b59f1ff173ac\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de4a-0b72-11eb-86b9-8962a0b7a9a6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de49-0b72-11eb-86b9-cbacad8230b2\">작동모습</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5fc1de4c-0b72-11eb-86b9-5fc179888d9c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5fc1de4b-0b72-11eb-86b9-e7bf6b6a7d3d\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-47932f6e-a21a-4ee3-86a1-c661a8b2574e\">\n                    <div class=\"se-component-content se-component-content-extend\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" >\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-47932f6e-a21a-4ee3-86a1-c661a8b2574e\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDA5MDhfNSAg/MDAxNTk5NTY4MDk2ODg2.pQE3pnQUEFcdv_0_ukRgi5WediEcSMqjBaBwdul4EP4g.YL8v6Nq4AsBSRTYhjxoza1OsmToYBh17lPDtG4ypQBgg.JPEG/1599568074096.jpg\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDA5MDhfNSAg/MDAxNTk5NTY4MDk2ODg2.pQE3pnQUEFcdv_0_ukRgi5WediEcSMqjBaBwdul4EP4g.YL8v6Nq4AsBSRTYhjxoza1OsmToYBh17lPDtG4ypQBgg.JPEG/1599568074096.jpg?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005F5F00000000",
+            "head": "기타",
+            "headId": 74,
+            "id": 24415,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 517,
+            "refArticleId": 24415,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "클립보드 로그인, 관리자 인증 OTP eval 소스 공유!",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1599568098417,
+            "writer": {
+                "id": "kiri9266",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "Kiri"
+            }
+        },
+        "articleId": 24415,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "너... 키위구나",
+                    "id": 102594882,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 102594882,
+                    "updateDate": 1599568378000,
+                    "writer": {
+                        "id": "jangsounggu",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzFfNjUg/MDAxNjA0MTE5NTc4ODU5.WbhYnDeJn46rancbl-5krGjeHJy87Yw8YEB7ti31_JQg.ZteiaJHy2YKL5pILO8JzeAfXDl6wgTPY04ZtopF_Qbwg.PNG/externalFile.png"
+                        },
+                        "nick": "파스텔ㅣPastel"
+                    }
+                },
+                {
+                    "content": "ㅎㅎ",
+                    "id": 102595434,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102594882,
+                    "updateDate": 1599568697000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Future"
+                    }
+                },
+                {
+                    "content": "키리님이 왜 이렇게 된것인가 궁금합니다",
+                    "id": 102595555,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 102595555,
+                    "updateDate": 1599568781000,
+                    "writer": {
+                        "id": "taejune5843",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "태준"
+                    }
+                },
+                {
+                    "content": "네..? 뭐가요",
+                    "id": 102595691,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102595555,
+                    "updateDate": 1599568879000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Future"
+                    }
+                },
+                {
+                    "content": "닉네임과 이미지가 왜 이렇게 된것이죠",
+                    "id": 102595736,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102595555,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Future"
+                    },
+                    "updateDate": 1599568913000,
+                    "writer": {
+                        "id": "taejune5843",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "태준"
+                    }
+                },
+                {
+                    "content": "잠시 바꾼거에요!",
+                    "id": 102595805,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102595555,
+                    "replyMember": {
+                        "id": "taejune5843",
+                        "nick": "태준"
+                    },
+                    "updateDate": 1599568962000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Future"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 102595877,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 102595877,
+                    "updateDate": 1599569004000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "제가 좀 멍청해서요",
+                    "id": 102595919,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102595877,
+                    "updateDate": 1599569027000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Future"
+                    }
+                },
+                {
+                    "content": "어떤 방법이 더 좋으려나요?",
+                    "id": 102596044,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102595877,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "핀밀크"
+                    },
+                    "updateDate": 1599569098000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Future"
+                    }
+                },
+                {
+                    "content": "더 수정이 간단해지도록 원래 소스에서 카페에 올리는 과정에 수정했습니다",
+                    "id": 102596305,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 102595877,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "핀밀크"
+                    },
+                    "updateDate": 1599569228000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Future"
+                    }
+                }
+            ],
+            "last": {
+                "id": 103120340,
+                "refId": 103120340
+            },
+            "next": {
+                "id": 102596531,
+                "refId": 102595877
+            }
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

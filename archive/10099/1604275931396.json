@@ -1,0 +1,417 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1561,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMTZfOSAg/MDAxNTc5MTQyODgzOTUy.eDADjAvw2T_X5Dd-XvzkvylLQNKh_fr-6XKpcYBolvEg.rlRoWybVdJzTGf6AVdZ6ycRZjtONtAbt3RcMjADAHnog.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>function comma(str) {<br />str = String(str);<br />var minus = str.substring(0, 1);<br />str = str.replace(/[^\\d]+/g, &apos;&apos;);<br />str = str.replace(/(\\d)(?=(?:\\d{3})+(?!\\d))/g, &apos;$1,&apos;);<br />//음수일 경우(?)<br />if(minus == &quot;-&quot;) str = &quot;-&quot;+str;<br />return str;<br />}<br />function getNaverSearch(msg,type) {<br />var Lw = &quot;\\u200b&quot;.repeat(500)<br />var client_id = &apos;자신 네이버 클라이언트ID&apos;;<br />var client_secret = &apos;자신 네이버 시크릿 클라이언트&apos;;<br />var text = msg.split(&quot;::&quot;)[1];<br />let url = &quot;https://openapi.naver.com/v1/search/&quot;+type+&quot;.xml?query=&quot;+text;<br />var serchT = &quot;&quot;;<br />parse = org.jsoup.Jsoup.connect(url)<br />.header(&quot;X-Naver-Client-Id&quot;, client_id)<br />.header(&quot;X-Naver-Client-Secret&quot;, client_secret)<br />.parser(org.jsoup.parser.Parser.xmlParser())<br />.get();<br />var j = 1;<br />for (var i =0; i &lt; parse.select (&quot;item&quot;).size (); i++){<br /><br />serchT += &quot;-&quot;.repeat(83)+&quot;[&quot;+j+&quot;] &quot;+parse.select (&quot;item &gt; title&quot;).get (i).text () + &quot;\\n&quot;<br />if (type == &apos;blog&apos;){<br />serchT +=&quot;\\n블로그 이름-&quot;+parse.select (&quot;item &gt; bloggername&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n링크-&quot;+parse.select (&quot;item &gt; bloggerlink&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n내용-&quot;+parse.select (&quot;item &gt; description&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if (type ==&apos;news&apos;){ <br />serchT +=&quot;\\n링크-&quot;+parse.select (&quot;item &gt; originallink&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n내용-&quot;+parse.select (&quot;item &gt; description&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if(type == &apos;encyc&apos;){ <br />serchT +=&quot;\\n내용-&quot;+parse.select (&quot;item &gt; description&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if(type == &apos;movie&apos;){<br />serchT +=&quot;\\n영화이미지-&quot;+parse.select (&quot;item &gt; image&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n제작년도-&quot;+parse.select (&quot;item &gt; pubDate&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n감독-&quot;+parse.select (&quot;item &gt; director&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n출연배우-&quot;+parse.select (&quot;item &gt; actor&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n평점-&quot;+parse.select (&quot;item &gt; userRating&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if(type == &apos;cafearticle&apos;){<br />serchT +=&quot;\\n링크-&quot;+parse.select (&quot;item &gt; cafeurl&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n카페이름-&quot;+parse.select (&quot;item &gt; cafename&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n내용-&quot;+parse.select (&quot;item &gt; description&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if(type == &apos;kin&apos;){<br />serchT +=&quot;\\n내용-&quot;+parse.select (&quot;item &gt; description&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if(type == &apos;local&apos;){<br />serchT +=&quot;\\n업체설명-&quot;+parse.select (&quot;item &gt; description&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n업체 전화번호-&quot;+parse.select (&quot;item &gt; telephone&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n업체 주소-&quot;+parse.select (&quot;item &gt; address&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n업체 도로명-&quot;+parse.select (&quot;item &gt; roadAddress&quot;).get (i).text () + &quot;\\n&quot;<br />var kattecX =parse.select (&quot;item &gt; mapx&quot;).get (i).text ()<br />var kattecY =parse.select (&quot;item &gt; mapy&quot;).get (i).text ()<br />/*var oKA = new GeoTransPoint(kattecX, kattecY);<br /><br />var oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);<br /><br />var lat = oGeo.getY() * 1E6;<br /><br />var lng = oGeo.getX() * 1E6;<br />*/<br />serchT +=&quot;\\n경도-&quot;+kattecX+ &quot;\\n&quot;<br />serchT +=&quot;위도-&quot;+kattecY+ &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if(type == &apos;webkr&apos;){<br />serchT +=&quot;\\n내용-&quot;+parse.select (&quot;item &gt; description&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else if(type == &apos;shop&apos;){<br />serchT +=&quot;\\n이미지링크-&quot;+parse.select (&quot;item &gt; image&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;\\n최저가-&quot;+comma(parse.select (&quot;item &gt; lprice&quot;).get (i).text ()) + &quot;\\n&quot;<br />serchT +=&quot;\\n최고가-&quot;+comma(parse.select (&quot;item &gt; hprice&quot;).get (i).text ()) + &quot;\\n&quot;<br />serchT +=&quot;\\n쇼핑몰 이름-&quot;+parse.select (&quot;item &gt; mallName&quot;).get (i).text () + &quot;\\n&quot;<br />serchT +=&quot;-&quot;.repeat(83);<br />}else {<br />serchT +=&quot;네이버 검색 시리즈에 없습니다&quot;<br />}<br />j++;<br />}<br />return text+&quot;검색결과 &quot;+Lw+&quot;\\n\\n&quot;+serchT.replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).trim();<br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br /><br />if(msg.indexOf(&quot;검색::&quot;)!=-1){<br /><br />if(msg.indexOf(&quot;블로그검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;blog&apos;));<br />}else if(msg.indexOf(&quot;뉴스검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;news&apos;));<br />}else if(msg.indexOf(&quot;백과사전검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;encyc&apos;));<br />}else if(msg.indexOf(&quot;영화검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;movie&apos;));<br />}else if(msg.indexOf(&quot;카페글검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;cafearticle&apos;));<br />}else if(msg.indexOf(&quot;지식인검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;kin&apos;));<br />}else if(msg.indexOf(&quot;지역검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;local&apos;));<br />}else if(msg.indexOf(&quot;웹검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;webkr&apos;));<br />}else if(msg.indexOf(&quot;쇼핑검색::&quot;)!=-1){<br />replier.reply(getNaverSearch(msg,&apos;shop&apos;));<br />}else {<br />replier.reply(&quot;검색을 다시 확인해주세요.&quot;);<br />}<br /><br /><br /><br />}<br /><br />}<br /><br /><br /><br />카톡우앙님꺼 네이버 api연동하는 모습에 감명받아 참고 하여 만들어 보았습니다. 여러번 테스트를 해보았는데 일단은 잘되서 올려봅니다 혹시 만약 에러발견하시고 알려주시면 감사하겠습니다.<br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000277300000000",
+            "id": 10099,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 449,
+            "refArticleId": 10099,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "살짝 노가다(?) 들어간 네이버 api연동 검색 시리즈",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1579142884577,
+            "writer": {
+                "id": "mam060922",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "Charlottek"
+            }
+        },
+        "articleId": 10099,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 159241,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/c257de6d7e2126fad63055625abcc6ba184ab456e2/MjAyMDAxMTZfOSAg/MDAxNTc5MTQyODgzOTUy.eDADjAvw2T_X5Dd-XvzkvylLQNKh_fr-6XKpcYBolvEg.rlRoWybVdJzTGf6AVdZ6ycRZjtONtAbt3RcMjADAHnog.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "카페글 검색이 2개에용...!",
+                    "id": 78589048,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78589048,
+                    "updateDate": 1579150627000,
+                    "writer": {
+                        "id": "vkdnjrjaror",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20170919_103/vkdnjrjaror_1505753355448V3dlt_PNG/avatar_profile.png"
+                        },
+                        "nick": "꾸뫄"
+                    }
+                },
+                {
+                    "content": "헐!! 수정하였습니다!!",
+                    "id": 78589170,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78589048,
+                    "updateDate": 1579150738000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 78589763,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78589763,
+                    "updateDate": 1579151246000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "아!죄송합니다! 카페로 옮기면서 콤마 function을 빼먹은거 같아요 수정하였습니다",
+                    "id": 78590714,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78589763,
+                    "updateDate": 1579151972000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "우왕이 아니라 우앙인데요",
+                    "id": 78599539,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78599539,
+                    "updateDate": 1579159663000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "아..수..수정하여씁니다. 그리고 번역기 잘쓰고있어요!!감사합니다",
+                    "id": 78599729,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78599729,
+                    "updateDate": 1579159848000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "답글 기능 안쓰시면 저한테 알림이 안와요",
+                    "id": 78601280,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78599729,
+                    "updateDate": 1579161226000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "아...넵!\r\n",
+                    "id": 78602341,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78599729,
+                    "replyMember": {
+                        "id": "kookyunchan",
+                        "nick": "카톡우앙"
+                    },
+                    "updateDate": 1579162180000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "아 혹시 저거 그대로 배끼면 (1도 수정하지않고) 작동하지 않나요?",
+                    "id": 89962292,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 89962292,
+                    "updateDate": 1589079390000,
+                    "writer": {
+                        "id": "bestslr",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ORION NEBULA"
+                    }
+                },
+                {
+                    "content": "작동합니다...만?",
+                    "id": 89972135,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89962292,
+                    "updateDate": 1589087362000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                }
+            ],
+            "last": {
+                "id": 91356315,
+                "refId": 91356315
+            },
+            "next": {
+                "id": 89972183,
+                "refId": 89962292
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

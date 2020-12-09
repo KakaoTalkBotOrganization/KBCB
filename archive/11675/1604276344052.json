@@ -1,0 +1,196 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp;</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">Ll = &quot;&#9148;&quot;.repeat(50)</span></div><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">Lw = &quot;\\u200b&quot;.repeat(500)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">V=[], a=[], b=[], c=[], start=false</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">Reset = _ =&gt; (a=[], b=[], c=[], start=false)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">FS = FileStream</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">path = &quot;sdcard/quiz/scores&quot;</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">rooms = []</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">/*</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">방 설정 하실거면 rooms 배열에 방이름 추가해 주세요.</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">비워넣을 시 모든 방 작동.</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">Made by doami</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">*/</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">function response (room, msg, sender, igc, replier) {</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (rooms.length &amp;&amp; rooms.indexOf(room) == -1) return;</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (!FS.read(path)) FS.write(path, &quot;{}&quot;)</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (msg == &quot;/퀴즈&quot; &amp;&amp; !start) {</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">start = true</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">parse = Utils.getWebText(&apos;<a href=\"https://m.search.naver.com/p/csearch/content/qapirender.nhn?&amp;where=m&amp;q=%B3%CD%BC%BE%BD%BA%C4%FB%C1%EE&amp;start=\" target=\"_blank\">https://m.search.naver.com/p/csearch/content/qapirender.nhn?&amp;where=m&amp;q=넌센스퀴즈&amp;start=</a>&apos;+(Math.random()*937|0+1)).replace(/&lt;([^&gt;])+&gt;|;|gt/g, &quot;&quot;).replace(/[\\n\\s]{2,}/g, &quot;\\n&quot;)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">Q = parse.split(&quot;&amp;&quot;)[4].trim()</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">a = parse.split(&quot;&amp;&quot;)[22].trim()</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">b = parse.split(&quot;&amp;&quot;)[16].trim()</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">c = parse.split(&quot;&amp;&quot;)[26].trim()</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">replier.reply(&quot;[!] &quot;+Q+&quot;\\n&quot;+Ll+&quot;\\n/정답 (답)\\n/힌트\\n/포기&quot;)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">A = &quot;답 : &quot;+a+&quot;\\n\\n풀이 : &quot;+c</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">}</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (msg.startsWith(&quot;/정답 &quot;)) {</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (a.replace(/ /g, &quot;&quot;) == msg.substr(4).replace(/ /g, &quot;&quot;)) {</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">json = JSON.parse(FS.read(path))</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">json[sender]?json[sender]++:json[sender] = 1</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">FS.write(path, JSON.stringify(json, null, 4))</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">replier.reply(&quot;[!] &quot;+sender+&quot; 님 정답!\\n&quot;+sender+&quot; 님의 현재 점수 : &quot;+json[sender]+&quot;점\\n\\n&quot;+A)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">Reset();</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">} else replier.reply(&quot;[!] 오답입니다 !&quot;)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">}</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (msg == &quot;/힌트&quot; &amp;&amp; start) replier.reply(&quot;[!] &quot;+b);</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (msg == &quot;/포기&quot; &amp;&amp; start) replier.reply(&quot;[!] &quot;+A), Reset();</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">if (msg == &quot;/점수판&quot;) {</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">json = JSON.parse(FS.read(path))</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">scores = Object.keys(json).sort((name1, name2) =&gt; json[name1] - json[name2]).reverse().map((name, index) =&gt; (index+1)+&quot;위 | &quot;+name+&quot; | &quot;+json[name]+&quot;점&quot;).join(&quot;\\n&quot;)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">replier.reply(&quot;[!] 점수판\\n&quot;+Ll+&quot;\\n&quot;+scores+&quot;\\n&quot;+Ll)</span><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">}</span><br /><br /><span style=\"color: rgb(34, 34, 34); font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 돋움, dotum, sans-serif; font-size: 12px;\">}</span></div><div><font color=\"#222222\" face=\"Apple SD Gothic Neo, 맑은 고딕, Malgun Gothic, 돋움, dotum, sans-serif\"><span style=\"font-size: 12px;\"><br /></span></font><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt;&nbsp;</b></div><div><b>구성원들이 정답 알래스카</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 정답 알래스카</b></div><div><b><br /></b></div><div><b>이런식으로 연속으로정답을 말할시 스크립트가 자동으로 꺼지게되는데</b></div><div>try cathc문을 적용시키면 이 오류가 잡히나요,,??</div><div><br /></div><div>만약 잡힌다면 try catch문을 어디부분에 집어넣어줘야하는지 ㅠㅠ</div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002D9B00000000",
+            "id": 11675,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 121,
+            "refArticleId": 11675,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "넌센스퀴즈 중복정답시 오류대해 질문드립니당!(출처.도미님)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582109823650,
+            "writer": {
+                "id": "phjun93",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "강아쥐"
+            }
+        },
+        "articleId": 11675,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "될지는 모르겟는디 넣으려면 정답에넣어야되지않을까요 대답할때 중복대답이 곂쳐지는거같은ㄷ ㅌㅌ",
+                    "id": 81646546,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81646546,
+                    "updateDate": 1582110651000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "오오! 재밌을것같아요",
+                    "id": 81649348,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81649348,
+                    "updateDate": 1582112939000,
+                    "writer": {
+                        "id": "sott2",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "sott2"
+                    }
+                },
+                {
+                    "content": "이 소스 저도 써도 되나ㅇ(퍽",
+                    "id": 81699559,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 81699559,
+                    "updateDate": 1582161221000,
+                    "writer": {
+                        "id": "rainbowssuk1453",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "조헌"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

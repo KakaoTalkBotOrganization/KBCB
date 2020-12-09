@@ -1,0 +1,238 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>H = 1000;<br />P = 1000;<br />C = 2500;<br />M = 0;<br />L=0;<br />var player = &quot;&quot;;<br />var start = false;<br />var z = &quot;10시 11시.js&quot;;<br />function response(room, msg, sender, isGroupChat, replier, imageDB) {<br />if(sender &amp;&amp; msg == &quot;/전투&quot;){<br />replier.reply(&quot;오목장이 나타났다! 어떻게 할까?\\n\\n/공격\\n싸운다.\\n\\n/방어\\n적의 공격을 막는다?\\n\\n/상점\\n무기를 구매 가능하다.\\n\\n/도망\\n튄다.\\n\\n/적 정보\\n적의 정보를 확인한다.\\n\\n/내 정보\\n자신의 정보를 확인한다.\\n\\n/삥뜯기\\n돈을 갈취한다.\\n\\n/관리자용 상점\\n관리자만 출입&bull;구매 가능하다&quot;)<br />player = sender;<br />start = true;<br />}<br />if (start == true &amp;&amp; msg &amp;&amp; player !== sender == &quot;/전투&quot;){<br />replier.reply(&quot;누군가 플레이중입니다.&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;/내 정보&quot;){<br />replier.reply(&quot;[정보]\\n\\n닉네임 : &quot;+sender+&quot;\\n\\nHP : &quot;+H+&quot;/&quot;+P+&quot;\\n\\n공격력 : 100\\n\\n돈 : &quot;+M+&quot;&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;/적 정보&quot;){<br />replier.reply(&quot;[적 정보]\\n\\n이름 : 오목장\\n\\nHP 2500/&quot;+C+&quot;\\n\\n공격력 : 200&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;/삥뜯기&quot;){<br />replier.reply(&quot;당신은 지나가던 아이의 돈을 삥뜯었다! +1000&quot;)<br />M+=1000;<br />}<br />if (sender == &quot;/관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/VIP용 삥뜯기&quot;){<br />replier.reply(&quot;당신은 지나가던 부자의 돈을 빼앗았다! +10000&quot;)<br />M+=10000;<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/부관리자용 삥뜯기&quot;){<br />replier.reply(&quot;당신은 지나가던 자신의 돈을 빼앗았다! +10000&quot;)<br />M+=100000;<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/관리자용 삥뜯기&quot;){<br />replier.reply(&quot;당신은 지나가던 두바이 거지의 돈을 삥뜯었다! +100000000&quot;)<br />M+=100000000;<br />}<br />if (sender == player &amp;&amp; msg == &quot;/도망&quot;){<br />replier.reply(&quot;당신은 도망쳤다.\\n(게임이 종료됩니다.)&quot;)<br />Api.reload(z)<br />}<br />if (sender == player &amp;&amp; msg == &quot;/상점&quot;){<br />replier.reply(&quot;상점에 오신 걸 환영합니다! 물건을 사실려면 /구매 (아이템) 이라고 써주세요!\\n\\n방패망토 - 상대방의 공격을 반사시킨다.\\n10000원\\n\\n공기포 - 상대방에게 500의 데미지를 가한다.\\n15000원\\n\\n관리자용 자주포 - 상대방에게 즉사의 데미지를 가한다.\\n0원\\n\\n전격포 - 상대방에게 전기(100)의 데미지를 가하고 때릴시 오목장이 맞대응 할 수 없다.\\n13000원\\n0원\\n\\n대포 - 상대방에게 800의 데미지를 가하고 때릴시 오목장이 화나서 한대를 강하게 때린다.\\n18000원\\n\\n생명포션 1 - 자신에게 100HP를 회복시키고 오목장은 때리지 않는다.\\n5000원\\n\\n생명포션 2 - 자신에게 800HP를 회복시키고 오목장은 때리지 않는다.\\n20000원&quot;)<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;/구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;방패망토&quot;)!=-1) {<br />U = 10000;<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 방패망토를 구입했다!&quot;)<br />M-=Number(U);<br />C-=200;<br />replier.reply(&quot;오목장은 당신을 공격하려했지만 방패망토로 인해 튕겨나가 사라진 줄 알았지만 오목장이 맞았다.\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;/구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;공기포&quot;)!=-1) {<br />U = 15000;<br />C-=500<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 공기포를 구입했다! 오목장은 500 데미지를 입었다!\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />M-=Number(U);<br />H-=200;<br />replier.reply(&quot;오목장은 공격을 시전했다! 당신의 HP가 200 감소했다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg.indexOf(&quot;/구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;관리자용 자주포&quot;)!=-1) {<br />U = 0;<br />C-=2500<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 자주포를 구입했다! 오목장은 100000000 데미지를 입었다!\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />M-=Number(U);<br />H-=0;<br />replier.reply(&quot;오목장은 공격을 시전했다! 당신은 관리자라 공격 할 수 없다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;/구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;전격포&quot;)!=-1) {<br />U = 13000;<br />C-=100<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 전격포를 구입했다! 오목장은 100 데미지를 입었다!\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />M-=Number(U);<br />H-=0;<br />replier.reply(&quot;오목장은 공격을 시전했다! 하지만 오목장은 몸이 저려 공격 할 수 없다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족합니다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;/구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;대포&quot;)!=-1) {<br />U = 18000;<br />C-=800<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 대포를 구입했다! 오목장은 800 데미지를 입었다!\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />M-=Number(U);<br />H-=900;<br />replier.reply(&quot;오목장은 공격을 시전했다! 오목장은 화가 나 더 강해졌다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족합니다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;/구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;생명포션 1&quot;)!=-1) {<br />U = 5000;<br />H =100<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 생명포션 1을 구입했다! HP가 100 회복되었다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />M-=Number(U);<br />H-=0;<br />replier.reply(&quot;오목장:악당도 회복할때는 기다려 주는 법이다! 오목장은 때리지 않았다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족합니다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;/구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;생명포션 2&quot;)!=-1) {<br />U = 20000;<br />H =500<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 생명포션 2를 구입했다! HP가 500 회복되었다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />M-=Number(U);<br />H-=0;<br />replier.reply(&quot;오목장:악당도 회복할때는 기다려 주는 법이다! 오목장은 때리지 않았다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족합니다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/관리자용 상점&quot;){<br />replier.reply(&quot;관리자용 상점에 오신 걸 환영합니다! 물건을 사실려면 /특수제작 (아이템) 이라고 써주세요!\\n\\n킹갓방패망토 - 상대방의 공격을 엄청나게 크게 반사시킨다.\\n0원\\n\\n킹갓엠퍼럴암흑의 공격-적을 사그라뜨린다\\n0원&quot;)<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg.indexOf(&quot;/특수제작&quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;킹갓방패망토&quot;)!=-1) {<br />U = 0;<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 킹갓방패망토를 구입했다!&quot;)<br />M-=Number(U);<br />C-=2500;<br />replier.reply(&quot;오목장은 당신을 공격하려했지만 방패망토로 인해 튕겨나가 사라진 줄 알았지만 오목장이 맞았다.\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg.indexOf(&quot;/특수제작&quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;킹갓엠퍼럴암흑의 공격&quot;)!=-1) {<br />U = 0;<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 킹갓엠퍼럴암흑의 공격을 구입했다!&quot;)<br />M-=Number(U);<br />C-=2500;<br />replier.reply(&quot;오목장은 암흑의 공격에 사그라 들었다.\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/부관리자용 상점&quot;){<br />replier.reply(&quot;부관리자용 상점에 오신 걸 환영합니다! 물건을 사실려면 /제작 (아이템) 이라고 써주세요!\\n\\n부방패망토 - 상대방의 공격을 엄청나게 크게 반사시킨다.\\n0원\\n\\n불완전한암흑의 공격-적을 사그라뜨린다.\\n0원&quot;)<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg.indexOf(&quot;/제작&quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;부방패망토&quot;)!=-1) {<br />U = 0;<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 부방패망토를 구입했다!&quot;)<br />M-=Number(U);<br />C-=1500;<br />replier.reply(&quot;오목장은 당신을 공격하려했지만 방패망토로 인해 튕겨나가 사라진 줄 알았지만 오목장이 맞았다.\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg.indexOf(&quot;/제작&quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;불완전한암흑의 공격&quot;)!=-1) {<br />U = 0;<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 불완전한암흑의 공격을 구입했다!&quot;)<br />M-=Number(U);<br />C-=1250;<br />replier.reply(&quot;오목장은 암흑의 공격에 사그라 들었다.\\n\\n오목장 HP : 2500/&quot;+C+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg == &quot;/공격&quot;){<br />C-=100;<br />replier.reply(&quot;오목장은 100의 데미지를 입었다!\\n\\n오목장 HP : 1500/&quot;+C+&quot;&quot;)<br />H-=200;<br />replier.reply(&quot;오목장은 공격을 시전했다! 당신의 HP가 200 감소했다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/관리자용 공격&quot;){<br />C-=1500;<br />replier.reply(&quot;오목장은 즉사했다!\\n\\n오목장 HP : 1500/&quot;+C+&quot;&quot;)<br />H-=0;<br />replier.reply(&quot;오목장은 공격을 시전했다! 힘의 여파로 인해 오목장은 공격 불가능하다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;/방어&quot;){<br />replier.reply(&quot;방어는 좋은 행동!\\n\\n받은 데미지가 50% 감소한다.&quot;)<br />H-=100;<br />replier.reply(&quot;오목장은 공격을 시전했다! 하지만 아주 단단하다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/자비&quot;){<br />replier.reply(&quot;안녕하세요.&quot;)<br />L-=1;<br />H-=0;<br />replier.reply(&quot;당신은 자비를 베푼다! 게임은 끝났다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/자비&quot;){<br />replier.reply(&quot;안녕하세요.&quot;)<br />L-=1;<br />H-=0;<br />replier.reply(&quot;당신은 자비를 베푼다! 게임은 끝났다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if (sender == &quot;//관리자 이름 적어주세용&quot; &amp;&amp; msg == &quot;/자비&quot;){<br />replier.reply(&quot;안녕하세요&quot;)<br />L-=1;<br />H-=0;<br />replier.reply(&quot;당신은 자비를 베푼다! 게임은 끝났다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if(H&lt;=0){<br />replier.reply(&quot;패배하셨습니다. 자동으로 게임이 종료됩니다.&quot;)<br />Api.reload(z)<br />}<br />if(C&lt;=0){<br />replier.reply(&quot;승리하셨습니다! 승리하신 분에게는 박수를 드립니다!\\n짝짝짝!&quot;)<br />Api.reload(z)<br />}<br />if(L&lt;0){<br />replier.reply(&quot;이거 사실 히든엔딩! 안녕하세요 관리자님!!&quot;)<br />Api.reload(z)<br />}<br />}<br /><br /><br /><br />보라님이나 다른 RPG만드는 분 참고해서 만들더니만 쓸데없는것도 많이 만들었네용</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000006B600000000",
+            "id": 1718,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 409,
+            "refArticleId": 1718,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "목장이봇(게임)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1555066985690,
+            "writer": {
+                "id": "kimsiyoon4202",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "카톡봇 궁금이"
+            }
+        },
+        "articleId": 1718,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "와아(짝짝짝)",
+                    "id": 57191866,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 57191866,
+                    "updateDate": 1555069278000,
+                    "writer": {
+                        "id": "im0423023",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ㅇㅂㅇ"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 57226947,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 57226947,
+                    "sticker": {
+                        "height": 105,
+                        "id": "kin-19-138-150",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/kin/original_19.png",
+                        "width": 96
+                    },
+                    "updateDate": 1555124378000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "나 결론은 이거 안 써",
+                    "id": 58750278,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 58750278,
+                    "updateDate": 1556972607000,
+                    "writer": {
+                        "id": "kimsiyoon4202",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA3MjdfMTc2/MDAxNTY0MjE1NDcxODAx.1bBOn3jzIqR6A_CW4GOcJpe8sJgiimtzyJerqgcARFQg.26SnoGkhqGVVOJRGFG5FTwtd0rs03Jr3JvWTuFudAuIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Alpha"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

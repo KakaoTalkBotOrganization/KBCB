@@ -1,0 +1,395 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 29,
+            "contentElements": [],
+            "contentHtml": "<p>const scriptName=&quot;앵그리버드.js&quot;;<br /><br />function dx(v0, t, radian){<br />    d=v0*t*Math.cos(radian);<br />    return d;<br />}<br /><br />function t_dx(dx, v0, radian){<br />    t=dx/(v0*Math.cos(radian));<br />    return t;<br />}<br /><br />function dy(v0, t, radian, g){<br />    d=v0*t*Math.sin(radian)-g*Math.pow(t,2)/2;<br />    return d;<br />}<br /><br />function prytest(pry, code){<br />    if(pry&lt;0.25) return code+&quot;   &quot;;<br />    if(pry&gt;=0.25&amp;&amp;pry&lt;0.5) return &quot; &quot;+code+&quot;  &quot;;<br />    if(pry&gt;=0.5&amp;&amp;pry&lt;0.75) return &quot;  &quot;+code+&quot; &quot;;<br />    if(pry&gt;=0.75) return &quot;   &quot;+code;<br />}<br /><br />function ran(a, b){<br />    if(a&gt;b){<br />        var c=a;<br />        a=b;<br />        b=c;<br />    }<br />    var num=Math.floor(Math.random()*(b-a+1))+a;<br />    return num;<br />}<br /><br />function fire(f, theta, map, save, room){<br />    radian=theta/180*Math.PI;<br />    var d=1;<br />    var m=1;<br />    var g=10;<br />    var v0=Math.pow(f/m/d, 1/2);<br />    for(var i=0 ; i&lt;H ; i++){<br />        t=t_dx(i, v0, radian);<br />        y=dy(v0, t, radian, g);<br />        if(y&gt;=0&amp;&amp;y&lt;=14){<br />            var savey=y;<br />            y=Math.floor(y);<br />            if(map[room][i][y]==&quot;&amp;13&amp;&quot;){<br />                map[room][i][y]=&quot;&amp;14&amp;&quot;;<br />                save[room][i][y]=&quot;&amp;14&amp;&quot;;<br />                monsternum[room]-=1;<br />                break;<br />            }<br />            if(map[room][i][y]==1){<br />                map[room][i][y]=&quot;&amp;14&amp;&quot;;<br />                save[room][i][y]=&quot;&amp;14&amp;&quot;;<br />                break;<br />            }<br />            if(map[room][i][y]==9){<br />                map[room][i][y]=&quot;&amp;15&amp;&quot;;<br />                save[room][i][y]=&quot;&amp;14&amp;&quot;;<br />                break;<br />            }<br />            if(map[room][i][y]==&quot;&amp;15&amp;&quot;){<br />                map[room][i][y]=&quot;&amp;14&amp;&quot;;<br />                save[room][i][y]=&quot;&amp;14&amp;&quot;;<br />                break;<br />            }<br />            t1=t_dx(i-1, v0, radian);<br />            t2=t_dx(i+1, v0, radian);<br />            dt1=t-(t-t1)/10;<br />            dt2=t+(t-t2)/10;<br />            dx1=dx(v0, dt1, radian);<br />            dx2=dx(v0, dt2, radian);<br />            dy1=dy(v0, dt1, radian, g);<br />            dy2=dy(v0, dt2, radian, g);<br />            a=(dy2-dy1)/(dx2-dx1);<br />            if(a&lt;1&amp;&amp;a&gt;0.4){<br />                pry=savey-y;<br />                save[room][i][y]=prytest(pry, 5);<br />            }<br />            if(a&gt;-1&amp;&amp;a&lt;-0.4){<br />                pry=savey-y;<br />                save[room][i][y]=prytest(pry, 4);<br />            }<br />            if(a&gt;=1&amp;&amp;a&lt;3) map[room][i][y]=3;<br />            if(a&lt;=-1&amp;&amp;a&lt;3) map[room][i][y]=2;<br />            if(a&gt;=3||a&lt;=-3) map[room][i][y]=8;<br />            if(a&gt;=-0.4&amp;&amp;a&lt;=0.4){<br />                pry=savey-y;<br />                save[room][i][y]=prytest(pry, 6);<br />            }<br />        }<br />    }<br />    return [map, save];<br />}<br /><br />/*<br />dx=v0tcos세타<br />dy=dxtan세타-(gt^2)/2<br />t=dx/(v0cos세타)<br />|    &#11035;&#11036;&#11035;&#11036;<br />&#11035;&#11036;&#11035;&#11036;&#11035;&#11036;<br />&#128163;&#128165;↗&#65039;&#128301;&#128055;&#11035;<br />&#11035;&#9585; &#9586; &#11036;&#11035;&#11036;<br />  / &#11036;&#11035; \\  &#11036;&#11035;<br />&#11035;&#11036;|    &#11035;&#11036;<br /><br />&#128126;<br /><br />&#11036;&#9729;&#65039;&#9729;&#65039;&#11036;<br />&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;<br />&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;<br />&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;<br />&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;<br />&#11036;&#9729;&#65039;&#9729;&#65039;&#11036;<br /><br />&#11036;&#9729;&#65039;&#11036;<br />&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;<br />&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;<br />&#9729;&#65039;&#9729;&#65039;&#9729;&#65039;<br />&#11036;&#9729;&#65039;&#11036;<br />__ &#11036;<br />ㅡ &#11036;<br /><br />*/<br /><br />var map={};<br />var save={};<br />var monsternum={};<br />var bombnum={};<br />var game=0;<br />var d=1;<br />var m=1;<br />var g=10;<br />var bomb=10;<br />var shape={0: &quot;&#11036;&quot;, 1: &quot;&#11035;&quot;, 2: &quot;&#9585; &quot;,3: &quot;&#9586; &quot;, 4: &quot;/&quot;, 5: &quot;\\\\&quot;, 6: &quot;|&quot;, 7: &quot;__ &quot;, 8: &quot;ㅡ &quot;, 9: &quot;&#127998;&quot;, 10: &quot;&#9729;&#65039;&quot;, 11: &quot;&#128262;&quot;, 12: &quot;&#128126;&quot;, 13:&quot;&#128127;&quot;, 14:&quot;&#128165;&quot;, 15:&quot;&#127996;&quot;};<br />var H=300;<br />var W=14;<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />    var allsee=new Array(1000).join(String.fromCharCode(847));<br />    if(msg==&quot;/맵생성&quot;){<br />        map[room]=[];<br />        save[room]=[];<br />        monsternum[room]=3;<br />        bombnum[room]=bomb;<br />        for(var i=0 ; i&lt;H ; i++){<br />            map[room][i]=[];<br />            save[room][i]=[];<br />            for(var j=0 ; j&lt;W ; j++){<br />                map[room][i][j]=0;<br />                save[room][i][j]=0;<br />            }<br />        }<br /><br />        //해 띄우기<br />        map[room][Math.floor(Math.random()*8)][Math.floor(Math.random()*3)+11]=&quot;&amp;11&amp;&quot;;<br /><br />        //구름1<br />        var cloudx=ran(0, 5);<br />        var cloudy=ran(7, 11);<br />        var kind=ran(3, 4);<br />        for(var i=0 ; i&lt;kind+2 ; i++){<br />            for(var j=0 ; j&lt;kind ; j++){<br />                map[room][i+cloudx][j+cloudy]=&quot;&amp;10&amp;&quot;;<br />                if((i==0&amp;&amp;j==0)||(i==0&amp;&amp;j==kind-1)||(i==kind+1&amp;&amp;j==0)||(i==kind+1&amp;&amp;j==kind-1)){<br />                    map[room][i+cloudx][j+cloudy]=0;<br />                }<br />            }<br />        }<br /><br />        //구름2<br />        var cloudx=ran(6, 15);<br />        var cloudy=ran(7, 11);<br />        var kind=ran(3, 4);<br />        for(var i=0 ; i&lt;kind+2 ; i++){<br />            for(var j=0 ; j&lt;kind ; j++){<br />                map[room][i+cloudx][j+cloudy]=&quot;&amp;10&amp;&quot;;<br />                if((i==0&amp;&amp;j==0)||(i==0&amp;&amp;j==kind-1)||(i==kind+1&amp;&amp;j==0)||(i==kind+1&amp;&amp;j==kind-1)){<br />                    map[room][i+cloudx][j+cloudy]=0;<br />                }<br />            }<br />        }<br /><br />        var count=2;  //땅 생성<br />        var monster=ran(15, 21);<br />        var monster2=ran(20, 27);<br />        for(var i=10 ; i&lt;H ; i++){<br />            if(count&gt;0){<br />                count+=ran(-1, 2);<br />                for(var j=0 ; j&lt;count ; j++){<br />                    map[room][i][j]=1;<br />                }<br />                if(i==monster-2){<br />                    map[room][i][count]=9;<br />                    map[room][i][count+1]=9;<br />                    map[room][i][count+2]=9;<br />                }<br />                if(i==monster){<br />                    map[room][i][count]=&quot;&amp;13&amp;&quot;;<br />                    map[room][i][count+3]=&quot;&amp;13&amp;&quot;;<br />                    map[room][i-2][count]=9;<br />                    map[room][i-2][count+1]=9;<br />                    map[room][i-2][count+2]=9;<br />                    map[room][i-1][count+2]=9;<br />                    map[room][i][count+2]=9;<br />                    map[room][i+1][count+2]=9;<br />                    map[room][i+2][count+2]=9;<br />                    map[room][i+2][count+1]=9;<br />                    map[room][i+2][count]=9;<br />                }<br />                if(i==monster2){<br />                    map[room][i][count]=&quot;&amp;13&amp;&quot;;<br />                }<br />            }<br />        }<br /><br />        map[room][0][0]=&quot;&#128163;&quot;;<br /><br />        var log=&quot;&quot;;<br />        for(var i=0 ; i&lt;H ; i++){<br />            for(var j=0 ; j&lt;W ; j++){<br />                save[room][i][j]=map[room][i][j];<br />            }<br />        }<br />        for(var i=0 ; i&lt;H ; i++){<br />            for(var j=0 ; j&lt;W ; j++){<br />                log+=save[room][i][j];<br />            }<br />            log+=&quot;\\n&quot;;<br />        }<br />        game=1;<br />        replier.reply(&quot;테스트필드\\n&quot;+&quot;&#128163;&quot;.repeat(bombnum[room]-1)+allsee+&quot;\\n&quot;+log.replace(/&amp;10&amp;/g, shape[10]).replace(/&amp;11&amp;/g, shape[11]).replace(/&amp;12&amp;/g, shape[12]).replace(/&amp;13&amp;/g, shape[13]).replace(/&amp;14&amp;/g, shape[14]).replace(/&amp;15&amp;/g, shape[15]).replace(/0/g, shape[0]).replace(/1/g, shape[1]).replace(/2/g, shape[2]).replace(/3/g, shape[3]).replace(/4/g, shape[4]).replace(/5/g, shape[5]).replace(/6/g, shape[6]).replace(/7/g,  shape[7]).replace(/8/g, shape[8]).replace(/9/g, shape[9]));           <br />    }<br /><br />    if(msg.indexOf(&quot;/발포 &quot;)==0&amp;&amp;game==0){<br />        replier.reply(&quot;/맵생성 이라고 해서 맵을 만들어주세요&quot;);<br />    }<br /><br />////////////////////////////////////////////////////////////////////////////////////<br /><br />    if(msg.indexOf(&quot;/발포 &quot;)==0&amp;&amp;game==1){<br />        var theta=Number(msg.split(&quot; &quot;)[1]);<br />        var f=Number(msg.split(&quot; &quot;)[2]);<br />        var data=fire(f, theta, map, save, room);<br />        map=data[0];<br />        save=data[1];<br />        if(bombnum[room]!=0) map[room][0][0]=&quot;&#128163;&quot;;<br />        var log=&quot;&quot;;<br />        bombnum[room]-=1;<br />        if(bomb-bombnum[room]&gt;3){<br />            for(var i=0 ; i&lt;count-1 ; i+=2){<br />                map[room][x][y]=0;<br />            }<br />        }<br />        for(var i=0 ; i&lt;H ; i++){<br />            for(var j=0 ; j&lt;W ; j++){<br />                if(save[room][i][j]!=0){<br />                    log+=save[room][i][j];<br />                }else{<br />                    log+=map[room][i][j];<br />                }<br />            }<br />            log+=&quot;\\n&quot;;<br />        }<br />        for(var i=0 ; i&lt;H ; i++){<br />            for(var j=0 ; j&lt;W ; j++){<br />                save[room][i][j]=map[room][i][j];<br />            }<br />        }<br />        if(monsternum[room]==0){<br />            replier.reply(&quot;성공!!\\n새 필드를 만들어주세요\\n남은 폭탄개수: &quot;+bombnum[room]);<br />            map[room]=[];<br />            game=0;<br />        }<br />        if(bombnum[room]==0&amp;&amp;monsternum[room]!=0){<br />            replier.reply(&quot;실패\\n폭탄이 다 떨어졌습니다\\n남은 폭탄개수: &quot;+bombnum[room]);<br />            map[room]=[];<br />            bombnum[room]=1;<br />            game=0;<br />        }<br />        replier.reply(&quot;각도: &quot;+theta+&quot;&deg; , 힘: &quot;+f+&quot;N\\n&quot;+&quot;&#128163;&quot;.repeat(bombnum[room]-1)+allsee+&quot;\\n&quot;+log.replace(/&amp;10&amp;/g, shape[10]).replace(/&amp;11&amp;/g, shape[11]).replace(/&amp;12&amp;/g, shape[12]).replace(/&amp;13&amp;/g, shape[13]).replace(/&amp;14&amp;/g, shape[14]).replace(/&amp;15&amp;/g, shape[15]).replace(/0/g, shape[0]).replace(/1/g, shape[1]).replace(/2/g, shape[2]).replace(/3/g, shape[3]).replace(/4/g, shape[4]).replace(/5/g, shape[5]).replace(/6/g, shape[6]).replace(/7/g,  shape[7]).replace(/8/g, shape[8]).replace(/9/g, shape[9]));           <br />    }<br />}<br /><br />제가 전에 앵그리버드를 만들고 리메이크를 하려고 했거든요? 근데 요즘 바뻐서 못하고 있어요 ㅠㅠ<br /><br /> 마음껏 리메이크하고 카페에 공유해주세요!!!!!</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000D8700000000",
+            "id": 3463,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 386,
+            "refArticleId": 3463,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "앵그리버드 소스공유 [리메이크해주세요!!]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1561722713567,
+            "writer": {
+                "id": "rlawldud7130",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "지영은빛"
+            }
+        },
+        "articleId": 3463,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이분 '물' 맞음? 뛰어 넘으신듯",
+                    "id": 62779328,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 62779328,
+                    "updateDate": 1561722813000,
+                    "writer": {
+                        "id": "im0423023",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ㅇㅂㅇ"
+                    }
+                },
+                {
+                    "content": "청정수임",
+                    "id": 62779442,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62779328,
+                    "updateDate": 1561723002000,
+                    "writer": {
+                        "id": "rlawldud7130",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "지영은빛"
+                    }
+                },
+                {
+                    "content": "이 정도면 물을 넘어선 석유...",
+                    "id": 62779953,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62779328,
+                    "replyMember": {
+                        "id": "rlawldud7130",
+                        "nick": "지영은빛"
+                    },
+                    "updateDate": 1561723686000,
+                    "writer": {
+                        "id": "cubeminetv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MTFfMTAw/MDAxNTg2NTgzMDc5MDEx.IQLuKnQtvUZmQvjya_zadmEU6pQtqkpRba6_5DgYCSEg.baU4wRzksr8efxYgDH8E4ZjYpSeyNFkSiGYhSHbg_rAg.JPEG.cubeminetv/profileImage.jpg"
+                        },
+                        "nick": "큐브마인"
+                    }
+                },
+                {
+                    "content": "더 고인 인마브큐님이 리메이크 해줘요",
+                    "id": 62779992,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62779328,
+                    "replyMember": {
+                        "id": "cubeminetv",
+                        "nick": "큐브마인"
+                    },
+                    "updateDate": 1561723740000,
+                    "writer": {
+                        "id": "rlawldud7130",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "지영은빛"
+                    }
+                },
+                {
+                    "content": "(리메이크고 뭐고 이해가 안 되는 고1)",
+                    "id": 62780040,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 62780040,
+                    "updateDate": 1561723801000,
+                    "writer": {
+                        "id": "cubeminetv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MTFfMTAw/MDAxNTg2NTgzMDc5MDEx.IQLuKnQtvUZmQvjya_zadmEU6pQtqkpRba6_5DgYCSEg.baU4wRzksr8efxYgDH8E4ZjYpSeyNFkSiGYhSHbg_rAg.JPEG.cubeminetv/profileImage.jpg"
+                        },
+                        "nick": "큐브마인"
+                    }
+                },
+                {
+                    "content": "이해 필요없이 걍 fire(f, theta, map, save, room) 만 알아서 잘쓰면 발포해줌",
+                    "id": 62780096,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62780040,
+                    "updateDate": 1561723869000,
+                    "writer": {
+                        "id": "rlawldud7130",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "지영은빛"
+                    }
+                },
+                {
+                    "content": "일단 도전해볼게여",
+                    "id": 62780543,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62780040,
+                    "replyMember": {
+                        "id": "rlawldud7130",
+                        "nick": "지영은빛"
+                    },
+                    "updateDate": 1561724304000,
+                    "writer": {
+                        "id": "cubeminetv",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MTFfMTAw/MDAxNTg2NTgzMDc5MDEx.IQLuKnQtvUZmQvjya_zadmEU6pQtqkpRba6_5DgYCSEg.baU4wRzksr8efxYgDH8E4ZjYpSeyNFkSiGYhSHbg_rAg.JPEG.cubeminetv/profileImage.jpg"
+                        },
+                        "nick": "큐브마인"
+                    }
+                },
+                {
+                    "content": "save랑 map의 차이점이 뭔진 까먹었지만 이따 한번 찾아서 주석 달아줌 일단 이거좀 하고..",
+                    "id": 62780595,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62780040,
+                    "replyMember": {
+                        "id": "cubeminetv",
+                        "nick": "큐브마인"
+                    },
+                    "updateDate": 1561724352000,
+                    "writer": {
+                        "id": "rlawldud7130",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "지영은빛"
+                    }
+                },
+                {
+                    "content": "않이\r\n석유만 알아볼수있게 해놨네\r\n자체 난독화는 아니지 형\r\n\r\n이거 리메이크 하려면 하나하나 주석으로 설명 필요할듯",
+                    "id": 62780137,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 62780137,
+                    "updateDate": 1561723915000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "ㅇㅋ",
+                    "id": 62780157,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62780137,
+                    "updateDate": 1561723938000,
+                    "writer": {
+                        "id": "rlawldud7130",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "지영은빛"
+                    }
+                }
+            ],
+            "last": {
+                "id": 96838336,
+                "refId": 96838336
+            },
+            "next": {
+                "id": 62780215,
+                "refId": 62780215
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,353 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1432,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAzMjRfMjU0/MDAxNTg1MDQ2MTEyNDQx.PNtTjQgY_JlpsFV_eb-n_yxW0Y9YsJLxE-bV0YvHp1Ug.5Y_475RPPozKVxrisNVgi3EyR8VCgrfCXMGMCHXXyygg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>Jsoup = org.jsoup.Jsoup<br />num = 4<br />start = {}<br />quiz = {}<br />answer = {}<br /><br />Array.prototype.shuffle = function() {<br />a = this<br />for (i = a.length; i; i -= 1) {<br />j = Math.random()*i|0<br />x = a[i - 1]<br />a[i - 1] = a[j]<br />a[j] = x<br />}<br />return a<br />}<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />msg2 = msg.replace(/ /g, &quot;&quot;)<br /><br />if (msg2 == &quot;/단어시작&quot;) {<br />if (!start[room]) {<br />start[room] = true<br />words = Array.from(new Set(Jsoup.connect(&quot;https://raw.githubusercontent.com/acidsound/korean_wordlist/master/wordslist.txt&quot;).get().text().replace(/【([^】])+】/g, &quot;&quot;).replace(/[ ]{2,}/g, &quot; &quot;).split(&quot; &quot;))).filter(w =&gt; w.length &gt;= num).filter(w =&gt; !(&quot;ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ&quot;.split(&quot;&quot;).some(c =&gt; w.includes(c))))<br />answer[room] = words[Math.random()*words.length|0]<br />quiz[room] = answer[room].split(&quot;&quot;).shuffle().join(&quot;&quot;)<br />replier.reply([<br />&quot;&bull; &apos;&quot;+quiz[room]+&quot;&apos; 를 알맞게 배열해보세요!&quot;,<br />&quot;/단어 정답 (단어)&quot;,<br />&quot;/단어 포기&quot;<br />].join(&quot;\\n&quot;))<br />} else replier.reply(&quot;&bull; 이미 게임이 진행중입니다!&quot;)<br />}<br /><br />if (msg2 == &quot;/단어포기&quot;) {<br />if (start[room]) {<br />start[room] = false<br />replier.reply([<br />&quot;&bull; 게임을 포기하셨습니다!&quot;,<br />&quot;정답은 바로 &apos;&quot;+answer[room]+&quot;&apos; 이었습니다!&quot;<br />].join(&quot;\\n&quot;))<br />quiz[room] = &quot;&quot;<br />answer[room] = &quot;&quot;<br />} else replier.reply(&quot;&bull; 게임이 시작되지 않았습니다!&quot;)<br />}<br /><br />if (msg2.startsWith(&quot;/단어정답&quot;)) {<br />if (start[room]) {<br />if (msg2.substr(5).trim() == answer[room]) {<br />replier.reply([<br />&quot;&bull; &quot;+sender+&quot; 님 정답!&quot;,<br />&quot;정답은 바로 &quot;+answer[room]+&quot; 이었습니다!&quot;<br />].join(&quot;\\n&quot;))<br />start[room] = false<br />quiz[room] = &quot;&quot;<br />answer[room] = &quot;&quot;<br />} else replier.reply(&quot;&bull; &quot;+sender+&quot; 님 틀렸습니다!&quot;)<br />} else replier.reply(&quot;&bull; 게임이 시작되지 않았습니다!&quot;)<br />}<br /><br />}<br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br /><p><br /><a href=\"https://cafe.naver.com/nameyee/14064\" target=\"_blank\">https://cafe.naver.com/nameyee/14064</a><br />여기서 아이디어를 얻어왔습니다. (같은 건 아니지만..)<br /><br />두번째 줄 변수 num의 길이 이상의 단어들만 문제에 출제됩니다. (기본값 4)<br /><br />방마다 따로 퀴즈를 풀 수 있게 하였습니다.<br /><br /><br />words = Array.from(new Set(Jsoup.connect(&quot;https://raw.githubusercontent.com/acidsound/korean_wordlist/master/wordslist.txt&quot;).get().text().replace(/【([^】])+】/g, &quot;&quot;).replace(/[ ]{2,}/g, &quot; &quot;).split(&quot; &quot;))).filter(w =&gt; w.length &gt;= num).filter(w =&gt; !(&quot;ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ&quot;.split(&quot;&quot;).some(c =&gt; w.includes(c))))<br /><br />현재 문제를 낼 때에 파싱을 해서 내는 것이기 때문에 5초정도 소요가 되는데<br /><br />이 words 변수를 원래 위치 대신 맨 윗줄에 놓으면 컴파일 할 때만 5초가 걸리고 문제는 바로 나올겁니다.<br /><br />다음 버전엔 점수판 도입 예정입니다.</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000370500000000",
+            "id": 14085,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 132,
+            "refArticleId": 14085,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "단어 배열 게임 v 1.0",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585046113373,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "도미 doami2005"
+            }
+        },
+        "articleId": 14085,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 401527,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/e174fd475a6a6bdef3177044769fe69b3b699735/MjAyMDAzMjRfMjU0/MDAxNTg1MDQ2MTEyNDQx.PNtTjQgY_JlpsFV_eb-n_yxW0Y9YsJLxE-bV0YvHp1Ug.5Y_475RPPozKVxrisNVgi3EyR8VCgrfCXMGMCHXXyygg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "js",
+                "fullName": "Test2.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Test2.js",
+                "size": 1947,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/de4bc271633f3ae6ca2c497e46afdaa00456a84a96/20200324_206_cafefile/29537083_1585046113106_nQseMM_js/Test2.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "옹 여기에 사용된 개념은 어떤개념인가요?",
+                    "id": 85216954,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85216954,
+                    "updateDate": 1585046196000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "파싱으로 단어 DB 있는 페이지 긁어와서 배열로 만들어 랜덤으로 하나 뽑아서 출제합니다.\r\n\r\n저번 넌센스퀴즈와는 다르게 객체를 사용해서 방마다 따로 퀴즈를 풀 수 있게 했어요\r\n\r\n그거 말곤 넌센스퀴즈랑 작동방식은 비슷해영",
+                    "id": 85217139,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85216954,
+                    "updateDate": 1585046348000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "어라 여전히 고잉물",
+                    "id": 85217198,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85217198,
+                    "updateDate": 1585046390000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "무명"
+                    }
+                },
+                {
+                    "content": "어떻게 저 짧은 소스에 이런걸....",
+                    "id": 85217558,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85217198,
+                    "updateDate": 1585046675000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "무명"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 85229221,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85229221,
+                    "updateDate": 1585054585000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "파싱을 하는거라 한 5초정도 걸릴거에요..\r\n대신 리스폰스 위에 그걸 두면 컴파일 할 때 5초 걸리고 문제는 바로 나올텐데\r\n음 글에 추가해놓을게요 하는방법",
+                    "id": 85234680,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85229221,
+                    "updateDate": 1585055681000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "+ 다음 버전에는 첫 컴파일 때 파일에 db 를 저장하여 첫 컴파일 이후에는 바로 로딩이 되도록 만들겠습니다.",
+                    "id": 85235846,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85229221,
+                    "updateDate": 1585056304000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

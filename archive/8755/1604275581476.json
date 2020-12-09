@@ -1,0 +1,223 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<p dir=\"ltr\">const BOT = &quot;[Bot]\\n&quot;;<br />\r\nlet notice = &quot;공지가 없습니다.&quot;;<br />\r\nlet bung = &quot;\\n부회장(몽이 따까리)\\n사장(봉이)\\n부사장(30회이상)\\n전무(25회이상)\\n상무(20회이상)\\n이사(15회이상)\\n부장(10회이상)\\n대리(8회이상)\\n주임(5회이상)\\n사원(3회이상)\\n인턴(1회이상)&quot;;<br />\r\nlet fortune = [&quot;복권 1등 당첨&quot;];<br />\r\nlet mission = [&quot;노래 한소절 부르세요.&quot;];</p>\r\n<p dir=\"ltr\">response = (room, msg, sender, isGroupChat, replier) =&gt; {<br />\r\n&nbsp;&nbsp;&nbsp; if (msg.includes(&quot;안녕&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;안녕하세요~&quot;);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/&quot;) &amp;&amp; msg.endsWith(&quot;확률&quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; msg = msg.replace(&quot;/&quot;, &quot;&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + msg + &quot; : &quot; + (Math.random() * 100 + 1 | 0) + &quot;%&quot;);<br />\r\n&nbsp;&nbsp;&nbsp; }</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.equals(&quot;/공지&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(notice);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/공지 수정 &quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; notice = msg.replace(&quot;/공지 수정 &quot;, &quot;&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + &quot;공지가 수정되었습니다 : \\n\\n&quot; + notice);<br />\r\n&nbsp;&nbsp;&nbsp; }</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.equals(&quot;/매크로&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + &quot;명령어입니다.\\n\\n/공지\\n/공지 수정 [내용]\\n/매크로\\n/벙양식\\n/벙계급\\n/벙계급 수정 [내용]\\n/~~~확률\\n/날씨 [지역]\\n/오늘의운세\\n/오늘의운세 추가 [내용]\\n/오늘의미션\\n/오늘의미션 추가 [내용]\\n/가위바위보\\n/가위바위보 [가위/바위/보]&quot;);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.equals(&quot;/벙양식&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;날짜: \\n시각: \\n참여인원\\n남: \\n여:&quot;);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.equals(&quot;/벙계급&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + bung);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/벙계급 수정 &quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bung = msg.replace(&quot;/벙계급 수정 &quot;, &quot;&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + &quot;벙계급 내용이 수정되었습니다 : \\n\\n&quot; + bung);<br />\r\n&nbsp;&nbsp;&nbsp; }</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/날씨 &quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; msg = msg.replace(&quot;/날씨 &quot;, &quot;&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + getWeather(msg));<br />\r\n&nbsp;&nbsp;&nbsp; }</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.equals(&quot;/오늘의운세&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + fortune[Math.random() * fortune.length | 0]);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/오늘의운세 추가 &quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; msg = msg.replace(&quot;/오늘의운세 추가 &quot;, &quot;&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fortune.push(msg);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + &quot;오늘의운세 :\\n\\n&quot; + fortune.join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp; }</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.equals(&quot;/오늘의미션&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + mission[Math.random() * mission.length | 0]);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/오늘의미션 추가 &quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; msg = msg.replace(&quot;/오늘의미션 추가 &quot;, &quot;&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mission.push(msg);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + &quot;오늘의미션 :\\n\\n&quot; + mission.join(&quot;\\n&quot;));<br />\r\n&nbsp;&nbsp;&nbsp; }</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.equals(&quot;/가위바위보&quot;))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + &quot;명령어 사용법 입니다.\\n\\n/가위바위보 [가위/바위/보]&quot;);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/가위바위보 &quot;)) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; msg = msg.replace(&quot;/가위바위보 &quot;, &quot;&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(BOT + getRsp(msg));<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n}</p>\r\n<p dir=\"ltr\">getWeather = place =&gt; {<br />\r\n&nbsp;&nbsp;&nbsp; try {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let parse = org.jsoup.Jsoup.connect(&quot;<a href=\"https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=\" target=\"_blank\">https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=</a>&quot; + place + &quot;+날씨&quot;).get();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let 날씨 = <a target=\"_blank\">parse.select</a>(&quot;p[class=main]&quot;).text().replace(/ 높/, &quot;&deg;C 높&quot;).replace(/ 낮/, &quot;&deg;C 낮&quot;);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let 온도 = <a target=\"_blank\">parse.select</a>(&quot;em[class=figure degree_code]&quot;).get(0).text();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let 체감온도 = <a target=\"_blank\">parse.select</a>(&quot;em[class=figure degree_code]&quot;).get(1).text();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let 미세먼지 = <a target=\"_blank\">parse.select</a>(&quot;em[class=figure sign2]&quot;).text();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let 습도 = <a target=\"_blank\">parse.select</a>(&quot;span[class=percent]&quot;).get(0).text();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let 풍속 = <a target=\"_blank\">parse.select</a>(&quot;span[class=metersec]&quot;).text();</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return (place + &quot;의 날씨 정보 입니다.\\n\\n&quot; + 날씨 + &quot;.\\n\\n온도 : &quot; + 온도 + &quot;&deg;C\\n체감온도 : &quot; + 체감온도 + &quot;&deg;C\\n미세먼지 : &quot; + 미세먼지 + &quot;\\n습도 : &quot; + 습도 + &quot;%\\n풍속 : &quot; + 풍속 + &quot;m/s&quot;);<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp; catch(e) {<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return &quot;검색 결과가 없습니다.&quot;;<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n}</p>\r\n<p dir=\"ltr\">getRsp = rsp =&gt; {<br />\r\n&nbsp;&nbsp;&nbsp; const WIN = { &quot;가위&quot;: &quot;보&quot;, &quot;보&quot;: &quot;바위&quot;, &quot;바위&quot;: &quot;가위&quot; };<br />\r\n&nbsp;&nbsp;&nbsp; const LOSE = { &quot;가위&quot;: &quot;바위&quot;, &quot;바위&quot;: &quot;보&quot;, &quot;보&quot;: &quot;가위&quot; };</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp; if (!rsp.match(/가위|바위|보/))<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return (rsp + &quot; 말고 가위, 바위, 보 중 하나를 내주세요.&quot;);</p>\r\n<p dir=\"ltr\">&nbsp; &nbsp; switch (Math.random() * 3 | 0) {<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; case 0:<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return (&quot;저는 &quot; + rsp + &quot;를 냈습니다.\\n비겼습니다.&quot;);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; case 1:<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return (&quot;저는 &quot; + WIN[rsp] + &quot;를 냈습니다.\\n당신은 이겼습니다.&quot;);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; case 2:<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return (&quot;저는 &quot; + LOSE[rsp] + &quot;를 냈습니다.\\n당신은 졌습니다.&quot;);<br />\r\n&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; default:<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return &quot;예측 불가능한 오류가 발생하였습니다.&quot;;<br />\r\n&nbsp;&nbsp;&nbsp; }</p><p dir=\"ltr\">여기서 오늘의운세와 오늘의미션 추가하고싶고 랜덤으로 하고싶습니다</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000223300000000",
+            "id": 8755,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 287,
+            "refArticleId": 8755,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "죄송하지만 소스좀 수정해주실 분 있으신가요",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575730402173,
+            "writer": {
+                "id": "kmsad4596",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "kmsad4596"
+            }
+        },
+        "articleId": 8755,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "저정도 만들었다면 오늘의 운세는 가능할것같은데..",
+                    "id": 75307057,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75307057,
+                    "updateDate": 1575739935000,
+                    "writer": {
+                        "id": "jinnyday0719",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMTcx/MDAxNjAyOTQ2MDIzMzAw.a1mEI4EpeDbk8J6sLw5CkdLqVQlDrpmoMOlCejozz7kg.JVmyla18yTNADc733cXr_-hOhQbVbhCC7xE1Bx6eBQIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Anseojin"
+                    }
+                },
+                {
+                    "content": "그리고 가위바위보에다가 랜덤 만들었잖아요 ㅋ",
+                    "id": 75307060,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75307057,
+                    "updateDate": 1575739958000,
+                    "writer": {
+                        "id": "jinnyday0719",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMTcx/MDAxNjAyOTQ2MDIzMzAw.a1mEI4EpeDbk8J6sLw5CkdLqVQlDrpmoMOlCejozz7kg.JVmyla18yTNADc733cXr_-hOhQbVbhCC7xE1Bx6eBQIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Anseojin"
+                    }
+                },
+                {
+                    "content": "이미 화살표 함수부터 고인건데...",
+                    "id": 75343286,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75343286,
+                    "updateDate": 1575798026000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "어 안녕하세요",
+                    "id": 75449559,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75449559,
+                    "updateDate": 1575900030000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "소스를 재컴파일 하면 오늘의운세와 오늘의미션이 리셋돼요.\r\n영원히(?) 유지하고 싶으시다면 파일을 이용하셔야 하는데 흠",
+                    "id": 75449875,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75449559,
+                    "updateDate": 1575900262000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

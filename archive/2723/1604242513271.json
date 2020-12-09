@@ -1,0 +1,379 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [],
+            "contentHtml": "<p>끝말잇기 소스를 사용하는데.. 두번씩 나옵니다.<br />도와주세요.. 소스:<br /><br />const Bot = {};\r<br />\r<br />const Check = \r<br />{\r<br /> /*\r<br />    * 함수 이름 : Check.getDoum\r<br />    *  함수 설명 : 두음 검사\r<br />    *  전달 인자 : (마지막 글자)\r<br />    */\r<br />\r<br /> getDoum : function(lastChar)\r<br /> {\r<br />  var doumList =\r<br />  {\r<br />   &quot;라&quot;:&quot;나&quot;, &quot;락&quot;:&quot;낙&quot;, &quot;란&quot;:&quot;난&quot;, &quot;랄&quot;:&quot;날&quot;, &quot;람&quot;:&quot;남&quot;, &quot;랍&quot;:&quot;납&quot;, &quot;랑&quot;:&quot;낭&quot;, \r<br />   &quot;래&quot;:&quot;내&quot;, &quot;랭&quot;:&quot;냉&quot;, &quot;냑&quot;:&quot;약&quot;, &quot;략&quot;:&quot;약&quot;, &quot;냥&quot;:&quot;앙&quot;, &quot;량&quot;:&quot;양&quot;, &quot;렁&quot;:&quot;넝&quot;, \r<br />   &quot;녀&quot;:&quot;여&quot;, &quot;려&quot;:&quot;여&quot;, &quot;녁&quot;:&quot;역&quot;, &quot;력&quot;:&quot;역&quot;, &quot;년&quot;:&quot;연&quot;, &quot;련&quot;:&quot;연&quot;, &quot;녈&quot;:&quot;열&quot;, \r<br />   &quot;렬&quot;:&quot;열&quot;, &quot;념&quot;:&quot;염&quot;, &quot;렴&quot;:&quot;염&quot;, &quot;렵&quot;:&quot;엽&quot;, &quot;녕&quot;:&quot;영&quot;, &quot;령&quot;:&quot;영&quot;, &quot;녜&quot;:&quot;예&quot;, \r<br />   &quot;례&quot;:&quot;예&quot;, &quot;로&quot;:&quot;노&quot;, &quot;록&quot;:&quot;녹&quot;, &quot;론&quot;:&quot;논&quot;, &quot;롱&quot;:&quot;농&quot;, &quot;뢰&quot;:&quot;뇌&quot;, &quot;뇨&quot;:&quot;요&quot;, \r<br />   &quot;료&quot;:&quot;요&quot;, &quot;룡&quot;:&quot;용&quot;, &quot;루&quot;:&quot;누&quot;, &quot;뉴&quot;:&quot;유&quot;, &quot;류&quot;:&quot;유&quot;, &quot;뉵&quot;:&quot;육&quot;, &quot;륙&quot;:&quot;육&quot;, \r<br />   &quot;륜&quot;:&quot;윤&quot;, &quot;률&quot;:&quot;율&quot;, &quot;륨&quot;:&quot;윰&quot;, &quot;륭&quot;:&quot;융&quot;, &quot;륵&quot;:&quot;늑&quot;, &quot;름&quot;:&quot;늠&quot;, &quot;릇&quot;:&quot;늣&quot;, \r<br />   &quot;릉&quot;:&quot;능&quot;, &quot;니&quot;:&quot;이&quot;, &quot;리&quot;:&quot;이&quot;, &quot;린&quot;:&quot;인&quot;, &quot;림&quot;:&quot;임&quot;, &quot;립&quot;:&quot;입&quot;\r<br />  };\r<br />  return doumList[lastChar] ? doumList[lastChar] : false;\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Check.isWord\r<br /> * 함수 설명 : 사전 유무 검사\r<br /> * 전달 인자 : (단어)\r<br /> *  출처 : 사로로님\r<br /> */\r<br />\r<br /> isWord : function(word)\r<br /> {\r<br />  var url = Utils.getWebText(&quot;https://ac.dict.naver.com/krdic/ac?frm=stdkrdic&amp;oe=utf8&amp;m=0&amp;r=1&amp;st=111&amp;r_lt=111&amp;q=&quot; + word).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;),\r<br />  data = JSON.parse(url);\r<br />     \r<br />  if (!data.items[0][0]) { return false; }\r<br />\r<br />  data = data.items[0][0].join(&quot;&quot;).replace(/-/g,&quot;&quot;); \r<br />  return (data != word) ? false : true;\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Check.isNoun\r<br /> * 함수 설명 : 명사 유무 검사\r<br /> * 전달 인자 : (단어)\r<br /> *  출처 : 사로로님\r<br /> */\r<br />\r<br /> isNoun : function(word)\r<br /> {\r<br />  // &darr; 사전 검사 후 명사 검사 (사전 검사가 속도가 더 빠르기 때문에 사전 검사 후 명사 검사)\r<br />  if (Check.isWord(word))\r<br />  {\r<br />   var url = Utils.getWebText(&quot;https://ko.dict.naver.com/api3/koko/search?query=&quot; + word).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;),\r<br />   data = url.split(&quot;meansCollector\\&quot;:&quot;)[1],\r<br />   noun = data.split(&quot;partOfSpeech\\&quot;&quot;)[1].split(&quot;\\&quot;&quot;)[1],\r<br />   mean = data.split(&quot;.\\&quot;,\\&quot;subjectGroup&quot;)[0].split(&quot;value\\&quot;:\\&quot;&quot;)[1].trim();\r<br />\r<br />   if (noun != &quot;명사&quot;) { return false; }\r<br />   \r<br />   return (mean.length &gt; 25) ? &quot;&lt;명사 : &quot; + mean.substr(0, 25) + &quot;...&gt;&quot; : &quot;&lt;명사 : &quot; + mean + &quot;&gt;&quot;;\r<br />  }\r<br />  else { return false; }\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Check.isOwnComWord\r<br /> * 함수 설명 : 한방 단어 검사 \r<br /> * (궭뷁이라고 입력하면 &quot;뷁&quot;으로 시작하는 단어는 없기 때문에 한방단어로 분류하는 원리)\r<br /> */\r<br />\r<br /> isOwnComWord : function(lastChar)\r<br /> {\r<br />  // &darr; 한방 단어가 아닌경우\r<br />  try\r<br />  {\r<br />   var url = Utils.getWebText(&quot;https://www.wordrow.kr/시작하는-말/&quot; + lastChar + &quot;/&quot;),\r<br />    value = url.split(&quot;로 시작하는 단어는? &quot;)[1].split(&quot;개&quot;)[0];\r<br />\r<br />   return (Number(value.replace(/[^0-9]/g,&quot;&quot;)) != 0) ? false : true;\r<br />  }\r<br />  // &darr; 한방 단어인 경우 검색 결과가 없기 때문에 파싱에서 undefined오류가 뜨기 때문에 catch로 잡아줍니다.\r<br />  catch(e)\r<br />  {\r<br />   // &darr; 한방단어 모드가 켜져있으면 통과\r<br />   if (Game.ownCom) { return false; }\r<br />   else\r<br />   {\r<br />    // &darr; 두음 적용된다면\r<br />    if (Check.getDoum(lastChar))\r<br />    {\r<br />     var url = Utils.getWebText(&quot;https://www.wordrow.kr/시작하는-말/&quot; + Check.getDoum(lastChar) + &quot;/&quot;),\r<br />      value = url.split(&quot;로 시작하는 단어는? &quot;)[1].split(&quot;개&quot;)[0];\r<br />\r<br />     // &darr; 시작하는 단어가 있으면\r<br />     return (Number(value.replace(/[^0-9]/g,&quot;&quot;)) != 0) ? false : true;\r<br />    }\r<br />    else\r<br />    {\r<br />     return true;\r<br />    }\r<br />   }\r<br />  }\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Check.baseWord\r<br /> * 함수 설명 : 단어 기본 검사, 단어 및 명사 유무 및 금칙어 검사\r<br /> * 전달 인자 : (단어, 사용된 단어 목록, 첫 글자, 마지막 글자, 처음 시작 확인)\r<br /> */\r<br />\r<br /> baseWord : function(word, usedWord, firstChar, lastChar, isFirst)\r<br /> {\r<br />  // &darr; 한 글자만 입력한 경우\r<br />  if (!(word.length - 1)) \r<br />  { \r<br />   Bot.replyRoom(&quot;두 글자 이상의 단어를 입력 해 주세요.&quot;); \r<br />   return false; \r<br />  }\r<br />  // &darr; 단어 입력을 안한 경우\r<br />  else if (!word) \r<br />  { \r<br />   Bot.replyRoom(&quot;단어를 입력 해 주세요.&quot;);\r<br />   return false; \r<br />  }\r<br />  // &darr; 이미 사용된 단어를 사용햇을 경우\r<br />  else if (usedWord.indexOf(word) != -1) \r<br />  { \r<br />   Bot.replyRoom(&quot;이미 사용한 단어 입니다.&quot;); \r<br />   return false;\r<br />  }\r<br />  // &darr; 금칙어를 사용했을 경우\r<br />  else if (Game.filter.indexOf(word) != -1)\r<br />  {\r<br />   Bot.replyRoom(word + &quot;(은)는 금칙어 입니다.&quot;);\r<br />   Event.setPlayerLife(2);\r<br />   return false;\r<br />  }\r<br />  else\r<br />  {\r<br />   // &darr; 단어, 명사 유무\r<br />   if (!Check.isNoun(word))\r<br />   {\r<br />    Bot.replyRoom\r<br />    (&quot;\\&quot;&quot; + word + &quot;\\&quot; (은)는 &quot; + (\r<br />     (!Check.isWord(word)) ? &quot;사전에 등록되지 않은 단어입니다.&quot; : \r<br />     (!Check.isNoun(word)) ? &quot;명사가 아닙니다.&quot; : &quot;&quot;)\r<br />    );\r<br />    return false;\r<br />   }\r<br />   // &darr; 한방 단어인지 검사\r<br />   else if (Check.isOwnComWord(lastChar))\r<br />   {\r<br />    Bot.replyRoom(&quot;현재 한방 단어가 금지된 상태입니다.&quot;);\r<br />    return false;\r<br />   }\r<br />   // &darr; 이전에 사용했던 단어와 매칭되지 않았을 경우\r<br />   else if (firstChar != lastChar)\r<br />      {\r<br />    // &darr; 단어를 처음 입력하는 경우는 예외\r<br />             if (isFirst) return true;\r<br />             else \r<br />             {\r<br />     // &darr; 두음 검사\r<br />     if(Check.getDoum(lastChar)) return true;\r<br />     else\r<br />     {\r<br />      Bot.replyRoom(lastChar + &quot;(으)로 시작하는 단어를 입력 해 주세요.&quot;); \r<br />      return false;\r<br />     } \r<br />             } \r<br />   }\r<br />   else { return true; }\r<br />  }\r<br /> },\r<br />};\r<br />\r<br />const Event =\r<br />{\r<br /> /*\r<br /> *  함수 이름 : Event.timer\r<br /> * 함수 설명 : 타이머 시작\r<br /> * 출처 : 사로로 &amp; 카신님\r<br /> */\r<br />\r<br /> timer : function()\r<br /> {\r<br />  new java.lang.Thread \r<br />  ({ \r<br />   run : function() { try \r<br />   {\r<br />    while (Game.timer)\r<br />             {\r<br />     java.lang.Thread.sleep(1000);\r<br />\r<br />     // &darr; 타이머가 입력없이 3번이상 작동되면 무한반복으로 인식해서 막음\r<br />     if (Game.timerCount &gt;= Game.timerShield)\r<br />     {\r<br />      Game.timer = false;\r<br />      Game.off();\r<br />      break;\r<br />     }\r<br />     else if (Game.time &gt;= Game.timeOut)\r<br />     {\r<br />      Event.setPlayerLife(1);\r<br />      Game.time = 0;\r<br />      Game.timerCount ++;\r<br />     }\r<br />     else \r<br />     { \r<br />      // &darr; 단어 처리중에는 타이머 일시정지\r<br />      if (!Game.timerStop)\r<br />      {\r<br />       Game.time ++;\r<br />      \r<br />       if (Game.time == 5) \r<br />       { \r<br />        Bot.replyRoom(&quot;10초 남았습니다.&quot;); \r<br />       }\r<br />      }\r<br />     }\r<br />    }\r<br />   } \r<br />   catch(e) \r<br />   { \r<br />    Bot.message\r<br />    (\r<br />     &quot;TIMER ERROR!\\n\\n&quot; +\r<br />     &quot;Error Code : &quot; + e \r<br />    );\r<br />   }\r<br />  }}).start();\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Event.setNextTurn\r<br /> * 함수 설명 : 턴 넘기기\r<br /> */\r<br />\r<br /> setNextTurn : function(player, turn) \r<br /> { \r<br />  Game.turn = ((turn == player.length) ? 1 : (turn + 1)); \r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Event.setNextWord\r<br /> * 함수 설명 : 마지막 글자 및 사용된 단어 등록\r<br /> */\r<br />\r<br /> setNextWord : function(word)\r<br /> {\r<br />  Game.usedWord.push(word);\r<br />  Game.lastChar = word.substr(word.length - 1);\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Event.startNextPlayer\r<br /> * 함수 설명 : 다음 플레이어로 넘어갈 때 실행\r<br /> */\r<br />\r<br /> setNextPlayer : function(word)\r<br /> {\r<br />  Game.time = 0;\r<br />  Game.first = false;\r<br />  Event.setNextWord(word);\r<br />\r<br />  var player   = Game.player,\r<br />   turn   = Game.turn,\r<br />\r<br />   nowPlayer  = player[turn - 1],\r<br />   nextPlayer  = player[(turn == player.length) ? 0 : turn],\r<br />   lastChar  = Game.lastChar;\r<br />     \r<br />  Bot.replyRoom\r<br />  (\r<br />   (Check.isNoun(word) ? Check.isNoun(word) : &quot;&quot;) + &quot;\\n\\n&quot; +\r<br />   &quot;[ &quot; + nowPlayer + &quot; ] 님이 \\&quot;&quot; + word + &quot;\\&quot;단어를 입력하셨습니다.\\n&quot; +\r<br />   &quot;[ &quot; + nextPlayer + &quot; ] 님은 \\&quot;&quot; + lastChar + &quot;\\&quot;(으)로 시작하는 단어를 입력해 주세요&quot;\r<br />  );\r<br />  \r<br />  Event.setNextTurn(player, turn);\r<br />\r<br />  // &darr; 다음 플레이어로 넘어가면 타이머 다시시작\r<br />  Game.timerStop = false;\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Event.setPlayerLife\r<br /> * 함수 설명 : 금칙어나 시간 초과 시 발동\r<br /> */\r<br />\r<br /> setPlayerLife : function(type)\r<br /> {\r<br />  type = (type == 1) ? &quot;&lt;시간 초괴&gt;\\n\\n&quot; : &quot;&lt;금칙어 사용&gt;\\n\\n&quot;; \r<br />\r<br />  var player  = Game.player,\r<br />   turn = Game.turn,\r<br />   life = Game.life,\r<br />\r<br />   nowPlayer = player[turn - 1],\r<br />   nowPlayerLife = (life[turn - 1] -= 1),\r<br />   nextPlayer = player[(turn == player.length) ? 0 : turn];\r<br />\r<br />   Game.life = life;\r<br />\r<br />  // 라이프가 0인 경우\r<br />  if (!nowPlayerLife)\r<br />  {\r<br />   // &darr; 1대1 상황인 경우\r<br />   if (player.length == 2)\r<br />   {\r<br />    Bot.replyRoom\r<br />    (\r<br />     type + &quot;[ &quot; + nowPlayer + &quot; ] 님이 라이프가 0이 되어 게임을 종료합니다.\\n&quot; +\r<br />     &quot;승자는 [ &quot; + nextPlayer + &quot; ] 님 입니다!&quot;\r<br />    );\r<br />    Game.off();\r<br />   }\r<br />   else\r<br />   {\r<br />    Event.setPlayerDelete(turn - 1);\r<br />    Bot.replyRoom(type + &quot;[ &quot; + nowPlayer + &quot; ] 님이 라이프가 0이 되어 아웃되었습니다.&quot;);\r<br />\r<br />    Bot.replyRoom\r<br />    (\r<br />     &quot;[ &quot; + nextPlayer + &quot; ] 님은 새로운 단어를 입력해 주세요\\n&quot; + \r<br />     &quot;남은 플레이어 : &quot; + Game.player.join(&quot;, &quot;)\r<br />    );\r<br />\r<br />    Game.first = true;\r<br />    Game.time = 0;\r<br />   }\r<br />  } \r<br />  else\r<br />  {\r<br />   Bot.replyRoom\r<br />   (\r<br />    type + &quot;[ &quot; + nowPlayer + &quot; ] 님의 라이프가 1 감소합니다.\\n\\n&quot; + \r<br />    &quot;남은 라이프 : &quot; + nowPlayerLife\r<br />   );\r<br />  }\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Event.setPlayerDelete\r<br /> * 함수 설명 : 아웃 시 플레이어 삭제\r<br /> */\r<br />\r<br /> setPlayerDelete : function(position) \r<br /> {\r<br />  // &darr; 시간초과나 금칙어로 라이프가 0이 될 경우\r<br />  if (Game.turn == Game.player.length)\r<br />  {\r<br />   Event.setNextTurn();\r<br />  }\r<br />\r<br />  Game.player.splice(position, 1);\r<br />  Game.life.splice(position, 1);\r<br /> },\r<br />\r<br /> /*\r<br /> *  함수 이름 : Event.setPlayerExit\r<br /> * 함수 설명 : 기권이나 나가기 입력 시 발동\r<br /> */\r<br />\r<br /> setPlayerExit : function(sender)\r<br /> {\r<br />  var player  = Game.player,\r<br />   turn = Game.turn,\r<br />   life = Game.life,\r<br />\r<br />   nowPlayer = player[turn - 1],\r<br />   nowPlayerLife = (life[turn - 1] -= 1),\r<br />   \r<br />   nextPlayer = nowPlayerLife = (life[turn - 1] -= 1),\r<br />   nextPlayerLife = life[turn];\r<br />   Game.life = life;\r<br />\r<br />  // &darr; 1대1 상황인 경우\r<br />  if (Game.player.length == 2)\r<br />  {\r<br />   Bot.replyRoom(&quot;승자는 [ &quot; + nextPlayer + &quot; ] 님 입니다!&quot;);\r<br />   Game.off();\r<br />  }\r<br />  else\r<br />  {\r<br />   // &darr; 기권이나 나가기를 입력한 사람이 자기 턴이라면\r<br />   if (nowPlayer == sender)\r<br />   {\r<br />    Event.setPlayerDelete(turn - 1);\r<br />\r<br />    Bot.replyRoom\r<br />    (\r<br />     &quot;[ &quot; + nextPlayer + &quot; ] 님은 새로운 단어를 입력해 주세요\\n&quot; + \r<br />     &quot;남은 플레이어 : &quot; + Game.player.join(&quot;, &quot;)\r<br />    );\r<br />\r<br />    Game.first = true;\r<br />    Game.time = 0;\r<br />   }\r<br />   else\r<br />   {\r<br />    var position = player.indexOf(sender);\r<br />\r<br />    Game.player.splice(position, 1);\r<br />    Game.life.splice(position, 1);\r<br />\r<br />    // &darr; A B C D 에서 C가 현재 턴일 때, A나 B가 기권을 입력한 경우\r<br />    if ((turn - 1) &gt; playerPosition)\r<br />    {\r<br />     Game.turn -= 1;\r<br />    }\r<br />\r<br />    Bot.replyRoom(&quot;남은 플레이어 : &quot; + Game.player.join(&quot;, &quot;));\r<br />   }\r<br />  }\r<br /> },\r<br />\r<br /> main : function(room, sender, message)\r<br /> {\r<br />  Event.command(room, sender, message);\r<br />\r<br />  var player    = Game.player, // Array[String]\r<br />   turn   = Game.turn,   // Number\r<br />   usedWord  = Game.usedWord, // Array[String]\r<br />   isFirst   = Game.first,  // Bool\r<br />\r<br />   input    = message.substr(0, 2) == &quot;::&quot;,\r<br />   word    = message.substring(2).trim(),\r<br />   lastChar  = (Game.first) ? word.substr(word.length - 1) : Game.lastChar,\r<br />   firstChar = word.charAt(0),\r<br />   playerLen = player.length, num;\r<br />\r<br />  if (Game.power) if (input)\r<br />  {\r<br />   for (num = 0 ; num &lt; playerLen ; num ++) \r<br />   if ((sender == player[num]) &amp;&amp; ((turn - 1) == num)) \r<br />   {\r<br />    Game.timerStop = true;\r<br />\r<br />    if (Check.baseWord(word, usedWord, firstChar, lastChar, isFirst))\r<br />    {\r<br />     Event.setNextPlayer(word);\r<br />    }\r<br />    else Game.timerStop = false; \r<br />   }\r<br />  }\r<br /> },\r<br />\r<br /> command : function(room, sender, message)\r<br /> {\r<br />  var command = message.split(&quot; &quot;)[0],\r<br />   input = message.replace(command + &quot; &quot;, &quot;&quot;),\r<br />   isRoomManager = (Game.player[0] == sender);\r<br />\r<br />  switch (command)\r<br />  {\r<br />   case &quot;/help&quot; : \r<br />   case &quot;/Help&quot; :\r<br />   case &quot;/도움말&quot; :\r<br />   case &quot;/명령어&quot; :\r<br />    Bot.message\r<br />    (\r<br />     &quot;&lt;끝말잇기 도움말&gt;\\n\\n&quot; +\r<br />     &quot;게임시작 방법 : 방 생성 -&gt; 인원모집(참가) -&gt; 시작\\n\\n&quot; +\r<br />     &quot;단어입력 방법 : \\&quot;::단어\\&quot;&quot; + (&quot;\\u200b&quot;.repeat(500)) +\r<br />     \r<br />     &quot;/방 [생성 / 삭제(방장) / 시작(방장)]&quot; +\r<br />     &quot;/방 [참가 / 나가기] : 끝말잇기 방에 참가하거나 참가를 취소합니다.\\n&quot; +\r<br />     &quot;-------------------------------------------------------------\\n&quot; +\r<br />     &quot;/게임 [재시작(방장) / 종료(방장)] : 현재 인원으로 재시작하거나, 게임을 종료합니다.\\n&quot; +\r<br />     &quot;/게임 [기권 / 나가기] : 게임을 기권하거나 게임을 나갑니다.\\n&quot; +\r<br />     &quot;-------------------------------------------------------------\\n&quot; +\r<br />     &quot;/한방단어 [켜기 / 끄기] 한방단어 모드를 키거나 끕니다.\\n&quot; +\r<br />     &quot;/단어 : 사용한 단어를 띄어줍니다.\\n&quot; +\r<br />     &quot;/라이프 : 플레이어의 남은 라이프와 상태를 알려줍니다.&quot;\r<br />    ); \r<br />    break;\r<br />  }\r<br />  if (command == &quot;/방&quot;) \r<br />  {\r<br />   if (input == &quot;생성&quot;)\r<br />   {\r<br />    if (Game.room.creat) { Bot.message(&quot;이미 생성된 방이 있습니다.&quot;); } \r<br />    else \r<br />    {\r<br />     Game.player.push(sender); \r<br />     Game.life.push(2);\r<br />      \r<br />     Game.room.name = room;\r<br />     Game.room.creat = true;\r<br />     Game.room.timer = true;\r<br />\r<br />     Bot.message\r<br />     (\r<br />      &quot;[ &quot; + sender + &quot; ] 님이 끝말잇기 방을 생성하였습니다.\\n\\n&quot; + \r<br />      &quot;게임 참가를 원하시면 \\&quot;/방 참가\\&quot;를 입력해 주세요.&quot;\r<br />     );\r<br />\r<br />     (function () \r<br />     { \r<br />      new java.lang.Thread \r<br />      ({ \r<br />       run : function() \r<br />       {\r<br />        while (Game.room.timer)\r<br />        {\r<br />         java.lang.Thread.sleep(1000);\r<br />\r<br />         if ((Game.room.time &gt;= Game.room.timeOut) &amp;&amp; (!Game.power))\r<br />         {\r<br />          Bot.replyRoom(&quot;60초가 지나 자동으로 방을 삭제합니다.&quot;);\r<br />          Game.off();\r<br />          break;\r<br />         }\r<br />         else \r<br />         {\r<br />          Game.room.time ++; \r<br />          if (Game.room.time == 30) { Bot.replyRoom(&quot;30초 후 방이 삭제됩니다.&quot;); }\r<br />          else if (Game.room.time == 50) { Bot.replyRoom(&quot;10초 후 방이 삭제됩니다.&quot;); }\r<br />         } \r<br />        }\r<br />       }}).start();\r<br />     })();\r<br />    }\r<br />   }\r<br />   else\r<br />   {\r<br />    if (!Game.room.creat) { Bot.message(&quot;생성된 방이 없습니다.&quot;); }\r<br />    else if (Game.room.name != room) { Bot.message(&quot;끝말잇기 방이 생성된 채팅방에서만 입력이 가능합니다.&quot;); }\r<br />    else if (Game.power) { Bot.replyRoom(&quot;이미 게임이 진행중입니다.&quot;); }\r<br />    else switch (input)\r<br />    {\r<br />     /* ----------------------------------------- 방장용 명령어 ----------------------------------------- */\r<br />\r<br />     case &quot;시작&quot; :\r<br />      if (!isRoomManager) { Bot.message(&quot;방장만 시작이 가능합니다.&quot;); break; }\r<br />      else if (Game.player.length &lt; 2) { Bot.message(&quot;2명 이상이 참가해야 게임 시작이 가능합니다.&quot;); break; }\r<br />\r<br />      var list = [&quot;첫&quot;, &quot;두&quot;, &quot;세&quot;, &quot;네&quot;, &quot;다섯&quot;, &quot;여섯&quot;, &quot;일곱&quot;, &quot;여덟&quot;],\r<br />       plus = &quot;번째 : &quot;, text = [], i;\r<br />\r<br />      Game.power = true;\r<br />      Game.timer = true;\r<br />      Game.room.timer = false;\r<br />\r<br />      for (i in Game.player) { text[i] = list[i] + plus + Game.player[i]; }\r<br />\r<br />      Bot.replyRoom(&quot;5초 뒤 게임이 시작됩니다 ...&quot;);\r<br />      java.lang.Thread.sleep(5000);\r<br />      \r<br />      Bot.replyRoom\r<br />      (\r<br />       &quot;게임을 시작합니다!\\n\\n&quot; +\r<br />       &quot;[플레이어 목록]\\n&quot; +\r<br />       text.join(&quot;\\n&quot;) + &quot;\\n\\n&quot; +\r<br />       &quot;[ &quot; + Game.player[0] + &quot; ] 님은 새로운 단어를 입력해 주세요&quot; \r<br />      );\r<br />      Event.timer();\r<br />      break;\r<br />     \r<br />     case &quot;삭제&quot; :  \r<br />      if (!isRoomManager) { Bot.message(&quot;방장만 삭제가 가능합니다.&quot;); break; }\r<br />      Bot.message(&quot;현재 진행중인 방이 삭제됩니다.&quot;);\r<br />      Game.off();\r<br />      break;\r<br />\r<br />     /* ------------------------------------------------------------------------------------------------ */\r<br />     /* --------------------------------------- 플레이어용 명령어 --------------------------------------- */\r<br />  \r<br />     case &quot;참가&quot; : \r<br />      if (Game.player.indexOf(sender) != -1) { Bot.message(&quot;중복 참여로 참가가 취소되었습니다.&quot;); break; }\r<br />      Game.player.push(sender); \r<br />      Game.life.push(2);\r<br />      Bot.message\r<br />      (\r<br />       &quot;[ &quot; + sender + &quot; ] 님이 끝말잇기에 참가하셨습니다.\\n\\n&quot; + \r<br />       &quot;현재 참가자 : &quot; + Game.player.join(&quot;, &quot;)\r<br />      );  \r<br />      break;\r<br />\r<br />     case &quot;나가기&quot; : \r<br />      if (Game.player.indexOf(sender) == -1) { Bot.replyRoom(&quot;방에 참가중인 상태가 아닙니다.&quot;); break; } \r<br />      var num = Game.player.indexOf(sender);\r<br />      Game.player.splice(num, 1);\r<br />      Game.life.splice(num, 1); \r<br />      \r<br />      Bot.replyRoom\r<br />      (\r<br />       sender + &quot;님이 방을 나갔습니다.\\n\\n&quot; +\r<br />       &quot;현재 참가중인 인원 : &quot; + Game.player.join(&quot;, &quot;)\r<br />      );\r<br />\r<br />      break;\r<br />    }\r<br />   }\r<br />  }\r<br />  else if (command == &quot;/게임&quot;)\r<br />  {\r<br />   if (!Game.power) { Bot.message(&quot;진행중인 게임이 없습니다.&quot;); }\r<br />   else if (Game.room.name != room) { Bot.message(&quot;끝말잇기 방이 생성된 채팅방에서만 입력이 가능합니다.&quot;); }\r<br />   else if (Game.player.indexOf(sender) == -1) { Bot.replyRoom(&quot;게임에 참가중인 상태가 아닙니다.&quot;); }\r<br />   else switch (input)\r<br />   {\r<br />    /* ----------------------------------------- 방장용 명령어 ----------------------------------------- */\r<br />\r<br />    case &quot;재시작&quot; :\r<br />     if (!isRoomManager) { Bot.replyRoom(&quot;방장만 입력이 가능합니다.&quot;); break; }\r<br />     Bot.replyRoom(&quot;현재 인원으로 게임이 재시작됩니다.&quot;);\r<br />     Game.restart();\r<br />     break;\r<br />      \r<br />    case &quot;종료&quot; :\r<br />     if (!isRoomManager) { Bot.replyRoom(&quot;방장만 입력이 가능합니다.&quot;); break; }\r<br />     Bot.replyRoom(&quot;게임이 종료됩니다.&quot;);\r<br />     Game.off();\r<br />     break;\r<br />\r<br />    /* ------------------------------------------------------------------------------------------------ */\r<br />    case &quot;기권&quot; : \r<br />     Bot.message(sender + &quot;님이 게임을 기권했습니다.&quot;);\r<br />     Event.setPlayerExit(sender);\r<br />     break;   \r<br />\r<br />    case &quot;나가기&quot; :  \r<br />     Bot.message(sender + &quot;님이 게임을 나갔습니다.&quot;);\r<br />     Event.setPlayerExit(sender);\r<br />     break;\r<br />    \r<br />    case &quot;단어&quot; : \r<br />     if (!Game.usedWord.length) Bot.replyRoom(&quot;아직 사용한 단어가 없습니다.&quot;);\r<br />     else Bot.message(&quot;&lt;사용한 단어 : &quot; + Game.usedWord.length + &quot;개&gt;\\n\\n&quot; + Game.usedWord.join(&quot; : &quot;));\r<br />     break;\r<br />    \r<br />    case &quot;라이프&quot; :\r<br />     var text = [], num = 0;\r<br />     for (num in Game.player) { text[num] = Game.player[num] + &quot; : &quot; + Game.life[num]; }\r<br />     Bot.message(text.join(&quot;\\n&quot;));\r<br />     break;\r<br />   }\r<br />  }\r<br />  else if (command == &quot;/한방단어&quot;)\r<br />  {\r<br />   if (!Game.room.creat) { Bot.message(&quot;생성된 방이 없습니다.&quot;); }\r<br />   else if (Game.room.name != room) { Bot.message(&quot;끝말잇기 방이 생성된 채팅방에서만 입력이 가능합니다.&quot;); }\r<br />   else if (!isRoomManager) { Bot.replyRoom(&quot;방장만 입력이 가능합니다.&quot;); }\r<br />   else switch (input)\r<br />   {\r<br />    case &quot;켜기&quot; :\r<br />     Game.ownCom = true;\r<br />     Bot.replyRoom(&quot;한방 단어 모드가 켜졌습니다&quot;);\r<br />     break;\r<br />      \r<br />    case &quot;끄기&quot; :\r<br />     Game.ownCom = false;\r<br />     Bot.replyRoom(&quot;한방 단어 모드가 꺼졌습니다&quot;);\r<br />     break;\r<br />   }\r<br />  }\r<br /> },\r<br />};\r<br />\r<br />const Game =\r<br />{\r<br /> /* --------------------------------------- */\r<br />\r<br /> filter : [],  // 금지 단어 설정\r<br />\r<br /> timeOut : 15,  // 단어입력 제한 시간 설정 (기본 15초)\r<br /> timerShield : 3,  // 타이머가 3번 이상 입력없이 작동 시 타이머 끄기 (타이머 무한 재생 방지)\r<br />\r<br /> /* --------------------------------------- */\r<br />\r<br />    life : [],   // 라이프\r<br /> player : [],  // 플레이어 목록\r<br /> usedWord : [],  // 사용한 단어 목록\r<br />\r<br /> power : false,  // 게임 시작 유무\r<br /> first : true,  // 새 단어 입력 (처음 시작)유무\r<br /> timer : false,  // 타이머 전원\r<br /> ownCom : true,   // 한방 단어 모드 전원\r<br /> \r<br /> room :     // 끝말잇기 방이 생성된 채팅방의 정보\r<br />    {\r<br />        name : &quot;&quot;,    // 방 이름\r<br />  creat : false,  // 방 생성 여부\r<br />  timer : false,  // 방 생성 시 타이머\r<br />  time : 0,  // 방 타이머 경과 시간\r<br />\r<br />  /* --------------------------------------- */\r<br />\r<br />  timeOut : 60, // 방 타이머 제한 시간 (기본 60초)\r<br /> \r<br />  /* --------------------------------------- */\r<br /> },\r<br />\r<br /> turn : 1,   // 게임 차례\r<br /> time : 0,   // 타이머 경과 시간\r<br /> timerStop : false, // 단어 처리중에는 타이머가 작동하지 않도록\r<br /> timerCount : 0,   // 타이머가 연속으로 몇 번 작동하는지\r<br />\r<br /> off : function()\r<br /> {\r<br />  Game.life = [];    Game.player = [];    Game.usedWord = [];\r<br />  Game.power = false;   Game.first = true;   Game.timer = false; \r<br />  Game.timerStop = false; Game.room.creat = false; Game.room.timer = false; Game.room.name = &quot;&quot;; \r<br />  Game.room.time = 0;  Game.turn = 1;    Game.time = 0;     Game.searching = 0;\r<br /> },\r<br /> restart : function() // 게임 재시작\r<br /> {\r<br />  // &darr; 현재 플레이어 그대로 다시 시작하기 때문에 Game.player는 건들지 않고, 라이프만 2로 다시 셋팅해줍니다.\r<br />  for (var num in Game.player) { Game.life[num] = 2; }\r<br />\r<br />  Game.usedWord = []; Game.first = true;  Game.room.timer = false; Game.timerStop = false;\r<br />  Game.time = 0;   Game.turn = 1;  Game.room.time = 0;\r<br /> }\r<br />};\r<br />\r<br />function response(room, message, sender, isGroupChat, replier, imageDB, packageName, threadId) { try \r<br />{\r<br /> Bot.message = (chatting) =&gt; { replier.reply(chatting) };\r<br /> Bot.replyRoom = (chatting) =&gt; { (Game.room.name) ? Api.replyRoom(Game.room.name, chatting) : &quot;&quot;; };\r<br />\r<br /> Event.main(room, sender, message);\r<br />\r<br /> } \r<br /> catch(e)\r<br />    { \r<br />  Bot.message\r<br />  (\r<br />   &quot;블로그에 에러내용을 댓글로 보내주세요\\n\\n&quot; +\r<br />   &quot;Error Code : &quot; + e.name + &quot;\\n\\n&quot; + \r<br />   &quot;Content : &quot; + e.message + &quot;\\n\\n&quot; +\r<br />   &quot;Line : &quot; + e.lineNumber\r<br />  ); \r<br /> }\r<br />}\r<br />\r<br />// &darr; 메신저봇 전용 (컴파일 되기 전에 호출)\r<br />function onStartCompile()\r<br />{\r<br /> Game.timer = false; \r<br /> Game.room.timer = false;\r<br />};</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000AA300000000",
+            "id": 2723,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 397,
+            "refArticleId": 2723,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "오류가 난것 같습니다...",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1559053756570,
+            "writer": {
+                "id": "whddlf2208",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTA1MjdfNjYg/MDAxNTU4OTUwMzM3NjQ2.Dn5D7sFlh8vtO_aEKg-ZMTUTPBcLoZYXuDchOFqydtEg.71NipLWxC8fl2gUPJnI5GTSnA3fbWColLaHPdyhqjm4g.JPEG/1553262226854.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "갈매기"
+            }
+        },
+        "articleId": 2723,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "소스 상의 문제는 없습니다.",
+                    "id": 60493626,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60493626,
+                    "updateDate": 1559054001000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "아... 그러면 왜 두번씩 뜨나요?",
+                    "id": 60494853,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60493626,
+                    "updateDate": 1559054825000,
+                    "writer": {
+                        "id": "whddlf2208",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjdfNjYg/MDAxNTU4OTUwMzM3NjQ2.Dn5D7sFlh8vtO_aEKg-ZMTUTPBcLoZYXuDchOFqydtEg.71NipLWxC8fl2gUPJnI5GTSnA3fbWColLaHPdyhqjm4g.JPEG/1553262226854.jpg"
+                        },
+                        "nick": "갈매기"
+                    }
+                },
+                {
+                    "content": "도움말은 문제가 없는데 나머지가 2번씩 뜹니다...",
+                    "id": 60495057,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60495057,
+                    "updateDate": 1559054960000,
+                    "writer": {
+                        "id": "whddlf2208",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjdfNjYg/MDAxNTU4OTUwMzM3NjQ2.Dn5D7sFlh8vtO_aEKg-ZMTUTPBcLoZYXuDchOFqydtEg.71NipLWxC8fl2gUPJnI5GTSnA3fbWColLaHPdyhqjm4g.JPEG/1553262226854.jpg"
+                        },
+                        "nick": "갈매기"
+                    }
+                },
+                {
+                    "content": "적용된 스크립트가 2개거나 봇앱 2개에 적용시킨건 아니신지요",
+                    "id": 60495799,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60495799,
+                    "updateDate": 1559055458000,
+                    "writer": {
+                        "id": "surbjun",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "큐브"
+                    }
+                },
+                {
+                    "content": "그런건 아니에요..",
+                    "id": 60495852,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60495799,
+                    "updateDate": 1559055512000,
+                    "writer": {
+                        "id": "whddlf2208",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjdfNjYg/MDAxNTU4OTUwMzM3NjQ2.Dn5D7sFlh8vtO_aEKg-ZMTUTPBcLoZYXuDchOFqydtEg.71NipLWxC8fl2gUPJnI5GTSnA3fbWColLaHPdyhqjm4g.JPEG/1553262226854.jpg"
+                        },
+                        "nick": "갈매기"
+                    }
+                },
+                {
+                    "content": "이렇게 2개가 뜹니다.",
+                    "id": 60496277,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA1MjlfMTUz/MDAxNTU5MDU1OTkzMDA0.IfxTZ9d3zRonrEzPGGF-3LmvFypOlGqwB7T--6FavvEg.8oBCg-n_sKlO5fkt--M0yNk3ZOtyVsje3XN4YjYBpdYg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 1813,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA1MjlfMTUz/MDAxNTU5MDU1OTkzMDA0.IfxTZ9d3zRonrEzPGGF-3LmvFypOlGqwB7T--6FavvEg.8oBCg-n_sKlO5fkt--M0yNk3ZOtyVsje3XN4YjYBpdYg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA1MjlfMTUz/MDAxNTU5MDU1OTkzMDA0.IfxTZ9d3zRonrEzPGGF-3LmvFypOlGqwB7T--6FavvEg.8oBCg-n_sKlO5fkt--M0yNk3ZOtyVsje3XN4YjYBpdYg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 60496277,
+                    "updateDate": 1559055993000,
+                    "writer": {
+                        "id": "whddlf2208",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjdfNjYg/MDAxNTU4OTUwMzM3NjQ2.Dn5D7sFlh8vtO_aEKg-ZMTUTPBcLoZYXuDchOFqydtEg.71NipLWxC8fl2gUPJnI5GTSnA3fbWColLaHPdyhqjm4g.JPEG/1553262226854.jpg"
+                        },
+                        "nick": "갈매기"
+                    }
+                },
+                {
+                    "content": "하나밖에 안되는데요(?)",
+                    "id": 60497948,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA1MjlfMjE2/MDAxNTU5MDU3NTAwOTgz.62vUTcv38BuDc1s31jhac6bSUXnZlmhGQUVkrG-aJfMg.iZOdRFxuTRiXf5OtqcoB07HjZRQiXmDJTZnWd-iClD4g.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 517,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA1MjlfMjE2/MDAxNTU5MDU3NTAwOTgz.62vUTcv38BuDc1s31jhac6bSUXnZlmhGQUVkrG-aJfMg.iZOdRFxuTRiXf5OtqcoB07HjZRQiXmDJTZnWd-iClD4g.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA1MjlfMjE2/MDAxNTU5MDU3NTAwOTgz.62vUTcv38BuDc1s31jhac6bSUXnZlmhGQUVkrG-aJfMg.iZOdRFxuTRiXf5OtqcoB07HjZRQiXmDJTZnWd-iClD4g.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 60496277,
+                    "updateDate": 1559057501000,
+                    "writer": {
+                        "id": "surbjun",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "큐브"
+                    }
+                },
+                {
+                    "content": "끝말잇기 소스가 하나더 적용되있는지 확인 해보세요",
+                    "id": 60500246,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60500246,
+                    "updateDate": 1559061855000,
+                    "writer": {
+                        "id": "jty0606",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEwMTVfMjU0/MDAxNTcxMDY3NzA1ODk1.6TzIRkwvDHePKRpP1ZBheIvO05VllqSIk-gChjLLqCkg.pkmMZ52xhVVrdF6QKqdqao056FZasHirGEN1a9UTqfQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "카톡봇재밌다"
+                    }
+                },
+                {
+                    "content": "이건 오류가 아닌거 같은디",
+                    "id": 60500660,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60500660,
+                    "updateDate": 1559063832000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "메신저봇을 모두 OFF 해보시고 테스트해보세요. 반응이 없다면 그건 메신저봇 내에 있는 스크립트에서 일어나는 일입니다.\r\n\r\n가르치기 소스도 있다면 살펴보세요..?",
+                    "id": 60509860,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60509860,
+                    "updateDate": 1559086288000,
+                    "writer": {
+                        "id": "pauljjang410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "그린스크린"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

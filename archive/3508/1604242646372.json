@@ -1,0 +1,405 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 16,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 (새카봇, 젤브봇, 메신저봇, 닼토봇, 기타)</b><div><b>=&gt; 닼토봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><span style=\"font-size: 13pt; color: rgb(21, 101, 192);\">var</span><span style=\"font-size: 13pt;\"> func = </span><span style=\"font-size: 13pt; color: rgb(255, 160, 0);\">&quot;&quot;</span></div><p dir=\"ltr\">\r\n<span style=\"color:#1565C0;\">function</span> response(room, msg, sender, isGroupChat, replier, ImageDB) {<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg == <span style=\"color:#FFA000;\">&quot;/소스만들기&quot;</span>){<br />\r\nreplier.reply(<span style=\"color:#FFA000;\">&quot; ※소스만들기※\\n/변수 (이름, 숫자)\\n/변수 (이름, 문자)\\n/만약(조건)이라면\\n/중괄호열(닫)기\\n/응답(할말)\\n/줄바꿈\\n/소스보기\\n/초기화\\n/소스실행 (복사한명령어)&quot;</span>)<br />\r\n}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg.<span style=\"color:#1565C0;\">indexOf</span>(<span style=\"color:#FFA000;\">&quot;/변수 (&quot;</span>)==<span style=\"color:#BF360C;\">0</span>){<br />\r\nan = msg.split(<span style=\"color:#FFA000;\">&quot;/변수 (&quot;</span>)[<span style=\"color:#BF360C;\">1</span>].split(<span style=\"color:#FFA000;\">&quot;,&quot;</span>)[<span style=\"color:#BF360C;\">0</span>].trim();<br />\r\ngi = msg.split(<span style=\"color:#FFA000;\">&quot;)&quot;</span>)[<span style=\"color:#BF360C;\">0</span>].split(<span style=\"color:#FFA000;\">&quot;,&quot;</span>)[<span style=\"color:#BF360C;\">1</span>].trim();<br />\r\nfunc = func + <span style=\"color:#FFA000;\">&quot;var &quot;</span> + an + <span style=\"color:#FFA000;\">&quot; = &quot;</span> + gi}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg.<span style=\"color:#1565C0;\">indexOf</span>(<span style=\"color:#FFA000;\">&quot;/문자변수 (&quot;</span>)==<span style=\"color:#BF360C;\">0</span>){<br />\r\nmo = msg.split(<span style=\"color:#FFA000;\">&quot;/문자변수 (&quot;</span>)[<span style=\"color:#BF360C;\">1</span>].split(<span style=\"color:#FFA000;\">&quot;,&quot;</span>)[<span style=\"color:#BF360C;\">0</span>].trim();<br />\r\nti = msg.split(<span style=\"color:#FFA000;\">&quot;)&quot;</span>)[<span style=\"color:#BF360C;\">0</span>].split(<span style=\"color:#FFA000;\">&quot;,&quot;</span>)[<span style=\"color:#BF360C;\">1</span>].trim();<br />\r\nfunc = func + <span style=\"color:#FFA000;\">&quot;var &quot;</span> + mo + <span style=\"color:#FFA000;\">&quot; = &quot;</span> + ti}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg.<span style=\"color:#1565C0;\">indexOf</span>(<span style=\"color:#FFA000;\">&quot;/만약&quot;</span>)==<span style=\"color:#BF360C;\">0</span> ){<br />\r\n<span style=\"color:#1565C0;\">var</span> ma = msg.split(<span style=\"color:#FFA000;\">&quot;/만약&quot;</span>)[<span style=\"color:#BF360C;\">1</span>].split(<span style=\"color:#FFA000;\">&quot;이라면&quot;</span>)[<span style=\"color:#BF360C;\">0</span>].trim()<br />\r\nfunc = func + <span style=\"color:#FFA000;\">&quot;if (&quot;</span> + ma + <span style=\"color:#FFA000;\">&quot;)&quot;</span>}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg == <span style=\"color:#FFA000;\">&quot;/중괄호열기&quot;</span>){<br />\r\nfunc = func + <span style=\"color:#FFA000;\">&quot;{&quot;</span>}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg == <span style=\"color:#FFA000;\">&quot;/중괄호닫기&quot;</span>){<br />\r\nfunc = func + <span style=\"color:#FFA000;\">&quot;}&quot;</span>}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg.<span style=\"color:#1565C0;\">indexOf</span>(<span style=\"color:#FFA000;\">&quot;/응답&quot;</span>) == <span style=\"color:#BF360C;\">0</span>){<br />\r\n<span style=\"color:#1565C0;\">var</span> dap = msg.split(<span style=\"color:#FFA000;\">&quot;/응답&quot;</span>)[<span style=\"color:#BF360C;\">1</span>].trim()<br />\r\nfunc = func + <span style=\"color:#FFA000;\">&quot;replier.reply(&quot;</span> + dap + <span style=\"color:#FFA000;\">&quot;)&quot;</span>}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg == <span style=\"color:#FFA000;\">&quot;/소스보기&quot;</span>){<br />\r\nreplier.reply(func)}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg == <span style=\"color:#FFA000;\">&quot;/줄바꿈&quot;</span>){<br />\r\nfunc = func + <span style=\"color:#FFA000;\">&quot;\\n&quot;</span>}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg == <span style=\"color:#FFA000;\">&quot;/초기화&quot;</span>){<br />\r\nfunc = <span style=\"color:#FFA000;\">&quot;&quot;</span>}<br />\r\n<span style=\"color:#1565C0;\">if</span>(msg.<span style=\"color:#1565C0;\">indexOf</span>(<span style=\"color:#FFA000;\">&quot;/소스실행&quot;</span>)==<span style=\"color:#BF360C;\">0</span>){<br />\r\n<span style=\"color:#8BC34A;\">//※여기※</span><br />\r\n}<br />\r\n}</p><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 파도님꺼보고 영감얻어서 소스를 만들어주는 소스를 연습겸 만들어보려고하는데요... 표시한곳에 최종적으로 완성된 소스를 실행시키는법은 없을까요ㅜㅜ (완죤히 초짜에염)</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000DB400000000",
+            "id": 3508,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 91,
+            "refArticleId": 3508,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "소스를 최종실행하는법ㅜㅜ",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1561888756610,
+            "writer": {
+                "id": "terrylee2357",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20171230_173/terrylee2357_1514626313669WiQAR_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "꿈나무"
+            }
+        },
+        "articleId": 3508,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "eval(func)",
+                    "id": 62896456,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "updateDate": 1562070006000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "힉! 이게 뭐죠...? eval이들어있넹.,..",
+                    "id": 62897367,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "updateDate": 1561889944000,
+                    "writer": {
+                        "id": "terrylee2357",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20171230_173/terrylee2357_1514626313669WiQAR_PNG/image.png"
+                        },
+                        "nick": "꿈나무"
+                    }
+                },
+                {
+                    "content": "eval은 소스를 실행시켜주는 함수입니다. 당연히 eval이 들어있는게 맞죠",
+                    "id": 63043374,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "terrylee2357",
+                        "nick": "꿈나무"
+                    },
+                    "updateDate": 1562048776000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "아.. 처음알았어욬ㅋㅋ 감사합니다",
+                    "id": 63043570,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음 BOT"
+                    },
+                    "updateDate": 1562048974000,
+                    "writer": {
+                        "id": "terrylee2357",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20171230_173/terrylee2357_1514626313669WiQAR_PNG/image.png"
+                        },
+                        "nick": "꿈나무"
+                    }
+                },
+                {
+                    "content": "죄송하지만 어떻게 활용해야되는지 여쭤봐도 될까요ㅜ?",
+                    "id": 63043798,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA3MDJfMTE1/MDAxNTYyMDQ5MTExODMx.ZRIG7XVNRflY1AvLpne-HecSDctUq2zpC459Iz_i7vog.WMl3Jr3v89S-sGGc-mQZP87528mnVNCTeiW5jZDR9mgg.JPEG/Screenshot_20190702-153129.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "Screenshot_20190702-153129.jpg",
+                        "height": 2340,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA3MDJfMTE1/MDAxNTYyMDQ5MTExODMx.ZRIG7XVNRflY1AvLpne-HecSDctUq2zpC459Iz_i7vog.WMl3Jr3v89S-sGGc-mQZP87528mnVNCTeiW5jZDR9mgg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA3MDJfMTE1/MDAxNTYyMDQ5MTExODMx.ZRIG7XVNRflY1AvLpne-HecSDctUq2zpC459Iz_i7vog.WMl3Jr3v89S-sGGc-mQZP87528mnVNCTeiW5jZDR9mgg.JPEG/Screenshot_20190702-153129.jpg",
+                        "width": 1080
+                    },
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음 BOT"
+                    },
+                    "updateDate": 1562049226000,
+                    "writer": {
+                        "id": "terrylee2357",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20171230_173/terrylee2357_1514626313669WiQAR_PNG/image.png"
+                        },
+                        "nick": "꿈나무"
+                    }
+                },
+                {
+                    "content": "ev=text=>{replier={};reply=[]; \r\nreplier.reply=str=>{reply.push(str);}\r\ntry{res=eval(text); } catch(g) { res=g; }\r\nres={\"Result\":res,\"Reply\":reply.join(\",\")};return res;}\r\n\r\nif(msg.indexOf(\"/소스실행\")==0){var out=ev(msg.substr(6).trim());replier.reply(\"Result : \"+out.Result+\"\r\nReply : \"+out.Reply);}",
+                    "id": 63043986,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "terrylee2357",
+                        "nick": "꿈나무"
+                    },
+                    "updateDate": 1562050671000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "감사합니다ㅜㅜ",
+                    "id": 63044037,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "jowoon222",
+                        "nick": "ㄱㄴ"
+                    },
+                    "updateDate": 1562049477000,
+                    "writer": {
+                        "id": "terrylee2357",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20171230_173/terrylee2357_1514626313669WiQAR_PNG/image.png"
+                        },
+                        "nick": "꿈나무"
+                    }
+                },
+                {
+                    "content": "진짜 죄송하지만ㅜㅜ 오류로 난무하는것같은데 간단한 실행법이 없을까요...ㅠ 복잡해도 사용법이라도ㅜㅜ 입문자라서요... 닼도봇으로는 안되는건가ㅜㅜ",
+                    "id": 63057728,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "jowoon222",
+                        "nick": "ㄱㄴ"
+                    },
+                    "updateDate": 1562063302000,
+                    "writer": {
+                        "id": "terrylee2357",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20171230_173/terrylee2357_1514626313669WiQAR_PNG/image.png"
+                        },
+                        "nick": "꿈나무"
+                    }
+                },
+                {
+                    "content": "ev=text=>{replier={};reply=[]; \r\nreplier.reply=str=>{reply.push(str);}\r\ntry{res=eval(text); } catch(g) { res=g; }\r\nres={\"Result\":res,\"Reply\":reply.join(\",\")};return res;}\r\n\r\n이건 함수고\r\n\r\n\r\nif(msg==\"/소스실행\"){var out=ev(func);replier.reply(\"Result : \"+out.Result+\"\r\nReply : \"+out.Reply);}\r\n\r\n이거 돌리면 되잖아요",
+                    "id": 63060056,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "terrylee2357",
+                        "nick": "꿈나무"
+                    },
+                    "updateDate": 1562070070000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "걍 replier.reply(eval(func)) 넣으면 해결",
+                    "id": 63063321,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62896456,
+                    "replyMember": {
+                        "id": "terrylee2357",
+                        "nick": "꿈나무"
+                    },
+                    "updateDate": 1562069613000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                }
+            ],
+            "last": {
+                "id": 62967565,
+                "refId": 62967565
+            },
+            "next": {
+                "id": 62967565,
+                "refId": 62967565
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

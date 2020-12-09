@@ -1,0 +1,390 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 21,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">전에 만든 베타 버전의 단점을 보안한 버전</span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><br /></span></font></b></div><div><b><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><br /></span></font></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const Closeable = function(){}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const Listenable = function(){}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const Initialable = function(){}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Closeable.prototype.close = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; throw new Error(&quot;ioException&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Listenable.prototype.listen = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Initialable.prototype.init = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const Http = function(port,limit){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; Closeable.call(this);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; Listenable.call(this);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; Initialable.call(this);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.server = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.executors = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.thread = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.urls = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.port = port||null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.status = Http.status.waiting;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.serverList = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.init = function(port){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.checkIsWaiting();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.setPort(port||this.port);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.serverList.push(this);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.server = new java.net.ServerSocket(this.port);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.executors = this.executors || java.util.concurrent.Executors.newFixedThreadPool(4);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.setStatus(Http.status.ready);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.listen = function(port){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.checkIsWaiting();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.init(port);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; const ctx = this;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.thread = new java.lang.Thread({run:function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while(true){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let sc , req, res ,run;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try{java.lang.Thread.sleep(10)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sc = ctx.server.accept();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; req = new Http.Request(sc);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; res = new Http.Response(sc);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; Log.d(1)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; res.setHeader(req.headerList);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Log.d(987)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; run = new java.lang.Runnable({run:function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Log.d(ctx.urls)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for(let a=0,b=ctx.urls.length;a&lt;b;a++){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Log.d(req.getUrlPath())</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(ctx.urls[a].checkUrlString(new String(req.getUrlPath()))&amp;&amp;new String(req.getMethod().value) == ctx.urls[a].getMethod()){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ctx.urls[a].call(req,res);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Log.d(1197)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }});</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ctx.executors.submit(run);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }catch(e){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>for(let a in e)Log.d(e[a])</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }}});</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.thread.start();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.setStatus(Http.status.running);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.checkIsWaiting = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(this.status!=Http.status.waiting)throw new Error(&quot;server status is not &apos;Wait&apos;&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.setLimit = function(l){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.checkIsWaiting();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.limit = l;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.setPort = function(port){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(port == null&amp;&amp;port &gt; 0)throw new Error(&quot;value port should be Number (x&gt;0)&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.checkIsWaiting();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.port = port;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.setStatus = function(st){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.status = st;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.addUrl = function(regexp, callback ,method){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(regexp.constructor == String)regexp = new RegExp(regexp);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.urls.push(new Url(regexp,callback,method));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.setExcutors = function(executors){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(executors == null)throw new Error(&quot;value executors should be java.util.concurrent.ExecuteService&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(this.executors != null)this.executors.shutdownNow();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.executors = executors;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.close = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.thread.interrupt();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.executors.shutdownNow();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.server.close();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.get = function(regexp,callback){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.addUrl(regexp,callback,&quot;GET&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.prototype.post = function(regexp,callback){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.addUrl(regexp,callback,&quot;POST&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.status = Object.freeze({</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; error:-1,</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; waiting:0,</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; ready:1,</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; running:2,</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; stop:3</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>});</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Request = function(sc){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; Initialable.call(this);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.sc = sc;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.in = sc.getInputStream();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.read = new java.io.InputStreamReader(this.in);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.reader = new java.io.BufferedReader(this.read);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headerList = new HeaderList();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.init();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Request.prototype.init = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Log.d(this.reader)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; let request = new String(this.reader.readLine()).split(&quot; &quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Log.d(request)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headerList.addHeader(new Header(&quot;method&quot;,request[0]));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headerList.addHeader(new Header(&quot;urlPath&quot;,request[1]));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headerList.addHeader(new Header(&quot;version&quot;,request[2]));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; request = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; while(this.reader.ready()){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.headerList.addHeader(new Header(this.reader.readLine()));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Request.prototype.getHeader =function(key){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return this.headerList.getHeader(key);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Request.prototype.getMethod = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return this.getHeader(&quot;method&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Request.prototype.getUrlPath = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return this.getHeader(&quot;urlPath&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Response = function(sc){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; Closeable.call(this);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.sc = sc;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.out = sc.getOutputStream();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.write = new java.io.OutputStreamWriter(this.out);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.writer = new java.io.PrintWriter(new java.io.BufferedWriter(this.write));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headers = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.buffer = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Response.prototype.setCookie = function(str){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headers.addHeader(new Cookie(str));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Response.prototype.setHeader = function(h){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headers = h;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Response.prototype.send = function(str){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.buffer.push(str);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Response.prototype.end = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(!this.headers.getHeader(&quot;Content-Length&quot;))</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headers.addHeader(&quot;Content-Length&quot;,this.buffer.join(&quot;&quot;).length);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Log.d(&quot;♡&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.writer.println(&quot;HTTP/1.1 200 OK&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Log.d(this.headers.toString())</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.writer.println(this.headers.toString());</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.writer.println(this.buffer.join(&quot;&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.writer.flush();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.close();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Http.Response.prototype.close = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.writer.close();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.write.close();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.out.close();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.sc.close();&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.headers = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.buffer = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const Url = function(regexp,callback,method){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.regexp = regexp || null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.method = method || &quot;GET&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.callback = callback || function(req,res){};</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Url.prototype.checkUrlString = function(Str){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return this.regexp.test(Str);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Url.prototype.getMethod = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return this.method;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Url.prototype.call = function(req,res){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.callback(req,res);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const Header = function(a,b){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(!b){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(!a){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.key = null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.value = null;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.key = a.split(&quot;:&quot;)[0];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; this.value = a.split(&quot;:&quot;)[1];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.key = a;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.value = b;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Header.prototype.setKey = function(key){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.key = key;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Header.prototype.setValue = function(str){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.value = str;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>Header.prototype.toString = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return [this.key,this.value].join(&quot;:&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const Cookie = function(str){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; Header.call(this);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.setKey(&quot;Set-Cookie&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.setValue(str||&quot;&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const HeaderList = function(headerList){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; this.list = headerList||[];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>HeaderList.prototype.getHeader = function(key){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; const temp = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; for(let a=0,b=this.list.length;a&lt;b;a++){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(this.list[a].key == key)temp.push(this.list[a]);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; if(temp.length == 0)return null;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return temp.length == 1?temp[0]:temp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>HeaderList.prototype.addHeader = function(a,b){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return this.list.push(b==null?a:new Header(a,b));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>HeaderList.prototype.toString = function(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; const buffer = [];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; for(let a=0,b=this.list.length;a&lt;b;a++){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; buffer[a] = this.list[a].toString();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; return [buffer.join(&quot;\\r\\n&quot;),&quot;\\r\\n&quot;].join(&quot;&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>function onStartCompile(){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; for(let a of Http.prototype.serverList){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a.close()</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>const test = new Http();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>test.get(/[^&gt;]+/, function(req,res){</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp;Log.d( req.headerList.toString())</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; res.send(Utils.getWebText(&quot;<a href=\"https://naver.com\" target=\"_blank\">https://naver.com</a>&quot;));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; res.end();</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>})</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>test.listen(8080)</b></span></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>\r\n    <div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000031C100000000",
+            "id": 12737,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 436,
+            "refArticleId": 12737,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "간단하게 카톡봇으로 Http 서버를 열어보자(초급) [V0.1A]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583427438933,
+            "writer": {
+                "id": "chahyunwooa",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "Ssvr"
+            }
+        },
+        "articleId": 12737,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이놈은 뭘 만드려는거지",
+                    "id": 83264076,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83264076,
+                    "updateDate": 1583427695000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 83264167,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83264167,
+                    "updateDate": 1583427879000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "솔직히 쉽게 이해 되잖음",
+                    "id": 83264210,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83264167,
+                    "updateDate": 1583427960000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Ssvr"
+                    }
+                },
+                {
+                    "content": "자바쪽을 안다는 가정 하에?",
+                    "id": 83264299,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83264167,
+                    "replyMember": {
+                        "id": "chahyunwooa",
+                        "nick": "Ssvr"
+                    },
+                    "updateDate": 1583428169000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "ㄷㄷㄷㄷㄷㄷㄷㄷ",
+                    "id": 83264384,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83264384,
+                    "updateDate": 1583428363000,
+                    "writer": {
+                        "id": "baejy1375",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Nub"
+                    }
+                },
+                {
+                    "content": "모야 이 고인물은",
+                    "id": 83264572,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83264384,
+                    "updateDate": 1583428820000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Ssvr"
+                    }
+                },
+                {
+                    "content": "모야 이 굇수는",
+                    "id": 83264577,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83264384,
+                    "replyMember": {
+                        "id": "chahyunwooa",
+                        "nick": "Ssvr"
+                    },
+                    "updateDate": 1583428830000,
+                    "writer": {
+                        "id": "baejy1375",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Nub"
+                    }
+                },
+                {
+                    "content": "퉤",
+                    "id": 83264798,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83264384,
+                    "replyMember": {
+                        "id": "baejy1375",
+                        "nick": "Nub"
+                    },
+                    "updateDate": 1583429809000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Ssvr"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 83264502,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83264502,
+                    "updateDate": 1583428618000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "뉴비가 작성해서 초급",
+                    "id": 83264805,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83264502,
+                    "updateDate": 1583429820000,
+                    "writer": {
+                        "id": "chahyunwooa",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Ssvr"
+                    }
+                }
+            ],
+            "last": {
+                "id": 86892348,
+                "refId": 86892348
+            },
+            "next": {
+                "id": 83264562,
+                "refId": 83264562
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

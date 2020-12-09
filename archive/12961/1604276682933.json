@@ -1,0 +1,300 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>const&nbsp;blist&nbsp;=&nbsp;[];<br /><br />const&nbsp;admin&nbsp;=&nbsp;[];<br /><br />var&nbsp;buser&nbsp;=&nbsp;[];<br /><br />path&nbsp;=&nbsp;&quot;/sdcard/가르치기봇/단어목록.txt&quot;;<br /><br />path2&nbsp;=&nbsp;&quot;/sdcard/가르치기봇/프로필코드.txt&quot;;<br /><br />FS&nbsp;=&nbsp;FileStream;<br /><br /><br />function&nbsp;response(room,&nbsp;msg,&nbsp;sender,&nbsp;isGroupChat,&nbsp;replier,&nbsp;imageDB,&nbsp;packageName)&nbsp;{<br /><br />&nbsp;&nbsp;var&nbsp;hscd&nbsp;=&nbsp;java.lang.String(imageDB.getProfileImage()).hashCode();<br /><br />&nbsp;&nbsp;if(blist.indexOf(room)&nbsp;==&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(!FS.read(path2))&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FS.write(path2,&nbsp;&quot;{}&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(!FS.read(path))&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FS.write(path,&nbsp;&quot;{}&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;words&nbsp;=&nbsp;JSON.parse(FS.read(path));<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;banhscd&nbsp;=&nbsp;JSON.parse(FS.read(path2));<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;banhscd[sender]&nbsp;=&nbsp;hscd;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;FS.write(path2,&nbsp;JSON.stringify(banhscd));<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(msg&nbsp;==&nbsp;&quot;/배운단어&quot;&nbsp;&amp;&amp;&nbsp;buser.indexOf(hscd)&nbsp;==&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(Object.keys(words).join(&quot;&nbsp;|&nbsp;&quot;)&nbsp;+&nbsp;&quot;\\n\\n총&nbsp;&quot;&nbsp;+&nbsp;Object.keys(words).length&nbsp;+&nbsp;&quot;&nbsp;개&nbsp;입니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(msg.startsWith(&quot;/가르치기&quot;)&nbsp;&amp;&amp;&nbsp;buser.indexOf(hscd)&nbsp;==&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(words[msg.substr(6).split(&quot;&gt;&quot;)[0]])&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;이미&nbsp;배운&nbsp;단어입니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(msg.split(&quot;/&quot;)[1]&nbsp;==&nbsp;undefined)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;가르치기&nbsp;기능은&nbsp;/가르치기&nbsp;단어&gt;대답할말&nbsp;형식으로&nbsp;사용해주세요.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;words[msg.substr(6).split(&quot;&gt;&quot;)[0]]&nbsp;=&nbsp;msg.split(&quot;&gt;&quot;)[1];<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FS.write(path,&nbsp;JSON.stringify(words));<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(msg.substr(6).split(&quot;&gt;&quot;)[0]&nbsp;+&nbsp;&quot;&nbsp;이라고&nbsp;말하면&nbsp;&quot;&nbsp;+&nbsp;msg.split(&quot;&gt;&quot;)[1]&nbsp;+&nbsp;&quot;&nbsp;이라고&nbsp;대답하도록&nbsp;가르쳤습니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(msg.startsWith(&quot;/삭제&quot;)&nbsp;&amp;&amp;&nbsp;admin.indexOf(hscd)&nbsp;!=&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!words[msg.substr(4)])&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(msg.substr(4)&nbsp;+&nbsp;&quot;&nbsp;단어를&nbsp;배운&nbsp;기억이&nbsp;없습니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;words[msg.substr(4)];<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FS.write(path,&nbsp;JSON.stringify(words));<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(msg.substr(4)&nbsp;+&nbsp;&quot;&nbsp;단어가&nbsp;삭제되었습니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(msg.startsWith(&quot;/밴&quot;)&nbsp;&amp;&amp;&nbsp;admin.indexOf(hscd)&nbsp;!=&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(buser.indexOf(banhscd[msg.substr(3)])&nbsp;!=&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;이미&nbsp;밴&nbsp;되어있는&nbsp;유저입니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!banhscd[msg.substr(3)])&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(msg.substr(3)&nbsp;+&nbsp;&quot;유저를&nbsp;찾을&nbsp;수&nbsp;없습니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buser.push(banhscd[msg.substr(3)]);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(msg.substr(3)&nbsp;+&nbsp;&quot;유저가&nbsp;밴되었습니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(msg.startsWith(&quot;/언밴&quot;)&nbsp;&amp;&amp;&nbsp;admin.indexOf(hscd)&nbsp;!=&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(buser.indexOf(banhscd[msg.substr(4)])&nbsp;==&nbsp;-1)&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(&quot;밴이&nbsp;되어있지&nbsp;않은&nbsp;유저입니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buser.splice(buser.indexOf(banhscd[msg.substr(4)]),&nbsp;1);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(msg.substr(4)&nbsp;+&nbsp;&quot;유저가&nbsp;언밴되었습니다.&quot;);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if(words[msg])&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.reply(words[msg]);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;}<br /><br />}<br /><br /><br />가르치기봇 삭제 어떻게 하는건가요...<br />지금 사람이 &quot;까까는&quot;이라고 말하면 봇이&quot;멋쟁이&quot;라고 말하는데 이거 삭제 어떻게해요...?</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000032A100000000",
+            "id": 12961,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 157,
+            "refArticleId": 12961,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "어거 삭제 어케하는거져...",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583663650477,
+            "writer": {
+                "id": "mjmjmj1225",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "청월"
+            }
+        },
+        "articleId": 12961,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "삭제 기능은 관리자만 가능합니다.\n/삭제 (삭재할 단어)",
+                    "id": 83519693,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83519693,
+                    "updateDate": 1583664524000,
+                    "writer": {
+                        "id": "austin929",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하프"
+                    }
+                },
+                {
+                    "content": "그게 안되여..",
+                    "id": 83519845,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83519693,
+                    "updateDate": 1583664636000,
+                    "writer": {
+                        "id": "mjmjmj1225",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청월"
+                    }
+                },
+                {
+                    "content": "admin 배열과 hscd 배열에\n관리자 프로필 이름과 관리자 프로필 사진의 해쉬코드를 등록해두셨나요?",
+                    "id": 83519916,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83519693,
+                    "replyMember": {
+                        "id": "mjmjmj1225",
+                        "nick": "청월"
+                    },
+                    "updateDate": 1583664689000,
+                    "writer": {
+                        "id": "austin929",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하프"
+                    }
+                },
+                {
+                    "content": "ㅏ..",
+                    "id": 83520464,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83519693,
+                    "replyMember": {
+                        "id": "austin929",
+                        "nick": "하프"
+                    },
+                    "updateDate": 1583665052000,
+                    "writer": {
+                        "id": "mjmjmj1225",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청월"
+                    }
+                },
+                {
+                    "content": "감사합니다",
+                    "id": 83520499,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83519693,
+                    "replyMember": {
+                        "id": "austin929",
+                        "nick": "하프"
+                    },
+                    "updateDate": 1583665070000,
+                    "writer": {
+                        "id": "mjmjmj1225",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "청월"
+                    }
+                },
+                {
+                    "content": "(추가로 만약 해쉬코드 가져오는 방법을 모르신다면)\nif (msg==\"/해쉬코드\") {\nvar x=java.lang.String(imageDB.getProfileImage()).hashCode();\nreplier.reply(x);\n}\n\n/해쉬코드 하시면 보낸사람의 프로필 해쉬코드를 보내줍니다.\nadmin = [091872737,-01372818]\n이런식으로 작성하셔야됩니다.",
+                    "id": 83520774,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83519693,
+                    "replyMember": {
+                        "id": "mjmjmj1225",
+                        "nick": "청월"
+                    },
+                    "updateDate": 1583665466000,
+                    "writer": {
+                        "id": "austin929",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하프"
+                    }
+                },
+                {
+                    "content": "ㅓ라\n맞네요 제가 아래 hsdc 보고 당연히 배열 두개일거라고 생각했네요 감사합니다. 수정하겠습니다.",
+                    "id": 83521064,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83519693,
+                    "replyMember": {
+                        "id": "hongsungtaek06",
+                        "nick": "tomohong"
+                    },
+                    "updateDate": 1583665502000,
+                    "writer": {
+                        "id": "austin929",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하프"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

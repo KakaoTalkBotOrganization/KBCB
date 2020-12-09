@@ -1,0 +1,178 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br /><br /><br />if(msg.indexOf(&quot;:날씨&quot;) == 0){<br />    try{<br />    var text = msg.substr(4)<br />    replier.reply(&quot;[Google Assistant] &#127760;searching. . .&quot;)<br />  if(text != &quot;&quot;){<br />&nbsp; &nbsp; var u = Utils.getWebText(&quot;https://m.search.naver.com/search.naver?sm=top_hty&amp;fbm=1&amp;ie=utf8&amp;query&amp;where=m==날씨+&quot;+msg.substr(4));<br />&nbsp; &nbsp; // 네이버 파싱<br /><br />var bot = &quot;[Google Assistant] &quot;<br />&nbsp; &nbsp; var locala = u.split(&quot;&lt;span class=\\&quot;btn_select\\&quot; role=\\&quot;button\\&quot;&gt;&quot;)[1]<br />&nbsp; &nbsp; var localb = locala.split(&quot;&lt;div class=\\&quot;main_tab\\&quot;&gt;&quot;)[0]<br />&nbsp; &nbsp; var localc = localb.replace(/(&lt;([^&gt;]+)&gt;)/g,&quot;&quot;)<br />    var locald = localc.replace(&quot;  \\n             \\n            \\n           \\n          &quot;, &quot;&quot;)<br />    var local = locald.trim();<br />&nbsp;   // 지역파싱<br /><br />if(local ==&quot;검색되기 싫은장소 적으셈&quot; || local ==&quot;검색되기 싫은장소 적으셈&quot; || local == &quot;검색되기 싫은장소 적으셈&quot; || local == &quot;검색되기 싫은장소 적으셈&quot;){<br />replier.reply(bot+text+&quot;은(는) 지원하지 않는 지역입니다!\\n확인후 재검색해주세요!&quot;);<br />}else {<br /><br /><br />    var tema = u.split(&quot;&lt;/span&gt;&lt;span class=\\&quot;tempmark\\&quot;&gt;&quot;)[0]<br />    var temb = tema.split(&quot;&lt;span class=\\&quot;todaytemp\\&quot;&gt;&quot;)[1]<br />    var h = temb.replace(/(&lt;([^&gt;]+)&gt;)/g,&quot;&quot;)<br />    var day = new Date();<br />    var ze = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;];<br />    var o = [&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;];<br />    var t = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9617;&apos;,&apos;&#9608;&#9608;&#9608;&apos;];<br />    var th = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;];<br />    var f = [&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;];<br />    var fi = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9617;&apos;,&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;];<br />    var s = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9617;&apos;,&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;];<br />    var se = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;];<br />    var e = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;];<br />    var n = [&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9608;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;,&apos;&#9617;&#9617;&#9608;&apos;,&apos;&#9608;&#9608;&#9608;&apos;];<br />    var ca = {&apos;0&apos;:ze,&apos;1&apos;:o,&apos;2&apos;:t,&apos;3&apos;:th,&apos;4&apos;:f,&apos;5&apos;:fi,&apos;6&apos;:s,&apos;7&apos;:se,&apos;8&apos;:e,&apos;9&apos;:n};<br />    var time1 = ca[h[0]];<br />    var time2 = ca[h[1]];<br />    var hli = &quot;&quot;;<br />    for(var i=0;i&lt;5;i++){<br />        if(i==&apos;1&apos;||i==&apos;3&apos;){<br />        hli += time1[i]+&apos; &apos;+time2[i]+&quot;\\n&quot;<br />        } else {<br />            hli += time1[i]+&apos; &apos;+time2[i]+&quot;\\n&quot;<br />        }<br />    }<br />    hli = hli.replace(/□/g,&quot;&#9617;&quot;).replace(/■/g,&quot;&#9608;&quot;).slice(0,-1)<br />    // 온도파싱<br /><br /><br />&nbsp; &nbsp; var infoa = u.split(&quot;&lt;p class=\\&quot;cast_txt\\&quot;&gt;&quot;)[1]<br />&nbsp; &nbsp; var infob = infoa.split(&quot;&lt;span class=\\&quot;merge\\&quot;&gt;&quot;)[0]<br />&nbsp; &nbsp; var info = infob.replace(/(&lt;([^&gt;]+)&gt;)/g,&quot;&quot;)<br />    // 정보파싱<br /><br /><br />    replier.reply(bot+&quot;&#9925; Weather &#9925;\\n&quot;+local+&quot;의 날씨에요.\\n\\n&quot;+hli+&quot; &deg;C \\n&quot;+info);<br />    }<br />} else if(text == &quot;&quot;) {<br />replier.reply(&quot;지역을 말씀해주세요!&quot;)<br />}<br />}  catch(e) {<br />replier.reply(bot+text+&quot;은(는) 지원하지 않는 지역입니다!\\n확인후 재검색해주세요!&quot;);<br />}<br />}<br />}<br /><br /><br /><br /><br />//뭐가 잘 못 됬을까요?</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000208400000000",
+            "id": 8324,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 99,
+            "refArticleId": 8324,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "js 링크가 잘못 됬는데...",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574773091747,
+            "writer": {
+                "id": "2ww3ee4rr5tt",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA5MThfMTQ0/MDAxNjAwNDM2NDYwMzA4.7PcA3NPRU5HfP5MTtFAipSutNCmy1rWnWc0PIqjOAygg.D3Md_Bg22EJceqloU7Eg5JVET0MfdgOZQw8Twr1QbLkg.PNG/%EC%BA%A1%EC%B2%98d.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_888.gif",
+                "memberLevelName": "카페스탭",
+                "nick": "TheDangers"
+            }
+        },
+        "articleId": 8324,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "localb에 div class부분 머시기를 못찾네요",
+                    "id": 74416887,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74416887,
+                    "updateDate": 1574774563000,
+                    "writer": {
+                        "id": "jjes1302",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "흐미"
+                    }
+                },
+                {
+                    "content": "?",
+                    "id": 74419029,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74416887,
+                    "updateDate": 1574775658000,
+                    "writer": {
+                        "id": "2ww3ee4rr5tt",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MThfMTQ0/MDAxNjAwNDM2NDYwMzA4.7PcA3NPRU5HfP5MTtFAipSutNCmy1rWnWc0PIqjOAygg.D3Md_Bg22EJceqloU7Eg5JVET0MfdgOZQw8Twr1QbLkg.PNG/%EC%BA%A1%EC%B2%98d.PNG"
+                        },
+                        "nick": "TheDangers"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

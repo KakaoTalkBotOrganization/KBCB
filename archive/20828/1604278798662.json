@@ -1,0 +1,327 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1280,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MDdfMTcg/MDAxNTk0MDc5NTU3NTAz.1EVZ7aLnVGyiAUvrX0HX8NGgO3um0Knd04bb7DZsk1cg.Z92E1sVh2TiytbdK8kPRpYRov61TWYFg-AUKltUiVWYg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "[[[CONTENT-ELEMENT-0]]]<br /><p>베라 봇 이거 시작하려고 히면 디버그가 방장이래서 시작을 못하고있어여 해걀해주세요<br />소스입니다<br /><br />limit = 31<br />playerList = []<br />order = []<br />start = false<br />leader = &quot;없음&quot;<br />nowTurn = &quot;없음&quot;<br />total = 0<br /><br />Array.prototype.shuffle = function() {<br />return this.sort(_ =&gt; Math.random() - 0.5)<br />}<br /><br />brReset = _ =&gt; playerList = [],order = [],start = false,leader = &quot;없음&quot;,nowTurn = &quot;없음&quot;,total = 0;<br /><br />function response (room, msg, sender, _, replier) {<br /><br />if (msg == &quot;/베라 입장&quot;) {<br />if (!start) {<br />if (playerList.indexOf(sender)==-1) {<br />playerList.push(sender)<br />replier.reply(&quot;[!] &quot;+sender+&quot; 님이 방에 입장하셨어요!\\n\\n&quot;+playerList.map((a, b) =&gt; (b+1)+&quot;. &quot;+a).join(&quot;\\n&quot;))<br />if (playerList.length==1) {<br />leader = sender<br />replier.reply(&quot;[!] &quot;+sender+&quot; 님이 방장입니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 이미 방에 입장하셨습니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 이미 게임이 시작되었습니다.&quot;)<br />}<br />}<br /><br />if (msg == &quot;/베라 퇴장&quot;) {<br />if (!start) {<br />if (playerList.indexOf(sender)!=-1) {<br />playerList.splice(playerList.indexOf(sender), 1)<br />replier.reply((&quot;[!] &quot;+sender+&quot; 님이 퇴장하셨어요!\\n\\n&quot;+playerList.map((a, b) =&gt; (b+1)+&quot;. &quot;+a).join(&quot;\\n&quot;)).trim())<br />if (playerList.length==1) {<br />leader = sender<br />replier.reply(&quot;[!] &quot;+playerList+&quot; 님이 방장입니다!&quot;)<br />}<br />if (playerList.length==0) replier.reply(&quot;[!] 모든 플레이어가 퇴장하였습니다!&quot;);<br />} else {<br />replier.reply(&quot;[!] 아직 방에 입장하지 않으셨습니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 게임 중에는 퇴장할 수 없습니다!&quot;)<br />}<br />}<br /><br />if (msg == &quot;/베라 시작&quot;) {<br />if (!start) {<br />if (sender == leader) {<br />if (playerList.length &gt; 1) {<br />start = true<br />order = playerList.shuffle()<br />nowTurn = order[0]<br />replier.reply(&quot;[!] 게임을 시작합니다! &quot;+nowTurn+&quot; 님 부터 1, 2, 3 중 하나를 입력해 주세요.&quot;)<br />} else {<br />replier.reply(&quot;[!] 2인 이상이어야 게임을 시작할 수 있습니다!&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 게임은 오직 방장만 시작할 수 있습니다.&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 이미 게임이 시작되었습니다.&quot;)<br />}<br />}<br /><br />if (msg == &quot;/베라 종료&quot;) {<br />if (start) {<br />if (sender == leader) {<br />brReset()<br />replier.reply(&quot;[!] 게임이 종료되었습니다!&quot;)<br />} else {<br />replier.reply(&quot;[!] 게임은 오직 방장만 종료할 수 있습니다.&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 아직 게임이 시작되지 않았습니다!&quot;);<br />}<br />}<br /><br />if (!isNaN(msg)&amp;&amp;nowTurn==sender&amp;&amp;start) {<br />if (1 &lt;= Number(msg)-total &amp;&amp; Number(msg)-total &lt;= 3) {<br />total = Number(msg)<br />if (total &gt; limit-1) {<br />playerList.splice(playerList.indexOf(sender), 1)<br />replier.reply(&quot;[!] 이런, &quot;+sender+&quot; 님이 탈락하였습니다! 게임 끝!\\n\\n[생존자]\\n&quot;+(playerList.map((a, b) =&gt; (b+1)+&quot;. &quot;+a).join(&quot;\\n&quot;)).trim())<br />brReset()<br />} else {<br />nowTurn = order[((order.indexOf(nowTurn)+1)&lt;(order.length))?(order.indexOf(nowTurn)+1):0]<br />replier.reply(&quot;[!] &quot;+total+&quot;\\n&quot;+nowTurn+&quot; 님은 &quot;+(total+1)+&quot;, &quot;+(total+2)+&quot;, &quot;+(total+3)+&quot; 중 하나를 입력해 주세요.&quot;)<br />}<br />} else {<br />replier.reply(&quot;[!] 숫자는 &quot;+(total+1)+&quot;, &quot;+(total+2)+&quot;, &quot;+(total+3)+&quot; 중 하나만 입력해 주세요.&quot;)<br />}<br />}<br /><br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000515C00000000",
+            "id": 20828,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 153,
+            "refArticleId": 20828,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "해결해주세요",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1594079558243,
+            "writer": {
+                "id": "yeomyechan0403",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA3MTFfMjgz/MDAxNTk0NDczNTM2Nzk4.dxmTPys7ogSe5J800BO3Zndyua-F1exl_SkZznoz7gUg.DbgwpFB-Mp5QEkk4NBcg77edYyJWVVDemaKWy_xA2usg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "나무판다"
+            }
+        },
+        "articleId": 20828,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 165343,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/b92ca51600323386ab4f281326c5bec36331cf8f/MjAyMDA3MDdfMTcg/MDAxNTk0MDc5NTU3NTAz.1EVZ7aLnVGyiAUvrX0HX8NGgO3um0Knd04bb7DZsk1cg.Z92E1sVh2TiytbdK8kPRpYRov61TWYFg-AUKltUiVWYg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "소스를 보여주세요",
+                    "id": 95959537,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95959537,
+                    "updateDate": 1594079663000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                },
+                {
+                    "content": "수정했습니디",
+                    "id": 95959632,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95959537,
+                    "updateDate": 1594079705000,
+                    "writer": {
+                        "id": "yeomyechan0403",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTFfMjgz/MDAxNTk0NDczNTM2Nzk4.dxmTPys7ogSe5J800BO3Zndyua-F1exl_SkZznoz7gUg.DbgwpFB-Mp5QEkk4NBcg77edYyJWVVDemaKWy_xA2usg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "나무판다"
+                    }
+                },
+                {
+                    "content": "디버그룸에서 테스트하고 카카오톡에서 하는거 아니신가요",
+                    "id": 95959980,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": true,
+                    "refId": 95959980,
+                    "updateDate": 1594079861000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "네 맞아여",
+                    "id": 95960027,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95959980,
+                    "updateDate": 1594079880000,
+                    "writer": {
+                        "id": "yeomyechan0403",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTFfMjgz/MDAxNTk0NDczNTM2Nzk4.dxmTPys7ogSe5J800BO3Zndyua-F1exl_SkZznoz7gUg.DbgwpFB-Mp5QEkk4NBcg77edYyJWVVDemaKWy_xA2usg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "나무판다"
+                    }
+                },
+                {
+                    "content": "그러몀 안되나여?",
+                    "id": 95960168,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95959980,
+                    "updateDate": 1594079932000,
+                    "writer": {
+                        "id": "yeomyechan0403",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTFfMjgz/MDAxNTk0NDczNTM2Nzk4.dxmTPys7ogSe5J800BO3Zndyua-F1exl_SkZznoz7gUg.DbgwpFB-Mp5QEkk4NBcg77edYyJWVVDemaKWy_xA2usg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "나무판다"
+                    }
+                },
+                {
+                    "content": "디버그룸에서 보내는 것 과 카카오톡에서 보내는것을 봇은 같게 인식합니다.",
+                    "id": 95960258,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": true,
+                    "refId": 95959980,
+                    "replyMember": {
+                        "id": "yeomyechan0403",
+                        "nick": "나무판다"
+                    },
+                    "updateDate": 1594079967000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "음 그러몀 소스 입력하고 테스트하면 안되는건기요?",
+                    "id": 95960339,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95959980,
+                    "replyMember": {
+                        "id": "hui1601",
+                        "nick": "Hibot"
+                    },
+                    "updateDate": 1594080003000,
+                    "writer": {
+                        "id": "yeomyechan0403",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTFfMjgz/MDAxNTk0NDczNTM2Nzk4.dxmTPys7ogSe5J800BO3Zndyua-F1exl_SkZznoz7gUg.DbgwpFB-Mp5QEkk4NBcg77edYyJWVVDemaKWy_xA2usg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "나무판다"
+                    }
+                },
+                {
+                    "content": "테스트하고 리셋",
+                    "id": 95961871,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": true,
+                    "refId": 95959980,
+                    "replyMember": {
+                        "id": "yeomyechan0403",
+                        "nick": "나무판다"
+                    },
+                    "updateDate": 1594080649000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

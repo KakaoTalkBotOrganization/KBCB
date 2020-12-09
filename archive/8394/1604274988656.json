@@ -1,0 +1,391 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 25,
+            "contentElements": [],
+            "contentHtml": "<p>공유할 소스 용도=&gt; 사다리 토토게임소스입니다<br />.토토 하시면 방법 나오구요<br />rooms에 방이름 master에 관리자이름 hashcode에 관리자해시코드 넣으시면됩니다.<br />사다리랑 주식이랑 섞어서 제작ㅋㅋ<br /><br /><br />소스 코드<br />=&gt;<br /><br /><br /><br /><br /><br />var master=&quot;PEN&quot;;<br />var hashcode=364211169;<br />var data;<br />var rooms=[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;];<br />String.prototype.replaceAll = function (org, dest) {<br />return this.split(org).join(dest);<br />}<br />function randomRange(min, max) {<br />return Math.floor( (Math.random() * (max - min + 1)) + min );<br />}<br />var 토토돌아감=false;<br />var sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();<br />var folder = new java.io.File(sdcard + &quot;/토토/&quot;); <br />folder.mkdirs();//sd카드에 토토 폴더를 생성합니다<br />var blank = &quot;\\u200b&quot;.repeat(501);<br />var ㅓ=&apos;\\u2524&apos;<br />var ㅏ=&apos;\\u251c&apos;<br />var ㅣ=&apos;\\u2502&apos;<br />var ㅓ_=&apos; \\u252a&apos;<br />var ㅓ__= &apos;\\u2529&apos;<br />var ㅏ_= &apos;\\u2522&apos; <br />var ㅏ__=&apos;\\u2521&apos; <br />var ㅣ_=&apos;\\u2503&apos;<br />var result=[];<br />var map;<br />var mapline=10;<br />function mapping()<br />{<br />map=new Array(16);<br />for(var k=0;k&lt;16;k++)<br />{<br />map[k]=new Array(mapline);<br />}<br />//2차원 배열선언<br />for(var l=0;l&lt;mapline;l++)<br />{<br />map[0][l]=0;<br />map[15][l]=0;<br />}<br />//1번줄 앞 마지막줄 뒤 배열 0으로 초기화<br />for(var i=1;i&lt;15;i++)<br />{<br />for(var j=0;j&lt;15;j++)<br />{<br />if(map[i-1][j]==0)<br />{ map[i][j]=randomRange(0,1);}<br />else<br />{map[i][j]=0;}<br />}<br />}<br />//맵생성<br />return &quot;맵이 생성되었습니다&quot;;<br /><br /><br />}<br /><br /><br /><br /><br /><br />function resultall()<br />{<br />var talk=&quot;&quot;;<br />var moved=false;<br />result=[]<br />for(var i=0;i&lt;mapline;i++)<br />{talk+=&quot;\\n&quot;;<br />moved=false;<br />for(var j=0;j&lt;15;j++)<br />{<br />if(map[j][i]==0&amp;&amp;map[j+1][i]==0)<br />{talk+=ㅣ;}<br />else if(map[j][i]==0&amp;&amp;map[j+1][i]==1)<br />{talk+=ㅏ;}<br />else if(map[j][i]==1&amp;&amp;map[j+1][i]==0)<br />{talk+=ㅓ;}<br />}<br />}<br />//맵그리기<br />for(var no=1;no&lt;16;no++)<br />{<br />var sel=no;<br />for(var i=0;i&lt;mapline;i++)<br />{<br />moved=false;<br />for(var j=0;j&lt;15;j++)<br />{<br />if(map[j][i]==0&amp;&amp;map[j+1][i]==1)<br />{<br />if(j==sel-1&amp;&amp;moved==false)<br />{<br />sel+=1;<br />moved=true;<br />}<br />}<br />else if(map[j][i]==1&amp;&amp;map[j+1][i]==0)<br />{<br />if(j==sel-1&amp;&amp;moved==false)<br />{<br />sel-=1;<br />moved=true;<br />}<br />}<br />}<br />}<br />result.push(sel);<br />}<br />return talk;<br />}<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />function 잔고(room,sender) {<br />var talk;<br />if (data[room][sender] == undefined) <br />{<br />data[room][sender] = {};<br />data[room][sender][&quot;name&quot;] = sender;<br />data[room][sender][&quot;money&quot;] = 100000;<br />data[room][sender][&quot;bat&quot;] = 0;<br />data[room][sender][&quot;batmoney&quot;] = 0;<br /><br />savej(&quot;토토&quot;,&quot;userdata.txt&quot;,data)<br />talk=&quot;토토계좌가 없어 신규계좌를 개설합니다.\\n지원금 10만원을 받았습니다.&quot;;<br />return talk;<br />}<br />else<br />{<br />talk=data[room][sender][&quot;name&quot;]+&quot;님의 잔고입니다.\\n&quot;+<br />&quot;잔액 : &quot;+data[room][sender][&quot;money&quot;]+&quot;원\\n&quot;+<br />&quot;배팅번호 : &quot;+data[room][sender][&quot;bat&quot;]+&quot;번\\n&quot;+<br />&quot;배팅금액 : &quot;+data[room][sender][&quot;batmoney&quot;]+&quot;원&quot;<br />return talk;<br />} <br />}<br /><br /><br />function 배팅(sender,room,bat,money)<br />{<br />if(!토토돌아감)<br />{<br />talk=&quot;토토사이트가 오픈되지 않았습니다.\\nHTTP 404 NOT FOUND&quot;;<br />return talk;<br />}<br />if (data[room][sender] == undefined) <br />{<br />data[room][sender] = {};<br />data[room][sender][&quot;name&quot;] = sender;<br />data[room][sender][&quot;money&quot;] = 100000;<br />data[room][sender][&quot;bat&quot;] = 0;<br />data[room][sender][&quot;batmoney&quot;] = 0;<br /><br />savej(&quot;토토&quot;,&quot;userdata.txt&quot;,data)<br />talk=&quot;토토계좌가 없어 신규계좌를 개설합니다.\\n지원금 10만원을 받았습니다.&quot;;<br />return talk;<br />}<br />else<br />{<br />if(data[room][sender][&quot;money&quot;]&gt;=parseInt(money))<br />{<br />data[room][sender][&quot;bat&quot;] =parseInt(bat);<br />data[room][sender][&quot;batmoney&quot;]=parseInt(money);<br />talk=&quot;사다리&quot;+bat+&quot;번에 &quot;+money+&quot;원을 배팅하셨습니다.\\n&quot;<br />talk+=&quot;배팅으로인해 &quot;+data[room][sender][&quot;batmoney&quot;]+&quot;원이 예약되었습니다.&quot;<br />savej(&quot;토토&quot;,&quot;userdata.txt&quot;,data);<br />}<br />else<br />{<br />talk=&quot;잔액이 부족합니다.\\n&quot;+sender+&quot;님의 잔액은 &quot;+data[room][sender][&quot;money&quot;]+&quot;원 입니다.&quot;;<br />} <br />return talk;<br />}<br />}<br /><br /><br /><br /><br /><br /><br />function 사다리(talk,replier)<br />{<br /><br />var roms=Object.keys(data)<br />for(var i=0;i&lt;roms.length;i++)<br />{<br />var userno=0;<br />var talktmp=talk+&quot;\\n&quot;;<br /><br />var users=Object.keys(data[roms[i]]);<br />for(var j=0;j&lt;users.length;j++)<br />{<br />if(data[roms[i]][users[j]][&quot;bat&quot;]!=0)<br />{<br />switch(result.indexOf(data[roms[i]][users[j]][&quot;bat&quot;]))<br />{<br />case 0:<br />{<br />data[roms[i]][users[j]][&quot;money&quot;]+=data[roms[i]][users[j]][&quot;batmoney&quot;];<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 &quot;+data[roms[i]][users[j]][&quot;bat&quot;]+&quot;번을 골라 1등에 당첨되셨습니다!!\\n&quot;;<br />break;<br />}<br />case 1:<br />{<br />data[roms[i]][users[j]][&quot;money&quot;]+=data[roms[i]][users[j]][&quot;batmoney&quot;]*0.5;<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 &quot;+data[roms[i]][users[j]][&quot;bat&quot;]+&quot;번을 골라 2등에 당첨되셨습니다!!\\n&quot;;<br />break;<br />}<br />case 2:<br />{<br />data[roms[i]][users[j]][&quot;money&quot;]+=data[roms[i]][users[j]][&quot;batmoney&quot;]*0.3;<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 &quot;+data[roms[i]][users[j]][&quot;bat&quot;]+&quot;번을 골라 3등에 당첨되셨습니다!!\\n&quot;;<br />break;<br />}<br />case 3:<br />{<br />data[roms[i]][users[j]][&quot;money&quot;]+=data[roms[i]][users[j]][&quot;batmoney&quot;]*0.1;<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 &quot;+data[roms[i]][users[j]][&quot;bat&quot;]+&quot;번을 골라 4등에 당첨되셨습니다!!\\n&quot;;<br />break;<br />}<br />case 4:<br />{<br />data[roms[i]][users[j]][&quot;money&quot;]-=data[roms[i]][users[j]][&quot;batmoney&quot;]*0.1;<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 &quot;+data[roms[i]][users[j]][&quot;bat&quot;]+&quot;번을 골라 5등에 당첨되셨습니다!!\\n&quot;;<br />break;<br />}<br />case 5:<br />{<br />data[roms[i]][users[j]][&quot;money&quot;]-=data[roms[i]][users[j]][&quot;batmoney&quot;]*0.3;<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 &quot;+data[roms[i]][users[j]][&quot;bat&quot;]+&quot;번을 골라 6등에 당첨되셨습니다!!\\n&quot;;<br />break;<br />}<br />case 6:<br />{<br />data[roms[i]][users[j]][&quot;money&quot;]-=data[roms[i]][users[j]][&quot;batmoney&quot;]*0.5;<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 &quot;+data[roms[i]][users[j]][&quot;bat&quot;]+&quot;번을 골라 7등에 당첨되셨습니다!!\\n&quot;;<br />break;<br />}<br />defalt:<br />{<br />talktmp+=data[roms[i]][users[j]][&quot;name&quot;]+&quot;님은 이번 배팅에 당첨되지않으셨습니다...\\n&quot;;<br />}<br />}//sw<br />data[roms[i]][users[j]][&quot;bat&quot;]=0;<br />data[roms[i]][users[j]][&quot;batmoney&quot;]=0;<br />savej(&quot;토토&quot;,&quot;userdata.txt&quot;,data);<br />userno++;<br />}//bat여부<br />}//foruser<br />if(userno!=0)<br />{ replier.reply(roms[i],talktmp);}<br />}//roomfor<br /><br />}<br /><br /><br /><br /><br /><br /><br /><br /><br />function 뺑이(replier)<br />{<br />while(토토돌아감)<br />{<br />talk=&quot;추첨시간이 돌아왔습니다!!\\n&quot;+blank+&quot;\\n&quot;;<br />mapping();<br />talk+=resultall();<br />사다리(talk,replier);<br />for(var i=0;i&lt;5;i++)<br />{ java.lang.Thread.sleep(60000);}<br />}<br />}<br /><br /><br /><br /><br /><br /><br />function save(folderName, fileName, data) { //파일 읽기 함수 제작 <br />try<br />{ FileStream.write(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName,data);}<br />catch(e)<br />{}<br />}<br />function savej(folderName, fileName, data) { //파일 읽기 함수 제작 <br />try<br />{ FileStream.write(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName,JSON.stringify(data));}<br />catch(e)<br />{}<br />}<br /><br /><br />function read(folderName, fileName) { //파일 읽기 함수 제작 <br />try<br />{<br />var reading = FileStream.read(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName);<br />return reading.toString();<br />}<br />catch(e){ return &quot;&quot;;}<br />}<br /><br /><br />function readj(folderName, fileName) { //파일 읽기 함수 제작 <br />try<br />{<br />return JSON.parse(FileStream.read(&quot;sdcard/&quot; + folderName + &quot;/&quot; + fileName));<br />}<br />catch(e){ return null;}<br />}<br /><br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {<br />if(readj(&quot;토토&quot;,&quot;userdata.txt&quot;)==null)<br />{<br />savej(&quot;토토&quot;,&quot;userdata.txt&quot;,{})<br />} <br />data = readj(&quot;토토&quot;,&quot;userdata.txt&quot;);<br />var talk;<br /><br /><br /><br /><br /><br />if(rooms.indexOf(room)!=-1) <br />{//방 맞으면 유저데이터에 추가<br />if(data[room]==undefined)<br />{data[room]={};}<br />if (msg.indexOf(&quot;.&quot;) == 0)//.인식시작<br />{<br />msg = msg.substring(1);<br />if(msg.indexOf(&quot;토토&quot;)==0)<br />{ <br />msg=msg.substring(2).trim();<br />if(msg.indexOf(&quot;시작&quot;)==0)<br />{<br />if(master==sender&amp;&amp;java.lang.String(ImageDB.getProfileImage()).hashCode()==hashcode)<br />{<br />토토돌아감=true;<br />replier.reply(&quot;서버가 오픈되었습니다.&quot;);<br />뺑이(replier);<br />}<br />}<br />else if(msg.indexOf(&quot;종료&quot;)==0)<br />{<br />if(master==sender&amp;&amp;java.lang.String(ImageDB.getProfileImage()).hashCode()==hashcode)<br />{<br />토토돌아감=false;<br />talk=&quot;서버가 닫혔습니다.&quot;;<br />}<br />}<br />else if(msg.indexOf(&quot;잔고&quot;)==0)<br />{talk=잔고(room,sender);}<br />else if(msg.indexOf(&quot;배팅&quot;)==0)<br />{<br />msg=msg.substring(2).trim();<br />msg=msg.split(&quot; &quot;);<br />var 검사 = msg.join(&quot;&quot;);<br />var 허용단어 = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;,];<br />for (var i = 0; i &lt; 허용단어.length; i++) {<br />if (검사.indexOf(허용단어[i]) != -1) {<br />검사 = 검사.replaceAll(허용단어[i], &quot;&quot;);<br />}<br />}<br />if(검사==&quot;&quot;&amp;&amp;msg.length==2)<br />{ <br />talk=배팅(sender,room,msg[0],msg[1]);<br />}<br />else<br />{talk=&quot;.토토 배팅 번호 배팅금 의 포멧으로 입력해주세요.&quot;}<br />}<br />else<br />{<br />talk=&quot;.토토 시작 = 서버를 오픈합니다.\\n&quot;+<br />&quot;.토토 종료 = 서버를 닫습니다.\\n&quot;+<br />&quot;.토토 잔고 = 자신의 잔고를 확인합니다.\\n&quot;+<br />&quot;.토토 배팅 번호 배팅금 = 사다리 번호에 배팅합니다.&quot;<br />}<br />}//토토인식<br />}//.인식<br />if (talk != null)//메세지전송부 <br />{<br />replier.reply(talk);<br />}<br />}//방이름이 지정된곳일때<br />}//메세지리스폰스<br /><br /><br /><br /><br /><br /><br /><br />( 말머리 등록 해주세요! )<br /><br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000020CA00000000",
+            "id": 8394,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 395,
+            "refArticleId": 8394,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "사다리토토게임소스입니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574948656290,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 8394,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 74589126,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74589126,
+                    "updateDate": 1574950103000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "매우건전하죠ㅋㅋ",
+                    "id": 74589713,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74589126,
+                    "updateDate": 1574950454000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "마치 저처럼 길다랗군요.",
+                    "id": 74595224,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74595224,
+                    "updateDate": 1574954209000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "실력이 모자라니 노가다로 승부해서 길다죠ㅋ",
+                    "id": 74596307,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74595224,
+                    "updateDate": 1574955115000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": ".사다리라해도 아무반응이없네요..\r\n",
+                    "id": 74596646,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74596646,
+                    "updateDate": 1574955460000,
+                    "writer": {
+                        "id": "yangzhu",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "깜찍잉"
+                    }
+                },
+                {
+                    "content": "아... .토토 네요\r\n착각을...",
+                    "id": 74596691,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596646,
+                    "updateDate": 1574955514000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": ".토토 하니까 도움말이 나오네요.\r\n헌데 .토토 시작 하면 아무말도없어요.ㅠ\r\n그래서 .토토 배팅 번호 배팅금 입력하니까\r\n토토사이트가 오픈되지 않았습니다.\r\nHTTP 404   NOT FOUND\r\n이렇게 뜨네요",
+                    "id": 74596790,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74596790,
+                    "updateDate": 1574955636000,
+                    "writer": {
+                        "id": "yangzhu",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "깜찍잉"
+                    }
+                },
+                {
+                    "content": "시작과 종료는 해시코드,마스터닉네임이 맞아야 작동됩니다\r\n본인의 해시코드를 찾아주세요(이건 자기봇으로 찾아야합니다 남의봇으로 찾은건 또 달라요)",
+                    "id": 74596834,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596790,
+                    "updateDate": 1574955733000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "본인의 해시코드는 하나밖에 안나오나요?",
+                    "id": 88861171,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596790,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1588080680000,
+                    "writer": {
+                        "id": "dlgusrn777",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "스르킨"
+                    }
+                },
+                {
+                    "content": "봇마다 다르게 나옵니다.\n그래서 자기봇으로 하셔야해요",
+                    "id": 88895704,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74596790,
+                    "replyMember": {
+                        "id": "dlgusrn777",
+                        "nick": "스르킨"
+                    },
+                    "updateDate": 1588118593000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                }
+            ],
+            "last": {
+                "id": 74654797,
+                "refId": 74654797
+            },
+            "next": {
+                "id": 74596864,
+                "refId": 74596864
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

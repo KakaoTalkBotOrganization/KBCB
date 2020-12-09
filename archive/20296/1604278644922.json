@@ -1,0 +1,417 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 32,
+            "contentElements": [],
+            "contentHtml": "<p>//핀밀크씌 소스에 뭘 좀 더 달아놓은 거에오<br /><br />const kalingModule = require(&apos;kaling.js&apos;).Kakao();<br />const Kakao = new kalingModule();<br />Kakao.init(&apos;4d545a185d172754667d621049004aa1&apos;);<br />Kakao.login(&apos;아이디&apos;, &apos;비번&apos;);<br />importPackage(org.jsoup);<br />function response(room, msg, sender, igc, replier) {<br />      if (msg.startsWith(&apos;/노래듣기 &apos;)) {<br />      try {<br />        melonPlay(room, msg);<br />      }      catch (e) {<br />  Api.reload(&quot;맬론.js&quot;);<br />}<br />    }<br />    if (msg.startsWith(&apos;/노래듣기2 &apos;)) {<br />      try {<br />        melonPlay3(room, msg);<br />      }      catch (e) {<br />      Api.reload(&quot;맬론.js&quot;);<br />    }<br />    }<br />    if (msg.startsWith(&apos;/노래피드 &apos;)) {<br />      try {<br />        melonPlay4(room, msg);<br />      }      catch (e) {<br />      Api.reload(&quot;맬론.js&quot;);<br />      replier.reply(e);<br />    }<br />    }<br />    if (msg.startsWith(&apos;/노래리스트 &apos;)) {<br />      try {<br />        melonPlay2(room, msg);<br />      }      catch (e) {<br />  Api.reload(&quot;맬론.js&quot;);<br />  replier.reply(e);<br />}<br />    }<br />  <br />}<br />function melonPlay(room, msg) {<br />  var doc = Jsoup.parse(Utils.getWebText(&apos;https://m.search.daum.net/search?w=music&amp;m=song&amp;nil_search=btn&amp;DA=NTB&amp;q=&apos; + msg.substr(6)));  <br />  var title = doc.select(&apos;strong.tit-g&apos;).eq(0).text();  //노래 제목<br />  var artist = doc.select(&apos;p.desc&apos;).eq(0).text();  //가수<br />  var img = doc.select(&apos;img&apos;).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id = doc.select(&apos;a&apos;).attr(&apos;data-song-id&apos;);  //곡 아이디<br />  var json = {<br />  &apos;link_ver&apos;: &apos;4.0&apos;, <br />  &apos;template_id&apos;: 10545, <br />  &apos;template_args&apos;: {<br />  &apos;THUMB_URL&apos;: img, <br />  &apos;TITLE&apos;: title, <br />  &apos;SUB_TITLE&apos;: artist, <br />  &apos;SONG_ID&apos;: id}};<br />  //멜론 템플릿 JSON<br />  return Kakao.send(room, json, &apos;custom&apos;);<br />}<br />function melonPlay2(room, msg) {<br />  var doc = Jsoup.parse(Utils.getWebText(&apos;https://m.search.daum.net/search?w=music&amp;m=song&amp;nil_search=btn&amp;DA=NTB&amp;q=&apos; + msg.substr(7)));  <br />  var doc2 = Utils.getWebText(&apos;https://m.search.daum.net/search?w=music&amp;m=song&amp;nil_search=btn&amp;DA=NTB&amp;q=&apos; + msg.substr(7));<br />  var n = String(String(String(String(doc2).split(&quot;div class=\\&quot;info_item\\&quot;&quot;)[1]).split(&quot;&amp;amp;rc=&quot;)[1]).split(&quot;&amp;amp;&quot;)[0]);<br />  var title1 = doc.select(&apos;strong.tit-g&apos;).eq(0).text();  //노래 제목<br />  var artist1 = doc.select(&apos;p.desc&apos;).eq(0).text();  //가수<br />  var img1 = doc.select(&apos;img&apos;).eq(1).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id1 = doc.select(&apos;a&apos;).attr(&apos;data-song-id&apos;);  //곡 아이디<br />  var title2 = doc.select(&apos;strong.tit-g&apos;).eq(1).text();  //노래 제목<br />  var artist2 = doc.select(&apos;p.desc&apos;).eq(1).text();  //가수<br />  var img2 = doc.select(&apos;img&apos;).eq(2).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id2 = String(doc2.split(&apos;data-song-id=\\&quot;&apos;)[3]).split(&quot;\\&quot;&quot;)[0];  //곡 아이디<br />  var title3 = doc.select(&apos;strong.tit-g&apos;).eq(2).text();  //노래 제목<br />  var artist3 = doc.select(&apos;p.desc&apos;).eq(2).text();  //가수<br />  var img3 = doc.select(&apos;img&apos;).eq(3).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id3 = String(doc2.split(&apos;data-song-id=\\&quot;&apos;)[5]).split(&quot;\\&quot;&quot;)[0];  //곡 아이디<br />  var title4 = doc.select(&apos;strong.tit-g&apos;).eq(3).text();  //노래 제목<br />  var artist4 = doc.select(&apos;p.desc&apos;).eq(3).text();  //가수<br />  var img4 = doc.select(&apos;img&apos;).eq(4).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id4 = String(doc2.split(&apos;data-song-id=\\&quot;&apos;)[7]).split(&quot;\\&quot;&quot;)[0];  //곡 아이디<br />  var title5 = doc.select(&apos;strong.tit-g&apos;).eq(4).text();  //노래 제목<br />  var artist5 = doc.select(&apos;p.desc&apos;).eq(4).text();  //가수<br />  var img5 = doc.select(&apos;img&apos;).eq(5).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id5 = String(doc2.split(&apos;data-song-id=\\&quot;&apos;)[9]).split(&quot;\\&quot;&quot;)[0];  //곡 아이디<br />  var title6 = doc.select(&apos;strong.tit-g&apos;).eq(5).text();  //노래 제목<br />  var artist6 = doc.select(&apos;p.desc&apos;).eq(5).text();  //가수<br />  var img6 = doc.select(&apos;img&apos;).eq(6).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id6 = String(doc2.split(&apos;data-song-id=\\&quot;&apos;)[11]).split(&quot;\\&quot;&quot;)[0];  //곡 아이디<br /><br />  var json = {<br />    &apos;link_ver&apos;: &apos;4.0&apos;, \r<br />    &apos;template_id&apos; : 10548,\r<br />    &apos;template_args&apos; : {\r<br />     &apos;HEADER_TITLE&apos;: msg.substr(7)+&quot; 에 대한 검색결과&quot;,\r<br />     &apos;SONG_COUNT&apos; : n,\r<br />     \r<br />     &apos;LIST_TITLE1&apos; : title1,\r<br />     &apos;LIST_THUMB_URL1&apos; : img1,\r<br />     &apos;LIST_SUB_TITLE1&apos; : artist1,\r<br />     &apos;LIST_SONG_ID1&apos; : id1,\r<br />     \r<br />     &apos;LIST_TITLE2&apos; : title2,\r<br />     &apos;LIST_THUMB_URL2&apos; : img2,\r<br />     &apos;LIST_SUB_TITLE2&apos; : artist2,\r<br />     &apos;LIST_SONG_ID2&apos; : id2,\r<br />\r<br />     &apos;LIST_TITLE3&apos; : title3,\r<br />     &apos;LIST_THUMB_URL3&apos; : img3,\r<br />     &apos;LIST_SUB_TITLE3&apos; : artist3,\r<br />     &apos;LIST_SONG_ID3&apos; : id3,\r<br />    \r<br />     &apos;LIST_TITLE4&apos; : title4,\r<br />     &apos;LIST_THUMB_URL4&apos; : img4,\r<br />     &apos;LIST_SUB_TITLE4&apos; : artist4,\r<br />     &apos;LIST_SONG_ID4&apos;: id4,<br /><br />     &apos;LIST_TITLE5&apos; : title5,\r<br />     &apos;LIST_THUMB_URL5&apos; : img5,\r<br />     &apos;LIST_SUB_TITLE5&apos; : artist5,\r<br />     &apos;LIST_SONG_ID5&apos; : id5,\r<br />    \r<br />     &apos;LIST_TITLE6&apos; : title6,\r<br />     &apos;LIST_THUMB_URL6&apos; : img6,\r<br />     &apos;LIST_SUB_TITLE6&apos; : artist6,\r<br />     &apos;LIST_SONG_ID6&apos;: id6,<br />     \r<br />     &apos;PLYLSTSEQ&apos; : &apos;261143&apos;\r<br />    }\r<br />   };<br />  //멜론 템플릿 JSON<br />  return Kakao.send(room, json, &apos;custom&apos;);<br />}<br />function melonPlay3(room, msg) {<br />  var doc = Jsoup.parse(Utils.getWebText(&apos;https://m.search.daum.net/search?w=music&amp;m=song&amp;nil_search=btn&amp;DA=NTB&amp;q=&apos; + msg.substr(6)));  //초급에 올리려고 Utils 사용<br />  var title = doc.select(&apos;strong.tit-g&apos;).eq(0).text();  //노래 제목<br />  var artist = doc.select(&apos;p.desc&apos;).eq(0).text();  //가수<br />  var img = doc.select(&apos;img&apos;).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id = doc.select(&apos;a&apos;).attr(&apos;data-song-id&apos;);  //곡 아이디<br />  var json = {<br />  &apos;link_ver&apos;: &apos;4.0&apos;, <br />  &apos;template_id&apos;: 10546, <br />  &apos;template_args&apos;: {<br />  &apos;THUMB_URL&apos;: img, <br />  &apos;TITLE&apos;: title, <br />  &apos;SUB_TITLE&apos;: artist, <br />  &apos;SONG_ID&apos;: id}};<br />  //멜론 템플릿 JSON<br />  return Kakao.send(room, json, &apos;custom&apos;);<br />}<br />function melonPlay4(room, msg) {<br />  var doc = Jsoup.parse(Utils.getWebText(&apos;https://m.search.daum.net/search?w=music&amp;m=song&amp;nil_search=btn&amp;DA=NTB&amp;q=&apos; + msg.substr(6)));  //초급에 올리려고 Utils 사용<br />  var title = doc.select(&apos;strong.tit-g&apos;).eq(0).text();  //노래 제목<br />  var artist = doc.select(&apos;p.desc&apos;).eq(0).text();  //가수<br />  var img = doc.select(&apos;img&apos;).attr(&apos;data-original-src&apos;);  //앨범 이미지<br />  var id = doc.select(&apos;a&apos;).attr(&apos;data-song-id&apos;);  //곡 아이디<br />  var json = {<br />  &apos;link_ver&apos;: &apos;4.0&apos;, <br />  &apos;template_id&apos;: 6964, <br />  &apos;template_args&apos;: {<br />  &apos;THUMB_URL&apos;: img, <br />  &apos;TITLE&apos;: title, <br />  &apos;SUB_TITLE&apos;: artist, <br />  &apos;LINK_URL&apos;: id}};<br />  //멜론 템플릿 JSON<br />  return Kakao.send(room, json, &apos;custom&apos;);<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004F4800000000",
+            "head": "기타",
+            "headId": 74,
+            "id": 20296,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 719,
+            "refArticleId": 20296,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "멜론 피드, 리스트 소스 투척",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1593081090607,
+            "writer": {
+                "id": "jjjj8539",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "1급 청정수 MoonBot"
+            }
+        },
+        "articleId": 20296,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이시국이지만 그냥 올리기로",
+                    "id": 94796113,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94796113,
+                    "updateDate": 1593081255000,
+                    "writer": {
+                        "id": "jjjj8539",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "1급 청정수 MoonBot"
+                    }
+                },
+                {
+                    "content": "모듈 있어야 작동하니 모듈부터 구하십쇼",
+                    "id": 94800847,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "updateDate": 1593085052000,
+                    "writer": {
+                        "id": "jjjj8539",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "1급 청정수 MoonBot"
+                    }
+                },
+                {
+                    "content": "템플릿 디자인 어떻게 하셨는지 카카오디벨로퍼에서 스샷가능한가욧??  읍읍..",
+                    "id": 94801474,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "updateDate": 1593085465000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "왈"
+                    }
+                },
+                {
+                    "content": "멜론꺼 훔치는건데여",
+                    "id": 94801501,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "왈"
+                    },
+                    "updateDate": 1593085485000,
+                    "writer": {
+                        "id": "jjjj8539",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "1급 청정수 MoonBot"
+                    }
+                },
+                {
+                    "content": "멜론 템플릿 어케생겼더라 종류가여러개라 하핳.. 으아아 귀차니즘이 오네요오 ㅋㅋㅋ\r\n아무튼 소스 올려주셔서 감사함다",
+                    "id": 94801644,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "replyMember": {
+                        "id": "jjjj8539",
+                        "nick": "1급 청정수 MoonBot"
+                    },
+                    "updateDate": 1593085600000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "왈"
+                    }
+                },
+                {
+                    "content": "팩트",
+                    "id": 94802192,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "핀밀크"
+                    },
+                    "updateDate": 1593086032000,
+                    "writer": {
+                        "id": "jjjj8539",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "1급 청정수 MoonBot"
+                    }
+                },
+                {
+                    "content": "아 감사합니다ㅎ",
+                    "id": 94802340,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "핀밀크"
+                    },
+                    "updateDate": 1593086153000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "왈"
+                    }
+                },
+                {
+                    "content": "청정수님 소스 자바스크립트 키 지우셔야될듯 저거그대로 하니까 님api로 작동 되용!!",
+                    "id": 94804551,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "replyMember": {
+                        "id": "jjjj8539",
+                        "nick": "1급 청정수 MoonBot"
+                    },
+                    "updateDate": 1593087540000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "왈"
+                    }
+                },
+                {
+                    "content": "ㅔ",
+                    "id": 94804572,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "왈"
+                    },
+                    "updateDate": 1593087556000,
+                    "writer": {
+                        "id": "jjjj8539",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "1급 청정수 MoonBot"
+                    }
+                },
+                {
+                    "content": "저거 멜론껀데요",
+                    "id": 94804618,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94800847,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "왈"
+                    },
+                    "updateDate": 1593087585000,
+                    "writer": {
+                        "id": "jjjj8539",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDhfNDYg/MDAxNTgzNjc3Njk4OTgx.HO5YqYNGEbbVYFh3TYDJsmuaowGwhx8KjLZpoJ4zht4g.2uD5_IVd9kJx6TWt0lpGJWR1HN0yQzFAiBAdroqgXdIg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "1급 청정수 MoonBot"
+                    }
+                }
+            ],
+            "last": {
+                "id": 97737708,
+                "refId": 97737708
+            },
+            "next": {
+                "id": 94804639,
+                "refId": 94800847
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

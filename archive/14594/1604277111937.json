@@ -1,0 +1,167 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "<div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Menlo, Monaco, 'Courier New', monospace; font-size: 12px; line-height: 18px; white-space: pre;\"><div><span style=\"color: #569cd6;\">const</span> <span style=\"color: #9cdcfe;\">scriptName</span> = <span style=\"color: #ce9178;\">&quot;common&quot;</span>;</div><div><span style=\"color: #6a9955;\">/**</span></div><div><span style=\"color: #6a9955;\"> * (string) room</span></div><div><span style=\"color: #6a9955;\"> * (string) sender</span></div><div><span style=\"color: #6a9955;\"> * (boolean) isGroupChat</span></div><div><span style=\"color: #6a9955;\"> * (void) replier.reply(message)</span></div><div><span style=\"color: #6a9955;\"> * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환</span></div><div><span style=\"color: #6a9955;\"> * (string) imageDB.getProfileBase64()</span></div><div><span style=\"color: #6a9955;\"> * (string) packageName</span></div><div><span style=\"color: #6a9955;\"> */</span></div><br /><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">response</span>(<span style=\"color: #9cdcfe;\">room</span>, <span style=\"color: #9cdcfe;\">msg</span>, <span style=\"color: #9cdcfe;\">sender</span>, <span style=\"color: #9cdcfe;\">isGroupChat</span>, <span style=\"color: #9cdcfe;\">replier</span>, <span style=\"color: #9cdcfe;\">imageDB</span>, <span style=\"color: #9cdcfe;\">packageName</span>) {</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">lotto</span> = <span style=\"color: #569cd6;\">new</span> <span style=\"color: #4ec9b0;\">Array</span>();</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">cmd</span> = <span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&quot; &quot;</span>)[<span style=\"color: #b5cea8;\">0</span>];</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">input_count</span> = <span style=\"color: #dcdcaa;\">parseInt</span>(<span style=\"color: #9cdcfe;\">msg</span>.<span style=\"color: #dcdcaa;\">replace</span>(<span style=\"color: #9cdcfe;\">cmd</span> + <span style=\"color: #ce9178;\">&quot; &quot;</span>, <span style=\"color: #ce9178;\">&quot;&quot;</span>));</div><br /><div>  <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">cmd</span> == <span style=\"color: #ce9178;\">&quot;@로또&quot;</span>) {</div><div>    <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">input_count</span> &lt; <span style=\"color: #b5cea8;\">11</span> &amp;&amp; <span style=\"color: #9cdcfe;\">input_count</span> &gt; <span style=\"color: #b5cea8;\">0</span>) {</div><div>      <span style=\"color: #c586c0;\">for</span> (<span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">i</span> = <span style=\"color: #b5cea8;\">0</span>; <span style=\"color: #9cdcfe;\">i</span> &lt; <span style=\"color: #9cdcfe;\">input_count</span>; <span style=\"color: #9cdcfe;\">i</span>++) {</div><div>        <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">i</span>] = <span style=\"color: #569cd6;\">new</span> <span style=\"color: #4ec9b0;\">Array</span>(<span style=\"color: #b5cea8;\">6</span>);</div><div>        <span style=\"color: #c586c0;\">for</span> (<span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">j</span> = <span style=\"color: #b5cea8;\">0</span>; <span style=\"color: #9cdcfe;\">j</span> &lt; <span style=\"color: #b5cea8;\">6</span>; <span style=\"color: #9cdcfe;\">j</span>++) {</div><br /><div>          <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">i</span>][<span style=\"color: #9cdcfe;\">j</span>] = <span style=\"color: #dcdcaa;\">parseInt</span>(<span style=\"color: #4ec9b0;\">Math</span>.<span style=\"color: #dcdcaa;\">random</span>() * <span style=\"color: #b5cea8;\">45</span>) + <span style=\"color: #b5cea8;\">1</span>;</div><div>          <span style=\"color: #c586c0;\">for</span> (<span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">k</span> = <span style=\"color: #b5cea8;\">0</span>; <span style=\"color: #9cdcfe;\">k</span> &lt; <span style=\"color: #9cdcfe;\">j</span>; <span style=\"color: #9cdcfe;\">k</span>++) {</div><div>            <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">i</span>][<span style=\"color: #9cdcfe;\">j</span>] == <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">i</span>][<span style=\"color: #9cdcfe;\">k</span>]) {</div><div>              <span style=\"color: #9cdcfe;\">j</span>--;</div><div>              <span style=\"color: #c586c0;\">break</span>;</div><div>            }</div><div>          }</div><div>        }</div><div>      }</div><div>      <span style=\"color: #c586c0;\">for</span> (<span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">m</span> = <span style=\"color: #b5cea8;\">0</span>; <span style=\"color: #9cdcfe;\">m</span> &lt; <span style=\"color: #9cdcfe;\">input_count</span>; <span style=\"color: #9cdcfe;\">m</span>++) {</div><div>        <span style=\"color: #569cd6;\">let</span> <span style=\"color: #9cdcfe;\">result</span> = <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">m</span>].<span style=\"color: #dcdcaa;\">sort</span>(<span style=\"color: #569cd6;\">function</span> (<span style=\"color: #9cdcfe;\">a</span>, <span style=\"color: #9cdcfe;\">b</span>) {</div><div>          <span style=\"color: #c586c0;\">return</span> <span style=\"color: #9cdcfe;\">a</span> - <span style=\"color: #9cdcfe;\">b</span>;</div><div>        });</div><div>      }</div><br /><div>      <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">lotto_result</span>;</div><div>      <span style=\"color: #c586c0;\">for</span> (<span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">l</span> = <span style=\"color: #b5cea8;\">0</span>; <span style=\"color: #9cdcfe;\">l</span> &lt; <span style=\"color: #9cdcfe;\">input_count</span>; <span style=\"color: #9cdcfe;\">l</span>++) {</div><div>        <span style=\"color: #9cdcfe;\">lotto_result</span> = <span style=\"color: #9cdcfe;\">lotto_result</span> + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>;</div><div>        <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">l</span> == <span style=\"color: #b5cea8;\">0</span>) {</div><div>          <span style=\"color: #9cdcfe;\">lotto_result</span> = <span style=\"color: #ce9178;\">&quot;추천 &quot;</span> + (<span style=\"color: #9cdcfe;\">l</span> + <span style=\"color: #b5cea8;\">1</span>) + <span style=\"color: #ce9178;\">&quot; : &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">0</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">1</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">2</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">3</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">4</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">5</span>];</div><div>        } <span style=\"color: #c586c0;\">else</span> <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">l</span> == <span style=\"color: #b5cea8;\">4</span>) {</div><div>          <span style=\"color: #9cdcfe;\">lotto_result</span> = <span style=\"color: #9cdcfe;\">lotto_result</span> + <span style=\"color: #ce9178;\">&quot;추천 &quot;</span> + (<span style=\"color: #9cdcfe;\">l</span> + <span style=\"color: #b5cea8;\">1</span>) + <span style=\"color: #ce9178;\">&quot; : &quot;</span>+ <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">0</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">1</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">2</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">3</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">4</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">5</span>] + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">----------------------------&quot;</span>;</div><div>        } <span style=\"color: #c586c0;\">else</span> <span style=\"color: #c586c0;\">if</span> (<span style=\"color: #9cdcfe;\">l</span> == <span style=\"color: #b5cea8;\">9</span>) {</div><div>          <span style=\"color: #9cdcfe;\">lotto_result</span> = <span style=\"color: #9cdcfe;\">lotto_result</span> + <span style=\"color: #ce9178;\">&quot;추천 &quot;</span> + (<span style=\"color: #9cdcfe;\">l</span> + <span style=\"color: #b5cea8;\">1</span>) + <span style=\"color: #ce9178;\">&quot; : &quot;</span>+ <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">0</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">1</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">2</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">3</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">4</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">5</span>];</div><div>        } <span style=\"color: #c586c0;\">else</span> {</div><div>          <span style=\"color: #9cdcfe;\">lotto_result</span> = <span style=\"color: #9cdcfe;\">lotto_result</span> + <span style=\"color: #ce9178;\">&quot;추천 &quot;</span> + (<span style=\"color: #9cdcfe;\">l</span> + <span style=\"color: #b5cea8;\">1</span>) + <span style=\"color: #ce9178;\">&quot; : &quot;</span>+ <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">0</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">1</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">2</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">3</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">4</span>] + <span style=\"color: #ce9178;\">&quot; &quot;</span> + <span style=\"color: #9cdcfe;\">lotto</span>[<span style=\"color: #9cdcfe;\">l</span>][<span style=\"color: #b5cea8;\">5</span>];</div><div>        }</div><div>      }</div><div>      <span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;추천번호 뽑는중&quot;</span>);</div><div>      <span style=\"color: #9cdcfe;\">java</span>.<span style=\"color: #9cdcfe;\">lang</span>.<span style=\"color: #9cdcfe;\">Thread</span>.<span style=\"color: #dcdcaa;\">sleep</span>(<span style=\"color: #b5cea8;\">2000</span>);</div><div>      <span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;로또 추천번호입니다.</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&#11015;&#65039;전체보기 눌러주세요! </span><span style=\"color: #d7ba7d;\">\\n\\n</span><span style=\"color: #ce9178;\">&quot;</span>+<span style=\"color: #ce9178;\">&apos;</span><span style=\"color: #d7ba7d;\">\\u200b</span><span style=\"color: #ce9178;\">&apos;</span>.<span style=\"color: #dcdcaa;\">repeat</span>(<span style=\"color: #b5cea8;\">500</span>) + <span style=\"color: #9cdcfe;\">lotto_result</span> + <span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n\\n</span><span style=\"color: #ce9178;\">가져다쓰고 AI탓 하지말기 :)&quot;</span>);</div><div>    } <span style=\"color: #c586c0;\">else</span> {</div><div>      <span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;1 ~ 10 사이 숫자입력&quot;</span>);</div><div>    }</div><div>  }</div><br /><div>}</div><br /><div><span style=\"color: #6a9955;\">//아래 4개의 메소드는 액티비티 화면을 수정할때 사용됩니다.</span></div><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onCreate</span>(<span style=\"color: #9cdcfe;\">savedInstanceState</span>, <span style=\"color: #9cdcfe;\">activity</span>) {</div><div>  <span style=\"color: #569cd6;\">var</span> <span style=\"color: #9cdcfe;\">textView</span> = <span style=\"color: #569cd6;\">new</span> <span style=\"color: #4ec9b0;\">android</span>.<span style=\"color: #4ec9b0;\">widget</span>.<span style=\"color: #4ec9b0;\">TextView</span>(<span style=\"color: #9cdcfe;\">activity</span>);</div><div>  <span style=\"color: #9cdcfe;\">textView</span>.<span style=\"color: #dcdcaa;\">setText</span>(<span style=\"color: #ce9178;\">&quot;Hello, World!&quot;</span>);</div><div>  <span style=\"color: #9cdcfe;\">textView</span>.<span style=\"color: #dcdcaa;\">setTextColor</span>(<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">graphics</span>.<span style=\"color: #9cdcfe;\">Color</span>.<span style=\"color: #9cdcfe;\">DKGRAY</span>);</div><div>  <span style=\"color: #9cdcfe;\">activity</span>.<span style=\"color: #dcdcaa;\">setContentView</span>(<span style=\"color: #9cdcfe;\">textView</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onStart</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onResume</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onPause</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div><div><span style=\"color: #569cd6;\">function</span> <span style=\"color: #dcdcaa;\">onStop</span>(<span style=\"color: #9cdcfe;\">activity</span>) { }</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000390200000000",
+            "id": 14594,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 58,
+            "refArticleId": 14594,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "로또 1개~10개뽑기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585667303217,
+            "writer": {
+                "id": "yoonhyouka",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "윤빙과"
+            }
+        },
+        "articleId": 14594,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

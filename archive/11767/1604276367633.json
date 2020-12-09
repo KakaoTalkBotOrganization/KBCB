@@ -1,0 +1,136 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇 (초록봇 - 닼토봇)</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: rgb(86, 156, 214);\">function</span>&nbsp;<span style=\"color: rgb(220, 220, 170);\">response</span>(<span style=\"color: rgb(156, 220, 254);\">room</span>,&nbsp;<span style=\"color: rgb(156, 220, 254);\">msg</span>,&nbsp;<span style=\"color: rgb(156, 220, 254);\">sender</span>,&nbsp;<span style=\"color: rgb(156, 220, 254);\">isGroupChat</span>,&nbsp;<span style=\"color: rgb(156, 220, 254);\">replier</span>,&nbsp;<span style=\"color: rgb(156, 220, 254);\">ImageDB</span>){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(197, 134, 192);\">if</span>(<span style=\"color: rgb(156, 220, 254);\">msg</span>&nbsp;==&nbsp;<span style=\"color: rgb(206, 145, 120);\">&quot;&quot;</span>){</div><div>????????????????????????????</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">data</span>&nbsp;=&nbsp;<span style=\"color: rgb(156, 220, 254);\">org</span>.<span style=\"color: rgb(156, 220, 254);\">jsoup</span>.<span style=\"color: rgb(156, 220, 254);\">Jsoup</span>.<span style=\"color: rgb(220, 220, 170);\">connect</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;<a href=\"https://www.bithumb.com/\" target=\"_blank\">https://www.bithumb.com/</a>&quot;</span>).<span style=\"color: rgb(220, 220, 170);\">get</span>().<span style=\"color: rgb(220, 220, 170);\">select</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;tbody&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">coin</span>&nbsp;=&nbsp;<span style=\"color: rgb(156, 220, 254);\">data</span>.<span style=\"color: rgb(220, 220, 170);\">select</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;span.blind&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">price</span>&nbsp;=&nbsp;<span style=\"color: rgb(156, 220, 254);\">data</span>.<span style=\"color: rgb(220, 220, 170);\">select</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;strong.sort_real&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">change</span>&nbsp;=&nbsp;<span style=\"color: rgb(156, 220, 254);\">data</span>.<span style=\"color: rgb(220, 220, 170);\">select</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;td.drop&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">amount</span>&nbsp;=&nbsp;<span style=\"color: rgb(156, 220, 254);\">data</span>.<span style=\"color: rgb(220, 220, 170);\">select</span>(<span style=\"color: rgb(206, 145, 120);\">&quot;strong.sort_amount&quot;</span>);</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(86, 156, 214);\">var</span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;=&nbsp;<span style=\"color: rgb(206, 145, 120);\">&apos;&apos;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;+=&nbsp;<span style=\"color: rgb(206, 145, 120);\">&apos;&#128054;빗&#128054;&apos;</span>&nbsp;+&nbsp;<span style=\"color: rgb(156, 220, 254);\">msg</span>&nbsp;+&nbsp;<span style=\"color: rgb(206, 145, 120);\">&apos;&#128054;썸&#128054;&apos;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;+=&nbsp;<span style=\"color: rgb(206, 145, 120);\">&apos;</span><span style=\"color: rgb(215, 186, 125);\">\\n</span><span style=\"color: rgb(206, 145, 120);\">현재시세:&nbsp;&apos;</span>&nbsp;+&nbsp;<span style=\"color: rgb(156, 220, 254);\">price</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;+=&nbsp;<span style=\"color: rgb(206, 145, 120);\">&apos;</span><span style=\"color: rgb(215, 186, 125);\">\\n</span><span style=\"color: rgb(206, 145, 120);\">가격변동:&nbsp;&apos;</span>&nbsp;+&nbsp;<span style=\"color: rgb(156, 220, 254);\">change</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;+=&nbsp;<span style=\"color: rgb(206, 145, 120);\">&apos;</span><span style=\"color: rgb(215, 186, 125);\">\\n</span><span style=\"color: rgb(206, 145, 120);\">거래량&nbsp;:&nbsp;&apos;</span>&nbsp;+&nbsp;<span style=\"color: rgb(156, 220, 254);\">amount</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(156, 220, 254);\">result</span>&nbsp;+=&nbsp;<span style=\"color: rgb(206, 145, 120);\">&apos;</span><span style=\"color: rgb(215, 186, 125);\">\\n</span><span style=\"color: rgb(206, 145, 120);\">※Bithumb※&apos;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: rgb(156, 220, 254);\">replier</span>.<span style=\"color: rgb(220, 220, 170);\">reply</span>(<span style=\"color: rgb(156, 220, 254);\">result</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><br /><div>}</div></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 위의 소스에서 if(msg == &quot; &quot;) 부분을 제외하고 실행 시,&nbsp;</b></div><div><b>var coin 의 결과값 (span.blind) 주르르르륵</b></div><div><b>var price 의 결과값 (strong.sort_real) 주르르르륵</b></div><div><b>나머지 이상 동일 과 같이 주르르르륵 나옵니다.</b></div><div><b><br /></b></div><div><b>var coin 변수 선언(span.blind)의 이름 출력 값들이 엔터단위로 출력되는데, 이 값들을 임시 Object 에 저장한 후, 원하는 msg 호출 시 해당 msg 값에 대한 나머지 값들을 result 로 출력받고 싶습니다.</b></div><div><b><br /></b></div><div><b>최대한 간결하게 소스코드를 작성하고 싶어서 헤메고 있습니다... ㅠ&nbsp;</b></div><div><b><br /></b></div><div><b>부디 조언 부탁 드립니다.</b></div><div><b><br /></b></div><div><b>감사합니다...</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002DF700000000",
+            "id": 11767,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 81,
+            "refArticleId": 11767,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "if(msg == \"\") 배열 선택 / 출력 관련 질문.... 꼭 댓글 부탁드립니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582276705360,
+            "writer": {
+                "id": "brian3918",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20100824_159/brian3918_1282576138330_r7kmvl_jpg/100814-0000.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "토끼는어흥"
+            }
+        },
+        "articleId": 11767,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

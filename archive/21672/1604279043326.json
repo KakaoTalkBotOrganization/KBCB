@@ -1,0 +1,401 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 14,
+            "contentElements": [],
+            "contentHtml": "if(msg.indexOf(&quot;!계산&quot;)==0) {//메세지가 !계산 으로 시작한다면...<blockquote><div><span style=\"font-size: 10pt;\">if(msg.includes(&quot;+&quot;) {//메세지가 + 를 포함한다면</span></div></blockquote><blockquote><blockquote><div><span style=\"font-size: 10pt;\">replier.reply(Math.round((Number(msg.substring(3,msg.indexOf(&quot;+&quot;)))+Number(msg.substring(msg.indexOf(&quot;+&quot;)+1,msg.length)))*100)/100);}</span></div></blockquote></blockquote><blockquote><div><div><span style=\"font-size: 10pt;\">}</span></div></div><div>else if(msg.includes(&quot;-&quot;) {//메세지가 - 를 포함한다면</div></blockquote><blockquote><blockquote><span style=\"font-size: 13.3333px;\">replier.reply(Math.round((Number(msg.substring(3,msg.indexOf(&quot;-&quot;)))-Number(msg.substring(msg.indexOf(&quot;-&quot;)+1,msg.length)))*100)/100);}</span></blockquote></blockquote><blockquote><div><span style=\"font-size: 10pt;\">}</span></div><div><span style=\"font-size: 10pt;\">else if(msg.includes(&quot;*&quot;) {//곱하기... 이하생략</span></div></blockquote><blockquote><blockquote><div><span style=\"font-size: 13.3333px;\">replier.reply(Math.round((Number(msg.substring(3,msg.indexOf(&quot;*&quot;)))*Number(msg.substring(msg.indexOf(&quot;*&quot;)+1,msg.length)))*100)/100);}</span></div></blockquote></blockquote><blockquote><div><span style=\"font-size: 10pt;\">}</span></div><div><span style=\"font-size: 10pt;\">else if(msg..includes(&quot;/&quot;) {나누기</span></div></blockquote><blockquote><blockquote>if(msg.substring(msg.indexOf(&quot;/&quot;)+1,msg.length)==0) {</blockquote></blockquote><blockquote><blockquote><blockquote><span style=\"font-size: 13.3333px;\">replier.reply(&quot;0으로 나눌 수 없습니다&quot;);</span></blockquote></blockquote></blockquote><blockquote><blockquote><span style=\"font-size: 13.3333px;\">} else {</span></blockquote><blockquote><span style=\"font-size: 13.3333px;\">replier.reply(Math.round((Number(msg.substring(3,msg.indexOf(&quot;/&quot;)))/Number(msg.substring(msg.indexOf(&quot;/&quot;)+1,msg.length)))*100)/100);}</span></blockquote><blockquote><span style=\"font-size: 13.3333px;\">}</span></blockquote></blockquote><blockquote><div><span style=\"font-size: 10pt;\">}</span></div><div><span style=\"font-size: 10pt;\">else {replier.reply(&quot;올바른 식이 아닙니다.\\n이 계산기는 두 숫자의 사칙연산만 가능합니다&quot;);</span></div><div><span style=\"font-size: 10pt;\">}</span></div></blockquote><div><span style=\"font-size: 10pt;\">}</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div style=\"font-size: 13.3333px;\"><span style=\"font-size: 14pt;\"><b>해석:</b></span></div><div><span style=\"font-size: 13.3333px;\">replier.reply(</span><span style=\"font-size: 13.3333px;\">Math.round((Number(msg.substring(3,msg.indexOf(&quot;+&quot;)))+Number(msg.substring(msg.indexOf(&quot;+&quot;)+1,msg.length)))*100)/100);</span></div><div><span style=\"font-size: 10pt;\">위 코드가 계산기의 주요 코드인데 설명을 위해 나누겠습니다</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div><span style=\"font-size: 10pt;\">let ans1 = Number(msg.substring(3,msg.indexOf(&quot;+&quot;)));</span></div><div>let ans2 = Number(msg.substring(msg.indexOf(&quot;+&quot;)+1,msg.length));</div><div>replier.reply(Math.round((ans1+ans2)*100)/100));</div><div>으로 나누고 설명을 하자면</div><div><br /></div><div><br /></div><div><span style=\"font-size: 13.3333px;\">첫번째줄의&nbsp;</span><span style=\"font-size: 13.3333px;\">Number(msg.substring(3,msg.indexOf(&quot;+&quot;)));</span></div><div><span style=\"font-size: 13.3333px;\">은 받은 메세지에서 3~(+문자가 나오기 전)까지를 잘라내는데</span></div><div><span style=\"font-size: 13.3333px;\">띄어쓰기가 없다면 +앞에 있는 숫자가 잘려나옵니다</span></div><div><span style=\"font-size: 13.3333px;\">그리고 Number()때문에 문자열을 정수,실수형으로 형변환을 해서 ans1변수에 저장하죠</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">두번째줄의&nbsp;</span><span style=\"font-size: 13.3333px;\">Number(msg.substring(msg.indexOf(&quot;+&quot;)+1,msg.length));</span></div><div><span style=\"font-size: 13.3333px;\">은 첫번째와 유사합니다. msg.indexOf(&quot;+&quot;)+1로 +기호가 나온 다음글자부터 msg.length로 메세지의 마지막 글자까지 잘라서 Number()로 형변환을 하여 ans2에 저장</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">3번째줄&nbsp;</span><span style=\"font-size: 13.3333px;\">replier.reply(Math.round((ans1+ans2)*100)/100);</span></div><div><span style=\"font-size: 13.3333px;\">ans1과 ans2를 더하고 Math.round로 소수 2째자리까지 나오게 하기 위해 *100을 하고 그 값을 다시 /100 해줬습니다</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 14pt;\"><b>+추가&nbsp;</b></span></div><div><span style=\"font-size: 13.3333px;\">Math.round로 소수 2째자리까지 나오는게 이해 안가시는 분을 위해 써봅니다</span></div><div><span style=\"font-size: 13.3333px;\">만약 ans1과 ans2를 계산한 값이 12.3456이라고 하면</span></div><div><span style=\"font-size: 13.3333px;\">Math.round 안에서 12.3456에 *100을 함, 1234.56</span></div><div><span style=\"font-size: 13.3333px;\">Math.round로 소수자리가 반올림됨, 1235</span></div><div><span style=\"font-size: 13.3333px;\">Math.round 밖에서 /100을 함, 12.35</span></div><div><span style=\"font-size: 13.3333px;\">로 소수 2째자리까지 나오게 되는겁니다</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">저도 초보인지라 코드도 난잡하고 글도 난잡하네요...</span></div><div><span style=\"font-size: 13.3333px;\">코드에 오류, 개선점 있다면 댓글 달아주세요 확인하는 대로 수정하겠습니다</span></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000054A800000000",
+            "id": 21672,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 148,
+            "refArticleId": 21672,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "단순하고 무식하게 만든 사칙연산 계산기(eval없음)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595575929347,
+            "writer": {
+                "id": "miw1102",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMzIg/MDAxNTk3OTI0MDgxMTYw.-IPZ636gUrEQsLRV-qHLlAaSIB5HZ08bykGERPJmQ5Ag.UUXTYrgtezEivsnQGfcJrMcSvbr5hdOu1kRX0NTckIIg.PNG.miw1102/%25ED%258D%25BC%25EB%259F%25AC%25EB%25A6%25AC.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "modabada"
+            }
+        },
+        "articleId": 21672,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이거 쓰고나서 보니까 왜이렇게 길어졌지",
+                    "id": 97791410,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97791410,
+                    "updateDate": 1595575944000,
+                    "writer": {
+                        "id": "miw1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMzIg/MDAxNTk3OTI0MDgxMTYw.-IPZ636gUrEQsLRV-qHLlAaSIB5HZ08bykGERPJmQ5Ag.UUXTYrgtezEivsnQGfcJrMcSvbr5hdOu1kRX0NTckIIg.PNG.miw1102/%25ED%258D%25BC%25EB%259F%25AC%25EB%25A6%25AC.png"
+                        },
+                        "nick": "modabada"
+                    }
+                },
+                {
+                    "content": "Math.PI도 넣어주세여",
+                    "id": 97791457,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97791457,
+                    "updateDate": 1595575992000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "파이값을 구하는거라면 그냥 단순응답으로도 충분할것같고 \n파이를 이용해서 계산을 해야된다면 제 능력 밖의 일입니다ㅠ\n\n님이 저보다 잘하실것 같은데 왜 저에게 찾으시나요ㅠㅠㅠ",
+                    "id": 97791578,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97791457,
+                    "updateDate": 1595576099000,
+                    "writer": {
+                        "id": "miw1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMzIg/MDAxNTk3OTI0MDgxMTYw.-IPZ636gUrEQsLRV-qHLlAaSIB5HZ08bykGERPJmQ5Ag.UUXTYrgtezEivsnQGfcJrMcSvbr5hdOu1kRX0NTckIIg.PNG.miw1102/%25ED%258D%25BC%25EB%259F%25AC%25EB%25A6%25AC.png"
+                        },
+                        "nick": "modabada"
+                    }
+                },
+                {
+                    "content": "단순응답 ㄷㄷ",
+                    "id": 97791726,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97791457,
+                    "replyMember": {
+                        "id": "miw1102",
+                        "nick": "modabada"
+                    },
+                    "updateDate": 1595576215000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "저는 이런거 다 귀찮아서 eval에다가 parseFloat 넣는 빡대가리입니다",
+                    "id": 97791773,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97791457,
+                    "replyMember": {
+                        "id": "miw1102",
+                        "nick": "modabada"
+                    },
+                    "updateDate": 1595576251000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "그냥 \nif(msg==\"!파이\") {\n replier.reply(Math.PI);\n }\n로는 안나오나요;",
+                    "id": 97791787,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97791457,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1595576264000,
+                    "writer": {
+                        "id": "miw1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMzIg/MDAxNTk3OTI0MDgxMTYw.-IPZ636gUrEQsLRV-qHLlAaSIB5HZ08bykGERPJmQ5Ag.UUXTYrgtezEivsnQGfcJrMcSvbr5hdOu1kRX0NTckIIg.PNG.miw1102/%25ED%258D%25BC%25EB%259F%25AC%25EB%25A6%25AC.png"
+                        },
+                        "nick": "modabada"
+                    }
+                },
+                {
+                    "content": "엌ㅋㅋㅋ",
+                    "id": 97791802,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97791457,
+                    "replyMember": {
+                        "id": "miw1102",
+                        "nick": "modabada"
+                    },
+                    "updateDate": 1595576274000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "Math.sin(45*Math.PI/180)",
+                    "id": 97791914,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97791457,
+                    "replyMember": {
+                        "id": "miw1102",
+                        "nick": "modabada"
+                    },
+                    "updateDate": 1595576354000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "function calc(chat, text) {\n  if (text.startsWith(\">계산 \")) {\n    try {\n      var problem = text.split(\">계산 \")[1].replace(/×/g, '*').replace(/÷/g, '/');\n      var result = Math.round(eval(problem));\n      return chat.replyText(String(result));\n    } catch (e) {\n      chat.replyText(\"계산할 수 없습니다.\");\n    } finally {\n\n    }\n  }\n여기에 관리자 체크까지 넣으면 편안",
+                    "id": 97791811,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97791811,
+                    "updateDate": 1595576283000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "try-catch 못써서 몰라오\n아무리 이해하려 해봐도 if else랑 차이를 모르겠던데",
+                    "id": 97791986,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97791811,
+                    "updateDate": 1595576415000,
+                    "writer": {
+                        "id": "miw1102",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMzIg/MDAxNTk3OTI0MDgxMTYw.-IPZ636gUrEQsLRV-qHLlAaSIB5HZ08bykGERPJmQ5Ag.UUXTYrgtezEivsnQGfcJrMcSvbr5hdOu1kRX0NTckIIg.PNG.miw1102/%25ED%258D%25BC%25EB%259F%25AC%25EB%25A6%25AC.png"
+                        },
+                        "nick": "modabada"
+                    }
+                }
+            ],
+            "last": {
+                "id": 97791811,
+                "refId": 97791811
+            },
+            "next": {
+                "id": 97792024,
+                "refId": 97791811
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

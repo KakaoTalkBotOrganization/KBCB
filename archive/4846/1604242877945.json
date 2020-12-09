@@ -1,0 +1,300 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<p>카신님 한글 분해소스 응용했습니다.</p><p>&nbsp;</p><p>&nbsp;</p><p dir=\"ltr\">&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;const CHOSEONGS = [&apos;ㄱ&apos;, &apos;ㄲ&apos;, &apos;ㄴ&apos;, &apos;ㄷ&apos;, &apos;ㄸ&apos;, &apos;ㄹ&apos;, &apos;ㅁ&apos;, &apos;ㅂ&apos;, &apos;ㅃ&apos;, &apos;ㅅ&apos;, &apos;ㅆ&apos;, &apos;ㅇ&apos;, &apos;ㅈ&apos;, &apos;ㅉ&apos;, &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];</p><p>&nbsp;</p><p>const JUNGSEONGS = [&apos;ㅏ&apos;, &apos;ㅐ&apos;, &apos;ㅑ&apos;, &apos;ㅒ&apos;, &apos;ㅓ&apos;, &apos;ㅔ&apos;, &apos;ㅕ&apos;, &apos;ㅖ&apos;, &apos;ㅗ&apos;, &apos;ㅘ&apos;, &apos;ㅙ&apos;, &apos;ㅚ&apos;, &apos;ㅛ&apos;, &apos;ㅜ&apos;, &apos;ㅝ&apos;, &apos;ㅞ&apos;, &apos;ㅟ&apos;, &apos;ㅠ&apos;, &apos;ㅡ&apos;, &apos;ㅢ&apos;, &apos;ㅣ&apos;];</p><p>&nbsp;</p><p>const JONGSEONGS = [&apos;&apos;, &apos;ㄱ&apos;, &apos;ㄲ&apos;, &apos;ㄳ&apos;, &apos;ㄴ&apos;, &apos;ㄵ&apos;, &apos;ㄶ&apos;, &apos;ㄷ&apos;, &apos;ㄹ&apos;, &apos;ㄺ&apos;, &apos;ㄻ&apos;, &apos;ㄼ&apos;, &apos;ㄽ&apos;, &apos;ㄾ&apos;, &apos;ㄿ&apos;, &apos;ㅀ&apos;, &apos;ㅁ&apos;, &apos;ㅂ&apos;, &apos;ㅄ&apos;, &apos;ㅅ&apos;, &apos;ㅆ&apos;, &apos;ㅇ&apos;, &apos;ㅈ&apos;, &apos;ㅊ&apos;, &apos;ㅋ&apos;, &apos;ㅌ&apos;, &apos;ㅍ&apos;, &apos;ㅎ&apos;];</p><p>&nbsp;</p><p>&nbsp;</p><p>function response(room, msg, sender, isGroupChat, replier, ImageDB, threadId){</p><p>&nbsp;</p><p>if(!msg.indexOf(&quot;/모스부호 &quot;)) {</p><p>&nbsp;</p><p>text = msg.substring(6);</p><p>&nbsp;</p><p>var A = [];</p><p>&nbsp;</p><p>for(var key in text){</p><p>&nbsp;</p><p>var a = text.charCodeAt(key);</p><p>&nbsp;</p><p>var b = a-0xAC00;&nbsp;</p><p>&nbsp;</p><p>var c = b%28;&nbsp;</p><p>&nbsp;</p><p>var d = ((b-c)/28)%21;&nbsp;</p><p>&nbsp;</p><p>var e = parseInt(((b-c)/28)/21);&nbsp;</p><p>&nbsp;</p><p>A.push(CHOSEONGS[e], JUNGSEONGS[d], JONGSEONGS[c]);</p><p>}</p><p>var nm = A.join(&quot;&nbsp; &nbsp;&quot;);</p><p>&nbsp;</p><p>var hj = nm.replace(/ㄱ/g,&quot;&middot; &ndash; &middot; &middot;&quot;).replace(/ㄴ/g,&quot;&middot; &middot; &ndash; &middot;&quot;).replace(/ㄷ/g,&quot;&ndash; &middot; &middot; &middot;&quot;).replace(/ㄹ/g,&quot;&middot; &middot; &middot; &ndash;&quot;).replace(/ㅁ/g,&quot;&ndash; &ndash;&quot;).replace(/ㅂ/g,&quot;&middot; &ndash; &ndash;&quot;).replace(/ㅅ/g,&quot;&ndash; &ndash; &middot;&quot;).replace(/ㅇ/g,&quot;&ndash; &middot; &ndash;&quot;).replace(/ㅈ/g,&quot;&middot; &ndash; &ndash; &middot;&quot;).replace(/ㅊ/g,&quot;&ndash; &middot; &ndash; &middot;&quot;).replace(/ㅋ/g,&quot;&ndash; &middot; &middot; &ndash;&quot;).replace(/ㅌ/g,&quot;&ndash; &ndash; &middot; &middot;&quot;).replace(/ㅍ/g,&quot;&ndash; &ndash; &ndash;&quot;).replace(/ㅎ/g,&quot;&middot; &ndash; &ndash; &ndash;&quot;).replace(/ㄲ/g,&quot;&middot; &ndash; &middot; &middot;&nbsp; &middot; &ndash; &middot; &middot;&quot;).replace(/ㅆ/g,&quot;&ndash; &ndash; &middot;&nbsp; &ndash; &ndash; &middot;&quot;).replace(/ㅃ/g,&quot;&middot; &ndash; &ndash;&nbsp; &middot; &ndash; &ndash;&quot;).replace(/ㅉ/g,&quot;&middot; &ndash; &ndash; &middot;&nbsp; &middot; &ndash; &ndash; &middot;&quot;).replace(/ㄸ/g,&quot;&ndash; &middot; &middot; &middot;&nbsp; &ndash; &middot; &middot; &middot;&quot;);</p><p>&nbsp;</p><p>var ks = hj.replace(/ㅏ/g,&quot;&middot;&quot;).replace(/ㅐ/g,&quot;&ndash; &ndash; &middot; &ndash;&quot;).replace(/ㅑ/g,&quot;&middot; &middot;&quot;).replace(/ㅒ/g,&quot;&middot; &middot;&nbsp; &middot; &middot; &ndash;&quot;).replace(/ㅓ/g,&quot;&ndash;&quot;).replace(/ㅔ/g,&quot;&ndash; &middot; &ndash; &ndash;&quot;).replace(/ㅕ/g,&quot;&middot; &middot; &middot;&quot;).replace(/ㅖ/g,&quot;&middot; &middot; &middot;&nbsp; &middot; &middot; &ndash;&quot;).replace(/ㅗ/g,&quot;&middot; &ndash;&quot;).replace(/ㅘ/g,&quot;&middot; &ndash;&nbsp; &middot;&quot;).replace(/ㅙ/g,&quot;&middot; &ndash;&nbsp; &ndash; &ndash; &middot; &ndash;&quot;).replace(/ㅚ/g,&quot;&middot; &ndash;&nbsp; &middot; &middot; &ndash;&quot;).replace(/ㅛ/g,&quot;&ndash; &middot;&quot;).replace(/ㅜ/g,&quot;&middot; &middot; &middot; &middot;&quot;).replace(/ㅝ/g,&quot;&middot; &middot; &middot; &middot;&nbsp; &ndash;&quot;).replace(/ㅞ/g,&quot; &middot; &middot; &middot; &middot;&nbsp; &ndash; &middot; &ndash; &ndash;&quot;).replace(/ㅟ/g,&quot;&middot; &middot; &middot; &middot;&nbsp; &middot; &middot; &ndash;&quot;).replace(/ㅠ/g,&quot;&middot; &ndash; &middot;&quot;).replace(/ㅡ/g,&quot;&ndash; &middot; &middot;&quot;).replace(/ㅢ/g,&quot;&ndash; &middot; &middot;&nbsp; &middot; &middot; &ndash;&quot;).replace(/ㅣ/g,&quot;&middot; &middot; &ndash;&quot;);</p><p>&nbsp;</p><p>var xx = ks.replace(/ㄳ/g,&quot; &middot; &ndash; &middot; &middot;&nbsp; &ndash; &ndash; &middot;&quot;).replace(/ㄵ/g,&quot;&middot; &middot; &ndash; &middot;&nbsp; &middot; &ndash; &ndash; &middot;&quot;).replace(/ㄶ/g,&quot;&middot; &middot; &ndash; &middot;&nbsp; &middot; &ndash; &ndash; &ndash;&quot;).replace(/ㄺ/g,&quot;&middot; &middot; &middot; &ndash;&nbsp; &middot; &ndash; &middot; &middot;&quot;).replace(/ㄻ/g,&quot;&middot; &middot; &middot; &ndash;&nbsp; &ndash; &ndash;&quot;).replace(/ㄼ/g,&quot;&middot; &middot; &middot; &ndash;&nbsp; &middot; &ndash; &ndash;&quot;).replace(/ㄽ/g,&quot;&middot; &middot; &middot; &ndash;&nbsp; &ndash; &ndash; &middot;&quot;).replace(/ㄾ/g,&quot;&middot; &middot; &middot; &ndash;&nbsp; &ndash; &ndash; &middot; &middot;&quot;).replace(/ㄿ/g,&quot;&middot; &middot; &middot; &ndash;&nbsp; &ndash; &ndash; &ndash;&quot;).replace(/ㅀ/g,&quot;&middot; &middot; &middot; &ndash;&nbsp; &middot; &ndash; &ndash; &ndash;&quot;).replace(/ㅄ/g,&quot;&middot; &ndash; &ndash;&nbsp; &ndash; &ndash; &middot;&quot;);</p><p>&nbsp;</p><p>replier.reply(xx);</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>}</p><p>&nbsp;</p><p>}</p><p>&nbsp;</p><p>으어........노가다 힘들다......</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000012EE00000000",
+            "id": 4846,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 273,
+            "refArticleId": 4846,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "모스부호 소스 공유",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1566900182390,
+            "writer": {
+                "id": "hanjw0126",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTExMDVfMTMy/MDAxNTcyOTQ4MzkwMjg0.L8lKL3iyb9xCa8Aj0Gj-wBulwo8J27Md1JXjwKNMImsg.vyhFq9tY0EXdyfJY-R0EjtspM3f6UQ7TKj2ZRJfog_sg.GIF/36F826E8-7C71-45E8-8FCB-96A64E52D154.gif"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "몽키s"
+            }
+        },
+        "articleId": 4846,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷㄷㄷ 필요했는데 ㄱㅅ",
+                    "id": 67384108,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 67384108,
+                    "updateDate": 1566901212000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "노가다 ㄷㄷㄷ",
+                    "id": 67385806,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 67385806,
+                    "updateDate": 1566902961000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "조만간 영어와 숫자도 추가예정입니다.",
+                    "id": 67388661,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 67388661,
+                    "updateDate": 1566905840000,
+                    "writer": {
+                        "id": "hanjw0126",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMDVfMTMy/MDAxNTcyOTQ4MzkwMjg0.L8lKL3iyb9xCa8Aj0Gj-wBulwo8J27Md1JXjwKNMImsg.vyhFq9tY0EXdyfJY-R0EjtspM3f6UQ7TKj2ZRJfog_sg.GIF/36F826E8-7C71-45E8-8FCB-96A64E52D154.gif"
+                        },
+                        "nick": "몽키s"
+                    }
+                },
+                {
+                    "content": "(흑흑ㅠㅠ)",
+                    "id": 67390010,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 67388661,
+                    "updateDate": 1566907210000,
+                    "writer": {
+                        "id": "hanjw0126",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMDVfMTMy/MDAxNTcyOTQ4MzkwMjg0.L8lKL3iyb9xCa8Aj0Gj-wBulwo8J27Md1JXjwKNMImsg.vyhFq9tY0EXdyfJY-R0EjtspM3f6UQ7TKj2ZRJfog_sg.GIF/36F826E8-7C71-45E8-8FCB-96A64E52D154.gif"
+                        },
+                        "nick": "몽키s"
+                    }
+                },
+                {
+                    "content": "노가다 ㄷㄷㄸㄷㄷ",
+                    "id": 67397317,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 67397317,
+                    "updateDate": 1566912214000,
+                    "writer": {
+                        "id": "surbjun",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "큐브"
+                    }
+                },
+                {
+                    "content": "ㄷㄷ 대단하십니다\r\n\r\n진짜 박수 드려야 합니다",
+                    "id": 67401188,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 67401188,
+                    "sticker": {
+                        "height": 112,
+                        "id": "happybean-11-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/happybean/original_11.png",
+                        "width": 129
+                    },
+                    "updateDate": 1566914804000,
+                    "writer": {
+                        "id": "702168",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160606_73/702168_1465174223865OobkI_JPEG/%25B9%25D9%25B3%25AA%25B3%25AA%2B%25B5%25E5%25B7%25A1%25B0%25EF%25BA%25BC.JPG"
+                        },
+                        "nick": "봇가주아"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

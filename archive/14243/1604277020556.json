@@ -1,0 +1,436 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 25,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">칼님 포켓몬에 스스로 추가 시킨(허락받음) 사냥 컨텐츠 입니다.</font></span></div><div>Kal님 카링 포켓몬 RPG :&nbsp;<a id=\"linkUrl\" href=\"https://cafe.naver.com/nameyee/14129\" target=\"_blank\">https://cafe.naver.com/nameyee/14129</a></div><div><div><b>이건 도움말에 적으시면 될꺼 같습니다.</b></div><div><div><b>&nbsp;&quot;&#10940; p.사냥 (포켓몬 번호)/ 사냥 방식 선택(1 또는 2 선택)/난이도 선택(1~무한)&#8609;\\n&quot; +&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;&#8669; (포켓몬 번호)가 야생포켓몬과 대결을 시작합니다. \\n&quot; +</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;1번 선택 :: 일정 확률로 몬스터볼을 던져 잡을 수 있습니다.(골드획득 X) \\n2번 선택 ::한쪽 포켓몬이 죽을 때까지 싸웁니다(골드획득 O)\\n&quot;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; + &quot;난이도 선택 :: 1~무한 난이도를 선택해 사냥할수 있습니다.&quot;);</b></div></div></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>if (msg.startsWith(&apos;p.사냥 &apos;)) {</b></span></div><div style=\"\"><b>Lw = &quot;\\u200b&quot;.repeat(500)</b></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 대답 = msg.replace(&apos;p.사냥 &apos;, &apos;&apos;).split(&apos;/&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (myjson[&apos;포켓몬&apos;][Number(대답[0]) - 1] == undefined) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(p + &apos;그런 번호의 포켓몬은 존재하지 않습니다!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (대답.length != 3) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(p + &apos;p.사냥 (포켓몬 번호)/(1 또는 2)/(난이도 선택) 으로 입력해주세요!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (Number(대답[0]) == 0) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(p + &apos;포켓몬 번호는 0 이상의 수로 입력해주세요&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (대답[2] &lt;= 0 || 대답[2] == &apos;&apos;) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&apos;난이도는 0 이상의 수로 입력해주세요&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (Number(대답[1]) != 1 &amp;&amp; Number(대답[1]) != 2) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(p + &quot;사냥 방식은 1번(포획)과 2번(사냥) 입니다. p.도움말 을 확인해 주세요.&quot;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (Number(대답[1]) == 1 &amp;&amp; myjson[&apos;몬스터볼&apos;] &lt;= 0) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(p + &apos;몬스터 볼이 부족합니다&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; return;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; java.lang.Thread.sleep(5000);&nbsp; //사냥 도배 시 똑같은 몬스터 잡히는 버그 방지</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; rand = Math.floor(Math.random() * json.length);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생이름 = json[rand][&apos;name&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생이미지 = json[rand][&apos;img&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생타입 = json[rand][&apos;type&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생약점 = json[rand][&apos;weaknesses&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생CP = Math.floor(Math.random() * Number(myjson[&apos;레벨&apos;] * 50 * 대답[2])) + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생체력 = Number(Number(json2[rand][&apos;base&apos;][&apos;HP&apos;]) * (야생CP / 7) + Math.floor(Math.random() * 야생CP)).toFixed(1);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생공격력 = Number(Number(json2[rand][&apos;base&apos;][&apos;Attack&apos;]) * (야생CP / 10) + Math.floor(Math.random() * 야생CP)).toFixed(1);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생속도 = Number(Number(json2[rand][&apos;base&apos;][&apos;Speed&apos;]) * (야생CP / 10) + Math.floor(Math.random() * 야생CP)).toFixed(1);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생번호 = &apos;없음&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 야생체력2 = Number(Number(json2[rand][&apos;base&apos;][&apos;HP&apos;]) * (야생CP / 7) + Math.floor(Math.random() * 야생CP)).toFixed(1);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; //replier.reply(p+&apos;자동 전투중입니다\\n잠시만 기다려주세요..&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 승 = &apos;&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 패 = &apos;&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 로그 = &apos;&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; pathp1 = sdcard + &quot;/ＫＡＬ ＢＯＴ/PokeMonGo/&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; pathp1 = pathp1 + room + &apos;/&apos; + sender + &apos;.txt&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; p1 = JSON.parse(FS.read(pathp1))[&apos;포켓몬&apos;][Number(대답[0]) - 1];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; at = &apos;&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; i = Number(대답) - 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 이름 = p1[&apos;이름&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 체력 = p1[&apos;체력&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 공격력 = p1[&apos;공격력&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 속도 = p1[&apos;속도&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; CP = p1[&apos;CP&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 번호 = 대답[0];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬 = &apos;&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬 = 내포켓몬 + &apos;\\n\\n 이름 :: &apos; + 이름;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬 = 내포켓몬 + &apos;\\n 번호 :: &apos; + 번호;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬 = 내포켓몬 + &apos;\\n CP :: &apos; + CP;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬 = 내포켓몬 + &apos;\\n 체력 :: &apos; + 체력;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬 = 내포켓몬 + &apos;\\n 공격력 :: &apos; + 공격력;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬 = 내포켓몬 + &apos;\\n 속도 :: &apos; + 속도;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; //j = Number(대결초대[room][sender].split(&apos;♡&apos;)[1])-1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 이름 = 야생이름;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 체력 = 야생체력;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 기존체력 = 야생체력;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 공격력 = 야생공격력;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 속도 = 야생속도;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; CP = 야생CP;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 번호 = 야생번호;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬2 = &apos;&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬2 = 내포켓몬2 + &apos;\\n\\n 이름 :: &apos; + 이름;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬2 = 내포켓몬2 + &apos;\\n 번호 :: &apos; + 번호;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬2 = 내포켓몬2 + &apos;\\n CP :: &apos; + CP;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬2 = 내포켓몬2 + &apos;\\n 체력 :: &apos; + 체력;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬2 = 내포켓몬2 + &apos;\\n 공격력 :: &apos; + 공격력;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 내포켓몬2 = 내포켓몬2 + &apos;\\n 속도 :: &apos; + 속도;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 로그 = &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;님의 포켓몬 스텟 &#8628;&apos; + 내포켓몬 + &apos;\\n\\n VS\\n\\n&apos; + &apos;야생포켓몬의 스텟 &#8628;&apos; + 내포켓몬2 + &apos;\\n\\n※ 곧 자동전투가 진행됩니다 ※&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (Number(p1[&apos;속도&apos;]) &gt;= Number(야생속도)) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; at = 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + (&apos;알림 &bull; &apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;님의 포켓몬이 속도가 높으므로 선공을 시작합니다!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; at = 2;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + (&apos;알림 &bull; 야생포켓몬의 속도가 높으므로 선공을 시작합니다!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; 포획 = &quot;-1&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; while (true) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (at == 1) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 데미지 = Math.floor(Math.random() * p1[&apos;공격력&apos;]);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;이 공격합니다 [ 데미지 &apos; + 데미지 + &apos; ]&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 랜덤 = Math.floor(Math.random() * 100) + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (랜덤 &lt; 20) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 랜덤 = Math.floor(Math.random() * 3) + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (랜덤 == 2) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;야생포켓몬이 공격을 피했습니다!!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos; 크.리.티.컬!!! 데미지 X 2!!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 야생체력 = 야생체력 - (데미지 * 2);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;의 체력 :: &apos; + Number(p1[&apos;체력&apos;]).toFixed(1) + &apos;\\n&apos; + &apos;야생포켓몬의 체력 :: &apos; + Number(야생체력).toFixed(1));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 야생체력 = 야생체력 - 데미지;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;의 체력 :: &apos; + Number(p1[&apos;체력&apos;]).toFixed(1) + &apos;\\n&apos; + &apos;야생포켓몬의 체력 :: &apos; + Number(야생체력).toFixed(1));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (대답[1] == &quot;1&quot; &amp;&amp; Number(야생체력) &lt; Number(기존체력) / 2) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 랜덤 = Math.floor(Math.random() * 2);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (랜덤 == 1) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 포획 = 0;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 포획 = 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (대답[1] == &quot;1&quot; &amp;&amp; 포획 == 0) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;야생포켓몬이 포획되어대결이 끝납니다&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 승 = p1[&apos;이름&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 패 = &apos;야생포켓몬&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if (야생체력 &lt; 0) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;야생포켓몬이 사망하여 대결이 끝납니다&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 승 = p1[&apos;이름&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 패 = &apos;야생포켓몬&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 데미지 = Math.floor(Math.random() * 야생공격력);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + (&apos;야생포켓몬이 공격합니다 [ 데미지 &apos; + 데미지 + &apos; ]&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 랜덤 = Math.floor(Math.random() * 100) + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (랜덤 &lt; 20) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 랜덤 = Math.floor(Math.random() * 3) + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (랜덤 == 2) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;이(가) 공격을 피했습니다!!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;야생포켓몬 크.리.티.컬!!! 데미지 X 2!!&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p1[&apos;체력&apos;] = p1[&apos;체력&apos;] - (데미지 * 2);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;의 체력 :: &apos; + Number(p1[&apos;체력&apos;]).toFixed(1) + &apos;\\n&apos; + &apos;야생포켓몬의 체력 :: &apos; + Number(야생체력).toFixed(1));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p1[&apos;체력&apos;] = p1[&apos;체력&apos;] - 데미지;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + (&apos;\\n\\n&apos; + &apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;의 체력 :: &apos; + Number(p1[&apos;체력&apos;]).toFixed(1) + &apos;\\n&apos; + &apos;야생포켓몬의 체력 :: &apos; + Number(야생체력).toFixed(1));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (p1[&apos;체력&apos;] &lt; 0) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + (&apos;&hearts;&#65039;&apos; + p1[&apos;이름&apos;] + &apos;이(가) 사망하여 대결이 끝납니다&apos;);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 승 = &apos;야생포켓몬&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 패 = p1[&apos;이름&apos;];</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (at == 1) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; at = 2;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; at = 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; pathm = sdcard + &quot;/ＫＡＬ ＢＯＴ/PokeMonGo/&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; pathm = pathm + room + &apos;/&apos; + sender + &apos;.txt&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; myjson = JSON.parse(FS.read(path));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; if (&apos;야생포켓몬&apos; == 승) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + &apos;야생포켓몬에게 패배하였습니다.&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; } else if (p1[&apos;이름&apos;] == 승 &amp;&amp; 대답[1] == 2) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;경험치&apos;] = Number(myjson[&apos;경험치&apos;]) + 20;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (myjson[&apos;경험치&apos;] &gt;= myjson[&apos;레벨&apos;] * 100) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + p + &apos;Level Up!\\n&apos; + myjson[&apos;레벨&apos;] + &apos; -&gt; &apos; + (myjson[&apos;레벨&apos;] + 1);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;경험치&apos;] = myjson[&apos;경험치&apos;] - (myjson[&apos;레벨&apos;] * 100);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;레벨&apos;] = Number(myjson[&apos;레벨&apos;]) + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; FS.write(path, JSON.stringify(myjson, null, 4));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 머니 = JSON.parse(FS.read(pathm));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 머니[&apos;코인&apos;] = Number(머니[&apos;코인&apos;]) + Number(야생CP * 2);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + sender + &apos;님에게 승리 상품 &apos; + Number(야생CP * 2) + &apos; Coin 이 지급됩니다&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; FS.write(pathm, JSON.stringify(머니, null, 4));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; path = sdcard + &quot;/ＫＡＬ ＢＯＴ/PokeMonGo/&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; path = path + room + &apos;/&apos; + sender + &apos;.txt&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; myjson = JSON.parse(FS.read(path));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 저장[room][sender] = true;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; } else if (p1[&apos;이름&apos;] == 승 &amp;&amp; 대답[1] == 1 &amp;&amp; 포획 == 0) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;경험치&apos;] = Number(myjson[&apos;경험치&apos;]) + 20;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (myjson[&apos;경험치&apos;] &gt;= myjson[&apos;레벨&apos;] * 100) {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(p + &apos;Level Up!\\n&apos; + myjson[&apos;레벨&apos;] + &apos; -&gt; &apos; + (myjson[&apos;레벨&apos;] + 1));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;경험치&apos;] = myjson[&apos;경험치&apos;] - (myjson[&apos;레벨&apos;] * 100);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;레벨&apos;] = Number(myjson[&apos;레벨&apos;]) + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 번호 = myjson[&apos;포켓몬&apos;].length + 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; FS.write(path, JSON.stringify(myjson, null, 4));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 임시객체 = {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &apos;이름&apos;: 야생이름,&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &apos;체력&apos;: 야생체력2,&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &apos;공격력&apos;: 야생공격력,&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &apos;속도&apos;: 야생속도,&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &apos;타입&apos;: 야생타입,&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &apos;약점&apos;: 야생약점,&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &apos;CP&apos;: CP};</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; myjson = JSON.parse(FS.read(path));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;포켓몬&apos;].push(임시객체);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + &apos;야생포켓몬을 성공적으로 포획하였습니다.\\n&#8680; [ 소모 :: 몬스터볼 x1 ]&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;몬스터볼&apos;] = Number(myjson[&apos;몬스터볼&apos;]) - 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; FS.write(path, JSON.stringify(myjson, null, 4));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 저장[room][sender] = true;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; } else {</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; myjson[&apos;몬스터볼&apos;] = Number(myjson[&apos;몬스터볼&apos;]) - 1;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 로그 = 로그 + &apos;\\n\\n&apos; + &apos;야생포켓몬을 잡지 못하였습니다.\\n&#8680; [ 소모 :: 몬스터볼 x1 ]&apos;;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; FS.write(path, JSON.stringify(myjson, null, 4));</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; 저장[room][sender] = true;</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; }</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&apos;승 :: &apos; + 승 + &apos; | 패 :: &apos; + 패 + &apos;\\n\\n※ 전투 로그 &amp; 결과 :: 전체보기 ※\\n&apos; + Lw + &apos;\\n&apos; + 로그);</b></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><b>&nbsp; &nbsp; }</b></span></div></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000037A300000000",
+            "id": 14243,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 366,
+            "refArticleId": 14243,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "Kal님 카링 사용한 포켓몬 RPG 추가 컨텐츠 (사냥하기)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585284111697,
+            "writer": {
+                "id": "mam060922",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "Charlottek"
+            }
+        },
+        "articleId": 14243,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "대결 처럼 만들려 했으나 도배가 너무 심각하게 되서 (채팅을 한번치면 봇은 3번을 말함) 로그로 쌓다가 마지막에 보여주는 식으로 변경하였습니다. 질문 또는 컨텐츠 추천받아요~",
+                    "id": 85527192,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85527192,
+                    "updateDate": 1585284222000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "오 제가 요청해도되나요?",
+                    "id": 91919568,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85527192,
+                    "updateDate": 1590709862000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                },
+                {
+                    "content": "칼님 포켓몬이 Charlottek님덕분에 한단계더 재밌어지겠네요 감사합니다",
+                    "id": 85527314,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85527314,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d74c399f-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d74c399f/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1585284289000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "오류 있음 말씀해주세요 확인해보겠습니다",
+                    "id": 85527348,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85527314,
+                    "updateDate": 1585284316000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "어디밑에 소스넣으면될까여??",
+                    "id": 85528118,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85527314,
+                    "replyMember": {
+                        "id": "mam060922",
+                        "nick": "Charlottek"
+                    },
+                    "updateDate": 1585284807000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "어..그냥 function response아래두면 작동할꺼예요",
+                    "id": 85528257,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85527314,
+                    "replyMember": {
+                        "id": "victoryks95",
+                        "nick": "춤돌이치킨"
+                    },
+                    "updateDate": 1585284899000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "return 부분만 빨게요 ! 다른건 다 정상이에요",
+                    "id": 85528481,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAzMjdfODAg/MDAxNTg1Mjg1MDYwMjU5.diA25_DI79qUY3uxrNFhtKBZxX62JJ07L5611Qjxr4Ag.W-EiBrT_kOzgTLhk2O3FFMZw8bUUn4pJhoj9JBSQb6gg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2280,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDAzMjdfODAg/MDAxNTg1Mjg1MDYwMjU5.diA25_DI79qUY3uxrNFhtKBZxX62JJ07L5611Qjxr4Ag.W-EiBrT_kOzgTLhk2O3FFMZw8bUUn4pJhoj9JBSQb6gg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDAzMjdfODAg/MDAxNTg1Mjg1MDYwMjU5.diA25_DI79qUY3uxrNFhtKBZxX62JJ07L5611Qjxr4Ag.W-EiBrT_kOzgTLhk2O3FFMZw8bUUn4pJhoj9JBSQb6gg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 85527314,
+                    "replyMember": {
+                        "id": "mam060922",
+                        "nick": "Charlottek"
+                    },
+                    "updateDate": 1585285061000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "음..?걸릴게 없는데..혹시 중괄호 나 소괄호 빠진게 있나 확인 부탁드릴게여\r\n",
+                    "id": 85529154,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85527314,
+                    "replyMember": {
+                        "id": "victoryks95",
+                        "nick": "춤돌이치킨"
+                    },
+                    "updateDate": 1585285618000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                },
+                {
+                    "content": "스크립트 따로 넣어도 정상작동할까요?",
+                    "id": 85598314,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85527314,
+                    "replyMember": {
+                        "id": "mam060922",
+                        "nick": "Charlottek"
+                    },
+                    "updateDate": 1585353187000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "리얼청정수둔"
+                    }
+                },
+                {
+                    "content": "아 따로두면 작동하지않습니다",
+                    "id": 86800269,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85527314,
+                    "replyMember": {
+                        "id": "yesnocool123",
+                        "nick": "리얼청정수둔"
+                    },
+                    "updateDate": 1586337329000,
+                    "writer": {
+                        "id": "mam060922",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMTNfMjYx/MDAxNTgxNTgxODIyNjc5.RzJgaxpivU3PMC3Ob_OtuiaMRSaHdY8-q3q7axHdb6gg.ZNIcU2w-CNkYq_Z4vx00SB1zLVfqRA4kyB499ga40ykg.JPEG/unnamed.jpg"
+                        },
+                        "nick": "Charlottek"
+                    }
+                }
+            ],
+            "last": {
+                "id": 88878804,
+                "refId": 88878804
+            },
+            "next": {
+                "id": 85530528,
+                "refId": 85530528
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

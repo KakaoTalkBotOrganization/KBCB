@@ -1,0 +1,391 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [],
+            "contentHtml": "<p>var list= [];<br />var member =0;<br />var rrStart=false;<br />var party = [];<br />var leader =[];<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB) {<br />if(msg==&quot;::방 삭제&quot;&amp;&amp;sender==&quot;shurieL&quot;){<br />if(rrStart==true){<br />replier.reply(&quot;게임이 진행중일때는 불가능합니다.&quot;);<br />} else{<br />if(party=&quot;&quot;){<br />replier.reply(&quot;먼저 방을 생성해주세요.(::방 생성)&quot;);<br />} else {<br />party = [];<br />member = 0;<br />list = [];<br />leader = [];<br />replier.reply(&quot;방이 삭제 되었습니다.&quot;);<br />}<br />}<br />}<br />if(msg==&quot;::방 생성&quot;){<br />if(rrStart==true){<br />replier.reply(&quot;게임 진행중에는 불가능합니다.&quot;);<br />} else {<br />if(party==&quot;&quot;&amp;&amp;leader==&quot;&quot;){<br />party.push(room);<br />leader.push(sender);<br />list.push(sender);<br />++member;<br />replier.reply(&quot;방이 생성되었습니다.\\n[::ㄹㄹ 참가]를 통해 게임에 참가하실 수 있습니다.\\n현재 참가 멤버:&quot;+list.join(&quot;,&quot;)+&quot;\\n인원 수:&quot;+member+&quot;명\\n인원이 충분하다면 방장은 [::시작] 명령어를 쳐주세요.\\n방장: &quot;+leader);<br />} else {<br />replier.reply(&quot;이미 다른 채팅방 혹은 이 채팅방에서 게임이 생성되었습니다.&quot;);<br />}<br />}<br />}<br />if(msg==&quot;::ㄹㄹ 참가&quot;){<br />if(rrStart==true){<br />replier.reply(&quot;이미 게임이 시작되었습니다.&quot;);<br />} else {<br />if (party == &quot;&quot;){<br />replier.reply(&quot;먼저 방을 생성해주세요.(::방 생성)&quot;);<br /> }else {<br />if(room==party){<br />if(list.indexOf(sender)!=-1){<br />replier.reply(&quot;이미 참가되어 있습니다.&quot;);<br />} else{<br />list.push(sender);<br />++member;<br />replier.reply(sender+&quot;님이 러시안 룰렛에 참가하셨습니다.\\n현재 참가 멤버:&quot;+list.join(&quot;,&quot;)+&quot;\\n인원 수:&quot;+member+&quot;명\\n인원이 충분하다면 방장은 [::시작] 명령어를 쳐주세요.\\n방장: &quot;+leader);<br />} <br />}else {<br />replier.reply(&quot;이 채팅방에서 생성된 게임이 아닙니다. 조금만 기다려 주십시오.&quot;);<br />}<br />}<br />}<br />}<br />if(msg==&quot;::참가자 명단&quot;){<br />if (party == &quot;&quot;){<br />replier.reply(&quot;먼저 방을 생성해주세요.(::방 생성)&quot;);<br /> }else {<br />if(room==party){<br />if(list==&quot;&quot;){<br />replier.reply(&quot;참가자가 없습니다.&quot;);<br />} else {<br />replier.reply(list+&quot;\\n총 &quot;+member+&quot;명\\n인원이 충분하다면 방장은 [/시작] 명령어를 쳐주세요.\\n방장: &quot;+leader);<br />}<br />} else {<br />replier.reply(&quot;이 채팅방에서 생성된 게임이 아닙니다. 조금만 기다려 주십시오.&quot;);<br />}<br />}<br />}<br />if(msg==&quot;::참가 취소&quot;){<br />if(rrStart==true){<br />replier.reply(&quot;게임 도중에는 불가능합니다.&quot;);<br />} else {<br />if (party == &quot;&quot;){<br />replier.reply(&quot;먼저 방을 생성해주세요.(::방 생성)&quot;);<br /> }else {<br />if(sender == leader){<br />replier.reply(&quot;방장은 취소할 수 없습니다.&quot;);<br />} else {<br />if(room==party){<br />if(list.indexOf(sender)!=-1){<br />index = list.indexOf(sender);<br />list.splice(index, 1);<br />--member;<br />replier.reply(sender+&quot;님이 게임에서 나갔습니다.\\n참가 인원 수:&quot;+member+&quot;명\\n인원이 충분하다면 방장은 [/시작] 명령어를 쳐주세요.\\n방장: &quot;+leader);<br />} else {<br />replier.reply(&quot;당신은 게임에 참여해 있지 않습니다.&quot;);<br />}<br />} else {<br />replier.reply(&quot;이 채팅방에서 생성된 게임이 아닙니다. 조금만 기다려 주십시오.&quot;);<br />}<br />}<br />}<br />}<br />}<br />if(msg==&quot;::시작&quot;){<br />if (party == &quot;&quot;){<br />replier.reply(&quot;먼저 방을 생성해주세요.(/방 생성)&quot;);<br /> }else {<br />if(room==party){<br />if(sender == leader){<br />if(member &lt;2){<br />replier.reply(&quot;인원이 부족합니다.(최소 2명)&quot;);<br />} else {<br />if(rrStart==true){<br />replier.reply(&quot;이미 게임이 시작되어있습니다.&quot;);<br />}<br />else{<br />rrStart=true;<br />replier.reply(&quot;러시안룰렛을 시작합니다.\\n참가 인원 수:&quot;+member+&quot;\\n리볼버를 장전합니다(총)&quot;);<br />while(1){<br />var a = Math.floor(Math.random()*list.length);<br />java.lang.Thread.sleep(5000);<br />var b = list[a]<br />--member;<br />replier.reply(b+&quot;님이 죽었습니다!&#128367;&#9904;&#128367;\\n남은 인원 수:&quot;+member+&quot;명&quot;);<br />index = list.indexOf(b);<br />list.splice(index, 1);<br />if(member==1){<br />replier.reply(&quot;승리자는 &quot;+list+&quot;님 입니다!&quot;);<br />member = 0;<br />list=[];<br />rrStart=false;<br />party=[];<br />leader=[];<br />break;<br />}<br />if(member&lt;=0){<br />replier.reply(&quot;&#128680;오류 발생! 게임을 종료합니다.&#128680;&quot;);<br />member = 0;<br />list=[];<br />rrStart=false;<br />party=[];<br />leader=[];<br />break;<br />}<br />java.lang.Thread.sleep(1000);<br />replier.reply(&quot;리볼버를 재장전 합니다(총)&quot;);<br />}<br />}<br />}<br />}else {<br />replier.reply(&quot;권한이 없습니다.&quot;);<br />}<br />}else {<br />replier.reply(&quot;이 채팅방에서 생성된 게임이 아닙니다.&quot;);<br />}<br />}<br />}<br />}<br /><br />간단하게 만든 러시안룰렛입니다만 늒비가 만들어서 매우 지저분합니다...피드백 받아요우(사실 받으려고 올리는..)</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000091C00000000",
+            "id": 2332,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 580,
+            "refArticleId": 2332,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "러시안룰렛",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1557672009150,
+            "writer": {
+                "id": "kksu0307",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjVfNTkg/MDAxNTg1MTAzMjc4MzM3.ICF5vHNeMOOZXJsPqmK_RUokBQgEmy9Exz66yvQRLvgg.zTKZsx6cQDbb34GPw950MtHdZ9cH5x5hZW-B088C6Kkg.JPEG.kksu0307/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "shurieL"
+            }
+        },
+        "articleId": 2332,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "러시안룰렛은 본래 한 발만 장전해서 진행되는 게임 아닌가요?\r\n아니면 게임 룰을 조금 변형해서 최후의 생존자가 남는 방식으로 변화를 준 건가요?",
+                    "id": 59314886,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 59314886,
+                    "updateDate": 1557673416000,
+                    "writer": {
+                        "id": "seebin3300",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "홍뇽"
+                    }
+                },
+                {
+                    "content": "탄창이 비어있는 과정은 생략하고 탄창이 들어있는것만 넣었습니다. 안그러면 도배가 되기도하고 게임이 너무 오래걸려서요. 한사람이 남을때까지 라운드를 계속 이어나가는겁니다",
+                    "id": 59315004,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 59314886,
+                    "updateDate": 1557673540000,
+                    "writer": {
+                        "id": "kksu0307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjVfNTkg/MDAxNTg1MTAzMjc4MzM3.ICF5vHNeMOOZXJsPqmK_RUokBQgEmy9Exz66yvQRLvgg.zTKZsx6cQDbb34GPw950MtHdZ9cH5x5hZW-B088C6Kkg.JPEG.kksu0307/profileImage.jpg"
+                        },
+                        "nick": "shurieL"
+                    }
+                },
+                {
+                    "content": "신선하군요. 호스트, 참여취소, 방 구분은 완전 좋네요",
+                    "id": 59315166,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 59314886,
+                    "replyMember": {
+                        "id": "kksu0307",
+                        "nick": "shurieL"
+                    },
+                    "updateDate": 1557673693000,
+                    "writer": {
+                        "id": "seebin3300",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "홍뇽"
+                    }
+                },
+                {
+                    "content": "잘만들으셨네영",
+                    "id": 59316324,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 59316324,
+                    "updateDate": 1557674558000,
+                    "writer": {
+                        "id": "ksjksj041010",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTBfMTE5/MDAxNTk0MzUwOTAxNjg0.RRTfD8DtcC7M7YAqYijkshZo6QgIdbCeQjbmA5LTSsog.cIasAQLBokIG-4TTf0FgjKKybfTnGT6jESzNEQHnfpkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "블로라"
+                    }
+                },
+                {
+                    "content": "감자합니다 헣",
+                    "id": 59316762,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 59316324,
+                    "updateDate": 1557674941000,
+                    "writer": {
+                        "id": "kksu0307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjVfNTkg/MDAxNTg1MTAzMjc4MzM3.ICF5vHNeMOOZXJsPqmK_RUokBQgEmy9Exz66yvQRLvgg.zTKZsx6cQDbb34GPw950MtHdZ9cH5x5hZW-B088C6Kkg.JPEG.kksu0307/profileImage.jpg"
+                        },
+                        "nick": "shurieL"
+                    }
+                },
+                {
+                    "content": "좋네요! 잘 만드셨습니다.",
+                    "id": 59319504,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 59319504,
+                    "updateDate": 1557680705000,
+                    "writer": {
+                        "id": "jobsupport",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MTlfMTAw/MDAxNTg5ODY0NzYwNDg1.86apo55rW4zfd70isM4ePR6ts7p1pE953ZvQbpyz8_Eg.MdvPRDigZbwaLC-NhqigLi0HRpTXRDKktFfcIs8b-jog.JPEG.jobsupport/papers.co-vh55-march-apple-event-blue-pattern-1024x768.jpg"
+                        },
+                        "nick": "링디"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 61656373,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61656373,
+                    "updateDate": 1560427977000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "방삭제 부분에서 sender==\"자기 닉네임\" 하시거나 지우셔야죠....",
+                    "id": 61658172,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61656373,
+                    "updateDate": 1560429573000,
+                    "writer": {
+                        "id": "kksu0307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjVfNTkg/MDAxNTg1MTAzMjc4MzM3.ICF5vHNeMOOZXJsPqmK_RUokBQgEmy9Exz66yvQRLvgg.zTKZsx6cQDbb34GPw950MtHdZ9cH5x5hZW-B088C6Kkg.JPEG.kksu0307/profileImage.jpg"
+                        },
+                        "nick": "shurieL"
+                    }
+                },
+                {
+                    "content": "sender==leader 하시면 됩니다",
+                    "id": 61659123,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61656373,
+                    "replyMember": {
+                        "id": "tjrwns0204",
+                        "nick": "반호"
+                    },
+                    "updateDate": 1560430517000,
+                    "writer": {
+                        "id": "kksu0307",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAzMjVfNTkg/MDAxNTg1MTAzMjc4MzM3.ICF5vHNeMOOZXJsPqmK_RUokBQgEmy9Exz66yvQRLvgg.zTKZsx6cQDbb34GPw950MtHdZ9cH5x5hZW-B088C6Kkg.JPEG.kksu0307/profileImage.jpg"
+                        },
+                        "nick": "shurieL"
+                    }
+                },
+                {
+                    "content": "왕 대단해요!",
+                    "id": 67559478,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 67559478,
+                    "updateDate": 1567079213000,
+                    "writer": {
+                        "id": "typearrow",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "good"
+                    }
+                }
+            ],
+            "last": {
+                "id": 86176069,
+                "refId": 86176069
+            },
+            "next": {
+                "id": 86176069,
+                "refId": 86176069
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

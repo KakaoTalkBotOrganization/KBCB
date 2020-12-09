@@ -1,0 +1,380 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [],
+            "contentHtml": "<p>/* 소스중 일부는 사진저장을 포함한 채팅기록 소스에서 떼왔습니다. (php도), 템플릿은 직접 만드시길, 소스가 많이 더럽습니다. 소스를 구원해주세요. 소스는 한줄입니다. */ const scriptName = &quot;image save&quot;; const kalingModule = require(&apos;kaling&apos;).Kakao(); const Kakao = new kalingModule; Kakao.init(&apos;js키&apos;); Kakao.login(&apos;카톡디&apos;, &apos;카톡아이디&apos;); var check = 0; let name = null; let mysite=&quot;http://hide00142.dothome.co.kr&quot;; const PICTURE_PATH = &quot;sdcard/Android/data/com.kakao.talk/contents/Mg==&quot;; function getLastPictureFolderPath(){ var file = new java.io.File(PICTURE_PATH); var list = file.listFiles().sort(function(a, b){ return b.lastModified() -a.lastModified(); } ); return list[0].toString(); } function getLastPictureFilePathFromFoldPath(path){ var file = new java.io.File(path); var list = file.listFiles().sort(function(a, b){ return b.lastModified() - a.lastModified(); } ); return list; } function getLastPicture(r){ try{ var path = getLastPictureFilePathFromFoldPath(getLastPictureFolderPath()); for(var i=0;i&lt;path.length;i++){ var file = new java.io.File(path[i].toString()); if(file.listFiles().length == 0) continue; else { var picture = getLastPictureFilePathFromFoldPath(file.getPath())[0].toString(); let baos = new java.io.ByteArrayOutputStream(); let bm = android.graphics.BitmapFactory.decodeFile(picture) try{ bm.compress(android.graphics.Bitmap.CompressFormat.JPEG, 100, baos); }catch(e){ } let bImage = baos.toByteArray(); let base64 = android.util.Base64.encodeToString(bImage, android.util.Base64.NO_WRAP); return base64; } } return null; } catch(e){ return null; } } function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) { if (msg.startsWith(&quot;/사진저장 &quot;)) { name = msg.split(&quot;/사진저장 &quot;)[1]; b = FileStream.read(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name); if (b != null) { replier.reply(&quot;이미 존재하는 이름입니다.&quot;); name = null; } else { check = 1; replier.reply(&quot;사진을 보내주세요.&quot;); } } if (msg == &quot;사진을 보냈습니다.&quot; &amp;&amp; check == 1) { let a = org.jsoup.Jsoup.connect(mysite+&apos;/imglog.php&apos;).data(&apos;room&apos;,room).data(&apos;img&apos;,getLastPicture(room)).ignoreContentType(true).post().text(); FileStream.write(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name, mysite+&apos;/img/&apos;+encodeURIComponent(room)+&apos;/&apos;+a+&apos;.jpg&apos;); c = FileStream.read(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;); try { if (c == null) { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, name); } else { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, c + &quot;\\n&quot; + name); } replier.reply(&quot;저장되었습니다. 사진을 보시려면 /사진보기 &quot; + name + &quot; 를 입력해 주세요&quot;); name = null; check = 0; } catch(e) { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, c + &quot;\\n&quot; + name); replier.reply(&quot;저장되었습니다. 사진을 보시려면 /사진보기 &quot; + name + &quot; 를 입력해 주세요&quot;); name = null; check = 0; } } if (msg.startsWith(&quot;/사진보기 &quot;)) { name = msg.split(&quot;/사진보기 &quot;)[1]; b = FileStream.read(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name); if (b != null) { Kakao.send(room, { &quot;link_ver&quot;:&quot;4.0&quot;, &quot;template_id&quot;:(00000), &quot;template_args&quot;:{ name:name, img:b } }, &quot;custom&quot;); } else { replier.reply(&quot;없는 제목입니다.&quot;); } } if (msg == &quot;/사진목록&quot;) { try { c = FileStream.read(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;); if (c != null) { replier.reply(c); } else { replier.reply(&quot;저장된 사진이 없습니다.&quot;); } } catch(e) { replier.reply(&quot;저장된 사진이 없습니다.&quot;); } } } function onCreate(savedInstanceState, activity) { var textView = new android.widget.TextView(activity); textView.setText(&quot;Hello, World!&quot;); textView.setTextColor(android.graphics.Color.DKGRAY); activity.setContentView(textView); } function onStart(activity) { } function onResume(activity) { } function onPause(activity) { } function onStop(activity) { }</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000510A00000000",
+            "id": 20746,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 592,
+            "refArticleId": 20746,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "사진저장",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1593939170210,
+            "writer": {
+                "id": "wjdtmdrl131",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "맨들"
+            }
+        },
+        "articleId": 20746,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "하트좀 눌러주십쇼 ㅜ",
+                    "id": 95791699,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95791699,
+                    "updateDate": 1593939303000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "하트",
+                    "id": 95791766,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95791699,
+                    "updateDate": 1593939341000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP청정"
+                    }
+                },
+                {
+                    "content": "사이트도메인 뭐로해야하나요",
+                    "id": 95796337,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95796337,
+                    "updateDate": 1593943548000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lucifer"
+                    }
+                },
+                {
+                    "content": "그대로.",
+                    "id": 95797019,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95796337,
+                    "updateDate": 1593944127000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "템플릿아이디는요",
+                    "id": 95797393,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95796337,
+                    "replyMember": {
+                        "id": "wjdtmdrl131",
+                        "nick": "맨들"
+                    },
+                    "updateDate": 1593944441000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "lucifer"
+                    }
+                },
+                {
+                    "content": "소스중 일부는 사진저장을 포함한 채팅기록 소스에서 떼왔습니다. (php도), 템플릿은 직접 만드시길, 소스가 많이 더럽습니다. 소스를 구원해주세요. 소스는 한줄입니다.\r\n\r\n직접 만들란거 안보이시나요. 역시 짱짱고수다운 댓글이심 ㅇ",
+                    "id": 95797943,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95796337,
+                    "replyMember": {
+                        "id": "ccwwhh0830",
+                        "nick": "lucifer"
+                    },
+                    "updateDate": 1593945002000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "최근사진은 성넨님꺼라조 ㅌㅌ",
+                    "id": 95834836,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95834836,
+                    "updateDate": 1593967252000,
+                    "writer": {
+                        "id": "app6460",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200429_60/app6460_15880928481294n5kD_PNG/image.png"
+                        },
+                        "nick": "녹는 앱"
+                    }
+                },
+                {
+                    "content": "완운",
+                    "id": 95835250,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 95834836,
+                    "updateDate": 1593968412000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "와드",
+                    "id": 95856731,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95856731,
+                    "updateDate": 1593996317000,
+                    "writer": {
+                        "id": "gigigia-1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTUz/MDAxNTk5NjEyNTg2MDgw.gz9LKfYQFlIU1Ih6Ro4ODKnP-r-LbWE_B5ROxm6GcN4g.AzxtviQvtDbkk0DawTj6adZ2Xc-ZL8piX8CadbcCd1Mg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "재승"
+                    }
+                },
+                {
+                    "content": "ㅠㅠ 안되네여",
+                    "id": 96002350,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96002350,
+                    "updateDate": 1594104064000,
+                    "writer": {
+                        "id": "dopani92",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTAxMTdfMjk2/MDAxNTQ3NzI2MTgyNDEw.SwvsAkIbJtDumchWKWlllCyCs0HVRW3H5H2b5_B8Nb4g.qtL_0O-gf7TE1HwOlOImDw1GLs9Z4o4X4QLqsRufHUYg.JPEG.dopani92/%25BA%25ED%25B7%25CE%25B1%25D7%25C0%25CC%25B9%25CC%25C1%25F6.JPG"
+                        },
+                        "nick": "젤리파덕"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

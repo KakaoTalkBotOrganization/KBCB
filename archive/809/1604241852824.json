@@ -1,0 +1,297 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div style=\"font-size: 13.3333px;\"><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">봇 on/off 기능</font></span></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b>소스 코드</b></div><div style=\"font-size: 13.3333px;\"><b>=&gt;&nbsp;</b></div><div style=\"font-size: 13.3333px;\"><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 16px;\">이 소스는 CC BY-NC-SA 2.0 KR 라이선스 가 적용되어 있습니다. 아래 링크에서 확인해주세요.</span></div><div style=\"font-size: 13.3333px;\"><b><br /></b></div><div style=\"font-size: 13.3333px;\"><b><a href=\"https://github.com/UnNamed72/I-bot/blob/master/README.md#license%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4\" target=\"_blank\" title=\"새창으로 열림\">[라이선스 링크]</a></b></div><div style=\"font-size: 13.3333px;\"><br /></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14px;\">/*&nbsp;</span></font><span style=\"font-size: 13.3333px;\"><table></table></span><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14pt;\">Made by UnNamed72</span></font><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">&apos;메신저 자동응답 봇&apos; 어플용 스크립트입니다.</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">특정 스크립트의 전원을 키고, 끄는 스크립트입니다.</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">Api.on()과 Api.off()의 갯수를 늘려서 더 많은 스크립트를 한번에 통제할 수 있습니다.</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">여기서는 예시로 &quot;test1.js&quot;와 &quot;test2.js&quot;라는 스크립트를 끄고 켜봤습니다.</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">*/</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><br /></span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><br /></span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">const scriptName=&quot;전원.js&quot;;</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><br /></span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">//변수들 미리 선언</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">var botOn = true;</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">var administrator = [];</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">var command;</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><br /></span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">&nbsp; <span style=\"white-space:pre\"> </span>//명령어가 &apos;on&apos; 혹은 &apos;off&apos;일때</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">&nbsp; if(msg == &quot;on&quot; || msg == &quot;off&quot;) {</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">  </span>//관리자가 &apos;on&apos;을 외쳤을 때</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">  </span>if(administrator.indexOf(sender) !== -1 &amp;&amp; msg === &quot;on&quot;) {</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">   </span>if(botOn == true) {<span style=\"white-space:pre\"> </span>//봇이 이미 켜져 있으면</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>replier.reply (&quot;봇이 이미 작동중입니다.&quot;);</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; <span style=\"white-space:pre\">   </span>} else {<span style=\"white-space:pre\">  </span>//봇이 켜져 있지 않으면</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>botOn = true;</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>Api.on(&quot;test1.js&quot;);</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>Api.on(&quot;test2.js&quot;);</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;작동을 시작합니다.&quot;);</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; <span style=\"white-space:pre\">   </span>}</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">  </span>} else if(administrator.indexOf(sender) !== -1 &amp;&amp; msg === &quot;off&quot;) {<span style=\"white-space:pre\"> </span>//관리자가 &apos;off&apos;를 외쳤을 때</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">   </span>if(botOn == true) {<span style=\"white-space:pre\">  </span>//봇이 켜져있으면</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>botOn = false;</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>Api.off(&quot;test1.js&quot;);</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>Api.off(&quot;test2.js&quot;);</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">    </span>replier.reply(&quot;봇이 작동을 중지합니다.&quot;);</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">   </span>} else replier.reply(&quot;봇이 이미 꺼져있습니다.&quot;);<span style=\"white-space:pre\">  </span>//봇이 켜져있지 않으면</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\">  </span>} else replier.reply(&quot;관리자가 아닙니다.&quot;);<span style=\"white-space:pre\">  </span>//관리자 아닌 사람이 &apos;on&apos;이나 &apos;off&apos;를 보냈을 때</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><span style=\"white-space:pre\"> </span>}</span></font></div><div style=\"\"><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\">}</span></font></div><span style=\"font-size: 13.3333px;\"><table></table></span></div><div><font color=\"#24292e\" face=\"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol\"><span style=\"font-size: 14px;\"><br /></span></font></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000032900000000",
+            "id": 809,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 406,
+            "refArticleId": 809,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "'UnNamed72' 님의 전원 소스입니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1550040349220,
+            "writer": {
+                "id": "r960701",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "카신"
+            }
+        },
+        "articleId": 809,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "봇이 이미 꺼진상태에서는 on이 작동하지 않을텐데 어떻하나요",
+                    "id": 53086599,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 53086599,
+                    "updateDate": 1550051500000,
+                    "writer": {
+                        "id": "nhyun0104",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "빼애애액"
+                    }
+                },
+                {
+                    "content": "메신저봇 전용입니다.\r\n메신저봇은 봇 스크립트 여러개를 한번에 관리할 수 있는데\r\n이 스크립트를 on/off 스크립트로 실행해두면\r\n다른 스크립트를 켜고 끌 수가 있어요.\r\n당연히 이 on/off 스크립트는 항상 켜져있어야 합니다.",
+                    "id": 53086779,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 53086599,
+                    "updateDate": 1550051695000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "아하 스크립트 하나 더만들고 해보니까 잘 작동하네요 감사합니다",
+                    "id": 53088901,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 53086599,
+                    "replyMember": {
+                        "id": "r960701",
+                        "nick": "카신"
+                    },
+                    "updateDate": 1550054298000,
+                    "writer": {
+                        "id": "nhyun0104",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "빼애애액"
+                    }
+                },
+                {
+                    "content": "감사합니다 잘됩니다",
+                    "id": 55254014,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 55254014,
+                    "updateDate": 1552670754000,
+                    "writer": {
+                        "id": "adcys0906",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA4MjNfOTMg/MDAxNTY2NTY3MzA1MDI5.rmZefDkSFkA06vAYVGRkzJXdj54ER-DMRSFiBBKl8V0g.gAJbK_H9H0sOb0u2iV_Dh3B6KG9Ztfl5C9iFQNPRWxUg.PNG.adcys0906/profileImage.png"
+                        },
+                        "nick": "EddyShop"
+                    }
+                },
+                {
+                    "content": "해시코드 넣어야하나요 닉네임넣어야하나요",
+                    "id": 83958313,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83958313,
+                    "updateDate": 1584003957000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "미션"
+                    }
+                },
+                {
+                    "content": "저는 제봇인데 저를 관리자 아니라고 합니다",
+                    "id": 94155651,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94155651,
+                    "updateDate": 1592540216000,
+                    "writer": {
+                        "id": "tmddyd7190",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20150107_81/tmddyd7190_1420621793483R5eAx_PNG/dnwn+dhk+ckdnjs.PNG"
+                        },
+                        "nick": "키리토"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,450 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 21,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1280,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA3MDZfMjc4/MDAxNTYyMzk5NzM3OTk2.t1VJgdW8PAcfYhBwdbpyjTjo39ranDE50WYItaUVzGMg.Kz8VZNPQb8bJKxSK6iTRxaMNAfngqpe6Jsfda6Vo2pEg.JPEG/externalFile.jpg",
+                            "width": 720
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 716,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA3MDZfOTIg/MDAxNTYyMzk5NzQwMjQ3.A1pzeRh-bZYTGSFjohxCcZWUpXupGOYkD0E7_mBitA0g.j4v8lzHaRGaTStL4qgUNMWekABxe_xa1ILjW_hdmzhMg.JPEG/externalFile.jpg",
+                            "width": 644
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 690,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA3MDZfNjgg/MDAxNTYyMzk5NzQxNjM0.nzrlUfDVuL-qy6zGiAGfyLtYOubJiUMKK91cxwgj43Ag.Eisp-b4_AqiKnigxZxbudY4JCt0mLdWYMyHRrup4h-sg.JPEG/externalFile.jpg",
+                            "width": 349
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>저번 시간에는 단순히 문자열로 파싱을 하는 법을 알아봤지만, 이번 시간엔 Jsoup 이라는걸로 한번 파싱을 해 보겠습니다.<br /><br />(참고로 이 글은 겁나게 길 수 있습니다.)<br /><br />Jsoup이란 무엇일까요?<br />Jsoup은 우리가 파싱을 더욱 쉽게 할 수 있도록 만들어진 것 입니다. Utils.getWebText는 단순히 HTML만 가져왔다면, Jsoup은 HTML을 객체로 가져와서 더 쉽게 파싱을 할 수 있습니다.<br /><br />일단 Jsoup의 사용법을 알아보겠습니다.<br /><br />org.jsoup.Jsoup.connect(링크)<br /><br />이 뒤엔 get() 이나 post() 로 서버 접속 방법을 설정할 수 있습니다.<br /><br />org.jsoup.Jsoup.connect(링크).get()<br />org.jsoup.Jsoup.connect(링크).post()<br /><br />일단 처음 배워보는것이니 get을 써보도록 하겠습니다.<br /><br />먼저, 기본 파싱에 replace와 split이 있듯이, 여기서도 자주 쓰이는게 있습니다.<br /><br />.select(태그)<br />.get(숫자)<br />.text()<br />.html()<br /><br />등등 여러가지가 있습니다. 이 중에서 제일 많이 쓰이는 것은 select인데, 예제를 통해 사용 방법을 알아봅시다.<br /><br />예제 HTML)<br />&lt;div class=&quot;abc&quot;&gt;<br />&lt;div class=&quot;abcde&quot;&gt;안녕하세요&lt;/div&gt;<br />&lt;/div&gt;<br /><br />우리가 HTML에서 이런걸 너무나 많이 봐왔는데 무시하고 지나갔죠? 이제는 얘를 해석해야합니다.<br />일단 중간에 &lt;div class=&quot;abcde&quot;&gt;를 주목해주세요!<br />앞에 있는 div는 태그명이고, 뒤에 있는 class는 태그의 속성입니다. 태그 속성에는 class나 id 등등 여러가지가 있습니다. 그리고 속성 뒤에 있는 &quot;abcde&quot;는 속성값입니다.<br />그리고 뒤에 있는 &lt;/div&gt;는 div 태그를 끝낸다 이 말입니다. 우리가 자바스크립트에서 중괄호 닫기랑 비슷한 역할입니다. <br /><br />아무튼, 우리가 select를 하려면 태그명과 속성 그리고 속성값을 알아야 합니다. 저 예시 HTML에서 안녕하세요를 가져와봅시다.<br />일단 저기서 div 태그의 속성값이 abcde인 태그를 가져오려면 이렇게 하면 됩니다. 저 HTML이 저장된 변수의 값을 doc 라고 하면,<br /><br />doc.select(&quot;div[class=abcde]&quot;)<br /><br />이렇게 하시면 속성값이 abcde인 div 태그만 뽑아올 수 있습니다. 뽑아온 결과는, <br /><br />&lt;div class=&quot;abcde&quot;&gt;안녕하세요&lt;/div&gt;<br /><br />이렇게 됩니다.<br /><br />여기서 우리가 안녕하세요만 뽑아올건데, text를 이용하면 됩니다. text는 HTML에 있는 태그를 다 지워줍니다.<br /><br />doc.text()<br /><br />이렇게 하면 결과가 안녕하세요 이겠네요.<br />결과적으로 최종 소스는, <br /><br />doc.select(&quot;div[class=abcde]&quot;).text()<br /><br />이렇게 됩니다.<br />예제 HTML을 한번 더 만들어 보겠습니다.<br /><br />예제 HTML2) <br />&lt;span id=&quot;뷁&quot;&gt;뿌엥&lt;/span&gt;<br />&lt;div class=&quot;abcd&quot;&gt;<br />&lt;span id=&quot;뷁&quot;&gt;와! 샌즈!&lt;/span&gt;<br />&lt;span id=&quot;뷁&quot;&gt;언더테일 아시는구나!&lt;/span&gt;<br />&lt;/div&gt;<br /><br />여기서 우리는 와! 샌즈! 를 가져오는게 목표입니다.<br />일단 저 HTML이 저장된 변수 이름도 doc라 해보고, 한번 뽑아와봅시다.<br /><br />doc.select(&quot;span[id=뷁]&quot;)<br /><br />근데 이러면 문제점이, 저기 보이는 모든 span 태그를 가져와버려서 문제입니다. 이럴땐 div 태그를 먼저 뽑아온다음 span을 뽑아옵시다.<br /><br />doc.select(&quot;div[class=abcd]&quot;).select(&quot;span[id=뷁]&quot;)<br /><br />이러면 확실하게 할 순 있지만 너무 기네요! 줄이기 위해 &gt; 를 이용해봅시다.<br /><br />doc.select(&quot;div[class=abcd] &gt; span[id=뷁]&quot;)<br /><br />이러면 div 안의 id가 뷁인 span 태그를 뽑아올 수 있습니다. 여기서 또 문제점은, 그래도 안에 2개를 다 가져온단 말이죠? 우리는 첫 번째것만 가져오기 위해 get을 사용해볼겁니다.<br /><br />doc.select(&quot;div[class=abcd] &gt; span[id=뷁]&quot;).get(0)<br /><br />죠습니다. 이제 text로 태그를 전멸시키면 끝입니다!<br /><br />doc.select(&quot;div[class=abcd] &gt; span[id=뷁]&quot;).get(0).text()<br /><br />완벽합니다. 그럼 우리는 이제 와! 샌즈! 를 가져올 수 있게 되었습니다.<br />추가로 팁을 하나 더 드리자면, class와 id는 굳이 저렇게 대괄호를 쓰지 않아도 됩니다.<br /><br />doc.select(&quot;div.abcd &gt; span#뷁&quot;).get(0).text()<br /><br />눈치 채셨나요? class는 점( . ) 으로, id는 샵( # ) 으로 나타낼 수 있습니다.<br />참고로 속성값에 띄어쓰기가 있을땐, 점으로 채워주시면 됩니다.<br /><br />이제 기본적인건 다 배웠으니, 본격적으로 파싱을 해 봅시다. 이번에도 실검입니당!<br />저번시간에 썼던 실검 사이트를 불러와서 HTML을 가져와봅시다.<br /><br />var doc = org.jsoup.Jsoup.connect(&quot;https://m.search.naver.com/search.naver?where=m&amp;sm=mtb_jum&amp;query=%EC%8B%A4%EC%8B%9C%EA%B0%84%EA%B2%80%EC%83%89%EC%96%B4&quot;).get()<br /><br />저번에도 변수 부분만 썼듯이 이번에도 변수 부분인 doc만 쓰겠습니다.</p>[[[CONTENT-ELEMENT-0]]]<br /><p>보니까 &lt;span class=&quot;tit _keyword&quot;&gt; 태그 사이에 실검이 있네요? 그러면 select로 뽑아옵시다.<br /><br />doc = doc.select(&quot;span.tit._keyword&quot;)<br /><br />속성값에 점이 있는 이유는 띄어쓰기가 있어서 입니다.</p>[[[CONTENT-ELEMENT-1]]]<br /><p>죠습니다. 이제 깔끔하게 번호만 붙여봅시다. for문을 이용하도록 하죠<br /><br />var keyWord = [];<br />for (a = 0; a &lt; doc.size(); a++) {<br />keyWord.push(a + 1 + &quot;. &quot; + doc.get(a).text());<br />}<br />replier.reply(keyWord.join(&quot;\\n&quot;));<br />size()는 몇 개가 select되었는지 가져옵니다. 배열의 length랑 비슷한 느낌이에요</p>[[[CONTENT-ELEMENT-2]]]<br /><p>완벽하네요! 최종 소스는 이렇게 됩니다.<br /><br />var doc = org.jsoup.Jsoup.connect(&quot;https://m.search.naver.com/search.naver?where=m&amp;sm=mtb_jum&amp;query=%EC%8B%A4%EC%8B%9C%EA%B0%84%EA%B2%80%EC%83%89%EC%96%B4&quot;).get();<br />doc = doc.select(&quot;span.tit._keyword&quot;);<br />var keyWord = [];<br />for (a = 0; a &lt; doc.size(); a++) {<br />keyWord.push(a + 1 + &quot;. &quot; + doc.get(a).text());<br />}<br />replier.reply(keyWord.join(&quot;\\n&quot;));<br /><br />어떤가요? 기본 파싱법은 복잡했지만, Jsoup을 배우고 나니 간편하지 않나요?<br />뿐만 아니라, Jsoup은 서버에 접속할 때 여러가지 설정을 해 줄 수 있습니다! 이건 get() 이나 post() 전에서 쓸 수 있는데, 대표적으로 header와 data가 있습니다.<br />header는 Content Type을 정하거나 기타 등등 여러가지로 쓰입니다.<br /><br />org.jsoup.Jsoup.connect(url).header(&quot;Content-Type&quot;,&quot;application/json&quot;) //Content Type를 application/json 으로 바꿈<br /><br />org.jsoup.Jsoup.connect(url).header(&quot;Authorization&quot;,&quot;Bearer &quot;+key) // 키 입력<br /><br />org.jsoup.Jsoup.connect(url).header(&quot;Accpet&quot;,&quot;*.*&quot;)<br /><br />이런식으로 써먹을 수 있습니다. 참고로 ignoreContentType으로 Content Type을 무시해버릴 수 있습니다.<br /><br />org.jsoup.Jsoup.connect(url).ignoreContentType(true)<br /><br />이렇게 써먹을 수 있습니다.<br /><br />data는 웹사이트에 data를 보낼때 사용합니다.<br /><br />org.jsoup.Jsoup.connect(url).data(&quot;email&quot;,email).data(&quot;password&quot;,password) // email과 password를 이용한 로그인<br /><br />org.jsoup.Jsoup.connect(&quot;https://m.search.naver.com/search.naver?&quot;).data(&quot;query&quot;,검색어).get() // data를 이용한 검색<br /><br />그리고 userAgent를 요구하는 웹사이트의 경우는, <br /><br />org.jsoup.Jsoup.connect(url).userAgent(&quot;Mozila&quot;)<br /><br />이렇게 하면 됩니다.<br /><br /><br />강좌 끝<br />header부터는 제가 알고있는 정보가 많이 없어서 부족한 부분이 있을 수 있는데 혹시 그런 부분이 있으면 지적 부탁드립니다.<br />시험기간부터 쓰기 시작해서 이제 올렸네요!<br />다음에는 Math 객체를 다뤄볼 예정입니다.<br />그럼 이만</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000E4A00000000",
+            "head": "중급",
+            "headId": 20,
+            "id": 3658,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 1303,
+            "refArticleId": 3658,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "(라이노 엔진) 자바스크립트 기초 강의 (4 - 2) - 파싱 (Jsoup)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1562399743427,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음 BOT"
+            }
+        },
+        "articleId": 3658,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 400993,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/73e66fdcc791974b6781e4d3e80e740ba9fb05e782/MjAxOTA3MDZfMjc4/MDAxNTYyMzk5NzM3OTk2.t1VJgdW8PAcfYhBwdbpyjTjo39ranDE50WYItaUVzGMg.Kz8VZNPQb8bJKxSK6iTRxaMNAfngqpe6Jsfda6Vo2pEg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 256357,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/eb7ef74c546061d4f91d7a4d7096ea9131639d24/MjAxOTA3MDZfOTIg/MDAxNTYyMzk5NzQwMjQ3.A1pzeRh-bZYTGSFjohxCcZWUpXupGOYkD0E7_mBitA0g.j4v8lzHaRGaTStL4qgUNMWekABxe_xa1ILjW_hdmzhMg.JPEG/externalFile.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 67209,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/6bfe77c7d48f8f537f99fccbf0166c13b1e31dff00/MjAxOTA3MDZfNjgg/MDAxNTYyMzk5NzQxNjM0.nzrlUfDVuL-qy6zGiAGfyLtYOubJiUMKK91cxwgj43Ag.Eisp-b4_AqiKnigxZxbudY4JCt0mLdWYMyHRrup4h-sg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "오..Jsoup",
+                    "id": 63350381,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63350381,
+                    "updateDate": 1562401231000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "제이수프!",
+                    "id": 63506996,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63350381,
+                    "updateDate": 1562587531000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "정확히는 몰랐는데 흐미",
+                    "id": 63352292,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63352292,
+                    "updateDate": 1562403991000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "핫 도움이 되셨다면 감사합니다",
+                    "id": 63507078,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63352292,
+                    "updateDate": 1562587612000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "봐도 모르겠다",
+                    "id": 63352971,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63352971,
+                    "updateDate": 1562405017000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "뷁 역시 너무 어렵게 설명했군요",
+                    "id": 63506982,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63352971,
+                    "updateDate": 1562587522000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 63378558,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 63378558,
+                    "updateDate": 1562429855000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "허헣 역시 너무 어렵게 설명했네요",
+                    "id": 63507049,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63378558,
+                    "updateDate": 1562587581000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "아아.... 실검이 제일 무난할 것 같았는데.. 조만간 파싱 예제를 하나 더 올려봐야겠네요",
+                    "id": 63507174,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63378558,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "냥냥이"
+                    },
+                    "updateDate": 1562587693000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "DLC가 무엇이죠",
+                    "id": 63507377,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 63378558,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "냥냥이"
+                    },
+                    "updateDate": 1562587876000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                }
+            ],
+            "last": {
+                "id": 84402649,
+                "refId": 84402649
+            },
+            "next": {
+                "id": 63507534,
+                "refId": 63378558
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

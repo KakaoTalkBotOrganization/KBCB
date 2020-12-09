@@ -1,0 +1,196 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 563,
+                            "service": "CAFE",
+                            "style": "width: 740px; height: 563px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAyMjZfMjQ5/MDAxNTgyNjg3NjExMDk2.GaJh_ACiOEBCphiZReTqAM0KSd3W2VA8awB1-BHqLQEg.daTNrdXkTau7_ccUmc2zIkukkUbGpMZJUSa1-bs9X1og.PNG/%EC%BA%A1%EC%B2%98.PNG",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;[[[CONTENT-ELEMENT-0]]]</b></div><div><b><br /></b></div><div><div style=\"\"><b><span style=\"white-space: pre;\"> </span>if(msg.indexOf(&quot;/딜표&quot;) != -1) {</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>var charaname = msg.replace(&quot;/딜표 &quot;,&quot;&quot;);</b></div><div style=\"\"><span style=\"white-space:pre\"><b>  </b></span></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>var data = Utils.getWebText(&quot;<a href=\"http://dundam.xyz/view.jsp?server=\" target=\"_blank\">http://dundam.xyz/view.jsp?server=</a>&quot;+svrname+&quot;&amp;name=&quot;+encodeURI(charaname)+&quot;&amp;image=&quot;+find_chara_key(encodeURI(charaname))+&quot;&amp;search=true&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>data = data.replace(/&quot;/g,&quot;&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>data = data.split(&quot;&lt;div class=tab-pane fade id=sendbag&gt;&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>data = data[1].split(&quot;&lt;div class=tab-pane fade id=prey_Gro&gt;&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>data = data[0].replace(/&lt;tr&gt;/g,&quot;두줄&quot;).replace(/&lt;td&gt;/g,&quot;한줄&quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g,&quot;&quot;).replace(/&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /g,&quot;&quot;).replace(/&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/g,&quot;&quot;).replace(&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;두줄스킬명 데미지&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;두줄 &quot;,&quot;&quot;).replace(&quot;두줄 고농축 + 무큐계 + 투함포 + 스위칭박스 버프 노카운터기준입니다두줄 간혹 스탯이 늦게 넘어오는 경우가 있습니다. 캐선창 갔다와서 다시 부탁드립니다!!!&quot;,&quot;&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>data = data.replace(/ 한줄 /g,&quot;\\n&quot;).replace(/두줄 /g,&quot;\\n\\n&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>var totaldmg = data.split(&quot;총 딜&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>totaldmg = &quot;총 딜&quot;+totaldmg[1];</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>var rpy = charaname+&quot;의 샌드백 딜표\\n\\n&quot;;</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>rpy = rpy + totaldmg+ &quot;\\n&quot; + &quot;\\u200b&quot;.repeat(500) +&quot;--------------------\\n&quot;+data.replace(&quot;\\n&quot;+totaldmg,&quot;&quot;);</b></div><div style=\"\"><span style=\"white-space:pre\"><b>  </b></span></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>replier.reply(rpy);</b></div><div style=\"\"><span style=\"white-space:pre\"><b>  </b></span></div><div style=\"\"><b><span style=\"white-space: pre;\"> </span>}</b></div></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b></b><div><b>function find_chara_key(charaname, replier){</b></div><div><b><span style=\"white-space:pre\"> </span>var data = Utils.getWebText(&quot;<a href=\"https://api.neople.co.kr/df/servers/\" target=\"_blank\">https://api.neople.co.kr/df/servers/</a>&quot;+svrname+&quot;/characters?characterName=&quot;+charaname+&quot;&amp;apikey=&quot;+apikey).replace(/&lt;[^&gt;]*&gt;/g,&quot;&quot;).replace(/\\n/g,&quot;&quot;).replace(&quot;&nbsp; &nbsp; &quot;,&quot;&quot;);</b></div><div><b><span style=\"white-space:pre\"> </span></b></div><div><b><span style=\"white-space:pre\"> </span>var key = JSON.parse(data.replace(&quot;{\\&quot;rows\\&quot;:[&quot;,&quot;&quot;).replace(&quot;]}&quot;,&quot;&quot;));</b></div><div><b><span style=\"white-space:pre\"> </span></b></div><div><b><span style=\"white-space:pre\"> </span>return(key.characterId);</b></div><div><b>}</b></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>apikey나 svrname(서버이름)같은건 직접 변수만들어서 넣어주셔야합니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002F1300000000",
+            "id": 12051,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 87,
+            "refArticleId": 12051,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "던담 딜표 샌드백",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1582687636413,
+            "writer": {
+                "id": "wireless__",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Findragon"
+            }
+        },
+        "articleId": 12051,
+        "attaches": [
+            {
+                "extension": "PNG",
+                "fullName": "캡처.PNG",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "캡처.PNG",
+                "size": 51480,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/21b43d8e99c5c51935d3b681b950205bfba957b54f/MjAyMDAyMjZfMjQ5/MDAxNTgyNjg3NjExMDk2.GaJh_ACiOEBCphiZReTqAM0KSd3W2VA8awB1-BHqLQEg.daTNrdXkTau7_ccUmc2zIkukkUbGpMZJUSa1-bs9X1og.PNG/캡처.PNG?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

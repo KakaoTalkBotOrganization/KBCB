@@ -1,0 +1,262 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [],
+            "contentHtml": "<div>betterHtml = msg =&gt; {</div><div>&nbsp;&nbsp;&nbsp; if (msg.includes(&quot;&amp;gt;&quot;) || msg.includes(&quot;&amp;lt;&quot;) || msg.includes(&quot;&amp;amp;&quot;) || msg.includes(&quot;&amp;nbsp;&quot;)) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return msg.replace(/&amp;gt;/g, &quot;&gt;&quot;).replace(/&amp;lt;/g, &quot;&lt;&quot;).replace(/&amp;amp;/g, &quot;&amp;&quot;).replace(/&amp;nbsp;/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp; } else {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return msg<br />&nbsp;&nbsp;&nbsp; }<br />}</div><div>remove = msg =&gt; {<br />&nbsp;&nbsp;&nbsp; if (msg.includes(&quot;undefined&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return msg.replace(/undefined/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp; } else {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return msg<br />&nbsp;&nbsp;&nbsp; }<br />}</div><div>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</div><div><br />&nbsp;&nbsp;&nbsp; if (msg.startsWith(&quot;/영화&quot;)) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var doc = org.jsoup.Jsoup.connect(&quot;<a href=\"https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=\" target=\"_blank\">https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=</a>&quot; + encodeURIComponent(msg.substr(4))).ignoreContentType(true).get()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let title = doc.select(&quot;h2[class=movie_title]&quot;).text();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let subt = doc.select(&quot;span[class=movie_sub_title]&quot;).text();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let gaeyo = &quot;개요 : &quot; + doc.select(&quot;div [class=detail_info]&quot;).select(&quot;dd&quot;).get(0).text().replace(/ /g, &quot; | &quot;)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!doc.text().includes(&quot;누적 관객수&quot;) &amp;&amp; doc.text().includes(&quot;관객수&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var rating = doc.select(&quot;span[class=star_count]&quot;).text();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</div><div><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (doc.text().includes(&quot;누적 관객수&quot;) &amp;&amp; doc.text().includes(&quot;관람객 평점&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var rating = doc.select(&quot;div[class=movie_grade_wrap]&quot;).select(&quot;span[class=score_num]&quot;).get(1).text()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let gaebong = doc.select(&quot;div[class=detail_info]&quot;).select(&quot;dd&quot;).get(1).text()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!doc.text().includes(&quot;누적 관객수&quot;) &amp;&amp; doc.text().includes(&quot;관객수&quot;) &amp;&amp; !doc.text().includes(&quot;개봉 D-&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var audience = doc.select(&quot;div [class=detail_info]&quot;).select(&quot;dd&quot;).get(3).text()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (doc.text().includes(&quot;누적 관객수&quot;) &amp;&amp; doc.text().includes(&quot;관람객 평점&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var au = doc.select(&quot;div[class=movie_grade_wrap]&quot;).select(&quot;span [class=score_num]&quot;).get(1).text()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var dayafter = doc.toString().split(au)[1].replace(/&lt;[^&gt;]+&gt;/g, &quot;&quot;).split(&quot;감독/출연&quot;)[0].replace(/[\\n\\s]{2,}/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var audience = au + &quot; (&quot; + dayafter.replace(&quot; &quot;, &quot;&quot;) + &quot;)&quot;;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!doc.text().includes(&quot;관객수&quot;) &amp;&amp; !doc.text().includes(&quot;개봉 D-&quot;) &amp;&amp; doc.text().includes(&quot;평점&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var rating = doc.select(&quot;div[class=detail_info]&quot;).select(&quot;dd&quot;).get(2).text()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</div><div><br /></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!doc.text().includes(&quot;평점&quot;) &amp;&amp; !doc.text().includes(&quot;관객수&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var rating = &quot;&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var audience = &quot;&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!doc.text().includes(&quot;관객수&quot;) &amp;&amp; !doc.text().includes(&quot;누적 관객수&quot;)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var audience = &quot;&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ((rating.split(&quot;&quot;).length) &gt; 4) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var rating = &quot;&quot;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let plot = doc.select(&quot;div [class=detail_info]&quot;).toString().split(&quot;줄거리&quot;)[1].split(&quot;더보기&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g, &quot;&quot;).replace(/[\\n\\s]{2,}/g, &quot;&quot;)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let final = title + &quot;\\n(&quot; + subt + &quot;)\\n━━━━━━━━━━━━━━\\n&quot; + gaeyo + &quot;\\n개봉 : &quot; + gaebong + &quot;\\n평점 : &quot; + rating + &quot;\\n관객수 : &quot; + audience + &quot;\\n━━━━━━━━━━━━━━\\n줄거리 : &quot; + betterHtml(plot)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(remove(final))</div><div>&nbsp;&nbsp;&nbsp; }<br />}&nbsp;</div><div><br /></div><div>이 소스를 타이타닉, 터미네이터 2, 엔드게임, 닥터 두리틀&nbsp; 이 4편으로 테스트하는데 타이타닉과 터미네이터 부분에 아무리 해도 오류가 생기네요.. 영화별로 사이트 구조가 항상 변하는데.. 좀 도와주실분..</div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001F3000000000",
+            "id": 7984,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 21,
+                "menuType": "B",
+                "name": "| 소스 요청 |"
+            },
+            "readCount": 102,
+            "refArticleId": 7984,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "영화",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573983749060,
+            "writer": {
+                "id": "hwarang228",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "Sjy0916"
+            }
+        },
+        "articleId": 7984,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "정규식 replace 쓸때는 없을 때 써도 오류가 안 나서 if문 안넣어도 되여",
+                    "id": 73690321,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73690321,
+                    "updateDate": 1573983844000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "정규식 부분에 if쓴건 cannot call replace of undefined 오류를 방지하려고 한게 아니라 사이트 구조에 대한 if문이에요",
+                    "id": 73690857,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73690321,
+                    "updateDate": 1573984435000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "Sjy0916"
+                    }
+                },
+                {
+                    "content": "맨 위 함수요",
+                    "id": 73690913,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73690321,
+                    "replyMember": {
+                        "id": "hwarang228",
+                        "nick": "Sjy0916"
+                    },
+                    "updateDate": 1573984483000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "그런가요 ㅋㅋ 하여튼 진짜 문제는 그게 아님..",
+                    "id": 73690960,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73690321,
+                    "updateDate": 1573984526000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "Sjy0916"
+                    }
+                },
+                {
+                    "content": "우와우와",
+                    "id": 73709989,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73709989,
+                    "updateDate": 1573999323000,
+                    "writer": {
+                        "id": "yyt2010",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "샤넬"
+                    }
+                },
+                {
+                    "content": "??ㅋㅋㅋ",
+                    "id": 73710045,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73709989,
+                    "updateDate": 1573999367000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "Sjy0916"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "카톡봇",
+                "headId": 84
+            },
+            {
+                "head": "디코봇",
+                "headId": 85
+            },
+            {
+                "head": "기타",
+                "headId": 86
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

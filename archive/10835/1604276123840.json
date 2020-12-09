@@ -1,0 +1,404 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 22,
+            "contentElements": [],
+            "contentHtml": "<p>//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />Ll = &quot;&#9148;&quot;.repeat(50)<br />Lw = &quot;\\u200b&quot;.repeat(500)<br />V=[], a=[], b=[], c=[], start=false<br />Reset = _ =&gt; (a=[], b=[], c=[], start=false)<br />FS = FileStream<br />path = &quot;sdcard/quiz/scores&quot;<br />rooms = []<br /><br />/*<br /><br />방 설정 하실거면 rooms 배열에 방이름 추가해 주세요.<br />비워넣을 시 모든 방 작동.<br />Made by doami<br /><br />*/<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (rooms.length &amp;&amp; rooms.indexOf(room) == -1) return;<br /><br />if (!FS.read(path)) FS.write(path, &quot;{}&quot;)<br /><br />if (msg == &quot;/퀴즈&quot; &amp;&amp; !start) {<br />start = true<br />parse = Utils.getWebText(&apos;https://m.search.naver.com/p/csearch/content/qapirender.nhn?&amp;where=m&amp;q=넌센스퀴즈&amp;start=&apos;+(Math.random()*937|0+1)).replace(/&lt;([^&gt;])+&gt;|;|gt/g, &quot;&quot;).replace(/[\\n\\s]{2,}/g, &quot;\\n&quot;)<br />Q = parse.split(&quot;&amp;&quot;)[4].trim()<br />a = parse.split(&quot;&amp;&quot;)[22].trim()<br />b = parse.split(&quot;&amp;&quot;)[16].trim()<br />c = parse.split(&quot;&amp;&quot;)[26].trim()<br />replier.reply(&quot;[!] &quot;+Q+&quot;\\n&quot;+Ll+&quot;\\n/정답 (답)\\n/힌트\\n/포기&quot;)<br />A = &quot;답 : &quot;+a+&quot;\\n\\n풀이 : &quot;+c<br />}<br /><br />if (msg.startsWith(&quot;/정답 &quot;)) {<br />if (a.replace(/ /g, &quot;&quot;) == msg.substr(4).replace(/ /g, &quot;&quot;)) {<br />json = JSON.parse(FS.read(path))<br />json[sender]?json[sender]++:json[sender] = 1<br />FS.write(path, JSON.stringify(json, null, 4))<br />replier.reply(&quot;[!] &quot;+sender+&quot; 님 정답!\\n&quot;+sender+&quot; 님의 현재 점수 : &quot;+json[sender]+&quot;점\\n\\n&quot;+A)<br />Reset();<br />} else replier.reply(&quot;[!] 오답입니다 !&quot;)<br />}<br /><br />if (msg == &quot;/힌트&quot; &amp;&amp; start) replier.reply(&quot;[!] &quot;+b);<br />if (msg == &quot;/포기&quot; &amp;&amp; start) replier.reply(&quot;[!] &quot;+A), Reset();<br />if (msg == &quot;/점수판&quot;) {<br />json = JSON.parse(FS.read(path))<br />scores = Object.keys(json).sort((name1, name2) =&gt; json[name1] - json[name2]).reverse().map((name, index) =&gt; (index+1)+&quot;위 | &quot;+name+&quot; | &quot;+json[name]+&quot;점&quot;).join(&quot;\\n&quot;)<br />replier.reply(&quot;[!] 점수판\\n&quot;+Ll+&quot;\\n&quot;+scores+&quot;\\n&quot;+Ll)<br />}<br /><br />}<br /><br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br /><br />업데이트<br />- 점수판 파일 미생성 오류 수정<br />- 퀴즈 중복 기능 제거<br />- 방 설정 기능 추가<br />- 가독성 개선<br />- 정답 띄어쓰기 구분 X (풋사과 == 풋 사과)</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002A5300000000",
+            "id": 10835,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 554,
+            "refArticleId": 10835,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "넌센스 퀴즈 v 1.6",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1580650002130,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 10835,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "점수판 정렬이 점수순위대로 정렬이 안되는거같은데 어딜 수정해야할까요? ㅠㅠ",
+                    "id": 80268259,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80268259,
+                    "updateDate": 1580880743000,
+                    "writer": {
+                        "id": "shinlevel",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180121_175/shinlevel_1516513319625GoSo0_GIF/__%283%29.gif"
+                        },
+                        "nick": "Yoshimi"
+                    }
+                },
+                {
+                    "content": "어떻게 정렬되나요?",
+                    "id": 80268279,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80268259,
+                    "updateDate": 1580880761000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "점수가 높으면 순위가 낮게 나와요. 낮은점수가 1위로 나오고..",
+                    "id": 80269423,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80268259,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1580881640000,
+                    "writer": {
+                        "id": "shinlevel",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180121_175/shinlevel_1516513319625GoSo0_GIF/__%283%29.gif"
+                        },
+                        "nick": "Yoshimi"
+                    }
+                },
+                {
+                    "content": "수정하였습니다.",
+                    "id": 80269938,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80268259,
+                    "replyMember": {
+                        "id": "shinlevel",
+                        "nick": "Yoshimi"
+                    },
+                    "updateDate": 1580882020000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "감사합니다~",
+                    "id": 80270108,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80268259,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1580882153000,
+                    "writer": {
+                        "id": "shinlevel",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20180121_175/shinlevel_1516513319625GoSo0_GIF/__%283%29.gif"
+                        },
+                        "nick": "Yoshimi"
+                    }
+                },
+                {
+                    "content": "여러방에서 개별 구동은 안되는걸까요? 다른방에서 퀴즈이용시 다른방은 /퀴즈 명령어가 안듣네요..",
+                    "id": 80311941,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80311941,
+                    "updateDate": 1580912600000,
+                    "writer": {
+                        "id": "jeonsh8069",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "에너지봇"
+                    }
+                },
+                {
+                    "content": "네",
+                    "id": 80312423,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80311941,
+                    "updateDate": 1580912827000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "누군가 정답을 맞추고 간발의 차이?로 동일한 정답을 입력시 js 에러가 나면서 비활성화 되용ㅜㅜ",
+                    "id": 80313089,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80311941,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1580913184000,
+                    "writer": {
+                        "id": "jeonsh8069",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "에너지봇"
+                    }
+                },
+                {
+                    "content": "아마 소스를 여러개 따로 만들면 가능할듯요",
+                    "id": 89267556,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80311941,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1588473199000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "V=[],a=[],b=[],c=0,d=[],F=FileStream,P=\"sdcard/SC/\",R=_=>(a=[],b=[],c=0,d=[]),response=(o,m,e,i,l)=>{j='join',s='split',t='trim',r='reply',w='replace',n='\\n',E='[!] ',D=E+'아직 문제를 내지 않았습니다.';m!='퀴즈'||(c=1,p=Utils.getWebText('https://m.search.naver.com/p/csearch/content/qapirender.nhn?&where=m&q=넌센스퀴즈&start='+(Math.random()*937|0+1))[w](/<[^>]+>|;|gt/g,'')[w](/[\\n\\s]{2,}/g,n),Q=p[s]('&')[4][t](),a.push(p[s]('&')[22][t]()),b.push(p[s]('&')[16][t]()),d.push(p[s]('&')[26][t]()),l[r](E+Q+n+'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ'+n+'정답 (답)\\n힌트\\n포기'));A='답 : '+a[j](', ')+'\\n\\n풀이 : '+d[j](n+n+'풀이 : ');if(m.startsWith('정답 ')){if(c){N=m.substr(3)[w](/, /g,',');if(a==N){F.write(P+e,Number(F.read(P+e))+1),l[r](E+e+' 님 정답!\\n\\n'+A),l[r](E+e+' 님의 현재 점수 : '+F.read(P+e)+'점'),R();return}a==N||l[r](E+'오답입니다 !')}c||l[r](D)}m!='포기'||(l[r](c?E+A:D),R()),m!='힌트'||l[r](c?E+b[j](', '):D);if(m=='점수판'){X=new java.io.File(P).list().sort();for(i=0;i<X.length;i++){V.push(X[i]+' : '+F.read(P+X[i])+'점')}l[r]('<퀴즈 점수판>'+n+V[j](n)),V=[]}if(m=='초기화'){X=new java.io.File(P).list().sort();for(i=0;i<X.length;i++){F.remove(P+X[i])}l[r](E+'초기화 되었습니다.'),V=[]}}\r\n\r\n레전드 소스\r\n\r\n",
+                    "id": 80503888,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80503888,
+                    "updateDate": 1581077875000,
+                    "writer": {
+                        "id": "eundaenged",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "은댕이"
+                    }
+                }
+            ],
+            "last": {
+                "id": 107592835,
+                "refId": 107592835
+            },
+            "next": {
+                "id": 80778404,
+                "refId": 80778404
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

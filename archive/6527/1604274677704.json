@@ -1,0 +1,257 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<div><span style=\"font-family: 돋움; font-size: 10pt;\">아직도 새카봇 안쓰는 human 있습니까? 그렇다면 어서 뒤로가기 누르세요.</span></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">// Rhino 방식 import</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">importClass(java.net.URL);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">importClass(javax.net.ssl.HttpsURLConnection);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">importPackage(java.io);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">importPackage(org.json);</span></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">// Array 에 있는 문자열중 랜덤으로 골라줍니다.</span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">function randomitem(a){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; return a[Math.floor(Math.random() * a.length)];</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">}</span></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">// 공백을 만들어줍니다.</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">var longword = &quot;\\u200b&quot;.repeat(500);</span><br /></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">// Thread 상태 확인을 위한 변수 설정</span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">let statud = false;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">let executed = false;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">let success = false;</span></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">// 목표 대화방 설정</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">let setroom = &quot;ROOM NAME&quot;;</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">let setisGroupChat = false;</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">let setmsg = &quot;반응할 대화 설정&quot;;</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">let parseURL = &quot;파싱할 URL 설정&quot;;</span><br /></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">function response(room,msg,sender,isGroupChat,replier){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; // 랜덤으로 출력할 대화 설정</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; var msg1 = new Array(</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;잠시 기다려주세요...&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;정보 받아오는중...&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;기다려 주세요...&apos;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; );</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; var msg2 = new Array(</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;다른방법 시도중..&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;다른 방법으로 다시 시도중..&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;조금만 더 기다려주세요..&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; );</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; var msg3 = new Array(</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;완전 실패! 정보를 전혀 받아오지 못했어요..&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;서버 또는 봇에게 문제가 있는 것 같아요..&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;404 오류가 뜨는걸 보아 서버가 꺼졌거나, 봇에 문제가 생겼거나 둘중 하나예요.&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;나중에 다시 해 보세요. 지금은 안되는 것 같네요.&apos;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; );</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; var msg4 = new Array(</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;성공! 아래 메세지를 눌러서 보세요.&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;현재 등록된 서버들의 목록이예요.&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;목록 표시&apos;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; );</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; var msg5 = new Array(</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;이미 작업 들어온 것이 있어!&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;그대 아직 일이 다 끝나지도 않았는데 나한테 또 시키는건가?&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;어허 조금만 더 기다려보게!&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; );</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; var msg6 = new Array(</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;말한지 얼마나 되었다고 또 시키는거야?!&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;그대 일부러 그러는것인가 &apos;+sender+&apos;?&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; sender+&apos;자네 나와 대화하고 싶어서 그러는겐가?&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;안돼. 돌아가.&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; );</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; var msg7 = new Array(</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;서버를 찾았습니다!&apos;,</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &apos;연결 성공!&apos;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; );</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; </span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; if(room == setroom &amp;&amp; isGroupChat === setisGroupChat &amp;&amp; msg == setmsg){</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // 모든 스레드 상태가 꺼져있는것을 확인합니다.</span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if(statud === false &amp;&amp; success === false &amp;&amp; executed === false){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; statud = true;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var data = &quot;nothing&quot;;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(randomitem(msg1));</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 여기에 있는 모든 통신은 Java 언어가 사용됩니다.</span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new java.lang.Thread({</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; run: function(){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var results = &quot;nothing&quot;;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try{</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // br.readline 할때 한줄로 이어나오거나, 한줄로만 나올때 줄바꿈을 합니다.</span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var newLine = java.lang.System.getProperty(&quot;line.separator&quot;);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var url = new URL(parseurl);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var con = url.openConnection();</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; con.setRequestProperty(&quot;User-Agent&quot;, &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20191008 Firefox/63.0&quot;);</span></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // openConnection() 을 할때, 파싱 시간이 너무 오래걸리면 파싱 중단을 합니다.</span><br /></div><div><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; con.setConnectTimeout(15 * 1000);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(randomitem(msg7));</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var ins = con.getInputStream();</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var is = new java.io.InputStreamReader(ins);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var sb = new java.lang.StringBuilder();</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var br = new java.io.BufferedReader(is);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var line = br.readLine();</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while(line != null) {</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sb.append(line);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sb.append(newLine);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line = br.readLine();</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(randomitem(msg4));</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(longword+sb);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; executed = false;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; success = true;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; statud = false;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; java.lang.Thread.sleep(60000);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; success = false;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }catch(e){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Log.e(e);</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }).start();</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; }</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; // 파싱 도중에 실행했을 때 대화를 출력합니다.</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; if(statud === true &amp;&amp; executed === false &amp;&amp; room == setroom &amp;&amp; isGroupChat === setisGroupChat &amp;&amp; msg == setmsg){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; executed = true;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; } else if (executed === true &amp;&amp; statud === true &amp;&amp; success === false &amp;&amp; room == setroom &amp;&amp; isGroupChat === setisGroupChat &amp;&amp; msg == setmsg){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; replier.reply(randomitem(msg5));</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; }</span><br /><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; // 파싱 완료후 대화를 출력하고, 대기시간동안 반응하지 않게 합니다.</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; if(statud === false &amp;&amp; success === true &amp;&amp; room == setroom &amp;&amp; isGroupChat === setisGroupChat &amp;&amp; msg == setmsg){</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; replier.reply(randomitem(msg6));</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; } else {</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return false;</span><br /><span style=\"font-family: 돋움; font-size: 8pt;\">&nbsp;&nbsp;&nbsp; }</span></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 10pt;\">끝.</span></div><div><span style=\"font-family: 돋움; font-size: 10pt;\">초보라면 이정도는 되어야 합니다.</span><br /></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000197F00000000",
+            "id": 6527,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 269,
+            "refArticleId": 6527,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "HTML 요청시 랜덤 대화 출력",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1571069695663,
+            "writer": {
+                "id": "kieaer",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjJfMTcw/MDAxNTg3NTYxNzUyNTA4.orcSxc1VfUcyV5HAT4cJuKLORdibT_QfGG11LUKWXBAg.aQ8_Cl_9tCfdij6vVNOppJzAeO8JIzrhokynCEUvT7cg.JPEG.kieaer/download20191100154143.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "키에르"
+            }
+        },
+        "articleId": 6527,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "뒤로가기 버튼이 어딨더라...(주섬주섬)",
+                    "id": 71079686,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71079686,
+                    "updateDate": 1571070070000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "새카봇이 아니라 새자봇이지만 ㄷㄷ...\r\n새자봇을 쓰시다니",
+                    "id": 71085114,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 71085114,
+                    "updateDate": 1571093184000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "그러게 머릿말을 왜 새카봇이라고함",
+                    "id": 71092121,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71085114,
+                    "updateDate": 1571097314000,
+                    "writer": {
+                        "id": "kieaer",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA0MjJfMTcw/MDAxNTg3NTYxNzUyNTA4.orcSxc1VfUcyV5HAT4cJuKLORdibT_QfGG11LUKWXBAg.aQ8_Cl_9tCfdij6vVNOppJzAeO8JIzrhokynCEUvT7cg.JPEG.kieaer/download20191100154143.jpg"
+                        },
+                        "nick": "키에르"
+                    }
+                },
+                {
+                    "content": "말머리 안고침? 헐",
+                    "id": 71130195,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 71085114,
+                    "replyMember": {
+                        "id": "kieaer",
+                        "nick": "키에르"
+                    },
+                    "updateDate": 1571127931000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

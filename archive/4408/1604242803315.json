@@ -1,0 +1,249 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-size:12pt;\"><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 (새카봇, 젤브봇, 메신저봇, 닼토봇, 기타)</b><div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 13.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b><br /></b></span></div><div><span style=\"font-size: 13.3333px;\"><b>try{</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>if(msg.indexOf(&quot;/날씨 &quot;)==0){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[jinxby]\\n날씨 정보를 불러오는중입니다...&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var a=Utils.getWebText(&quot;<a href=\"https://m.search.naver.com/search.naver?query=\" target=\"_blank\">https://m.search.naver.com/search.naver?query=</a>&quot;+msg.substr(4)+&quot;날씨&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var main=a.split(&quot;&lt;span class=\\&quot;bt_slt\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var b=a.split(&quot;&lt;p class=\\&quot;main\\&quot;&gt;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].replace(&quot;&lt;/em&gt;&quot;,&quot;도&quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var c=a.split(&quot;&lt;em class=\\&quot;figure degree_code\\&quot;&gt;&quot;)[1].split(&quot;&lt;/strong&gt;&quot;)[0].replace(&quot;&lt;/em&gt;&quot;,&quot;도&quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var d=a.split(&quot;&lt;span class=\\&quot;degree_code\\&quot;&gt;&quot;)[9].split(&quot;&lt;span class=\\&quot;u_hc\\&quot;&gt;&quot;)[0]</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var e=a.split(&quot;&lt;span class=\\&quot;degree_code\\&quot;&gt;&quot;)[8].split(&quot;&lt;span class=\\&quot;u_hc\\&quot;&gt;&quot;)[0]</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var f=a.split(&quot;&lt;em class=\\&quot;figure degree_code\\&quot;&gt;&quot;)[2].split(&quot;&lt;/div&gt;&quot;)[0].replace(&quot;&lt;/em&gt;&quot;,&quot;도&quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g,&quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var g=a.split(&quot;&lt;span class=\\&quot;percent\\&quot;&gt;&quot;)[1].split(&quot;자외선&quot;)[0].replace(&quot;&lt;/em&gt;&quot;,&quot;도&quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g,&quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var h=a.split(&quot;미세먼지&quot;)[1].split(&quot;㎍/㎥&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>if(h&lt;=30){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>A = &quot;&#128513;좋음&#128513;&quot;;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>else if(h&lt;=50){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>A = &quot;&#128552;보통&#128552;&quot;;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>else if(h&lt;=100){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>A = &quot;&#128545;나쁨&#128545;&quot;;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>else if (h&gt;100){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>A = &quot;&#128127;매우나쁨&#128127;&quot;;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>else if (h!=Number){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>A = &quot;&#10071;에러&#10071;&quot;;</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var i =a.split(&quot;자외선&quot;)[1].split(&quot;풍속&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g,&quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>var j =a.split(&quot;&lt;span class=\\&quot;metersec\\&quot;&gt;&quot;)[1].split(&quot;&lt;div class=\\&quot;grap_box\\&quot;&gt;&quot;)[0].replace(&quot;&lt;/em&gt;&quot;,&quot;도&quot;).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).replace(/\\n/g,&quot;&quot;)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[jinxby]\\n&quot;+main+&quot;날씨입니닷!\\n현재온도 : &quot;+c+&quot;\\n&#128314;&#65039;최고온도 : &quot;+d+&quot; | &#128315;최저온도 : &quot;+e+&quot;\\n현재날씨 : &quot;+b+&quot;\\n체감온도 : &quot;+f+&quot;\\n미세먼지 : &quot;+h+&quot;㎍/㎥&quot;+A+&quot;\\n자외선 : &quot;+i+&quot;\\n습도 : &quot;+g+&quot;%\\n풍속 : &quot;+j)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}catch(e){</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>replier.reply(&quot;[jinxby]\\n지역이름을 정확히 입력해주세요.\\nex)서울 강북구 번동&quot;+전체보기+&quot;\\n\\n자세한 오류&quot;+e)</b></span></div><div><span style=\"font-size: 13.3333px;\"><b>}</b></span></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; (위 소스는 jinxby님의 소스를 그대로 갖다 쓰다가 생긴 오류의 질문입니다.)</b></div><div><b><br /></b></div><div><b>제가 저 소스를 그대로 복붙해서 썼습니다.</b></div><div><b><br /></b></div><div><b>컴파일까지는 문제가 없었는데, 막상 구동하니까 타임아웃 오류가 뜹니다...ㅠㅠ</b></div><div><b><br /></b></div><div><b>해결책(다른 사이트, 다른 사이트 주소 등)이 없을까요? ㅠㅠ</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b>빨리 답해주시면 압도적인 감사!!</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000113800000000",
+            "id": 4408,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 160,
+            "refArticleId": 4408,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[긴급]날씨소스 타임아웃 오류",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1565441097710,
+            "writer": {
+                "id": "chang99112",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "Thanatos99"
+            }
+        },
+        "articleId": 4408,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 66065954,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 66065954,
+                    "updateDate": 1565441449000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "음...현재 LG G6+로 돌리는데, 속도가 느려서 타임아웃이 뜬다는 말씀이시군요?",
+                    "id": 66066219,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66065954,
+                    "updateDate": 1565441664000,
+                    "writer": {
+                        "id": "chang99112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Thanatos99"
+                    }
+                },
+                {
+                    "content": "사이트 로딩이 느린 것에 대한 해결책이 있는지요??",
+                    "id": 66066564,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66065954,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "냥냥이"
+                    },
+                    "updateDate": 1565441959000,
+                    "writer": {
+                        "id": "chang99112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Thanatos99"
+                    }
+                },
+                {
+                    "content": "와이파이공유기에 기기를 가까이요",
+                    "id": 66172653,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66065954,
+                    "replyMember": {
+                        "id": "chang99112",
+                        "nick": "Thanatos99"
+                    },
+                    "updateDate": 1565577060000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "JS카톡챗봇"
+                    }
+                },
+                {
+                    "content": "보통 집에서 구동하면 와이파이가 3~4칸까지 잘 뜨는데, 더 가까이 대봐야겠네요",
+                    "id": 66172996,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66065954,
+                    "replyMember": {
+                        "id": "gfpower00",
+                        "nick": "JS카톡챗봇"
+                    },
+                    "updateDate": 1565577290000,
+                    "writer": {
+                        "id": "chang99112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Thanatos99"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

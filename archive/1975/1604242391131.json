@@ -1,0 +1,268 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">네이버 파싱 운세</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><span style=\"font-size: 13pt; color: rgb(21, 101, 192);\">var</span><span style=\"font-size: 13pt;\"> j =</span><span style=\"font-size: 13pt; color: rgb(255, 160, 0);\">&quot;\\u200b&quot;</span><span style=\"font-size: 13pt;\">.repeat(</span><span style=\"font-size: 13pt; color: rgb(191, 54, 12);\">5</span><span style=\"font-size: 13pt; color: rgb(191, 54, 12);\">0</span><span style=\"font-size: 13pt; color: rgb(191, 54, 12);\">0</span><span style=\"font-size: 13pt;\">)</span></div><div><p dir=\"ltr\">\r\n<span style=\"color:#1565C0;\">function</span> response(room, msg, sender, isGroup, replier) {<br />\r\n&nbsp; &nbsp; <span style=\"color:#1565C0;\">if</span> (msg == <span style=\"color:#FFA000;\">&quot;@운세&quot;</span>) {<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; <span style=\"color:#1565C0;\">var</span> data = Utils.getWebText(<span style=\"color:#FFA000;\">&quot;https://m.search.naver.com/search.naver?where=m&amp;query=%EC%98%A4%EB%8A%98%EB%9D%A0%EB%B3%84%EC%9A%B4%EC%84%B8&amp;sm=mtb_she&amp;qdt=0#&quot;</span>);<br />\r\n<span style=\"color:#1565C0;\">var</span> data2 = data.split(<span style=\"color:#FFA000;\">&quot;별자리운세&quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; <span style=\"color:#1565C0;\">var</span> data3 = data2[<span style=\"color:#BF360C;\">1</span>].split(<span style=\"color:#FFA000;\">&quot;포춘82&quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; <span style=\"color:#1565C0;\">var</span> data4 = data3[<span style=\"color:#BF360C;\">0</span>].replace(/(&lt;([^&gt;]+)&gt;)/g, <span style=\"color:#FFA000;\">&quot;&quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.trim();<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data = data.split(<span style=\"color:#FFA000;\">&quot;\\n&quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/년생/g, <span style=\"color:#FFA000;\">&quot;년생\\n&quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/쥐띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n쥐띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/소띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n소띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/호랑이띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n호랑이띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/토끼띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n토끼띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/용띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n용띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/뱀띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n뱀띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/말띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n말띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/양띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n양띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/원숭이띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n원숭이띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/닭띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n닭띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/개띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n개띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/돼지띠/g, <span style=\"color:#FFA000;\">&quot;\\n\\n돼지띠]&nbsp; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/오늘 내일 이주 이달&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#BF360C;\">1</span> <span style=\"color:#BF360C;\">2</span> <span style=\"color:#BF360C;\">3</span> <span style=\"color:#BF360C;\">4</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 위 정보는 참고용이며, 자세한 운세는/g, <span style=\"color:#FFA000;\">&quot;&quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; data4 = data4.replace(/ /g, <span style=\"color:#FFA000;\">&quot; &quot;</span>);<br />\r\n&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(<span style=\"color:#FFA000;\">&quot;[오늘의 운세]\\n아래를 눌러주세요.&quot;</span> + j+data4);<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n}</p></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000007B700000000",
+            "id": 1975,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 631,
+            "refArticleId": 1975,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "네이버 파싱 운세 소스공유",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1556368290560,
+            "writer": {
+                "id": "leej_m",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20111031_179/leej_m_1319993786549_64Rj6l_jpg/%B5%A5%B8%B6_00000.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "deadmau5"
+            }
+        },
+        "articleId": 1975,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "감사합니다.",
+                    "id": 60711882,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60711882,
+                    "updateDate": 1559296999000,
+                    "writer": {
+                        "id": "wlwhsny",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "망고"
+                    }
+                },
+                {
+                    "content": "오류가나요ㅠ\r\n",
+                    "id": 69520404,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA5MjRfMjcx/MDAxNTY5MzA4MDcwNjAw.cVf_KaF-mnd-mSwU0YorhEEbDlhKsjcOaX8MAJUsX3Eg.6K99L8kkNjYpXHOe_aa51lQBJBGb9DdG3xA2yP2HOxQg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 352,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA5MjRfMjcx/MDAxNTY5MzA4MDcwNjAw.cVf_KaF-mnd-mSwU0YorhEEbDlhKsjcOaX8MAJUsX3Eg.6K99L8kkNjYpXHOe_aa51lQBJBGb9DdG3xA2yP2HOxQg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA5MjRfMjcx/MDAxNTY5MzA4MDcwNjAw.cVf_KaF-mnd-mSwU0YorhEEbDlhKsjcOaX8MAJUsX3Eg.6K99L8kkNjYpXHOe_aa51lQBJBGb9DdG3xA2yP2HOxQg.JPEG/externalFile.jpg",
+                        "width": 1020
+                    },
+                    "refId": 69520404,
+                    "updateDate": 1569308071000,
+                    "writer": {
+                        "id": "sait8930",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "단이"
+                    }
+                },
+                {
+                    "content": "저거 아마 맨 윗줄 j 정의한거 안써서 그런듯여",
+                    "id": 69969667,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69520404,
+                    "updateDate": 1569823078000,
+                    "writer": {
+                        "id": "domwis14",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "우웅이"
+                    }
+                },
+                {
+                    "content": "; 빠졌다고 계속 나오는데 뭘까요 ㅠㅠ",
+                    "id": 75180605,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75180605,
+                    "updateDate": 1575598075000,
+                    "writer": {
+                        "id": "bidotal",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200305_50/bidotal_1583404850256EJwwp_JPEG/image.JPEG"
+                        },
+                        "nick": "카톡봇연구"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

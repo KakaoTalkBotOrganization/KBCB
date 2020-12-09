@@ -1,0 +1,385 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 11,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저 봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt; 입장소스</b></div><div><div style=\"\"><b>const Thread = java.lang.Thread; //DO NOT TOUCH</b></div><div style=\"\"><b>const Jsoup = org.jsoup.Jsoup; //DO NOT TOUCH</b></div><div style=\"\"><b>let status; //DO NOT TOUCH</b></div><div style=\"\"><b>let loopStarted = false; //DO NOT TOUCH</b></div><div style=\"\"><b>/*-- 변수 설정 --*/</b></div><div style=\"\"><b>let room_raw = [&quot;<a href=\"https://open.kakao.com/o/링크\" target=\"_blank\">https://open.kakao.com/o/링크</a>&quot;]; //사용할 방 주소 순서대로 추가하시면 됩니다.</b></div><div style=\"\"><b>let room_names = [&quot;방이름&quot;]; //사용할 방 이름 정확하게 순서대로 추가하시면 됩니다.</b></div><div style=\"\"><b>let data_real = [{result: null}]; //사용할 방의 갯수만큼 {result: null}를 추가해주셔야합니다</b></div><div style=\"\"><b>let data_pre = [{result: null}]; //이거도 마찬가지로 사용할 방의 갯수만큼 {result: null} 추가</b></div><div style=\"\"><b>const source_name=&quot;이름&quot;; //메봇에서의 소스 이름을 넣으셔야 합니다.</b></div><div style=\"\"><b>const utc=1000 // 업데이트 시간 주기입니다; 단위는 ms 입니다; 1S=1000ms; 최소 500이상 - 최대 3000을 권장합니다;</b></div><div style=\"\"><b>const utce=60000 //에러 발생시 다음 업데이트까지 대기시간입니다; 단위는 ms 입니다; 1S=1000ms; 최소 30000이상 - 최대 300000을 권장합니다.</b></div><div style=\"\"><b>/*-- 변수 설정 끝 --*/</b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</b></div><div style=\"\"><b>&nbsp; &nbsp; if (!loopStarted) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; loopStarted = true;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; while (true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (java.lang.Thread.interrupted()==true){Api.off(source_name);return &quot;stopped&quot;;} // 메신저봇R 전용; thread interrupt</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var success= updateData(); // 데이터 업데이트</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (status==403){Api.off(source_name);return &quot;stopped&quot;;};</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(success){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /* 이곳에다가 소스를 추가하실수 있습니다. */</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /* 지원하는 변수: name, link, description, headcount, master, tags, like*/</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /* 예시: data_pre[i].result.name 또는 data_pre[i].result.tags*/</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (let i = 0; i &lt; room_raw.length; i ++) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (data_pre[i].result != null) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (data_real[i].result.headcount &gt; data_pre[i].result.headcount)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Api.replyRoom(room_names[i], &quot;안농!&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if (data_real[i].result.headcount &lt; data_pre[i].result.headcount)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Api.replyRoom(room_names[i], &quot;잘가옹&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /*for (let i = 0; i &lt; room_raw.length; i ++) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (data_pre[i].result != null) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (data_real[i].result.like &gt; data_pre[i].result.like)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Api.replyRoom(room_names[i], &quot;[알림] 누군가 좋아요를 눌렀어요!\\n 하트: &quot;+data_pre[i].result.like+&quot;↗&quot;+data_real[i].result.like);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if (data_real[i].result.like &lt; data_pre[i].result.like)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Api.replyRoom(room_names[i], &quot;[알림] 누군가 좋아요를 가져갔어요!\\n 하트: &quot;+data_pre[i].result.like+&quot;↘&quot;+data_real[i].result.like);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }*/ //쓰실거면 주석 풀어놓으시면 됩니다. 이것 -&gt; /* */ &lt;-</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Thread.sleep(utc); //업데이트 주기 입니다. (ms 단위)&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else{</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Thread.sleep(utce); // 연결 에러시 대기시간</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>updateData = () =&gt; {</b></div><div style=\"\"><b>&nbsp; let res;</b></div><div style=\"\"><b>&nbsp; &nbsp;for (let i = 0; i &lt; room_raw.length; i ++) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;data_pre[i] = data_real[i]; // copy previous data_pre to data_real</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;res = Jsoup.connect(&quot;<a href=\"https://api.develope.kr/search/room?room=\" target=\"_blank\">https://api.develope.kr/search/room?room=</a>&quot; + room_raw[i]).ignoreContentType(true).ignoreHttpErrors(true).execute()</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;status=res.statusCode();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(status!=200){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let a=&quot;[오류] 서버로부터 정보를 받아오지 못했습니다.&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (status==503){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a = a + &quot;\\n현재 서버가 점검 중입니다. 자세한 정보는 <a href=\"https://api.develope.kr/\" target=\"_blank\">https://api.develope.kr/</a> 을 확인해주세요.\\n&quot;+utce/1000+&quot;초 후 연결을 다시 시도합니다.&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if(status==403){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a = a + &quot;\\n사용자의 IP가 서버로부터 차단되었습니다. 자세한 사항은 소스 밑 주석에 작성되어있는 연락처를 통해 문의해주세요.&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a = a + &quot;\\n인터넷 연결을 확인해보시길 바랍니다. 계속 안되는경우 소스 밑 주석에 작성되어있는 연락처를 통해 질문하실수 있습니다.\\n&quot;+utce/1000+&quot;초 후 연결을 다시 시도합니다.&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; a = a + &quot;\\nHTTP &quot;+status+&quot; ERROR&quot; ;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Log.e(a); //Sports... it&apos;s in the game...&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return false;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;let obj = JSON.parse(res.body());</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;data_real[i] = obj;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;return true;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>}</b></div></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>카링소스</b></div><div style=\"\"><div style=\"\"><b>let id = &quot;아이디&quot;;</b></div><div style=\"\"><b>let pw = &quot;비번&quot;;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>const kakaoModule = require(&apos;BotKakaoAPI&apos;).Kakao();</b></div><div style=\"\"><b>const Kakao = new kakaoModule;</b></div><div style=\"\"><b>Kakao.init(&apos;번호&apos;);</b></div><div style=\"\"><b>Kakao.login(id,pw);</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function sendListTemplate(room, header_title, bg, contents, buttons, web_url, mobile_web_url) {</b></div><div style=\"\"><b>let json = {};</b></div><div style=\"\"><b>json[&quot;link_ver&quot;] = &quot;4.0&quot;;</b></div><div style=\"\"><b>json[&quot;template_object&quot;] = {};</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;object_type&quot;] = &quot;list&quot;;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;button_title&quot;] = &quot;테스트&quot;;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;contents&quot;] = contents;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;header_title&quot;] = header_title;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;buttons&quot;] = [];</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;header_image_url&quot;] = &quot;<a href=\"http://leadtv.dothome.co.kr/kakaoApi/img/bg-\" target=\"_blank\">http://leadtv.dothome.co.kr/kakaoApi/img/bg-</a>&quot;+bg+&quot;.png&quot;;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;header_image_width&quot;] = 900;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;header_image_height&quot;] = 900;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;header_link&quot;] = {};</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;header_link&quot;][&quot;web_url&quot;] = web_url;</b></div><div style=\"\"><b>json[&quot;template_object&quot;][&quot;header_link&quot;][&quot;mobile_web_url&quot;] = mobile_web_url;</b></div><div style=\"\"><b>return Kakao.send(room, json, &apos;default&apos;);</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function sendFeedTemplate(room, title, image_url, web, m_web, description, like, comment, share, bt1, web1, m_web1, bt2, web2, m_web2) {</b></div><div style=\"\"><b>let json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_object&quot;:{&quot;object_type&quot;:&quot;feed&quot;,&quot;button_title&quot;:&quot;&quot;,&quot;content&quot;:{&quot;title&quot;:title,&quot;image_url&quot;:image_url,&quot;link&quot;:{&quot;web_url&quot;:web,&quot;mobile_web_url&quot;:m_web},&quot;description&quot;:description},&quot;social&quot;:{&quot;like_count&quot;:like,&quot;comment_count&quot;:comment,&quot;shared_count&quot;:share},&quot;buttons&quot;:[{&quot;title&quot;:bt1,&quot;link&quot;:{&quot;web_url&quot;:web1,&quot;mobile_web_url&quot;:m_web1}},{&quot;title&quot;:bt2,&quot;link&quot;:{&quot;web_url&quot;:web2,&quot;mobile_web_url&quot;:m_web2}}]}};</b></div><div style=\"\"><b>return Kakao.send(room, json, &apos;default&apos;);</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function sendCommerceTemplate(room, title, image_url, web, m_web, description, bt1, web1, m_web1, bt2, web2, m_web2, regular_price, discount_price, discount_rate) {</b></div><div style=\"\"><b>let json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_object&quot;:{&quot;object_type&quot;:&quot;commerce&quot;,&quot;button_title&quot;:&quot;&quot;,&quot;content&quot;:{&quot;title&quot;:title,&quot;image_url&quot;:image_url,&quot;link&quot;:{&quot;web_url&quot;:web,&quot;mobile_web_url&quot;:m_web}},&quot;commerce&quot;:{&quot;regular_price&quot;:regular_price,&quot;discount_price&quot;:discount_price,&quot;discount_rate&quot;:discount_rate},&quot;buttons&quot;:[{&quot;title&quot;:bt1,&quot;link&quot;:{&quot;web_url&quot;:web1,&quot;mobile_web_url&quot;:m_web1}},{&quot;title&quot;:bt2,&quot;link&quot;:{&quot;web_url&quot;:web2,&quot;mobile_web_url&quot;:m_web2}}]}};</b></div><div style=\"\"><b>return Kakao.send(room, JSON.stringify(json), &apos;default&apos;);</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function sendLocationTemplate(room, title, image_url, web, m_web, description, like, comment, share, bt1, web1, m_web1, bt2, web2, m_web2, address, address_title) {</b></div><div style=\"\"><b>let json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_object&quot;:{&quot;object_type&quot;:&quot;location&quot;,&quot;button_title&quot;:&quot;&quot;,&quot;address&quot;:address,&quot;content&quot;:{&quot;title&quot;:title,&quot;image_url&quot;:image_url,&quot;link&quot;:{&quot;web_url&quot;:web,&quot;mobile_web_url&quot;:m_web},&quot;description&quot;:description},&quot;social&quot;:{&quot;like_count&quot;:like,&quot;comment_count&quot;:comment,&quot;shared_count&quot;:share},&quot;buttons&quot;:[{&quot;title&quot;:bt1,&quot;link&quot;:{&quot;web_url&quot;:web1,&quot;mobile_web_url&quot;:m_web1}},{&quot;title&quot;:bt2,&quot;link&quot;:{&quot;web_url&quot;:web2,&quot;mobile_web_url&quot;:m_web2}}],&quot;address_title&quot;:address_title}};</b></div><div style=\"\"><b>return Kakao.send(room, json, &apos;default&apos;);</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>function Test(room){</b></div><div style=\"\"><b>json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_id&quot;:(24419),&quot;template_args&quot;:{}}</b></div><div style=\"\"><b>return Kakao.send(room, json, &quot;custom&quot;)</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName){</b></div><div style=\"\"><b>if(msg == &quot;테스트&quot;){</b></div><div style=\"\"><b>Test(room)</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>}</b></div></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 윗 소스들은 입장시 안내 문구 나오는 소스와 카카오링크를 사용하는 소스인데</b></div><div><b>입장 시 카카오링크가 바로 나오게 하려면 어떻게 해야할지 찾아봐도 안보고 도저히 감이 안와서 질문올립니다ㅠㅠ</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000453800000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 17720,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 403,
+            "refArticleId": 17720,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "입장소스와 카카오링크 소스를 합칠 수 있나요?",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1588706866807,
+            "writer": {
+                "id": "uko05038",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "리먼"
+            }
+        },
+        "articleId": 17720,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "response는 2 개 이상이면 맨 아래것만 발동합니다.",
+                    "id": 89535106,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 89535106,
+                    "updateDate": 1588707232000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "두개를 합칠방법은 없나요?\r\n하나는 사람 입장시에 문구가 발동 되는것이고\r\n하나는 특정문구입력시 카카오링크 발동 되는것인데\r\n사람 입장시에 카카오링크가 발동될 수있게 축약시키는 방법은 아예없는건가요?",
+                    "id": 89535129,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89535106,
+                    "updateDate": 1588707476000,
+                    "writer": {
+                        "id": "uko05038",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리먼"
+                    }
+                },
+                {
+                    "content": "왜 없나요 입장문구를 카카오링크로 바꾸면 되겠죠",
+                    "id": 89535238,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89535106,
+                    "replyMember": {
+                        "id": "uko05038",
+                        "nick": "리먼"
+                    },
+                    "updateDate": 1588708831000,
+                    "writer": {
+                        "id": "hojunyun243",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDZfNTMg/MDAxNTg2MTAwMDEzNzQy.UwC7ZL_cADOp1lwXvYnywIrWiaxLR8u9tcJv5clHGeAg.9tRl5OtmkqseiVG2BBsJfnK5VhomqwzhY-TKFp4GhDgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "한국인"
+                    }
+                },
+                {
+                    "content": "어떻게해야할지 감이 안와서 그런데,,\r\n            for (let i = 0; i < room_raw.length; i ++) {\r\n               if (data_pre[i].result != null) {\r\n                  if (data_real[i].result.headcount > data_pre[i].result.headcount){\r\n                     Test(room)\r\n            }\r\n이런식으로 하면 되나요?",
+                    "id": 89535261,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89535106,
+                    "replyMember": {
+                        "id": "hojunyun243",
+                        "nick": "한국인"
+                    },
+                    "updateDate": 1588709176000,
+                    "writer": {
+                        "id": "uko05038",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리먼"
+                    }
+                },
+                {
+                    "content": "저는 카링을 안해서 모르겠네요",
+                    "id": 89535267,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89535106,
+                    "replyMember": {
+                        "id": "uko05038",
+                        "nick": "리먼"
+                    },
+                    "updateDate": 1588709223000,
+                    "writer": {
+                        "id": "hojunyun243",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDZfNTMg/MDAxNTg2MTAwMDEzNzQy.UwC7ZL_cADOp1lwXvYnywIrWiaxLR8u9tcJv5clHGeAg.9tRl5OtmkqseiVG2BBsJfnK5VhomqwzhY-TKFp4GhDgg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "한국인"
+                    }
+                },
+                {
+                    "content": "카링 그 Kakao.send 부분을 replier.reply 대신 넣으시면 됩니다.",
+                    "id": 89549696,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89535106,
+                    "replyMember": {
+                        "id": "uko05038",
+                        "nick": "리먼"
+                    },
+                    "updateDate": 1588723659000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "가능함미다",
+                    "id": 89548883,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA1MDZfMjIg/MDAxNTg4NzIzMjQ0OTA0._Q__NI1KVgAaIf_nb8WalMMmnohm-xp-fU2i67kNwqsg.a1JHqE6BtqPK0iOgWVXHtAO6D1WMpYM5i1bfapfG6qQg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 2280,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA1MDZfMjIg/MDAxNTg4NzIzMjQ0OTA0._Q__NI1KVgAaIf_nb8WalMMmnohm-xp-fU2i67kNwqsg.a1JHqE6BtqPK0iOgWVXHtAO6D1WMpYM5i1bfapfG6qQg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA1MDZfMjIg/MDAxNTg4NzIzMjQ0OTA0._Q__NI1KVgAaIf_nb8WalMMmnohm-xp-fU2i67kNwqsg.a1JHqE6BtqPK0iOgWVXHtAO6D1WMpYM5i1bfapfG6qQg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 89548883,
+                    "updateDate": 1588723245000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "헉,, 혹시 어떻게 합치는지 여쭤봐도 될까요? ㅠㅠ",
+                    "id": 89607429,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89548883,
+                    "updateDate": 1588762298000,
+                    "writer": {
+                        "id": "uko05038",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리먼"
+                    }
+                },
+                {
+                    "content": "굳이 카링을 하나여?\r\n느려질텐디",
+                    "id": 89583030,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 89583030,
+                    "updateDate": 1588744633000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "카링사용하는게 깔끔해 보여서요ㅠ\r\n도와주시면 감사하겠습니다!",
+                    "id": 89610010,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 89583030,
+                    "updateDate": 1588764210000,
+                    "writer": {
+                        "id": "uko05038",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리먼"
+                    }
+                }
+            ],
+            "last": {
+                "id": 94457441,
+                "refId": 94457441
+            },
+            "next": {
+                "id": 94457441,
+                "refId": 94457441
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

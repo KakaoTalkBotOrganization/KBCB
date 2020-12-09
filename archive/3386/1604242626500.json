@@ -1,0 +1,201 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>/*<br />Black List API<br />&copy; 2018 Dark Tornado, All rights reserved.<br />상업적 이용 금지. API를 판매하거나 API가 포함된 소스 크드 및 프로그램을 이용한 금전적인 이익 추구 금지.<br /><br />boolean BlackList.add(String nickName);<br />boolean BlackList.remove(String nickName);<br />boolean BlackList.isBanned(String nickName);<br />String[] BlackList.getList();<br />void BlackList.clear();<br />*/<br /><br />const BlackList = {};<br /><br />BlackList.list = [];<br />BlackList.add = function(name) {<br />    if (BlackList.isBanned(name)) {<br />        return false;<br />    } else {<br />        BlackList.list.push(name);<br />        return true;<br />    }<br />};<br />BlackList.isBanned = function(name) {<br />    for (var n = 0; n &lt; BlackList.list.length; n++) {<br />        if (BlackList.list[n] == name) return true;<br />    }<br />    return false;<br />};<br />BlackList.remove = function(name) {<br />    for (var n = 0; n &lt; BlackList.list.length; n++) {<br />        if (BlackList.list[n] == name) {<br />            BlackList.list.splice(n, 1);<br />            return true;<br />        }<br />    }<br />    return false;<br />};<br />BlackList.getList = function(name) {<br />    return BlackList.list;<br />};<br />BlackList.clear = function(name) {<br />    BlackList.list = [];<br />};<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br />    msg = msg.trim();<br />    sender = sender.trim();<br />    var cmd = msg.split(&quot; &quot;)[0];<br />    if (cmd == &quot;/차단&quot;) {<br />        let name = msg.replace(&quot;/차단 &quot;, &quot;&quot;);<br />        BlackList.add(name);<br />        replier.reply(name + &quot;(을)를 차단하였습니다.&quot;);<br />    } else if (cmd == &quot;/차단해제&quot;) {<br />        let name = msg.replace(&quot;/차단해제 &quot;, &quot;&quot;);<br />        BlackList.remove(name);<br />        replier.reply(name + &quot;(을)를 차단해제하였습니다.&quot;);<br />    } else if (cmd == &quot;/차단확인&quot;) {<br />        let name = msg.replace(&quot;/차단확인 &quot;, &quot;&quot;);<br />        if (BlackList.isBanned(name)) {<br />            replier.reply(name + &quot;(은)는 차단당한 사람입니다.&quot;);<br />        } else {<br />            replier.reply(name + &quot;(은)는 차단당하지 않은 사람입니다.&quot;);<br />        }<br />    } else if (msg == &quot;/차단목록&quot;) {<br />        let str = &quot;&quot;;<br />        let list = BlackList.getList();<br />        for (let n = 0; n &lt; list.length; n++) {<br />            str += list[n] + &quot;\\n&quot;;<br />        }<br />        replier.reply(&quot;[차단 목록]\\n&quot; + str.trim());<br />    } else if (msg == &quot;/차단초기화&quot;) {<br />        BlackList.clear();<br />        replier.reply(&quot;차단 목록이 초기화되었습니다.&quot;);<br />    }<br /><br />    if (BlackList.isBanned(sender)) {<br />        return;<br />    }<br />    if (msg == &quot;안녕&quot;) {<br />        replier.reply(&quot;누구세요?&quot;);<br />    }<br />}<br /><br /><br />이거를 어떻게해야 특정 한사람만 쓸 수 있게할 수 있죠 ㅜㅜ 완전 생초보라 쉽게 설명 부탁드려요 ㅜㅜ</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000D3A00000000",
+            "id": 3386,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 169,
+            "refArticleId": 3386,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "이걸 특정 한 사람만 쓸수 있게 하려면 어케해야되요?",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1561297171953,
+            "writer": {
+                "id": "jmk27645",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "Samsong 샘송"
+            }
+        },
+        "articleId": 3386,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "response 함수 바로 아래에 if(sender!=\"특정사람이름\")return;\r\n이 코드를 붙여넣기 하시면 돼요",
+                    "id": 62392949,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 62392949,
+                    "updateDate": 1561297317000,
+                    "writer": {
+                        "id": "babara0328",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MjdfMjky/MDAxNTY2ODU3ODk5MjU5.VykqYHYV1TQgZcwxaipb6ZH1ziEWOJgmb_qq65CZUMsg.voN5N_Wvvpx84LsTGeSTbDJlOkHKjuFe7F0GSu4LKu4g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "자유"
+                    }
+                },
+                {
+                    "content": "정말 감사합니다❗말끔히 해결됐네요❗❗",
+                    "id": 62393416,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62392949,
+                    "updateDate": 1561297610000,
+                    "writer": {
+                        "id": "jmk27645",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Samsong 샘송"
+                    }
+                },
+                {
+                    "content": "어떤 상황에서 사용하나요",
+                    "id": 91524744,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62392949,
+                    "replyMember": {
+                        "id": "jmk27645",
+                        "nick": "Samsong 샘송"
+                    },
+                    "updateDate": 1590390349000,
+                    "writer": {
+                        "id": "jtech10cnc",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "초초초초보컴맹"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

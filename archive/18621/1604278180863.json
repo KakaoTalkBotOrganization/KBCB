@@ -1,0 +1,399 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 53,
+            "contentElements": [],
+            "contentHtml": "<p>var 타수 = 900;<br />var 참여 = [];<br />var 타자 =[];<br />var 저장 = [];<br />var 짧은글=[&quot;가장 훌륭한 인간은 모든 사람을 사랑하는 사람이다.&quot;,&quot;가을에 떨어지는 도토리는 먼저 먹는 것이 임자이다.&quot;,&quot;강나루 건너서 밀밭 길을 구름에 달 가듯이 가는 나그네.&quot;,&quot;동해물과 백두산이 마르고 닳도록&quot;,&quot;하느님이 보우하사 우리나라 만세&quot;,&quot;무궁화 삼천리 화려 강산&quot;,&quot;대한 사람 대한으로 길이 보전하세&quot;,&quot;9년 홍수에 햇빛 기다리듯 하다&quot;,&quot;가까운 데 집은 깎이고 먼 데 집은 비친다&quot;,&quot;가까운 무당보다 먼 데 무당이 영하다&quot;,&quot;가르치는 것은 두 번 배우는 일이다&quot;,&quot;가까운 데를 가도 점심밥을 싸 가지고 가거라&quot;,&quot;가뭄에 콩 나듯&quot;,&quot;가장 바쁜 사람이 가장 많은 시간을 가진다&quot;,&quot;가을에는 기도하게 하소서&quot;,&quot;간에 기별도 안 간다&quot;,&quot;갈수록 태산이&quot;,&quot;강물이 돌을 굴리지는 못한다&quot;,&quot;가장 훌륭한 인간은 모든 사람을 사랑하는 사람이다.&quot;,&quot;강나루 건너서 밀밭 길을 구름에 달 가듯이 가는 나그네.&quot;,&quot;감나무 밑에 누워 연시 입 안에 떨어지기 바란다.&quot;,&quot;가지 많은 나무에 바람 잘 날 없다.&quot;];<br /><br />var Lw = &quot;\\u200b&quot;.repeat(500);<br /><br />var 선 = &quot;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&quot;;<br /><br /><br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br /><br />var 랜덤 = [Math.floor(Math.random()*짧은글.length)];<br /><br />var a = 랜덤;<br /><br /><br />if(msg == &quot;/타자 도움말&quot;){<br />replier.reply(&quot;타자게임\\n[1] /타자 도움말\\n[2] /타자 목록\\n[3] /타자 참가\\n[4] /타자 퇴장\\n[5] /타자 시작&quot;);<br />}<br /><br />if(msg == &quot;/타자 목록&quot;){<br />replier.reply(&quot;타자 [목록]&quot;+Lw+&quot;\\n\\n&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&#9148;&quot;+참여.join(&quot;\\n&quot;)+&quot;\\n&quot;+선);<br />}<br /><br /><br />if(msg == &quot;/타자 참가&quot;){<br />if(참여.indexOf(sender+&quot;\\n&quot;) == -1) {<br />참여.push(sender+&quot;\\n&quot;);<br />replier.reply(&quot;타자 게임 참가완료&quot;+Lw+&quot;\\n&quot;+선+&quot;\\n\\n&quot;+참여+&quot;\\n\\n&quot;+선+&quot;\\n[/타자 시작] 으로 시작할 수 있습니다&quot;);<br />}<br />else<br />if(msg == &quot;/타자 참가&quot;){<br />replier.reply(&quot;이미 타자에 참가하셨습니다&quot;+Lw+&quot;\\n&quot;+선+&quot;\\n\\n&quot;+참여+&quot;\\n\\n&quot;+선+&quot;\\n[/타자 시작] 으로 시작할 수 있습니다&quot;);<br />return;<br />}<br />}<br /><br /><br /><br /><br />if(msg == &quot;/타자 퇴장&quot;){<br />참여.splice(참여.indexOf(sender+&quot;\\n&quot;), 1);<br />replier.reply(sender+&quot;님이 타자를 퇴장하셨습니다!&quot;+Lw+&quot;\\n&quot;+선+&quot;\\n\\n&quot;+Lw+&quot;\\n&quot;+참여+&quot;\\n\\n&quot;+선+&quot;\\n[/타자 시작] 으로 시작할 수 있습니다&quot;);<br />}<br /><br /><br />if(msg == &quot;/타자 시작&quot;){<br />if(참여.indexOf(sender+&quot;\\n&quot;) != -1){<br />replier.reply(&quot;곧 타자게임을 시작합니다! 준비해주세요!!&quot;);<br />java.lang.Thread.sleep(2000);<br />저장.push(sender);<br />start = new Date().getTime();<br />replier.reply(&quot;『&quot;+짧은글[랜덤]+&quot;』&quot;);<br />타자.push(짧은글[랜덤]);<br /><br />java.lang.Thread.sleep(500);<br />타수 = 800;<br /><br />java.lang.Thread.sleep(500);<br />타수 = 700;<br /><br />java.lang.Thread.sleep(1000);<br />타수 = 650;<br /><br />java.lang.Thread.sleep(500);<br />타수 = 600;<br /><br />java.lang.Thread.sleep(500);<br />타수 = 550;<br /><br />java.lang.Thread.sleep(1000);<br />타수 = 500;<br /><br />java.lang.Thread.sleep(1000);<br />타수 = 450;<br /><br />java.lang.Thread.sleep(1000);<br />타수 = 400;<br /><br />java.lang.Thread.sleep(1000);<br />타수 = 350;<br /><br />java.lang.Thread.sleep(1000);<br />타수 = 300;<br /><br />java.lang.Thread.sleep(2000);<br />타수 = 250;<br /><br />java.lang.Thread.sleep(3000);<br />타수 = 200;<br /><br />java.lang.Thread.sleep(4000);<br />타수 = 150;<br /><br />java.lang.Thread.sleep(5000);<br />타수 = 100;<br /><br />java.lang.Thread.sleep(6000);<br />타수 = 50;<br /><br />java.lang.Thread.sleep(7000);<br />타수 = 0;<br /><br /><br />}<br />else<br />if(msg== &quot;/타자 시작&quot;){<br />replier.reply(&quot;아직 타자게임에 참가하지않으셨습니다\\n『/타자 참가』&quot;);<br />}<br />}<br /><br /><br />if(저장.indexOf(sender) != -1){<br />if(msg == 타자){<br />end = new Date().getTime();<br />replier.reply(sender+&quot;님 타자완료! [1등]\\n\\n[제시어] : &quot;+타자+&quot;\\n[타수] : &quot;+타수+&quot;\\n[시간] : &quot;+((end-start)/1000)+&quot;초&quot;);<br />참여 = [];<br />타자 = [];<br />저장 = [];<br />타수 = 900;<br />}<br />}<br />}<br /><br /><br /><br /><br />[리메이크 내용]<br />글추가   <br />도움말추가   <br />목록추가   <br />퇴장추가 <br />오류수정<br />디자인 변경</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000048BD00000000",
+            "id": 18621,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 502,
+            "refArticleId": 18621,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[메신저봇] 타자 소스 [리메이크]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1590209317073,
+            "writer": {
+                "id": "yesnocool123",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "SSAP청정"
+            }
+        },
+        "articleId": 18621,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "타자게임\r\n[1] /타자 도움말\r\n[2] /타자 목록\r\n[3] /타자 참가\r\n[4] /타자 퇴장\r\n[5] /타자 시작",
+                    "id": 91322669,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91322669,
+                    "updateDate": 1590209382000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                },
+                {
+                    "content": "음 멋지군",
+                    "id": 91322830,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91322830,
+                    "updateDate": 1590209560000,
+                    "writer": {
+                        "id": "gigigia-1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTUz/MDAxNTk5NjEyNTg2MDgw.gz9LKfYQFlIU1Ih6Ro4ODKnP-r-LbWE_B5ROxm6GcN4g.AzxtviQvtDbkk0DawTj6adZ2Xc-ZL8piX8CadbcCd1Mg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "재승"
+                    }
+                },
+                {
+                    "content": "ㅘ",
+                    "id": 91322836,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91322830,
+                    "updateDate": 1590209570000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                },
+                {
+                    "content": "이거 복붙해서 써도 되나요??",
+                    "id": 91322905,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91322905,
+                    "updateDate": 1590209633000,
+                    "writer": {
+                        "id": "youngho00905",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfNzcg/MDAxNTk0OTcxMzQ0MTQ2.nTGyd-ueBqv5gAefrBTbvYUWzob8DLCUKIdg4VS_ybgg.7vOU3AO12SxO7YjI_iQBq-WZxUuyjPPt0I2CClXqaDkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "블칸"
+                    }
+                },
+                {
+                    "content": "네네네 쓰세요",
+                    "id": 91322947,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91322905,
+                    "updateDate": 1590209667000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                },
+                {
+                    "content": "감사합니다 ㅎㅎ",
+                    "id": 91322950,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91322905,
+                    "replyMember": {
+                        "id": "yesnocool123",
+                        "nick": "SSAP청정"
+                    },
+                    "updateDate": 1590209674000,
+                    "writer": {
+                        "id": "youngho00905",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfNzcg/MDAxNTk0OTcxMzQ0MTQ2.nTGyd-ueBqv5gAefrBTbvYUWzob8DLCUKIdg4VS_ybgg.7vOU3AO12SxO7YjI_iQBq-WZxUuyjPPt0I2CClXqaDkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "블칸"
+                    }
+                },
+                {
+                    "content": "엥 ㅋㅋㅋㅋㅋㅋ엄청 잘하시는데요 !!",
+                    "id": 91323041,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91322905,
+                    "replyMember": {
+                        "id": "yesnocool123",
+                        "nick": "SSAP청정"
+                    },
+                    "updateDate": 1590209761000,
+                    "writer": {
+                        "id": "youngho00905",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfNzcg/MDAxNTk0OTcxMzQ0MTQ2.nTGyd-ueBqv5gAefrBTbvYUWzob8DLCUKIdg4VS_ybgg.7vOU3AO12SxO7YjI_iQBq-WZxUuyjPPt0I2CClXqaDkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "블칸"
+                    }
+                },
+                {
+                    "content": "혼자서 소스 짤 줄 아시면 뉴비는 아니죠오 !",
+                    "id": 91323053,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91323053,
+                    "updateDate": 1590209778000,
+                    "writer": {
+                        "id": "youngho00905",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfNzcg/MDAxNTk0OTcxMzQ0MTQ2.nTGyd-ueBqv5gAefrBTbvYUWzob8DLCUKIdg4VS_ybgg.7vOU3AO12SxO7YjI_iQBq-WZxUuyjPPt0I2CClXqaDkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "블칸"
+                    }
+                },
+                {
+                    "content": "그럼 핵뉴비 할께요",
+                    "id": 91323069,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91323053,
+                    "updateDate": 1590209793000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                },
+                {
+                    "content": "앜ㅋㅋㅋㅋㅋ",
+                    "id": 91323077,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91323053,
+                    "replyMember": {
+                        "id": "yesnocool123",
+                        "nick": "SSAP청정"
+                    },
+                    "updateDate": 1590209803000,
+                    "writer": {
+                        "id": "youngho00905",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfNzcg/MDAxNTk0OTcxMzQ0MTQ2.nTGyd-ueBqv5gAefrBTbvYUWzob8DLCUKIdg4VS_ybgg.7vOU3AO12SxO7YjI_iQBq-WZxUuyjPPt0I2CClXqaDkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "블칸"
+                    }
+                }
+            ],
+            "last": {
+                "id": 91610237,
+                "refId": 91610237
+            },
+            "next": {
+                "id": 91323093,
+                "refId": 91323053
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

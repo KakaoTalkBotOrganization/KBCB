@@ -1,0 +1,168 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "<p>도서관 수정해서 만들었습니다<br />const scriptName=&quot;게시판.js&quot;;<br />FS=FileStream;<br />const nn=&quot;\\u200b&quot;.repeat(500);<br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />msg=msg.trim();<br />msgn=msg.split(&quot; &quot;);<br />command=CommandParser.parse(msg,true);<br /><br />//if(!(new java.io.File(&quot;/sdcard/BOT/Content/Content.json&quot;).isFile()))<br />//FileStream.write(&quot;/sdcard/BOT/Content/Content.json&quot;,&quot;[]&quot;);<br /><br />try{<br />if(msg==&quot;.글&quot;){<br />replier.reply(&quot;글 사용법\\n글 목록 : .글 목록\\n글 추가 : .글 추가 (제목) (내용)\\n글 읽기 : .글 읽기 (ID)\\n댓글 달기 : .글 댓글 (ID) (내용)\\n\\n(글 삭제는 MatSoGeum에게 말해주세요)\\n(이름이나 내용에 띄어쓰기가 있으면 \\&quot;로 감싸주세요.)&quot;);<br />}else if(msgn[0]==&quot;.글&quot;&amp;&amp;msgn[1]==&quot;추가&quot;){<br />Content=JSON.parse(FileStream.read(&quot;/sdcard/BOT/Content/Content.json&quot;));<br />Content.push({name:command[2],content:command[3],writer:sender,reply:[]});<br />FileStream.write(&quot;/sdcard/BOT/Content/Content.json&quot;,JSON.stringify(Content));<br />replier.reply(&quot;추가되었습니다.&quot;)<br />}else if(msgn[0]==&quot;.글&quot;&amp;&amp;msgn[1]==&quot;목록&quot;){<br />Content=JSON.parse(FileStream.read(&quot;/sdcard/BOT/Content/Content.json&quot;));<br />Tmp=&quot;&quot;;<br />for(i=0;i&lt;Content.length;i++){<br />Tmp+=i<br />Tmp+=&quot; : &quot;;<br />Tmp+=Content[i][&apos;name&apos;];<br />Tmp+=&quot; &quot;;<br />Tmp+=Content[i][&apos;writer&apos;];<br />Tmp+=&quot;\\n&quot;;<br />}<br />replier.reply(Tmp);<br />}else if(msgn[0]==&quot;.글&quot;&amp;&amp;msgn[1]==&quot;읽기&quot;&amp;&amp;msgn[2]!=undefined){<br />Content=JSON.parse(FileStream.read(&quot;/sdcard/BOT/Content/Content.json&quot;));<br />reply=&quot;&quot;;<br />for(i=0;i&lt;Content[Number(msgn[2])][&apos;reply&apos;].length;i++){<br />reply+=Content[Number(msgn[2])][&apos;reply&apos;][i][&apos;name&apos;]+&quot; : &quot;+Content[Number(msgn[2])][&apos;reply&apos;][i][&apos;dp&apos;];<br />reply+=&quot;\\n&quot;<br />}<br />replier.reply(&quot;글&quot;+nn+&quot;\\n제목 : &quot;+Content[Number(msgn[2])][&apos;name&apos;]+&quot;\\n내용 : \\n&quot;+Content[Number(msgn[2])][&apos;content&apos;]+&quot;\\n\\n----------------------------------------댓글----------------------------------------\\n&quot;+reply);<br /><br />}else if(msgn[0]==&quot;.글&quot;&amp;&amp;msgn[1]==&quot;댓글&quot;&amp;&amp;msgn[3]!=undefined){<br />rdp=command[3].replace(/\\n/g,&quot;&quot;).replace(/\\u202E/g,&quot;&quot;)<br />Content=JSON.parse(FileStream.read(&quot;/sdcard/BOT/Content/Content.json&quot;));<br />Content[Number(msgn[2])][&apos;reply&apos;].push({name:sender,dp:command[3]})<br />FileStream.write(&quot;/sdcard/BOT/Content/Content.json&quot;,JSON.stringify(Content));<br />replier.reply(&quot;댓글을 달았습니다&quot;)<br />}<br />}catch(e){<br />replier.reply(&quot;오류 발생\\n\\n&quot;+e);<br />}<br />}<br />//커맨드파서<br />var CommandParser = (function() {<br />    var parse = function(str, lookForQuotes) {<br />        var args = [];<br />        var readingPart = false;<br />        var part = &apos;&apos;;<br />        for (var i = 0; i &lt; str.length; i++){<br />            if (str.charAt(i) === &apos; &apos; &amp;&amp; !readingPart) {<br />                args.push(part);<br />                part = &apos;&apos;;<br />            } else {<br />                if (str.charAt(i) === &apos;\\&quot;&apos; &amp;&amp; lookForQuotes) {<br />                    readingPart = !readingPart;<br />                } else {<br />                    part += str.charAt(i);<br />                }<br />            }<br />        }<br />        args.push(part);<br />        return args;<br />    }<br />    return {<br />        parse: parse<br />    }<br />})();</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000A5C00000000",
+            "id": 2652,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 179,
+            "refArticleId": 2652,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "글",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1558826575947,
+            "writer": {
+                "id": "psksun4500",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "MatSoGeum"
+            }
+        },
+        "articleId": 2652,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,313 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-c98dbc88-eab9-11ea-82e6-7b008b37881d\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedef99b-eab9-11ea-82e6-d904d5bd2c7e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedef99a-eab9-11ea-82e6-dd22fa14cd7d\">function searchYoutube(text) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedef99d-eab9-11ea-82e6-abbf14200f1e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedef99c-eab9-11ea-82e6-df971fb50d00\">  try {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedef99f-eab9-11ea-82e6-bb969779f488\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedef99e-eab9-11ea-82e6-69d8f3ca154f\">    let res &#x3D; JSON.parse(org.jsoup.Jsoup.connect(&quot;https://www.youtube.com/results?search_query&#x3D;&quot; + encodeURIComponent(text)).get().html().split(&quot;window[\\&quot;ytInitialData\\&quot;] &#x3D;&quot;)[1].split(&quot;window[\\&quot;ytInitialPlayerResponse\\&quot;] &#x3D; null;&quot;)[0].replace(/;/g, &quot;&quot;)).contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedef9a1-eab9-11ea-82e6-29376d29430c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedef9a0-eab9-11ea-82e6-f9815d71a0bc\">    let result &#x3D; [];</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedef9a3-eab9-11ea-82e6-95b19c4cc8b1\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedef9a2-eab9-11ea-82e6-891223440cd8\">    for (let i &#x3D; 0; i &lt; 5; i++) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20b5-eab9-11ea-82e6-6fd124b79934\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20b4-eab9-11ea-82e6-bd16f7927b0e\">      result[i] &#x3D; {};</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20b7-eab9-11ea-82e6-c18a920bf9c7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20b6-eab9-11ea-82e6-8bcb015032e5\">      if (res[i].channelRenderer !&#x3D; undefined) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20b9-eab9-11ea-82e6-7f63df5f15fb\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20b8-eab9-11ea-82e6-a5ad0119f8c0\">        result[i].type &#x3D; &quot;채널&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20bb-eab9-11ea-82e6-a7fad5357d33\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20ba-eab9-11ea-82e6-6d7de81c1cf1\">        result[i].title &#x3D; &quot;채널이름: &quot; + res[i].channelRenderer.title.simpleText;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20bd-eab9-11ea-82e6-a118fcdc477f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20bc-eab9-11ea-82e6-27e346082581\">        result[i].url &#x3D; &quot;채널주소: https://www.youtube.com&quot; + res[i].channelRenderer.navigationEndpoint.commandMetadata.webCommandMetadata.url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20bf-eab9-11ea-82e6-1159ab8137bc\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20be-eab9-11ea-82e6-2f7e54a90df4\">        result[i].image &#x3D; &quot;채널사진: https:&quot; + res[i].channelRenderer.thumbnail.thumbnails[0].url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20c1-eab9-11ea-82e6-41acb63a4291\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20c0-eab9-11ea-82e6-13612e0701c2\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20c3-eab9-11ea-82e6-4b637cd8536f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20c2-eab9-11ea-82e6-4d1630e7e5dc\">      if (res[i].videoRenderer !&#x3D; undefined) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20c5-eab9-11ea-82e6-cbfd1d61a220\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20c4-eab9-11ea-82e6-6d19741675c9\">        result[i].type &#x3D; &quot;영상&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf20c7-eab9-11ea-82e6-0ff09876f8c3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf20c6-eab9-11ea-82e6-1d00b3d9e8ff\">        result[i].title &#x3D; &quot;동영상: &quot; + res[i].videoRenderer.title.runs[0].text;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47d9-eab9-11ea-82e6-f1447aa1af3c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47d8-eab9-11ea-82e6-7d190a735482\">        result[i].titleurl &#x3D; &quot;동영상주소: https://youtube.com/watch?v&#x3D;&quot; + res[i].videoRenderer.videoId;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47db-eab9-11ea-82e6-e9b240b43ff7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47da-eab9-11ea-82e6-3dee3d82e3ee\">        result[i].image &#x3D; &quot;이미지: &quot; + res[i].videoRenderer.thumbnail.thumbnails[0].url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47dd-eab9-11ea-82e6-53b95b685fe5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47dc-eab9-11ea-82e6-d133cc6cf1a5\">        result[i].channeltitle &#x3D; &quot;업로더이름: &quot; + res[i].videoRenderer.longBylineText.runs[0].text;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47df-eab9-11ea-82e6-ad7e0de2b829\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47de-eab9-11ea-82e6-a50b76020a6f\">        result[i].channelurl &#x3D; &quot;업로더주소: https://www.youtube.com&quot; + res[i].videoRenderer.longBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47e1-eab9-11ea-82e6-9bcdbec73975\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47e0-eab9-11ea-82e6-03a402c349ab\">        result[i].channelimage &#x3D; &quot;업로더사진: &quot; + res[i].videoRenderer.channelThumbnailSupportedRenderers.channelThumbnailWithLinkRenderer.thumbnail.thumbnails[0].url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47e3-eab9-11ea-82e6-c168085ba3d4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47e2-eab9-11ea-82e6-65ba3f2873f5\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47e5-eab9-11ea-82e6-7b5dc47f2af5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47e4-eab9-11ea-82e6-c75b9792f32d\">      if (res[i].shelfRenderer !&#x3D; undefined) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47e7-eab9-11ea-82e6-8b4d1b928569\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47e6-eab9-11ea-82e6-334c3a2435b7\">        result[i].type &#x3D; &quot;최신동영상&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47e9-eab9-11ea-82e6-dbbe6969bac1\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47e8-eab9-11ea-82e6-abd3a5859321\">        result[i].title &#x3D; res[i].shelfRenderer.title.simpleText + &quot;: &quot; + res[i].shelfRenderer.content.verticalListRenderer.items[0].videoRenderer.title.runs[0].text;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47eb-eab9-11ea-82e6-0b1f74f65cac\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47ea-eab9-11ea-82e6-0dc7a4559069\">        result[i].titleurl &#x3D; &quot;동영상주소: https://youtube.com/watch?v&#x3D;&quot; + res[i].shelfRenderer.content.verticalListRenderer.items[0].videoRenderer.videoId;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47ed-eab9-11ea-82e6-2d2b6167afd7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47ec-eab9-11ea-82e6-1fe383b203de\">        result[i].image &#x3D; &quot;이미지: &quot; + res[i].shelfRenderer.content.verticalListRenderer.items[0].videoRenderer.thumbnail.thumbnails[0].url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf47ef-eab9-11ea-82e6-31cf8dcce700\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf47ee-eab9-11ea-82e6-e3de071c971f\">        result[i].channeltitle &#x3D; &quot;업로더이름: &quot; + res[i].shelfRenderer.content.verticalListRenderer.items[0].videoRenderer.longBylineText.runs[0].text;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f01-eab9-11ea-82e6-d30b3b36d475\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f00-eab9-11ea-82e6-9f6dc98d8a32\">        result[i].channelurl &#x3D; &quot;업로더주소: https://www.youtube.com&quot; + res[i].shelfRenderer.content.verticalListRenderer.items[0].videoRenderer.longBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f03-eab9-11ea-82e6-af220ddc8191\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f02-eab9-11ea-82e6-61582a1d0886\">        result[i].channelimage &#x3D; &quot;업로더사진: &quot; + res[i].shelfRenderer.content.verticalListRenderer.items[0].videoRenderer.channelThumbnailSupportedRenderers.channelThumbnailWithLinkRenderer.thumbnail.thumbnails[0].url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f05-eab9-11ea-82e6-d14f191056e5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f04-eab9-11ea-82e6-d7e43b425075\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f07-eab9-11ea-82e6-fd80771cff63\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f06-eab9-11ea-82e6-1d10d39ff107\">      if (res[i].horizontalCardListRenderer !&#x3D; undefined) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f09-eab9-11ea-82e6-0f1f746c7887\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f08-eab9-11ea-82e6-8bbef7aca9c3\">        result[i].type &#x3D; &quot;연관검색어&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f0b-eab9-11ea-82e6-430f4a0361c3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f0a-eab9-11ea-82e6-fd9086587d57\">        result[i].title &#x3D; &quot;연관검색어: &quot; + res[i].horizontalCardListRenderer.cards[0].searchRefinementCardRenderer.query.runs[0].text;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f0d-eab9-11ea-82e6-b31639dda125\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f0c-eab9-11ea-82e6-e53478cc111b\">        result[i].image &#x3D; &quot;이미지: https:&quot; + res[i].horizontalCardListRenderer.cards[0].searchRefinementCardRenderer.thumbnail.thumbnails[0].url;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f0f-eab9-11ea-82e6-9f0b74dd8048\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f0e-eab9-11ea-82e6-a5432997c941\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f11-eab9-11ea-82e6-5d1c3b215903\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f10-eab9-11ea-82e6-f15e5673e0e0\">    }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f13-eab9-11ea-82e6-e7cddff8114c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f12-eab9-11ea-82e6-cd6cdca5fc1d\">    let reply &#x3D; &quot;유튜브 검색결과\\n&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f15-eab9-11ea-82e6-2f9db1bff6f8\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f14-eab9-11ea-82e6-c5eae0a080c4\">    for (let e of result) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f17-eab9-11ea-82e6-cd4102ee71e6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f16-eab9-11ea-82e6-05fa8cd16bea\">      if (Object.keys(e).length &#x3D;&#x3D; 0) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf6f19-eab9-11ea-82e6-bfc98440f0da\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf6f18-eab9-11ea-82e6-6d5c6cf2e8f3\">        continue;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf962b-eab9-11ea-82e6-b391e60e547b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf962a-eab9-11ea-82e6-7d6ef63d46ab\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf962d-eab9-11ea-82e6-85f8a4d29816\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf962c-eab9-11ea-82e6-37f074445f6c\">      if (e.type &#x3D;&#x3D; &quot;채널&quot;) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf962f-eab9-11ea-82e6-0d975173f3df\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf962e-eab9-11ea-82e6-f1ddbe2cbe41\">        reply +&#x3D; e.title + &quot;\\n&quot; + e.url + &quot;\\n&quot; + e.image + &quot;\\n\\n\\n&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf9631-eab9-11ea-82e6-b3e0a6e45b35\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf9630-eab9-11ea-82e6-09066128f7df\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf9633-eab9-11ea-82e6-f518e8276238\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf9632-eab9-11ea-82e6-033507577f08\">      if (e.type &#x3D;&#x3D; &quot;영상&quot; || e.type &#x3D;&#x3D; &quot;최신동영상&quot;) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf9635-eab9-11ea-82e6-1b619c6669f6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf9634-eab9-11ea-82e6-e36312804da7\">        reply +&#x3D; e.title + &quot;\\n&quot; + e.titleurl + &quot;\\n&quot; + e.image + &quot;\\n&quot; + e.channeltitle + &quot;\\n&quot; + e.channelurl + &quot;\\n&quot; + e.channelimage + &quot;\\n\\n\\n&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf9637-eab9-11ea-82e6-77c10a1ce648\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf9636-eab9-11ea-82e6-61988c5ba04a\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf9639-eab9-11ea-82e6-a35597223fcb\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf9638-eab9-11ea-82e6-e32a7270c21f\">      if (e.type &#x3D;&#x3D; &quot;연관검색어&quot;) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf963b-eab9-11ea-82e6-bd4b57fa053f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf963a-eab9-11ea-82e6-9128e7d0ca21\">        reply +&#x3D; e.title + &quot;\\n&quot; + e.image + &quot;\\n\\n\\n&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf963d-eab9-11ea-82e6-a10f191cb8b0\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf963c-eab9-11ea-82e6-af1abb1e5340\">      }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedf963f-eab9-11ea-82e6-d565358aa72b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedf963e-eab9-11ea-82e6-ff1e9635aa78\">    }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedfbc51-eab9-11ea-82e6-11c5229635a5\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedfbc50-eab9-11ea-82e6-63eebedc0f99\">    return reply;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedfbc53-eab9-11ea-82e6-271510489f6a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedfbc52-eab9-11ea-82e6-7d3b04c755c2\">  } catch(e) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedfbc55-eab9-11ea-82e6-8d87f37edfd2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedfbc54-eab9-11ea-82e6-79b376918f1a\">    return &quot;검색 결과가 없습니다.&quot;;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedfbc57-eab9-11ea-82e6-f764093cbcd6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedfbc56-eab9-11ea-82e6-a11773db0619\">  }</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedfbc59-eab9-11ea-82e6-cd0c1aeaa780\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedfbc58-eab9-11ea-82e6-7f56dfc51031\">}</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-cedfbc5b-eab9-11ea-82e6-5bdd69209a08\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cedfbc5a-eab9-11ea-82e6-8b83b1100e38\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00005D6200000000",
+            "head": "초급",
+            "headId": 103,
+            "id": 23906,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 245,
+            "refArticleId": 23906,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "유튜브검색",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1598789432903,
+            "writer": {
+                "id": "taejune5843",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "태준"
+            }
+        },
+        "articleId": 23906,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "말.머.리.가.정.말.적.합.하.네.요",
+                    "id": 101640536,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101640536,
+                    "updateDate": 1598789472000,
+                    "writer": {
+                        "id": "nybeom",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMjlfMjgg/MDAxNjAzOTc0MTQ3Njgw.xneQtQTgZivwtGuIoyfXpVnYEy8aX9LN75uA_My17wkg.4OctfpVyvEdnAh77DKk-eR0-2KHGLCJcwOHNYY_rLDYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "Project"
+                    }
+                },
+                {
+                    "content": "복붙하면 되는거라 초급(?)",
+                    "id": 101644421,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": true,
+                    "refId": 101644421,
+                    "updateDate": 1598791433000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "맞습니다",
+                    "id": 101644491,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101644421,
+                    "updateDate": 1598791467000,
+                    "writer": {
+                        "id": "taejune5843",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "태준"
+                    }
+                },
+                {
+                    "content": "이거 뭐라고 쳐야 검색결과가나와요?",
+                    "id": 101728361,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101728361,
+                    "updateDate": 1598859892000,
+                    "writer": {
+                        "id": "aser2497",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "멍뭉이tv"
+                    }
+                },
+                {
+                    "content": "text부분에 검색할거 넣으세오",
+                    "id": 101742232,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 101728361,
+                    "updateDate": 1598870582000,
+                    "writer": {
+                        "id": "taejune5843",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "태준"
+                    }
+                },
+                {
+                    "content": "괄호안에넣어야되나요",
+                    "id": 101742323,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101742323,
+                    "updateDate": 1598870659000,
+                    "writer": {
+                        "id": "aser2497",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "멍뭉이tv"
+                    }
+                },
+                {
+                    "content": "?",
+                    "id": 101742410,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 101742410,
+                    "updateDate": 1598870721000,
+                    "writer": {
+                        "id": "aser2497",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "멍뭉이tv"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

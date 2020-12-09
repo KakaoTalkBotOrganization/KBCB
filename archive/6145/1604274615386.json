@@ -1,0 +1,394 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 29,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)</font></span></div><div><b>가사따라부르기 ver.3.0</b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><b>var say=&quot;&quot;;</b></div><div style=\"\"><b>var test=&quot;&quot;;</b></div><div style=\"\"><b>var nowsing=0;</b></div><div style=\"\"><b>var singlength=0;</b></div><div style=\"\"><b>var singnot=0;</b></div><div style=\"\"><b>var botnamestr=&quot;(접두사..일걸요? 아무튼 알아서 입력하세요.)</b><b>&quot;</b></div><div style=\"\"><b>let lw = &quot;\\u200b&quot;.repeat(500);</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadld) {</b></div><div style=\"\"><b>//이발도 알아서 하세요.</b></div><div style=\"\"><b>/*if(msg.indexOf(&quot;eval &quot;)==0){</b></div><div style=\"\"><b>try{</b></div><div style=\"\"><b>var a=eval(msg.substr(5))</b></div><div style=\"\"><b>replier.reply(a)</b></div><div style=\"\"><b>}catch(e){</b></div><div style=\"\"><b>replier.reply(e)</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>}*/</b></div><div style=\"\"><b>img=java.lang.String(ImageDB.getProfileImage()).hashCode();</b></div><div style=\"\"><b>if(msg.indexOf(&quot;!가사 따라부르기 &quot;)==0 &amp;&amp; say==&quot;&quot;){</b></div><div style=\"\"><b>replier.reply(botnamestr+&quot;잠시만 기다려 주세요!&quot;);</b></div><div style=\"\"><b>say=img+sender;</b></div><div style=\"\"><b>try{</b></div><div style=\"\"><b>test=Utils.getWebText(&quot;https://m.search.naver.com/search.naver?query=&quot;+msg.replace(&quot;!가사 따라부르기 &quot;,&quot;&quot;).replace(&quot; &quot;,&quot;+&quot;)+&quot;+가사&quot;).split(&quot;&lt;div class=\\&quot;lyrics_txt _size_limit\\&quot; style=\\&quot;display: block;\\&quot;&gt;&quot;)[1].split(&quot;&lt;div class=\\&quot;btn_box\\&quot;&gt;&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/[\\n\\s]{2,}/g,&quot;\\n&quot;).split(&quot;\\n&quot;);</b></div><div style=\"\"><b>replier.reply(botnamestr+&quot;자! 준비가 끝났습니다!, 저먼저 시작할께요!\\n그만하고 싶으면 !그만하기 를 입력해주세요!\\n\\n&quot;+test[nowsing]+&quot;\\n\\n가사를 보려면 전체보기를 눌러주세요.&quot;+lw+&quot;\\n&quot;+test.join(&quot;\\n&quot;));</b></div><div style=\"\"><b>nowsing++</b></div><div style=\"\"><b>singlength=test.length;</b></div><div style=\"\"><b>return 0;</b></div><div style=\"\"><b>}catch(e){</b></div><div style=\"\"><b>try{</b></div><div style=\"\"><b>test=Utils.getWebText(&quot;https://m.search.naver.com/search.naver?query=&quot;+msg.replace(&quot;!가사 따라부르기 &quot;,&quot;&quot;).replace(&quot; &quot;,&quot;+&quot;)+&quot;+가사&quot;).split(&quot;&lt;div class=\\&quot;lyrics_txt _size_limit\\&quot;&gt;&quot;)[1].split(&quot;&lt;div class=\\&quot;btn_box\\&quot;&gt;&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/[\\n\\s]{2,}/g,&quot;\\n&quot;).split(&quot;\\n&quot;);</b></div><div style=\"\"><b>if(test.length&lt;=1) throw new error;</b></div><div style=\"\"><b>replier.reply(botnamestr+&quot;자! 준비가 끝났습니다!, 저먼저 시작할께요!\\n그만하고 싶으면 !그만하기 를 입력해주세요!\\n\\n&quot;+test[nowsing]+&quot;\\n\\n가사를 보려면 전체보기를 눌러주세요.&quot;+lw+&quot;\\n&quot;+test.join(&quot;\\n&quot;));</b></div><div style=\"\"><b>nowsing++</b></div><div style=\"\"><b>singlength=test.length;</b></div><div style=\"\"><b>return 0;</b></div><div style=\"\"><b>}catch(e){</b></div><div style=\"\"><b>replier.reply(&quot;Aㅓ.. 하필이면.. 노래가 읎어요!&quot;)</b></div><div style=\"\"><b>say=&quot;&quot;</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>if(img+sender==say){</b></div><div style=\"\"><b>nowsing++</b></div><div style=\"\"><b>if(nowsing+1&gt;test.length){</b></div><div style=\"\"><b>replier.reply(botnamestr+&quot;자, 노래가 끝났습니다!\\n&quot;+sender+&quot;님의 점수는 &quot;+Math.round(100-(singnot/singlength*100))+&quot;점 입니다.&quot;)</b></div><div style=\"\"><b>test=&quot;&quot;;</b></div><div style=\"\"><b>say=&quot;&quot;;</b></div><div style=\"\"><b>nowsing=0;</b></div><div style=\"\"><b>singlength=0;</b></div><div style=\"\"><b>singnot=0;</b></div><div style=\"\"><b>return 0;</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>nowsing--</b></div><div style=\"\"><b>if(msg==&quot;!그만하기&quot;){</b></div><div style=\"\"><b>replier.reply(botnamestr+&quot;넵, 알겠습니다!&quot;);</b></div><div style=\"\"><b>say=&quot;&quot;;</b></div><div style=\"\"><b>singlength=0;</b></div><div style=\"\"><b>singnot=0;</b></div><div style=\"\"><b>nowsing=0</b></div><div style=\"\"><b>return 0;</b></div><div style=\"\"><b>}else if(msg.replace(/[ ]/g,&quot;&quot;)==test[nowsing].replace(/[ ]/g,&quot;&quot;)){</b></div><div style=\"\"><b>nowsing++</b></div><div style=\"\"><b>replier.reply(botnamestr+test[nowsing])</b></div><div style=\"\"><b>nowsing++</b></div><div style=\"\"><b>if(nowsing+1&gt;test.length){</b></div><div style=\"\"><b>replier.reply(botnamestr+&quot;자, 노래가 끝났습니다!\\n&quot;+sender+&quot;님의 점수는 &quot;+Math.round(100-(singnot/singlength*100))+&quot;점 입니다.&quot;)</b></div><div style=\"\"><b>test=&quot;&quot;;</b></div><div style=\"\"><b>say=&quot;&quot;;</b></div><div style=\"\"><b>nowsing=0;</b></div><div style=\"\"><b>return 0;</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>//nowsing--</b></div><div style=\"\"><b>}else{</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>replier.reply(botnamestr+sender+&quot;님! 가사가 틀렸어요! &quot;+sender+&quot;님이 불러야 할 가사는 &apos;&quot;+test[nowsing]+&quot;&apos;입니다&quot;);</b></div><div style=\"\"><b>singnot++;</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>}</b></div></div><div style=\"\"><b>//주석처리한건 한 이유가 있으니.. Aㅓ.. 소스 이해 못했으면 아무거나 건들지 마세요. 버그가 생길수 있습니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000180100000000",
+            "id": 6145,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 253,
+            "refArticleId": 6145,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[닼토봇은 호환안됨]노래 따라부르기 ver.3.0",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1570432338163,
+            "writer": {
+                "id": "bass90301",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "bass90301"
+            }
+        },
+        "articleId": 6145,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "새자봇 테스트 해보심?",
+                    "id": 70520075,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70520075,
+                    "updateDate": 1570435759000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "ㅇㅇ 잘됨",
+                    "id": 70520149,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70520075,
+                    "updateDate": 1570435820000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "우와",
+                    "id": 70520332,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70520075,
+                    "replyMember": {
+                        "id": "bass90301",
+                        "nick": "bass90301"
+                    },
+                    "updateDate": 1570435977000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "잘되네요 ! 좋아요박고갑니다 감사합니다",
+                    "id": 70521745,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70521745,
+                    "updateDate": 1570437157000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "감사합니다!",
+                    "id": 70527308,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70521745,
+                    "updateDate": 1570442247000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "이발은 좀...",
+                    "id": 70524904,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70524904,
+                    "updateDate": 1570440023000,
+                    "writer": {
+                        "id": "williameom0826",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDJfMTU1/MDAxNTg1Nzg4NjczNzY1.P0yIN6FJ_f49z-WPSTHegCrZTR-B-hK8YwVgconwsFEg.4fBP8ETOdeLTnaf5v2Ph6SpT27lsVPpHwd2jGpiufPEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "williameom"
+                    }
+                },
+                {
+                    "content": "디버깅용인데 빼기 귀찮아서 넣음",
+                    "id": 70524977,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70524904,
+                    "updateDate": 1570440090000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "음...",
+                    "id": 70525030,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70524904,
+                    "replyMember": {
+                        "id": "bass90301",
+                        "nick": "bass90301"
+                    },
+                    "updateDate": 1570440143000,
+                    "writer": {
+                        "id": "williameom0826",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MDJfMTU1/MDAxNTg1Nzg4NjczNzY1.P0yIN6FJ_f49z-WPSTHegCrZTR-B-hK8YwVgconwsFEg.4fBP8ETOdeLTnaf5v2Ph6SpT27lsVPpHwd2jGpiufPEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "williameom"
+                    }
+                },
+                {
+                    "content": "추가된 기능이 뭐에유? 최적화인가",
+                    "id": 70527173,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70527173,
+                    "updateDate": 1570442139000,
+                    "writer": {
+                        "id": "hamew3900",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "NanMang"
+                    }
+                },
+                {
+                    "content": "아마 버그 수정일걸요.\r\n배열의 길이가 1개면 바로 끝나는 버그\r\n아님 있는 노래 없다고 나오는 버그 둘중 하나일걸요",
+                    "id": 70527259,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70527173,
+                    "updateDate": 1570442235000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                }
+            ],
+            "last": {
+                "id": 95873850,
+                "refId": 95873850
+            },
+            "next": {
+                "id": 70528512,
+                "refId": 70528512
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

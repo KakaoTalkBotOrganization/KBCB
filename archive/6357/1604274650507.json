@@ -1,0 +1,268 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>각종 오류들이 만들 때마다 생겨나서 그냥 뿌립니다<br />오류나도 책임 안짐<br />(경로 다 만드시는 게 좋을 거임..)<br />873줄<br /><br /><br />-------------------------------------------------------<br /><br />checkAdmin = id =&gt; {<br /><br />if (FileStream.read(&quot;/sdcard/BOT/admi&quot;).split(&quot;\\n&quot;).indexOf(id) != -1) {<br /><br />return true;<br /><br />}<br /><br />}<br /><br />ringupgrade = 0;<br /><br />players = &quot;sdcard/doamirpg/players/&quot;;<br /><br />FS = FileStream;<br /><br />S = &quot;&#128178;&quot;;<br /><br />divide = num =&gt; {<br /><br />rep = num.toString().replace(/\\B(?=(\\d{4})+(?!\\d))/g, &quot;,&quot;)<br /><br />if (JSON.stringify(rep.match(/,/g,&quot;&quot;))!=&quot;null&quot;) {<br /><br />if (rep.match(/,/g,&quot;&quot;).length==1) {<br /><br />return rep.replace(&quot;,&quot;, &quot;만 &quot;).replace(/0000/g,&quot;&quot;).replace(/ 0+/g,&quot; &quot;).trim()<br /><br />} else {<br /><br />return rep.replace(&quot;,&quot;, &quot;억 &quot;).replace(/0000/g,&quot;&quot;).replace(&quot;,&quot;, &quot;만 &quot;).replace(&quot;억 만&quot;,&quot;억&quot;).replace(/ 0+/g,&quot; &quot;).trim()<br /><br />}<br /><br />} else {<br /><br />return rep<br /><br />}<br /><br />}<br /><br />zzang = [&quot;짱구&quot;, &quot;철수&quot;, &quot;맹구&quot;, &quot;유리&quot;, &quot;훈이&quot;, &quot;교장쌤&quot;];<br /><br />doraemon = [&quot;진구&quot;, &quot;이슬이&quot;, &quot;퉁퉁이&quot;, &quot;비실이&quot;, &quot;도라에몽&quot;];<br /><br />function checkitems(sender) {<br /><br />itms = JSON.parse(FS.read(&quot;sdcard/doamirpg/itemscoin.json&quot;));<br /><br />return itms[sender];<br /><br />}<br /><br />function additem(send, item) {<br /><br />itms = JSON.parse(FS.read(&quot;sdcard/doamirpg/itemscoin.json&quot;));<br /><br />itms[send].push(item);<br /><br />FS.write(&quot;sdcard/doamirpg/itemscoin.json&quot;, JSON.stringify(itms));<br /><br />}<br /><br />function deleteitem(sender, item) {<br /><br />itms = JSON.parse(FS.read(&quot;sdcard/doamirpg/itemscoin.json&quot;));<br /><br />a = (itms[sender].join(&quot;\\n&quot;)+&quot;\\n&quot;).replace(item+&quot;\\n&quot;, &quot;&quot;).trim();<br /><br />itms[sender] = a.split();<br /><br />if (itms[sender] == &quot;&quot;) {<br /><br />itms[sender] = [];<br /><br />}<br /><br />FS.write(&quot;sdcard/doamirpg/itemscoin.json&quot;, JSON.stringify(itms));<br /><br />}<br /><br />function checkring(sender) {<br /><br />itms = JSON.parse(FS.read(&quot;sdcard/doamirpg/itemscoin.json&quot;));<br /><br />return (&quot;반지 +&quot; + (itms[sender].join(&quot;\\n&quot;) + &quot;\\n&quot;).split(&quot;반지 +&quot;)[1].split(&quot;\\n&quot;)[0]);<br /><br />}<br /><br />function upgradering(sender) {<br /><br />const a = checkring(sender);<br /><br />deleteitem(sender, a);<br /><br />additem(sender, &quot;반지 +&quot; + (Number(a.split(&quot;반지 +&quot;)[1]) + 1));<br /><br />}<br /><br />function downgradering(sender) {<br /><br />const a = checkring(sender);<br /><br />deleteitem(sender, a);<br /><br />additem(sender, &quot;반지 +&quot; + (Number(a.split(&quot;반지 +&quot;)[1]) - 1));<br /><br />}<br /><br />function checkLv(send) {<br /><br />return Number(FS.read(players + send).split(&quot;Lv.&quot;)[1].split(&quot;(&quot;)[0].trim());<br /><br />}<br /><br />function checkRank(sender) {<br /><br />return FS.read(players + sender).split(&quot;(&quot;)[1].split(&quot;)&quot;)[0];<br /><br />}<br /><br />function setRank(sender, rank) {<br /><br />FS.write(players+sender, FS.read(players + sender).replace(&quot;(&quot;+checkRank(sender)+&quot;)&quot;, &quot;(&quot;+rank+&quot;)&quot;))<br /><br />}<br /><br />function Rankup(sender) {<br /><br />ranks = [&quot;뉴비&quot;, &quot;중수&quot;, &quot;고수&quot;, &quot;마스터&quot;, &quot;고인물&quot;, &quot;쌉고인물&quot;, &quot;Top&quot;, &quot;☆GOD☆&quot;];<br /><br />setRank(sender, ranks[ranks.indexOf(checkRank(sender)) + 1]);<br /><br />}<br /><br />function Lvup(sender) {<br /><br />FS.write(players + sender, FS.read(players + sender).replace(/Lv\\. ([0-9]+)+/g, &quot;Lv. &quot; + (checkLv(sender) + 1)));<br /><br />}<br /><br />function checkdamage(weapon) {<br /><br />if (weapon.includes(&quot;+&quot;) &amp;&amp; !weapon.includes(&quot;+0&quot;)) {<br /><br />return (weapon.split(&quot;+&quot;)[1]) * 3;<br /><br />} else {<br /><br />if (weapon.includes(&quot;+0&quot;)) {<br /><br />return 1;<br /><br />} else {<br /><br />return 0;<br /><br />}<br /><br />}<br /><br />}<br /><br />function upgradecoin(weapon) {<br /><br />if (weapon.includes(&quot;+&quot;)) {<br /><br />return (weapon.split(&quot;+&quot;)[1] * 20);<br /><br />} else {<br /><br />return 5;<br /><br />}<br /><br />}<br /><br />function checkplayer(send) {<br /><br />if (new java.io.File(&quot;sdcard/doamirpg/players&quot;).list().indexOf(send) != -1) {<br /><br />return true;<br /><br />} else {<br /><br />return false;<br /><br />}<br /><br />}<br /><br />function allUsers() {<br /><br />return new java.io.File(&quot;sdcard/doamirpg/players&quot;).list().sort().join(&quot;\\n&quot;);<br /><br />}<br /><br />function addcoin(send, add) {<br /><br />info = FS.read(players + send);<br /><br />FS.write(players + send, info.replace(&quot;잔고 : &quot; + info.split(&quot;잔고 : &quot;)[1].split(S)[0], &quot;잔고 : &quot; + Number(Number(info.split(&quot;잔고 : &quot;)[1].split(S)[0]) + Number(add))));<br /><br />}<br /><br />function changeweapon(send, wpnname) {<br /><br />FS.write(players + send, FS.read(players + send).replace(FS.read(players + send).split(&quot;무기 : &quot;)[1].split(&quot;\\n&quot;)[0], wpnname));<br /><br />}<br /><br />function mapmove(send, area) {<br /><br />FS.write(players + send, FS.read(players + send).replace(FS.read(players + send).split(&quot;위치 : &quot;)[1].trim(), area));<br /><br />}<br /><br />function checkmap(send) {<br /><br />return FS.read(players + send).split(&quot;위치 :&quot;)[1].trim();<br /><br />}<br /><br />function checkcoin(send) {<br /><br />return FS.read(players + send).split(&quot;잔고 :&quot;)[1].split(&quot;&#128178;&quot;)[0].trim();<br /><br />}<br /><br />function checkweapon(send) {<br /><br />return FS.read(players + send).split(&quot;무기 :&quot;)[1].split(&quot;\\n&quot;)[0].trim();<br /><br />}<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {<br /><br />if (msg == &quot;/회원가입&quot;) {<br /><br />if ((sender.length &gt;= 3 &amp;&amp; sender.length &lt;= 20) &amp;&amp; !sender.includes(&quot;.&quot;) &amp;&amp; !sender.includes(&quot;\\\\&quot;) &amp;&amp; !sender.includes(&quot;&#8203;\\u200b&quot;)) {<br /><br />if (new java.io.File(players).list().sort().indexOf(sender) == -1) {<br /><br />FS.write(players + sender, sender + &quot;\\nLv. 0 (뉴비)\\n잔고 : 0&quot; + S + &quot;\\n무기 : 맨손\\n위치 : 로비&quot;);<br /><br />mapmove(sender, &quot;로비&quot;);<br /><br />itms = JSON.parse(FS.read(&quot;sdcard/doamirpg/itemscoin.json&quot;));<br /><br />itms[sender] = {};<br /><br />FS.write(&quot;sdcard/doamirpg/itemscoin.json&quot;, JSON.stringify(itms));<br /><br />replier.reply(&quot;[!] 등록되었습니다.&quot;);<br /><br />} else {<br /><br />replier.reply(&quot;[!] 이미 사용중인 닉네임입니다!&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 닉네임 조건에 적합하지 않습니다!\\n조건: 3자 이상 20자 이하\\n공백문자, ., \\\\ 사용 불가&quot;);<br /><br />}<br /><br />}<br /><br />if (checkplayer(sender)) {<br /><br />if (checkcoin(sender)&gt;9999999999) {<br /><br />addcoin(sender, -1*checkcoin(sender))<br /><br />addcoin(sender, 9999999999)<br /><br />}<br /><br />itms = JSON.parse(FS.read(&quot;sdcard/doamirpg/itemscoin.json&quot;));<br /><br />if (JSON.stringify(itms[sender])==&quot;{}&quot;) {<br /><br />itms[sender] = [];<br /><br />FS.write(&quot;sdcard/doamirpg/itemscoin.json&quot;, JSON.stringify(itms));<br /><br />}<br /><br />if (checkLv(sender) &lt;= 10) {<br /><br />setRank(sender, &quot;뉴비&quot;);<br /><br />} else {<br /><br />if (checkLv(sender) &gt; 10 &amp;&amp; checkLv(sender) &lt;= 50) {<br /><br />setRank(sender, &quot;중수&quot;);<br /><br />} else {<br /><br />if (checkLv(sender) &gt; 50 &amp;&amp; checkLv(sender) &lt;= 100) {<br /><br />setRank(sender, &quot;고수&quot;);<br /><br />} else {<br /><br />if (checkLv(sender) &gt; 100 &amp;&amp; checkLv(sender) &lt;= 300) {<br /><br />setRank(sender, &quot;파이터&quot;);<br /><br />} else {<br /><br />if (checkLv(sender) &gt; 300 &amp;&amp; checkLv(sender) &lt;= 500) {<br /><br />setRank(sender, &quot;학살꾼&quot;);<br /><br />} else {<br /><br />if (checkLv(sender) &gt; 500 &amp;&amp; checkLv(sender) &lt;= 1000) {<br /><br />setRank(sender, &quot;고인물&quot;);<br /><br />} else {<br /><br />if (checkLv(sender) &gt; 1000 &amp;&amp; checkLv(sender) &lt;= 2000) {<br /><br />setRank(sender, &quot;마스터&quot;);<br /><br />} else {<br /><br />if (checkLv(sender) &gt; 3000 &amp;&amp; checkLv(sender) &lt; 5000) {<br /><br />setRank(sender, &quot;&curren; 신 &curren;&quot;);<br /><br />}<br /><br />}<br /><br />}<br /><br />}<br /><br />}<br /><br />}<br /><br />}<br /><br />}<br /><br />try {<br /><br />if (msg == &quot;/사냥&quot;) {<br /><br />if (checkmap(sender) != &quot;로비&quot;) {<br /><br />rand = Math.random() * 15 | 0 + 1;<br /><br />if (rand != 1) {<br /><br />if (checkitems(sender).join(&quot;&quot;).indexOf(&quot;반지&quot;) != -1) {<br /><br />ringupgrade = Number(checkring(sender).split(&quot;반지 +&quot;)[1].trim());<br /><br />}<br /><br />earnedcoin = (ringupgrade + 1) * ((Math.random() * (Number(checkdamage(checkweapon(sender))) + 10) | 0) + Number(checkdamage(checkweapon(sender))));<br /><br />addcoin(sender, earnedcoin);<br /><br />replier.reply(&quot;[!] &quot; + sender + &quot; 님이\\n&apos;&quot; + checkweapon(sender) + &quot;&apos; 를 사용해 &quot; + ((checkmap(sender) == &quot;진구네집&quot;) ? (doraemon[Math.random() * doraemon.length | 0]) : (zzang[Math.random() * zzang.length | 0])) + &quot; 사냥에 성공하여 &quot; + divide(earnedcoin) + S + &quot; 를 획득하였습니다!\\n\\n잔고 : &quot; + divide(checkcoin(sender)) + &quot;&#128178;&quot;);<br /><br />giftran = Math.random() * 5 | 0 + 1;<br /><br />if (giftran == 5) {<br /><br />giftearned = Math.random() * 100 | 0 + 1;<br /><br />addcoin(sender, giftearned);<br /><br />replier.reply(&quot;[Bonus] 전리품을 얻었습니다! (+&quot; + giftearned + S + &quot;)&quot;);<br /><br />}<br /><br />lvup = Math.random() * 7 | 0 + 1;<br /><br />if (lvup == 7) {<br /><br />Lvup(sender);<br /><br />replier.reply(&quot;[!] &quot; + sender + &quot;님이 레벨업을 하였습니다!\\n현재 레벨 : &quot; + checkLv(sender));<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 몬스터가 보이지 않습니다..&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 로비에서는 사냥을 할 수 없습니다!\\n&apos;/맵&apos; 을 사용해 주세요.&quot;);<br /><br />}<br /><br />}<br /><br />}<br /><br />catch (e) {<br /><br />replier.reply(e.message+&quot;\\n&quot;+e.lineNumber);<br /><br />}<br /><br />if (msg.startsWith(&quot;/스탯&quot;)) {<br /><br />if (msg.length == 3) {<br /><br />if (checkplayer(sender)) {<br /><br />replier.reply(FS.read(players + sender) + &quot;\\n《&quot; + checkitems(sender) + &quot;》&quot;);<br /><br />} else {<br /><br />replier.reply(&quot;[!] 회원가입이 필요합니다!\\n&apos;/회원가입&apos;&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(FS.read(players + msg.substr(3).trim())+&quot;\\n《&quot; + checkitems(msg.substr(3).trim()) + &quot;》&quot;);<br /><br />}<br /><br />}<br /><br />if (msg == &quot;/강화&quot;) {<br /><br />replier.reply(&quot;&apos;/강화 (도구)&apos;\\n&quot;<br />+&quot;\\n도구 목록\\n&quot; + &quot;-&quot;.repeat(20)<br />+&quot;\\n&bull; 검\\n&quot;<br />+&quot;\\n&bull; 반지\\n&quot;<br />+ &quot;-&quot;.repeat(20));<br /><br />}<br /><br />if (msg == &quot;/강화 검&quot;) {<br /><br />if (checkweapon(sender) != &quot;맨손&quot;) {<br /><br />ran = Math.random() * 200 | 0 + 1;<br /><br />if (checkcoin(sender) &gt;= upgradecoin(checkweapon(sender))) {<br /><br />if (ran &gt; 40 &amp;&amp; ran &lt;= 199) {<br /><br />info = FS.read(players + sender);<br /><br />addcoin(sender, -1 * Number(upgradecoin(checkweapon(sender))));<br /><br />changeweapon(sender, &quot;검 +&quot; + Number(Number(FS.read(players + sender).split(&quot;+&quot;)[1].split(&quot;\\n&quot;)[0].trim()) + 1));<br /><br />replier.reply(&quot;[!] &apos;&quot; + checkweapon(sender) + &quot;&apos; 강화를 성공하였습니다!\\n\\n공격력 &quot; + divide(checkdamage(checkweapon(sender))) + &quot;\\n잔고 &quot; + divide(checkcoin(sender)) + S + &quot; ( - &quot; + (Number(upgradecoin(checkweapon(sender)))) + S + &quot;)&quot;);<br /><br />} else {<br /><br />if (ran &lt;= 40) {<br /><br />info = FS.read(players + sender);<br /><br />addcoin(sender, -1 * Number(upgradecoin(checkweapon(sender))));<br /><br />changeweapon(sender, &quot;검 +&quot; + Number(Number(FS.read(players + sender).split(&quot;+&quot;)[1].split(&quot;\\n&quot;)[0].trim()) - 1));<br /><br />if ((checkweapon(sender) + &quot;&quot;).indexOf(&quot;-&quot;) != -1) {<br /><br />changeweapon(sender, &quot;검 +0&quot;);<br /><br />}<br /><br />replier.reply(&quot;[!] 강화에 실패하였습니다!\\n무기의 성능이 하락됩니다.\\n\\n잔고 : &quot; + divide(checkcoin(sender)) + &quot;&#128178;\\n\\n현재 무기 : &quot; + FS.read(players + sender).split(&quot;무기 : &quot;)[1].split(&quot;\\n&quot;)[0]);<br /><br />} else {<br /><br />replier.reply(&quot;[!] 이런.. 무기가 터져버렸습니다!\\n맨손으로 돌아갑니다.&quot;);<br /><br />changeweapon(sender, &quot;맨손&quot;);<br /><br />}<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] &quot; + divide((upgradecoin(checkweapon(sender)) - checkcoin(sender))) + &quot; 골드가 부족합니다!&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 검을 착용해주세요.&quot;);<br /><br />}<br /><br />}<br /><br />if (msg == &quot;/강화 반지&quot;) {<br /><br />if (checkitems(sender).join(&quot;&quot;).indexOf(&quot;반지&quot;) != -1) {<br /><br />ran = Math.random() * 200 | 0 + 1;<br /><br />if (checkcoin(sender) &gt;= upgradecoin(checkring(sender))) {<br /><br />if (ran &gt; 40 &amp;&amp; ran &lt;= 199) {<br /><br />addcoin(sender, -1 * Number(upgradecoin(checkring(sender))));<br /><br />upgradering(sender);<br /><br />replier.reply(&quot;[!] &apos;&quot; + checkring(sender) + &quot;&apos; 강화를 성공하였습니다!\\n\\n잔고 &quot; + divide(checkcoin(sender)) + S + &quot; ( - &quot; + (Number(upgradecoin(checkring(sender)))) + S + &quot;)&quot;);<br /><br />} else {<br /><br />if (ran &lt;= 40) {<br /><br />info = FS.read(players + sender);<br /><br />addcoin(sender, -1 * Number(upgradecoin(checkring(sender))));<br /><br />downgradering(sender);<br /><br />if ((checkring(sender) + &quot;&quot;).indexOf(&quot;-&quot;) != -1) {<br /><br />deleteitem(sender, nowring);<br /><br />additem(sender, &quot;반지 +0&quot;);<br /><br />}<br /><br />replier.reply(&quot;[!] 강화에 실패하였습니다!\\n무기의 성능이 하락됩니다.\\n\\n잔고 : &quot; + divide(checkcoin(sender)) + &quot;&#128178;\\n\\n현재 반지 : &quot; + checkring(sender));<br /><br />} else {<br /><br />replier.reply(&quot;[!] 이런.. 무기가 터져버렸습니다!\\n맨손으로 돌아갑니다.&quot;);<br /><br />deleteitem(sender, checkring(sender));<br /><br />}<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] &quot; + (upgradecoin(checkweapon(sender)) - checkcoin(sender)) + &quot; 골드가 부족합니다!&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 반지를 착용해주세요.&quot;);<br /><br />}<br /><br />}<br /><br />if (msg == &quot;/맵&quot;) {<br /><br />replier.reply(&quot;&lt;맵 목록&gt;\\n&quot; + &quot;-&quot;.repeat(40) + &quot;\\n로비\\n짱구네집\\n진구네집\\n&quot; + &quot;-&quot;.repeat(40) + &quot;\\n&apos;/맵 이동 (지역)&apos; 을 통해 이동할 수 있습니다.&quot;);<br /><br />}<br /><br />if (msg.startsWith(&quot;/맵 이동 &quot;)) {<br /><br />map = msg.substr(6);<br /><br />map == &quot;로비&quot; ? (replier.reply(&quot;[!] 로비로 이동하였습니다.&quot;), mapmove(sender, &quot;로비&quot;)) : (map == &quot;짱구네집&quot; ? (replier.reply(&quot;[!] 짱구네 집으로 이동하였습니다.&quot;), mapmove(sender, &quot;짱구네집&quot;)) : (map == &quot;진구네집&quot; ? (replier.reply(&quot;[!] 진구네 집으로 이동하였습니다.&quot;), mapmove(sender, &quot;진구네집&quot;)) : replier.reply(&quot;[!] 존재하지 않는 지역입니다!&quot;)));<br /><br />}<br /><br />if (msg == &quot;/도박&quot;) {<br /><br />replier.reply(&quot;&lt;골드도박 목록&gt;\\n\\n/동전도박\\n- 앞면이 나오면 돈을 2배로 증가시키고 뒷면이 나오면 반을 감소시킵니다.\\n\\n/룰렛도박 (액수)\\n- 세 도형의 모양이 모두 같으면 베팅금액의 10배 지급\\n&quot;);<br /><br />}<br /><br />if (msg.startsWith(&quot;/송금 &quot;)) {<br /><br />sendrr = msg.substr(4).split(&quot; &quot;);<br /><br />sendrr.pop();<br /><br />sendrr = sendrr.join(&quot; &quot;);<br /><br />sendcoin = msg.split(&quot; &quot;).pop();<br /><br />if (!checkplayer(sendrr)) {<br /><br />replier.reply(&quot;[!] 존재하지 않는 이름입니다!&quot;);<br /><br />} else {<br /><br />if (Number(sendcoin) &gt; 0 &amp;&amp; !isNaN(sendcoin)) {<br /><br />if (Number(sendcoin) &lt;= checkcoin(sender)) {<br /><br />addcoin(sender, Number(sendcoin) * -1);<br /><br />addcoin(sendrr, Number(sendcoin));<br /><br />replier.reply(&quot;[!] &quot; + sender + &quot;님이 &quot; + sendrr + &quot;님에게 &quot; + divide(sendcoin) + S + &quot;을 송금하였습니다!&quot;);<br /><br />replier.reply(&quot;[!] 잔고 : &quot; + divide(checkcoin(sender)) + S);<br /><br />} else {<br /><br />replier.reply(&quot;[!] &quot;+(Number(sendcoin)-Number(checkcoin(sender)))+S+&quot;가 부족합니다!&quot;)<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 송금할 돈은 양수여야 합니다!&quot;);<br /><br />}<br /><br />}<br /><br />}<br /><br />if (msg == &quot;/유저&quot;) {<br /><br />replier.reply(&quot;[!] 가입한 유저\\n&quot; + allUsers());<br /><br />}<br /><br />if (msg == &quot;/동전도박&quot;) {<br /><br />if (checkcoin(sender)&gt;0) {<br /><br />dong = Math.random() * 2 | 0;<br /><br />dong == 0 ? (replier.reply(&quot;[!] 이런, 뒷면이 나와 골드가 감소됩니다!&quot;), addcoin(sender, (- 1 / 2) * checkcoin(sender)), replier.reply(&quot;[!] 잔고 : &quot; + divide(checkcoin(sender)) + &quot; &#128178;&quot;)) : (replier.reply(&quot;[!] 앞면이 나와 골드가 2배가 됩니다!&quot;), addcoin(sender, Math.floor(checkcoin(sender))), replier.reply(&quot;[!] 잔고 : &quot; + divide(checkcoin(sender)) + &quot; &#128178;&quot;));<br /><br />addcoin(sender, Math.floor(checkcoin(sender)) - checkcoin(sender));<br /><br />} else {<br /><br />replier.reply(&quot;[!] 골드가 부족합니다!&quot;);<br /><br />}<br /><br />}<br /><br />if (msg.startsWith(&quot;/룰렛도박 &quot;)) {<br /><br />betcoin = msg.substr(6);<br /><br />if (!isNaN(betcoin) &amp;&amp; Number(betcoin) &gt; 0) {<br /><br />if (Number(betcoin) &lt;= Number(checkcoin(sender))) {<br /><br />a = [&quot;○&quot;, &quot;□&quot;, &quot;☆&quot;];<br /><br />ran = a[Math.random() * 3 | 0] + a[Math.random() * 3 | 0] + a[Math.random() * 3 | 0];<br /><br />if (ran.replace(/○/g, &quot;&quot;) == &quot;&quot; || ran.replace(/□/g, &quot;&quot;) == &quot;&quot; || ran.replace(/☆/g, &quot;&quot;) == &quot;&quot;) {<br /><br />replier.reply(&quot;[ &quot; + ran + &quot; ]&quot;);<br /><br />addcoin(sender, -betcoin);<br /><br />addcoin(sender, betcoin * 10);<br /><br />replier.reply(&quot;[!] &quot; + sender + &quot; 님이 룰렛도박을 성공하여 &quot; + divide(betcoin * 10) + &quot; 골드를 획득하였습니다.&quot;);<br /><br />replier.reply(&quot;[!] 잔액 : &quot;+divide(checkcoin(sender))+S)<br /><br />} else {<br /><br />replier.reply(&quot;[ &quot; + ran + &quot; ]&quot;);<br /><br />replier.reply(&quot;[!] &quot; + sender + &quot; 님이 룰렛도박을 실패하여 &quot; + divide(betcoin) + &quot; 골드를 잃었습니다!&quot;);<br /><br />addcoin(sender, -betcoin);<br /><br />replier.reply(&quot;[!] 잔고 : &quot; + divide(checkcoin(sender)) + &quot;&#128178;&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 돈이 부족합니다!&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 자연수만 입력해 주세요.&quot;);<br /><br />}<br /><br />}<br /><br />if (msg == &quot;/상점&quot;) {<br /><br />replier.reply(&quot;상점\\n&quot; + &quot;-&quot;.repeat(40)<br />+ &quot;\\n&bull; 검 +0 | 10&quot; + S + &quot;\\n- 강화할수록 데미지가 세집니다.\\n&quot;<br />+ &quot;\\n&bull; 반지 +0 | 100&quot; + S + &quot;\\n- 공격력을 증폭시켜줍니다.\\n&quot;<br />+ &quot;\\n&bull; 칭호 교환권 | 1000&quot; + S + &quot;\\n- 랭크명을 바꿀 수 있습니다.\\n (조건 : 5000 Lv)\\n&quot;<br />+ &quot;-&quot;.repeat(40) + &quot;\\n\\n/구입 (물건) 으로 아이템을 구매할 수 있습니다.\\n\\n/강화 (물건) 으로 아이템을 강화할 수 있습니다.&quot;);<br /><br />}<br /><br />if (msg.startsWith(&quot;/구입&quot;)) {<br /><br />sltditm = msg.substr(3).trim();<br /><br />if (sltditm == &quot;검&quot;) {<br /><br />if (checkweapon(sender) == &quot;맨손&quot;) {<br /><br />if (checkcoin(sender) &gt;= 10) {<br /><br />addcoin(sender, -10);<br /><br />changeweapon(sender, &quot;검 +0&quot;);<br /><br />replier.reply(&quot;[!] 인벤토리에 &apos;검 +0&apos; 이 추가되었습니다.\\n잔고 : &quot; + checkcoin(sender) + S);<br /><br />} else {<br /><br />replier.reply(&quot;[!] &quot; + (10 - checkcoin(sender)) + S + &quot;가 부족합니다!&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 이미 검을 지니고 있습니다!&quot;);<br /><br />}<br /><br />}<br /><br />if (sltditm == &quot;반지&quot;) {<br /><br />if (!checkitems(sender).join(&quot;&quot;).includes(&quot;반지&quot;)) {<br /><br />if (checkcoin(sender) &gt;= 100) {<br /><br />addcoin(sender, -100);<br /><br />additem(sender, &quot;반지 +0&quot;);<br /><br />replier.reply(&quot;[!] 인벤토리에 &apos;반지 +0&apos; 이 추가되었습니다.\\n잔고 : &quot; + checkcoin(sender) + S);<br /><br />} else {<br /><br />replier.reply(&quot;[!] &quot; + (100 - checkcoin(sender)) + S + &quot;가 부족합니다!&quot;);<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 이미 반지를 지니고 있습니다!&quot;);<br /><br />}<br /><br />}<br /><br />if (sltditm == &quot;칭호&quot;) {<br /><br />addcoin(sender, -1000)<br /><br />additem(sender, &quot;칭호 교환권&quot;)<br /><br />replier.reply(&quot;[!] 인벤토리에 &apos;칭호 교환권&apos; 이 추가되었습니다!\\n사용법 : &apos;/칭호 (원하는 이름)&apos;\\n잔고 : &quot; + checkcoin(sender) + S)<br /><br />}<br /><br /><br />if (sltditm==&quot;&quot;) {<br /><br />replier.reply(&quot;&apos;/구입 (도구)&apos;\\n&quot;<br />+&quot;\\n도구 목록\\n&quot; + &quot;-&quot;.repeat(20)<br />+&quot;\\n&bull; 검&quot;<br />+&quot;\\n&bull; 반지&quot;<br />+&quot;\\n&bull; 칭호&quot;<br />+ &quot;\\n&quot;+&quot;-&quot;.repeat(20))<br /><br />}<br /><br />}<br /><br />}<br /><br />if (msg.startsWith(&quot;/칭호&quot;)) {<br /><br />willsetrank = msg.substr(3).trim()<br /><br />if (checkLv(sender)&gt;=5000) {<br /><br />if (checkitems(sender).join(&quot;&quot;).includes(&quot;칭호&quot;)) {<br /><br />if (willsetrank.match(/ /g,&quot;&quot;)==undefined&amp;&amp;willsetrank.length&gt;0&amp;&amp;willsetrank.length&lt;11) {<br /><br />setRank(sender, willsetrank)<br /><br />deleteitem(sender, &quot;칭호 교환권&quot;)<br /><br />replier.reply(&quot;[!] &quot;+sender+&quot; 님의 칭호가 변경되었습니다!&quot;)<br /><br />} else {<br /><br />replier.reply(&quot;[!] 칭호 조건에 적합하지 않습니다!\\n칭호 조건 : 1자 이상 10자 이하, 띄어쓰기 불가능&quot;)<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 교환권이 없습니다!\\n&apos;/구입 칭호&apos; 를 입력해주세요.&quot;)<br /><br />}<br /><br />} else {<br /><br />replier.reply(&quot;[!] 칭호 교환권은 Lv 5000 이상부터 구매할 수 있습니다!&quot;)<br /><br />}<br /><br />}<br /><br />id = ImageDB.getProfileImage().substr(ImageDB.getProfileImage().length - 20).replace(/[\\*&lt;&gt;\\?\\/:\\|\\n]/g, &quot;&quot;);<br /><br />try {<br /><br />if (checkAdmin(id)) {<br /><br />if (msg.startsWith(&quot;/모두송금&quot;)) {<br /><br />givec = Number(msg.substr(5).trim());<br /><br />for (i of (allUsers().split(&quot;\\n&quot;))) {<br /><br />addcoin(i, givec);<br /><br />}<br /><br />replier.reply(&quot;[!] 모두에게 &quot; + givec + S + &quot;가 송금되었습니다!&quot;);<br /><br />}<br /><br />if (msg.startsWith(&quot;dv&quot;)) {<br /><br />replier.reply(eval(msg.substr(2)));<br /><br />}<br /><br />}<br /><br />}<br /><br />catch (e) {<br /><br />replier.reply(e.message + &quot;\\n&quot; + e.lineNumber);<br /><br />}<br /><br />}<br /><br /><br />------------------------------&#8208;-----------------------<br /><br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000018D500000000",
+            "id": 6357,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 1142,
+            "refArticleId": 6357,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "RPG 공유 (873줄)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1570852050687,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 6357,
+        "attaches": [
+            {
+                "extension": "js",
+                "fullName": "rpg 게임.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "rpg 게임.js",
+                "size": 23097,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/ef7af3495a6465d0fd197e4a7692ec9535679934/20191012_150_cafefile/29537083_1570852049850_OBTVqg_js/rpg+%EA%B2%8C%EC%9E%84.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "이제 저랑 같이 만들죠(?",
+                    "id": 70905793,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70905793,
+                    "updateDate": 1570871865000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "ㅅㄹ..\r\n?님 접는다고 하지 않았..",
+                    "id": 70905865,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70905793,
+                    "updateDate": 1570871959000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "할거 없어서 다시 복귀한건ㄷ",
+                    "id": 70905938,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 70905793,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1570872088000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "저번에 만드신 도미님 RPG? 그거 있었잖아여 거기에 도박장 추가하면 좋을것같은뎅...",
+                    "id": 89750211,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 89750211,
+                    "updateDate": 1588872503000,
+                    "writer": {
+                        "id": "kgy12070",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "kgy12070"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

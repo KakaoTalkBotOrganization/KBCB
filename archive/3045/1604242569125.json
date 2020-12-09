@@ -1,0 +1,376 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 33,
+            "contentElements": [],
+            "contentHtml": "<p>자바스크립트의 매우매우매우매우 기초적인것들을 알려드리겠습니다.<br />(참고로 이 글은 내용이 좀 길 수 있으니 유의해서 보시기 바랍니다.)<br />일단 자바스크립트를 만들면,<br />메신저봇 기준으로는 이상한게 막 써있을텐데 그거 다 지우고 아래 영어를 복붙합시다.<br /><br />function response(room, msg, sender, isGroupChat, replier) {<br /><br />}<br /><br />(닼토봇은 저게 기본으로 입력되어있으니 놔두시면 됩니다)<br />이것은 함수 중 특정 상황에서 발생하는 이벤트 리스너 라는 녀석으로, 채팅이 날라올 때마다 중괄호 안에 있는 코드가 실행된다고 보시면 됩니다.<br /><br />response 뒤 괄호에 뭔가가 써져있는데, 매개변수라는 것입니다. 하나씩 파헤쳐봅시당<br />room : 채팅이 날라온 채팅방의 방이름<br />msg : 채팅 내용<br />sender : 채팅을 보낸 사람<br />isGroupChat : 채팅방이 단체채팅방인지 아닌지 알려줌<br />replier : 답장 객체. replier.reply(보낼내용) 으로 답장할 수 있음. (뭔 말인지 모르겠으면 replier.reply(보낼내용) 만 알아두세요)<br /><br />이제 자바스크립트의 각 요소들을 알아봅시다.<br /><br />if (조건) { }<br />이 위에있는건 if문이라 불리는데, 조건을 만족하면 중괄호 사이의 것들을 실행시킵니다.<br /><br />예시 ) <br />function response(room, msg, sender, isGroupChat, replier) { <br />if (msg == &quot;안녕하세요&quot;) {<br />replier.reply(&quot;반가워요&quot;);<br />}<br />}<br /><br />위 소스를 해석해보자면, 조건인 msg == &quot;안녕하세요&quot; 는 &apos;채팅 내용이 안녕하세요라면&apos; 이라는 조건입니다.<br />조건을 나타낼때에는 등호를 두 개 붙입니다.<br />replier.reply(&quot;반가워요&quot;); 는 반가워요 라고 답장해주는 것입니다.<br />따라서 저 소스는 채팅내용이 안녕하세요 일때 반가워요 라고 답장을 해 줄 것입니다.<br />그리고 replier.reply 뒤에 붙은 세미콜론( ; )이 붙는 걸 볼 수 있는데, 저건 &apos;이 명령은 끝났다&apos; 를 의미합니다.<br />조금 응용을 해보자면, <br /><br />function response(room, msg, sender, isGroupChat, replier) { <br />if (msg == &quot;나 누구게?&quot;) {<br />replier.reply(sender+&quot;님이시네요!&quot;);<br />}<br />}<br /><br />소스를 해석하면, 채팅내용이 나 누구게? 일때 보낸사람의 닉을 인용해서 (보낸사람)님이시네요! 라고 답장 해 줄 것입니다.<br />여기서 의문점이 드실 수 있습니다.<br />&apos;왜 sender랑 &quot;님이시네요!&quot; 사이에 + 를 쓴거지?&apos;<br />왜냐하면, 문자열과 변수를 이어붙일때는 + 를 씁니다.<br />문자열은 &quot;안녕하세요&quot;, &quot;룰루랄라&quot; 같은 것들을 말하고, 변수는 sender 같은 것을 말합니다.<br /><br />if (조건) { } else { }<br />또는<br />if (조건) { } else if (조건) { }<br /><br />이 뒤에 붙은 else 라는놈은 if문 뒤에 붙는데, 앞 if문이 실행이 되지 않았을 때 else 안에 있는 것을 실행해줍니다.<br />else if는 if 뒤에 무한히 붙일 수 있습니다.<br /><br />예시) <br />function response(room, msg, sender, isGroupChat, replier) { <br />if (msg == &quot;이봐?&quot;) {<br />if (sender == &quot;마스터&quot;) {<br />replier.reply(&quot;네 주인님.&quot;);<br />} else {<br />replier.reply(&quot;네..?&quot;);<br />}<br />}<br />}<br /><br />소스를 해석해봅시다.<br />만먁 채팅 내용이 이봐? 라면,<br />만약 채팅을 보낸사람이 마스터 이면 네 주인님. 을 답장하고,<br />그렇지 않으면(즉 채팅을 보낸 사람이 마스터 가 아니면) 네..? 를 답장합니다.<br />소스를 좀 더 개조(?)해봅시다.<br /><br />function response(room, msg, sender, isGroupChat, replier) { <br />if (msg == &quot;이봐?&quot;) {<br />if (sender == &quot;마스터&quot;) {<br />replier.reply(&quot;네 주인님.&quot;);<br />} else if (sender == &quot;부마스터&quot;) {<br />replier.reply(&quot;네 부주인님.&quot;);<br />} else {<br />replier.reply(&quot;네..?&quot;);<br />}<br />}<br />}<br /><br />소스를 해석해봅시다.<br />만약 채팅 내용이 이봐? 라면,<br />보낸사람이 마스터 라면 네 주인님. 이라고 답장하고,<br />부마스터 라면 네 부주인님. 이라고 답장하고, <br />그렇지 않으면 네..? 라고 답장합니다.<br /><br />이제 if문은 충분히 알아본 것 같으니, 변수에 대해 알아보겠습니다.<br /><br />변수는 값을 저장하는 도구라고 보시면 되는데,<br />var (변수이름); 으로 변수를 만들 수 있습니다.<br /><br />var a; (변수 a 만듦)<br />var b, c; (변수 b와 c 만듦)<br />var A = 0; (값이 0인 변수 A 만듦)<br />var d = true; (값이 true, 즉 참 인 변수 d 만듦)<br /><br />여기서 의문점이 드실 수 있습니다.<br />&apos;어? 조건에는 등호가 두갠데 여긴 한개네?&apos;<br />그것은 등호 한개가 있으면 오른쪽 값을 왼쪽에 대입하라 는 뜻이고, 등호 두개는 조건을 의미합니다.<br />true는 &apos;참&apos;을 의미합니다, 반대로 거짓인 false도 있죠!<br />변수는 var 말고도 let 이나 const 를 쓸 수 있는데, let은 잘 안쓰니 갖다 버리세요(?)<br />var는 저장한 값을 언제든지 바꿀 수 있지만, const는 한번 만들면 못 바꿉니다.<br /><br />그리고 변수는 지역변수와 전역변수라는게 있는데, 전역변수는 모든 곳에서 존재하고, 지역변수는 특정 지역에서만 존재합니다.<br />이제부터는 소스를 보충설명하기 위해 소스 주변에 //(할 말) 을 붙여서 설명하겠습니다.<br />예를 들면,<br /><br />var a = &quot;안녕?&quot;; //값이 &quot;안녕?&quot;인 변수 a 만듦, function 밖에 있으므로 전역변수<br />function response(room, msg, sender, isGroupChat, replier) {<br />var b = 0; //값이 0인 변수 b 만듦, 지역변수<br />if (msg == a) {<br />b++; //변수 b에 1을 더함<br />replier.reply(room+&quot;채팅방에 오신 것을 환영합니다!&quot;);<br />}<br />} //지역변수인 b는 여기서부터 존재하지 않음<br /><br />소스를 해석해봅시다.<br />만약 채팅 내용이 변수 a와 같다면(즉 채팅 내용이 안녕? 이라면),<br />변수 b에 1을 더하고 (채팅방)채팅방에 오신 것을 환영합니다! 라고 답장합니다.<br />변수 b에는 저 명령어를 실행시킨 횟수가 저장되겠네요!<br />또 하나 예를 들어봅시다.<br /><br />var 용기 = 0; //전역변수<br />function response(room, msg, sender, isGroupChat, replier) {<br />if (msg == &quot;용기!&quot;) {<br />용기++; //용기에 1을 더함<br />replier.reply(&quot;저에게 용기가 들어왔어용!\\n현재 용기 : &quot;+용기);<br />}<br />if (msg == &quot;/방 정보&quot;) {<br />if (용기 &lt; 3) {<br />replier.reply(&quot;용기가 부족하여 말할 수 없습니다.&quot;);<br />} else {<br />if (isGroupChat == true) {<br />replier.reply(&quot;이 방은 단체채팅방이 맞습니다.&quot;);<br />} else {<br />replier.reply(&quot;이 방은 단체채팅방이 아닙니다.&quot;);<br />}<br />}<br />}<br />}<br /><br />소스를 해석해봅시다.<br />만약 채팅 내용이 용기! 라면, 용기 변수에 1을 더한 후 용기가 들어왔다고 하고 현재 용기수를 답장합니다.<br />여기서 \\n 은 엔터키(줄바꿈)하고 똑같은 역할을 합니다.<br />그리고 채팅 내용이 /방 정보 이면,<br />용기가 3 미만이면 용기가 부족하여 말할수 없다고 답장합니다.<br />그렇지 않으면(용기가 3 이상이면),<br />isGroupChat이 참이면 단체채팅방이 맞다고 답장,<br />그렇지 않으면(isGroupChat이 거짓이면) 아니라고 답장합니다.<br /><br />마지막으로 배열에 대해 알려드리겠습니다.<br />배열은 우리가 카톡봇을 만들때 너무나도 유용하게 쓰일 녀석입니다. 무려 여러개의 값을 저장할 수 있죠!!<br />배열은 [값1, 값2, 값3....] 이런식으로 생겼습니다. 배열의 길이는 제한이 없습니다.<br /><br />var abc = [&quot;안녕&quot;, &quot;반가워&quot;, &quot;히힛&quot;, &quot;룰루랄라&quot;, &quot;빰&quot;]; //변수 abc에 안녕, 반가워, 히힛, 룰루랄라 그리고 빰 을 저장<br /><br />이제 이 배열을 어떻게 사용하냐면, (배열이름)[수] 로 배열의 특정 요소를 가져올 수 있습니다.<br />위 배열으로 예를 들어보겠습니다.<br /><br />var abc = [&quot;안녕&quot;, &quot;반가워&quot;, &quot;히힛&quot;, &quot;룰루랄라&quot;, &quot;빰&quot;]; //변수 abc에 안녕, 반가워, 히힛, 룰루랄라 그리고 빰 을 저장<br />function response(room, msg, sender, isGroupChat, replier) {<br />msg = Number(msg); //채팅 내용의 자료형을 숫자로 바꿈<br />replier.reply(abc[msg]);<br />}<br /><br />소스를 해석하자면, abc 배열의 채팅 내용의 숫자 번째에 있는 요소를 답장합니다.<br />채팅 내용이 0이면 &quot;안녕&quot; 을 가져오고, 1이면 &quot;반가워&quot;를 가져옵니다.<br />여기서 의문점이 드실 수 있습니다.<br />&apos;왜 0일때 안녕을 가져오지? 1일때 아닌가?&apos;<br />그것은, 우리는 보통 수를 1부터 세지만, 자바스크립트는 수를 0부터 셉니다.<br />그래서 저 배열을 세보자면, 우리는 하나, 둘, 셋, 넷, 다섯 으로 세겠지만,<br />자바스크립트는 0, 1, 2, 3, 4로 셉니다.<br />그래서 0일때 안녕, 1일때 반가워를 가져옵니다.<br /><br />배열에는 여러가지 이상한 장난을 칠 수 있습니다.<br />저 abc 배열을 예로 들자면,<br /><br />var abc = [&quot;안녕&quot;, &quot;반가워&quot;, &quot;히힛&quot;, &quot;룰루랄라&quot;, &quot;빰&quot;];<br />function response(room, msg, sender, isGroupChat, replier) {<br />abc.push(&quot;호롤롤로&quot;); //배열의 맨 뒤에 호롤롤로 저장<br />abc.unshift(&quot;히든메시지&quot;); //배열의 맨 앞에 히든 메시지 저장<br />abc.splice(1, 2); //배열의 1번째 요소부터 2개 삭제<br />var a = abc.indexOf(&quot;호롤롤로&quot;); //배열에 호롤롤로가 어디 들어있는지 알려줌, 없으면 -1<br />var b = abc.join(&quot;! &quot;) //모든 배열 요소를 합쳐서 하나의 값으로 만듦, 합칠때 요소 사이사이에 &quot;! &quot; 가 들어감<br />replier.reply(b+&quot;\\n&quot;+a);<br />}<br /><br />소스를 해석하자면, 배열 맨 앞에 히든메시지 저장, 맨 뒤에 호롤롤로 저장, 1번째부터 2개 삭제합니다.<br />그리고 변수 a에는 호롤롤로가 어디 있는지 저장, b에는 ! 를 끼워넣어서 배열을 합친 값을 저장합니다.<br />그러고서 b와 a 사이에 엔터를 넣고 답장하겠네요.<br />아마도 답장 결과는, <br /><br />히든메시지! 히힛! 룰루랄라! 빰! 호롤롤로<br />4<br /><br />이렇게 답장하겠네요.<br /><br />자 이제 강좌가 끝났습니다!<br />긴 글 읽어주시느라 너무 감사합니당<br />2번째 강좌는 언제 올라올지 몰라요(?)<br />그럼 이만<br /><br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000BE500000000",
+            "head": "초급",
+            "headId": 5,
+            "id": 3045,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 1954,
+            "refArticleId": 3045,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "(라이노 엔진) 자바스크립트 기초 강의 (1) - 기본 문법, 변수, 배열",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1559956218977,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음 BOT"
+            }
+        },
+        "articleId": 3045,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "하와와..처음인 거시와요..",
+                    "id": 61247972,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61247972,
+                    "updateDate": 1559959840000,
+                    "writer": {
+                        "id": "jmw7668",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTAyMTZfMTM2/MDAxNTUwMzI3ODI4MzAz.nK2BVCww6_DtQ13tl8OMRO1_3Q5jR2ebQyqbbs_cqYsg.N3qS-G_X3neeL-cLqlZQA0zb__8CFgHWuJf1hP4bOP8g.JPEG.jmw7668/externalFile.jpg"
+                        },
+                        "nick": "ㅡMㅡ"
+                    }
+                },
+                {
+                    "content": "하핳...괜차나요",
+                    "id": 61248988,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61247972,
+                    "updateDate": 1559960924000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "정리 잘되어 있네요",
+                    "id": 61248729,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61248729,
+                    "updateDate": 1559960639000,
+                    "writer": {
+                        "id": "jsptree",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사과님"
+                    }
+                },
+                {
+                    "content": "핫 감사합니당",
+                    "id": 61248980,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61248729,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-5-154-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_5.png",
+                        "width": 107
+                    },
+                    "updateDate": 1559960916000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "엣날에 비베로 배열이나 변수 많이 써왔는데 지금은 까먹어서 다시 참고 해야겠네요 오옹.ㅎㅎ좋은강의네유",
+                    "id": 61254984,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61254984,
+                    "updateDate": 1559968113000,
+                    "writer": {
+                        "id": "yoyolove12",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "ㄱㄺ23"
+                    }
+                },
+                {
+                    "content": "좋은 강의로 봐주신다니 감사합니다!",
+                    "id": 61259569,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61254984,
+                    "sticker": {
+                        "height": 104,
+                        "id": "sally_friends-5-154-149",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/sally_friends/original_5.png",
+                        "width": 107
+                    },
+                    "updateDate": 1559974400000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "저 자스 처음 해봐요 ㅠㅠ",
+                    "id": 61294298,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 61294298,
+                    "updateDate": 1560014082000,
+                    "writer": {
+                        "id": "gundam7985",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjlfNTQg/MDAxNTU5MTM3MjM5MDAy.VYRKDZj5gdiB44aE--axWWP9NqMe3ElXsg56zW_HK1gg.hR3a8JepV5bPbP0gsytSySELnJ-yYpwIYpieScm5Ebkg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "쿨칠"
+                    }
+                },
+                {
+                    "content": "우와 정말 처음 해보시게 생겼네요",
+                    "id": 61297235,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 61294298,
+                    "updateDate": 1560034208000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "공부 와드!!",
+                    "id": 62438493,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 62438493,
+                    "updateDate": 1561351669000,
+                    "writer": {
+                        "id": "swn10",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "랭두"
+                    }
+                },
+                {
+                    "content": "감사합니당!!",
+                    "id": 62536455,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 62438493,
+                    "updateDate": 1561455929000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                }
+            ],
+            "last": {
+                "id": 96395630,
+                "refId": 96395630
+            },
+            "next": {
+                "id": 62748154,
+                "refId": 62748154
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

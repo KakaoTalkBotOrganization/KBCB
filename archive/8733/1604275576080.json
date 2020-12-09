@@ -1,0 +1,189 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "만들어본 몇몇 소스가 있는데<div>게시판에 올리려면 등업을 해야하니 여기다라도 일단 글을 쓰며 저급한 소스 하나를 투척</div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">sdcard</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">android</span>.<span style=\"color: #9cdcfe;\">os</span>.<span style=\"color: #9cdcfe;\">Environment</span>.<span style=\"color: #dcdcaa;\">getExternalStorageDirectory</span>().<span style=\"color: #dcdcaa;\">getAbsolutePath</span>();</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">allsee</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Array</span>(<span style=\"color: #b5cea8;\">1000</span>).<span style=\"color: #dcdcaa;\">join</span>(<span style=\"color: #4ec9b0;\">String</span>.<span style=\"color: #dcdcaa;\">fromCharCode</span>(<span style=\"color: #b5cea8;\">847</span>));</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">command</span>(<span style=\"color: #9cdcfe;\">cmd</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">cmd_str</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">cmd</span>.<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&apos;&nbsp;&apos;</span>)[<span style=\"color: #b5cea8;\">0</span>];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">param</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">cmd</span>.<span style=\"color: #dcdcaa;\">substring</span>(<span style=\"color: #9cdcfe;\">cmd_str</span>.<span style=\"color: #9cdcfe;\">length</span>&nbsp;+&nbsp;<span style=\"color: #b5cea8;\">1</span>,&nbsp;<span style=\"color: #9cdcfe;\">cmd</span>.<span style=\"color: #9cdcfe;\">length</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;[<span style=\"color: #9cdcfe;\">cmd_str</span>,&nbsp;<span style=\"color: #9cdcfe;\">param</span>];</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">save</span>(<span style=\"color: #9cdcfe;\">folderName</span>,&nbsp;<span style=\"color: #9cdcfe;\">fileName</span>,&nbsp;<span style=\"color: #9cdcfe;\">str</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">c</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">File</span>(<span style=\"color: #9cdcfe;\">sdcard</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;/&quot;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">folderName</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;/&quot;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">fileName</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">d</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">FileOutputStream</span>(<span style=\"color: #9cdcfe;\">c</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">e</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">lang</span>.<span style=\"color: #4ec9b0;\">String</span>(<span style=\"color: #9cdcfe;\">str</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">d</span>.<span style=\"color: #dcdcaa;\">write</span>(<span style=\"color: #9cdcfe;\">e</span>.<span style=\"color: #dcdcaa;\">getBytes</span>());</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">d</span>.<span style=\"color: #dcdcaa;\">close</span>();</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">read</span>(<span style=\"color: #9cdcfe;\">folderName</span>,&nbsp;<span style=\"color: #9cdcfe;\">fileName</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">b</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">File</span>(<span style=\"color: #9cdcfe;\">sdcard</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;/&quot;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">folderName</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;/&quot;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">fileName</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(!(<span style=\"color: #9cdcfe;\">b</span>.<span style=\"color: #dcdcaa;\">exists</span>()))&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;<span style=\"color: #569cd6;\">null</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">c</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">FileInputStream</span>(<span style=\"color: #9cdcfe;\">b</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">d</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">InputStreamReader</span>(<span style=\"color: #9cdcfe;\">c</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">e</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">java</span>.<span style=\"color: #4ec9b0;\">io</span>.<span style=\"color: #4ec9b0;\">BufferedReader</span>(<span style=\"color: #9cdcfe;\">d</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">f</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">e</span>.<span style=\"color: #dcdcaa;\">readLine</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">g</span>&nbsp;=&nbsp;<span style=\"color: #ce9178;\">&quot;&quot;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">while</span>&nbsp;((<span style=\"color: #9cdcfe;\">g</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">e</span>.<span style=\"color: #dcdcaa;\">readLine</span>())&nbsp;!=&nbsp;<span style=\"color: #569cd6;\">null</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">f</span>&nbsp;+=&nbsp;<span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">g</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">c</span>.<span style=\"color: #dcdcaa;\">close</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">d</span>.<span style=\"color: #dcdcaa;\">close</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">e</span>.<span style=\"color: #dcdcaa;\">close</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;<span style=\"color: #9cdcfe;\">f</span>.<span style=\"color: #dcdcaa;\">toString</span>();</div><div>}</div><br /><div><span style=\"color: #569cd6;\">function</span>&nbsp;<span style=\"color: #dcdcaa;\">response</span>(<span style=\"color: #9cdcfe;\">room</span>,&nbsp;<span style=\"color: #9cdcfe;\">msg</span>,&nbsp;<span style=\"color: #9cdcfe;\">sender</span>,&nbsp;<span style=\"color: #9cdcfe;\">isGroupChat</span>,&nbsp;<span style=\"color: #9cdcfe;\">replier</span>,&nbsp;<span style=\"color: #9cdcfe;\">ImageDB</span>,&nbsp;<span style=\"color: #9cdcfe;\">packageName</span>,&nbsp;<span style=\"color: #9cdcfe;\">threadId</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #dcdcaa;\">command</span>(<span style=\"color: #9cdcfe;\">msg</span>)[<span style=\"color: #b5cea8;\">0</span>]==<span style=\"color: #ce9178;\">&quot;/save&quot;</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">script_left</span>&nbsp;=&nbsp;<span style=\"color: #dcdcaa;\">command</span>(<span style=\"color: #9cdcfe;\">msg</span>)[<span style=\"color: #b5cea8;\">1</span>].<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&quot;|&quot;</span>)[<span style=\"color: #b5cea8;\">0</span>];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">var</span>&nbsp;<span style=\"color: #9cdcfe;\">script_right</span>&nbsp;=&nbsp;<span style=\"color: #dcdcaa;\">command</span>(<span style=\"color: #9cdcfe;\">msg</span>)[<span style=\"color: #b5cea8;\">1</span>].<span style=\"color: #dcdcaa;\">split</span>(<span style=\"color: #ce9178;\">&quot;|&quot;</span>)[<span style=\"color: #b5cea8;\">1</span>];</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">save</span>(<span style=\"color: #ce9178;\">&quot;katalkbot&quot;</span>,&nbsp;<span style=\"color: #9cdcfe;\">script_left</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;.js&quot;</span>,&nbsp;<span style=\"color: #9cdcfe;\">script_right</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">replier</span>.<span style=\"color: #dcdcaa;\">reply</span>(<span style=\"color: #ce9178;\">&quot;스크립트를&nbsp;&quot;</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">script_left</span>&nbsp;+&nbsp;<span style=\"color: #ce9178;\">&quot;의&nbsp;이름으로&nbsp;저장했습니다!&quot;</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>}</div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000221D00000000",
+            "id": 8733,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 92,
+            "refArticleId": 8733,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "등업을 하려고 글을 쓰려하니 쓰지 못하므로",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575703075743,
+            "writer": {
+                "id": "jerome012342",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "jerome012342"
+            }
+        },
+        "articleId": 8733,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "소스이동 게시판 사용하시면 되는데",
+                    "id": 75271802,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75271802,
+                    "updateDate": 1575704845000,
+                    "writer": {
+                        "id": "aiden060303",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDlfMjEw/MDAxNTc4NTQ1NjkyOTIz._uO-Y1_j7sVGs3ks4Fn1rcQ94Vizm6wHqeOYLZNZkz4g.HYSR7cd04kd0byVS9w--hlD7rxzDda-T92FH5fEIiPog.JPEG/externalFile.jpg"
+                        },
+                        "nick": "지헌"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,405 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;(이건 초급맞죠?...)</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">.시계라고하면 디지털로 표현된 시계가 출력됩니다</span></font></b></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\"><b>방이름은 rooms에 넣으시면됩니다.</b></span></font></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>const rooms=[&quot;a&quot;,&quot;b&quot;];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>var blank = &quot;\\u200b&quot;.repeat(501);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>String.prototype.replaceAll = function (org, dest) {</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; return this.split(org).join(dest);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b><br /></b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>const numbers=[[&quot;&#9608;&#9608;&#9608; &quot;,&quot;&#9608;□&#9608; &quot;,&quot;&#9608;□&#9608; &quot;,&quot;&#9608;□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;],[&quot;&#9608;&#9608;□ &quot;,&quot;□&#9608;□ &quot;,&quot;□&#9608;□ &quot; ,&quot;□&#9608;□ &quot;,&quot;&#9608;&#9608;&#9608; &quot;],[&quot;&#9608;&#9608;&#9608; &quot;,&quot;□□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;,&quot;&#9608;□□ &quot;, &quot;&#9608;&#9608;&#9608; &quot;],[&quot;&#9608;&#9608;&#9608; &quot;,&quot;□□&#9608; &quot;, &quot;&#9608;&#9608;&#9608; &quot;,&quot;□□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;],[&quot;&#9608;□&#9608; &quot;,&quot;&#9608;□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;,&quot;□□&#9608; &quot;,&quot;□□&#9608; &quot;],[&quot;&#9608;&#9608;&#9608; &quot;,&quot;&#9608;□□ &quot;,&quot;&#9608;&#9608;&#9608; &quot;,&quot;□□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;],[&quot;&#9608;&#9608;&#9608; &quot; ,&quot;&#9608;□□ &quot;, &quot;&#9608;&#9608;&#9608; &quot;,&quot;&#9608;□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;],[&quot;&#9608;&#9608;&#9608; &quot;,&quot;□□&#9608; &quot;,&quot;□□&#9608; &quot;,&quot;□&#9608;□ &quot; , &quot;□&#9608;□ &quot; ],[&quot;&#9608;&#9608;&#9608; &quot; ,&quot;&#9608;□&#9608; &quot;, &quot;&#9608;&#9608;&#9608; &quot; ,&quot;&#9608;□&#9608; &quot;, &quot;&#9608;&#9608;&#9608; &quot; ],[ &quot;&#9608;&#9608;&#9608; &quot; ,&quot;&#9608;□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;,&quot;□□&#9608; &quot;,&quot;&#9608;&#9608;&#9608; &quot;]];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>const midpoint =[&quot;□□□ &quot;,&quot;□&#9608;□ &quot;,&quot;□□□ &quot;,&quot;□&#9608;□ &quot;,&quot;□□□ &quot;];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(rooms.indexOf(room)!=-1)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>{</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>if(msg.indexOf(&quot;.시계&quot;)==0)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; {</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var talk=&quot;&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var today=new Date();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var hours=today.getHours();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var min=today.getMinutes();</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; min=min&lt;10?&quot;0&quot;+min:min;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var times=hours+&quot; : &quot;+min;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; var output=[];</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;&nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>for(var j=0;j&lt;5;j++)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;var tmp=times;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;for(var i=0;i&lt;numbers.length;i++)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; {</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tmp=tmp.replaceAll(i,numbers[i][j]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp; tmp=tmp.replaceAll(&quot; : &quot;,midpoint[j]);</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp; talk+=tmp+&quot;\\n&quot;;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; &nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;if(talk!=&quot;&quot;)</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp; {replier.reply(&quot;현재시각입니다\\n&quot;+blank+&quot;\\n&quot;+talk);}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp; &nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>&nbsp;}</b></span></div><div style=\"\"><span style=\"font-size: 17.3333px;\"><b>}</b></span></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001FE800000000",
+            "id": 8168,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 405,
+            "refArticleId": 8168,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "디지털시계",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1574418439203,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 8168,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 74111286,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74111286,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1574419755000,
+                    "writer": {
+                        "id": "sihyunit",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "sihyuniT"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 74112070,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74112070,
+                    "updateDate": 1574420667000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "정답...\r\n어떤분이 500하면 너무 딱 떨어지니까 501로 하자고...ㅋㅋ",
+                    "id": 74137573,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74112070,
+                    "replyMember": {
+                        "id": "jun9975sun",
+                        "nick": "nolbo"
+                    },
+                    "updateDate": 1574464537000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "중급소스로 이동하였습니다.",
+                    "id": 74126074,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74126074,
+                    "updateDate": 1574433932000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "가아니라 초급이네요,,,?",
+                    "id": 74126112,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74126074,
+                    "updateDate": 1574433961000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "와~",
+                    "id": 74137542,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74126074,
+                    "replyMember": {
+                        "id": "dalgkdbs",
+                        "nick": "새름"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57f2b2eb51346-8-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57f2b2eb51346/original_8.png",
+                        "width": 129
+                    },
+                    "updateDate": 1574464489000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "디지털 숫자화에 한줄만 추가하면 구현 가능. 와!",
+                    "id": 74140879,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74140879,
+                    "updateDate": 1574468488000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "아... 그생각을 못했네요\r\n차라리 디지털 숫자화 함수를 만들고 그걸로 출력할껄...",
+                    "id": 74140958,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74140879,
+                    "updateDate": 1574468573000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "이거 어떻게 사용하나요?.. .시계 해도 작동이 안되는데...ㅠ",
+                    "id": 80537384,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80537384,
+                    "updateDate": 1581122910000,
+                    "writer": {
+                        "id": "hoyoon6381",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190916_37/hoyoon6381_1568642293507R4idt_JPEG/image.jpg"
+                        },
+                        "nick": "hoy"
+                    }
+                },
+                {
+                    "content": "방이름이 rooms에 들어가있어야해요\r\n그 방에서 .시계하면 작동되요\r\n디버그룸의 방이름을 바꿔서 한번 테스트해보시는게 좋을거에요\r\n거기서 되는데 카톡방에서 안되면 알림문제나 wearos가 설치되지않은 문제같은 다른류의 문제고 거기서도 안되면 소스에 방이름이 잘못되었다거나 소스를 잘못 붙였다거나 컴파일을 안했다거나하는 문제니까요ㅎ",
+                    "id": 80537638,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80537384,
+                    "updateDate": 1581123075000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                }
+            ],
+            "last": {
+                "id": 80537384,
+                "refId": 80537384
+            },
+            "next": {
+                "id": 80540281,
+                "refId": 80537384
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

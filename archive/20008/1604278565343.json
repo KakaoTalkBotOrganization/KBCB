@@ -1,0 +1,409 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 400,
+                            "service": "CAFE",
+                            "style": "width: 740px; height: 400px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MjBfMjgw/MDAxNTkyNjYxMDUxMDA3.TzXFj-riAoIKc022jHKqpOreACcII1w_DSGG6suppCYg.Mv7JiYxBK5OWUFI78fqGLjbgAxyWmW9UqH0s4L3pXdkg.PNG/1%3D.PNG",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                },
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 396,
+                            "service": "CAFE",
+                            "style": "width: 740px; height: 396px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MjBfMTAw/MDAxNTkyNjYxMDUxNzgz.5z4nwJCYMQDjm7VhTbvI0mDIfawJUU2TzE-lQqRLkZUg.mrnrGaNkvsWVbm1QYslX38g4te1Xsmy14cSBLxnfZkEg.PNG/%EC%BA%A1%EC%B2%98.PNG",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div><br /></div><img id=\"userImg1231797\" style=\"\" /><img id=\"userImg9091978\" style=\"\" />[[[CONTENT-ELEMENT-0]]]<br /><br />[[[CONTENT-ELEMENT-1]]]<div><br /></div><div><br /></div><div>언젠가 내가 동작 스크립트를 까먹을 때를 대비한 백업(?)</div><div><br /></div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #c586c0;\">using</span>&nbsp;<span style=\"color: #4ec9b0;\">System</span>.<span style=\"color: #4ec9b0;\">Collections</span>;</div><div><span style=\"color: #c586c0;\">using</span>&nbsp;<span style=\"color: #4ec9b0;\">System</span>.<span style=\"color: #4ec9b0;\">Collections</span>.<span style=\"color: #4ec9b0;\">Generic</span>;</div><div><span style=\"color: #c586c0;\">using</span>&nbsp;<span style=\"color: #4ec9b0;\">UnityEngine</span>;</div><br /><div><span style=\"color: #569cd6;\">public</span>&nbsp;<span style=\"color: #569cd6;\">class</span>&nbsp;<span style=\"color: #4ec9b0;\">PlayerMovement</span>&nbsp;:&nbsp;<span style=\"color: #4ec9b0;\">MonoBehaviour</span></div><div>{</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//스피드&amp;힘&nbsp;변수</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;walkSpeed;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;runSpeed;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;applySpeed;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;crouchSpeed;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;jumpForce;</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//상태&nbsp;변수</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">bool</span>&nbsp;isRun;&nbsp;<span style=\"color: #6a9955;\">//default&nbsp;False</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">bool</span>&nbsp;isCrouch;<span style=\"color: #6a9955;\">//default&nbsp;False</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">bool</span>&nbsp;isGround&nbsp;=&nbsp;<span style=\"color: #569cd6;\">true</span>;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//앉았을때&nbsp;앉는&nbsp;높이</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;crouchPosY;&nbsp;<span style=\"color: #6a9955;\">//앉았을&nbsp;때&nbsp;높이</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;originPosY;&nbsp;<span style=\"color: #6a9955;\">//원래의&nbsp;높이</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;applyPosY;</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//땅&nbsp;착지&nbsp;여부</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #4ec9b0;\">CapsuleCollider</span>&nbsp;capsuleCollider;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//필요한&nbsp;컴포넌트</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;lookSensitivity;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;cameraRotationLimit;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;currentCameraRotationX&nbsp;=&nbsp;<span style=\"color: #b5cea8;\">0f</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;[<span style=\"color: #4ec9b0;\">SerializeField</span>]</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #4ec9b0;\">Camera</span>&nbsp;theCamera;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #4ec9b0;\">Rigidbody</span>&nbsp;rb;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//&nbsp;Start&nbsp;is&nbsp;called&nbsp;before&nbsp;the&nbsp;first&nbsp;frame&nbsp;update</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">Start</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applySpeed</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">walkSpeed</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">rb</span>&nbsp;=&nbsp;<span style=\"color: #dcdcaa;\">GetComponent</span>&lt;<span style=\"color: #4ec9b0;\">Rigidbody</span>&gt;();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">capsuleCollider</span>&nbsp;=&nbsp;<span style=\"color: #dcdcaa;\">GetComponent</span>&lt;<span style=\"color: #4ec9b0;\">CapsuleCollider</span>&gt;();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">originPosY</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">theCamera</span>.<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">localPosition</span>.<span style=\"color: #9cdcfe;\">y</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applyPosY</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">originPosY</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//&nbsp;Update&nbsp;is&nbsp;called&nbsp;once&nbsp;per&nbsp;frame</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">Update</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">TryRun</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">IsGround</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">TryJump</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">TryCrouch</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">Move</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">CameraRotation</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">CharacterRotation</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">TryCrouch</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetKeyDown</span>(<span style=\"color: #9cdcfe;\">KeyCode</span>.<span style=\"color: #9cdcfe;\">C</span>)&nbsp;&amp;&amp;&nbsp;<span style=\"color: #9cdcfe;\">isGround</span>&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">Crouch</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">Crouch</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">isCrouch</span>&nbsp;=&nbsp;!<span style=\"color: #9cdcfe;\">isCrouch</span>;&nbsp;<span style=\"color: #6a9955;\">//default&nbsp;false에서&nbsp;true로&nbsp;바뀜.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(<span style=\"color: #9cdcfe;\">isCrouch</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applySpeed</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">crouchSpeed</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applyPosY</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">crouchPosY</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">else</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applySpeed</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">walkSpeed</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applyPosY</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">originPosY</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">StartCoroutine</span>(<span style=\"color: #dcdcaa;\">CrouchCoroutine</span>());</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #4ec9b0;\">IEnumerator</span>&nbsp;<span style=\"color: #dcdcaa;\">CrouchCoroutine</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;<span style=\"color: #9cdcfe;\">_posY</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">theCamera</span>.<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">localPosition</span>.<span style=\"color: #9cdcfe;\">y</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">int</span>&nbsp;<span style=\"color: #9cdcfe;\">count</span>&nbsp;=&nbsp;<span style=\"color: #b5cea8;\">0</span>;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">while</span>&nbsp;(<span style=\"color: #9cdcfe;\">_posY</span>&nbsp;!=&nbsp;<span style=\"color: #9cdcfe;\">applyPosY</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">count</span>++;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">_posY</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Mathf</span>.<span style=\"color: #dcdcaa;\">Lerp</span>(<span style=\"color: #9cdcfe;\">_posY</span>,&nbsp;<span style=\"color: #9cdcfe;\">applyPosY</span>,&nbsp;<span style=\"color: #b5cea8;\">0.35f</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">theCamera</span>.<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">localPosition</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>(<span style=\"color: #b5cea8;\">0</span>,&nbsp;<span style=\"color: #9cdcfe;\">_posY</span>,&nbsp;<span style=\"color: #b5cea8;\">0</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">count</span>&gt;<span style=\"color: #b5cea8;\">15</span>)<span style=\"color: #c586c0;\">break</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">yield</span>&nbsp;<span style=\"color: #c586c0;\">return</span>&nbsp;<span style=\"color: #569cd6;\">null</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">theCamera</span>.<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">localPosition</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>(<span style=\"color: #b5cea8;\">0</span>,&nbsp;<span style=\"color: #9cdcfe;\">applyPosY</span>,&nbsp;<span style=\"color: #b5cea8;\">0</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">IsGround</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">isGround</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Physics</span>.<span style=\"color: #dcdcaa;\">Raycast</span>(<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">position</span>,&nbsp;<span style=\"color: #9cdcfe;\">Vector3</span>.<span style=\"color: #9cdcfe;\">down</span>,&nbsp;<span style=\"color: #9cdcfe;\">capsuleCollider</span>.<span style=\"color: #9cdcfe;\">bounds</span>.<span style=\"color: #9cdcfe;\">extents</span>.<span style=\"color: #9cdcfe;\">y</span>&nbsp;+&nbsp;<span style=\"color: #b5cea8;\">0.1f</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">TryJump</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetKey</span>(<span style=\"color: #9cdcfe;\">KeyCode</span>.<span style=\"color: #9cdcfe;\">Space</span>)&nbsp;&amp;&amp;&nbsp;<span style=\"color: #9cdcfe;\">isGround</span>&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">Jump</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">Jump</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//앉은&nbsp;상태에서&nbsp;점프&nbsp;시&nbsp;앉기&nbsp;해제.</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">isCrouch</span>)</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">Crouch</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">rb</span>.<span style=\"color: #9cdcfe;\">velocity</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">up</span>&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">jumpForce</span>;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">TryRun</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>(<span style=\"color: #9cdcfe;\">isCrouch</span>)<span style=\"color: #c586c0;\">return</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetKey</span>(<span style=\"color: #9cdcfe;\">KeyCode</span>.<span style=\"color: #9cdcfe;\">LeftShift</span>))</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">Running</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c586c0;\">if</span>&nbsp;(<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetKeyUp</span>(<span style=\"color: #9cdcfe;\">KeyCode</span>.<span style=\"color: #9cdcfe;\">LeftShift</span>))</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #dcdcaa;\">RunningCancel</span>();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">Running</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">isRun</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">true</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applySpeed</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">runSpeed</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">RunningCancel</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">isRun</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">applySpeed</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">walkSpeed</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">CharacterRotation</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;<span style=\"color: #9cdcfe;\">_yRotation</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetAxisRaw</span>(<span style=\"color: #ce9178;\">&quot;Mouse&nbsp;X&quot;</span>);<span style=\"color: #6a9955;\">//마우스&nbsp;좌우</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>&nbsp;<span style=\"color: #9cdcfe;\">_characterRotationY</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>(<span style=\"color: #b5cea8;\">0f</span>,&nbsp;<span style=\"color: #9cdcfe;\">_yRotation</span>,&nbsp;<span style=\"color: #b5cea8;\">0f</span>)&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">lookSensitivity</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">rb</span>.<span style=\"color: #dcdcaa;\">MoveRotation</span>(<span style=\"color: #9cdcfe;\">rb</span>.<span style=\"color: #9cdcfe;\">rotation</span>&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">Quaternion</span>.<span style=\"color: #dcdcaa;\">Euler</span>(<span style=\"color: #9cdcfe;\">_characterRotationY</span>));</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">CameraRotation</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;<span style=\"color: #9cdcfe;\">_xRotation</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetAxisRaw</span>(<span style=\"color: #ce9178;\">&quot;Mouse&nbsp;Y&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;<span style=\"color: #9cdcfe;\">_cameraRotationX</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">_xRotation</span>&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">lookSensitivity</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">currentCameraRotationX</span>&nbsp;-=&nbsp;<span style=\"color: #9cdcfe;\">_cameraRotationX</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">currentCameraRotationX</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Mathf</span>.<span style=\"color: #dcdcaa;\">Clamp</span>(<span style=\"color: #9cdcfe;\">currentCameraRotationX</span>,&nbsp;-<span style=\"color: #9cdcfe;\">cameraRotationLimit</span>,&nbsp;<span style=\"color: #9cdcfe;\">cameraRotationLimit</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">theCamera</span>.<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">localEulerAngles</span>&nbsp;=&nbsp;<span style=\"color: #569cd6;\">new</span>&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>(<span style=\"color: #9cdcfe;\">currentCameraRotationX</span>,&nbsp;<span style=\"color: #b5cea8;\">0f</span>,&nbsp;<span style=\"color: #b5cea8;\">0f</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">private</span>&nbsp;<span style=\"color: #569cd6;\">void</span>&nbsp;<span style=\"color: #dcdcaa;\">Move</span>()</div><div>&nbsp;&nbsp;&nbsp;&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;<span style=\"color: #9cdcfe;\">_moveDirX</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetAxisRaw</span>(<span style=\"color: #ce9178;\">&quot;Horizontal&quot;</span>);<span style=\"color: #6a9955;\">//좌우&nbsp;축</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #569cd6;\">float</span>&nbsp;<span style=\"color: #9cdcfe;\">_moveDirZ</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">Input</span>.<span style=\"color: #dcdcaa;\">GetAxisRaw</span>(<span style=\"color: #ce9178;\">&quot;Vertical&quot;</span>);<span style=\"color: #6a9955;\">//앞뒤&nbsp;축</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>&nbsp;<span style=\"color: #9cdcfe;\">_moveHorizontal</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">right</span>&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">_moveDirX</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//위치의&nbsp;오른쪽값&nbsp;*&nbsp;오른쪽키&nbsp;누를&nbsp;때&nbsp;1&nbsp;왼쪽키일때&nbsp;-1&nbsp;곱해짐</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>&nbsp;<span style=\"color: #9cdcfe;\">_moveVertical</span>&nbsp;=&nbsp;<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">forward</span>&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">_moveDirZ</span>;</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #4ec9b0;\">Vector3</span>&nbsp;<span style=\"color: #9cdcfe;\">_velocity</span>&nbsp;=&nbsp;(<span style=\"color: #9cdcfe;\">_moveHorizontal</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">_moveVertical</span>).<span style=\"color: #9cdcfe;\">normalized</span>&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">applySpeed</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #6a9955;\">//속력(좌표값을&nbsp;정규화&nbsp;하고&nbsp;속력과&nbsp;방향을&nbsp;더해서&nbsp;속력을&nbsp;만듦)</span></div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #9cdcfe;\">rb</span>.<span style=\"color: #dcdcaa;\">MovePosition</span>(<span style=\"color: #9cdcfe;\">transform</span>.<span style=\"color: #9cdcfe;\">position</span>&nbsp;+&nbsp;<span style=\"color: #9cdcfe;\">_velocity</span>&nbsp;*&nbsp;<span style=\"color: #9cdcfe;\">Time</span>.<span style=\"color: #9cdcfe;\">deltaTime</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>}</div><br /></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004E2800000000",
+            "id": 20008,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 106,
+            "refArticleId": 20008,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "윾니티 움직임 스크립트 다했띠",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1592660850667,
+            "writer": {
+                "id": "ins1500",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "진영"
+            }
+        },
+        "articleId": 20008,
+        "attaches": [
+            {
+                "extension": "PNG",
+                "fullName": "1=.PNG",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "1=.PNG",
+                "size": 162772,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/1b8e07b4a1fdff230fe98cbb8c621b67c1936d8f23/MjAyMDA2MjBfMjgw/MDAxNTkyNjYxMDUxMDA3.TzXFj-riAoIKc022jHKqpOreACcII1w_DSGG6suppCYg.Mv7JiYxBK5OWUFI78fqGLjbgAxyWmW9UqH0s4L3pXdkg.PNG/1=.PNG?type=attachment"
+            },
+            {
+                "extension": "PNG",
+                "fullName": "캡처.PNG",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "캡처.PNG",
+                "size": 150449,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/ce5bd261712b2af6da3c596e59b7ceb21446b85af1/MjAyMDA2MjBfMTAw/MDAxNTkyNjYxMDUxNzgz.5z4nwJCYMQDjm7VhTbvI0mDIfawJUU2TzE-lQqRLkZUg.mrnrGaNkvsWVbm1QYslX38g4te1Xsmy14cSBLxnfZkEg.PNG/캡처.PNG?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "개 힘들어따\n",
+                    "id": 94285821,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94285821,
+                    "updateDate": 1592660866000,
+                    "writer": {
+                        "id": "ins1500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "진영"
+                    }
+                },
+                {
+                    "content": "?\n뭐야 사진 안떠 뭐여",
+                    "id": 94285847,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94285847,
+                    "updateDate": 1592660882000,
+                    "writer": {
+                        "id": "ins1500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "진영"
+                    }
+                },
+                {
+                    "content": "수정했띠",
+                    "id": 94286184,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94285847,
+                    "replyMember": {
+                        "id": "birn983179",
+                        "nick": "정우"
+                    },
+                    "updateDate": 1592661063000,
+                    "writer": {
+                        "id": "ins1500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "진영"
+                    }
+                },
+                {
+                    "content": "웨?",
+                    "id": 94287035,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94285847,
+                    "replyMember": {
+                        "id": "birn983179",
+                        "nick": "정우"
+                    },
+                    "updateDate": 1592661489000,
+                    "writer": {
+                        "id": "ins1500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "진영"
+                    }
+                },
+                {
+                    "content": "프레임 속도가 바뀌면 캐릭터 이속이 미쳐돌아갈 것 같은 코드네요(?)\n\n배포해서 exe 만들고 품질 설정 Performance로 하고 실행시켜 보시는걸 추천",
+                    "id": 94288757,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94288757,
+                    "updateDate": 1592662347000,
+                    "writer": {
+                        "id": "mir99712",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTRfMTk5/MDAxNTkyMTM4NTM5OTE1.V3wbJhlekTa2nIPrtPu6zC96n_m0ye_xdbijXF3wycwg._nzQagZCEqT6IYMyJ5ch2lX4_9ivqpLRvHe1TrJurXIg.PNG.mir99712/Untitled.png"
+                        },
+                        "nick": "Violet"
+                    }
+                },
+                {
+                    "content": "ㅏ 델타타임 곱해져 있는거 못봤",
+                    "id": 94288887,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94288757,
+                    "updateDate": 1592662411000,
+                    "writer": {
+                        "id": "mir99712",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTRfMTk5/MDAxNTkyMTM4NTM5OTE1.V3wbJhlekTa2nIPrtPu6zC96n_m0ye_xdbijXF3wycwg._nzQagZCEqT6IYMyJ5ch2lX4_9ivqpLRvHe1TrJurXIg.PNG.mir99712/Untitled.png"
+                        },
+                        "nick": "Violet"
+                    }
+                },
+                {
+                    "content": "앗",
+                    "id": 94295105,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94288757,
+                    "replyMember": {
+                        "id": "mir99712",
+                        "nick": "Violet"
+                    },
+                    "updateDate": 1592664884000,
+                    "writer": {
+                        "id": "ins1500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "진영"
+                    }
+                },
+                {
+                    "content": "낄낄",
+                    "id": 94296080,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94288757,
+                    "replyMember": {
+                        "id": "mir99712",
+                        "nick": "Violet"
+                    },
+                    "updateDate": 1592665349000,
+                    "writer": {
+                        "id": "ins1500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "진영"
+                    }
+                },
+                {
+                    "content": "ln e = ?",
+                    "id": 94292592,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94292592,
+                    "updateDate": 1592663962000,
+                    "writer": {
+                        "id": "sinho1206",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "aww zz"
+                    }
+                },
+                {
+                    "content": "?",
+                    "id": 94295122,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94292592,
+                    "updateDate": 1592664891000,
+                    "writer": {
+                        "id": "ins1500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MjhfNDEg/MDAxNTk4NTcwMjM3MTk4.YL0D4hnIuB-9fA6hujLX6stV8Rzk_KLh1At0bkZki-Ag.qKkM4pTGZaSNfkvIWih5gqX6ogEvDkfsNFOFob50bMYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "진영"
+                    }
+                }
+            ],
+            "last": {
+                "id": 94304566,
+                "refId": 94304566
+            },
+            "next": {
+                "id": 94311101,
+                "refId": 94292592
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

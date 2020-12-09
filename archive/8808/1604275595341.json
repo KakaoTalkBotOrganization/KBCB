@@ -1,0 +1,258 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;제비뽑기</b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><b></b></div><p>const scriptName=&quot;뽑기.js&quot;;</p><p>var player = [&quot;gacha&quot;]&nbsp; // DB파일명 개인적 변경<br />var p1 = [&quot;count&quot;]&nbsp;&nbsp; // DB파일명 개인적 변경<br />var count = DataBase.getDataBase(p1)<br />var player1 = []<br />var result = []<br />var player2 = []<br />var gm = []&nbsp;&nbsp; // 뽑기할 관리자 닉네임<br />var all = &quot;\\u200b&quot;.repeat(500)</p><p>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />&nbsp;<br />if(msg.indexOf(&quot;/뽑기참가&quot;)==0){<br />if(!!DataBase.getDataBase(player).match(sender)){<br />replier.reply(sender+&quot; 님 이미 뽑기이벤트에 등록되었습니다.&quot;);<br />} else {<br />DataBase.appendDataBase(player,&quot;# &quot;+sender+&quot; @\\n&quot;)<br />replier.reply(sender+&quot; 님 뽑기이벤트에 참가 등록 완료.&quot;)<br />count = DataBase.getDataBase(p1)<br />count ++<br />DataBase.removeDataBase(p1)<br />DataBase.setDataBase(p1,count)</p><p>}<br />}</p><p>if(msg.indexOf(&quot;/뽑기명단&quot;)==0){<br />var a = DataBase.getDataBase(player).replace(<a target=\"_blank\">/@/g</a>, &quot;&quot;).replace(/#/g, &quot;&quot;)<br />count = DataBase.getDataBase(p1)<br />player1.push(a)<br />replier.reply(&quot;[뽑기 참가자 - &quot;+count+&quot; 명 ]\\n&quot;+all+&quot;\\n&quot;+player1)<br />player1 = []<br />}</p><p>if(msg.indexOf(&quot;/참가자리셋&quot;)==0){<br />&nbsp; if(gm.indexOf(sender)!=-1){<br />DataBase.removeDataBase(player)<br />DataBase.setDataBase(player,&quot;&quot;)<br />DataBase.removeDataBase(p1)<br />DataBase.setDataBase(p1,&quot;&quot;)<br />player1 = []<br />count = 0<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;참가자 리셋 완료&quot;)<br />} else {<br />&nbsp;&nbsp;&nbsp; replier.reply(&quot;넌 관리자가 아니야&quot;)<br />}<br />}</p><p>if(msg.indexOf(&quot;/랜덤뽑기&quot;)==0){<br />&nbsp; if(gm.indexOf(sender)!=-1){<br />if(count == 0){<br />&nbsp; replier.reply(&quot;지금은 참가자가 없습니다\\n참가자부터 모집하세요&quot;)<br />} else {<br />&nbsp;for(i=1;i&lt;=count;i++){<br />&nbsp;&nbsp; var a = DataBase.getDataBase(player)<br />&nbsp;&nbsp; var b = a.split(&quot;#&quot;)[i].split(&quot;@&quot;)[0]<br />&nbsp;&nbsp;&nbsp; player2.push(b)<br />}<br />&nbsp;var c = Math.floor(Math.random() * count)<br />var d = Math.floor(Math.random() * count)<br />&nbsp;&nbsp; var e = player2[c]<br />&nbsp;&nbsp;&nbsp; var f = player2[d]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;축하합니다.\\n상품당첨자는 [ &quot; + e+ &quot; ] 님입니다\\n아쉽습니다.\\n상품 기부자는&nbsp; [ &quot;+f+&quot;&nbsp; ] 님입니다.&quot;);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; player2 = []<br />}<br />} else {<br />&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(&quot;너는 뽑을 권한이 없어&quot;);<br />}<br />}</p><p><br /></p><p>}<br /></p><p><strong><br /></strong></p><b></b><p><b><br /></b></p><div class=\"NHN_Writeform_Main\"><b><br /></b></div><p><b><br /></b></p><p><b>참가자를 등록한 뒤에 참가자배열 내에서 뽑아주는것입니다.</b></p><p><b>제가 쓰던거라 변형해서 사용하시면 됩니다.</b></p><p><b>여려명 뽑으실거면for문으로 돌리시거나</b></p><p><b>간단하게는 변수 추가해서 하시면 됩니다.</b></p><p><b>저는 중복이 가능하게 한상태라 중복 알고리즘을 짜지 않았습니다.</b></p><p><b>당첨자를 여려명 할시 중복 제거 알고리즘을 작성하셔야 합니다.<b></b></b></p><div class=\"NHN_Writeform_Main\"><b><b>봇 재컴파일시 리스트 유지를 위해 DB화 하였습니다.<br /></b></b></div><p><b></b></p><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div><p></p><p></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000226800000000",
+            "id": 8808,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 230,
+            "refArticleId": 8808,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "KittyNyang님 요청 제비뽑기 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575865894513,
+            "writer": {
+                "id": "nettime007",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "까칠한까칠"
+            }
+        },
+        "articleId": 8808,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "고인물 ㄷㄷ",
+                    "id": 75410686,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75410686,
+                    "updateDate": 1575866150000,
+                    "writer": {
+                        "id": "thdgusrjs",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190623_7/thdgusrjs_1561250352155mlKP1_PNG/thdgusrjs_1458721588331.png"
+                        },
+                        "nick": "code0"
+                    }
+                },
+                {
+                    "content": "와..잼나겠어요!~ 수고하셨습니다~그런데 컴파일후 방에서 실행하니 에러뜨네요..14번줄",
+                    "id": 75415450,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75415450,
+                    "updateDate": 1575871274000,
+                    "writer": {
+                        "id": "f4unny13",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "아이린f"
+                    }
+                },
+                {
+                    "content": "컴파일 직전에만 저장하면 되는 건 비밀",
+                    "id": 75448644,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75448644,
+                    "updateDate": 1575899449000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "감사합니다~^^",
+                    "id": 75496171,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75496171,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1575952318000,
+                    "writer": {
+                        "id": "kingkar90",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjJfNjEg/MDAxNTU4NTAzOTQ0Njk5.TErTkHhGiZOT3snNPrzXLdOn2rWG_wSUK3q6XWpqCiEg.7yJMW1uBKkOhBUyFwsb-lGCJCMTYqeiIzTqj70azToEg.JPEG.kingkar90/externalFile.jpg"
+                        },
+                        "nick": "KittyNyang"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

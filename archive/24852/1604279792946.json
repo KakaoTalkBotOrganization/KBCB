@@ -1,0 +1,176 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-8dc78f3b-e33a-4318-926e-f18d148baa3e\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-de93ff83-c9d3-446d-9d5c-0456534a8f6f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-22ead96f-f5ac-4eaf-a6d0-ac233e02fcb2\">심심해서 스레드가지고 워커 모듈 만들어봤어요. 뭔지 모르는 분들을 위해 간단하게 설명해드리자면 한 작업을</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-924ee077-73c5-40c2-aa30-246342661584\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6e67c1e2-3356-42fd-9d4d-686c178d37e1\">여러 갈래로 나누어 동시에 처리하는 모듈입니다. 예를들어 1부터 100000까지 더하는 소스가 있다면 한 흐름으로</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-657a1fe8-5e6e-43e9-a21d-fa47a11d7549\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-4c593191-8e75-443b-ad96-91838b0700ae\">이 작업을 처리하려면 시간도 오래 걸리고 부담도 많이 갑니다. 따라서 스레드라는 작업 흐름을 원하는 만큼 생성해서</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-653652b8-6f75-495d-ab14-c03d954c1eac\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cd3abeca-5e9d-4288-ba21-e3f8135b994e\">작업을 각 스레드에게 분배해 처리하게 하여 시간도 줄이고 부담도 줄이는 그러한 병렬처리를 할 수 있슴니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-75931e72-088a-4b04-9847-3be71fa94fda\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6be013b8-9736-4c2f-8fed-154ade75181e\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ce761895-c947-4acb-82d3-d36b9b9cdace\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-aec0c70c-ae0e-432c-824e-aa8e246d863a\">모듈도 허접하고 쓸 사람이 있나 싶으니 간단하게만 소개할게요.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-548164dc-ee4e-4406-8a31-e88c42b1d507\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-ea6ef260-13e1-4123-abe4-b4bacd248a5f\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-757b42d2-2faf-4a0d-9fd4-0915d096b3a4\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-31a29e4c-7956-4f3b-a9be-170ddecee7af\">//예시 소스</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-71b044ad-9c01-4fdc-9077-f4d92f884199\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-b1f8cda1-c04b-4e10-b50f-fa6f3d9582d4\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ff37e4f0-39ad-4c24-bf3a-78f697b61731\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-c87357d5-92cf-4da9-903f-307c77b87ed1\">//전역</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ff552f2b-3d2a-4fe8-8359-5a5a37750e25\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-1aacd805-8ea8-4c31-9892-8f91ec40b6a1\">let MultiWorker &#x3D; require(&quot;multi-worker.js&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-f2471f8e-4697-4955-ab1b-f70610bbee76\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-2837ef21-870d-4db7-a355-29a074b38459\">let Worker &#x3D; new MultiWorker(2, 100); // 각각 워커갯수, 타임스택(그냥 아무 숫자나 넣으세요)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-d18c122d-4ad7-4a01-ba6f-8406fab4c588\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-ece2c357-f6ad-4643-ab05-9806da8d4a6e\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-e474f055-d0c2-4425-b3e0-6163a8fbca27\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-b1b5c9d7-d499-468a-a0d0-bc7c33cf7c4b\">//지역</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-c5d9b3b2-8157-4423-8892-79f69a9bd0bd\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-0540b1ac-29bb-4131-8dc8-4351412e9aed\">if(msg &#x3D;&#x3D; &quot;/start&quot;) {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a2081c5a-0196-4037-af2b-e629fecdb20a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-786c8a56-f9ad-49af-9c26-82ce2bb2af6a\">Worker.on(&quot;finish&quot;, (worker_id, result) &#x3D;&gt; {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ad889d30-eeb1-4b24-a95d-0e3b4aed7603\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7e1b81a7-f738-4863-b6f2-c20fa777011d\">replier.reply(worker_id + &quot;워커가 종료되었습니다. 결과 : &quot; + result);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-c24817b6-fe61-460e-a7b1-67c937f3b6cc\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-bf4eed5d-80a1-4c06-a45e-f8d632ed3548\">});</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-61ecf2a7-c591-4b5b-88b5-7422d1520674\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-19aa8217-8f76-4990-a416-b2fd65dcdc07\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-f05572b4-ae31-4924-a43a-89ce88beef71\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-210da16c-ac0d-4617-a077-892a4e1a527c\">Worker.on(&quot;finishAll&quot;, (worker_result_arr) &#x3D;&gt; {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-f40fbff0-7205-41c7-8a1b-a1f74c62f062\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-6d6d5ca7-621b-4f3a-bd6a-9960ae0f40e4\">replier.reply(&quot;워커들의 총 결과값 배열 : &quot; + worker_result_arr);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-80737740-f913-4138-b190-f7c42fb19c56\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-56ab7964-93d8-45e5-b2f2-e6b872856237\">})</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-460ddac5-c2dd-422b-b852-80310a876391\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-7362fb7e-bca1-4efc-9c47-74c38057625a\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3d77870f-54d9-4df7-adc8-8730ba2dcc4a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-0ff81345-a0e2-4b9d-bf28-58ba87dad964\">Worker.start(</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-9aa5b4f1-06c3-42c8-adc7-d45f0f258796\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-14ebecc8-6751-4ce6-b23f-ada56f4bc270\">{</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-aa276877-0ea1-4b58-bcb3-1f51d9a42d92\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-494ccf67-fa7e-40e0-a3cc-7ea8db309c5f\">&quot;func1&quot; : () &#x3D;&gt; {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-b7b7b852-6b00-46d4-802a-ebf31ce0844e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-f0338fd0-720a-430d-99dd-a21799611d5f\">replier.reply(&quot;hello1&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-4c01c30b-8ec8-4302-baf0-642458266c9e\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-d8e2c02c-2921-40a7-83c5-af53d1753495\">return 1;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-c60debe3-5ebb-4d55-9ce0-f48245e46e4d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-734c0293-32e4-4708-95b1-a487cf062609\">},</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-b3303657-06d8-4152-a9ac-380de0a6354d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-30b60451-8b72-4e80-a034-da732fa172d0\">&quot;func2&quot; : () &#x3D;&gt; {</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a17c363b-695f-4520-baab-ef2915c2683b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-93a50a4f-3fd2-4a38-997b-b337acbbe1d5\">replier.reply(&quot;hello2&quot;);</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-8e3174a8-8887-4edf-8411-d64f3fc9ba8d\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a37c82bc-c035-4a2b-930d-4076ddd03d3c\">return 2;</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-bf53b69b-38b2-4f48-960e-3ef27b577648\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-02c40da2-889c-4108-be4e-b7c8b0bb5ed6\">}</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-2f92fe96-c043-4000-8cb3-b45a09a4008a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-5ebf1714-54fb-417e-9295-89bf5946e8df\">}</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a1e4f8f8-9ce1-49db-aba9-d458f581d4ee\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-e279152a-16bf-40a6-b318-a64b696ac696\">); //워커 갯수에 맞춰서 함수를 넣어야함. </span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a2121e55-6046-4156-ba58-0407a96d17b6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-1a7c4429-4f3f-49f5-81d8-e9ef2ee80433\">//키 이름은 func1부터 워커 갯수까지 1씩 더하면서 지으면 됨 ㅇㅇ</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-696f3f54-4fda-4d63-9dde-30423998467c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-bf3dd4b2-6c47-4855-9fad-f84cf6b05ecf\">}</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-50ab5784-31fb-429b-897b-2bceffac7a79\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-9d62c105-3ecb-48a3-89e7-4a80e99ce31b\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-59103b04-b115-460c-99b5-7293299f9b2a\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-221c78ac-6757-4349-8ac6-ce3bf415ed70\">이게 압축파일 안에 들어있는 텍스트파일 내용입니다. (가이드용)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-59a4c7c3-afc0-4e09-ade2-68ded97d3a6f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-1a38ea29-c73d-49f8-829e-22f16f6e7e93\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-e660b16f-0491-46f4-97bf-8a0943dcae94\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-feea7e3c-48f8-4c4c-aca4-ef039819044e\">그냥 보고 이렇게 쓰이는거구나 정도만 알면 돼요.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5e478059-5048-43db-9afe-802e6b49c47c\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3284d86c-c920-4664-823e-e3cfbf1e7a4f\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-71dd02ab-a0f0-408e-b452-b1663ca3e1d2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a50b81e6-e736-4176-bcba-699c97e542e7\">혹시 가져가서 연구라도 해보실 분들은 가져가셔도되고 정말 감사하게도 쓸 </span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-67fe4d0f-358b-4769-84de-466dcacee2e6\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-09131bf4-32ca-4d51-a22d-64393f50888d\">의향이 있으신 분들은 댓글로 질문하시거나 물어보시면 친절하게 답변해드림니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-0d16c3c1-1d42-48ca-9b30-300d136cfdfb\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-cbd0af9f-23ae-45eb-b41d-8110e7523c29\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-0345bdee-a2f8-4b4f-9145-bdd9c8b88694\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-e9378458-295a-4e0e-ac36-c10fd88dbff4\">그럼</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6fcbeb68-8a3d-4343-b140-46b9cc410bcd\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-8eabfecc-599a-4e78-85fc-360a8073bc8c\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-file se-l-default\" id=\"SE-48fcc417-48be-4379-94a5-02cd1db10555\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-file se-l-default se-section-align-\">\n                            <div class=\"se-module se-module-file\">\n                                <span class=\"se-file-icon\"><strong class=\"se-blind\">첨부파일</strong></span>\n                                <div class=\"se-file-name-container\">\n                                    <span class=\"se-file-name\">multi-worker</span><span class=\"se-file-extension\">.zip</span>\n                                </div>\n                                <a href=\"https://downapi.cafe.naver.com/v1.0/cafes/article/file/3ae3f066-f95e-11ea-96b7-0050568d263a/download\" class=\"se-file-save-button __se_link\" role=\"button\" target=\"_blank\" data-linktype=\"file\" data-linkdata='{\"link\": \"https://downapi.cafe.naver.com/v1.0/cafes/article/file/3ae3f066-f95e-11ea-96b7-0050568d263a/download\"}'>\n                                    <span class=\"se-blind\">파일 다운로드</span>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_file\", \"id\" :\"SE-48fcc417-48be-4379-94a5-02cd1db10555\", \"data\" : { \"link\": \"https://downapi.cafe.naver.com/v1.0/cafes/article/file/3ae3f066-f95e-11ea-96b7-0050568d263a/download\"}}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-29dff38b-1d77-4b2a-a65a-942bc911f3e8\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-63310024-ed18-405e-84d5-1b17c8c9f9b2\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-d3ed0e6b-ec9e-4841-b983-61c6d9f9d81a\">  </span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000611400000000",
+            "id": 24852,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 88,
+            "refArticleId": 24852,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "워커 모듈",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1600397602870,
+            "writer": {
+                "id": "dit67890",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "문성"
+            }
+        },
+        "articleId": 24852,
+        "attaches": [
+            {
+                "extension": "zip",
+                "fileId": "3ae3f066-f95e-11ea-96b7-0050568d263a",
+                "fullName": "multi-worker.zip",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "multi-worker.zip",
+                "seComponentId": "SE-48fcc417-48be-4379-94a5-02cd1db10555",
+                "seComponentIdList": [
+                    "SE-48fcc417-48be-4379-94a5-02cd1db10555"
+                ],
+                "size": 1452,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://downapi.cafe.naver.com/v1.0/cafes/article/file/3ae3f066-f95e-11ea-96b7-0050568d263a/download"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "한줄평 : 다시 만들어 오십쇼.",
+                    "id": 103627649,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA5MThfNDYg/MDAxNjAwNDE3OTI0MDcy.UDdWoyG4o5xtOeqkFU-_a8Y_ALR89Oz2G2A4dsBQiUIg.DmFDV3CZbOc09EomxJiIP7J6tdkmvdh4IPNut-CqTvQg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 1142,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA5MThfNDYg/MDAxNjAwNDE3OTI0MDcy.UDdWoyG4o5xtOeqkFU-_a8Y_ALR89Oz2G2A4dsBQiUIg.DmFDV3CZbOc09EomxJiIP7J6tdkmvdh4IPNut-CqTvQg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA5MThfNDYg/MDAxNjAwNDE3OTI0MDcy.UDdWoyG4o5xtOeqkFU-_a8Y_ALR89Oz2G2A4dsBQiUIg.DmFDV3CZbOc09EomxJiIP7J6tdkmvdh4IPNut-CqTvQg.JPEG/externalFile.jpg",
+                        "width": 2000
+                    },
+                    "refId": 103627649,
+                    "updateDate": 1600417924000,
+                    "writer": {
+                        "id": "ntr76",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Ubu"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

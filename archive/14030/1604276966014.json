@@ -1,0 +1,190 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-size:10pt;\"><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">메이플스토리 길드 검색</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); font-family: 'D2Coding ligature', Consolas, 'Courier New', monospace; font-size: 17px; line-height: 23px; white-space: pre;\"><div><span style=\"color: #c678dd;\">const</span>&nbsp;<span style=\"color: #d19a66;\">scriptName</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #98c379;\">&quot;길드검색&quot;</span>;</div><div><span style=\"color: #c678dd;\">const</span>&nbsp;<span style=\"color: #d19a66;\">Lw</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\u200b</span><span style=\"color: #98c379;\">&quot;</span>.<span style=\"color: #61afef;\">repeat</span>(<span style=\"color: #d19a66;\">500</span>);</div><br /><div><span style=\"color: #c678dd;\">const</span>&nbsp;<span style=\"color: #61afef;\">response</span>&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;(room,&nbsp;msg,&nbsp;sender,&nbsp;isGroupChat,&nbsp;replier,&nbsp;ImageDB)&nbsp;<span style=\"color: #c678dd;\">=&gt;</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">try</span>{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;worldCode&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;[<span style=\"color: #98c379;\">&quot;reboot&quot;</span>,<span style=\"color: #98c379;\">&quot;reboot2&quot;</span>,<span style=\"color: #98c379;\">&quot;union&quot;</span>,<span style=\"color: #98c379;\">&quot;scania&quot;</span>,<span style=\"color: #98c379;\">&quot;bera&quot;</span>,<span style=\"color: #98c379;\">&quot;croa&quot;</span>,<span style=\"color: #98c379;\">&quot;zenith&quot;</span>,<span style=\"color: #98c379;\">&quot;elysium&quot;</span>,<span style=\"color: #98c379;\">&quot;luna&quot;</span>,<span style=\"color: #98c379;\">&quot;enosis&quot;</span>,<span style=\"color: #98c379;\">&quot;nova&quot;</span>,<span style=\"color: #98c379;\">&quot;arcane&quot;</span>,<span style=\"color: #98c379;\">&quot;red&quot;</span>,<span style=\"color: #98c379;\">&quot;aurora&quot;</span>];</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;worldName&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;[<span style=\"color: #98c379;\">&quot;리부트&quot;</span>,<span style=\"color: #98c379;\">&quot;리부트2&quot;</span>,<span style=\"color: #98c379;\">&quot;유니온&quot;</span>,<span style=\"color: #98c379;\">&quot;스카니아&quot;</span>,<span style=\"color: #98c379;\">&quot;베라&quot;</span>,<span style=\"color: #98c379;\">&quot;크로아&quot;</span>,<span style=\"color: #98c379;\">&quot;제니스&quot;</span>,<span style=\"color: #98c379;\">&quot;엘리시움&quot;</span>,<span style=\"color: #98c379;\">&quot;루나&quot;</span>,<span style=\"color: #98c379;\">&quot;이노시스&quot;</span>,<span style=\"color: #98c379;\">&quot;노바&quot;</span>,<span style=\"color: #98c379;\">&quot;아케인&quot;</span>,<span style=\"color: #98c379;\">&quot;레드&quot;</span>,<span style=\"color: #98c379;\">&quot;오로라&quot;</span>];</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;guildName&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;msg.<span style=\"color: #61afef;\">split</span>(<span style=\"color: #98c379;\">&quot;&nbsp;&quot;</span>);</div><br /><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span>&nbsp;(guildName[<span style=\"color: #d19a66;\">0</span>]&nbsp;<span style=\"color: #56b6c2;\">==</span>&nbsp;<span style=\"color: #98c379;\">&quot;!길드&quot;</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">for</span>(<span style=\"color: #c678dd;\">let</span>&nbsp;i&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #d19a66;\">0</span>;&nbsp;i&nbsp;<span style=\"color: #56b6c2;\">&lt;</span>&nbsp;worldCode.<span style=\"color: #e06c75;\">length</span>;&nbsp;i<span style=\"color: #56b6c2;\">+</span>)&nbsp;{</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;getGuildInfo&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;Utils.<span style=\"color: #61afef;\">getWebText</span>(<span style=\"color: #98c379;\">&quot;<a href=\"https://maple.gg/guild/\" target=\"_blank\">https://maple.gg/guild/</a>&quot;</span><span style=\"color: #56b6c2;\">+</span>worldCode[i]<span style=\"color: #56b6c2;\">+</span><span style=\"color: #98c379;\">&quot;/&quot;</span><span style=\"color: #56b6c2;\">+</span>msg.<span style=\"color: #61afef;\">substr</span>(<span style=\"color: #d19a66;\">4</span>));</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span>&nbsp;(getGuildInfo.<span style=\"color: #61afef;\">indexOf</span>(<span style=\"color: #98c379;\">&quot;길드를&nbsp;찾을&nbsp;수&nbsp;없습니다.&quot;</span>)<span style=\"color: #56b6c2;\">!=</span>&nbsp;<span style=\"color: #56b6c2;\">-</span><span style=\"color: #d19a66;\">1</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getData&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #98c379;\">&apos;해당&nbsp;길드의&nbsp;정보를&nbsp;찾을&nbsp;수&nbsp;없습니다&apos;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">else</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;guildInfo&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;getGuildInfo.<span style=\"color: #61afef;\">split</span>(<span style=\"color: #98c379;\">&quot;&lt;div&nbsp;class=</span><span style=\"color: #56b6c2;\">\\&quot;</span><span style=\"color: #98c379;\">row&nbsp;mb-4</span><span style=\"color: #56b6c2;\">\\&quot;</span><span style=\"color: #98c379;\">&gt;&quot;</span>)[<span style=\"color: #d19a66;\">1</span>].<span style=\"color: #61afef;\">split</span>(<span style=\"color: #98c379;\">&quot;&lt;div&nbsp;class=</span><span style=\"color: #56b6c2;\">\\&quot;</span><span style=\"color: #98c379;\">col-lg-4</span><span style=\"color: #56b6c2;\">\\&quot;</span><span style=\"color: #98c379;\">&gt;&quot;</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guildInfo&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;guildInfo[<span style=\"color: #d19a66;\">0</span>].<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #56b6c2;\">/(&lt;(</span><span style=\"color: #d19a66;\">[</span><span style=\"color: #56b6c2;\">^</span><span style=\"color: #d19a66;\">&gt;]</span><span style=\"color: #56b6c2;\">+)&gt;)/</span><span style=\"color: #c678dd;\">g</span>,&nbsp;<span style=\"color: #98c379;\">&quot;&quot;</span>).<span style=\"color: #61afef;\">trim</span>().<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #56b6c2;\">/</span><span style=\"color: #c678dd;\">^</span><span style=\"color: #56b6c2;\">&nbsp;+/</span><span style=\"color: #c678dd;\">gm</span>,<span style=\"color: #98c379;\">&quot;&quot;</span>).<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #56b6c2;\">/-/</span><span style=\"color: #c678dd;\">g</span>,<span style=\"color: #98c379;\">&quot;&quot;</span>).<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #56b6c2;\">/&nbsp;/</span><span style=\"color: #c678dd;\">g</span>,<span style=\"color: #98c379;\">&quot;&quot;</span>).<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #56b6c2;\">/</span><span style=\"color: #d19a66;\">\\n</span><span style=\"color: #56b6c2;\">/</span><span style=\"color: #c678dd;\">g</span>,<span style=\"color: #98c379;\">&quot;&quot;</span>);</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;getData&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;guildInfo.<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #98c379;\">&quot;길드마스터&quot;</span>,<span style=\"color: #98c379;\">&quot;길드마스터&nbsp;:&nbsp;&quot;</span>).<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #98c379;\">&quot;월드랭킹&quot;</span>,<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">월드랭킹&nbsp;:&nbsp;&quot;</span>).<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #98c379;\">&quot;전체랭킹&quot;</span>,<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">전체랭킹&nbsp;:&nbsp;&quot;</span>).<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #98c379;\">&quot;길드원수&quot;</span>,<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">길드원&nbsp;수&nbsp;:&nbsp;&quot;</span>).<span style=\"color: #61afef;\">replace</span>(<span style=\"color: #98c379;\">&quot;길드포인트&quot;</span>,<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">길드포인트&nbsp;:&nbsp;&quot;</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">if</span>&nbsp;(i&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #d19a66;\">0</span>)&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;totalData&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;<span style=\"color: #98c379;\">&quot;[&nbsp;&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;guildName[<span style=\"color: #d19a66;\">1</span>]&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;&nbsp;-&nbsp;&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;worldName[i]&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;&nbsp;]&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;getData<span style=\"color: #56b6c2;\">+</span><span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n\\n</span><span style=\"color: #98c379;\">&quot;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">else</span>&nbsp;{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">var</span>&nbsp;totalData&nbsp;<span style=\"color: #56b6c2;\">=</span>&nbsp;totalData&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;[&nbsp;&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;guildName[<span style=\"color: #d19a66;\">1</span>]&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;&nbsp;-&nbsp;&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;worldName[i]&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;&nbsp;]&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;getData<span style=\"color: #56b6c2;\">+</span><span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n\\n</span><span style=\"color: #98c379;\">&quot;</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><br /><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.<span style=\"color: #61afef;\">reply</span>(guildName[<span style=\"color: #d19a66;\">1</span>]&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;&nbsp;정보&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;Lw&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;totalData);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #c678dd;\">catch</span>(e){</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.<span style=\"color: #61afef;\">reply</span>(<span style=\"color: #98c379;\">&quot;오류명&nbsp;:&nbsp;&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;e.<span style=\"color: #e06c75;\">name</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;</span><span style=\"color: #56b6c2;\">\\n</span><span style=\"color: #98c379;\">오류&nbsp;메시지&nbsp;:&nbsp;&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;e.<span style=\"color: #e06c75;\">message</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;<span style=\"color: #98c379;\">&quot;오류난&nbsp;줄&nbsp;:&nbsp;&quot;</span>&nbsp;<span style=\"color: #56b6c2;\">+</span>&nbsp;e.<span style=\"color: #e06c75;\">lineNumber</span>);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>}</div></div></div><div><b><br /></b></div><div><b>코드 작성에 도움주신 엔테클로님 감사합니다&nbsp;</b></div><div><b><br /></b></div><div><b>복붙 방지용 간단한 오타 하나 냈습니다&nbsp;</b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br /></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000036CE00000000",
+            "id": 14030,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 83,
+            "refArticleId": 14030,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "메이플 길드 검색",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584963864410,
+            "writer": {
+                "id": "yce1014",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA0MjBfMTIx/MDAxNTg3MzUzNjIzNzAx.gUaiEAPZrvBR4UzgkWFqliJyFnSlkuNpMfU08QhALgsg.lJgdqzxUHJhGfMqLZaZtvmgcGdUYZ8BG7AmJ9STODHAg.JPEG/Totoro-backgrounds-wallpapers-HD_%281%29.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "SOODA"
+            }
+        },
+        "articleId": 14030,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "소스 감사합니다~ 제가 귀찮아서 안한 변수지정을..읍읍",
+                    "id": 85260598,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85260598,
+                    "updateDate": 1585090238000,
+                    "writer": {
+                        "id": "entekorea",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTFfODQg/MDAxNTk5ODMxMzQyNDc1.onTx_XXSiVq6aJmPIX24mYn1sbMJcDHlP3TieI3HOG0g.0slO0dbNaI9bW7WSbmVIoKBDmFjcrWEElnHRuCu8jEEg.JPEG/KakaoTalk_20200909_211355749.jpg"
+                        },
+                        "nick": "엔테클로"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

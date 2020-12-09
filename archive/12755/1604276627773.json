@@ -1,0 +1,366 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>강좌할 주제</b><div><b>=&gt; <font color=\"#7d7d7d\">음... Http 라이브러리?</font></b></div><div><font color=\"#7d7d7d\"><br /></font></div><div><b>강좌 내용</b></div><div><b>=&gt;&nbsp;</b><span style=\"font-size: 13.3333px;\">오늘 나온(?)건지는 모르겠지만 따끈따끈한 API_2에서 크롤링하는 법을 알아봅시다.</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">일단 API_2에 있는 크롤링 관련 라이브러리는 Http인데요, 이 객체의 메서드들을 한번 살펴봅시다.</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">Http.request(url | option, func);</span></div><div><span style=\"font-size: 13.3333px;\">Http.requestSync(url | option);</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">첫 번째 메서드 Http.request는 두 가지 사용법으로 나뉘는데요, 첫 번째 인자에 문자열로 링크를 주냐, json으로 옵션들을 주냐입니다.&nbsp;</span></div><div><span style=\"font-size: 13.3333px;\">첫 번째 인자를 링크로 준다면, 해당 사이트에 get 으로 크롤링하고, json으로 준다면 해당 옵션들로다가 request를 보냅니다. 이 json의 구조는..</span></div><div><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div>{</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #a31515;\">&quot;url&quot;</span> : <span style=\"color: #a31515;\">&quot;링크&quot;</span>, <span style=\"color: #aaaaaa;\">//크롤링할 사이트</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #a31515;\">&quot;timeout&quot;</span> : <span style=\"color: #09885a;\">3000</span>, <span style=\"color: #aaaaaa;\">//타임아웃 시간 설정</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #a31515;\">&quot;method&quot;</span> : <span style=\"color: #a31515;\">&quot;GET&quot;</span>, <span style=\"color: #aaaaaa;\">//GET or POST</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #a31515;\">&quot;headers&quot;</span> : { <span style=\"color: #aaaaaa;\">//헤더들</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #a31515;\">&quot;Accept&quot;</span> : <span style=\"color: #a31515;\">&quot;*/*&quot;</span>,</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #a31515;\">&quot;User-Agent&quot;</span> : <span style=\"color: #a31515;\">&quot;Mozilla/5.0&quot;</span></div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>}</div></div></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">대강 이렇게 되어있습니다. 헤더에는 User Agent와 Referer만 지원했었지만, 최근 업데이트로 모든 종류의 헤더를 지원한다고 하네요!</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">그리고 두 번째 인자에는 콜백함수가 들어갑니다. 즉 크롤링이 끝나면 두 번째 인자로 넘겨준 함수를 호출한다는 소리입니다. 이 콜백함수의 인자에는 exception, response, document가 들어갑니다. 이름에 드러나 있듯이 첫 번째 인자는 에러, 두 번째 인자는 http 응답, 세 번째 인자는 Jsoup으로 크롤링한 결과의 html이 전달됩니다.</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">이제 두 번째 메서드의 사용법을 알아볼까요?</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div>첫 번째 메서드와 약간은 비슷하지만, 이 requestSync라는 녀석은 동기적입니다. 인자에 url이나 json으로 옵션을 넘겨주면 Jsoup으로 크롤링한 결과의 html을 반환해줍니다. 첫 번째 메서드는 콜백함수를 수행하는 방식으로 작동하는 반면, 이 메서드는 html을 반환해준다는 차이가 있네요!</div><div><br /></div><div>이제 이걸로 한강 수온을 가져오는 예제 소스를 짜 볼까요?</div><div><br /></div><div>사이트는 wpws.kr 에서 가져오는걸로 하고, 크롬 개발자 도구를 이용하여 어디를 select할지 복사해옵시다.</div><div>그리고 이제 소스를 끄적이면 됩니다!</div><div><br /></div><div><div style=\"background-color: rgb(255, 255, 254); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"line-height: 19px;\"><div style=\"line-height: 19px;\"><div style=\"line-height: 19px;\"><div><span style=\"color: #aaaaaa;\">//Http.request 메서드 사용</span></div><div><span style=\"color: #008080;\">Http</span>.request(<span style=\"color: #a31515;\">&quot;<a href=\"https://www.wpws.kr/hangang/\" target=\"_blank\">https://www.wpws.kr/hangang/</a>&quot;</span>, (e, r, d) =&gt; {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #0000ff;\">if</span> (e != <span style=\"color: #0000ff;\">null</span>) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #008080;\">Log</span>.e(<span style=\"color: #a31515;\">&quot;한강 수온을 가져오지 못했습니다.\\n&quot;</span> + e);</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #0000ff;\">return</span>;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;}</div><div>    <span style=\"color: #0000ff;\">let</span> temp = d.select(<span style=\"color: #a31515;\">&quot;#temp&quot;</span>).text();</div><div>    <span style=\"color: #008080;\">Log</span>.d(<span style=\"color: #a31515;\">&quot;현재 한강 수온 : &quot;</span> + temp);</div><div>});</div><br /><div><span style=\"color: #aaaaaa;\">//Http.requestSync 메서드 사용</span></div><div><span style=\"color: #0000ff;\">try</span> {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #0000ff;\">let</span> temp = <span style=\"color: #008080;\">Http</span>.requestSync(<span style=\"color: #a31515;\">&quot;<a href=\"https://www.wpws.kr/hangang/\" target=\"_blank\">https://www.wpws.kr/hangang/</a>&quot;</span>).select(<span style=\"color: #a31515;\">&quot;#temp&quot;</span>).text();</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #008080;\">Log</span>.d(<span style=\"color: #a31515;\">&quot;현재 한강 수온 : &quot;</span> + temp);</div><div>} <span style=\"color: #0000ff;\">catch</span> (e) {</div><div>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #008080;\">Log</span>.e(<span style=\"color: #a31515;\">&quot;한강 수온을 가져오지 못했습니다.\\n&quot;</span> + e);</div><div>}</div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 10pt;\">개인적으로 Jsoup 라이브러리를 사용할 때보다 더 편리해진 것 같습니다..?</span></div><div><br /></div><div><br /></div><div><span style=\"font-family: 돋움; font-size: 10pt;\">이상</span></div></div></div></div></div></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div>2편은 안올라올수도</div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000031D300000000",
+            "head": "중급",
+            "headId": 20,
+            "id": 12755,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 427,
+            "refArticleId": 12755,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[메봇R] API2에서 크롤링(파싱)을 해보쟈 (1)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583463584827,
+            "writer": {
+                "id": "junho8590",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "마른얼음"
+            }
+        },
+        "articleId": 12755,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "파일은 어떻게 올리나요",
+                    "id": 83299863,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83299863,
+                    "updateDate": 1583463653000,
+                    "writer": {
+                        "id": "aidenkor",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTNfMjM0/MDAxNTk5OTgzNjcyMTAy.nPYLAEsagoL0HlO-W_SN_Cz7fmfxXBU-MNw67q92LsEg.MIYVbyA3RxdmR6R4_wiJMp1kFv5wFwTsdd677rnvyIcg.PNG/logo-small.png"
+                        },
+                        "nick": "delta"
+                    }
+                },
+                {
+                    "content": "흠터",
+                    "id": 83300006,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83299863,
+                    "updateDate": 1583463741000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "따끈따끈한 고인물",
+                    "id": 83300044,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83300044,
+                    "updateDate": 1583463774000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "음?",
+                    "id": 83300209,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83300044,
+                    "updateDate": 1583463895000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "마른얼음은 언제녹죠 ㅋㅋ루ㅋㅋ",
+                    "id": 83300419,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83300044,
+                    "replyMember": {
+                        "id": "junho8590",
+                        "nick": "마른얼음"
+                    },
+                    "updateDate": 1583464062000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 83301140,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83301140,
+                    "updateDate": 1583464617000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "히히히히ㅣ히히히히ㅣ히히",
+                    "id": 83301328,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83301140,
+                    "updateDate": 1583464745000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "저번에 API2 뒤져보면서 써보고 노드느낌을 느꼈던건 안비밀",
+                    "id": 83307997,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83307997,
+                    "updateDate": 1583469254000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "ㅋㅋㅋㅋㅋㅋㅋ",
+                    "id": 83308080,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 83307997,
+                    "updateDate": 1583469314000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "질문 있습니다. 마른얼음은 왜 촉촉하지 않은건가요?",
+                    "id": 83308400,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 83308400,
+                    "updateDate": 1583469540000,
+                    "writer": {
+                        "id": "mir99712",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA2MTRfMTk5/MDAxNTkyMTM4NTM5OTE1.V3wbJhlekTa2nIPrtPu6zC96n_m0ye_xdbijXF3wycwg._nzQagZCEqT6IYMyJ5ch2lX4_9ivqpLRvHe1TrJurXIg.PNG.mir99712/Untitled.png"
+                        },
+                        "nick": "Violet"
+                    }
+                }
+            ],
+            "last": {
+                "id": 83308400,
+                "refId": 83308400
+            },
+            "next": {
+                "id": 83308459,
+                "refId": 83308400
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

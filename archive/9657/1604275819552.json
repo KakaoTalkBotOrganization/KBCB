@@ -1,0 +1,423 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [],
+            "contentHtml": "<p>FS = FileStream<br />path = &quot;sdcard/ChatRpg/json&quot;<br />Lw = &quot;\\u200b&quot;.repeat(500)<br />Ll = &quot;&#9148;&quot;.repeat(50)<br /><br />/*<br />Made by Doami<br />방 조건 거실 땐 response 줄 밑에<br />if (room != &quot;사용할 방&quot;) return;<br />한 줄 추가하시면 됩니다.<br />*/<br /><br />isUser = (json, user) =&gt; Object.keys(json).indexOf(user)!=-1<br /><br />addDP = (json, user, DP) =&gt; json[user][&quot;DP&quot;] += DP<br /><br /><br />response = (room, msg, sender, _, replier) =&gt; {<br /><br />if (!FS.read(path)) FS.write(path, &quot;{}&quot;);<br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />json = JSON.parse(FS.read(path))<br /><br />json[sender] || (json[sender] = {})<br />json[sender][&quot;title&quot;] || (json[sender][&quot;title&quot;] = &quot;&quot;)<br />json[sender][&quot;chat&quot;] || (json[sender][&quot;chat&quot;] = 0)<br />json[sender][&quot;DP&quot;] || (json[sender][&quot;DP&quot;] = 0)<br />json[sender][&quot;count&quot;] || (json[sender][&quot;count&quot;] = 0)<br />json[sender][&quot;recent&quot;] || (json[sender][&quot;recent&quot;] = &quot;0.0&quot;)<br /><br />json[sender][&quot;chat&quot;]++<br /><br />FS.write(path, JSON.stringify(json, null, 4))<br /><br />//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br /><br />if (msg == &quot;/도움말&quot;) {<br /><br />result = &quot;&bull; 도움말 입니다.\\n&quot;+<br />&quot;/내 정보&quot;+&quot;\\n&quot;+<br />&quot;/출석&quot;+&quot;\\n&quot;+<br />&quot;/출석 목록&quot;+&quot;\\n&quot;+<br />&quot;/칭호 (바꿀 칭호)&quot;+&quot;\\n&quot;+<br />&quot;/환전 (액수)&quot;+&quot;\\n&quot;<br />replier.reply(result)<br /><br />}<br /><br />if (msg == &quot;/출석&quot;) {<br /><br />json = JSON.parse(FS.read(path))<br />day = new Date();<br />nowDate = (day.getMonth()+1)+&quot;.&quot;+day.getDate()<br /><br />if (json[sender][&quot;recent&quot;] != nowDate) {<br /><br />json[sender][&quot;count&quot;]++<br />json[sender][&quot;recent&quot;] = nowDate<br />addDP(json, sender, 100)<br />FS.write(path, JSON.stringify(json, null, 4))<br />replier.reply(&quot;&bull; &quot;+sender+&quot; 님 &quot;+nowDate.replace(&quot;.&quot;, &quot;월 &quot;)+&quot;일 출석 완료!\\n출석 보상으로 100 DP를 획득했습니다.&quot;)<br /><br />} else replier.reply(&quot;&bull; 이미 오늘 출석을 하셨습니다!&quot;)<br /><br />}<br /><br />if (msg.replace(/ /g, &quot;&quot;) == &quot;/출석목록&quot;) {<br /><br />json = JSON.parse(FS.read(path))<br />day = new Date()<br />nowDate2 = (day.getMonth()+1)+&quot;.&quot;+day.getDate()<br />arr = Object.keys(json).filter(a =&gt; json[a][&quot;recent&quot;] == nowDate2).map((a, b) =&gt; (b+1)+&quot;. &quot;+a)<br />replier.reply(&quot;&bull; 오늘 출석 목록입니다.&quot;+Lw+&quot;\\n\\n&quot;+arr.join(&quot;\\n&quot;))<br /><br />}<br /><br />if (msg.replace(/ /g, &quot;&quot;) == &quot;/내정보&quot;) {<br /><br />json = JSON.parse(FS.read(path))[sender]<br />title = json[&quot;title&quot;]<br />chat = json[&quot;chat&quot;]<br />DP = json[&quot;DP&quot;]<br />count = json[&quot;count&quot;]<br />recent = json[&quot;recent&quot;]==&quot;0.0&quot;?&quot;없음&quot;:json[&quot;recent&quot;].replace(&quot;.&quot;, &quot;월 &quot;)+&quot;일&quot;<br />result = &quot;&bull; &quot;+sender+&quot; 님의 정보\\n&quot;+Ll+&quot;\\n\\n&quot;+<br />(title?title+&quot;\\n&quot;:&quot;&quot;)+<br />&quot;채팅 : &quot;+chat+&quot;회\\n&quot;+<br />&quot;DP : &quot;+DP+&quot;\\n&quot;+<br />&quot;출석 : &quot;+count+&quot;회\\n&quot;+<br />&quot;최근 출석 : &quot;+recent+&quot;\\n&quot;+<br />&quot;\\n&quot;+Ll<br />replier.reply(result)<br /><br />}<br /><br />if (msg.startsWith(&quot;/칭호&quot;)) {<br /><br />tag = msg.substr(3).trim()<br />json = JSON.parse(FS.read(path))<br /><br />if (json[sender][&quot;DP&quot;] &gt;= 300) {<br />if (tag.length&amp;&amp;tag.length&lt;=20) {<br /><br />json = JSON.parse(FS.read(path))<br />json[sender][&quot;title&quot;] = tag<br />addDP(json, sender, -300)<br />replier.reply(&quot;&bull; 300 DP를 사용하여 칭호를 바꿨습니다!\\n변경된 칭호 : &apos;&quot;+tag+&quot;&apos;&quot;)<br />FS.write(path, JSON.stringify(json, null, 4)) <br /><br />} else replier.reply(&quot;&bull; 칭호는 0~20자 사이로만 등록이 가능합니다!&quot;)<br />} else replier.reply(&quot;&bull; &quot;+(300 - json[sender][&quot;DP&quot;])+&quot;DP가 부족합니다!&quot;)<br /><br />}<br /><br />if (msg.startsWith(&quot;/환전&quot;)) {<br /><br />much = Number(msg.substr(3).replace(&quot;DP&quot;, &quot;&quot;).trim())<br />json = JSON.parse(FS.read(path))<br /><br />if (!isNaN(much)&amp;&amp;Number.isInteger(much)&amp;&amp;much &gt; 0) {<br />if (json[sender][&quot;chat&quot;] &gt;= much) {<br /><br />json[sender][&quot;chat&quot;] -= much<br />json[sender][&quot;DP&quot;] += much<br />replier.reply(&quot;&bull; 환전이 완료되었습니다!\\n현재 DP : &quot;+json[sender][&quot;DP&quot;])<br />FS.write(path, JSON.stringify(json, null, 4))<br /><br />} else replier.reply(&quot;&bull; 채팅량이 부족합니다!&quot;)<br />} else replier.reply(&quot;&bull; 자연수량만 환전이 가능합니다!&quot;)<br /><br />}<br /><br />if (msg.startsWith(&quot;/송금 &quot;)) {<br /><br />m = msg.substr(4).split(&quot; &quot;)<br />sendcoin = Number(m.pop())<br />sendper = m.join(&quot; &quot;)<br /><br />if (!isNaN(sendcoin)&amp;&amp;Number.isInteger(sendcoin)&amp;&amp;sendcoin &gt; 0) {<br /><br />json = JSON.parse(FS.read(path))<br /><br />if (json[sender][&quot;DP&quot;] &gt;= sendcoin) {<br />if (isUser(json, sendper)) {<br />if (sender != sendper) {<br /><br />json[sender][&quot;DP&quot;] -= sendcoin<br />json[sendper][&quot;DP&quot;] += sendcoin<br />replier.reply(&quot;&bull; &quot;+sender+&quot; 님이 &quot;+sendper+&quot; 님에게 &quot;+sendcoin+&quot;DP 를 보냈습니다!&quot;)<br />FS.write(path, JSON.stringify(json, null, 4))<br /><br />} else replier.reply(&quot;&bull; 자기 자신에게는 송금할 수 없습니다.&quot;)<br />} else replier.reply(&quot;&bull; 존재하지 않는 유저입니다.&quot;)<br />} else replier.reply(&quot;&bull; DP 가 부족합니다.&quot;)<br />} else replier.reply(&quot;&bull; 자연수로만 입력해 주세요.&quot;)<br /><br />}<br /><br />}<br /><br /><br /><br />마음대로 수정해서 쓰세요.<br /><br />/내 정보<br />/출석<br />- 출석하기 (하루 1회)<br />/출석 목록<br />- 당일 출석 목록<br />/칭호 (바꿀 칭호)<br />- 300 DP 소모, 내정보에 표시<br />/환전 (액수)<br />- 채팅량을 DP로 교환</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000025B900000000",
+            "id": 9657,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 721,
+            "refArticleId": 9657,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "간단한 채팅 - RPG 예제 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1578152310737,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "doami2005"
+            }
+        },
+        "articleId": 9657,
+        "attaches": [
+            {
+                "extension": "js",
+                "fullName": "Chat-RPG.js",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Chat-RPG.js",
+                "size": 4358,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/6aff76c6d58f8e527e98fdcaf2146f10b0e21cfef7/20200105_271_cafefile/29537083_1578152538571_9E86fB_js/Chat-RPG.js?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "신기하네요 Good",
+                    "id": 77617559,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77617559,
+                    "updateDate": 1578152500000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "제 객체 강좌들 보시면\r\n알아서 응용해서 기능 추가하실 수 있습니다\r\n\r\nTMI) 오늘내일 중으로 레식 전적 공개 예정",
+                    "id": 77617689,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77617689,
+                    "updateDate": 1578152718000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "도미 은(는) 파싱충 에서 객체충 (으)로 진화하였다!",
+                    "id": 77618866,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 77617689,
+                    "updateDate": 1578153552000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "출석은 연속 출석이 있으면 좋을 것 같은데.. 일주일, 한달해서 추가 보너스 DP. (&& 1~3등 추가 보너스)",
+                    "id": 77622350,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77622350,
+                    "updateDate": 1578704096000,
+                    "writer": {
+                        "id": "labyrinth428",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMTBfMjg2/MDAxNTc4NTgzMzg5MTIx.dv3kkPOc4VE9YtBFXEBga3_krfMcG-FpWYAWseqoISsg.0vAWKmYi-SiWUUeIhAZyGrY7ksCu6w-3TVu2LiLShrkg.JPEG/11880383_142188956119424_2156475469741310298_n.jpg"
+                        },
+                        "nick": "페르조나"
+                    }
+                },
+                {
+                    "content": "고였네 고였.ㅓ",
+                    "id": 77632167,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 77632167,
+                    "updateDate": 1578188070000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "오류 발견했어용.\n출석 랭킹.. 몇명 부터인지는 모르겠는데..\n10명 이상인가? 순서가 뒥죽박죽이 됩니다.\n어떻게 해야할까요?",
+                    "id": 78146390,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78146390,
+                    "updateDate": 1578704057000,
+                    "writer": {
+                        "id": "labyrinth428",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMTBfMjg2/MDAxNTc4NTgzMzg5MTIx.dv3kkPOc4VE9YtBFXEBga3_krfMcG-FpWYAWseqoISsg.0vAWKmYi-SiWUUeIhAZyGrY7ksCu6w-3TVu2LiLShrkg.JPEG/11880383_142188956119424_2156475469741310298_n.jpg"
+                        },
+                        "nick": "페르조나"
+                    }
+                },
+                {
+                    "content": "혹시 일정점수 도달시 초기화되나요?",
+                    "id": 78181141,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 78181141,
+                    "updateDate": 1578739983000,
+                    "writer": {
+                        "id": "kurumi0710",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "빛fud"
+                    }
+                },
+                {
+                    "content": "아뇨",
+                    "id": 78181995,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78181141,
+                    "updateDate": 1578741008000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "앗..사용하다 초기화되서 그런줄 알았는데 다른 문제가 있나보네욥..",
+                    "id": 78211099,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 78181141,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1578771173000,
+                    "writer": {
+                        "id": "kurumi0710",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "빛fud"
+                    }
+                },
+                {
+                    "content": "늦은 시간 죄송합니다\r\n혹시 이 문구에 대한 해결법 알고계신가요?",
+                    "id": 78281103,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAxMTNfMjkg/MDAxNTc4ODQ0MzczMzQ3.P-XZF5KaS2TQtw_3t-TQsQIu7MapSulhF-JjUrNnm6Mg.4VhLEO3ty9lYq10A2sjJRCo5x2zO7KWkuT2-DnbhTPog.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 204,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDAxMTNfMjkg/MDAxNTc4ODQ0MzczMzQ3.P-XZF5KaS2TQtw_3t-TQsQIu7MapSulhF-JjUrNnm6Mg.4VhLEO3ty9lYq10A2sjJRCo5x2zO7KWkuT2-DnbhTPog.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDAxMTNfMjkg/MDAxNTc4ODQ0MzczMzQ3.P-XZF5KaS2TQtw_3t-TQsQIu7MapSulhF-JjUrNnm6Mg.4VhLEO3ty9lYq10A2sjJRCo5x2zO7KWkuT2-DnbhTPog.JPEG/externalFile.jpg",
+                        "width": 540
+                    },
+                    "refId": 78181141,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1578844373000,
+                    "writer": {
+                        "id": "kurumi0710",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "빛fud"
+                    }
+                }
+            ],
+            "last": {
+                "id": 97874558,
+                "refId": 97874558
+            },
+            "next": {
+                "id": 79634492,
+                "refId": 79634492
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

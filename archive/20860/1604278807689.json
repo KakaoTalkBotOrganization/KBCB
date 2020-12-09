@@ -1,0 +1,393 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [],
+            "contentHtml": "<p>질문내용=&gt;카톡디와 카톡아이디가 뭐고 모듈은 뭔지<br /><br />질문:카톡디는 우리가 흔히 말하는 톡디인가요? 카톡아이디는 또 뭔가요? 카링소스엔 모듈이 들어가는데 그 모듈은 소스에 어디에 쓰는지 무엇인지 알려주세요.<br /><br />/* 소스중 일부는 사진저장을 포함한 채팅기록 소스에서 떼왔습니다. (php도), 템플릿은 직접 만드시길, 소스가 많이 더럽습니다. 소스를 구원해주세요. 소스는 한줄입니다. */ const scriptName = &quot;image save&quot;; const kalingModule = require(&apos;kaling&apos;).Kakao(); const Kakao = new kalingModule; Kakao.init(&apos;js키&apos;); Kakao.login(&apos;카톡디&apos;, &apos;카톡아이디&apos;); var check = 0; let name = null; let mysite=&quot;http://hide00142.dothome.co.kr&quot;; const PICTURE_PATH = &quot;sdcard/Android/data/com.kakao.talk/contents/Mg==&quot;; function getLastPictureFolderPath(){ var file = new java.io.File(PICTURE_PATH); var list = file.listFiles().sort(function(a, b){ return b.lastModified() -a.lastModified(); } ); return list[0].toString(); } function getLastPictureFilePathFromFoldPath(path){ var file = new java.io.File(path); var list = file.listFiles().sort(function(a, b){ return b.lastModified() - a.lastModified(); } ); return list; } function getLastPicture(r){ try{ var path = getLastPictureFilePathFromFoldPath(getLastPictureFolderPath()); for(var i=0;i&lt;path.length;i++){ var file = new java.io.File(path[i].toString()); if(file.listFiles().length == 0) continue; else { var picture = getLastPictureFilePathFromFoldPath(file.getPath())[0].toString(); let baos = new java.io.ByteArrayOutputStream(); let bm = android.graphics.BitmapFactory.decodeFile(picture) try{ bm.compress(android.graphics.Bitmap.CompressFormat.JPEG, 100, baos); }catch(e){ } let bImage = baos.toByteArray(); let base64 = android.util.Base64.encodeToString(bImage, android.util.Base64.NO_WRAP); return base64; } } return null; } catch(e){ return null; } } function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) { if (msg.startsWith(&quot;/사진저장 &quot;)) { name = msg.split(&quot;/사진저장 &quot;)[1]; b = FileStream.read(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name); if (b != null) { replier.reply(&quot;이미 존재하는 이름입니다.&quot;); name = null; } else { check = 1; replier.reply(&quot;사진을 보내주세요.&quot;); } } if (msg == &quot;사진을 보냈습니다.&quot; &amp;&amp; check == 1) { let a = org.jsoup.Jsoup.connect(mysite+&apos;/imglog.php&apos;).data(&apos;room&apos;,room).data(&apos;img&apos;,getLastPicture(room)).ignoreContentType(true).post().text(); FileStream.write(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name, mysite+&apos;/img/&apos;+encodeURIComponent(room)+&apos;/&apos;+a+&apos;.jpg&apos;); c = FileStream.read(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;); try { if (c == null) { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, name); } else { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, c + &quot;\\n&quot; + name); } replier.reply(&quot;저장되었습니다. 사진을 보시려면 /사진보기 &quot; + name + &quot; 를 입력해 주세요&quot;); name = null; check = 0; } catch(e) { FileStream.write(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;, c + &quot;\\n&quot; + name); replier.reply(&quot;저장되었습니다. 사진을 보시려면 /사진보기 &quot; + name + &quot; 를 입력해 주세요&quot;); name = null; check = 0; } } if (msg.startsWith(&quot;/사진보기 &quot;)) { name = msg.split(&quot;/사진보기 &quot;)[1]; b = FileStream.read(&quot;/sdcard/imagesavelist/&quot; + room + &quot;/&quot; + name); if (b != null) { Kakao.send(room, { &quot;link_ver&quot;:&quot;4.0&quot;, &quot;template_id&quot;:(00000), &quot;template_args&quot;:{ name:name, img:b } }, &quot;custom&quot;); } else { replier.reply(&quot;없는 제목입니다.&quot;); } } if (msg == &quot;/사진목록&quot;) { try { c = FileStream.read(&quot;/sdcard/imagesavelist1/&quot; + room + &quot;/list&quot;); if (c != null) { replier.reply(c); } else { replier.reply(&quot;저장된 사진이 없습니다.&quot;); } } catch(e) { replier.reply(&quot;저장된 사진이 없습니다.&quot;); } } } function onCreate(savedInstanceState, activity) { var textView = new android.widget.TextView(activity); textView.setText(&quot;Hello, World!&quot;); textView.setTextColor(android.graphics.Color.DKGRAY); activity.setContentView(textView); } function onStart(activity) { } function onResume(activity) { } function onPause(activity) { } function onStop(activity) { }<br /><br /><br />(말머리 등록 해주세요! )</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000517C00000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 20860,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 269,
+            "refArticleId": 20860,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "카링질문",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1594114012540,
+            "writer": {
+                "id": "maxking2007",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA5MzBfMjQ3/MDAxNjAxNDQzMzA2NDEw.7hcK7y6GST7lfroMwe0HgwvsnKmUtbdALNviiUK_TYYg.re7LxHNf3C8Yn7YxB3rvz6UrLKuMDYD1IGqkVVnHJoEg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "늅이"
+            }
+        },
+        "articleId": 20860,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "모듈은 sdcard(내장메모리)-메봇-그 스크립트의 이름-modules에 넣습니다. \n카톡디에는 카톡 아이디를\n카톡아이디에는 카톡 비번을 넣으시면 됩니다.",
+                    "id": 96017079,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96017079,
+                    "updateDate": 1594114470000,
+                    "writer": {
+                        "id": "yih2776",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                        },
+                        "nick": "Ametrine"
+                    }
+                },
+                {
+                    "content": "혹시 틀린거있으면 고치겠습니다",
+                    "id": 96017622,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96017079,
+                    "updateDate": 1594114853000,
+                    "writer": {
+                        "id": "yih2776",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                        },
+                        "nick": "Ametrine"
+                    }
+                },
+                {
+                    "content": "모듈\r\nhttps://cafe.naver.com/nameyee/12321",
+                    "id": 96018284,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96018284,
+                    "updateDate": 1594115396000,
+                    "writer": {
+                        "id": "bknikell",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MDJfOCAg/MDAxNTkxMDk5NzM1MDgz.iVYcOqdyJtDc2L1QDK49xW8Td3XBpQQ9kmk__Gk8SoMg.wxCGkqgZYpr7iGVBdvyDKKRjMxL80pGQ0Jg-ubhU3R0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "BCode"
+                    }
+                },
+                {
+                    "content": "카톡 아이디라는게 우리가 말하는 톡디인거죠?",
+                    "id": 96018289,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96018289,
+                    "updateDate": 1594115388000,
+                    "writer": {
+                        "id": "maxking2007",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MzBfMjQ3/MDAxNjAxNDQzMzA2NDEw.7hcK7y6GST7lfroMwe0HgwvsnKmUtbdALNviiUK_TYYg.re7LxHNf3C8Yn7YxB3rvz6UrLKuMDYD1IGqkVVnHJoEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "늅이"
+                    }
+                },
+                {
+                    "content": "카링에서 로그인할때 쓰는\r\n카톡아이디는 카카오톡 로그인할때 입력하는 아이디예요.",
+                    "id": 96018347,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96018289,
+                    "updateDate": 1594115434000,
+                    "writer": {
+                        "id": "bknikell",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MDJfOCAg/MDAxNTkxMDk5NzM1MDgz.iVYcOqdyJtDc2L1QDK49xW8Td3XBpQQ9kmk__Gk8SoMg.wxCGkqgZYpr7iGVBdvyDKKRjMxL80pGQ0Jg-ubhU3R0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "BCode"
+                    }
+                },
+                {
+                    "content": "이메일말하시는건가요?",
+                    "id": 96018366,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96018366,
+                    "updateDate": 1594115452000,
+                    "writer": {
+                        "id": "maxking2007",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MzBfMjQ3/MDAxNjAxNDQzMzA2NDEw.7hcK7y6GST7lfroMwe0HgwvsnKmUtbdALNviiUK_TYYg.re7LxHNf3C8Yn7YxB3rvz6UrLKuMDYD1IGqkVVnHJoEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "늅이"
+                    }
+                },
+                {
+                    "content": "네.",
+                    "id": 96019158,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96018366,
+                    "updateDate": 1594116087000,
+                    "writer": {
+                        "id": "bknikell",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MDJfOCAg/MDAxNTkxMDk5NzM1MDgz.iVYcOqdyJtDc2L1QDK49xW8Td3XBpQQ9kmk__Gk8SoMg.wxCGkqgZYpr7iGVBdvyDKKRjMxL80pGQ0Jg-ubhU3R0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "BCode"
+                    }
+                },
+                {
+                    "content": "이게 그 sdk로드및 초기화인데 이걸 어디에 넣어야하나요",
+                    "id": 96018501,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MDdfMTIx/MDAxNTk0MTE1NTY1MjA0.jAxCPWGgJ3zMW0VGakxIg3R_rQbMRmQf8q_SF6sh0oQg.b4OoP-ngZ67XYkSRGtvFSqc0kAUtlBftraXXm1jetZgg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 1920,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA3MDdfMTIx/MDAxNTk0MTE1NTY1MjA0.jAxCPWGgJ3zMW0VGakxIg3R_rQbMRmQf8q_SF6sh0oQg.b4OoP-ngZ67XYkSRGtvFSqc0kAUtlBftraXXm1jetZgg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA3MDdfMTIx/MDAxNTk0MTE1NTY1MjA0.jAxCPWGgJ3zMW0VGakxIg3R_rQbMRmQf8q_SF6sh0oQg.b4OoP-ngZ67XYkSRGtvFSqc0kAUtlBftraXXm1jetZgg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 96018501,
+                    "updateDate": 1594115565000,
+                    "writer": {
+                        "id": "maxking2007",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MzBfMjQ3/MDAxNjAxNDQzMzA2NDEw.7hcK7y6GST7lfroMwe0HgwvsnKmUtbdALNviiUK_TYYg.re7LxHNf3C8Yn7YxB3rvz6UrLKuMDYD1IGqkVVnHJoEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "늅이"
+                    }
+                },
+                {
+                    "content": "1~4번째줄 복사후 사용하고싶은 소스 맨 윗부분에 붙여넣으세요",
+                    "id": 96019747,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96018501,
+                    "updateDate": 1594116563000,
+                    "writer": {
+                        "id": "bknikell",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA2MDJfOCAg/MDAxNTkxMDk5NzM1MDgz.iVYcOqdyJtDc2L1QDK49xW8Td3XBpQQ9kmk__Gk8SoMg.wxCGkqgZYpr7iGVBdvyDKKRjMxL80pGQ0Jg-ubhU3R0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "BCode"
+                    }
+                },
+                {
+                    "content": "델타님이 첨부해주신 저 kalink.js는 그냥 소스에 넣어도 무관한가요?",
+                    "id": 96018790,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MDdfMjc2/MDAxNTk0MTE1ODA5Nzg3.LkvnbwnWkP-rHSyjjG80mMLeLNZKuJ_poMrgwcAubWIg.32YRbxJQ8Qf4TuRpxzTsf_nm0l9aBlpLo8pBD8214zwg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 1920,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA3MDdfMjc2/MDAxNTk0MTE1ODA5Nzg3.LkvnbwnWkP-rHSyjjG80mMLeLNZKuJ_poMrgwcAubWIg.32YRbxJQ8Qf4TuRpxzTsf_nm0l9aBlpLo8pBD8214zwg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA3MDdfMjc2/MDAxNTk0MTE1ODA5Nzg3.LkvnbwnWkP-rHSyjjG80mMLeLNZKuJ_poMrgwcAubWIg.32YRbxJQ8Qf4TuRpxzTsf_nm0l9aBlpLo8pBD8214zwg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 96018790,
+                    "updateDate": 1594115811000,
+                    "writer": {
+                        "id": "maxking2007",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MzBfMjQ3/MDAxNjAxNDQzMzA2NDEw.7hcK7y6GST7lfroMwe0HgwvsnKmUtbdALNviiUK_TYYg.re7LxHNf3C8Yn7YxB3rvz6UrLKuMDYD1IGqkVVnHJoEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "늅이"
+                    }
+                }
+            ],
+            "last": {
+                "id": 96026871,
+                "refId": 96026871
+            },
+            "next": {
+                "id": 96019149,
+                "refId": 96018790
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

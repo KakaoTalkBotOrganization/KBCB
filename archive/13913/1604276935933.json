@@ -1,0 +1,180 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><span style=\"font-size: 11pt;\">지난 게시글에서 setTimeout을 가볍게 구현하는 법을 보여드렸는데요</span><br /></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 11pt;\">이번에는 setTimeout, setInterval, clearInterval 세 함수 모두를 구현해보겠습니다.</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 11pt;\">봇은 메신저봇을 이용할 거에요.</span></div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 11pt;\">먼저 지난 소스를 불러오자면</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 11pt;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">setTimeout = function(fn, delay){</span></div><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">var thread = new java.lang.Thread(){</span></div></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">run(){</span></div></blockquote></blockquote><blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">java.lang.Thread.sleep(delay);</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">fn();</span></div></blockquote></blockquote></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div></blockquote></blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">thread.start();</span></div></blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">function response(room, msg,sender, isGroupChat, replier, ImageDB) {</span></div><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">var myFunction = function(){</span></div></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">//함수 작업</span></div></blockquote></blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">setTimeout(myFuntion, 3000);//여기서 setTimeout의 함수와 딜레이를 수정하면 됩니다.</span></div></blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">인데 setInterval은 단발성 함수가 아닌 지속해서 반복해주는 함수입니다.</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">그렇다면 setTimeout에서 어떻게 해주어야 할까요?</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">여기서 재귀함수를 사용하게 됩니다.</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">재귀함수는 한자로 풀이해보면 스스로 자기 자신을 부르는 함수인데 이름과 기능이 똑같습니다.</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">function hi(){</span></div><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">//작업을 한담</span></div></blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">//hi();</span></div></blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">이 함수 같은 경우 작업을 진행하고 다시 자기 자신을 호출하므로&nbsp; 계속해서 반복되는 재귀함수가 되는 거에요.</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">이제 이를 이용하여 setInterval을 만들어보면</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">var working = false;//setInterval을 멈출 수 있는 변수</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">setTimeout = function(fn, delay){</span></div><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">var thread = new java.lang.Thread(){</span></div></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">run(){</span></div></blockquote></blockquote><blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">java.lang.Thread.sleep(delay);</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">fn();</span></div></blockquote></blockquote></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div></blockquote></blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div></blockquote><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">//여기서부터 추가되는 부분</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">setInterval = function(fn, delay){</span></div><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">var thread = new java.lang.Thread(){</span></div></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">run(){</span></div></blockquote></blockquote><blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">working = true;</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">Interval(fn, delay);</span></div></blockquote></blockquote></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div></blockquote></blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">thread.start();</span></div></blockquote><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">Interval = function(fn, delay){</span></div></div></div><blockquote><div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\" style=\"\"><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">java.lang.Thread.sleep(delay);</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">fn();</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">if(working) Interval(fn, delay);</span></div></div></div></blockquote><div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\" style=\"\"><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">clearInterval = function(){</span></div></div></div><blockquote><div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\" style=\"\"><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">working = false;</span></div></div></div></blockquote><div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\" style=\"\"><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">//여기까지</span></div></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><br /></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">function response(room, msg,sender, isGroupChat, replier, ImageDB) {</span></div><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">var myFunction = function(){</span></div></blockquote><blockquote><blockquote><div class=\"NHN_Writeform_Main\"><span style=\"font-size: 14.6667px;\">//함수 작업</span></div></blockquote></blockquote><blockquote><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">setTimeout(myFuntion, 3000);//여기서 setTimeout의 함수와 딜레이를 수정, 3초 뒤 1번 실행</span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">setInterval(myFunction, 3000);//3초마다 반복 실행</span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">if(msg===&apos;멈춰&apos;) clearInterval();//반복 실행 중단</span></div></blockquote><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">}</span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">onStartCompile(){</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">clearInterval();//반복 실행 중단</span><span style=\"font-size: 14.6667px;\"><br />}</span></div><div class=\"NHN_Writeform_Main\" style=\"font-size: 13.3333px;\"><span style=\"font-size: 14.6667px;\">이런식으로 짤 수 있습니다.</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">물론 함수를 여러 번 호출 할 때 working은 하나이므로 제대로 작동하지 않는데 이는 배열로 바꿔서 알아서 수정하시면 될 듯?</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><br /></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">여기서 Interval의 포인트는 자기 자신을 호출하여 계속 실행한다는 점에 있습니다.</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">그리고 boolean을 이용하여 다음번 실행을 제어한 것인데 Thread는 중간에 강제로 종료시킬 수도 있지만 그냥 종료시키면 함수가 제대로 끝나지 않은 상태라 오류가 발생할 수 있습니다.</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><strike>추가로 메신저봇R이라면</strike></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><strike>onStartCompile(){</strike></span></div></div><blockquote><div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><strike>working = false;</strike></span></div></div></blockquote><div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><strike>}</strike></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><strike>를 추가하셔야 합니다.</strike></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><strike><br /></strike></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><strike>메신저봇에서</strike> 그냥 리로드할 경우 working이 true가 되어있는 상태로 영영 사라지기 때문에 앱을 강제종료하기 전까지 멈출 수 없게 되는데 onStartCompile은 리로드하기 직전에 호출되는 함수이기에 이를 방지할 수 있습니다.</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">글이 너무 길어져서 카페 자동파싱은 다음에 다시 작성할게요</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">근데 대충 원리를 깨우치시면 쉽게 하실듯.</span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\"><br /></span></div><div class=\"NHN_Writeform_Main\" style=\"\"><span style=\"font-size: 14.6667px;\">제가 강좌는 첨이라 왜 해야하는건지(?) 모르는 부분(?)은 질문 주세요!</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000365900000000",
+            "id": 13913,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 397,
+            "refArticleId": 13913,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "js에서 타이머 구현(thread 기초 강좌)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584796630430,
+            "writer": {
+                "id": "0308kang",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "공돌이"
+            }
+        },
+        "articleId": 13913,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "java.lang.Thread.currentThread().interrupt(); 는 어디에 써야되나요?",
+                    "id": 84938173,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84938173,
+                    "updateDate": 1584806474000,
+                    "writer": {
+                        "id": "setinboy",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "파이팅코로나"
+                    }
+                },
+                {
+                    "content": "interrupt()가 저거랑 똑같아여.\n얘도 함수 하나 다 끝나면 sleep상태일 때 걸려서 종료하는 건데 일단은 좀 더 직관적인게 그냥 boolean 이용하는 거라",
+                    "id": 84938328,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84938173,
+                    "updateDate": 1584806700000,
+                    "writer": {
+                        "id": "0308kang",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "공돌이"
+                    }
+                },
+                {
+                    "content": "변수 이름 짓기 귀찮을 때 인터럽트 하면 되고, 작명가의 소질이 있는 것 같다! 싶으면 전역변수를 통해 값만 바꿔서 돌고있는 루프를 벗어나게 해주면 됩니다.",
+                    "id": 84943286,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84938173,
+                    "updateDate": 1584822858000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

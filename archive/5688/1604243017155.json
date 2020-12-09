@@ -1,0 +1,316 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 8,
+            "contentElements": [],
+            "contentHtml": "<div style=\"\"><div class=\"NHN_Writeform_Main\" style=\"\"><div style=\"font-size: 10pt;\"><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메-봇</b></div></div><span style=\"font-size: 10pt;\"><b></b></span><div style=\"font-size: 10pt;\"><b><b><br /></b></b></div><b>질문할 소스</b><div style=\"font-size: 10pt;\"><b>=&gt;&nbsp;</b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"\"><div style=\"\"><b>const scriptName=&quot;소스.js&quot;;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</b></div><div style=\"\"><b>const Command = {};</b></div><div style=\"\"><b>Command.output = function(msg) {</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp;var output_question = msg.replace(&apos;/&apos;,&apos;&apos;).split(&apos; &apos;);</b></div><div style=\"\"><b>&nbsp; &nbsp;var dir=&apos;&apos;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp;for(i=0;i&lt;output_question.length;i++) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; dir+=&apos;/&apos;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; dir+=output_question[i];</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp;var file = new java.io.File(sdcard+&apos;/katalkbot&apos;+dir+&apos;.txt&apos;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(!(file.exists())) {&nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return &apos;잘못된 값입니다.&apos;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp;var fis = new java.io.FileInputStream(file);</b></div><div style=\"\"><b>&nbsp; &nbsp;var isr = new java.io.InputStreamReader(fis);</b></div><div style=\"\"><b>&nbsp; &nbsp;var br = new java.io.BufferedReader(isr);</b></div><div style=\"\"><b>&nbsp; &nbsp;var str = br.readLine();</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp;var line = &quot;&quot;;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp;while((line = br.readLine()) !== null) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; str += &quot;\\n&quot; + line;</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp;fis.close();&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp;isr.close();</b></div><div style=\"\"><b>&nbsp; &nbsp;br.close();</b></div><div style=\"\"><b>&nbsp; &nbsp;return str;</b></div><div style=\"\"><b>};</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></div><div style=\"\"><b>if(msg.indexOf(&apos;/추가 &apos;) != -1){</b></div><div style=\"\"><b>var sub =msg.split(&apos; &apos;)[1];</b></div><div style=\"\"><b>var sub1 = msg.split(&apos; &apos;)[2];</b></div><div style=\"\"><b>var output_question = msg.replace(&apos;/&apos;,&apos;&apos;).replace(&apos;추가&apos;,&apos;&apos;).split(&apos; &apos;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>FileStream.append(sdcard+&apos;/katalkbot/농장/&apos;+sub+&apos;.txt&apos;, &apos;\\n\\n&apos;+sub1);</b></div><div style=\"\"><b>replier.reply (sub1 +&apos; 추가완료\\n&apos;+&quot;\\u200b&quot;.repeat(500)+FileStream.read(sdcard+&apos;/katalkbot/추가/&apos;+sub+&apos;.txt&apos;));</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>if(msg.indexOf(&apos;/확인 &apos;) != -1){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; var option=msg.split(&apos; &apos;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; var op = msg.split(&apos; &apos;)[1];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (option.length == 3){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;option[2]=option[2].toUpperCase();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; var data=Command.output(option[0]+&apos; &apos;+option[1]);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (data.indexOf(&apos;*&apos;+option[2]+&apos;\\n&apos;) == -1){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(op+&apos;소스 전체보기\\n&apos;+&quot;\\u200b&quot;.repeat(500)+data+&quot;\\n\\n copyrightⓒ&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; var str=data.split(&apos;*&apos;+option[2]+&apos;\\n&apos;)[1].split(&apos;\\n\\n&apos;)[0];&nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp;replier.reply(str);</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>}</b></div></div><div style=\"font-size: 10pt;\"><b>질문내용</b></div><div style=\"font-size: 10pt;\"><b>=&gt;&nbsp;</b></div><div style=\"font-size: 10pt;\"><b>FileStream.read을 이용하여 a.txt에&nbsp;</b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><b>1</b></div><div style=\"font-size: 10pt;\"><b>3</b></div><div style=\"font-size: 10pt;\"><b>6</b></div><div style=\"font-size: 10pt;\"><b>4</b></div><div style=\"font-size: 10pt;\"><b>5</b></div><div style=\"font-size: 10pt;\"><b>2</b></div><div style=\"font-size: 10pt;\"><b>라는 값을 저장하고</b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><b>불러올때는 올림차순, 내림차순 등으로 정렬하려면 어떤 함수가있나요?</b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><b><br /></b></div><div style=\"font-size: 10pt;\"><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000163800000000",
+            "id": 5688,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 162,
+            "refArticleId": 5688,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "txt 순서정렬",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1569233470250,
+            "writer": {
+                "id": "kiss_0153",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "Dabot"
+            }
+        },
+        "articleId": 5688,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "Array.prototype.sort",
+                    "id": 69446701,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 69446701,
+                    "updateDate": 1569233805000,
+                    "writer": {
+                        "id": "a2611577",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "scap"
+                    }
+                },
+                {
+                    "content": "이건 어떻게 쓰는걸까요..",
+                    "id": 69497946,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69446701,
+                    "updateDate": 1569288702000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "FileStream.read(path).split(\"\r\n\").sort(function(a, b){\r\nreturn a - b ;\r\n}).join(\"\r\n\")",
+                    "id": 69451005,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 69451005,
+                    "updateDate": 1569238004000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "코드가 이해가 잘안가요.. ㅜㅜ 소스재업했는데 어디에 넣어야하는걸까요",
+                    "id": 69497931,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69451005,
+                    "updateDate": 1569288692000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "join(\"\\.n\")인데 카페에서 자동변환됐네요\r\n파일읽은것을 줄바꿈별로 짤라서 순서 정리 뒤 다시 줄바꿈별로 합친거에요",
+                    "id": 69521342,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69451005,
+                    "replyMember": {
+                        "id": "kiss_0153",
+                        "nick": "Dabot"
+                    },
+                    "updateDate": 1569309108000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "path 자리엔 파일경로가 들어가는건가요?\r\n맘처럼 안되는데 제가 잘못적었나봐요",
+                    "id": 69689519,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69451005,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1569485782000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "path = \"sdcard/~~~\"",
+                    "id": 69689549,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 69451005,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1569485813000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "직접 만들 수도 있고, array.prototype.sort를 이용할 수도 있습니다.\r\n\r\n만일 만들어보고 싶으시다면 '버블 정렬'을 검색해서 구현해보시기 바랍니다.\r\n\r\n제공되는 sort 함수는 모질라 개발자 사이트에 가면 예제와 함께 활용법이 제공되어 있으니 참고하시기 바랍니다.",
+                    "id": 69518063,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 69518063,
+                    "updateDate": 1569305780000,
+                    "writer": {
+                        "id": "jjse4001",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTA5MTFfMzYg/MDAxNTY4MTY2Mjk1OTc3.sYW3rFiCggd1I5I1mbmzL051QU4F4Z3C7sfS5dAU3Fgg.NJE8bhYzORrlPD3MiA20zS0Sw9LWwrZ3lnGyONAxhcEg.JPEG.jjse4001/profileImage.jpg"
+                        },
+                        "nick": "천비아"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

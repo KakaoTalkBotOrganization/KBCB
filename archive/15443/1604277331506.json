@@ -1,0 +1,194 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇R</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><div style=\"\"><b>const scriptName = &quot;i&quot;;</b></div><div style=\"\"><b>/**</b></div><div style=\"\"><b>&nbsp;* (string) room</b></div><div style=\"\"><b>&nbsp;* (string) sender</b></div><div style=\"\"><b>&nbsp;* (boolean) isGroupChat</b></div><div style=\"\"><b>&nbsp;* (void) replier.reply(message)</b></div><div style=\"\"><b>&nbsp;* (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환</b></div><div style=\"\"><b>&nbsp;* (string) imageDB.getProfileBase64()</b></div><div style=\"\"><b>&nbsp;* (string) packageName</b></div><div style=\"\"><b>&nbsp;*/</b></div><div style=\"\"><b>var a = 0;</b></div><div style=\"\"><b>var name;</b></div><div style=\"\"><b>var adminlist=FileStream.read(&quot;/sdcard/D/admin.txt&quot;);</b></div><div style=\"\"><b>var k = 0;</b></div><div style=\"\"><b>var date = new Date;</b></div><div style=\"\"><b>var dat;</b></div><div style=\"\"><b>var b = [];</b></div><div style=\"\"><b>var v = 0;</b></div><div style=\"\"><b>var gg;</b></div><div style=\"\"><b>var adlis;</b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, aaaa, c){</b></div><div style=\"\"><b>&nbsp; &nbsp; if(msg==&quot;!로그인&quot; &amp;&amp; v == 0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;관리자 방으로 보내진 인증번호 6자리를 입력해주세요!&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; a = generateRandom(100000, 999999);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;미터갓&quot;, a);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; v = 1;</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; else if(msg==&quot;!로그인&quot; &amp;&amp; v == 1){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;이미 누군가가 로그인을 시도하고 있습니다!&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; if(msg == a &amp;&amp; (v == 1 &amp;&amp; FileStream.read(&quot;/sdcard/D/admin.txt&quot;).indexOf(sender)==-1)){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; FileStream.append(&quot;/sdcard/D/admin.txt&quot;,&quot;\\n&quot;+sender);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;등록되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; v = 0;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; adminlist=FileStream.read(&quot;/sdcard/D/admin.txt&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;else if((msg == a &amp;&amp; v == 1)&amp;&amp; adminlist.indexOf(sender)==0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;replier.reply(&quot;이미 등록되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;v = 0;</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;if (msg == &quot;!로그인B&quot; &amp;&amp; adminlist.indexOf(sender)==0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;replier.reply(&quot;로그인이 취소되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;v = 0;</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;if(msg==&quot;!adminlist&quot;){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;모든 관리자들의 닉네임이에요!&quot;+&quot;\\u200b&quot;.repeat(1000)+&quot;\\n\\n\\n&quot;+FileStream.read(&quot;/sdcard/D/admin.txt&quot;));</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; if(msg.indexOf(&quot;!관리자 add &quot;)==0 &amp;&amp; FileStream.read(&quot;/sdcard/D/admin.txt&quot;).indexOf(sender) == 0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(FileStream.read(&quot;/sdcard/D/admin.txt&quot;).indexOf(msg.split(&quot;!관리자 add &quot;))==-1){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileStream.append(&quot;/sdcard/D/admin.txt&quot;,msg.split(&quot;!관리자 add &quot;)[1]);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;등록되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; adminlist=FileStream.read(&quot;/sdcard/D/admin.txt&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; else{</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;이미 등록되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; if(msg == &quot;!RSTadminlist&quot; &amp;&amp; adminlist.indexOf(sender) == 0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; FileStream.write(&quot;/sdcard/D/admin.txt&quot;, &quot;\\u200d&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; adminlist=FileStream.read(&quot;/sdcard/D/admin.txt&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; else if(msg == &quot;!RSTadminlist&quot; &amp;&amp; FileStream.read(&quot;/sdcard/D/admin.txt&quot;).indexOf(sender) != 0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;관리자 아닌데 왜 초기화하시려고 그러세요?&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp;//공지</b></div><div style=\"\"><b>&nbsp; &nbsp;if(msg.indexOf(&quot;!공지등록 &quot;)==0 &amp;&amp; FileStream.read(&quot;/sdcard/D/admin.txt&quot;).indexOf(sender) == 0) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;변경되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; FileStream.write(&quot;/sdcard/D/공지.txt&quot;,msg.split(&quot;!공지등록 &quot;)[1]);</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;else if(msg.indexOf(&quot;!공지등록 &quot;)==0 &amp;&amp; adminlist.indexOf(sender)!=0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;replier.reply(&quot;관리자 아닌데 공지 바꾸게요? 에?&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;else if(msg == &quot;!공지&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;공지를 보시려면 전체보기를 눌러주세요!&quot;+&quot;\\u200d&quot;.repeat(500)+&quot;\\n&quot;.repeat(3)+FileStream.read(&quot;/sdcard/D/공지.txt&quot;));</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;//도움말</b></div><div style=\"\"><b>&nbsp; &nbsp;if(msg==&quot;!도움말.Administer&quot; &amp;&amp; adminlist.indexOf(sender)==0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;도움말을 보시려면 전체보기를 눌러주세요!&quot;+&quot;\\u200d&quot;.repeat(1000)+&quot;\\n\\n\\n\\n&quot;+&quot;!RST - 출석부 초기화\\n!출석 add &lt;닉네임&gt; - &lt;닉네임&gt;을 출석부에 추가\\n!공지등록 &lt;채팅&gt; - &lt;채팅&gt;을 공지로 등록해줍니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;//출석</b></div><div style=\"\"><b>&nbsp; &nbsp;if(dat!=new Date().toLocaleString().split(&quot;오&quot;)[0]){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; dat = new Date().toLocaleString().split(&quot;오&quot;)[0];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; b = [];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; k = 0;</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;if(b.indexOf(sender)==-1) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg == &apos;출석&apos; &amp;&amp; sender != &apos;쌤&apos;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;b.push(sender);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&apos;인증되었습니다.&apos;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;k++;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;else if(b.indexOf(sender)!=-1) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg == &apos;출석&apos;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;이미 인증되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;if(msg == &apos;!출석부&apos;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;오늘 출석한 사람들의 명단을 확인하시려면 전체보기를 눌러주세요!&quot;+&quot;\\u200d&quot;.repeat(500)+&quot;\\n\\n&quot;+&quot;(&quot;+k+&quot;/26)\\n&quot;+b.join(&quot;\\n&quot;));</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;adminlist = FileStream.read(&quot;/sdcard/D/admin.txt&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp;if(msg == &apos;!RST&apos; &amp;&amp; adminlist.indexOf(sender)==0) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; b = [];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; k = 0;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; replier.reply(&quot;초기화되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp;if(msg.indexOf(&quot;!출석 add &quot;)==0 &amp;&amp; FileStream.read(&quot;/sdcard/D/admin.txt&quot;).indexOf(sender)==0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(b.indexOf(msg.split(&quot;!출석 add &quot;)[1])==-1){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;b.push(msg.split(&quot;!출석 add &quot;)[1]);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;추가되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;k++;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; else if(b.indexOf(msg.split(&quot;!출석 add &quot;)[1])==0 &amp;&amp; FileStream.read(&quot;/sdcard/D/admin.txt&quot;).indexOf(sender)==0){</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;해당 닉네임이 이미 있습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp;}</b></div><div style=\"\"><b>}</b></div><div style=\"\"><b>var generateRandom = function (min, max) {</b></div><div style=\"\"><b>&nbsp; var ranNum = Math.floor(Math.random()*(max-min+1)) + min;</b></div><div style=\"\"><b>&nbsp; return ranNum;&nbsp;</b></div><div style=\"\"><b>}</b></div></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 사진처럼 에러가 나는데 해결해주실분</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003C5300000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 15443,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 188,
+            "refArticleId": 15443,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "indexOf 에러",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1586151852840,
+            "writer": {
+                "id": "hanss0810",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTAzMThfMjYz/MDAxNTUyOTE3MDQ2NDEy.nzUb7WQGaIUQT7aRz_PJubbhhXKSfAG0Hh9ZdoCthoIg.paTWV67yhGhNPz4SpRerwr3riGdMOPTRt5L2Mn7Fagcg.JPEG.hanss0810/fgasdfasfasdfas.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "미터갓"
+            }
+        },
+        "articleId": 15443,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "Screenshot_20200406-143220_MessengerBot.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_2020...MessengerBot.jpg",
+                "size": 381743,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/56c34afae9b7b26e42a4c1f6ce26542c8cde20c27a/20200406_168_cafefile/29537083_1586151827868_GiUsEo_jpg/Screenshot_20200406-143220_MessengerBot.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "!로그인 을 치고 발급받은 번호를 입력하니까 저러네요\n그리고 나머지는 if문에 adminlist.indexOf(sender)==0; 가 있으면 else 문이나 else if문만 작동되요... 해결해주실분",
+                    "id": 86558767,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86558767,
+                    "updateDate": 1586152052000,
+                    "writer": {
+                        "id": "hanss0810",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTAzMThfMjYz/MDAxNTUyOTE3MDQ2NDEy.nzUb7WQGaIUQT7aRz_PJubbhhXKSfAG0Hh9ZdoCthoIg.paTWV67yhGhNPz4SpRerwr3riGdMOPTRt5L2Mn7Fagcg.JPEG.hanss0810/fgasdfasfasdfas.jpg"
+                        },
+                        "nick": "미터갓"
+                    }
+                },
+                {
+                    "content": "indexOf(sender) != -1",
+                    "id": 91214407,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86558767,
+                    "updateDate": 1590112142000,
+                    "writer": {
+                        "id": "moon1784",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "오리털파카"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

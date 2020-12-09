@@ -1,0 +1,179 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇R</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><p dir=\"ltr\">const&nbsp;Thread&nbsp;=&nbsp;java.lang.Thread;&nbsp;//DO&nbsp;NOT&nbsp;TOUCH</p>\r\n<p dir=\"ltr\">const&nbsp;Jsoup&nbsp;=&nbsp;org.jsoup.Jsoup;&nbsp;//DO&nbsp;NOT&nbsp;TOUCH</p>\r\n<p dir=\"ltr\">let&nbsp;status;&nbsp;//DO&nbsp;NOT&nbsp;TOUCH</p>\r\n<p dir=\"ltr\">let&nbsp;loopStarted&nbsp;=&nbsp;false;&nbsp;//DO&nbsp;NOT&nbsp;TOUCH</p>\r\n<p dir=\"ltr\">/*--&nbsp;변수&nbsp;설정&nbsp;--*/</p>\r\n<p dir=\"ltr\">let&nbsp;room_raw&nbsp;=&nbsp;[&quot;https://open.kakao.com/o/gN5XXV1b&quot;];&nbsp;//사용할&nbsp;방&nbsp;주소&nbsp;순서대로&nbsp;추가하시면&nbsp;됩니다.</p>\r\n<p dir=\"ltr\">let&nbsp;room_names&nbsp;=&nbsp;[&quot;테스트방&quot;];&nbsp;//사용할&nbsp;방&nbsp;이름&nbsp;정확하게&nbsp;순서대로&nbsp;추가하시면&nbsp;됩니다.</p>\r\n<p dir=\"ltr\">let&nbsp;data_real&nbsp;=&nbsp;[{result:&nbsp;null}];&nbsp;//사용할&nbsp;방의&nbsp;갯수만큼&nbsp;{result:&nbsp;null}를&nbsp;추가해주셔야합니다</p>\r\n<p dir=\"ltr\">let&nbsp;data_pre&nbsp;=&nbsp;[{result:&nbsp;null}];&nbsp;//이거도&nbsp;마찬가지로&nbsp;사용할&nbsp;방의&nbsp;갯수만큼&nbsp;{result:&nbsp;null}&nbsp;추가</p>\r\n<p dir=\"ltr\">const&nbsp;source_name=&quot;test&quot;;&nbsp;//메봇에서의&nbsp;소스&nbsp;이름을&nbsp;넣으셔야&nbsp;합니다.</p>\r\n<p dir=\"ltr\">const&nbsp;utc=1000&nbsp;//&nbsp;업데이트&nbsp;시간&nbsp;주기입니다;&nbsp;단위는&nbsp;ms&nbsp;입니다;&nbsp;1S=1000ms;&nbsp;최소&nbsp;500이상&nbsp;-&nbsp;최대&nbsp;3000을&nbsp;권장합니다;</p>\r\n<p dir=\"ltr\">const&nbsp;utce=60000&nbsp;//에러&nbsp;발생시&nbsp;다음&nbsp;업데이트까지&nbsp;대기시간입니다;&nbsp;단위는&nbsp;ms&nbsp;입니다;&nbsp;1S=1000ms;&nbsp;최소&nbsp;30000이상&nbsp;-&nbsp;최대&nbsp;300000을&nbsp;권장합니다.</p>\r\n<p dir=\"ltr\">/*--&nbsp;변수&nbsp;설정&nbsp;끝&nbsp;--*/</p>\r\n<p dir=\"ltr\">function&nbsp;response(room,&nbsp;msg,&nbsp;sender,&nbsp;isGroupChat,&nbsp;replier,&nbsp;ImageDB,&nbsp;packageName,&nbsp;threadId)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!loopStarted)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopStarted&nbsp;=&nbsp;true;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(true)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(java.lang.Thread.interrupted()==true){Api.off(source_name);return&nbsp;&quot;stopped&quot;;}&nbsp;//&nbsp;메신저봇R&nbsp;전용;&nbsp;thread&nbsp;interrupt</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;success=&nbsp;updateData();&nbsp;//&nbsp;데이터&nbsp;업데이트</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(status==403){Api.off(source_name);return&nbsp;&quot;stopped&quot;;};</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(success){</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;이곳에다가&nbsp;소스를&nbsp;추가하실수&nbsp;있습니다.&nbsp;*/</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;지원하는&nbsp;변수:&nbsp;name,&nbsp;link,&nbsp;description,&nbsp;headcount,&nbsp;master,&nbsp;tags,&nbsp;like*/</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;예시:&nbsp;data_pre[i].result.name&nbsp;또는&nbsp;data_pre[i].result.tags*/&nbsp;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(let&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;room_raw.length;&nbsp;i&nbsp;++)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(data_pre[i].result&nbsp;!=&nbsp;null)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(data_real[i].result.headcount&nbsp;&gt;&nbsp;data_pre[i].result.headcount)</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Api.replyRoom(room_names[i],&nbsp;&quot;[알림]&nbsp;누군가&nbsp;방을&nbsp;들어왔어요!\\n&nbsp;인원:&nbsp;&quot;+data_pre[i].result.headcount+&quot;↗&quot;+data_real[i].result.headcount);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(data_real[i].result.headcount&nbsp;&lt;&nbsp;data_pre[i].result.headcount)</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Api.replyRoom(room_names[i],&nbsp;&quot;[알림]&nbsp;누군가&nbsp;방을&nbsp;나갔어요!\\n&nbsp;인원:&nbsp;&quot;+data_pre[i].result.headcount+&quot;↘&quot;+data_real[i].result.headcount);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*for&nbsp;(let&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;room_raw.length;&nbsp;i&nbsp;++)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(data_pre[i].result&nbsp;!=&nbsp;null)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(data_real[i].result.like&nbsp;&gt;&nbsp;data_pre[i].result.like)</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Api.replyRoom(room_names[i],&nbsp;&quot;[알림]&nbsp;누군가&nbsp;좋아요를&nbsp;눌렀어요!\\n&nbsp;하트:&nbsp;&quot;+data_pre[i].result.like+&quot;↗&quot;+data_real[i].result.like);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(data_real[i].result.like&nbsp;&lt;&nbsp;data_pre[i].result.like)</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Api.replyRoom(room_names[i],&nbsp;&quot;[알림]&nbsp;누군가&nbsp;좋아요를&nbsp;가져갔어요!\\n&nbsp;하트:&nbsp;&quot;+data_pre[i].result.like+&quot;↘&quot;+data_real[i].result.like);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}*/&nbsp;//쓰실거면&nbsp;주석&nbsp;풀어놓으시면&nbsp;됩니다.&nbsp;이것&nbsp;-&gt;&nbsp;/*&nbsp;*/&nbsp;&lt;-</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thread.sleep(utc);&nbsp;//업데이트&nbsp;주기&nbsp;입니다.&nbsp;(ms&nbsp;단위)&nbsp;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thread.sleep(utce);&nbsp;//&nbsp;연결&nbsp;에러시&nbsp;대기시간</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">}&nbsp;</p>\r\n<p dir=\"ltr\">updateData&nbsp;=&nbsp;()&nbsp;=&gt;&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;let&nbsp;res;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;for&nbsp;(let&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;room_raw.length;&nbsp;i&nbsp;++)&nbsp;{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_pre[i]&nbsp;=&nbsp;data_real[i];&nbsp;//&nbsp;copy&nbsp;previous&nbsp;data_pre&nbsp;to&nbsp;data_real</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res&nbsp;=&nbsp;Jsoup.connect(&quot;https://api.develope.kr/search/room?room=&quot;&nbsp;+&nbsp;room_raw[i]).ignoreContentType(true).ignoreHttpErrors(true).execute()</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status=res.statusCode();</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(status!=200){</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;a=&quot;[오류]&nbsp;서버로부터&nbsp;정보를&nbsp;받아오지&nbsp;못했습니다.&quot;;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(status==503){</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;a&nbsp;+&nbsp;&quot;\\n현재&nbsp;서버가&nbsp;점검&nbsp;중입니다.&nbsp;자세한&nbsp;정보는&nbsp;<a href=\"https://api.develope.kr/을확인해주세요.\" target=\"_blank\">https://api.develope.kr/&nbsp;을&nbsp;확인해주세요.</a>\\n&quot;+utce/1000+&quot;초&nbsp;후&nbsp;연결을&nbsp;다시&nbsp;시도합니다.&quot;;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(status==403){</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;a&nbsp;+&nbsp;<span style=\"color:#A5C25C;\">&quot;\\n사용자의&nbsp;IP가&nbsp;서버로부터&nbsp;차단되었습니다.&nbsp;자세한&nbsp;사항은&nbsp;소스&nbsp;밑&nbsp;주석에&nbsp;작성되어있는&nbsp;연락처를&nbsp;통해&nbsp;문의해주세요.&quot;</span>;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\"><span style=\"color:#CB772F;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span>{</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;a&nbsp;+&nbsp;<span style=\"color:#A5C25C;\">&quot;\\n인터넷&nbsp;연결을&nbsp;확인해보시길&nbsp;바랍니다.&nbsp;계속&nbsp;안되는경우&nbsp;소스&nbsp;밑&nbsp;주석에&nbsp;작성되어있는&nbsp;연락처를&nbsp;통해&nbsp;질문하실수&nbsp;있습니다.\\n&quot;</span>+utce/<span style=\"color:#6897BB;\">1000</span>+<span style=\"color:#A5C25C;\">&quot;초&nbsp;후&nbsp;연결을&nbsp;다시&nbsp;시도합니다.&quot;</span>;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;a&nbsp;+&nbsp;<span style=\"color:#A5C25C;\">&quot;\\nHTTP&nbsp;&quot;</span>+status+<span style=\"color:#A5C25C;\">&quot;&nbsp;ERROR&quot;</span>&nbsp;;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#7A9EC2;\">Log</span>.e(<span style=\"color:#FFFFFF;\">a</span>);&nbsp;<span style=\"color:#707070;\">//Sports...&nbsp;it&apos;s&nbsp;in&nbsp;the&nbsp;game...&nbsp;</span></p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#CB772F;\">return</span>&nbsp;<span style=\"color:#CB772F;\">false</span>;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:#CB772F;\">let</span>&nbsp;obj&nbsp;=&nbsp;JSON.parse(<span style=\"color:#FFFFFF;\">res.body()</span>);</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_real[i]&nbsp;=&nbsp;obj;</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\r\n<p dir=\"ltr\">&nbsp;&nbsp;&nbsp;<span style=\"color:#CB772F;\">return</span>&nbsp;<span style=\"color:#CB772F;\">true</span>;&nbsp;</p>\r\n<p dir=\"ltr\"><span style=\"background-color:#FFAA00;\">}</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#707070;\">//&nbsp;API&nbsp;관련&nbsp;자유게시판&nbsp;글&nbsp;먼저&nbsp;읽어주세요.&nbsp;댓글에&nbsp;링크&nbsp;올리겠습니다.</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#707070;\">//&nbsp;&lt;Copyright&nbsp;2020.&nbsp;KeonWoo&nbsp;PARK.&nbsp;All&nbsp;rights&nbsp;reserved.&gt;</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#707070;\">//&nbsp;저작권자의&nbsp;허락&nbsp;없이&nbsp;상업적&nbsp;사용,&nbsp;2차&nbsp;무단&nbsp;배포&nbsp;및&nbsp;무단&nbsp;수정을&nbsp;금합니다.&nbsp;단&nbsp;비상업적인&nbsp;목적으로만&nbsp;수정&nbsp;및&nbsp;사용이&nbsp;가능합니다.</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#707070;\">//&nbsp;API&nbsp;문서는&nbsp;<a href=\"https://docs.develope.kr/ko/index.html를참고해주세요.\" target=\"_blank\">https://docs.develope.kr/ko/index.html&nbsp;를&nbsp;참고해주세요.</a></span></p>\r\n<p dir=\"ltr\"><span style=\"color:#707070;\">//&nbsp;이메일:&nbsp;parkkw472@develope.kr</span></p>\r\n<p dir=\"ltr\"><span style=\"color:#707070;\">//&nbsp;카카오톡:&nbsp;<a href=\"https://open.kakao.com/me/KeonWoo_PARK\" target=\"_blank\">https://open.kakao.com/me/KeonWoo_PARK</a></span></p>\r\n<p dir=\"ltr\"><span style=\"color:#707070;\">//&nbsp;디스코드:&nbsp;<a href=\"https://discord.gg/przF7jn\" target=\"_blank\">https://discord.gg/przF7jn</a></span></p></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 건우님 2.0 소스인데 방정보 다 넣었는데 작동이 안되요 왜 안될까요?</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000353800000000",
+            "id": 13624,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 306,
+            "refArticleId": 13624,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "입장소스 작동이 안되네요",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584433926880,
+            "writer": {
+                "id": "dongming2",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20140226_91/dongming2_13933847668706C8ct_JPEG/161x161_ratio.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "자비스크립트초보"
+            }
+        },
+        "articleId": 13624,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "그러게요(?)",
+                    "id": 84473098,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84473098,
+                    "updateDate": 1584434043000,
+                    "writer": {
+                        "id": "vicoki123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMjk0/MDAxNTgwNTI4MTM4MTY3.k0ST66LKqkwN0ncHoJJTuUEWNiB3hhYf1zJ5wboJ5Jgg.BVpV2tjCcnHHeQ3WdPPpKOsvGGS4N9ENpkKs4BNQgHkg.PNG/Laco-1.png"
+                        },
+                        "nick": "라코봇"
+                    }
+                },
+                {
+                    "content": "오늘 API 서버 점검이 완료되었습니다.\r\n\r\n한번 다시 해보시겠어요?",
+                    "id": 84519533,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84519533,
+                    "updateDate": 1584466251000,
+                    "writer": {
+                        "id": "pgw03",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMThfMTcw/MDAxNjAzMDA5OTMwMzU5.s54iR_FcboT3RtUrgPb0N5QJa7qIot0DC39gXCsfoE4g.ijWr0K09EXpw3oBnUst4cyevjj_-5bFhHv6v2PUiVtwg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "KeonWoo PARK"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

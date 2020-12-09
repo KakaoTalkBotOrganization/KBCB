@@ -1,0 +1,196 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">특정시간마다 메세지보내기/함수실행/맘대로</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><pre><span style=\"color:#cc7832;font-weight:bold;\">const </span>scriptName = <span style=\"color:#6a8759;\">&quot;시간마다.js&quot;</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;font-weight:bold;\">var </span>POWERmode = <span style=\"color:#cc7832;font-weight:bold;\">false</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;font-weight:bold;\">var </span>joinedRoom<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;font-weight:bold;\">var </span>roomJoined = <span style=\"color:#cc7832;font-weight:bold;\">false</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;font-weight:bold;\">var </span>setted_time = <span style=\"color:#6a8759;\">&quot;7:30&quot;</span><span style=\"color:#cc7832;\">;</span><span style=\"color:#808080;\">//기본세팅시간<br /></span><span style=\"color:#cc7832;font-weight:bold;\">var </span>message = <span style=\"color:#6a8759;\">&quot;학식시간별 알림 start,시간을 설정해주세요</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">현재 세팅시간은 &quot;</span>+setted_time+<span style=\"color:#6a8759;\">&quot;입니다</span><span style=\"color:#cc7832;\">\\n</span><span style=\"color:#6a8759;\">&quot;</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;font-weight:bold;\">var </span>delay = <span style=\"color:#6897bb;\">60000</span><span style=\"color:#cc7832;\">;</span><span style=\"color:#808080;\">//딜레이시간<br /></span><span style=\"color:#cc7832;font-weight:bold;\">let </span>user_menu = [<span style=\"color:#6a8759;\">&quot;메세지기록&quot;</span>]<span style=\"color:#cc7832;\">;</span><span style=\"color:#808080;\">//보낼 방 리스트<br /></span><span style=\"color:#cc7832;font-weight:bold;\">let </span>admin = <span style=\"color:#6a8759;\">&quot;&quot;</span><span style=\"color:#cc7832;\">; </span><span style=\"color:#808080;\">//관리자이름<br /></span><span style=\"color:#808080;\">//const password = parseInt(Math.random() * 10000);<br /></span><span style=\"color:#cc7832;font-weight:bold;\">const </span>password = <span style=\"color:#6a8759;\">&quot;8888&quot;</span><span style=\"color:#cc7832;\">;<br /></span>Log.<span style=\"color:#9876aa;\">d</span>(password)<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\"><br /></span><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">response</span>(room<span style=\"color:#cc7832;\">, </span>msg<span style=\"color:#cc7832;\">, </span>sender<span style=\"color:#cc7832;\">, </span>isGroupChat<span style=\"color:#cc7832;\">, </span>replier<span style=\"color:#cc7832;\">, </span>ImageDB<span style=\"color:#cc7832;\">, </span>packageName<span style=\"color:#cc7832;\">, </span>threadId) {<br />    <span style=\"color:#cc7832;font-weight:bold;\">if </span>(msg == <span style=\"color:#6a8759;\">&apos;[&apos; </span>+ password + <span style=\"color:#6a8759;\">&apos;]&apos; </span>&amp;&amp; !roomJoined) {<br />        roomJoined = <span style=\"color:#cc7832;font-weight:bold;\">true</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">        </span>POWERmode = <span style=\"color:#cc7832;font-weight:bold;\">true</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">        </span>joinedRoom = room<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">        </span>Log.<span style=\"color:#9876aa;\">i</span>(<span style=\"color:#6a8759;\">&quot;Room joined: &quot; </span>+ joinedRoom)<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">        </span><span style=\"color:#ffc66d;\">sendMessage</span>()<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">        </span><span style=\"color:#ffc66d;\">sendMessageInterval</span>()<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">        </span><span style=\"color:#cc7832;font-weight:bold;\">return</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">    </span>}<br /><br />    <span style=\"color:#cc7832;font-weight:bold;\">if </span>(msg == <span style=\"color:#6a8759;\">&quot;전원종료&quot; </span>&amp;&amp; sender == admin){<br />        POWERmode = <span style=\"color:#cc7832;font-weight:bold;\">false</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">    </span>}<br />    <span style=\"color:#cc7832;font-weight:bold;\">if </span>(msg == <span style=\"color:#6a8759;\">&quot;전원시작&quot; </span>&amp;&amp; sender == admin){<br />        POWERmode = <span style=\"color:#cc7832;font-weight:bold;\">true</span><span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">    </span>}<br />    <span style=\"color:#cc7832;font-weight:bold;\">if </span>(msg.<span style=\"color:#ffc66d;\">indexOf</span>(<span style=\"color:#6a8759;\">&quot;시간설정&quot;</span>) ==<span style=\"color:#6897bb;\">0 </span>&amp;&amp; sender == admin){<br />        setted_time = msg.<span style=\"color:#ffc66d;\">trim</span>().<span style=\"color:#ffc66d;\">substring</span>(<span style=\"color:#6897bb;\">5</span>)<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">        </span>replier.reply(setted_time+<span style=\"color:#6a8759;\">&quot;으로 설정되었습니다&quot;</span>)<br />    }<br />    <span style=\"color:#cc7832;font-weight:bold;\">if </span>(msg == <span style=\"color:#6a8759;\">&quot;학식시간조회&quot; </span>&amp;&amp; sender == admin){<br />        replier.reply(setted_time+<span style=\"color:#6a8759;\">&quot;마다 작업을 수행합니다&quot;</span>)<br />    }<br /><br />}<br /><br /><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">sendMessage</span>() {<br />    Api.replyRoom(joinedRoom<span style=\"color:#cc7832;\">, </span>message)<span style=\"color:#cc7832;\">;<br /></span>}<br /><br /><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">sendMessageInterval</span>() {<br />    <span style=\"color:#cc7832;font-weight:bold;\">new </span>java.<span style=\"color:#9876aa;\">lang</span>.Thread(<span style=\"color:#cc7832;font-weight:bold;\">new </span>java.<span style=\"color:#9876aa;\">lang</span>.Runnable(){<br />        run: () =&gt; {<br />            java.<span style=\"color:#9876aa;\">lang</span>.Thread.sleep(delay)<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">            </span><span style=\"color:#cc7832;font-weight:bold;\">var </span>date = <span style=\"color:#cc7832;font-weight:bold;\">new </span>Date()<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\">            </span><span style=\"color:#cc7832;font-weight:bold;\">if </span>(date.<span style=\"color:#ffc66d;\">getHours</span>()==setted_time.<span style=\"color:#ffc66d;\">split</span>(<span style=\"color:#6a8759;\">&quot;:&quot;</span>)[<span style=\"color:#6897bb;\">0</span>])<br />                <span style=\"color:#cc7832;font-weight:bold;\">if </span>(date.<span style=\"color:#ffc66d;\">getMinutes</span>() == setted_time.<span style=\"color:#ffc66d;\">split</span>(<span style=\"color:#6a8759;\">&quot;:&quot;</span>)[<span style=\"color:#6897bb;\">1</span>])<br />                    <span style=\"color:#cc7832;font-weight:bold;\">for </span>(<span style=\"color:#cc7832;font-weight:bold;\">let </span>i = <span style=\"color:#6897bb;\">0</span><span style=\"color:#cc7832;\">; </span>i &lt; user_menu.<span style=\"color:#9876aa;\">length</span><span style=\"color:#cc7832;\">; </span>i ++)<br />                        Api.replyRoom(user_menu[i]<span style=\"color:#cc7832;\">,</span><span style=\"color:#6a8759;\">&quot;퉷퉷);<br /></span><span style=\"color:#6a8759;\"><br /></span><span style=\"color:#6a8759;\">            </span><span style=\"color:#cc7832;font-weight:bold;\">if </span>(POWERmode == <span style=\"color:#cc7832;font-weight:bold;\">true</span>)<br />                <span style=\"color:#ffc66d;\">sendMessageInterval</span>()<span style=\"color:#cc7832;\">;<br /></span><span style=\"color:#cc7832;\"><br /></span><span style=\"color:#cc7832;\">        </span>}<br />    }).start()<span style=\"color:#cc7832;\">;<br /></span>}<br /><br /><br /><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">onStartCompile</span>() { }<br /><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">onCreate</span>(savedInstanceState<span style=\"color:#cc7832;\">, </span>activity) { }<br /><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">onResume</span>(activity) { }<br /><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">onPause</span>(activity) { }<br /><span style=\"color:#cc7832;font-weight:bold;\">function </span><span style=\"color:#ffc66d;\">onStop</span>(activity) { }</pre></div><div><b>대충설명하면&nbsp;</b></div><div><b>[8888]치면 시작하고 나머지는 보시는 그대로</b></div><div><b>카페글 어떤분거를 좀더 편하게 바꿔서 써먹는중인데 roomjoined 같은건 무시하셔도 됨당</b></div><div><b><br /></b></div><div><b>더 좋게 만들어주실 능력자분들은 멋쟁이</b></div><div><b><br /></b></div><div><b>이유는 모르는데 며칠 지나면 혼자 파업해요(?)</b></div><div><b><br /></b></div><div><b>power기능은 가끔 미쳐날뛰는 오류를 강제 셧다운하기 위함이지만 설정 잘못건들면 폰껏다키는수밖에 없는 불안정한 친구(?)</b></div><div><b><br /></b></div><div><br /></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? 네에)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001D3600000000",
+            "id": 7478,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 466,
+            "refArticleId": 7478,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "특정시간마다 반복기능(아마도 공용)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573143662707,
+            "writer": {
+                "id": "kyleok",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "kyleok"
+            }
+        },
+        "articleId": 7478,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷ",
+                    "id": 72956791,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 72956791,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1573144797000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

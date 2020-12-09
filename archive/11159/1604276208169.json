@@ -1,0 +1,427 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 43,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">카카오,네이버 번역기소스입니다.</font></span></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">api key는 따로 발급받으셔야합니다.</span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">글고보니 카페에 번역소스 많지않던가...?</span></font></div><div><font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">rooms안에 배열로 방이름 넣으시면됩니다(지금은 알파벳이름의 방만 감지 예로 a라던가 b라던가...)</span></font></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><b>var blank = &quot;\\u200b&quot;.repeat(501);</b></div><div style=\"\"><b>const rooms=&quot;abcdefghijklmnopqrstuvwxyz&quot;;</b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</b></div><div style=\"\"><b>&nbsp; if(rooms.indexOf(room)!=-1)</b></div><div style=\"\"><b>&nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp;if(msg.indexOf(&quot;.네이버번역 &quot;)==0)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;{</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; var transfrom=&quot;&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; var transto=&quot;&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; var transno;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; msg=msg.substring(7).trim();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;영&quot;)==0){transfrom=&quot;en&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;한&quot;)==0){transfrom=&quot;ko&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;스&quot;)==0){transfrom=&quot;es&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;프&quot;)==0){transfrom=&quot;fr&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;중&quot;)==0){transfrom=&quot;zh-CN&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;베&quot;)==0){transfrom=&quot;vi&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;태&quot;)==0){transfrom=&quot;th&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;인&quot;)==0){transfrom=&quot;id&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;일&quot;)==0){transfrom=&quot;ja&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if(transno==1)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp;{</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; msg=msg.substring(1);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;영 &quot;)==0){transto=&quot;en&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;한 &quot;)==0){transto=&quot;ko&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;스 &quot;)==0){transto=&quot;es&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;프 &quot;)==0){transto=&quot;fr&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;중 &quot;)==0){transto=&quot;zh-CN&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;베 &quot;)==0){transto=&quot;vi&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;태 &quot;)==0){transto=&quot;th&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;인 &quot;)==0){transto=&quot;id&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;일 &quot;)==0){transto=&quot;ja&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if(transno==2)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; msg=msg.substring(2).trim();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var result=JSON.parse(org.jsoup.Jsoup.connect(&quot;<a href=\"https://openapi.naver.com/v1/papago/n2mt\" target=\"_blank\">https://openapi.naver.com/v1/papago/n2mt</a>&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .header(&apos;content-type&apos;, &apos;application/x-www-form-urlencoded; charset=UTF-8&apos;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .header(&apos;x-naver-client-id&apos;, &quot;APIKEYID&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .header(&apos;x-naver-client-secret&apos;, &quot;APISECRET&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;source&quot;,transfrom)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;target&quot;,transto)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;text&quot;,msg)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .ignoreContentType(true).post().body().text());</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(result[&quot;message&quot;][&quot;result&quot;][&quot;translatedText&quot;]);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{replier.reply(&quot;번역사용법\\n&quot;+blank+&quot;\\n.네이버번역 (언어앞글자) (메세지)\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;지원언어 : 영어, 한국어, 스페인어, 프랑스어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;중국어, 베트남어, 태국어, 인도어, 일본어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;.카카오번역 (언어앞글자) (메세지)\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;지원언어 : 한국어, 영어, 일본어, 중국어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;베트남어, 인도어, 아랍어, 뱅갈어, 독일어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;스페인어, 프랑스어, 힌디어, 이탈리아어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;말레이시아어, 네덜란드어, 포르투갈어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;러시아어, 태국어, 터키어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+&quot;예) .카카오번역 한영 백조마리 백조&quot;);}&nbsp; &nbsp; &nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}//네이버번역끝</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;if(msg.indexOf(&quot;.카카오번역 &quot;)==0)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var transfrom=&quot;&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var transto=&quot;&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var transno=0;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; msg=msg.substring(7).trim();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;한&quot;)==0){transfrom=&quot;kr&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;영&quot;)==0){transfrom=&quot;en&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;일&quot;)==0){transfrom=&quot;jp&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;중&quot;)==0){transfrom=&quot;cn&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;베&quot;)==0){transfrom=&quot;vi&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;인&quot;)==0){transfrom=&quot;id&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;아&quot;)==0){transfrom=&quot;ar&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;뱅&quot;)==0){transfrom=&quot;bn&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;독&quot;)==0){transfrom=&quot;de&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;스&quot;)==0){transfrom=&quot;es&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;프&quot;)==0){transfrom=&quot;fr&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;힌&quot;)==0){transfrom=&quot;hi&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;이&quot;)==0){transfrom=&quot;it&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;말&quot;)==0){transfrom=&quot;ms&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;네&quot;)==0){transfrom=&quot;nl&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;포&quot;)==0){transfrom=&quot;pt&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;러&quot;)==0){transfrom=&quot;ru&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;태&quot;)==0){transfrom=&quot;th&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;터&quot;)==0){transfrom=&quot;tr&quot;;transno=1;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(transno==1)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;msg=msg.substring(1);&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;한 &quot;)==0){transto=&quot;kr&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;영 &quot;)==0){transto=&quot;en&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;일 &quot;)==0){transto=&quot;jp&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;중 &quot;)==0){transto=&quot;cn&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;베 &quot;)==0){transto=&quot;vi&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;인 &quot;)==0){transto=&quot;id&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;아 &quot;)==0){transto=&quot;ar&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;뱅 &quot;)==0){transto=&quot;bn&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;독 &quot;)==0){transto=&quot;de&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;스 &quot;)==0){transto=&quot;es&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;프 &quot;)==0){transto=&quot;fr&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;힌 &quot;)==0){transto=&quot;hi&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;이 &quot;)==0){transto=&quot;it&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;말 &quot;)==0){transto=&quot;ms&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;네 &quot;)==0){transto=&quot;nl&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;포 &quot;)==0){transto=&quot;pt&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;러 &quot;)==0){transto=&quot;ru&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;태 &quot;)==0){transto=&quot;th&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.indexOf(&quot;터 &quot;)==0){transto=&quot;tr&quot;;transno=2;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(transno==2)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;msg=msg.substring(2).trim();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var result=JSON.parse(org.jsoup.Jsoup.connect(&quot;<a href=\"https://kapi.kakao.com/v1/translation/translate\" target=\"_blank\">https://kapi.kakao.com/v1/translation/translate</a>&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .header(&quot;Authorization&quot;,&quot;KakaoAK APIKEY&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;src_lang&quot;,transfrom)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;target_lang&quot;,transto)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .data(&quot;query&quot;,msg)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .ignoreContentType(true)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .post().body().text());</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(result[&quot;translated_text&quot;].join(&quot; &quot;));</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {replier.reply(&quot;번역사용법\\n&quot;+blank+&quot;\\n.네이버번역 (언어앞글자) (메세지)\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;지원언어 : 영어, 한국어, 스페인어, 프랑스어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;중국어, 베트남어, 태국어, 인도어, 일본어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;.카카오번역 (언어앞글자) (메세지)\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;지원언어 : 한국어, 영어, 일본어, 중국어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;베트남어, 인도어, 아랍어, 뱅갈어, 독일어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;스페인어, 프랑스어, 힌디어, 이탈리아어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;말레이시아어, 네덜란드어, 포르투갈어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +&quot;러시아어, 태국어, 터키어\\n&quot;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+&quot;예) .카카오번역 한영 백조마리 백조&quot;);}</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}//카카오번역끝</b></div><div style=\"\"><b>&nbsp; }//방</b></div><div style=\"font-weight: bold;\">}</div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002B9700000000",
+            "id": 11159,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 356,
+            "refArticleId": 11159,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "카카오,네이버 번역기 소스입니다",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1581160665527,
+            "writer": {
+                "id": "jjp43",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "nuguge"
+            }
+        },
+        "articleId": 11159,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㅗㅜㅑ",
+                    "id": 80579006,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80579006,
+                    "updateDate": 1581161045000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                },
+                {
+                    "content": "어케씀?\n.네이버번역 한 영 \n이렇게요?\n쓰는 방법좀 ㅠ",
+                    "id": 80579598,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "updateDate": 1581161604000,
+                    "writer": {
+                        "id": "wemer12",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "wemer12"
+                    }
+                },
+                {
+                    "content": "번역사용법\\n\"+blank+\"\\n.네이버번역 (언어앞글자) (메세지)\\n\"\r\n                                                +\"지원언어 : 영어, 한국어, 스페인어, 프랑스어\\n\"\r\n                                                +\"중국어, 베트남어, 태국어, 인도어, 일본어\\n\"\r\n                                                +\".카카오번역 (언어앞글자) (메세지)\\n\"\r\n                                                +\"지원언어 : 한국어, 영어, 일본어, 중국어\\n\"\r\n                                                +\"베트남어, 인도어, 아랍어, 뱅갈어, 독일어\\n\"\r\n                                                +\"스페인어, 프랑스어, 힌디어, 이탈리아어\\n\"\r\n                                                +\"말레이시아어, 네덜란드어, 포르투갈어\\n\"\r\n                                                +\"러시아어, 태국어, 터키어\\n\"\r\n                                                 +\"예) .카카오번역 한영 백조마리 백조\"\r\n요기 방법이 있어요ㅎ",
+                    "id": 80580059,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "updateDate": 1581161999000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                },
+                {
+                    "content": "친절한 답변 ㅠㅠ \n감사합니다!",
+                    "id": 80580189,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1581162115000,
+                    "writer": {
+                        "id": "wemer12",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "wemer12"
+                    }
+                },
+                {
+                    "content": "컴파일이 안되는에런데..어떻게 하죠?",
+                    "id": 80580324,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDAyMDhfMjE1/MDAxNTgxMTYyMjQ2NzAz.LkfAgd-wCYRUokMkIb6KOMJSarJefQO8TYlRT5Oey_Eg.0-6vWtHm3qVdCP8NZZnlMY7ueemiO0RQNhu5sHOdQmIg.PNG/Screenshot_20200208-204353.png"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "Screenshot_20200208-204353.png",
+                        "height": 3120,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDAyMDhfMjE1/MDAxNTgxMTYyMjQ2NzAz.LkfAgd-wCYRUokMkIb6KOMJSarJefQO8TYlRT5Oey_Eg.0-6vWtHm3qVdCP8NZZnlMY7ueemiO0RQNhu5sHOdQmIg.PNG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDAyMDhfMjE1/MDAxNTgxMTYyMjQ2NzAz.LkfAgd-wCYRUokMkIb6KOMJSarJefQO8TYlRT5Oey_Eg.0-6vWtHm3qVdCP8NZZnlMY7ueemiO0RQNhu5sHOdQmIg.PNG/Screenshot_20200208-204353.png",
+                        "width": 1440
+                    },
+                    "refId": 80579598,
+                    "replyMember": {
+                        "id": "jjp43",
+                        "nick": "nuguge"
+                    },
+                    "updateDate": 1581162264000,
+                    "writer": {
+                        "id": "wemer12",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "wemer12"
+                    }
+                },
+                {
+                    "content": "엌 이거 그냥 복붙만하시는게 아니라 수정하셔야되여 네이버 Api키",
+                    "id": 80583154,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "replyMember": {
+                        "id": "wemer12",
+                        "nick": "wemer12"
+                    },
+                    "updateDate": 1581163168000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "aip키는 어디서 발급받고 어디에 넣어야 할까요?",
+                    "id": 80585496,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "replyMember": {
+                        "id": "ppch0529",
+                        "nick": "타카"
+                    },
+                    "updateDate": 1581164028000,
+                    "writer": {
+                        "id": "minicr",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "미니"
+                    }
+                },
+                {
+                    "content": "저거 게속 넘겨보시면 APIKEYID 여기에 아이디넣고 바로밑에 비번넣으시면 되요 도미님 번역소스 찾아서 댓글보시면 발급받는 링크있어요",
+                    "id": 80586126,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "replyMember": {
+                        "id": "minicr",
+                        "nick": "미니"
+                    },
+                    "updateDate": 1581164104000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                },
+                {
+                    "content": "비번 넣는곳이 어디일까여..",
+                    "id": 85898523,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "replyMember": {
+                        "id": "ppch0529",
+                        "nick": "타카"
+                    },
+                    "updateDate": 1585613913000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "리얼청정수둔"
+                    }
+                },
+                {
+                    "content": "APISECRET이요",
+                    "id": 85974342,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80579598,
+                    "replyMember": {
+                        "id": "yesnocool123",
+                        "nick": "리얼청정수둔"
+                    },
+                    "updateDate": 1585661294000,
+                    "writer": {
+                        "id": "jjp43",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110917_155/jjp43_1316268844941_76RonB_PNG/%C4%B8%C3%B3.PNG"
+                        },
+                        "nick": "nuguge"
+                    }
+                }
+            ],
+            "last": {
+                "id": 95360958,
+                "refId": 95360958
+            },
+            "next": {
+                "id": 80585214,
+                "refId": 80585214
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

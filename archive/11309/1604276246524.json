@@ -1,0 +1,379 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 22,
+            "contentElements": [],
+            "contentHtml": "<p>자바스크립트에서 객체란, 키(속성)과 값의 쌍들을 가지고 있는 구조를 말합니다.<br /><br />자바스크립트 객체의 종류에는 크게 세가지가 있습니다.<br />1. 생성자 함수<br />2. 객체 리터럴<br />3. 배열객체<br /><br />※ 생성자 함수는 심화 과정이니 정의만 배우고, 자세한건 객체 리터럴만 배우겠습니다. 배열 객체는 객체 리터럴을 할때 같이 설명하겠습니다.<br /><br />1. 생성자 함수<br />생성자 함수란 이름에서 볼 수 있듯이 함수를 객체로써 사용하는것을 말합니다.<br />우리가 흔하 사용하지만 생성자 함수인지 몰랐던 생성자 함수에는 &quot;Date&quot;가 있습니다.<br />&quot;Date&quot; 생성자 함수를 쓸때는 new Date().속성 같은 형식으로 쓰죠?<br />이렇듯이 생성자 함수를 사용할때는 앞에 new 연산자를 붙입니다. new 연산자는 &quot;뒤에있는 객체를 인스턴스화 시키겠다.&quot; 라는 기능을 가진 연산자로,<br />&quot;인스턴스&quot;라는것은 객체와 비슷하지만 조금 다릅니다.<br />객체란 코드상의 구조 그 자체를 말하고,<br />인스턴스란 코드상에서 사용할 수 있는 실체를 말합니다.<br />즉 인스턴스화 한다는것은, &quot;실제로 사용할 수 있는 형태로 바꾼다&quot; 라고도 말할 수 있습니다.<br /><br />2. 객체 리터럴<br />객체 리터럴은 그냥 줄여서 객체라고도 부릅니다. 왜냐하면 그 형태가 기본적인 객체의 형태이기 때문이죠.<br />객체 리터럴은 변수로 선언하거나, ()로 감싸면 그 자체로 인스턴스화 되기 때문에 new 연산자를 사용해서 인스턴스화 할 필요가 없습니다.<br />객체 리터럴을 만드는 방법은<br />{ &quot;키&quot; : 값, &quot;키&quot;: 값 } 과 같은 형태로 만들면 됩니다.<br />예를들어서 A라는 변수에 B:1, C:2 의 (키,값)쌍이 있는 객체를 저장하고 싶다면,<br />var A = {<br />B: 1,<br />C: 2<br />};<br />처럼 하면 됩니다.<br /><br />2-1. 값을 불러오거나 저장하기<br />A라는 객체에 있는 값들을 가져오려면<br />A.키 또는 A[&quot;키&quot;] 와 같이 사용하시면 됩니다.<br />추가적으로 객체에 특정 키에 대한 값을 저장하고 싶다면<br />A.키 = 값; 또는 A[&quot;키&quot;] = 값;<br />그런데, 2번째 형태를 어디서 많이 보지 않았나요?<br />그렇습니다. 바로 배열에서 보았죠.<br />배열 또한 &quot;객체&quot; 입니다.<br />0,1,2,3 과 같은 &quot;인덱스&quot;와<br />push, shift, slice와 같은 배열 관련 함수들을 &quot;키&quot; 로 가지고 있는 &quot;객체&quot;죠.<br /><br />그렇기 때문에 var A = []; 라고 해놓고<br />A.B = 1; 와 같이 사용할 수 있습니다.<br />우리는 이것을 &quot;배열 객체&quot; 라고 부릅니다.<br /><br />3. 관련 함수들<br />객체와 관련된 함수들에는 뭐가 있을까요?<br />대표적으로는 Object.defineProperty, Object.getOwnPropertyNames,<br />Object.keys 등이 있습니다.<br /><br />Object.defineProperty는 이름에서 볼 수 있듯이<br />특정 객체에 특정 속성을 저장하는 함수입니다.<br />그런데 그냥 객체.속성 = 값; 을 사용하면 되지 왜 이런 복잡한 함수를 사용할까요?<br />그 이유는 Object.defineProperty는 속성을 정의할 때 삭제가 가능한가? 수정이 가능한가? 등의 세부적인 조건들을 달 수 있기 때문입니다.<br />사용법은 Object.defineProperty(객체, &quot;속성&quot;, 세부조건 객체 리터럴)<br />입니다. 값이 들어가지 않는 이유는 세부조건 안에서 값을 지정할 수 있기 때문입니다.<br />각각의 세부조건들은 기본(Default)값들이 있는데, 그중 하나가 &quot;수정 불가&quot; 입니다. 이때문에 유용하게 쓰입니다.<br />마치 상수처럼 값을 바꾸지도, 값을 삭제하지도 못하는거죠.<br />값을 지정하는 세부조건의 이름은 value입니다.<br />예를들어서 A라는 객체에 B:2 라는 속성과 값을 지정하고 싶다면<br />Object.defineProperty(A, &quot;B&quot;, {value: 2});<br />와 같이 사용하면 됩니다.<br /><br />Object.getOwnPropertyNames와 Object.keys는 둘다 객체가 가지고 있는 속성들을 배열에 담아 가져옵니다.<br />그런데 왜 똑같은 기능의 함수가 2개나 있을까요?<br />아까 Object.defineProperty 를 배웠죠?<br />3번째 인자에 들어가는 세부조건중에는 enumerable라는 것이 있습니다. 기능은 &quot;속성 열거(읽기) 가능 여부&quot; 이며, 기본값은 거짓(false)입니다.<br />즉, Object.keys는 enumerable이 true인 속성들만 가져오고, Object.getOwnPropertyNames는 모든 속성을 가져온다는 차이가 있습니다.<br /><br />이상 객체(Object) 강의였습니다.<br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00002C2D00000000",
+            "id": 11309,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 260,
+            "refArticleId": 11309,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "객체(Object)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1581369914490,
+            "writer": {
+                "id": "whitebear_0u0",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "ㅣ화베ㅣ"
+            }
+        },
+        "articleId": 11309,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "와!",
+                    "id": 80798748,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80798748,
+                    "updateDate": 1581371825000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "빨랑 Array.prototype.reduce 써오세욧",
+                    "id": 80798771,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80798771,
+                    "updateDate": 1581371878000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "뻘글좀 올려줘요 그럼",
+                    "id": 80798785,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80798771,
+                    "updateDate": 1581371896000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "그러기엔 제 글의 대부분이 뻘글이라 양심에 찔려요",
+                    "id": 80798795,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80798771,
+                    "replyMember": {
+                        "id": "whitebear_0u0",
+                        "nick": "ㅣ화베ㅣ"
+                    },
+                    "updateDate": 1581371920000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "그러면 Array.isArray 강의 올려요",
+                    "id": 80798801,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80798771,
+                    "replyMember": {
+                        "id": "okysky1121",
+                        "nick": "졸려"
+                    },
+                    "updateDate": 1581371934000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "어라?",
+                    "id": 80798807,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80798771,
+                    "replyMember": {
+                        "id": "whitebear_0u0",
+                        "nick": "ㅣ화베ㅣ"
+                    },
+                    "updateDate": 1581371946000,
+                    "writer": {
+                        "id": "okysky1121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTVfMjE3/MDAxNTgxNjk0NzM1NDY3.CKMG62ofJSHw4ne4RBDvNhxMxKcEeU59DCN9wWUIk-kg.yE7tt3CdkggxYCmxHf0BLqDp92yER6Szvgk02b82y7gg.JPEG.okysky1121/image.jpg"
+                        },
+                        "nick": "졸려"
+                    }
+                },
+                {
+                    "content": "configurable writable도 써줘요 읍읍",
+                    "id": 80798806,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 80798806,
+                    "updateDate": 1581371945000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                },
+                {
+                    "content": "생략",
+                    "id": 80798812,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80798806,
+                    "updateDate": 1581371955000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "삭제 가능 여부, 수정 여부",
+                    "id": 80798817,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80798806,
+                    "updateDate": 1581371969000,
+                    "writer": {
+                        "id": "whitebear_0u0",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MDFfMTA5/MDAxNTk2Mjg1NjAxMTky.pP_1CbUsiu9r7PbnqhnAq-3HUQmlKlSYZTv9xIGBqlIg.MIUOJOZ2vgW7MVUi9ujYyVtuUebiaF9hp6jdyz_xx5gg.PNG.whitebear_0u0/%25ED%2599%2594%25EB%25B2%25A0.png"
+                        },
+                        "nick": "ㅣ화베ㅣ"
+                    }
+                },
+                {
+                    "content": "ㅘ!",
+                    "id": 80798830,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 80798806,
+                    "replyMember": {
+                        "id": "whitebear_0u0",
+                        "nick": "ㅣ화베ㅣ"
+                    },
+                    "updateDate": 1581371989000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음"
+                    }
+                }
+            ],
+            "last": {
+                "id": 80843259,
+                "refId": 80843259
+            },
+            "next": {
+                "id": 80798844,
+                "refId": 80798806
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

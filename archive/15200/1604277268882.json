@@ -1,0 +1,236 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 3660,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MDNfMjIy/MDAxNTg1OTE0NzI5MDY3.JxURaX_R66zZvzXhy-QUfynI5O6CeZ38ghNFyRVj_C4g.pL6inUqCxJc4JAxmxfqnp8OMaTeU26_yXFfERRRRAMgg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "[[[CONTENT-ELEMENT-0]]]<br /><p><br />const scriptName=&quot;blockjack.js&quot;;<br />bj=null;<br />card=&quot;A 2 3 4 5 6 7 8 9 10 Jack Queen King&quot;.split(&quot; &quot;);<br />mycard=[];<br />orcard=[];<br /><br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){<br />if(msg == &quot;bj&quot;){<br />if(bj) replier.reply(&quot;하고있는중&quot;);<br />else {<br />replier.reply(&quot;시작\\n히트를 시작합니다.&quot;);<br />bj = sender;<br />mycard=[];<br />orcard=[];<br />mycard.push(card[Math.floor(Math.random()*13)]);<br />mycard.push(card[Math.floor(Math.random()*13)]);<br />replier.reply(sender+&quot;님의 패는 &quot;+mycard+&quot; 입니다. 카드의 합은 &quot;<br />+counting(mycard)+&quot;입니다.\\n&quot;<br />+&quot;멈추실려면 /스테이 혹은 /스탠드를 입력해주세요.\\n&quot;<br />+&quot;더 받으시려면 /히트를 입력해주세요.\\n/더블다운 입력하시면 더블다운을 하실 수 있습니다.&quot;<br />+&quot;J, Q, K 카드는 10으로 칩니다. A는 1이나 11로 칠 수 있습니다.&quot;);<br />orcard.push(card[Math.floor(Math.random()*13)]);<br />replier.reply(&quot;딜러의 카드는 &quot;+orcard+&quot; 입니다.&quot;);<br />}<br />}<br /><br />if(bj==sender){<br />if([&quot;/스테이&quot;,&quot;/스탠드&quot;].indexOf(msg) != -1){<br />while(counting(orcard)&lt;17){<br />orcard.push(card[Math.floor(Math.random()*13)]);<br />}<br />replier.reply(&quot;딜러는 &quot;+(orcard.length-2)+&quot;장의 카드를 받았습니다.&quot;);<br />if(counting(orcard) &gt; 21){<br />replier.reply(&quot;딜러가 버스트(패가 21이상)가 되어 경기에서 승리하셨습니다.\\n&quot;+&quot;딜러의 패는 &quot;+orcard+&quot; 였습니다. 패의 합은 &quot;<br />+orc+&quot; 입니다.\\n&quot;);<br />}<br />else{<br />var orc = counting(orcard)<br />var myc = counting(mycard)<br />replier.reply(&quot;딜러의 패는 &quot;+orcard+&quot; 였습니다. 패의 합은 &quot;<br />+orc+&quot; 입니다.\\n&quot;<br />+sender+&quot;님의 패는 &quot;+mycard+&quot; 입니다. 패의 합은 &quot;<br />+myc+&quot; 입니다.&quot;);<br />if(orc == myc) <br />replier.reply(&quot;패의 합이 값으므로 푸시(무승부) 입니다.&quot;);<br />else<br />replier.reply(&quot;게임에서 &quot;+(orc&gt;myc?&quot;패배&quot;:&quot;승리&quot;)+&quot;하셨습니다.&quot;);<br />}<br />bj=null;<br />}<br /><br />if(msg == &quot;/히트&quot;){<br />var temp = card[Math.floor(Math.random()*13)];<br />mycard.push(temp);<br />var temp2 = counting(mycard);<br />replier.reply(temp+&quot; 카드를 받았습니다. 카드들의 합은 &quot;+ temp2 +&quot; 입니다.\\n&quot;<br />+&quot;멈추실려면 /스테이 혹은 /스탠드를 입력해주세요.\\n&quot;<br />+&quot;더 받으시려면 /히트를 입력해주세요.&quot;);<br />if(temp2 &gt; 21){<br />replier.reply(sender+&quot;님이 버스트(&quot;+temp2+&quot;장)가 되어 경기에서 패배 하셨습니다.&quot;<br />+&quot;딜러의 패는 &quot;+orcard+&quot; 였습니다. 패의 합은 &quot;<br />+counting(orcard)+&quot; 입니다.&quot;);<br />bj=null;<br />return;<br />}<br />}<br /><br />if(msg == &quot;/더블다운&quot;){<br />var temp = card[Math.floor(Math.random()*13)];<br />mycard.push(temp);<br />var temp2 = counting(mycard);<br />replier.reply(temp+&quot; 카드를 받았습니다. 카드들의 합은 &quot;+ temp2 +&quot; 입니다.&quot;);<br />if(temp2 &gt; 21){<br />replier.reply(sender+&quot;님이 버스트(&quot;+temp2+&quot;장)가 되어 경기에서 패배 하셨습니다.&quot;<br />+&quot;딜러의 패는 &quot;+orcard+&quot; 였습니다. 패의 합은 &quot;<br />+counting(orcard)+&quot; 입니다.&quot;);<br />bj=null;<br />return;<br />}<br />}<br /><br /><br />}<br /><br />}<br /><br />function counting(arr){<br />Aleng = arr.reduce((c,d)=&gt;d==&quot;A&quot;?c+1:c,0);<br />count = arr.reduce((c,d)=&gt;<br />{<br />if(d==&quot;A&quot;) return c+11;<br />if(card.indexOf(d)&gt;8) return c+10;<br />return c+(~~d);<br />},0);<br />while(Aleng){<br />if(count&gt;21)<br />count-=10,Aleng--;<br />else Aleng=0;<br />}<br />return count;<br />}<br /><br /><br /><br /><br />옛날에 만들었는데 공유합니다.<br />잘못된 곳이 있을 수 있습니다<br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003B6000000000",
+            "id": 15200,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 161,
+            "refArticleId": 15200,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "블랙잭 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585914729717,
+            "writer": {
+                "id": "a2611577",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "scap"
+            }
+        },
+        "articleId": 15200,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 983916,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/69fc75c5d68f8d517d9bfec9f1196a17b3e11ffdfc/MjAyMDA0MDNfMjIy/MDAxNTg1OTE0NzI5MDY3.JxURaX_R66zZvzXhy-QUfynI5O6CeZ38ghNFyRVj_C4g.pL6inUqCxJc4JAxmxfqnp8OMaTeU26_yXFfERRRRAMgg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "언디파인드..",
+                    "id": 86307183,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86307183,
+                    "updateDate": 1585920130000,
+                    "writer": {
+                        "id": "xormr456",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "다거다거"
+                    }
+                },
+                {
+                    "content": "기능입니다.",
+                    "id": 86309148,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86307183,
+                    "updateDate": 1585921310000,
+                    "writer": {
+                        "id": "a2611577",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "scap"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

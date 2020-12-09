@@ -1,0 +1,346 @@
+{
+    "result": {
+        "article": {
+            "ccl": {
+                "cclList": [
+                    {
+                        "desc": "저작자 명시 필수",
+                        "name": "by"
+                    },
+                    {
+                        "desc": "영리적 사용 불가",
+                        "name": "nc"
+                    },
+                    {
+                        "desc": "내용 변경 불가",
+                        "name": "nd"
+                    }
+                ],
+                "cclSet": {
+                    "icon": "ico_sccl02.png",
+                    "iconWidth": 49,
+                    "manualUrl": "http://creativecommons.org/licenses/by-nc-nd/2.0/kr/"
+                },
+                "hasCclWithNoScrap": true,
+                "hasCclWithScrap": false
+            },
+            "commentCount": 6,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 564,
+                            "service": "CAFE",
+                            "style": "width: 740px; height: 564px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA0MDFfMTEw/MDAxNTg1Njc0NjUzMTU5.XQOUmesbiLsARedvi6rWhcK5pYW4XvCETTapeZLBofYg.jRYkjQycyAZwSaQFMlIPiv9eXjL7VNx8UdAxUKZLfyUg.PNG/0005870.png",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div><div>예전에 올린 로또 번호찾기 소스입니다.</div><div>[[[CONTENT-ELEMENT-0]]]<br /></div><div><br /></div><div><br /></div><div>//여기서부터 시작하자</div><div>function response(room, msg, sender, isGroupChat, replier) {</div><div><br /></div><div>//로또번호 찾아보기</div><div><br /></div><div>var allsee=&quot;\\u200b&quot;.repeat(500);</div><div><br /></div><div><br /></div><div>if(msg.indexOf(&quot;로또 설명서&quot;)==0){</div><div>&nbsp; replier.reply(&quot;명령어는 아래와 같습니다&quot;+allsee+&quot;\\n명령어 :로또 [회차번호] 는 자신이 원하는 로또 회차를 알려줍니다. \\n만일 해당 회차가 아닐경우 이번주 회차로 보이게 됩니다.\\nex)로또 892\\n명령어 : 이번주 로또 는 이번주 로또 번호를 알려줍니다.\\nex)이번주 로또\\n 명령어 : 지난주 로또 는 지난주 로또 번호를 알려줍니다.\\nex)지난주 로또 &quot;)</div><div>}</div><div><br /></div><div><br /></div><div>var lotto_num = null;</div><div><br /></div><div>if(msg.indexOf(&quot;로또 알려줘&quot;) == 0)&nbsp; {</div><div>&nbsp; var page = Utils.getWebText(&quot;<a href=\"https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=\" target=\"_blank\">https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=</a>&quot;+msg.substr(7)); //동행복권에서 로또회차를 검색합니다.</div><div>&nbsp; var num = msg.substr(7).replace(/[^0-9]/g,&quot;&quot;); // 로또 라는 명령어 뒤에 숫자만 인식합니다. 글자가있을경우 잘라냅니다.</div><div><br /></div><div>&nbsp; //동행복권 회차 가져오기</div><div>&nbsp; lotto_num = page.split(&quot;동행복권 &quot;)[1].split(&quot;회 당첨번호&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;);</div><div>&nbsp; //동행복권 당첨번호 가져오기</div><div>&nbsp; lotto = page.split(&quot;당첨번호 &quot;)[1].split(&quot; 1등 총&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;).replace(&apos;+&apos;, &apos;\\n보너스 번호 &apos;).replace(&apos;.&apos;, &apos; 입니다.&apos;);</div><div><br /></div><div>&nbsp; if(lotto_num == num){ //동행복권 회차와 입력된 넘버랑 비교합니다. 동일하면 복권을 출력합니다.</div><div>&nbsp; &nbsp; replier.reply(num + &quot;회차 \\n당첨 번호 : &quot; +lotto);</div><div>&nbsp; }</div><div>//글자 또는 빈공간으로 진입시 출력 메시지가 뜨게 합니다.</div><div>&nbsp; if(num == &quot;&quot;){</div><div>&nbsp; &nbsp; replier.reply(&quot;회차가 입력되지 않았습니다. \\n[로또 회차번호 ex:로또 898]를 적어주세요&quot;);</div><div>&nbsp; }</div><div>//동행복권과 비교하여 회차가 없을경우 이번주 회차가 뜹니다.</div><div>&nbsp; if(lotto_num!==num&amp;&amp;num !==&quot;&quot;){</div><div>&nbsp; &nbsp; var page = Utils.getWebText(&quot;<a href=\"https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=\" target=\"_blank\">https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=</a>&quot;);</div><div>&nbsp; &nbsp; var num = msg.substr(7);</div><div><br /></div><div>&nbsp; &nbsp; lotto_num = page.split(&quot;동행복권 &quot;)[1].split(&quot;회 당첨번호 &quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;);</div><div>&nbsp; &nbsp; lotto = page.split(&quot;당첨번호 &quot;)[1].split(&quot; 1등 총&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;).replace(&apos;+&apos;, &apos;\\n보너스 번호 :&apos;).replace(&apos;.&apos;, &apos; 입니다.&apos;);</div><div>&nbsp; &nbsp; replier.reply(num +&quot;회차는 \\n올바른 회차가 아닙니다.\\n이번 주 &quot; + lotto_num + &quot;회차 \\n당첨 번호 : &quot; + lotto);</div><div>&nbsp; }</div><div>}</div><div><br /></div><div>// 이번주 로또가 뜨게 합니다.</div><div>var lotto_num = null;</div><div>if(msg.indexOf(&quot;이번주 로또&quot;) == 0)&nbsp; {</div><div>&nbsp; var page = Utils.getWebText(&quot;<a href=\"https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=\" target=\"_blank\">https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=</a>&quot;);</div><div><br /></div><div>&nbsp; lotto_num = page.split(&quot;동행복권 &quot;)[1].split(&quot;회 당첨번호&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;);</div><div><br /></div><div>&nbsp; lotto = page.split(&quot;당첨번호 &quot;)[1].split(&quot; 1등 총&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;).replace(&apos;+&apos;, &apos;\\n보너스 번호 :&apos;).replace(&apos;.&apos;, &apos; 입니다.&apos;);</div><div>&nbsp; replier.reply(&quot;이번 주 &quot;+lotto_num+&quot; 회차 \\n당첨 번호 : &quot; +lotto);</div><div>}</div><div><br /></div><div><br /></div><div>//지난주 로또가 뜨게합니다.</div><div>var lotto_num = null;</div><div>if(msg.indexOf(&quot;지난주 로또&quot;) == 0)&nbsp; {</div><div>&nbsp; var lotto_num = Utils.getWebText(&quot;<a href=\"https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=\" target=\"_blank\">https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=</a>&quot;);</div><div><br /></div><div>&nbsp; lotto_num = lotto_num.split(&quot;동행복권 &quot;)[1].split(&quot;회 당첨번호&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;);</div><div>&nbsp; lotto_num = Number(lotto_num);</div><div>&nbsp; lotto_num -= 1; //회차에서 -1을 시켜 지난주로 인식하게 합니다.</div><div><br /></div><div>&nbsp; var lotto = Utils.getWebText(&quot;<a href=\"https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=\" target=\"_blank\">https://m.dhlottery.co.kr/gameResult.do?method=byWin&amp;drwNo=</a>&quot;+lotto_num);</div><div>&nbsp; lotto = lotto.split(&quot;당첨번호 &quot;)[1].split(&quot; 1등 총&quot;)[0].replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;).trim().replace(/&nbsp; /g,&quot;&quot;).replace(/^ +/gm,&quot;&quot;).replace(&apos;+&apos;, &apos;\\n보너스 번호 : &apos;).replace(&apos;.&apos;, &apos; 입니다.&apos;);</div><div>&nbsp; replier.reply(&quot;지난 주 &quot;+lotto_num+&quot;회차 \\n당첨 번호 : &quot;+lotto);</div><div>}</div><div><br /></div><div><br /></div><div>}</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000395700000000",
+            "id": 14679,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": false,
+            "isEnableScrap": false,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 45,
+            "refArticleId": 14679,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "로또 번호찾기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585674663250,
+            "writer": {
+                "id": "ssk5108",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "아기곰"
+            }
+        },
+        "articleId": 14679,
+        "attaches": [
+            {
+                "extension": "png",
+                "fullName": "0005870.png",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "0005870.png",
+                "size": 406936,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/891c9521360203b69b7f182c1ef988f35301ff8f/MjAyMDA0MDFfMTEw/MDAxNTg1Njc0NjUzMTU5.XQOUmesbiLsARedvi6rWhcK5pYW4XvCETTapeZLBofYg.jRYkjQycyAZwSaQFMlIPiv9eXjL7VNx8UdAxUKZLfyUg.PNG/0005870.png?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": false,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "VSCode 에요?",
+                    "id": 85994634,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85994634,
+                    "updateDate": 1585674757000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "아뇨 예전에 만든거라. 초보로 만들어서 Vscode가 아니라 보기어려운겁니다..ㅠ",
+                    "id": 85994648,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85994634,
+                    "updateDate": 1585674817000,
+                    "writer": {
+                        "id": "ssk5108",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "아기곰"
+                    }
+                },
+                {
+                    "content": "아니... 이건 깃헙에 올리시지... 그럼 포크해가는건데.... vscode는 깃헙 플러그인으로 지원되요....",
+                    "id": 85994674,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85994674,
+                    "updateDate": 1585674913000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "다른 장점이 있나요?\r\nVS가 더 좋은 부분은욤...?!",
+                    "id": 85996242,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85994674,
+                    "updateDate": 1585684396000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "vscode가 좋은점은.... 흠..... 플러그인 때문인걸로알아요\r\n하이라이팅은비슷하고\r\n자동 레퍼런스도 같고....",
+                    "id": 85996356,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85994674,
+                    "replyMember": {
+                        "id": "dsy2761",
+                        "nick": "AlphaDo"
+                    },
+                    "updateDate": 1585685332000,
+                    "writer": {
+                        "id": "jomin398",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "jomin398"
+                    }
+                },
+                {
+                    "content": "엄청난 노가다 소스다 ㄷㄷ",
+                    "id": 86005862,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86005862,
+                    "updateDate": 1585698135000,
+                    "writer": {
+                        "id": "jsptree",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사과님"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

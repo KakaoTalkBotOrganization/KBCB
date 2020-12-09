@@ -1,0 +1,396 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 44,
+            "contentElements": [],
+            "contentHtml": "<p>======Api지원 중단되어 사용이 불가합니다======<br /><br />지민님 Api와 주영님(당나기귀님) 소스 이용하였습니다.<br />밑에분이 먼저 올려주셨는데...ㅠㅠ 일단 올려봅니다.<br /><br />//API의 지원중단으로 인해, 저작권자의 허락을 맡고 2차 수정, 재배포하는 &apos;채팅방 입장감지와 좋아요 반응봇&apos; 소스입니다.<br />//지민 님의 허락을 맡고 &apos;오픈채팅방 정보 API(입장감지)&apos; 를 사용하였습니다. 출처: </p><a href=\"https://cafe.naver.com/nameyee/18718\" target=\"_blank\" id=\"9023531\">https://cafe.naver.com/nameyee/18718</a><br /><p><br /><br />//이하 내용은 소스 설명 및 출처 내용입니다.<br />//======위대하신 문재인 대통령은 언제나 함께 하신다.======<br />/*<br />소스코드 원본 및 설명 : </p><a href=\"https://kmbfamily.net/software/1758\" target=\"_blank\" id=\"8568788\">https://kmbfamily.net/software/1758</a><br /><p><br /><br />채팅방 입장감지와 좋아요 반응봇<br />버전 : 1.1.0.0<br />-1.0.0.0 : 최초개발(2020년 5월 13일)<br />-1.0.1.0 : 미발송 오류 버그수정(2020년 5월 13일)<br />-1.1.0.0 : 쓰레드 중복실행 방지 기능 추가+봇 가동시 토스트 메시지 알림 기능 추가(2020년 5월 14일)<br />설명 : 채팅방에 새로 들어오거나 좋아요를 눌러주는경우 반응을 해줍니다.(루팅하지 않고도 작동합니다.)<br /><br />*저작권자*<br />-kmb패밀리( </p><a href=\"http://kmbfamily.net\" target=\"_blank\" id=\"2586771\">http://kmbfamily.net</a><br /><p>)<br /><br />-너의톡방은( </p><a href=\"http://yourtalk.net\" target=\"_blank\" id=\"6535402\">http://yourtalk.net</a><br /><p>)<br /><br /><br />*원 저작권자*<br />-KeonWoo PARK( </p><a href=\"http://develope.kr\" target=\"_blank\" id=\"6765254\">http://develope.kr</a><br /><p>)<br /><br /><br />@본 소스코드는 CC BY-NC-SA 라이선스를 따릅니다.@<br />@저작권자의 허락 없이 상업적 사용, 2차 무단 배포 및 무단 수정을 금합니다.@<br />@단 비상업적인 목적으로만 수정 및 사용이 가능하며 이 경우에도 저작권자는 표기하여야 합니다.@<br />@본 소스코드에 대해 궁금하신점 또는 오류가 있으시면 kmb패밀리 이메일 webmaster@kmbfamily.net 또는 너의톡방은의 문의방 </p><a href=\"https://open.kakao.com/o/gNDClgTb\" target=\"_blank\" id=\"9956809\">https://open.kakao.com/o/gNDClgTb</a><br /><p>으로 문의주세요.@<br /><br /><br />*사용법*<br />-아무한테나 채팅이 하나라도 오면 Log를 남기고 봇이 가동됩니다.<br />-메신저봇 기준 맨 윗줄 const scriptName 이 선언된 다음줄인 2번째줄 부터 붙여넣기 해주시면 됩니다.<br />-const scriptName(이 봇 소스코드를 돌리는 스크립트의 이름)이 반드시 선언되어 있어야 합니다.<br />-소스코드 수정과 같이 껏다 재가동 해야 하는 경우 끄고 나서(여기서 끈다의 의미는 Api.off(scriptName); 함수로 끄는것과 같은방식을 의미) 1초후에 켜야 합니다.<br />안그러면 종료되지 않은 쓰레드 때문에 도배될수도 있습니다.<br />-변경 및 설정해야 하는 변수는 5개 입니다.<br />g_data[&quot;interval&quot;] , g_data[&quot;room&quot;][&quot;link&quot;] , g_data[&quot;room&quot;][&quot;title&quot;] , g_data[&quot;room&quot;][&quot;likeup&quot;] , g_data[&quot;room&quot;][&quot;usersup&quot;]<br /><br />*변수설명*<br />g_data[&quot;interval&quot;] : 채팅방 정보를 불러오는 간격입니다.(단위 초) 짧으면 짧을수록 금방 반응하고 길면 늦게 반응합니다.<br />g_data[&quot;room&quot;][&quot;link&quot;] : 채팅방 링크 영역 입니다.(배열로 넣습니다.) 채팅방 링크가 </p><a href=\"https://open.kakao.com/o/ninemuses\" target=\"_blank\" id=\"1404163\">https://open.kakao.com/o/ninemuses</a><br /><p>면 open.kakao.com/o/ 뒤에 ninemusis 만 넣어주세요.<br /><br />g_data[&quot;room&quot;][&quot;title&quot;] : 채팅방 제목을 넣어주세요.(배열로 넣습니다.) 위 링크순서에 맞게 넣어주셔야 하고 제목값 잘못넣으면 채팅방 인원이 늘거나 좋아요 눌러준방에 톡 발송이 안되거나 엉뚱한방에 날아갑니다.<br />g_data[&quot;room&quot;][&quot;likeup&quot;] : (누군가)좋아요 눌렀을때 채팅방에 보낼 내용을 적어주세요.<br />g_data[&quot;room&quot;][&quot;usersup&quot;] : (누군가)새로 들어와서 방 인원이 늘었을때 보낼 내용을 적어주세요.<br /><br />*에러가 났을 때 로그를 남기는 기능, failsafe는 2차배포자의 수정 능력이 딸려 모두 제거되었습니다.<br /><br />**예시(채팅방 1곳에서 운영한다고 가정하고 간격 180초)**<br />채팅방 이름 : 나인뮤지스 팬클럽<br />채팅방 링크 : </p><a href=\"https://open.kakao.com/o/ninemuses\" target=\"_blank\" id=\"4270414\">https://open.kakao.com/o/ninemuses</a><br /><p><br /><br />g_data[&quot;interval&quot;] = 180;<br />g_data[&quot;room&quot;][&quot;link&quot;] = [&quot;ninemuses&quot;];<br />g_data[&quot;room&quot;][&quot;title&quot;] = [&apos;나인뮤지스 팬클럽&apos;];<br />*/<br /><br />//=======소스코드 입니다=======<br /><br />var trigger = false;<br />g_data = new Array();<br />g_data[&quot;open&quot;] = false;<br />g_data[&quot;room&quot;] = new Array();<br />//설정영역<br />//채팅방 상태 감지 간격<br />g_data[&quot;interval&quot;] = 10;<br />//톡방 영역<br />g_data[&quot;room&quot;][&quot;link&quot;] = [&quot;(링크를 넣어주세요)&quot;]; //방 링크 영역<br />g_data[&quot;room&quot;][&quot;title&quot;] = [&apos;(봇이 알림을 전송해줄 방 이름을 넣어주세요)&apos;]; //방 제목 영역(위 링크의 방 제목)<br />//반응시 톡 발송내용 영역<br />g_data[&quot;room&quot;][&quot;likeup&quot;] = &apos;채팅방 좋아요 눌러주셔서 감사합니다!&apos;; //채팅방 좋아요 눌렀을경우 발송할 메시지<br />g_data[&quot;room&quot;][&quot;usersup&quot;] = &apos;새로 오신분 환영합니다.&apos;; //채팅방에 새로 인원 들어온경우 메시지<br /><br />//설정영역 끝<br />//여기부터는 건드리지 말아주세요........<br />g_data[&quot;room&quot;][&quot;url&quot;] = &quot;</p><a href=\"http://49.167.65.134:3201/search/openchat/?q=https://open.kakao.com/o/\" target=\"_blank\" id=\"8797719\">http://49.167.65.134:3201/search/openchat/?q=https://open.kakao.com/o/</a><br /><p>&quot;+g_data[&quot;room&quot;][&quot;link&quot;];<br /><br />//API URL 영역<br />//크론탭 트렌잭션 변수<br />g_data[&quot;transaction&quot;] = false; //쓰레드가 중복으로 여러개 돌아가는것을 방지합니다.<br />//데이터 베이스 영역<br />g_data[&quot;DB&quot;] = new Array();<br />//현재값 이전값 저장영역 선언<br />g_data[&quot;DB&quot;][&quot;now&quot;] = new Array();<br />g_data[&quot;DB&quot;][&quot;before&quot;] = new Array();<br />//3차 영역 선언(인원수,좋아요수)<br />g_data[&quot;DB&quot;][&quot;now&quot;][&quot;users&quot;] = new Array();<br />g_data[&quot;DB&quot;][&quot;now&quot;][&quot;likes&quot;] = new Array();<br />g_data[&quot;DB&quot;][&quot;before&quot;][&quot;users&quot;] = new Array();<br />g_data[&quot;DB&quot;][&quot;before&quot;][&quot;likes&quot;] = new Array();<br /><br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br />if(trigger === false){<br />trigger = true;<br />Log.i(&quot;채팅방 입장감지와 좋아요 반응봇이 가동되었습니다.&quot;);<br />Api.showToast(&quot;채팅방 입장감지와 좋아요 반응봇이 가동되었습니다.&quot;);<br />replier.reply(&quot;채팅방 입장감지와 좋아요 반응봇이 가동되었습니다.&quot;);<br />crontab(g_data[&quot;interval&quot;]);<br />}<br />}<br /><br />function crontab(interval){<br />var idx = 0;<br />if(!interval){<br />return false;<br />}<br />if(g_data[&quot;transaction&quot;] === false){ //크론탭 함수 중복실행 방지 분기점<br />g_data[&quot;transaction&quot;] = true; //중복실행을 방지하기 위해서 true로 변경<br />thread = new java.lang.Thread(new java.lang.Runnable({<br />run:function(){<br />try{<br />//실행코드 넣는 부분 시작<br />thread1();<br />//실행코드 넣는 부분 끝<br />while(Api.isOn(scriptName)){<br />if(idx&lt;interval){<br />java.lang.Thread.sleep(1000);<br />idx++;<br />}else{<br />break;<br />}<br />}<br />g_data[&quot;transaction&quot;] = false; //크론탭 실행 끝났으면 false로 바꿔놔야 다시 크론탭 함수 불러와서 무한반복<br />if(Api.isOn(scriptName)){<br />crontab(interval);<br />}<br />}catch(e){<br />}<br />}<br />}));<br />thread.start();<br />}<br />}<br /><br /><br />function thread1(){<br />thread = new java.lang.Thread(new java.lang.Runnable({<br />run:function(){<br />Roomwatcher();<br />}<br />}));<br />thread.start();<br />}<br /><br /><br />function Roomwatcher(){<br />for(var idx in g_data[&quot;room&quot;][&quot;link&quot;]){<br />var roomdata = Roominfo(g_data[&quot;room&quot;][&quot;url&quot;]); //정상적으로 오픈채팅방 정보를 불러온경우<br />//방 인원수+좋아요수 비교 및 반응 영역<br />g_data[&quot;DB&quot;][&quot;before&quot;][&quot;users&quot;][idx] = g_data[&quot;DB&quot;][&quot;now&quot;][&quot;users&quot;][idx]; //인원값 before에 복사<br />g_data[&quot;DB&quot;][&quot;before&quot;][&quot;likes&quot;][idx] = g_data[&quot;DB&quot;][&quot;now&quot;][&quot;likes&quot;][idx]; //좋아요값 before에 복사<br />g_data[&quot;DB&quot;][&quot;now&quot;][&quot;users&quot;][idx] = roomdata[&quot;member&quot;]; //인원값 저장<br />g_data[&quot;DB&quot;][&quot;now&quot;][&quot;likes&quot;][idx] = roomdata[&quot;heart&quot;]; //좋아요값 저장<br />if(g_data[&quot;DB&quot;][&quot;now&quot;][&quot;users&quot;][idx] &gt; g_data[&quot;DB&quot;][&quot;before&quot;][&quot;users&quot;][idx] &amp;&amp; g_data[&quot;open&quot;] === true){ //g_data[&quot;open&quot;]가 false면 함수를 처음 실행했다는 의미<br />//채팅방 인원 늘었을때 반응<br />Api.replyRoom(g_data[&quot;room&quot;][&quot;title&quot;][idx],g_data[&quot;room&quot;][&quot;usersup&quot;]);<br />}<br />if(g_data[&quot;DB&quot;][&quot;now&quot;][&quot;likes&quot;][idx] &gt; g_data[&quot;DB&quot;][&quot;before&quot;][&quot;likes&quot;][idx] &amp;&amp; g_data[&quot;open&quot;] === true){ //g_data[&quot;open&quot;]가 false면 함수를 처음 실행했다는 의미<br />//좋아요 눌렀을때 반응<br />Api.replyRoom(g_data[&quot;room&quot;][&quot;title&quot;][idx],g_data[&quot;room&quot;][&quot;likeup&quot;]);<br />}<br />if(g_data[&quot;open&quot;] === false){<br />//스크립트 맨처음 실행한경우면 이전값이 다 null이죠.....그런경우에 반응?이 일어나는것을 방지합니다.<br />g_data[&quot;open&quot;] = true;<br />}<br />}<br />}<br /><br />function Roominfo(url){<br />var f_data = new Array();<br />f_data[&quot;heart&quot;] = new Array();<br />f_data[&quot;member&quot;] = new Array();<br />var connectJsoup = org.jsoup.Jsoup.connect(url).ignoreContentType(true).get().text();<br />var json = JSON.parse(connectJsoup);<br />f_data[&quot;heart&quot;] = json.items[0].hearts;<br />f_data[&quot;member&quot;] = json.items[0].count;<br />return f_data;<br />}<br /><br /><br /><br />잘 작동하는거 같습니다!<br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000493700000000",
+            "head": "기타",
+            "headId": 74,
+            "id": 18743,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 1614,
+            "refArticleId": 18743,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "(사용불가) 입퇴장감지 소스 (지민님 api, 주영님 소스)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1590421287190,
+            "writer": {
+                "id": "ihr0410",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "자전거515"
+            }
+        },
+        "articleId": 18743,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "진짜 필요했는데 감사합니다",
+                    "id": 91574532,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91574532,
+                    "updateDate": 1590422395000,
+                    "writer": {
+                        "id": "michaelkim7211",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20201011_82/michaelkim7211_1602385964548xQLAE_PNG/image.png"
+                        },
+                        "nick": "맛있는 연어 스테이크"
+                    }
+                },
+                {
+                    "content": "어플이 강제로 팅겨요 ㅠㅠ",
+                    "id": 91574633,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91574633,
+                    "updateDate": 1590422540000,
+                    "writer": {
+                        "id": "gmltn947",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "삼양돌이"
+                    }
+                },
+                {
+                    "content": "제가 초보다보니 수정할때 너무 번거로워서 failsafe를 다 지워버려서...ㅠㅠ (사실 원래 개인적으로 쓰려고 만든 봇이라서요)\r\n혹시 링크 맞게 넣으셨나요?",
+                    "id": 91574696,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91574633,
+                    "updateDate": 1590422632000,
+                    "writer": {
+                        "id": "ihr0410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "자전거515"
+                    }
+                },
+                {
+                    "content": "네 그게 원 소스도 그렇게 되어있고 그렇게해도 잘 작동해요\r\n혹시 맨윗줄 const 구문 있으신가요? 그리고 채팅방 검색허용 되는지 확인해주세요",
+                    "id": 91574821,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91574633,
+                    "replyMember": {
+                        "id": "gmltn947",
+                        "nick": "삼양돌이"
+                    },
+                    "updateDate": 1590422790000,
+                    "writer": {
+                        "id": "ihr0410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "자전거515"
+                    }
+                },
+                {
+                    "content": "방링크랑 방제목 괄호안에 집어넣어야 되는거에요? 아니면.괄호지우고 따음표안에 넣어야 되는건가요?",
+                    "id": 91574834,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91574633,
+                    "replyMember": {
+                        "id": "ihr0410",
+                        "nick": "자전거515"
+                    },
+                    "updateDate": 1590422792000,
+                    "writer": {
+                        "id": "gmltn947",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "삼양돌이"
+                    }
+                },
+                {
+                    "content": "아 괄호는 지우셔야해요!!",
+                    "id": 91574864,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91574633,
+                    "replyMember": {
+                        "id": "gmltn947",
+                        "nick": "삼양돌이"
+                    },
+                    "updateDate": 1590422823000,
+                    "writer": {
+                        "id": "ihr0410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "자전거515"
+                    }
+                },
+                {
+                    "content": "감사합니다 정상작동",
+                    "id": 91574707,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91574707,
+                    "updateDate": 1590422641000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "api 서버만 변경된건가요?",
+                    "id": 91577740,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 91577740,
+                    "updateDate": 1590426708000,
+                    "writer": {
+                        "id": "dsdg3627",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "땡구르"
+                    }
+                },
+                {
+                    "content": "넵 그리고 에러났을때 로그를 남기고 멈추는 기능은 다 뺐습니다",
+                    "id": 91583982,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91577740,
+                    "updateDate": 1590446475000,
+                    "writer": {
+                        "id": "ihr0410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "자전거515"
+                    }
+                },
+                {
+                    "content": "감사합니다!",
+                    "id": 91616390,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 91577740,
+                    "replyMember": {
+                        "id": "ihr0410",
+                        "nick": "자전거515"
+                    },
+                    "updateDate": 1590461613000,
+                    "writer": {
+                        "id": "dsdg3627",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "땡구르"
+                    }
+                }
+            ],
+            "last": {
+                "id": 97266824,
+                "refId": 97266824
+            },
+            "next": {
+                "id": 91761087,
+                "refId": 91761087
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

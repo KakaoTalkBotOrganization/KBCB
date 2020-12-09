@@ -1,0 +1,436 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 19,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">날씨 검색</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><b>else if(msg.indexOf(&quot;!날씨&quot;) == 0)</b></div><div style=\"\"><b>&nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(msg.split(&quot; &quot;).length &lt;= 1) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;동이나 구 단위 지역을 입력해주시기 바랍니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var printStr = &quot;[&quot; + msg.split(&quot; &quot;)[1] + &quot; 날씨 정보]\\n\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var tmpArray = [];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var location = msg.split(&quot; &quot;)[1];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var rtnString = &quot;[&quot; + location + &quot; 현재 날씨]\\n\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var htmlStr = Utils.getWebText(&quot;<a href=\"https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=\" target=\"_blank\">https://m.search.naver.com/search.naver?sm=mtp_hty.top&amp;where=m&amp;query=</a>&quot; + encodeURI(location + &quot; 날씨&quot;));</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; var RegionCode;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; htmlStr = htmlStr.substring(htmlStr.indexOf(&quot;regionCode&quot;));</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; RegionCode = htmlStr.substring(11, htmlStr.indexOf(&quot;\\&quot;&quot;));</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; htmlStr = Utils.getWebText(&quot;<a href=\"https://m.weather.naver.com/m/main.nhn?regionCode=\" target=\"_blank\">https://m.weather.naver.com/m/main.nhn?regionCode=</a>&quot; + encodeURI(RegionCode));</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; htmlStr = htmlStr.replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;);</b></div><div style=\"\"><b>//replier.reply(htmlStr);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; htmlStr = htmlStr.split(&quot;전 발표&quot;)[1].trim();</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; tmpArray = htmlStr.split(&quot;\\n&quot;);</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp;//&nbsp; &nbsp; &nbsp;replier.reply(htmlStr);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if(tmpArray[0].indexOf(&quot;온도&quot;) == -1)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;현재 온도 : &quot; + tmpArray[0] + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;최저/최고 온도 : &quot; + tmpArray[2].trim().substring(4, tmpArray[2].length - 4) + &quot;/&quot; + tmpArray[4].trim().substring(4, tmpArray[4].length - 4) + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;체감 온도 : &quot; + tmpArray[5].split(&quot;체감&quot;)[1].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;현재 날씨 : &quot; + tmpArray[9].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;자외선 : &quot; + tmpArray[20].split(&quot;자외선&quot;)[1].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;강수확률 : &quot; + tmpArray[30].split(&quot;,&quot;)[0].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;바람세기 : &quot; + tmpArray[31].split(&quot;,&quot;)[0].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;습도 : &quot; + tmpArray[32].split(&quot;,&quot;)[0].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;현재 온도 : &quot; + tmpArray[1].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;최저/최고 온도 : &quot; + tmpArray[8].trim().substring(4, tmpArray[8].length - 4) + &quot;/&quot; + tmpArray[10].trim().substring(4, tmpArray[10].length - 4) + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;체감 온도 : &quot; + tmpArray[11].split(&quot;체감&quot;)[1].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;현재 날씨 : &quot; + tmpArray[15].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;자외선 : &quot; + tmpArray[34].split(&quot;,&quot;)[0].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;강수확률 : &quot; + tmpArray[31].split(&quot;,&quot;)[0].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;바람세기 : &quot; + tmpArray[32].split(&quot;,&quot;)[0].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; printStr += &quot;습도 : &quot; + tmpArray[33].split(&quot;,&quot;)[0].trim() + &quot;\\n&quot;;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(printStr);</b></div><div style=\"\"><b>&nbsp; &nbsp; }</b></div></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>국내/국외 날씨 검색 가능합니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000011DA00000000",
+            "id": 4570,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 322,
+            "refArticleId": 4570,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "날씨 검색 코드",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1565947595097,
+            "writer": {
+                "id": "highkrs",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20160212_59/highkrs_14552365195859wBpG_JPEG/1454593100695.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "로젠다로"
+            }
+        },
+        "articleId": 4570,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "우와 국내/외 검색 가능에 최고/최저온도 구현까지..\r\n대단하십니다!",
+                    "id": 66530012,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 66530012,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-15-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_15.png",
+                        "width": 129
+                    },
+                    "updateDate": 1565956413000,
+                    "writer": {
+                        "id": "bass90301",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "bass90301"
+                    }
+                },
+                {
+                    "content": "와 지역코드를 저렇게 뜯어오네..ㄷ",
+                    "id": 66532293,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 66532293,
+                    "updateDate": 1565958545000,
+                    "writer": {
+                        "id": "junho8590",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190330_183/junho8590_1553932414639v9xBF_PNG/110857.png"
+                        },
+                        "nick": "마른얼음 BOT"
+                    }
+                },
+                {
+                    "content": "메봇 인덱스오브 에러나네요.. 왤까요\r\n",
+                    "id": 66653863,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 66653863,
+                    "updateDate": 1566110994000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "Sjy0916"
+                    }
+                },
+                {
+                    "content": "에러 내용 공유점",
+                    "id": 66713595,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66653863,
+                    "updateDate": 1566176694000,
+                    "writer": {
+                        "id": "highkrs",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160212_59/highkrs_14552365195859wBpG_JPEG/1454593100695.jpg"
+                        },
+                        "nick": "로젠다로"
+                    }
+                },
+                {
+                    "content": "앞에 코드없어서 else 빼고 함요 에러나서",
+                    "id": 66743092,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTA4MTlfMTA0/MDAxNTY2MjAxMjk0NzU5.4z5Xjsyf96fFwgOdYqnH20jiLPIfrAswpSYQKyydre8g.qGgHOko-Utj2H0quHBZrw4bQPGoCJu9ERuIq-R1yRJsg.JPEG/Screenshot_20190819-165438_MessengerBot.jpg"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "Screenshot_20190819-165438_MessengerBot.jpg",
+                        "height": 2960,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTA4MTlfMTA0/MDAxNTY2MjAxMjk0NzU5.4z5Xjsyf96fFwgOdYqnH20jiLPIfrAswpSYQKyydre8g.qGgHOko-Utj2H0quHBZrw4bQPGoCJu9ERuIq-R1yRJsg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTA4MTlfMTA0/MDAxNTY2MjAxMjk0NzU5.4z5Xjsyf96fFwgOdYqnH20jiLPIfrAswpSYQKyydre8g.qGgHOko-Utj2H0quHBZrw4bQPGoCJu9ERuIq-R1yRJsg.JPEG/Screenshot_20190819-165438_MessengerBot.jpg",
+                        "width": 1440
+                    },
+                    "refId": 66653863,
+                    "replyMember": {
+                        "id": "highkrs",
+                        "nick": "로젠다로"
+                    },
+                    "updateDate": 1566201296000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "Sjy0916"
+                    }
+                },
+                {
+                    "content": "메봇은 trim을 사용하지 못하나요?\r\n저는 닼토봇 사용중입니다.",
+                    "id": 66818537,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66653863,
+                    "replyMember": {
+                        "id": "hwarang228",
+                        "nick": "Sjy0916"
+                    },
+                    "updateDate": 1566278890000,
+                    "writer": {
+                        "id": "highkrs",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160212_59/highkrs_14552365195859wBpG_JPEG/1454593100695.jpg"
+                        },
+                        "nick": "로젠다로"
+                    }
+                },
+                {
+                    "content": "그런가봐여... 네이버 파싱할때 트림은잘 되던데",
+                    "id": 66825562,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66653863,
+                    "replyMember": {
+                        "id": "highkrs",
+                        "nick": "로젠다로"
+                    },
+                    "updateDate": 1566285760000,
+                    "writer": {
+                        "id": "hwarang228",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMjZfMTU3/MDAxNTc0Njk0MzU5NjQ5.q-3tvpXVHQHwWECyi-GWI9oGC7_CIZyD65UZskvnH0Ug.ZT_qfMidMHSLy2hwweY67JrHh2uIuFUlqjEk4EPrj0cg.JPEG.hwarang228/notredame.jpg"
+                        },
+                        "nick": "Sjy0916"
+                    }
+                },
+                {
+                    "content": "trim 사용 잘될걸요",
+                    "id": 66837333,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66653863,
+                    "replyMember": {
+                        "id": "highkrs",
+                        "nick": "로젠다로"
+                    },
+                    "updateDate": 1566296810000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "파싱과정 에러같은데\r\n닼토봇이 메봇이랑 파싱 구조가 달라서 그런 거 같습니다",
+                    "id": 66837354,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66653863,
+                    "replyMember": {
+                        "id": "hwarang228",
+                        "nick": "Sjy0916"
+                    },
+                    "updateDate": 1566296832000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "메봇 확인해 보니깐 파싱 문제가 맞는거 같습니다.\r\n라인 갯수가 달라져 있었습니다.\r\n\r\n예를들어 체감온도 부분에서 \r\n\r\n닼토봇은 9번째 라인에 현재 날씨가 있는 반면\r\nprintStr += \"현재 날씨 : \" + tmpArray[9].trim() + \"\\n\"; \r\n\r\n메봇은 10번째 라인에 현재 날씨가 있었음을 확인했습니다.\r\nprintStr += \"현재 날씨 : \" + tmpArray[10].trim() + \"\\n\";\r\n\r\n즉, 메봇은 각 정보가 있는 라인의 위치를 넣어주면 동작을 잘 할것으로 보입니다.\r\n",
+                    "id": 67083271,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 66653863,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "doami2005"
+                    },
+                    "updateDate": 1566551747000,
+                    "writer": {
+                        "id": "highkrs",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160212_59/highkrs_14552365195859wBpG_JPEG/1454593100695.jpg"
+                        },
+                        "nick": "로젠다로"
+                    }
+                }
+            ],
+            "last": {
+                "id": 66653863,
+                "refId": 66653863
+            },
+            "next": {
+                "id": 67083357,
+                "refId": 66653863
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

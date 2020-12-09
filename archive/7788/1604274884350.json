@@ -1,0 +1,397 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 43,
+            "contentElements": [
+                {
+                    "json": {
+                        "audioUrl": "",
+                        "desc": "#AlphaDo #카카오톡 #봇 #의뢰 #주문제작 #문화상품권 #기프트카드 #계좌 #초성퀴즈",
+                        "domain": "open.kakao.com",
+                        "from": "MOBILEWEB",
+                        "imageUrl": "https://dthumb-phinf.pstatic.net/?src=https://iopen.kakaocdn.net/img/og/v1/ko_scrap_sv_05.png&amp;type=f560_336",
+                        "layout": "WIDE_IMAGE",
+                        "linkUrl": "https://open.kakao.com/o/s17SKUNb",
+                        "truncatedDesc": "#AlphaDo #&#52852;&#52852;&#50724;&#53665; #&#48391; #&#51032;&#47280; #&#51452;&#47928;&#51228;&#51089; #&#47928;&#54868;&#49345;&#54408;&#44428; #&#44592;&#54532;&#53944;&#52852;&#46300; #&#44228;&#51340; #&#52488;&#49457;&#53300;&#51592;",
+                        "truncatedTitle": "&#52852;&#52852;&#50724;&#53665; &#48391; &#49548;&#49828; &#51032;&#47280;",
+                        "videoUrl": ""
+                    },
+                    "type": "LINK"
+                }
+            ],
+            "contentHtml": "<p>const Url = &quot;&quot;; //URI 그대로 복사해서 넣으세요<br />const On = {};<br />const Pro = {};<br />let User = &quot;&quot;; //주어지는 api 키 그대로 복사해서 넣으세요<br /><br />response = (room, msg, sender, isGroupChat, replier) =&gt; {<br />if (!On[room]) On[room] = false;<br /><br />if (!Pro[room]) Pro[room] = 0;<br /><br />if (msg == &quot;/Talk On&quot;) {<br />On[room] = true;<br />replier.reply(&quot;[Bot]\\nRoom : &quot; + room + &quot;\\nTalk : On&quot;);<br />return;<br />}<br /><br />if (!On[room]) return;<br /><br />if (msg == &quot;/Talk Off&quot;) {<br />On[room] = false;<br />replier.reply(&quot;[Bot]\\nRoom : &quot; + room + &quot;\\nTalk : Off&quot;);<br />return;<br />}<br /><br />if (msg.startsWith(&quot;/Talk &quot;)) {<br />msg = msg.replace(&quot;/Talk &quot;, &quot;&quot;);<br /><br />if (isNaN(msg)) return;<br /><br />if (msg &lt; 0 || msg &gt; 100) return;<br />Pro[room] = msg;<br />replier.reply(&quot;[Bot]\\nRoom : &quot; + room + &quot;\\nProbability : &quot; + msg + &quot;%&quot;); <br />return;<br />}<br /><br />if (Math.random() * 100 &lt;&lt; 0 &gt; (99 - Pro[room])) {<br />User = User.replace(&quot;Basic &quot;, &quot;&quot;);<br />let jsondata = { &quot;request&quot;: { &quot;query&quot;: msg } };<br /><br />send = _ =&gt; { <br />try{<br />let url = new java.net.URL(Url);<br />let con = url.openConnection();<br />con.setRequestMethod(&quot;POST&quot;); // 서버 접속 방법을 설정하세요. GET, POST, OPTIONS 등..<br />con.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json; charset=utf-8&quot;); // 서버 접속시 가져올 데이터의 형식을 지정<br />con.setRequestProperty(&quot;Authorization&quot;, &quot;Basic &quot; + User); // 인증키 입력. 사이트에 따라 Basic 또는 Bearer 를 사용합니다.<br />con.setRequestProperty(&quot;User-Agent&quot;, &quot;Mozilla&quot;); // 일부 사이트의 경우 User-Agent 를 요구합니다.<br />con.setRequestProperty(&quot;Accpet&quot;, &quot;*.*&quot;); // 일부 사이트의 경우, 이 헤더가 없으면 오류가 발생합니다.<br />con.setDoOutput(true);<br />let wr = new java.io.DataOutputStream(con.getOutputStream());<br />let writer = new java.io.BufferedWriter(new java.io.OutputStreamWriter(wr, &quot;UTF-8&quot;));<br />writer.write(JSON.stringify(jsondata));<br />writer.close();<br />wr.close();<br /><br />let responseCode = con.getResponseCode();<br />let br;<br /><br />if (responseCode == 200) {<br />br = new java.io.BufferedReader(new java.io.InputStreamReader(con.getInputStream()));<br />}<br />else<br />br = new java.io.BufferedReader(new java.io.InputStreamReader(con.getErrorStream()));<br /><br />let inputLine;<br />let response = &quot;&quot;;<br /><br />while ((inputLine = br.readLine()) != null) {<br />response += inputLine;<br />}<br />br.close();<br />return response;<br />} catch (e) {<br />return e;<br />} <br />} <br /><br />let results = JSON.parse(send());<br />replier.reply(results[&quot;response&quot;][&quot;replies&quot;][0][&quot;text&quot;]);<br />}<br />}<br /><br />/*<br />전에 올렸던 핑퐁에서 업데이트로 인해 발생하는 오류를 수정했어요.<br />이제 Base64로 인코딩은 안해도 됩니다. 와!<br /><br />/Talk On 명령어로 전원을 켭니다.<br />/Talk Off 명령어로 전원을 끕니다.<br />/Talk 100 명령어로 반응 학률을 100%로 설정합니다.<br />/Talk 69 명령어로 반응 확률을 69%로 설정합니다.<br />/Talk 7458853.141592 명령어로 반응 확률을 설정하지 않습니다.<br />핑퐁 사이트 &gt; 플랫폼 연동 &gt; Custom API 항목을 연동하세요.<br />Custom API를 누르시면 Api 키를 획득하실 수 있습니다.<br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br /><p>모르시겠다면, 이 방으로 들어와서 의뢰하여 주세요.<br />비용(?)이 발생할 수는 있지만 친절하게 알려드리겠습니다. (잡혀가려나)<br />*/</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001E6C00000000",
+            "id": 7788,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 802,
+            "refArticleId": 7788,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[소스] 핑퐁핑퐁핑퐁핑퐁",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573705339523,
+            "writer": {
+                "id": "dsy2761",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_888.gif",
+                "memberLevelName": "부 매니저",
+                "nick": "AlphaDo"
+            }
+        },
+        "articleId": 7788,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "?? 원래 안했는데욥 Base어쩌구",
+                    "id": 73456326,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73456326,
+                    "updateDate": 1573705383000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "한 3개월전인가 처음올라오고 그뒤로부터 한번도 소스를 바꾼적이 없어요..",
+                    "id": 73456389,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73456326,
+                    "updateDate": 1573705413000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "사이트에서 주어지는 api 키 양식이 바뀌어서 기존 글대로 하면 인코딩이 두번 되어 오류가 발생합니다...ㅋㅋㅋ",
+                    "id": 73456673,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73456326,
+                    "updateDate": 1573705632000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "아직도 토큰 오류가 나는데요... 저만그러나요",
+                    "id": 73478892,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73478892,
+                    "updateDate": 1573725499000,
+                    "writer": {
+                        "id": "eric071024",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMTFfMjI2/MDAxNTgxNDA1MzA3OTE5.wHhJ9BjdQemQL3vrELHIH9c6Sdn7KTULYfMQgy2GN9Eg.bZxBVVQwWHBc8yMZbm6x7Arg8KW03i5YLQlvTtC7w7gg.GIF.eric071024/ezgif-5-8ffa2959ab3f.gif"
+                        },
+                        "nick": "runkan"
+                    }
+                },
+                {
+                    "content": "고ㅡ인물",
+                    "id": 73511416,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73511416,
+                    "updateDate": 1573772690000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "히유"
+                    }
+                },
+                {
+                    "content": "저도 토큰 오류가...",
+                    "id": 73539048,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73539048,
+                    "updateDate": 1573791322000,
+                    "writer": {
+                        "id": "nettime007",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "까칠한까칠"
+                    }
+                },
+                {
+                    "content": "잘되네요. 정말 고맙습니다.",
+                    "id": 73640402,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73640402,
+                    "updateDate": 1573912590000,
+                    "writer": {
+                        "id": "kyyk112",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "부활"
+                    }
+                },
+                {
+                    "content": "작동 정말 잘되네요...!",
+                    "id": 74664724,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74664724,
+                    "updateDate": 1575032449000,
+                    "writer": {
+                        "id": "pauljjang410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "그린스크린"
+                    }
+                },
+                {
+                    "content": "작동 잘되셔서 감사합니다...!",
+                    "id": 74675915,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74664724,
+                    "updateDate": 1575040256000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "채팅방에 사용하고 싶은 방만 하는 방법 있나요?",
+                    "id": 76304696,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 76304696,
+                    "updateDate": 1576825997000,
+                    "writer": {
+                        "id": "tkdgjs6897",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMTAx/MDAxNTgwNTY3MzYzMTY2.XUeAx5gDTLB-IBBj-2Sb8BmdLVmtTF2Nn9PAkRw4GV0g.zno8J23Z--_f3x3V5V7N7r0O_Pxr4lA1SAktuNttGIIg.JPEG/1552227072327.jpg"
+                        },
+                        "nick": "상헌굿"
+                    }
+                }
+            ],
+            "last": {
+                "id": 106625814,
+                "refId": 106625814
+            },
+            "next": {
+                "id": 76304781,
+                "refId": 76304696
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

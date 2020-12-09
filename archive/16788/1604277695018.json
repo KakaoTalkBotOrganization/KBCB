@@ -1,0 +1,181 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇R</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt; 방 별로 명령어를 껐다 키는걸 만들려고 하는데</b></div><div><b>작동 중지가 되야하는데 시작만 됩니다 도와주세요</b></div><div><b>※여기에서 %%% 부분은 듀얼메신저 구분할려고 방 이름 앞에 %%% 붙여둔거에요</b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; FS = FileStream;</b></div><div><b>work_path = &apos;sdcard/jipoongbot/work.json&apos;;</b></div><div><b>let command = [&quot;ㄱ&quot;, &quot;ㄴ&quot;];</b></div><div><b>const allsee = new Array(500).fill(&quot;&quot;).join(&quot;&quot;);</b></div><div><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</b></div><div><b>&nbsp; &nbsp; if (room.includes(&quot;%%%&quot;)) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; rooom = room.replace(&quot;%%%&quot;, &quot;&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if (JSON.parse(FS.read(work_path))[rooom] == null) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; filest = JSON.parse(FS.read(work_path));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; filest[rooom] = [&quot;&quot;];</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FS.write(work_path, JSON.stringify(filest));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; if (msg.startsWith(&quot;/작동&quot;)) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let target = msg.replace(&quot;/작동&quot;, &quot;&quot;).trim();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (command.includes(target).valueOf()) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (JSON.parse(FS.read(work_path))[rooom].some(e =&gt; target.includes(e).valueOf())) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; filest = JSON.parse(FS.read(work_path));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; filest[rooom][filest[rooom].length] = target;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FS.write(work_path, JSON.stringify(filest));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(target + &quot;의 작동을 시작하였습니다&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; filest = JSON.parse(FS.read(work_path));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var num = filest[rooom].indexOf(target);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; filest[rooom].splice(num, 1);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FS.write(work_path, JSON.stringify(filest));</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(target + &quot;의 작동을 중지하였습니다&quot;);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;해당 명령어는 존재하지 않습니다!&quot; + allsee + command);</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }      catch (e) {</b></div><div><b>&nbsp; &nbsp; replier.reply(&quot;실행 과정 중에 오류가 생겼습니다.&quot; + allsee + &quot;\\n오류명 : &quot; + e.name + &quot;\\n오류메시지 : &quot; + e.message + &quot;\\n오류난 줄 : &quot; + e.lineNumber);</b></div><div><b>}</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; }</b></div><div><b>}</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000419400000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 16788,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 99,
+            "refArticleId": 16788,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "방 별로 명령어를 하나하나 껐다 키는걸 만들던 중..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587923608077,
+            "writer": {
+                "id": "larrykmcho",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20191110_202/larrykmcho_1573354894091u86ye_PNG/image.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "지풍"
+            }
+        },
+        "articleId": 16788,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "윽.. 모바일이라 불편하네요. 한번 시간이 된다면 만들어 보겠습니다 :)",
+                    "id": 88668702,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88668702,
+                    "updateDate": 1587937615000,
+                    "writer": {
+                        "id": "hyukjun0106",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTZfNTUg/MDAxNTg2OTk4MjMzMTE1.GIkMkitCptPs4QcaYP53_d9sa3zRdMWGKg-ZRvVgwYQg.rsdiLOzyzR5Az6OknEqrC4ZXHdq_boroeGvFDsdimxIg.PNG/1586997919830.PNG"
+                        },
+                        "nick": "김코딩"
+                    }
+                },
+                {
+                    "content": "감사합니다!",
+                    "id": 88678148,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88668702,
+                    "updateDate": 1587944676000,
+                    "writer": {
+                        "id": "larrykmcho",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20191110_202/larrykmcho_1573354894091u86ye_PNG/image.png"
+                        },
+                        "nick": "지풍"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

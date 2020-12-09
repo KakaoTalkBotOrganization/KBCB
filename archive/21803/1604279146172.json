@@ -1,0 +1,229 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1521,
+                            "service": "CAFE",
+                            "style": "width:1080px; height:2220px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MjdfMjE4/MDAxNTk1Nzc2MzQzMjg4.OOZ1DHrC_WtOVCp_oatAlydpH7ciWNUO85CH-4QL9Cgg.ZaER7roMR9606wsTMhVJreSG45Iy5aj6yGUUCwn-W2Mg.JPEG/Screenshot_20200726-234256_KakaoTalk.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "[[[CONTENT-ELEMENT-0]]]<p>&nbsp;이렇게 계속 오류가 뜨고 코드는 구름님꺼 사용했습니당..! 늦은시간이지만 도와주실분 있나요??</p><p>var 끝말 = {};</p><p>끝말.단어 = [];</p><p>끝말.인원 = [];</p><p>끝말.파워 = false;</p><p>끝말.앞단어 = null;</p><p>끝말.두음앞단어 = null;</p><p>끝말.단어들 = [];</p><p>끝말.두음 = &quot;미설정&quot;;</p><p>function response(room, msg, sender, isGroupChat, replier, ImageID) {</p><p>sender = sender.replace(/&#847;| &#8238;/g,&quot;&quot;).trim();</p><p>msg = msg.trim();</p><p>function s(str) {</p><p>replier.reply(str);</p><p>}</p><p>if (msg == &quot;/끝말&quot;) {</p><p>s(&quot;&lsquo;/참가 (두음 or 노두음)&rsquo;을 입력하십시오.(ex. &lsquo;/참가 두음&rsquo;)&quot;);</p><p>}</p><p>var cc = msg.split(&quot; &quot;)[1];</p><p>if (msg.indexOf(&quot;/참가&quot;)==0) {</p><p>if (msg == &quot;/참가&quot;) {</p><p>s(&quot;&lsquo;/참가 (두음 / 노두음)&rsquo;&quot;);</p><p>}</p><p>if (cc == &quot;두음&quot; || cc == &quot;노두음&quot;) {</p><p>if (끝말.인원.indexOf(sender)!=-1) {</p><p>s(&quot;이미 참가되어 있습니다.&quot;);</p><p>return;</p><p>}</p><p>if (끝말.파워 == true) {</p><p>s(&quot;이미 시작되어 있습니다.&quot;);</p><p>return;</p><p>}</p><p>if (cc == &quot;두음&quot;&amp;&amp;끝말.두음 !== &quot;없음&quot;) {</p><p>if (끝말.두음 == &quot;미설정&quot;) {</p><p>s(&quot;두음모드로 설정되었습니다.&quot;);</p><p>}</p><p>끝말.두음 = &quot;있음&quot;;</p><p>}</p><p>if (cc == &quot;노두음&quot;&amp;&amp;끝말.두음 !== &quot;있음&quot;) {</p><p>if (끝말.두음 == &quot;미설정&quot;) {</p><p>s(&quot;노두음모드로 설정되었습니다.&quot;);</p><p>}</p><p>끝말.두음 = &quot;없음&quot;;</p><p>}</p><p>끝말.인원.push(sender);</p><p>s(&quot;참가되었습니다.\\n참가인원수 : &quot;+끝말.인원.length+&quot;명&quot;);</p><p>}</p><p>}</p><p>if (msg == &quot;/시작&quot;) {</p><p>if (끝말.파워 == true) {</p><p>s(&quot;이미 시작되어 있습니다.&quot;);</p><p>return;</p><p>}</p><p>if (끝말.인원.length &lt; 2) {</p><p>s(&quot;인원이 충분하지 않습니다.&quot;);</p><p>return;</p><p>}</p><p>끝말.파워 = true;</p><p>s(&quot;게임을 시작합니다.\\n인원은 &quot;+끝말.인원.length+&quot;명이고\\n순서는 &quot;+끝말.인원.join(&quot; &#9656; &quot;)+&quot; 입니다.(&apos;!단어&apos;로 단어 입력)&quot;);</p><p>var g = &quot;가나다라마바사아자차카타파하&quot;;</p><p>var h = Math.floor(Math.random()*14);</p><p>var f = g.split(&quot;&quot;)[h];</p><p>s(&quot;시작단어 : &quot;+f);</p><p>끝말.앞단어 = f;</p><p>}</p><p>if (끝말.파워 == true &amp;&amp; 끝말.인원.length &gt; 1 &amp;&amp; 끝말.인원[0] == sender &amp;&amp; msg.indexOf(&quot;!&quot;)==0) {</p><p>if (msg.indexOf(끝말.앞단어)!==1 &amp;&amp; msg.indexOf(끝말.두음앞단어)!==1) {</p><p>s(&quot;앞 글자가 맞지 않습니다.&quot;);</p><p>return;</p><p>}</p><p>if (끝말.단어들.indexOf(msg.substr(1))!=-1) {</p><p>s(&quot;이미 했던 단어입니다.&quot;);</p><p>return;</p><p>}</p><p>if (msg.length == 2) {</p><p>s(&quot;한글자는 안 됩니다!&quot;);</p><p>return;</p><p>}</p><p>if (msg.substr(1).match(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/)) {</p><p>s(&quot;오직 한글만 됩니다!(옛한글제외)&quot;);</p><p>return;</p><p>}</p><p>var b = msg.substr(1);</p><p>var a = Utils.getWebText(&quot;https://opendict.korean.go.kr/m/searchResult?currentPage=1&amp;dicType=1&amp;sense_no=&amp;query=&quot;+encodeURI(b));</p><p>var c = a.split(&quot;만 찾기&quot;)[2];</p><p>if (c !== undefined) {</p><p>var l = a.split(&quot;wordDis\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0];</p><p>var n = a.split(&quot;wordAttr\\&quot;&gt;&quot;)[3].split(&quot;&lt;/span&gt;&quot;)[0];</p><p>var m = a.split(&quot;wordAttr\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0];</p><p>l = l.replace(/&lt;[^&gt;]+&gt;/,&quot;&quot;);</p><p>m = m.replace(/&lt;[^&gt;]+&gt;/,&quot;&quot;);</p><p>n = n.replace(/&lt;[^&gt;]+&gt;/,&quot;&quot;);</p><p>끝말.인원.shift();</p><p>끝말.인원.push(sender);</p><p>var 두음 = [[&quot;라&quot;,&quot;나&quot;], [&quot;락&quot;,&quot;낙&quot;], [&quot;띾&quot;,&quot;낚&quot;], [&quot;띿&quot;,&quot;낛&quot;], [&quot;란&quot;,&quot;난&quot;], [&quot;랁&quot;,&quot;낝&quot;], [&quot;랂&quot;,&quot;낞&quot;], [&quot;랃&quot;,&quot;낟&quot;], [&quot;랄&quot;,&quot;날&quot;], [&quot;랅&quot;,&quot;낡&quot;], [&quot;랆&quot;,&quot;낢&quot;], [&quot;랇&quot;,&quot;낣&quot;], [&quot;랈&quot;,&quot;낤&quot;], [&quot;랉&quot;,&quot;낥&quot;], [&quot;랊&quot;,&quot;낦&quot;], [&quot;랋&quot;,&quot;낧&quot;], [&quot;람&quot;,&quot;남&quot;], [&quot;랍&quot;,&quot;납&quot;], [&quot;랎&quot;,&quot;낪&quot;], [&quot;랏&quot;,&quot;낫&quot;], [&quot;랐&quot;,&quot;났&quot;], [&quot;랑&quot;,&quot;낭&quot;], [&quot;랒&quot;,&quot;낮&quot;], [&quot;랓&quot;,&quot;낯&quot;], [&quot;랔&quot;,&quot;낰&quot;], [&quot;랕&quot;,&quot;낱&quot;], [&quot;랖&quot;,&quot;낲&quot;], [&quot;랗&quot;,&quot;낳&quot;], [&quot;래&quot;,&quot;내&quot;], [&quot;랙&quot;,&quot;낵&quot;], [&quot;랚&quot;,&quot;낶&quot;], [&quot;랛&quot;,&quot;낷&quot;], [&quot;랜&quot;,&quot;낸&quot;], [&quot;랝&quot;,&quot;낹&quot;], [&quot;랞&quot;,&quot;낺&quot;], [&quot;랟&quot;,&quot;낻&quot;], [&quot;랠&quot;,&quot;낼&quot;], [&quot;랡&quot;,&quot;낽&quot;], [&quot;랢&quot;,&quot;낾&quot;], [&quot;랣&quot;,&quot;낿&quot;], [&quot;랤&quot;,&quot;냀&quot;], [&quot;랥&quot;,&quot;냁&quot;], [&quot;랦&quot;,&quot;냂&quot;], [&quot;랧&quot;,&quot;냃&quot;], [&quot;램&quot;,&quot;냄&quot;], [&quot;랩&quot;,&quot;냅&quot;], [&quot;랪&quot;,&quot;냆&quot;], [&quot;랫&quot;,&quot;냇&quot;], [&quot;랬&quot;,&quot;냈&quot;], [&quot;랭&quot;,&quot;냉&quot;], [&quot;랮&quot;,&quot;냊&quot;], [&quot;랯&quot;,&quot;냋&quot;], [&quot;랰&quot;,&quot;냌&quot;], [&quot;랱&quot;,&quot;냍&quot;], [&quot;랲&quot;,&quot;냎&quot;], [&quot;랳&quot;,&quot;냏&quot;], [&quot;로&quot;,&quot;노&quot;], [&quot;록&quot;,&quot;녹&quot;], [&quot;롞&quot;,&quot;녺&quot;], [&quot;롟&quot;,&quot;녻&quot;], [&quot;론&quot;,&quot;논&quot;], [&quot;롡&quot;,&quot;녽&quot;], [&quot;롢&quot;,&quot;녾&quot;], [&quot;롣&quot;,&quot;녿&quot;], [&quot;롤&quot;,&quot;놀&quot;], [&quot;롥&quot;,&quot;놁&quot;], [&quot;롦&quot;,&quot;놂&quot;], [&quot;롧&quot;,&quot;놃&quot;], [&quot;롨&quot;,&quot;놄&quot;], [&quot;롩&quot;,&quot;놅&quot;], [&quot;롪&quot;,&quot;놆&quot;], [&quot;롫&quot;,&quot;놇&quot;], [&quot;롬&quot;,&quot;놈&quot;], [&quot;롭&quot;,&quot;놉&quot;], [&quot;롮&quot;,&quot;놊&quot;], [&quot;롯&quot;,&quot;놋&quot;], [&quot;롰&quot;,&quot;놌&quot;], [&quot;롱&quot;,&quot;농&quot;], [&quot;롲&quot;,&quot;놎&quot;], [&quot;롳&quot;,&quot;놏&quot;], [&quot;롴&quot;,&quot;놐&quot;], [&quot;롵&quot;,&quot;놑&quot;], [&quot;롶&quot;,&quot;높&quot;], [&quot;롷&quot;,&quot;놓&quot;], [&quot;뢰&quot;,&quot;뇌&quot;], [&quot;뢱&quot;,&quot;뇍&quot;], [&quot;뢲&quot;,&quot;뇎&quot;], [&quot;뢳&quot;,&quot;뇏&quot;], [&quot;뢴&quot;,&quot;뇐&quot;], [&quot;뢵&quot;,&quot;뇑&quot;], [&quot;뢶&quot;,&quot;뇒&quot;], [&quot;뢷&quot;,&quot;뇓&quot;], [&quot;뢸&quot;,&quot;뇔&quot;], [&quot;뢹&quot;,&quot;뇕&quot;], [&quot;뢺&quot;,&quot;뇖&quot;], [&quot;뢻&quot;,&quot;뇗&quot;], [&quot;뢼&quot;,&quot;뇘&quot;], [&quot;뢽&quot;,&quot;뇙&quot;], [&quot;뢾&quot;,&quot;뇚&quot;], [&quot;뢿&quot;,&quot;뇛&quot;], [&quot;룀&quot;,&quot;뇜&quot;], [&quot;룁&quot;,&quot;뇝&quot;], [&quot;룂&quot;,&quot;뇞&quot;], [&quot;룃&quot;,&quot;뇟&quot;], [&quot;룄&quot;,&quot;뇠&quot;], [&quot;룅&quot;,&quot;뇡&quot;], [&quot;룆&quot;,&quot;뇢&quot;], [&quot;룇&quot;,&quot;뇣&quot;], [&quot;룈&quot;,&quot;뇤&quot;], [&quot;룉&quot;,&quot;뇥&quot;], [&quot;룊&quot;,&quot;뇦&quot;], [&quot;룋&quot;,&quot;뇧&quot;], [&quot;루&quot;,&quot;누&quot;], [&quot;룩&quot;,&quot;눅&quot;], [&quot;룪&quot;,&quot;눆&quot;], [&quot;룫&quot;,&quot;눇&quot;], [&quot;룬&quot;,&quot;눈&quot;], [&quot;룭&quot;,&quot;눉&quot;], [&quot;룮&quot;,&quot;눊&quot;], [&quot;룯&quot;,&quot;눋&quot;], [&quot;룰&quot;,&quot;눌&quot;], [&quot;룱&quot;,&quot;눍&quot;], [&quot;룲&quot;,&quot;눎&quot;], [&quot;룳&quot;,&quot;눏&quot;], [&quot;룴&quot;,&quot;눐&quot;], [&quot;룵&quot;,&quot;눑&quot;], [&quot;룶&quot;,&quot;눒&quot;], [&quot;룷&quot;,&quot;눓&quot;], [&quot;룸&quot;,&quot;눔&quot;], [&quot;룹&quot;,&quot;눕&quot;], [&quot;룺&quot;,&quot;눖&quot;], [&quot;룻&quot;,&quot;눗&quot;], [&quot;룼&quot;,&quot;눘&quot;], [&quot;룽&quot;,&quot;눙&quot;], [&quot;룾&quot;,&quot;눚&quot;], [&quot;룿&quot;,&quot;눛&quot;], [&quot;뤀&quot;,&quot;눜&quot;], [&quot;뤁&quot;,&quot;눝&quot;], [&quot;뤂&quot;,&quot;눞&quot;], [&quot;뤃&quot;,&quot;눟&quot;], [&quot;르&quot;,&quot;느&quot;], [&quot;륵&quot;,&quot;늑&quot;], [&quot;륶&quot;,&quot;늒&quot;], [&quot;륷&quot;,&quot;늓&quot;], [&quot;른&quot;,&quot;는&quot;], [&quot;륹&quot;,&quot;늕&quot;], [&quot;륺&quot;,&quot;늖&quot;], [&quot;륻&quot;,&quot;늗&quot;], [&quot;를&quot;,&quot;늘&quot;], [&quot;륽&quot;,&quot;늙&quot;], [&quot;륾&quot;,&quot;늚&quot;], [&quot;륿&quot;,&quot;늛&quot;], [&quot;릀&quot;,&quot;늜&quot;], [&quot;릁&quot;,&quot;늝&quot;], [&quot;릂&quot;,&quot;늞&quot;], [&quot;릃&quot;,&quot;늟&quot;], [&quot;름&quot;,&quot;늠&quot;], [&quot;릅&quot;,&quot;늡&quot;], [&quot;릆&quot;,&quot;늢&quot;], [&quot;릇&quot;,&quot;늣&quot;], [&quot;릈&quot;,&quot;늤&quot;], [&quot;릉&quot;,&quot;능&quot;], [&quot;릊&quot;,&quot;늦&quot;], [&quot;릋&quot;,&quot;늧&quot;], [&quot;릌&quot;,&quot;늨&quot;], [&quot;릍&quot;,&quot;늩&quot;], [&quot;릎&quot;,&quot;늪&quot;], [&quot;릏&quot;,&quot;늫&quot;], [&quot;랴&quot;,&quot;야&quot;], [&quot;략&quot;,&quot;약&quot;], [&quot;랶&quot;,&quot;앾&quot;], [&quot;랷&quot;,&quot;앿&quot;], [&quot;랸&quot;,&quot;얀&quot;], [&quot;랹&quot;,&quot;얁&quot;], [&quot;랺&quot;,&quot;얂&quot;], [&quot;랻&quot;,&quot;얃&quot;], [&quot;랼&quot;,&quot;얄&quot;], [&quot;랽&quot;,&quot;얅&quot;], [&quot;랾&quot;,&quot;얆&quot;], [&quot;랿&quot;,&quot;얇&quot;], [&quot;럀&quot;,&quot;얈&quot;], [&quot;럁&quot;,&quot;얉&quot;], [&quot;럂&quot;,&quot;얊&quot;], [&quot;럃&quot;,&quot;얋&quot;], [&quot;럄&quot;,&quot;얌&quot;], [&quot;럅&quot;,&quot;얍&quot;], [&quot;럆&quot;,&quot;얎&quot;], [&quot;럇&quot;,&quot;얏&quot;], [&quot;럈&quot;,&quot;얐&quot;], [&quot;량&quot;,&quot;양&quot;], [&quot;럊&quot;,&quot;얒&quot;], [&quot;럋&quot;,&quot;얓&quot;], [&quot;럌&quot;,&quot;얔&quot;], [&quot;럍&quot;,&quot;얕&quot;], [&quot;럎&quot;,&quot;얖&quot;], [&quot;럏&quot;,&quot;얗&quot;], [&quot;려&quot;,&quot;여&quot;], [&quot;력&quot;,&quot;역&quot;], [&quot;렦&quot;,&quot;엮&quot;], [&quot;렧&quot;,&quot;엯&quot;], [&quot;련&quot;,&quot;연&quot;], [&quot;렩&quot;,&quot;엱&quot;], [&quot;렪&quot;,&quot;엲&quot;], [&quot;렫&quot;,&quot;엳&quot;], [&quot;렬&quot;,&quot;열&quot;], [&quot;렭&quot;,&quot;엵&quot;], [&quot;렮&quot;,&quot;엶&quot;], [&quot;렯&quot;,&quot;엷&quot;], [&quot;렰&quot;,&quot;엸&quot;], [&quot;렱&quot;,&quot;엹&quot;], [&quot;렲&quot;,&quot;엺&quot;], [&quot;렳&quot;,&quot;엻&quot;], [&quot;렴&quot;,&quot;염&quot;], [&quot;렵&quot;,&quot;엽&quot;], [&quot;렶&quot;,&quot;엾&quot;], [&quot;렷&quot;,&quot;엿&quot;], [&quot;렸&quot;,&quot;였&quot;], [&quot;령&quot;,&quot;영&quot;], [&quot;렺&quot;,&quot;옂&quot;], [&quot;렻&quot;,&quot;옃&quot;], [&quot;렼&quot;,&quot;옄&quot;], [&quot;렽&quot;,&quot;옅&quot;], [&quot;렾&quot;,&quot;옆&quot;], [&quot;렿&quot;,&quot;옇&quot;], [&quot;례&quot;,&quot;예&quot;], [&quot;롁&quot;,&quot;옉&quot;], [&quot;롂&quot;,&quot;옊&quot;], [&quot;롃&quot;,&quot;옋&quot;], [&quot;롄&quot;,&quot;옌&quot;], [&quot;롅&quot;,&quot;옍&quot;], [&quot;롆&quot;,&quot;옎&quot;], [&quot;롇&quot;,&quot;옏&quot;], [&quot;롈&quot;,&quot;옐&quot;], [&quot;롉&quot;,&quot;옑&quot;], [&quot;롊&quot;,&quot;옒&quot;], [&quot;롋&quot;,&quot;옓&quot;], [&quot;롌&quot;,&quot;옔&quot;], [&quot;롍&quot;,&quot;옕&quot;], [&quot;롎&quot;,&quot;옖&quot;], [&quot;롏&quot;,&quot;옗&quot;], [&quot;롐&quot;,&quot;옘&quot;], [&quot;롑&quot;,&quot;옙&quot;], [&quot;롒&quot;,&quot;옚&quot;], [&quot;롓&quot;,&quot;옛&quot;], [&quot;롔&quot;,&quot;옜&quot;], [&quot;롕&quot;,&quot;옝&quot;], [&quot;롖&quot;,&quot;옞&quot;], [&quot;롗&quot;,&quot;옟&quot;], [&quot;롘&quot;,&quot;옠&quot;], [&quot;롙&quot;,&quot;옡&quot;], [&quot;롚&quot;,&quot;옢&quot;], [&quot;롛&quot;,&quot;옣&quot;], [&quot;료&quot;,&quot;요&quot;], [&quot;룍&quot;,&quot;욕&quot;], [&quot;룎&quot;,&quot;욖&quot;], [&quot;룏&quot;,&quot;욗&quot;], [&quot;룐&quot;,&quot;욘&quot;], [&quot;룑&quot;,&quot;욙&quot;], [&quot;룒&quot;,&quot;욚&quot;], [&quot;룓&quot;,&quot;욛&quot;], [&quot;룔&quot;,&quot;욜&quot;], [&quot;룕&quot;,&quot;욝&quot;], [&quot;룖&quot;,&quot;욞&quot;], [&quot;룗&quot;,&quot;욟&quot;], [&quot;룘&quot;,&quot;욠&quot;], [&quot;룙&quot;,&quot;욡&quot;], [&quot;룚&quot;,&quot;욢&quot;], [&quot;룛&quot;,&quot;욣&quot;], [&quot;룜&quot;,&quot;욤&quot;], [&quot;룝&quot;,&quot;욥&quot;], [&quot;룞&quot;,&quot;욦&quot;], [&quot;룟&quot;,&quot;욧&quot;], [&quot;룠&quot;,&quot;욨&quot;], [&quot;룡&quot;,&quot;용&quot;], [&quot;룢&quot;,&quot;욪&quot;], [&quot;룣&quot;,&quot;욫&quot;], [&quot;룤&quot;,&quot;욬&quot;], [&quot;룥&quot;,&quot;욭&quot;], [&quot;룦&quot;,&quot;욮&quot;], [&quot;룧&quot;,&quot;욯&quot;], [&quot;류&quot;,&quot;유&quot;], [&quot;륙&quot;,&quot;육&quot;], [&quot;륚&quot;,&quot;윢&quot;], [&quot;륛&quot;,&quot;윣&quot;], [&quot;륜&quot;,&quot;윤&quot;], [&quot;륝&quot;,&quot;윥&quot;], [&quot;륞&quot;,&quot;윦&quot;], [&quot;륟&quot;,&quot;윧&quot;], [&quot;률&quot;,&quot;율&quot;], [&quot;륡&quot;,&quot;윩&quot;], [&quot;륢&quot;,&quot;윪&quot;], [&quot;륣&quot;,&quot;윫&quot;], [&quot;륤&quot;,&quot;윬&quot;], [&quot;륥&quot;,&quot;윭&quot;], [&quot;륦&quot;,&quot;윮&quot;], [&quot;륧&quot;,&quot;윯&quot;], [&quot;륨&quot;,&quot;윰&quot;], [&quot;륩&quot;,&quot;윱&quot;], [&quot;륪&quot;,&quot;윲&quot;], [&quot;륫&quot;,&quot;윳&quot;], [&quot;륬&quot;,&quot;윴&quot;], [&quot;륭&quot;,&quot;융&quot;], [&quot;륮&quot;,&quot;윶&quot;], [&quot;륯&quot;,&quot;윷&quot;], [&quot;륰&quot;,&quot;윸&quot;], [&quot;륱&quot;,&quot;윹&quot;], [&quot;륲&quot;,&quot;윺&quot;], [&quot;륳&quot;,&quot;윻&quot;], [&quot;리&quot;,&quot;이&quot;], [&quot;릭&quot;,&quot;익&quot;], [&quot;릮&quot;,&quot;읶&quot;], [&quot;릯&quot;,&quot;읷&quot;], [&quot;린&quot;,&quot;인&quot;], [&quot;릱&quot;,&quot;읹&quot;], [&quot;릲&quot;,&quot;읺&quot;], [&quot;릳&quot;,&quot;읻&quot;], [&quot;릴&quot;,&quot;일&quot;], [&quot;릵&quot;,&quot;읽&quot;], [&quot;릶&quot;,&quot;읾&quot;], [&quot;릷&quot;,&quot;읿&quot;], [&quot;릸&quot;,&quot;잀&quot;], [&quot;릹&quot;,&quot;잁&quot;], [&quot;릺&quot;,&quot;잂&quot;], [&quot;릻&quot;,&quot;잃&quot;], [&quot;림&quot;,&quot;임&quot;], [&quot;립&quot;,&quot;입&quot;], [&quot;릾&quot;,&quot;잆&quot;], [&quot;릿&quot;,&quot;잇&quot;], [&quot;맀&quot;,&quot;있&quot;], [&quot;링&quot;,&quot;잉&quot;], [&quot;맂&quot;,&quot;잊&quot;], [&quot;맃&quot;,&quot;잋&quot;], [&quot;맄&quot;,&quot;잌&quot;], [&quot;맅&quot;,&quot;잍&quot;], [&quot;맆&quot;,&quot;잎&quot;], [&quot;맇&quot;,&quot;잏&quot;], [&quot;녀&quot;,&quot;여&quot;], [&quot;녁&quot;,&quot;역&quot;], [&quot;녂&quot;,&quot;엮&quot;], [&quot;녃&quot;,&quot;엯&quot;], [&quot;년&quot;,&quot;연&quot;], [&quot;녅&quot;,&quot;엱&quot;], [&quot;녆&quot;,&quot;엲&quot;], [&quot;녇&quot;,&quot;엳&quot;], [&quot;녈&quot;,&quot;열&quot;], [&quot;녉&quot;,&quot;엵&quot;], [&quot;녊&quot;,&quot;엶&quot;], [&quot;녋&quot;,&quot;엷&quot;], [&quot;녌&quot;,&quot;엸&quot;], [&quot;녍&quot;,&quot;엹&quot;], [&quot;녎&quot;,&quot;엺&quot;], [&quot;녏&quot;,&quot;엻&quot;], [&quot;념&quot;,&quot;염&quot;], [&quot;녑&quot;,&quot;엽&quot;], [&quot;녒&quot;,&quot;엾&quot;], [&quot;녓&quot;,&quot;엿&quot;], [&quot;녔&quot;,&quot;였&quot;], [&quot;녕&quot;,&quot;영&quot;], [&quot;녖&quot;,&quot;옂&quot;], [&quot;녗&quot;,&quot;옃&quot;], [&quot;녘&quot;,&quot;옄&quot;], [&quot;녙&quot;,&quot;옅&quot;], [&quot;녚&quot;,&quot;옆&quot;], [&quot;녛&quot;,&quot;옇&quot;], [&quot;뇨&quot;,&quot;요&quot;], [&quot;뇩&quot;,&quot;욕&quot;], [&quot;뇪&quot;,&quot;욖&quot;], [&quot;뇫&quot;,&quot;욗&quot;], [&quot;뇬&quot;,&quot;욘&quot;], [&quot;뇭&quot;,&quot;욙&quot;], [&quot;뇮&quot;,&quot;욚&quot;], [&quot;뇯&quot;,&quot;욛&quot;], [&quot;뇰&quot;,&quot;욜&quot;], [&quot;뇱&quot;,&quot;욝&quot;], [&quot;뇲&quot;,&quot;욞&quot;], [&quot;뇳&quot;,&quot;욟&quot;], [&quot;뇴&quot;,&quot;욠&quot;], [&quot;뇵&quot;,&quot;욡&quot;], [&quot;뇶&quot;,&quot;욢&quot;], [&quot;뇷&quot;,&quot;욣&quot;], [&quot;뇸&quot;,&quot;욤&quot;], [&quot;뇹&quot;,&quot;욥&quot;], [&quot;뇺&quot;,&quot;욦&quot;], [&quot;뇻&quot;,&quot;욧&quot;], [&quot;뇼&quot;,&quot;욨&quot;], [&quot;뇽&quot;,&quot;용&quot;], [&quot;뇾&quot;,&quot;욪&quot;], [&quot;뇿&quot;,&quot;욫&quot;], [&quot;눀&quot;,&quot;욬&quot;], [&quot;눁&quot;,&quot;욭&quot;], [&quot;눂&quot;,&quot;욮&quot;], [&quot;눃&quot;,&quot;욯&quot;], [&quot;뉴&quot;,&quot;유&quot;], [&quot;뉵&quot;,&quot;육&quot;], [&quot;뉶&quot;,&quot;윢&quot;], [&quot;뉷&quot;,&quot;윣&quot;], [&quot;뉸&quot;,&quot;윤&quot;], [&quot;뉹&quot;,&quot;윥&quot;], [&quot;뉺&quot;,&quot;윦&quot;], [&quot;뉻&quot;,&quot;윧&quot;], [&quot;뉼&quot;,&quot;율&quot;], [&quot;뉽&quot;,&quot;윩&quot;], [&quot;뉾&quot;,&quot;윪&quot;], [&quot;뉿&quot;,&quot;윫&quot;], [&quot;늀&quot;,&quot;윬&quot;], [&quot;늁&quot;,&quot;윭&quot;], [&quot;늂&quot;,&quot;윮&quot;], [&quot;늃&quot;,&quot;윯&quot;], [&quot;늄&quot;,&quot;윰&quot;], [&quot;늅&quot;,&quot;윱&quot;], [&quot;늆&quot;,&quot;윲&quot;], [&quot;늇&quot;,&quot;윳&quot;], [&quot;늈&quot;,&quot;윴&quot;], [&quot;늉&quot;,&quot;융&quot;], [&quot;늊&quot;,&quot;윶&quot;], [&quot;늋&quot;,&quot;윷&quot;], [&quot;늌&quot;,&quot;윸&quot;], [&quot;늍&quot;,&quot;윹&quot;], [&quot;늎&quot;,&quot;윺&quot;], [&quot;늏&quot;,&quot;윻&quot;], [&quot;니&quot;,&quot;이&quot;], [&quot;닉&quot;,&quot;익&quot;], [&quot;닊&quot;,&quot;읶&quot;], [&quot;닋&quot;,&quot;읷&quot;], [&quot;닌&quot;,&quot;인&quot;], [&quot;닍&quot;,&quot;읹&quot;], [&quot;닎&quot;,&quot;읺&quot;], [&quot;닏&quot;,&quot;읻&quot;], [&quot;닐&quot;,&quot;일&quot;], [&quot;닑&quot;,&quot;읽&quot;], [&quot;닒&quot;,&quot;읾&quot;], [&quot;닓&quot;,&quot;읿&quot;], [&quot;닔&quot;,&quot;잀&quot;], [&quot;닕&quot;,&quot;잁&quot;], [&quot;닖&quot;,&quot;잂&quot;], [&quot;닗&quot;,&quot;잃&quot;], [&quot;님&quot;,&quot;임&quot;], [&quot;닙&quot;,&quot;입&quot;], [&quot;닚&quot;,&quot;잆&quot;], [&quot;닛&quot;,&quot;잇&quot;], [&quot;닜&quot;,&quot;있&quot;], [&quot;닝&quot;,&quot;잉&quot;], [&quot;닞&quot;,&quot;잊&quot;], [&quot;닟&quot;,&quot;잋&quot;], [&quot;닠&quot;,&quot;잌&quot;], [&quot;닡&quot;,&quot;잍&quot;], [&quot;닢&quot;,&quot;잎&quot;], [&quot;닣&quot;,&quot;잏&quot;]];</p><p>끝말.두음앞단어 = msg.substr(msg.length-1);</p><p>for (var b = 0; b &lt; 두음.length; b++) {</p><p>if (두음[b][0] == msg.substr(msg.length-1)) {</p><p>끝말.두음앞단어 = 두음[b][1];</p><p>}</p><p>}</p><p>if (끝말.두음 == &quot;없음&quot;) {</p><p>끝말.두음앞단어 = msg.substr(msg.length-1);</p><p>}</p><p>if (끝말.두음앞단어 == msg.substr(msg.length-1)) {</p><p>s(sender+&quot;님이 「&quot;+msg.substr(1)+&quot;」단어를 하셨습니다.\\n다음 글자는 『&quot;+msg.substr(msg.length-1)+&quot;』이며\\n순서는 &quot;+끝말.인원.join(&quot; &rarr; &quot;)+&quot; 입니다.&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;\\n\\n\\n\\n-----------------------\\n\\n\\n\\n&quot;+m+n+&quot;\\n&quot;+l);</p><p>} else {</p><p>s(sender+&quot;님이 「&quot;+msg.substr(1)+&quot;」단어를 하셨습니다.\\n다음 글자는 『&quot;+msg.substr(msg.length-1)+&quot;(&quot;+끝말.두음앞단어+&quot;)』이며\\n순서는 &quot;+끝말.인원.join(&quot; &rarr; &quot;)+&quot; 입니다.&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;\\n\\n\\n\\n-----------------------\\n\\n\\n\\n&quot;+m+n+&quot;\\n&quot;+l);</p><p>}</p><p>끝말.앞단어 = msg.substr(msg.length-1);</p><p>끝말.단어들.push(msg.substr(1));</p><p>return;</p><p>} else {</p><p>s(sender+&quot;님이 사전에 없는 단어를 입력하셨습니다.&quot;);</p><p>끝말.인원.shift();</p><p>if (끝말.인원.length &lt; 2 &amp;&amp; 끝말.파워 == true) {</p><p>s(&quot;인원이 1명 이하로 떨어져, 게임이 종료됩니다.\\n우승자는 「&quot;+끝말.인원[0]+&quot;」님 입니다!&quot;);</p><p>끝말.단어 = [];</p><p>끝말.인원 = [];</p><p>끝말.파워 = false;</p><p>끝말.앞단어 = null;</p><p>끝말.두음앞단어 = null;</p><p>끝말.단어들 = [];</p><p>끝말.두음 = &quot;미설정&quot;;</p><p>return;</p><p>}</p><p>if (끝말.인원.length &gt; 1 &amp;&amp; 끝말.파워 == true) {</p><p>s(sender+&quot;님이 탈락하셨습니다.\\n남은 인원은 &quot;+끝말.인원.length+&quot;명이고\\n순서는 &quot;+끝말.인원.join(&quot; &#9656; &quot;)+&quot; 입니다.&quot;);</p><p>var g = &quot;가나다라마바사아자차카타파하&quot;;</p><p>var h = Math.floor(Math.random()*14);</p><p>var f = g.split(&quot;&quot;)[h];</p><p>s(&quot;시작단어 : &quot;+f);</p><p>끝말.앞단어 = f;</p><p>끝말.단어들 = [];</p><p>}</p><p>}</p><p>}</p><p>여기서 86번째 줄은&nbsp;<span style=\"font-size: 13pt;\">var l = a.split(&quot;wordDis\\&quot;&gt;&quot;)[1].split(&quot;&lt;/span&gt;&quot;)[0]; 요거입니다!!</span></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000552B00000000",
+            "id": 21803,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 168,
+            "refArticleId": 21803,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "끝말잇기 질문이용",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595776472703,
+            "writer": {
+                "id": "dughdhk0826",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "줜이"
+            }
+        },
+        "articleId": 21803,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "Screenshot_20200726-234256_KakaoTalk.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_2020...56_KakaoTalk.jpg",
+                "size": 407830,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/a237be0e1e29289db05433083dd2a1d8782ad4ee/MjAyMDA3MjdfMjE4/MDAxNTk1Nzc2MzQzMjg4.OOZ1DHrC_WtOVCp_oatAlydpH7ciWNUO85CH-4QL9Cgg.ZaER7roMR9606wsTMhVJreSG45Iy5aj6yGUUCwn-W2Mg.JPEG/Screenshot_20200726-234256_KakaoTalk.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "a.split(\"wordDis\\\">\")[1]\n의 결과가 undefined인 것으로 추정되는 거심시오.\n",
+                    "id": 98002442,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98002442,
+                    "updateDate": 1595776997000,
+                    "writer": {
+                        "id": "dt3141592",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA3MTNfNjAg/MDAxNDk5ODc0MzI1ODY0.L23nhKElHQBYU1HI-neTmsWWI76dJM8ijnLGirojm_0g.ZsTOi3Ay5KzWIPqmG2ZbjR7l0bCQfmpzyPQB9naua4og.PNG.dt3141592/Dark%2BTornado%252B.png"
+                        },
+                        "nick": "Dark Tornado"
+                    }
+                },
+                {
+                    "content": "으으 머리가 아프네요ㅜ 이것만 3시간 잡고 있는 거시에오..",
+                    "id": 98002719,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98002442,
+                    "updateDate": 1595777194000,
+                    "writer": {
+                        "id": "dughdhk0826",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "줜이"
+                    }
+                },
+                {
+                    "content": "a.split(\"wordDis\\\">\")[1]\n의 결과가 undefined라면 어딜 지우고 수정하면 되는 것인가요..?",
+                    "id": 98002796,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98002442,
+                    "updateDate": 1595777261000,
+                    "writer": {
+                        "id": "dughdhk0826",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "줜이"
+                    }
+                },
+                {
+                    "content": "사이트 구조가 변경되었거나... 저처럼 소스를 잘못짜거나.... 그런 경우가 있습니다. 소스를 다시 만드시는걸 추천합니다.",
+                    "id": 98006428,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98006428,
+                    "updateDate": 1595783597000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "어머니에게우주8을"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

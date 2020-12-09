@@ -1,0 +1,409 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 27,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 1520,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTExMTRfNzUg/MDAxNTczNjgxOTcwODM0.JvGy9oU9FRK48LpMo9aZnzcMB4fDVNpkc1HjUBq3BBsg.XEyjqNkPI3pZwOXrPjQ8dupOzG54xitihdXGAXDSeG8g.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>/*나라(국가) 정보 가져오기 v2<br />Copyright 2019, Indvel All rights reserved.*/<br />function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){ <br />if(msg.indexOf(&quot;/국가검색&quot;)==0){<br />var name = msg.substr(6);<br />replier.reply(getNationInfo2(name))<br />}<br /><br />function getNationInfo2(name) {<br /> var doc = Utils.getWebText(&quot;https://terms.naver.com/search.nhn?query=&quot; + name + &quot;&amp;dicType=1&quot;, &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36&quot;, false, false);<br /> if(doc.indexOf(&quot;검색결과가 없습니다.&quot;) != -1) {<br />  return &quot;해당 국가 정보를 찾을 수 없습니다.&quot;;<br /> } else {<br />  try {<br />   var url = doc.split(&quot;&lt;div class=\\&quot;info_area\\&quot;&gt;&quot;)[1].split(&quot;&lt;a href=&quot;)[1].split(&quot; target&quot;)[0].replace(&quot;\\&quot;&quot;, &quot;&quot;);<br />   doc = Utils.getWebText(&quot;https://terms.naver.com&quot; + url, &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36&quot;, false, false);<br />   var result = [];<br />   var section = doc.split(&quot;&lt;div class=\\&quot;section_wrap \\&quot;&gt;&quot;)[1].split(&quot;&lt;div class=\\&quot;sub_cont_wrap\\&quot;&quot;)[0];<br />   var tbody = section.split(&quot;&lt;div class=\\&quot;tmp_profile\\&quot;&gt;&quot;)[1];<br />   if(tbody == undefined) {<br />    return &quot;해당 국가 정보를 찾을 수 없습니다.&quot;;<br />   } else {<br />    tbody = tbody.split(&quot;&lt;tbody&gt;&quot;)[1].split(&quot;&lt;/tbody&gt;&quot;)[0];<br />   }<br />   <br />   result[0] = section.split(&quot;&lt;div class=\\&quot;headword_title\\&quot;&gt;&quot;)[1].split(&quot;&lt;/h2&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).trim().replace(&quot;두산백과&quot;, &quot;&quot;).replace(/\\s/gi, &quot;&quot;) + &quot;\\n&quot;;<br />   result[1] = section.split(&quot;&lt;p class=\\&quot;word\\&quot;&quot;)[1].split(&quot;&lt;/p&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(/\\s+/g, &quot; &quot;).replace(&quot; ,&quot;, &quot;, &quot;).replace(&quot;[&quot;, &quot;&quot;).replace(&quot;]&quot;, &quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).replace(&quot;음성듣기&quot;, &quot;&quot;).replace(&quot;\\n&quot;, &quot;&quot;).replace(&quot;,  &quot;, &quot;, &quot;).replace(&quot; ,&quot;, &quot;,&quot;).trim() + &quot;\\n\\n&quot;;<br />   result[2] = tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;원어명&lt;/span&gt;&quot;)[1];<br />   if(result[2] == undefined) {<br />    result[2] = &quot;&quot;;<br />   } else {<br />    result[2] = &quot;원어명 : &quot; + result[2].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />   }<br />   result[3] = tbody.split(&quot;&lt;tr&gt;&quot;)[2].split(&quot;&lt;th&quot;)[1].split(&quot;&lt;/th&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).split(&quot;&gt;&quot;)[1].trim() + &quot; :&quot; + tbody.split(&quot;&lt;tr&gt;&quot;)[2].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).trim().replace(&quot;&gt;&quot;, &quot;&quot;) + &quot;\\n&quot;;<br />   result[4] = &quot;면적 : &quot; + numberWithCommas(tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;면적(㎢)&lt;/span&gt;&quot;)[1].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim()) + &quot;㎢&quot; + &quot;\\n&quot;;<br />   result[5] = &quot;시간대 : &quot; + tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;시간대&lt;/span&gt;&quot;)[1].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />   result[6] = &quot;수도 : &quot; + tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;수도&lt;/span&gt;&quot;)[1].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />   result[7] = tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;공용어&lt;/span&gt;&quot;)[1];<br />   if(result[7] == undefined) {<br />    result[7] = &quot;&quot;;<br />   } else {<br />    result[7] = &quot;공용어 : &quot; + result[7].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />   }<br />   result[8] = tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;건국일&lt;/span&gt;&quot;)[1];<br />   if(result[8] == undefined) {<br />    result[8] = &quot;&quot;;<br />   } else {<br />    result[8] = &quot;건국일 : &quot; + result[8].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />   }<br />   result[9] = &quot;국가원수/총리 : &quot; + tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;국가원수/국무총리&lt;/span&gt;&quot;)[1].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />   result[10] = &quot;정체 : &quot; + tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;정체&lt;/span&gt;&quot;)[1].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim() + &quot;\\n&quot;;<br />   result[11] = &quot;통화 : &quot; + tbody.split(&quot;&lt;span class=\\&quot;title\\&quot;&gt;통화&lt;/span&gt;&quot;)[1].split(&quot;&lt;td&quot;)[1].split(&quot;&lt;/td&gt;&quot;)[0].replace(/&lt;[^&gt;]+&gt;/g,&quot;&quot;).replace(&quot;&gt;&quot;, &quot;&quot;).trim();<br />   <br />   return result.join(&quot;&quot;);<br />  } catch(e) {<br />   //Log.e(e + &quot; #&quot; + e.lineNumber);<br />   return &quot;해당 국가 정보를 찾을 수 없습니다.&quot;;<br />  }<br /> }<br />}<br />}<br /><br />왠지 모르겠으나 국가정보가 없다고 뜨네요.. <br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00001E6100000000",
+            "id": 7777,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 158,
+            "refArticleId": 7777,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "인디벨님 국가정보 소스 관련질문",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1573681971747,
+            "writer": {
+                "id": "fkdlftjqj",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "멍뭉"
+            }
+        },
+        "articleId": 7777,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 334312,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/2abf368592c9ce123ed8bd8ab2552f54f0a25cbe72/MjAxOTExMTRfNzUg/MDAxNTczNjgxOTcwODM0.JvGy9oU9FRK48LpMo9aZnzcMB4fDVNpkc1HjUBq3BBsg.XEyjqNkPI3pZwOXrPjQ8dupOzG54xitihdXGAXDSeG8g.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "- 해결 완료 -",
+                    "id": 73426565,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "updateDate": 1573685417000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "잉? 해결안됫는뎅?! 이거 다른거얔",
+                    "id": 73426619,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "updateDate": 1573685465000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "멍뭉"
+                    }
+                },
+                {
+                    "content": "아??",
+                    "id": 73426664,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1573685502000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "소스들이 하나같이 들여쓰기가 안돠어있으니까 뭐가 어디껀지 1도모르겠네요 일단오류나는 곳은\r\n마지막 try에서 catch하네요",
+                    "id": 73427096,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1573685834000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "흐음..",
+                    "id": 73427127,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "dalgkdbs",
+                        "nick": "새름"
+                    },
+                    "updateDate": 1573685857000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "멍뭉"
+                    }
+                },
+                {
+                    "content": "result[11] 문제발견",
+                    "id": 73427667,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1573686214000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "엇?!",
+                    "id": 73427689,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "dalgkdbs",
+                        "nick": "새름"
+                    },
+                    "updateDate": 1573686229000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "멍뭉"
+                    }
+                },
+                {
+                    "content": "4번도 문제발견",
+                    "id": 73427813,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1573686306000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                },
+                {
+                    "content": "어떻게수정해야되?..",
+                    "id": 73427857,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "dalgkdbs",
+                        "nick": "새름"
+                    },
+                    "updateDate": 1573686334000,
+                    "writer": {
+                        "id": "fkdlftjqj",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMDJfMTg1/MDAxNTc1MjI1NTA1NDc3.oydtixVzs32fbPegBE3GmDRx2QTgcbI1n4aPDBZmjZwg.I30QwMVWToOMf8QkgILRAS68ezbw_FGM9B-bn7BqQAsg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "멍뭉"
+                    }
+                },
+                {
+                    "content": "2번도 문제발견",
+                    "id": 73427996,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73426565,
+                    "replyMember": {
+                        "id": "fkdlftjqj",
+                        "nick": "멍뭉"
+                    },
+                    "updateDate": 1573686414000,
+                    "writer": {
+                        "id": "dalgkdbs",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "새름"
+                    }
+                }
+            ],
+            "last": {
+                "id": 74868311,
+                "refId": 74868311
+            },
+            "next": {
+                "id": 73428077,
+                "refId": 73426565
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

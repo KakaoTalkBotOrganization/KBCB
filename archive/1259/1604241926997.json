@@ -1,0 +1,251 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>H = 500;<br />P = 500;<br />C = 1500;<br />M = 0;<br />var player = &quot;&quot;;<br />var start = false;<br />var z = &quot;전투.js&quot;;//소스 제목 넣기<br />function response(room, msg, sender, isGroupChat, replier, imageDB) {<br />if(sender &amp;&amp; msg == &quot;-전투&quot;){<br />replier.reply(&quot;야생의 보라봇이 나타났다! 어떻게 할까?\\n\\n-공격\\n\\n-방어\\n\\n-상점\\n\\n-도망\\n\\n-적 정보\\n\\n-내 정보\\n\\n-삥뜯기&quot;)<br />player = sender;<br />start = true;<br />}<br />if (start == true &amp;&amp; msg &amp;&amp; player !== sender == &quot;-전투&quot;){<br />replier.reply(&quot;누군가 플레이중입니다.&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;-내 정보&quot;){<br />replier.reply(&quot;[정보]\\n\\n닉네임 : &quot;+sender+&quot;\\n\\nHP : &quot;+H+&quot;/&quot;+P+&quot;\\n\\n공격력 : 20\\n\\n돈 : &quot;+M+&quot;&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;-적 정보&quot;){<br />replier.reply(&quot;[적 정보]\\n\\n이름 : 보라봇\\n\\nHP 1500/&quot;+C+&quot;\\n\\n공격력 : 200&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;-삥뜯기&quot;){<br />replier.reply(&quot;당신은 지나가던 아이의 돈을 삥뜯었다! +1000&quot;)<br />M+=1000;<br />}<br />if (sender == player &amp;&amp; msg == &quot;-도망&quot;){<br />replier.reply(&quot;당신은 도망쳤다.\\n(게임이 종료됩니다.)&quot;)<br />Api.reload(z)<br />}<br />if (sender == player &amp;&amp; msg == &quot;-상점&quot;){<br />replier.reply(&quot;상점에 오신 걸 환영합니다! 물건을 사실려면 -구매 (아이템) 이라고 써주세요!\\n\\n방패망토 - 상대방의 공격을 반사시킨다.\\n8669원\\n\\n공기포 - 상대방에게 500의 데미지를 가한다.\\n12301원&quot;)<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;-구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;방패망토&quot;)!=-1) {<br />U = 8669;<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 방패망토를 구입했다!&quot;)<br />M-=Number(U);<br />C-=200;<br />replier.reply(&quot;보라봇은 당신을 공격하려했지만 방패망토로 인해 자신이 공격을 맞았다.\\n\\n보라봇 HP : 1500/&quot;+C+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg.indexOf(&quot;-구매 &quot;)!=-1){<br />var U = 0;<br />if (msg.indexOf(&quot;공기포&quot;)!=-1) {<br />U = 12301;<br />if (U&lt;=M){<br />replier.reply(&quot;당신은 공기포를 구입했다! 보라봇은 500 데미지를 입었다!\\n\\n보라봇 HP : 1500/&quot;+C+&quot;&quot;)<br />M-=Number(U);<br />H-=200;<br />replier.reply(&quot;보라봇은 공격을 시전했다! 당신의 HP가 200 감소했다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}else{<br />if (U&gt;=M){<br />replier.reply(&quot;돈이 부족하다.&quot;)<br />}<br />}<br />}<br />}<br />if (sender == player &amp;&amp; msg == &quot;-공격&quot;){<br />C-=20;<br />replier.reply(&quot;보라봇은 20의 데미지를 입었다!\\n\\n보라봇 HP : 1500/&quot;+C+&quot;&quot;)<br />H-=200;<br />replier.reply(&quot;보라봇은 공격을 시전했다! 당신의 HP가 200 감소했다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if (sender == player &amp;&amp; msg == &quot;-방어&quot;){<br />replier.reply(&quot;당신은 방어를 시전했다!\\n\\n받은 데미지가 80% 감소한다.&quot;)<br />H-=40;<br />replier.reply(&quot;보라봇은 공격을 시전했다! 당신의 HP가 40 감소했다!\\n\\n당신의 HP : &quot;+H+&quot;/&quot;+P+&quot;&quot;)<br />}<br />if(H&lt;=0){<br />replier.reply(&quot;패배하셨습니다. 자동으로 게임이 종료됩니다.&quot;)<br />Api.reload(z)<br />}<br />if(C&lt;=0){<br />replier.reply(&quot;승리하셨습니다! 승리하신 분에게는 박수를 드립니다!\\n짝짝짝!&quot;)<br />Api.reload(z)<br />}<br />}<br /><br /><br />-전투 라고 치면 시작됩니다.</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000004EB00000000",
+            "id": 1259,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 318,
+            "refArticleId": 1259,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "보라봇과의 전투",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1552192986393,
+            "writer": {
+                "id": "newdoraemon1104",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAxOTAyMjFfMTY4/MDAxNTUwNzUyNzczNTkx.kmxXE8F853QP8OS_TJVcgkxAoNmHIBARRFYw7IqHbsog.bMXQpbrrTrKyNrUhwXU9tg31E8sOvtzMGg55AXtWdT8g.JPEG.newdoraemon1104/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "보라색 너구리"
+            }
+        },
+        "articleId": 1259,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷ",
+                    "id": 54859356,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 54859356,
+                    "updateDate": 1552206502000,
+                    "writer": {
+                        "id": "minecuontr",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20190707_199/minecuontr_1562504314946gED1G_JPEG/image.jpg"
+                        },
+                        "nick": "마쿤"
+                    }
+                },
+                {
+                    "content": "어허",
+                    "id": 54859855,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 54859855,
+                    "updateDate": 1552207348000,
+                    "writer": {
+                        "id": "jen71213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리드"
+                    }
+                },
+                {
+                    "content": "?",
+                    "id": 54859995,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 54859855,
+                    "updateDate": 1552207531000,
+                    "writer": {
+                        "id": "newdoraemon1104",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTAyMjFfMTY4/MDAxNTUwNzUyNzczNTkx.kmxXE8F853QP8OS_TJVcgkxAoNmHIBARRFYw7IqHbsog.bMXQpbrrTrKyNrUhwXU9tg31E8sOvtzMGg55AXtWdT8g.JPEG.newdoraemon1104/externalFile.jpg"
+                        },
+                        "nick": "보라색 너구리"
+                    }
+                },
+                {
+                    "content": "ㅎㅇㅎㅇㅎㅇ",
+                    "id": 54917712,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 54917712,
+                    "updateDate": 1552277372000,
+                    "writer": {
+                        "id": "alsdn3763",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "철수맨"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

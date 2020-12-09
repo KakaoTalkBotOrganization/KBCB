@@ -1,0 +1,389 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 16,
+            "contentElements": [],
+            "contentHtml": "<p>/*이 경고 소스는 PI(파이)님과 트위치봇(JS챗봇)이 공동 개발하였습니다. 주석은 지우지 말아주세요 다른곳에 2차공유 안됩니다. 복붙해서 사용하시면됩니다.*/<br />const scriptName = &quot;경고봇&quot;;<br />var ownt = &quot;&quot;;<br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br />sender = sender.replace(/[/]/g,&quot;&quot;).replace(/ /g,&quot;&quot;);<br />var code = java.lang.String(imageDB.getProfileImage()).hashCode();<br />if(FileStream.read(&quot;/sdcard/Warn/&quot;+sender+&quot;.txt&quot;)==null) FileStream.write(&quot;/sdcard/Warn/&quot;+sender+&quot;.txt&quot;, &quot;0&quot;);<br />if(FileStream.read(&quot;/sdcard/Ale/&quot;+sender+&quot;.txt&quot;)==null) FileStream.write(&quot;/sdcard/Ale/&quot;+sender+&quot;.txt&quot;, &quot;0&quot;);<br />var own = FileStream.read(&quot;/sdcard/Own/&quot;+sender+&quot;.txt&quot;);<br />var lst = FileStream.read(&quot;/sdcard/Lst.txt&quot;);<br />if(msg==&quot;/관리자신청&quot;){<br />if(own==null){<br />replier.reply(&quot;관리자 항목에 관리자가 없음으로 인해 &quot;+sender+&quot;님이 관리자가 되었습니다.&quot;);<br />FileStream.write(&quot;/sdcard/Own/&quot;+sender+&quot;.txt&quot;, code);<br />}else{<br />if(own.indexOf(code)==-1){<br />replier.reply(sender+&quot;님의 관리자 신청이 접수 되었습니다.&quot;);<br />ownt = code+&quot;:::&quot;+sender;<br />}else{<br />replier.reply(&quot;이미 관리자 입니다.&quot;);<br />}<br />}<br />}else if(msg==&quot;/관리자수락&quot;&amp;&amp;own.indexOf(code)!=-1){<br />if(ownt!=&quot;&quot;){<br />replier.reply(ownt.split(&quot;:::&quot;)[1]+&quot;님이 관리자가 되었습니다.&quot;);<br />FileStream.append(&quot;/sdcard/Own/&quot;+sender+&quot;.txt&quot;,ownt.split(&quot;:::&quot;)[0]);<br />}else{<br />replier.reply(&quot;관리자 신청자가 없습니다.&quot;);<br />}<br />}else if(msg.indexOf(&quot;/관리자해제 &quot;)==0&amp;&amp;own==code){<br />replier.reply(msg.substr(7)+&quot;님의 관리자 해제가 완료 되었습니다.&quot;);<br />FileStream.remove(&quot;/sdcard/Own/&quot;+msg.substr(7)+&quot;.txt&quot;);<br />}else if(msg==&quot;/관리자탈퇴&quot;&amp;&amp;own.indexOf(code)!=-1){<br />replier.reply(&quot;탈퇴 완료.&quot;);<br />FileStream.romove(&quot;/sdcard/Own/&quot;+sender+&quot;.txt&quot;);<br />}else if(msg==&quot;/관리자신청자&quot;){<br />replier.reply(&quot;관리자 신청자 : &quot;+ownt.split(&quot;:::&quot;)[1]);<br />}else if(msg.indexOf(&quot;/경고 &quot;)==0&amp;&amp;own.indexOf(code)!=-1){<br />var name = msg.substr(4).split(&quot; &quot;)[0];<br />var warn = Number(msg.substr(4).split(&quot; &quot;)[1]);<br />var why = msg.substr(4).split(&quot; &quot;)[2];<br />FileStream.append(&quot;/sdcard/Lst.txt&quot;, &quot;\\n\\n&quot;+name+&quot;님 경고 &quot;+warn+&quot;회 / &quot;+why);<br />if(FileStream.read(&quot;/sdcard/Warn/&quot;+name+&quot;.txt&quot;)==null){<br />replier.reply(&quot;존재하지 않는 아이디 입니다.&quot;);<br />}else{<br />FileStream.write(&quot;/sdcard/Warn/&quot;+name+&quot;.txt&quot;, Number(FileStream.read(&quot;/sdcard/Warn/&quot;+name+&quot;.txt&quot;))+warn);<br />replier.reply(&quot;정상적으로 처리 되었습니다.&quot;);<br />replier.reply(&quot;카톡으로 하는 마피아게임!&quot;,name+&quot;님, 경고 &quot;+warn+&quot;추가 입니다\\n현재 경고 : &quot;+FileStream.read(&quot;/sdcard/Warn/&quot;+name+&quot;.txt&quot;));<br />}<br />}else if(msg.indexOf(&quot;/경고보기 &quot;)==0){<br />if(FileStream.read(&quot;/sdcard/Warn/&quot;+msg.substr(6)+&quot;.txt&quot;)!=null){<br />replier.reply(msg.substr(6)+&quot;님의 경고는 &quot;+FileStream.read(&quot;/sdcard/Warn/&quot;+msg.substr(6)+&quot;.txt&quot;)+&quot;회 입니다.&quot;);<br />}else{<br />replier.reply(&quot;해당 아이디를 찾을 수 없습니다.&quot;);<br />}<br />}else if(msg.indexOf(&quot;/주의 &quot;)==0&amp;&amp;own.indexOf(code)!=-1){<br />var aname = msg.substr(4).split(&quot; &quot;)[0];<br />var awarn = Number(msg.substr(4).split(&quot; &quot;)[1]);<br />var awhy = msg.substr(4).split(&quot; &quot;)[2];<br />FileStream.append(&quot;/sdcard/aLst.txt&quot;, +&quot;\\n\\n&quot;+aname+&quot;님 주의 &quot;+awarn+&quot;회 / &quot;+awhy);<br />if(FileStream.read(&quot;/sdcard/Ale/&quot;+aname+&quot;.txt&quot;)==null){<br />replier.reply(&quot;존재하지 않는 아이디 입니다.&quot;);<br />}else{<br />FileStream.write(&quot;/sdcard/Ale/&quot;+aname+&quot;.txt&quot;, Number(FileStream.read(&quot;/sdcard/Ale/&quot;+aname+&quot;.txt&quot;))+awarn);<br />replier.reply(&quot;정상적으로 처리 되었습니다.&quot;);<br />replier.reply(&quot;카톡으로 하는 마피아게임!&quot;,aname+&quot;님, 주의 &quot;+awarn+&quot;추가 입니다\\n현재 주의 : &quot;+FileStream.read(&quot;/sdcard/Ale/&quot;+aname+&quot;.txt&quot;));<br />}<br />}else if(msg.indexOf(&quot;/주의보기 &quot;)==0){<br />if(FileStream.read(&quot;/sdcard/Ale/&quot;+msg.substr(6)+&quot;.txt&quot;)!=null){<br />replier.reply(msg.substr(6)+&quot;님의 주의는 &quot;+FileStream.read(&quot;/sdcard/Ale/&quot;+msg.substr(6)+&quot;.txt&quot;)+&quot;회 입니다.&quot;);<br />}else{<br />replier.reply(&quot;해당 아이디를 찾을 수 없습니다.&quot;);<br />}<br />}else if(msg==&quot;/경고보기&quot;){<br />replier.reply(&quot;경고 목록&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;\\n\\n&quot;+FileStream.read(&quot;/sdcard/Lst.txt&quot;));<br />}else if(msg==&quot;/주의보기&quot;){<br />replier.reply(&quot;주의 목록&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;\\n\\n&quot;+FileStream.read(&quot;/sdcard/aLst.txt&quot;));<br />}else if(msg==&quot;/도움말&quot;){<br />replier.reply(&quot;도움말&quot;+&quot;\\u200b&quot;.repeat(500)+&quot;\\n\\n/도움말\\n/경고 [이름] [횟수] [사유 (들여쓰기 X)]\\n/경고보기 [이름]\\n/경고보기\\n/주의 [이름] [횟수] [사유]\\n/주의보기 [이름]\\n/주의보기\\n/관리자신청\\n/관리자수락\\n/관리자신청자\\n/관리자삭제\\n/관리자탈퇴\\n/관리자해제 [이름 (공백, 슬래시 제외]&quot;);<br />}<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000021A200000000",
+            "id": 8610,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 426,
+            "refArticleId": 8610,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "경고소스 PI(파이) , 트봇 공동제작",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1575383529960,
+            "writer": {
+                "id": "gfpower00",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_888.gif",
+                "memberLevelName": "카페스탭",
+                "nick": "JS카톡챗봇"
+            }
+        },
+        "articleId": 8610,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "관리자부분은 파일스트림 특성상 오류가 발생할 수 있습니다.",
+                    "id": 74976594,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74976594,
+                    "updateDate": 1575383569000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "JS카톡챗봇"
+                    }
+                },
+                {
+                    "content": "방 어떻게 설정 하나요",
+                    "id": 74977288,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74977288,
+                    "updateDate": 1575384028000,
+                    "writer": {
+                        "id": "whddlf2208",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjdfNjYg/MDAxNTU4OTUwMzM3NjQ2.Dn5D7sFlh8vtO_aEKg-ZMTUTPBcLoZYXuDchOFqydtEg.71NipLWxC8fl2gUPJnI5GTSnA3fbWColLaHPdyhqjm4g.JPEG/1553262226854.jpg"
+                        },
+                        "nick": "갈매기"
+                    }
+                },
+                {
+                    "content": "\"카톡으로하는 마피아 게임!\" 부분에서 내용만 수정해주시면 됩니다(전체소스에서 잘보시면 2개있어요)\r\n방제:a 일경우\r\n\"a\"",
+                    "id": 74977479,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74977288,
+                    "updateDate": 1575384178000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "JS카톡챗봇"
+                    }
+                },
+                {
+                    "content": "감사합니다",
+                    "id": 75130903,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74977288,
+                    "replyMember": {
+                        "id": "gfpower00",
+                        "nick": "JS카톡챗봇"
+                    },
+                    "updateDate": 1575543534000,
+                    "writer": {
+                        "id": "whddlf2208",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA1MjdfNjYg/MDAxNTU4OTUwMzM3NjQ2.Dn5D7sFlh8vtO_aEKg-ZMTUTPBcLoZYXuDchOFqydtEg.71NipLWxC8fl2gUPJnI5GTSnA3fbWColLaHPdyhqjm4g.JPEG/1553262226854.jpg"
+                        },
+                        "nick": "갈매기"
+                    }
+                },
+                {
+                    "content": "와 저같은 초보도 어떻게 협업이 안될까요 주륵",
+                    "id": 74977726,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 74977726,
+                    "updateDate": 1575384381000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "그래프 그리실 정도면....말다했죠",
+                    "id": 74977854,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 74977726,
+                    "updateDate": 1575384464000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "JS카톡챗봇"
+                    }
+                },
+                {
+                    "content": "닉바꾸면 못잡음 ㅌㅌ",
+                    "id": 75033300,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75033300,
+                    "updateDate": 1575444622000,
+                    "writer": {
+                        "id": "aiden060303",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDlfMjEw/MDAxNTc4NTQ1NjkyOTIz._uO-Y1_j7sVGs3ks4Fn1rcQ94Vizm6wHqeOYLZNZkz4g.HYSR7cd04kd0byVS9w--hlD7rxzDda-T92FH5fEIiPog.JPEG/externalFile.jpg"
+                        },
+                        "nick": "지헌"
+                    }
+                },
+                {
+                    "content": "ㅋㅋㅋㅋㅋㅋㅋ",
+                    "id": 75216989,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 75033300,
+                    "updateDate": 1575632069000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "JS카톡챗봇"
+                    }
+                },
+                {
+                    "content": "다음에는 해시코드 ㄱ",
+                    "id": 75100628,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 75100628,
+                    "updateDate": 1575516372000,
+                    "writer": {
+                        "id": "kkong21216",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "동생"
+                    }
+                },
+                {
+                    "content": "써봣는데 관리자저장이 안되는지 신청하면 관리자가 없어서 관리자로 바로 되더라구요.. 관리자 아닌사람도 경고줄수있고..ㅇㅅㅇ",
+                    "id": 79890306,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79890306,
+                    "updateDate": 1580524883000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "타카"
+                    }
+                }
+            ],
+            "last": {
+                "id": 103178823,
+                "refId": 103178823
+            },
+            "next": {
+                "id": 80389347,
+                "refId": 79890306
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

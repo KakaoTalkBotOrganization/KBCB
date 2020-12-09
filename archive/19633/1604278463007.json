@@ -1,0 +1,283 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentElements": [],
+            "contentHtml": "<p>const path = &quot;sdcard/bot/rs&quot;;<br />let json;<br />const Lw = &quot;&#8203;&quot;.repeat(500);<br />let isCompile = false;<br />const a = [&quot;멧돼지&quot;, &quot;돼지&quot;, &quot;소&quot;, &quot;닭&quot;];<br />function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br />  if (!FileStream.read(path)) <br />    FileStream.write(path, &quot;{}&quot;);<br />  if (!isCompile) {<br />    json = JSON.parse(FileStream.read(path));<br />    isCompile = true;<br />    var dd = 0;<br />  }<br />  if (msg == &quot;!회원가입&quot;) {<br />    if (!json[sender]) {<br />      json[sender] = {};<br />      json[sender][&quot;HW&quot;] = 1;<br />      json[sender][&quot;money&quot;] = 0;<br />      json[sender][&quot;FP&quot;] = 100;<br />      json[sender][&quot;HP&quot;] = 100;<br />      json[sender][&quot;atk&quot;] = 7;<br />      json[sender][&quot;fhun&quot;] = 5;<br />      json[sender][&quot;hun&quot;] = 5;<br />      json[sender][&quot;food&quot;] = &quot;undefined&quot;;<br />      json[sender][&quot;Boss&quot;] = 0;<br />      json[sender][&quot;dd&quot;] = 0;<br />      replier.reply(&quot;회원가입이 완료되었습니다!&quot;);<br />      FileStream.write(path, JSON.stringify(json));<br />    } else {<br />      replier.reply(&quot;이미 회원가입이 되어있습니다.&quot;);<br />    }<br />  }<br />  if (msg == &quot;!사냥&quot; &amp;&amp; !!json[sender] &amp;&amp; json[sender][&quot;HP&quot;] &gt;= 30) {<br />    var addfood = (a[Math.floor(Math.random() * a.length)]);<br />    replier.reply(addfood + &quot;를(을) 사냥했습니다!&quot;);<br />    json[sender][&quot;hp&quot;] -= 1;<br />    if (json[sender][&quot;food&quot;] == undefined) {<br />      json[sender][&quot;food&quot;] = &quot;ㆍ&quot; + addfood;<br />    } else {<br />      json[sender][&quot;food&quot;] += +&quot;\\n&quot; + &quot;ㆍ&quot; + addfood + &quot;&quot;;<br />    }<br />    if (msg == &quot;!사냥&quot; &amp;&amp; !!json[sender] &amp;&amp; json[sender][&quot;HP&quot;] &lt; 30) {<br />      replier.reply(&quot;너무 기운이 없어서 사냥을 나갈 수 없습니다...&quot;);<br />    }<br />    FileStream.write(path, JSON.stringify(json));<br />  }<br />  if (msg == &quot;!식량&quot; &amp;&amp; !!json[sender]) {<br />    replier.reply(sender + &quot;님의 식량입니다.&quot; + Lw + json[sender][&quot;food&quot;]);<br />  }<br />  if (msg == &quot;!구매 일반검&quot; &amp;&amp; !!json[sender] &amp;&amp; json[sender][&quot;money&quot;] &gt;= 500) {<br />    json[sender][&quot;money&quot;] -= 500;<br />    json[sender][&quot;atk&quot;] += 5;<br />    replier.reply(&quot;일반검을 구매했습니다!공격력이 5올랐습니다!\\n&quot; + &quot;현재&quot; + sender + &quot;님의 돈:&quot; + json[sender][&quot;money&quot;] + &quot;원&quot;);<br />    FileStream.write(path, JSON.stringify(json));<br />  }<br />  if (msg == &quot;!구매 일반갑옷&quot; &amp;&amp; !!json[sender] &amp;&amp; json[sender][&quot;money&quot;] &gt;= 500) {<br />    json[sender][&quot;money&quot;] -= 500;<br />    json[sender][&quot;FP&quot;] += 5;<br />    replier.reply(&quot;일반갑옷을 구매했습니다!최대 체력이 5올랐습니다!\\n&quot; + json[sender][&quot;money&quot;]);<br />    FileStream.write(path, JSON.stringify(json));<br />  }<br />  if (msg == &quot;!돈벌기&quot; &amp;&amp; !!json[sender]) {<br />    var m = [100, 200, 300, 100, 200, 100];<br />    var mm = (m[Math.floor(Math.random() * m.length)]);<br />    json[sender][&quot;money&quot;] += mm;<br />    replier.reply(mm + &quot;원을 벌었습니다!&quot;);<br />    json[sender][&quot;dd&quot;] += 1;<br />  }<br />  FileStream.write(path, JSON.stringify(json));<br />  if (msg == &quot;!내돈&quot;) {<br />    replier.reply(sender + &quot;님의 돈:&quot; + json[sender][&quot;money&quot;]);<br />  }<br />  if (msg == &quot;!내정보&quot; &amp;&amp; !!json[sender]) {<br />    replier.reply(sender + &quot;님의 정보입니다.&quot; + Lw + &quot;돈:&quot; + json[sender][&quot;money&quot;] + &quot;\\n최대 체력:&quot; + json[sender][&quot;FP&quot;] + &quot;\\n현재 체력:&quot; + json[sender][&quot;HP&quot;] + &quot;\\n공격력:&quot; + json[sender][&quot;atk&quot;] + &quot;\\n최대 배고픔:&quot; + json[sender][&quot;fhun&quot;] + &quot;\\n현재 배고픔:&quot; + json[sender][&quot;hun&quot;]);<br />    FileStream.write(path, JSON.stringify(json));<br />  }<br />  if (msg == &quot;!보스전&quot; &amp;&amp; !!json[sender]) {<br />    json[sender][&quot;Boss&quot;] = 1;<br />    replier.reply(&quot;상대할 보스를 정해주세요!ex)!상대 알티스\\n1.알티스\\n2.발데르(업데이트예정)\\n3.토파즈(업데이트예정)\\n4.프레이(업데이트예정)&quot;);<br />  }<br />  if (msg == &quot;!상대 알티스&quot; &amp;&amp; json[sender][&quot;Boss&quot;] == 1) {<br />    var alhp = 250;<br />    var alatk = 25;<br />    let i = 0;<br />    for (i = 0; i &lt; 8; i++) {<br />      alhp -= json[sender][&quot;atk&quot;];<br />      if (json[sender][&quot;Boss&quot;] == 1) <br />        replier.reply(sender + &quot;의 공격!상대 알티스의 피가&quot; + json[sender][&quot;atk&quot;] + &quot;만큼 깎였습니다&quot;);<br />      json[sender][&quot;HP&quot;] -= 25;<br />      java.lang.Thread.sleep(3000);<br />      if (json[sender][&quot;Boss&quot;] == 1) {<br />        replier.reply(&quot;상대 알티스의 공격!&quot; + sender + &quot;님의 피가 25만큼 달았습니다!&quot;);<br />        java.lang.Thread.sleep(3000);<br />        if (json[sender][&quot;HP&quot;] &lt;= 0) {<br />          json[sender][&quot;Boss&quot;] = 0;<br />          json[sender][&quot;HP&quot;]=json[sender][&quot;FP&quot;];<br />          replier.reply(sender + &quot;님은 쓰러졌다!&quot;);<br />          java.lang.Thread.sleep(3000);<br />          replier.reply(&quot;부활하였습니다!&quot;);<br />        }<br />        if (alhp &lt;= 0) {<br />         replier.reply(&quot;알티스는 쓰러졌다!3000원을얻었다&quot;);<br />          json[sender][&quot;Boss&quot;] = 0;<br />          json[sender][&quot;money&quot;] += 3000;<br />          FileStream.write(path, JSON.stringify(json));<br />        }<br />      }<br />    }<br />  }<br />}<br /><br />이부분에서  부활부분...부활하고나서 체력이 FP가 안되고  자꾸 50으로 되네요 왜그럴까요</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004CB100000000",
+            "id": 19633,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 65,
+            "refArticleId": 19633,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "부활에서의 오류",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1592091867983,
+            "writer": {
+                "id": "jwy101963",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "쌉초보"
+            }
+        },
+        "articleId": 19633,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "혹시 json[sender][\"FP\"]; 가 뭐죠",
+                    "id": 93594504,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93594504,
+                    "updateDate": 1592097495000,
+                    "writer": {
+                        "id": "ianshim0718",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTA4MTNfMTE5/MDAxNTY1NjIyNjk3MTQ1.-fviPxKWScJuwC0yuSroKzT7OkwRGE_e8UPatV7-xSAg.LW5ybvadS-pZqH3yuPqUXas2RDFUnpuDm9-Uyp_u_1Ug.JPEG/1547170285259.jpg"
+                        },
+                        "nick": "여노"
+                    }
+                },
+                {
+                    "content": "위에 봐주세요",
+                    "id": 93604513,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93594504,
+                    "updateDate": 1592104722000,
+                    "writer": {
+                        "id": "jwy101963",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쌉초보"
+                    }
+                },
+                {
+                    "content": "와 회원가입부분 미쳤네요",
+                    "id": 93679365,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93679365,
+                    "updateDate": 1592175285000,
+                    "writer": {
+                        "id": "gaonmoon0406",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "BennyK"
+                    }
+                },
+                {
+                    "content": "힝",
+                    "id": 93684505,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93679365,
+                    "updateDate": 1592178044000,
+                    "writer": {
+                        "id": "jwy101963",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쌉초보"
+                    }
+                },
+                {
+                    "content": "json[sender][\"HP\"]+=json[sender][\"FP\"];",
+                    "id": 93694711,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 93694711,
+                    "updateDate": 1592182848000,
+                    "writer": {
+                        "id": "noblesse1980",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjRfMTMx/MDAxNTk1NTY2OTQzNTM3.b7np7GPTo7F0R26DgKXWat-NJcMVROC4QPDhwZYTWlwg.BwHVUl1F9kf8hgyjxORF_JokdecqAynrQhwtYs0I11gg.JPEG/didhd_vmtk.jpg"
+                        },
+                        "nick": "야옹"
+                    }
+                },
+                {
+                    "content": "이거 해보세여",
+                    "id": 93694748,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93694711,
+                    "updateDate": 1592182868000,
+                    "writer": {
+                        "id": "noblesse1980",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA3MjRfMTMx/MDAxNTk1NTY2OTQzNTM3.b7np7GPTo7F0R26DgKXWat-NJcMVROC4QPDhwZYTWlwg.BwHVUl1F9kf8hgyjxORF_JokdecqAynrQhwtYs0I11gg.JPEG/didhd_vmtk.jpg"
+                        },
+                        "nick": "야옹"
+                    }
+                },
+                {
+                    "content": "똑같애요",
+                    "id": 93821650,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 93694711,
+                    "replyMember": {
+                        "id": "noblesse1980",
+                        "nick": "야옹"
+                    },
+                    "updateDate": 1592278248000,
+                    "writer": {
+                        "id": "jwy101963",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "쌉초보"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

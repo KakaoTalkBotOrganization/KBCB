@@ -1,0 +1,368 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 14,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt; while문 내에&nbsp;</b><div style=\"color: rgb(212, 212, 212); line-height: 19px; font-family: Consolas,'Courier New',monospace; font-size: 14px; white-space: pre; background-color: rgb(30, 30, 30);\"><div><span style=\"color: #9cdcfe;\"><div style=\"color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;\"><div><span style=\"color: #569cd6;\">const</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">Thread</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">java</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">lang</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">Thread</span><span style=\"color: #d4d4d4;\">;</span></div><div><span style=\"color: #569cd6;\">const</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">Jsoup</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">org</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">jsoup</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">Jsoup</span><span style=\"color: #d4d4d4;\">;</span></div><br /><div><span style=\"color: #569cd6;\">const</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">scriptName</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #ce9178;\">&quot;Test&quot;</span><span style=\"color: #d4d4d4;\">;</span></div><br /><div><span style=\"color: #569cd6;\">const</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">url</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #ce9178;\">&quot;<a href=\"https://api.develope.kr/search/room?room=\" target=\"_blank\">https://api.develope.kr/search/room?room=</a>&quot;</span></div><br /><div><span style=\"color: #569cd6;\">let</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">f_data</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #4ec9b0;\">JSON</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">parse</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">Jsoup</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">connect</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">url</span><span style=\"color: #d4d4d4;\">).</span><span style=\"color: #dcdcaa;\">ignoreContentType</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #569cd6;\">true</span><span style=\"color: #d4d4d4;\">).</span><span style=\"color: #dcdcaa;\">get</span><span style=\"color: #d4d4d4;\">().</span><span style=\"color: #dcdcaa;\">text</span><span style=\"color: #d4d4d4;\">());</span></div><br /><div><span style=\"color: #569cd6;\">let</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">pre_data</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">f_data</span><span style=\"color: #d4d4d4;\">;</span></div><div><span style=\"color: #569cd6;\">let</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">now_data</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">f_data</span><span style=\"color: #d4d4d4;\">;</span></div><br /><div><span style=\"color: #569cd6;\">let</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">roomName</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">f_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">name</span><span style=\"color: #d4d4d4;\">;</span></div><br /><div><span style=\"color: #569cd6;\">function</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #dcdcaa;\">response</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">room</span><span style=\"color: #d4d4d4;\">,&nbsp;</span><span style=\"color: #9cdcfe;\">msg</span><span style=\"color: #d4d4d4;\">,&nbsp;</span><span style=\"color: #9cdcfe;\">sender</span><span style=\"color: #d4d4d4;\">,&nbsp;</span><span style=\"color: #9cdcfe;\">isGroupChat</span><span style=\"color: #d4d4d4;\">,&nbsp;</span><span style=\"color: #9cdcfe;\">replier</span><span style=\"color: #d4d4d4;\">,&nbsp;</span><span style=\"color: #9cdcfe;\">imageDB</span><span style=\"color: #d4d4d4;\">,&nbsp;</span><span style=\"color: #9cdcfe;\">packageName</span><span style=\"color: #d4d4d4;\">)&nbsp;{</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;</span><span style=\"color: #6a9955;\">/*</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*(string)&nbsp;room</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*(string)&nbsp;sender</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*(boolean)&nbsp;isGroupChat</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*(function)&nbsp;replier.reply(message)</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*(function)&nbsp;replier.reply(room,&nbsp;message,&nbsp;hideErrorToast&nbsp;=&nbsp;false)</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*(function)&nbsp;imageDB.getProfileBase64()</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*(string)&nbsp;packageName</span></div><div><span style=\"color: #6a9955;\">&nbsp;&nbsp;&nbsp;*/</span></div><br /><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;</span><span style=\"color: #c586c0;\">if</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">sender</span><span style=\"color: #d4d4d4;\">&nbsp;==&nbsp;</span><span style=\"color: #ce9178;\">&apos;CMF&nbsp;BABO/28/여/sup&apos;</span><span style=\"color: #d4d4d4;\">&nbsp;&amp;&amp;&nbsp;</span><span style=\"color: #9cdcfe;\">msg</span><span style=\"color: #d4d4d4;\">&nbsp;==&nbsp;</span><span style=\"color: #ce9178;\">&apos;test&apos;</span><span style=\"color: #d4d4d4;\">){</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">roomName</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">room</span><span style=\"color: #d4d4d4;\">;</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;}</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #c586c0;\">while</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #569cd6;\">true</span><span style=\"color: #d4d4d4;\">){</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">pre_data</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">now_data</span><span style=\"color: #d4d4d4;\">;</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #569cd6;\">let</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #9cdcfe;\">res</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #4ec9b0;\">JSON</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">parse</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">Jsoup</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">connect</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">url</span><span style=\"color: #d4d4d4;\">).</span><span style=\"color: #dcdcaa;\">ignoreContentType</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #569cd6;\">true</span><span style=\"color: #d4d4d4;\">).</span><span style=\"color: #dcdcaa;\">get</span><span style=\"color: #d4d4d4;\">().</span><span style=\"color: #dcdcaa;\">text</span><span style=\"color: #d4d4d4;\">());</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">now_data</span><span style=\"color: #d4d4d4;\">&nbsp;=&nbsp;</span><span style=\"color: #9cdcfe;\">res</span><span style=\"color: #d4d4d4;\">;</span></div><br /><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #c586c0;\">if</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">pre_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">headcount</span><span style=\"color: #d4d4d4;\">&nbsp;&gt;&nbsp;</span><span style=\"color: #9cdcfe;\">now_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">headcount</span><span style=\"color: #d4d4d4;\">){</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">Api</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">replyRoom</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">roomName</span><span style=\"color: #d4d4d4;\">,</span><span style=\"color: #ce9178;\">&quot;1킬...&quot;</span><span style=\"color: #d4d4d4;\">);</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span><span style=\"color: #c586c0;\">else</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #c586c0;\">if</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">pre_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">headcount</span><span style=\"color: #d4d4d4;\">&nbsp;&lt;&nbsp;</span><span style=\"color: #9cdcfe;\">now_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">headcount</span><span style=\"color: #d4d4d4;\">){</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">Api</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">replyRoom</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">roomName</span><span style=\"color: #d4d4d4;\">,</span><span style=\"color: #ce9178;\">&quot;&#10084;어서오세요&#10084;</span><span style=\"color: #d7ba7d;\">\\n</span><span style=\"color: #ce9178;\">&quot;</span><span style=\"color: #d4d4d4;\">);</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><br /><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #c586c0;\">if</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">pre_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">like</span><span style=\"color: #d4d4d4;\">&nbsp;&gt;&nbsp;</span><span style=\"color: #9cdcfe;\">now_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">like</span><span style=\"color: #d4d4d4;\">){</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">Api</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">replyRoom</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">roomName</span><span style=\"color: #d4d4d4;\">,</span><span style=\"color: #ce9178;\">&quot;누가&nbsp;하트&nbsp;지움???&quot;</span><span style=\"color: #d4d4d4;\">);</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span><span style=\"color: #c586c0;\">else</span><span style=\"color: #d4d4d4;\">&nbsp;</span><span style=\"color: #c586c0;\">if</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">pre_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">like</span><span style=\"color: #d4d4d4;\">&nbsp;&lt;&nbsp;</span><span style=\"color: #9cdcfe;\">now_data</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">result</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #9cdcfe;\">like</span><span style=\"color: #d4d4d4;\">){</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">Api</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">replyRoom</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #9cdcfe;\">roomName</span><span style=\"color: #d4d4d4;\">,</span><span style=\"color: #ce9178;\">&quot;누구&nbsp;하트&nbsp;누름???&quot;</span><span style=\"color: #d4d4d4;\">);</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><br /><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: #9cdcfe;\">Thread</span><span style=\"color: #d4d4d4;\">.</span><span style=\"color: #dcdcaa;\">sleep</span><span style=\"color: #d4d4d4;\">(</span><span style=\"color: #b5cea8;\">1500</span><span style=\"color: #d4d4d4;\">);</span></div><div><span style=\"color: #d4d4d4;\">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div><span style=\"color: #d4d4d4;\">}</span></div></div></span></div></div></div><div><b>를 통해 메세지 발송을 하는데</b></div><div><b>슬립을 1500을 주었습니다.</b></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; sleep을 1500을 줬는데 if문 내에 들어왔을때 메세지를 여러개 도배를 해버립니다. 해결방법이 있을까요?</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000028F200000000",
+            "id": 10482,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 173,
+            "refArticleId": 10482,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "메세지 여러개 발송",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1580044876393,
+            "writer": {
+                "id": "all_mind",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "빠아앙2"
+            }
+        },
+        "articleId": 10482,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 79408677,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79408677,
+                    "updateDate": 1580045059000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "소스 다시 첨부했습니다.\r\n\r\n하트를 누르거나 누가 입장 나갔을때 같은 메세지를 여러번 발송하는 현상이 발생됩니다. ㅠㅠ",
+                    "id": 79408824,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79408677,
+                    "updateDate": 1580045119000,
+                    "writer": {
+                        "id": "all_mind",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "빠아앙2"
+                    }
+                },
+                {
+                    "content": "쓰레드가 1개가 아니라 여러개라서 그래요",
+                    "id": 79408865,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79408865,
+                    "updateDate": 1580045145000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "MinSoup"
+                    }
+                },
+                {
+                    "content": "혹시 이 소스 어떤분이 만드신 소스인지 알 수 있을까요??",
+                    "id": 79410188,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79410188,
+                    "updateDate": 1580046189000,
+                    "writer": {
+                        "id": "rhsol7933",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kkam"
+                    }
+                },
+                {
+                    "content": "이거 수정이 불가능하지 않나요?",
+                    "id": 79410861,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79410188,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "냥냥이"
+                    },
+                    "updateDate": 1580046652000,
+                    "writer": {
+                        "id": "rhsol7933",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kkam"
+                    }
+                },
+                {
+                    "content": "작성자분은 수정을 하셨는데..?",
+                    "id": 79410936,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79410188,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "냥냥이"
+                    },
+                    "updateDate": 1580046702000,
+                    "writer": {
+                        "id": "rhsol7933",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kkam"
+                    }
+                },
+                {
+                    "content": "아무 조치도 못하는건가요?",
+                    "id": 79411004,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79410188,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "냥냥이"
+                    },
+                    "updateDate": 1580046754000,
+                    "writer": {
+                        "id": "rhsol7933",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kkam"
+                    }
+                },
+                {
+                    "content": "아하 !",
+                    "id": 79411048,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79410188,
+                    "replyMember": {
+                        "id": "choho0327",
+                        "nick": "냥냥이"
+                    },
+                    "updateDate": 1580046781000,
+                    "writer": {
+                        "id": "rhsol7933",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kkam"
+                    }
+                },
+                {
+                    "content": "어라..! 제가 알기로는, 수정하여 공유하지만 않는다면 문제는 없을겁니다",
+                    "id": 79413417,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79410188,
+                    "replyMember": {
+                        "id": "rhsol7933",
+                        "nick": "Kkam"
+                    },
+                    "updateDate": 1580048463000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "AbsoluTe"
+                    }
+                },
+                {
+                    "content": "원본 소스의 저작자가 소스에 '비상업적 목적으로 수정 가능' 이라고 언급을 하셨더군요. \r\n주석을 지워 개인적으로 사용하는것은 '비상업적 목적으로 수정'하는 것이죠. \r\n방금 말했듯이 저작자가 '비상업적 목적으로 수정'을 허락하였으니, 주석을 지운 후 개인적으로 사용하는 것은ㅈ무단수정이 아니라고 보는게 더 맞는것같은데요.\r\n\r\n요약 : 비상업적 목적으로 수정 == 주석을 지워서 개인적으로 사용함 != 무단 수정",
+                    "id": 79414171,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79410188,
+                    "replyMember": {
+                        "id": "sweetcorn0318",
+                        "nick": "AbsoluTe"
+                    },
+                    "updateDate": 1580090280000,
+                    "writer": {
+                        "id": "sweetcorn0318",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "AbsoluTe"
+                    }
+                }
+            ],
+            "last": {
+                "id": 79436404,
+                "refId": 79436404
+            },
+            "next": {
+                "id": 79414543,
+                "refId": 79410188
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

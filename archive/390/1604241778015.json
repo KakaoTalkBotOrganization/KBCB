@@ -1,0 +1,420 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div class=\"NHN_Writeform_Main\"><b>var userDeck=[];</b></div><div class=\"NHN_Writeform_Main\"><b>var Bstart = [];</b></div><div class=\"NHN_Writeform_Main\"><b>var pickk=[];</b></div><div class=\"NHN_Writeform_Main\"><b>var Hand=[];</b></div><div class=\"NHN_Writeform_Main\"><br /></div><div class=\"NHN_Writeform_Main\"><b>function cardDeck(deckName) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;var pattern = [&quot;&spades;&quot;,&quot;&hearts;&quot;,&quot;&clubs;&quot;,&quot;◆&quot;];</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;var cardNum = [&quot;A&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;,&quot;J&quot;,&quot;Q&quot;,&quot;K&quot;];</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;userDeck[deckName]=[];</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;for(var i=0;i&lt;pattern.length;i++) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; userDeck[deckName][i] = [];</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; for(var n=0;n&lt;cardNum.length;n++) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;userDeck[deckName][i].push(pattern[i]+cardNum[n]);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;} return deckName;</b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>function pick(userName) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;var rnd1 = Math.floor(Math.random()*3);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;var rnd2 = Math.floor(Math.random()*12);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;pickk[userName] = userDeck[userName][rnd1][rnd2];</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;userDeck[userName][rnd1].splice(rnd2,1);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;if(pickk[userName] == undefined){</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp;pickk[userName] = pick(userName);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;return pickk[userName];</b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>function scoring(score) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;var 계산 = [];</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;var 점수 = 0;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;계산 = Hand[score].split(&quot; &quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;for (var i=0;i&lt;계산.length;i++) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;계산[i]=계산[i].replace(&quot;J&quot;,&quot;10&quot;).replace(&quot;Q&quot;,&quot;10&quot;).replace(&quot;K&quot;,&quot;10&quot;).replace(&quot;A&quot;,&quot;11&quot;)</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;for (var i=0;i&lt;계산.length;i++) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; 점수 += Number(계산[i].substr(1));</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;if (점수 &gt; 21) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; for (var n=0;n&lt;계산.length;n++) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (계산[n].indexOf(&quot;11&quot;)!=-1) {계산[n]=계산[n].replace(&quot;11&quot;,&quot;1&quot;);}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; 점수 = 0;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; for (var n=0;n&lt;계산.length;n++) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;점수 += Number(계산[n].substr(1));</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp;return 점수;</b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId){</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp;if (msg == &quot;/블랙잭&quot; &amp;&amp; Bstart[sender] != true) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; cardDeck(sender);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; Bstart[sender] = true;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; Hand[sender] = pick(sender);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; Hand[sender+&quot;dl&quot;] = pick(sender);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; Hand[sender] += &quot; &quot;+pick(sender);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; replier.reply(&quot;[후소봇]\\n게임을 시작합니다.\\n카드를 배분하겠습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; java.lang.Thread.sleep(500);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; replier.reply(&quot;[딜러 카드]&nbsp; &nbsp;□ &quot;+Hand[sender+&quot;dl&quot;]+&quot;\\n[&quot;+sender+&quot;나으리님 카드]&nbsp; &nbsp;&quot;+Hand[sender]+&quot; : &quot;+scoring(sender)+&quot; 점\\n 1.hit&nbsp; &nbsp;2.stand&quot;)</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp;if (Bstart[sender] == true) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; if (msg == &quot;1&quot; || msg.toLowerCase() == &quot;hit&quot; ) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;Hand[sender] += &quot; &quot; +pick(sender);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[후소봇]\\n[딜러 카드]&nbsp; &nbsp;□ &quot;+Hand[sender+&quot;dl&quot;]+&quot;\\n[&quot;+sender+&quot;나으리님 카드]&nbsp; &nbsp;&quot;+Hand[sender]+&quot; : &quot;+scoring(sender)+&quot; 점&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if (scoring(sender) &gt; 21) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;&lt;YOU LOSE&gt;\\n유저님의 카드점수가 21을 넘었습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Hand[sender] = &quot;&quot;;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Hand[sender+&quot;dl&quot;] = &quot;&quot;;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; userDeck[sender] = undefined;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Bstart[sender] = false;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;} else if (scoring(sender) &lt;= 21) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;1.hit&nbsp; &nbsp; 2.stand&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; } else if (msg == &quot;2&quot; || msg.toLowerCase() == &quot;stand&quot;) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;Hand[sender+&quot;dl&quot;] += &quot; &quot;+pick(sender);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[후소봇]\\n제 카드를 오픈하겠습니다.\\n[딜러 카드]&nbsp; &quot;+Hand[sender+&quot;dl&quot;]+&quot; : &quot;+scoring(sender+&quot;dl&quot;)+&quot; 점\\n[&quot;+sender+&quot;나으리님 카드]&nbsp; &nbsp;&quot;+Hand[sender]+&quot; : &quot;+scoring(sender)+&quot; 점&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;while(scoring(sender+&quot;dl&quot;) &lt;= 17) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Hand[sender+&quot;dl&quot;] += &quot; &quot;+pick(sender);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;java.lang.Thread.sleep(300);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[딜러 카드]&nbsp; &quot;+Hand[sender+&quot;dl&quot;]+&quot; : &quot;+scoring(sender+&quot;dl&quot;)+&quot; 점\\n[&quot;+sender+&quot;나으리님 카드]&nbsp; &nbsp;&quot;+Hand[sender]+&quot; : &quot;+scoring(sender)+&quot; 점&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;if (scoring(sender+&quot;dl&quot;) &gt; 21) {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;replier.reply(&quot;[후소봇]\\n유저께서 이기셨습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;} else {</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;switch (true)</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;{</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;case scoring(sender) &gt; scoring(sender+&quot;dl&quot;): replier.reply(&quot;[후소봇]\\n유저께서 이기셨습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;break;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;case scoring(sender) == scoring(sender+&quot;dl&quot;): replier.reply(&quot;[후소봇]\\n비겼습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;break;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;case scoring(sender) &lt; scoring(sender+&quot;dl&quot;): replier.reply(&quot;[후소봇]\\n제가 이겼습니다.&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;break;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;default: replier.reply(&quot;[후소봇]\\n죄송합니다. 계산을 못했어요 ㅠㅠ&quot;);</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;break;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;Hand[sender] = &quot;&quot;;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;Hand[sender+&quot;dl&quot;] = &quot;&quot;;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;userDeck[sender] = undefined;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; &nbsp; &nbsp;Bstart[sender] = false;</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp; &nbsp; }</b></div><div class=\"NHN_Writeform_Main\"><b>&nbsp;}</b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b><br /></b></div><div class=\"NHN_Writeform_Main\"><b>}</b></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000018600000000",
+            "id": 390,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 393,
+            "refArticleId": 390,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "블랙잭(미수정본)",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1546908444740,
+            "writer": {
+                "id": "r960701",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "카신"
+            }
+        },
+        "articleId": 390,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "현재까지 발견된 오류 : 마크하나의 카드를 전부 뽑을경우\r\n해당마크배열이 undefined됨.\r\n(한 게임에서 마크하나를 다 뽑을 일이 없을거 같긴하지만....)",
+                    "id": 50947099,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50947099,
+                    "updateDate": 1546908582000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 50947524,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50947524,
+                    "sticker": {
+                        "height": 112,
+                        "id": "linebiz21_01-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/linebiz21_01/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1546908955000,
+                    "writer": {
+                        "id": "jowoon222",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTBfMTEx/MDAxNTczMzExNzA2MjAw.Y9jVoqlfeKRr9A8HjWFyBzAtwlDTYn1U6Hd62totjowg.b5bPwY8FiWjq8NriLplnsKWF_zu7u-NADjokQeq77D0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "ㄱㄴ"
+                    }
+                },
+                {
+                    "content": "와우~~",
+                    "id": 50948364,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50948364,
+                    "sticker": {
+                        "height": 105,
+                        "id": "kin-8-141-150",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/kin/original_8.png",
+                        "width": 98
+                    },
+                    "updateDate": 1546909704000,
+                    "writer": {
+                        "id": "kiss_0153",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxODEyMDNfMjYg/MDAxNTQzODMzOTA4ODEx.-STL_rCRXX-UkLh12oLAfj6zs0CQdcacm7lfILny9Zwg.HQrxw5PUda5fMJHFhJV_F2zFwVKf-mxNWKrdHCPajt8g.PNG.kiss_0153/sdfsdf.png"
+                        },
+                        "nick": "Dabot"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 50957812,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50957812,
+                    "sticker": {
+                        "height": 112,
+                        "id": "linebiz21_01-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/linebiz21_01/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1546920492000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "스티커가 가득하다!",
+                    "id": 50957876,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50957876,
+                    "updateDate": 1546920573000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 50959167,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 50959167,
+                    "sticker": {
+                        "height": 112,
+                        "id": "linebiz21_01-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/linebiz21_01/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1546922138000,
+                    "writer": {
+                        "id": "kimjunghyo3495",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA4MjBfMjU3/MDAxNTk3ODY1MDQ0OTI1.a0lBTQIUKI8vr0COWiexJP7js6157sq703z9rTWDNgYg.xO10PGMrCLv0izt2cvr5ikWoArX8gl5FDGIXpNxhB4Ig.JPEG.kimjunghyo3495/profileImage.jpg"
+                        },
+                        "nick": "Changa A"
+                    }
+                },
+                {
+                    "content": "다른사람과 같이플레이하면 완벽할것같아요 !",
+                    "id": 76122251,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 76122251,
+                    "updateDate": 1576636797000,
+                    "writer": {
+                        "id": "victoryks95",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20160218_77/victoryks95_1455769115136vOdlj_JPEG/profileimage.jpg"
+                        },
+                        "nick": "춤돌이치킨"
+                    }
+                },
+                {
+                    "content": "아쉽지만 그건 히든카드때문에 갠톡을 써야되어요...",
+                    "id": 77500428,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76122251,
+                    "updateDate": 1578028464000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                },
+                {
+                    "content": "인사가 늦었습니다 잘 쓰고 있습니다 감사합니다",
+                    "id": 79443925,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 79443925,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6e98126-4-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6e98126/original_4.png",
+                        "width": 129
+                    },
+                    "updateDate": 1580096185000,
+                    "writer": {
+                        "id": "tlsrjstn258",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDAyMDNfNzMg/MDAxNTgwNzM1MzQ5MDA4.QcBqK9xYD1ZSq1OMPaR1gBMupn3O3XMqwlm6TsqNfKwg.XdjIFFJ9lOo-uM0Epvj8-F9i-fIgEsbFXuyjm-VO0ukg.JPEG.tlsrjstn258/profileImage.jpg"
+                        },
+                        "nick": "설개향"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 79727221,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 79443925,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1580361640000,
+                    "writer": {
+                        "id": "r960701",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNjEyMTJfNDAg/MDAxNDgxNTQ2OTQ2NDg0.15o5AAoK0TP-pQ3aXXXRilfvCjaKPfwO_tnkFuGHhhMg.13qy0j5_J-XBxA2fUz4t8eZeC4isfCZxx9VQlIaGsR8g.PNG.r960701/20100515183900.png"
+                        },
+                        "nick": "카신"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

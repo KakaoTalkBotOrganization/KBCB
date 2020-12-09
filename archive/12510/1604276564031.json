@@ -1,0 +1,196 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; <font color=\"#7d7d7d\"><span style=\"font-size: 12px;\">간단한 추첨 같은데에 사용 할 수 있는 뽑기 소스입니다.</span></font></b></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><b>const scriptName = &quot;뽑기.js&quot;;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>const COMPRESS = &quot;\\u200b&quot;.repeat(500);</b></div><div style=\"\"><b>let people = [];</b></div><div style=\"\"><b>let game_starter = null;</b></div><div style=\"\"><b>let people_push = false;</b></div><div style=\"\"><b>let start = false;</b></div><div style=\"\"><b>let people_win = null;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg == &quot;/뽑기 시작&quot; || msg == &quot;/뽑기시작&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (people_push == false &amp;&amp; start == false) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people_push = true;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; start = true;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; game_starter = sender;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;랜덤뽑기가 시작되었습니다.\\n&apos;/참여&apos;를 입력하여 뽑기에 참가하세요.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기가 이미 진행중입니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg == &quot;/참여&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (start == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (people_push == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (people.indexOf(sender) == -1) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people.push(sender);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;참여되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;중복참여는 불가능합니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기가 마감되어 참가가 불가능합니다.\\n&apos;/뽑기 확인&apos;을 입력하여 결과를 확인해주세요.&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 진행중이 아닙니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg.indexOf(&quot;/참여 &quot;) == 0) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (start == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (people_push == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (people.indexOf(msg.substr(4)) == -1) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people.push(msg.substr(4));</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;[&quot; + msg.substr(4) + &quot;] 님이 뽑기에 참여 되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;[&quot; + msg.substr(4) + &quot;] 님은 이미 뽑기에 참여중입니다.&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기가 마감되어 참가가 불가능합니다.\\n&apos;/뽑기 확인&apos;을 입력하여 결과를 확인해주세요.&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 진행중이 아닙니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg == &quot;/뽑기나가기&quot; || msg == &quot;/뽑기 나가기&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (start == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (people_push == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (people.indexOf(sender) != -1) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people.splice(people.indexOf(sender),1);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기에서 나오셨습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;참여중이 아닙니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기가 마감되어 참가 및 나가기가 불가능합니다.&quot;)</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 진행중이 아닙니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg == &quot;/뽑기 마감&quot; || msg == &quot;/뽑기마감&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (people_push == true &amp;&amp; start == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (game_starter == sender) {&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people_push = false;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; random = Math.round(Math.random() * (people.length - 1));</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people_win = people[random];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기가 종료되었습니다.\\n&apos;/뽑기 확인&apos;을 입력하여 당첨여부를 확인해주세요.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기를 처음 시작한 사람만이 마감 및 종료가 가능합니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 진행중이 아닙니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg == &quot;/뽑기 확인&quot; || msg == &quot;/뽑기확인&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (start == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (people_win == sender) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 당첨여부 확인입니다.&quot; + COMPRESS + &quot;\\n\\n당신은 당첨입니다!\\n\\n참여자 목록▼\\n[&quot; + people.join(&quot;, &quot;) + &quot;]&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 당첨여부 확인입니다.&quot; + COMPRESS + &quot;\\n\\n아쉽게도 당첨에 실패하셨습니다.\\n\\n당첨자 : &quot; + people_win + &quot;\\n\\n참여자 목록▼\\n[&quot; + people.join(&quot;, &quot;) + &quot;]&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 진행중이 아닙니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg == &quot;/뽑기 종료&quot; || msg == &quot;/뽑기종료&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; if (start == true) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (game_starter == sender) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people = [];</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; start = false;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; people_win = null;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; game_starter = null;</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기가 종료되었습니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기를 처음 시작한 사람만이 종료가 가능합니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; } else {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 진행중이 아닙니다.&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; if (msg == &quot;/뽑기 명령어&quot;) {</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(&quot;뽑기 명령어 도움말 입니다.\\n\\n/뽑기시작\\n/뽑기마감\\n/뽑기종료\\n/참여\\n/참여 이름\\n/뽑기나가기\\n/뽑기확인&quot;);</b></div><div style=\"\"><b>&nbsp; &nbsp; &nbsp; }</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>}</b></div></div><div><b><br /></b></div><div><b>실 사용중이나, 몇 군데 체크 못한 오류가 있을 수 있습니다.</b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000030DE00000000",
+            "id": 12510,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 223,
+            "refArticleId": 12510,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "뽑기 소스 공유",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1583225841400,
+            "writer": {
+                "id": "kkh5356",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20200824_255/kkh5356_1598228162203uoCjb_JPEG/image.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_888.gif",
+                "memberLevelName": "카페스탭",
+                "nick": "5356"
+            }
+        },
+        "articleId": 12510,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 95348790,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 95348790,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1593564908000,
+                    "writer": {
+                        "id": "chanjin080320",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Blue box"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

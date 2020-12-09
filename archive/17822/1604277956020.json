@@ -1,0 +1,159 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 1,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;let id = &quot;&quot;;</b></div><div><b>let pw = &quot;&quot;;</b></div><div><b><br /></b></div><div><b>const kakaoModule = require(&apos;BotKakaoAPI&apos;).Kakao();</b></div><div><b>const Kakao = new kakaoModule;</b></div><div><b>Kakao.init(&apos;&apos;);</b></div><div><b>Kakao.login(id,pw);</b></div><div><b><br /></b></div><div><b>const Thread = java.lang.Thread; //DO NOT TOUCH</b></div><div><b>const Jsoup = org.jsoup.Jsoup; //DO NOT TOUCH</b></div><div><b>let status; //DO NOT TOUCH</b></div><div><b>let loopStarted = false; //DO NOT TOUCH</b></div><div><br /></div><div><b>let room_raw = [&quot;<a href=\"https://open.kakao.com/o/\" target=\"_blank\">https://open.kakao.com/o/</a>&quot;]; //사용할 방 주소 순서대로 추가하시면 됩니다.</b></div><div><b>let room_names = [&quot;&quot;]; //사용할 방 이름 정확하게 순서대로 추가하시면 됩니다.</b></div><div><b>let data_real = [{result: null}]; //사용할 방의 갯수만큼 {result: null}를 추가해주셔야합니다</b></div><div><b>let data_pre = [{result: null}]; //이거도 마찬가지로 사용할 방의 갯수만큼 {result: null} 추가</b></div><div><b>const source_name=&quot;합2&quot;; //메봇에서의 소스 이름을 넣으셔야 합니다.</b></div><div><b>const utc=1000 // 업데이트 시간 주기입니다; 단위는 ms 입니다; 1S=1000ms; 최소 500이상 - 최대 3000을 권장합니다;</b></div><div><b>const utce=60000 //에러 발생시 다음 업데이트까지 대기시간입니다; 단위는 ms 입니다; 1S=1000ms; 최소 30000이상 - 최대 300000을&nbsp;</b></div><div><b>function sendListTemplate(room, header_title, bg, contents, buttons, web_url, mobile_web_url) {</b></div><div><b><br /></b></div><div><b>let json = {};</b></div><div><b>json[&quot;link_ver&quot;] = &quot;4.0&quot;;</b></div><div><b>json[&quot;template_object&quot;] = {};</b></div><div><b>json[&quot;template_object&quot;][&quot;object_type&quot;] = &quot;list&quot;;</b></div><div><b>json[&quot;template_object&quot;][&quot;button_title&quot;] = &quot;테스트&quot;;</b></div><div><b>json[&quot;template_object&quot;][&quot;contents&quot;] = contents;</b></div><div><b>json[&quot;template_object&quot;][&quot;header_title&quot;] = header_title;</b></div><div><b>json[&quot;template_object&quot;][&quot;buttons&quot;] = [];</b></div><div><b>json[&quot;template_object&quot;][&quot;header_image_url&quot;] = &quot;<a href=\"http://leadtv.dothome.co.kr/kakaoApi/img/bg-\" target=\"_blank\">http://leadtv.dothome.co.kr/kakaoApi/img/bg-</a>&quot;+bg+&quot;.png&quot;;</b></div><div><b>json[&quot;template_object&quot;][&quot;header_image_width&quot;] = 900;</b></div><div><b>json[&quot;template_object&quot;][&quot;header_image_height&quot;] = 900;</b></div><div><b>json[&quot;template_object&quot;][&quot;header_link&quot;] = {};</b></div><div><b>json[&quot;template_object&quot;][&quot;header_link&quot;][&quot;web_url&quot;] = web_url;</b></div><div><b>json[&quot;template_object&quot;][&quot;header_link&quot;][&quot;mobile_web_url&quot;] = mobile_web_url;</b></div><div><b>return Kakao.send(room, json, &apos;default&apos;);</b></div><div><b>}</b></div><div><b><br /></b></div><div><b>function sendFeedTemplate(room, title, image_url, web, m_web, description, like, comment, share, bt1, web1, m_web1, bt2, web2, m_web2) {</b></div><div><b>let json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_object&quot;:{&quot;object_type&quot;:&quot;feed&quot;,&quot;button_title&quot;:&quot;&quot;,&quot;content&quot;:{&quot;title&quot;:title,&quot;image_url&quot;:image_url,&quot;link&quot;:{&quot;web_url&quot;:web,&quot;mobile_web_url&quot;:m_web},&quot;description&quot;:description},&quot;social&quot;:{&quot;like_count&quot;:like,&quot;comment_count&quot;:comment,&quot;shared_count&quot;:share},&quot;buttons&quot;:[{&quot;title&quot;:bt1,&quot;link&quot;:{&quot;web_url&quot;:web1,&quot;mobile_web_url&quot;:m_web1}},{&quot;title&quot;:bt2,&quot;link&quot;:{&quot;web_url&quot;:web2,&quot;mobile_web_url&quot;:m_web2}}]}};</b></div><div><b>return Kakao.send(room, json, &apos;default&apos;);</b></div><div><b>}</b></div><div><b><br /></b></div><div><b>function sendCommerceTemplate(room, title, image_url, web, m_web, description, bt1, web1, m_web1, bt2, web2, m_web2, regular_price, discount_price, discount_rate) {</b></div><div><b>let json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_object&quot;:{&quot;object_type&quot;:&quot;commerce&quot;,&quot;button_title&quot;:&quot;&quot;,&quot;content&quot;:{&quot;title&quot;:title,&quot;image_url&quot;:image_url,&quot;link&quot;:{&quot;web_url&quot;:web,&quot;mobile_web_url&quot;:m_web}},&quot;commerce&quot;:{&quot;regular_price&quot;:regular_price,&quot;discount_price&quot;:discount_price,&quot;discount_rate&quot;:discount_rate},&quot;buttons&quot;:[{&quot;title&quot;:bt1,&quot;link&quot;:{&quot;web_url&quot;:web1,&quot;mobile_web_url&quot;:m_web1}},{&quot;title&quot;:bt2,&quot;link&quot;:{&quot;web_url&quot;:web2,&quot;mobile_web_url&quot;:m_web2}}]}};</b></div><div><b>return Kakao.send(room, JSON.stringify(json), &apos;default&apos;);</b></div><div><b>}</b></div><div><b><br /></b></div><div><b>function sendLocationTemplate(room, title, image_url, web, m_web, description, like, comment, share, bt1, web1, m_web1, bt2, web2, m_web2, address, address_title) {</b></div><div><b>let json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_object&quot;:{&quot;object_type&quot;:&quot;location&quot;,&quot;button_title&quot;:&quot;&quot;,&quot;address&quot;:address,&quot;content&quot;:{&quot;title&quot;:title,&quot;image_url&quot;:image_url,&quot;link&quot;:{&quot;web_url&quot;:web,&quot;mobile_web_url&quot;:m_web},&quot;description&quot;:description},&quot;social&quot;:{&quot;like_count&quot;:like,&quot;comment_count&quot;:comment,&quot;shared_count&quot;:share},&quot;buttons&quot;:[{&quot;title&quot;:bt1,&quot;link&quot;:{&quot;web_url&quot;:web1,&quot;mobile_web_url&quot;:m_web1}},{&quot;title&quot;:bt2,&quot;link&quot;:{&quot;web_url&quot;:web2,&quot;mobile_web_url&quot;:m_web2}}],&quot;address_title&quot;:address_title}};</b></div><div><b>return Kakao.send(room, json, &apos;default&apos;);</b></div><div><b>}</b></div><div><b>function Test(room){</b></div><div><b>json = {&quot;link_ver&quot;:&quot;4.0&quot;,&quot;template_id&quot;:(24558),&quot;template_args&quot;:{}}</b></div><div><b>return replier.reply(room, json, &quot;custom&quot;)<font color=\"#ef007c\">//56번째 줄</font></b></div><div><b>}</b></div><div><b><br /></b></div><div><b>function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) {</b></div><div><b>&nbsp; &nbsp; if (!loopStarted) {</b></div><div><b>&nbsp; &nbsp; &nbsp; loopStarted = true;</b></div><div><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; while (true) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (java.lang.Thread.interrupted()==true){Api.off(source_name);return &quot;stopped&quot;;} // 메신저봇R 전용; thread interrupt</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var success= updateData(); // 데이터 업데이트</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (status==403){Api.off(source_name);return &quot;stopped&quot;;};</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(success){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (let i = 0; i &lt; room_raw.length; i ++) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (data_pre[i].result != null) {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (data_real[i].result.headcount &gt; data_pre[i].result.headcount){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Test(room)<font color=\"#ef007c\">//72번째 줄</font></b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Thread.sleep(utc); //업데이트 주기 입니다. (ms 단위)&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else{</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Thread.sleep(utce); // 연결 에러시 대기시간</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp;}</b></div><div><b>}</b></div><div><b><br /></b></div><div><b>updateData = () =&gt; {</b></div><div><b>&nbsp; let res;</b></div><div><b>&nbsp; &nbsp;for (let i = 0; i &lt; room_raw.length; i ++) {</b></div><div><b>&nbsp; &nbsp; &nbsp;&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;data_pre[i] = data_real[i]; // copy previous data_pre to data_real</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;res = Jsoup.connect(&quot;<a href=\"https://api.develope.kr/search/room?room=\" target=\"_blank\">https://api.develope.kr/search/room?room=</a>&quot; + room_raw[i]).ignoreContentType(true).ignoreHttpErrors(true).execute()</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;status=res.statusCode();</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(status!=200){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; let a=&quot;[오류] 서버로부터 정보를 받아오지 못했습니다.&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (status==503){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a = a + &quot;\\n현재 서버가 점검 중입니다. 자세한 정보는 <a href=\"https://api.develope.kr/\" target=\"_blank\">https://api.develope.kr/</a> 을 확인해주세요.\\n&quot;+utce/1000+&quot;초 후 연결을 다시 시도합니다.&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if(status==403){</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a = a + &quot;\\n사용자의 IP가 서버로부터 차단되었습니다. 자세한 사항은 소스 밑 주석에 작성되어있는 연락처를 통해 문의해주세요.&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else {</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a = a + &quot;\\n인터넷 연결을 확인해보시길 바랍니다. 계속 안되는경우 소스 밑 주석에 작성되어있는 연락처를 통해 질문하실수 있습니다.\\n&quot;+utce/1000+&quot;초 후 연결을 다시 시도합니다.&quot;;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; a = a + &quot;\\nHTTP &quot;+status+&quot; ERROR&quot; ;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Log.e(a); //Sports... it&apos;s in the game...&nbsp;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return false;</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;let obj = JSON.parse(res.body());</b></div><div><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;data_real[i] = obj;</b></div><div><b>&nbsp; &nbsp; &nbsp;}</b></div><div><b>&nbsp; &nbsp;return true;</b></div><div><b><br /></b></div><div><b>}</b></div><div><b>질문내용</b></div><div><b>=&gt;</b><b>&nbsp;</b></div><div><b>Runtime Error(합2)</b></div><div><b>ReferenceError: &quot;replier&quot; is not defined. (합2#56)<span style=\"white-space:pre\"> </span>at 합2:56 (Test)</b></div><div><b><span style=\"white-space:pre\"> </span>at 합2:72 (response)</b></div><div>이 오류가 계속 발생하는데</div><div>변수를 어떻게 손을 봐줘야할지 감이 안오는데... 조언부탁드립니다!ㅠㅠ</div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000459E00000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 17822,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 108,
+            "refArticleId": 17822,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "ReferenceError 질문 있습니다",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1588880152403,
+            "writer": {
+                "id": "uko05038",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "리먼"
+            }
+        },
+        "articleId": 17822,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "카카오링크면은\r\nreplier.reply가 아니라 Kakao.send 아닌가요",
+                    "id": 89751472,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 89751472,
+                    "updateDate": 1588884102000,
+                    "writer": {
+                        "id": "kookyunchan",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAyMDA1MDRfMjU3/MDAxNTg4NTM1ODA3MzQw.N8tc_uLmdpi1cSbOwDFCOgWHkzMRurimqG7_qNV9niQg.paJjBYk1OHi0bsVPCwVfpmZ1dxhPSC-CviQqlWEO5TAg.JPEG.kookyunchan/KakaoTalk_20200122_124013590.jpg"
+                        },
+                        "nick": "카톡우앙"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

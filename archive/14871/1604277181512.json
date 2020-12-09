@@ -1,0 +1,253 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">/*</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">Made By Green050121</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">*/</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\"></span><div style=\"line-height: 19px;\"><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(java.lang);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(java.net);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(java.util);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(android.graphics);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(android.widget);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(android.view);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(android.app);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(android.os);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(android.content);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(android.media);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(org.jsoup);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">importPackage(org.mozilla.javascript);</span></div></div></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">const ctx=Api.getContext();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">Calculation={<br /></span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Byte&nbsp;:&nbsp;function(bytes)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;bytes&nbsp;=&nbsp;parseInt(bytes);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;s&nbsp;=&nbsp;[&apos;bytes&apos;,&nbsp;&apos;KB&apos;,&nbsp;&apos;MB&apos;,&nbsp;&apos;GB&apos;,&nbsp;&apos;TB&apos;,&nbsp;&apos;PB&apos;];</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;e&nbsp;=&nbsp;Math.floor(Math.log(bytes)&nbsp;/&nbsp;Math.log(1024));</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(e&nbsp;==&nbsp;&quot;-Infinity&quot;)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&quot;0&nbsp;&quot;&nbsp;+&nbsp;s[0];</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(bytes&nbsp;/&nbsp;Math.pow(1024,&nbsp;Math.floor(e))).toFixed(2)&nbsp;+&nbsp;&quot;&quot;&nbsp;+&nbsp;s[e];</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;Wifi={</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SSID:function&nbsp;()&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(android.os.Build.VERSION.SDK_INT&nbsp;&gt;=&nbsp;android.os.Build.VERSION_CODES.O)&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;cm&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.CONNECTIVITY_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;actInfo&nbsp;=&nbsp;cm.getActiveNetworkInfo();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(actInfo&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;actInfo.isConnected())&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;ssid&nbsp;=&nbsp;actInfo.getExtraInfo();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ssid;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;wm&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.WIFI_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;wifiInfo&nbsp;=&nbsp;wm.getConnectionInfo();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;ssid&nbsp;=&nbsp;wifiInfo.getSSID();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ssid;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Speed:&nbsp;function()&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;wm&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.WIFI_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;wifiInfo&nbsp;=&nbsp;wm.getConnectionInfo()</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;speed&nbsp;=&nbsp;wifiInfo.getLinkSpeed();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;speed+&quot;Mbps&quot;;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frequency:&nbsp;function()&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;wm&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.WIFI_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;wifiInfo&nbsp;=&nbsp;wm.getConnectionInfo()</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;frequency&nbsp;=&nbsp;wifiInfo.getFrequency();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;frequency&gt;5000?&quot;5GHz&quot;:&quot;2.4GHz&quot;;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;Memory={</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total:function()&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;am&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.ACTIVITY_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;mi&nbsp;=&nbsp;new&nbsp;ActivityManager.MemoryInfo();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;am.getMemoryInfo(mi);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;Calculation.Byte(mi.totalMem);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Using:function()&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;am&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.ACTIVITY_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;mi&nbsp;=&nbsp;new&nbsp;ActivityManager.MemoryInfo();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;am.getMemoryInfo(mi);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;Calculation.Byte(Math.floor(mi.totalMem&nbsp;-&nbsp;mi.availMem));</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Avail:function()&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;am&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.ACTIVITY_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;mi&nbsp;=&nbsp;new&nbsp;ActivityManager.MemoryInfo();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;am.getMemoryInfo(mi);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;Calculation.Byte(mi.availMem);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Percentage:function()&nbsp;{</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;am&nbsp;=&nbsp;ctx.getSystemService(android.content.Context.ACTIVITY_SERVICE);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;mi&nbsp;=&nbsp;new&nbsp;ActivityManager.MemoryInfo();</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;am.getMemoryInfo(mi);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;usingMem&nbsp;=&nbsp;Math.floor(mi.totalMem&nbsp;-&nbsp;mi.availMem);</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;Math.floor((usingMem&nbsp;/&nbsp;mi.totalMem)&nbsp;*&nbsp;100)&nbsp;+&nbsp;&quot;%&quot;;</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><span style=\"background-color: rgb(255, 255, 255);\"><br /></span><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;},</span></div><div style=\"\"><span style=\"background-color: rgb(255, 255, 255);\"><br /></span></div></div><blockquote><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"\"><div style=\"line-height: 19px;\"><div><span style=\"background-color: rgb(255, 255, 255);\">Info=function()&nbsp;{</span></div></div></div></div></blockquote><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"\"><div style=\"line-height: 19px;\"><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try&nbsp;{java.lang.Runtime.getRuntime().exec(&quot;su&quot;);var&nbsp;root=true;}&nbsp;catch(e)&nbsp;{var&nbsp;root=false;}</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;wifi=String(Api.getContext().getSystemService(android.content.Context.WIFI_SERVICE).getConnectionInfo());</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;state=wifi.split(&quot;Supplicant&nbsp;state:&quot;)[1].split(&quot;,&quot;)[0].trim()==&quot;COMPLETED&quot;?&quot;WiFi&quot;:&quot;error&quot;;</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(state==&quot;error&quot;)&nbsp;{try{var&nbsp;ssid=String(Api.getContext().getSystemService(android.content.Context.CONNECTIVITY_SERVICE).getActiveNetworkInfo().getExtraInfo()).replace(/&quot;/g,&quot;&quot;),state=&quot;LTE/3G&quot;}catch(e){state=&quot;&lt;Not&nbsp;Connected&nbsp;Network&gt;&quot;}}</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;[</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;[&nbsp;Phone&nbsp;Info&nbsp;]&quot;+&quot;\\u200b&quot;.repeat(1000),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;,</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;버전&nbsp;:&nbsp;&quot;+Device.getAndroidVersionName(),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;기종&nbsp;:&nbsp;&quot;+Device.getPhoneBrand()+&quot;&nbsp;&quot;+Device.getPhoneModel(),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;배터리&nbsp;잔량&nbsp;:&nbsp;&quot;+Device.getBatteryLevel()+&quot;%&quot;,</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;배터리&nbsp;온도&nbsp;:&nbsp;&quot;+Number(Device.getBatteryTemperature())/10+&quot;&deg;C&quot;,</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;충전&nbsp;여부&nbsp;:&nbsp;&quot;+Device.isCharging(),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;충전기&nbsp;종류&nbsp;:&nbsp;&quot;+Device.getPlugType(),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;,</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Network&nbsp;이름&nbsp;:&nbsp;&quot;+(state==&quot;WiFi&quot;?Bot.Wifi.SSID():state==&quot;&lt;Not&nbsp;Connected&nbsp;Network&gt;&quot;?state:ssid),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Network&nbsp;상태&nbsp;:&nbsp;&quot;+state,</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;WiFi&nbsp;속도&nbsp;:&nbsp;&quot;+(state!=&quot;WiFi&quot;?&quot;&lt;Not&nbsp;Connected&nbsp;WiFi&gt;&quot;:Wifi.Speed()),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;WiFi&nbsp;대역폭&nbsp;:&nbsp;&quot;+(state!=&quot;WiFi&quot;?&quot;&lt;Not&nbsp;Connected&nbsp;WiFi&gt;&quot;:Wifi.Frequency()),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Giga&nbsp;WiFi&nbsp;:&nbsp;&quot;+(state!=&quot;WiFi&quot;?&quot;&lt;Not&nbsp;Connected&nbsp;WiFi&gt;&quot;:(wifi.indexOf(&quot;GigaAp&quot;)!=-1?wifi.split(&quot;GigaAp:&quot;)[1].split(&quot;,&quot;)[0].trim():&quot;&lt;Not&nbsp;Supported&nbsp;This&nbsp;Device&gt;&quot;)),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;,</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Memory&nbsp;Total&nbsp;:&nbsp;&quot;+Memory.Total(),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Memory&nbsp;Using&nbsp;:&nbsp;&quot;+Memory.Using(),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Memory&nbsp;Avail&nbsp;:&nbsp;&quot;+Memory.Avail(),</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Memory&nbsp;Using&nbsp;Percentage&nbsp;:&nbsp;&quot;+Bot.Memory.Percentage(),</span></div></div></div></div><blockquote><blockquote><blockquote><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"\"><div style=\"line-height: 19px;\"><div><span style=\"background-color: rgb(255, 255, 255);\">&quot;&quot;,</span></div></div></div></div></blockquote></blockquote></blockquote><div style=\"font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div style=\"\"><div style=\"line-height: 19px;\"><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Root&nbsp;:&nbsp;&quot;+root</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;].join(&quot;\\n&quot;);</span></div><div><span style=\"background-color: rgb(255, 255, 255);\">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></div></div><div style=\"\"><br /></div><div style=\"\">사용법 : Info();</div><div style=\"\"><br /></div><div style=\"\">※ 중요 ※</div><div style=\"\">이 소스는 메신저봇(메신저봇R포함)에서만 작동합니다.(어짜피 다 메봇 쓸ㅌ..(읍읍))</div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003A1700000000",
+            "id": 14871,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 227,
+            "refArticleId": 14871,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "스마트폰 정보 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585745244833,
+            "writer": {
+                "id": "dbsehgus0121",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "Green050121"
+            }
+        },
+        "articleId": 14871,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ctx 변수는 몬가영\nWifi.SSID() 함수 내부에요",
+                    "id": 86105176,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86105176,
+                    "updateDate": 1585759295000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "수정했습니다",
+                    "id": 86299511,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86105176,
+                    "updateDate": 1585915615000,
+                    "writer": {
+                        "id": "dbsehgus0121",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMTRfNDUg/MDAxNTczNzAwMzMwMDc0.2MV0l2dzvpTI8hSGOZhHXGhFOEaXxC73D2GjK0PhQtog.hFvr7iA1nTal3MDviQH3ja37x7rSeCmccCjZQ-ArpFMg.PNG.dbsehgus0121/icon.png"
+                        },
+                        "nick": "Green050121"
+                    }
+                },
+                {
+                    "content": "뭐지 어떻게 쓰는거지 .   \r\n(   혼란   )",
+                    "id": 86141342,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86141342,
+                    "updateDate": 1585795435000,
+                    "writer": {
+                        "id": "duswl071005",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200616_163/duswl071005_1592267238071g96mJ_PNG/image.png"
+                        },
+                        "nick": "루카"
+                    }
+                },
+                {
+                    "content": "if (msg==\"대충 명령ㅇ ㅓ\"); 와 repiler.refly는 어따 집어넣어야 하는거지 . . ?",
+                    "id": 86141751,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86141751,
+                    "updateDate": 1585795639000,
+                    "writer": {
+                        "id": "duswl071005",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200616_163/duswl071005_1592267238071g96mJ_PNG/image.png"
+                        },
+                        "nick": "루카"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

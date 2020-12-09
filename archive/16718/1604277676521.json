@@ -1,0 +1,240 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 3,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)</font></span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b><span style=\"font-size: 13pt; color: rgb(38, 139, 210);\">var</span><span style=\"font-size: 13pt;\"> game = </span><span style=\"font-size: 13pt; color: rgb(38, 139, 210);\">false</span><span style=\"font-size: 13pt;\">;</span></div><p dir=\"ltr\">\r\n<span style=\"color:#268BD2;\">var</span> player1 = [];<br />\r\n<span style=\"color:#268BD2;\">var</span> player2 = [];<br />\r\n<span style=\"color:#268BD2;\">var</span> player3 = [];<br />\r\n<span style=\"color:#268BD2;\">var</span> player4 = [];<br />\r\n<span style=\"color:#268BD2;\">var</span> pan = <span style=\"color:#93A1A1;\">1</span>;<br />\r\n<span style=\"color:#268BD2;\">var</span> zongbok = [];<br />\r\n<span style=\"color:#268BD2;\">var</span> ggam = <span style=\"color:#268BD2;\">false</span>;<br />\r\n\r\n<br />\r\n<span style=\"color:#268BD2;\">function</span> response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {\r\n<br />\r\n <br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악어이빨&quot;</span>){<br />\r\n alligators = <span style=\"color:#269186;\">Math</span>.floor((<span style=\"color:#269186;\">Math</span>.random()*<span style=\"color:#93A1A1;\">10</span>)+<span style=\"color:#93A1A1;\">1</span>);<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;악어이빨 게임을 준비합니다. \\n/악겜참가&quot;</span>);<br />\r\n&nbsp;&nbsp;&nbsp; ggam=<span style=\"color:#268BD2;\">true</span>;}<br />\r\n&nbsp;&nbsp; <span style=\"color:#93A1A1;\">//____________참가_______________//</span><br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악겜참가&quot;</span>)<span style=\"color:#268BD2;\">if</span>(pan==<span style=\"color:#93A1A1;\">4</span>)<span style=\"color:#268BD2;\">if</span>(ggam==<span style=\"color:#268BD2;\">true</span>){<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; player4.push(sender);<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;최대 인원으로 게임을 시작합니다.&quot;</span>);<br />\r\n&nbsp;&nbsp;&nbsp; pan++;<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;숫자가 정해졌습니다. /악어 1~10중에 골라주세요.\\n순서는 &quot;</span>+player1+<span style=\"color:#269186;\">&quot;&#10145;&#65039;&quot;</span>+player2+<span style=\"color:#269186;\">&quot;&#10145;&#65039;&quot;</span>+player3+<span style=\"color:#269186;\">&quot;&#10145;&#65039;&quot;</span>+player4+<span style=\"color:#269186;\">&quot;입니다.&quot;</span>);game = <span style=\"color:#268BD2;\">true</span>;}<br />\r\n&nbsp;&nbsp;&nbsp; <br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악겜참가&quot;</span>)<span style=\"color:#268BD2;\">if</span>(pan==<span style=\"color:#93A1A1;\">3</span>)<span style=\"color:#268BD2;\">if</span>(ggam==<span style=\"color:#268BD2;\">true</span>){<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; player3.push(sender);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pan++;<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;최대 인원은 4명입니다. 시작하시려면\\n/악겜시작&quot;</span>);}<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악겜참가&quot;</span>)<span style=\"color:#268BD2;\">if</span>(pan==<span style=\"color:#93A1A1;\">2</span>)<span style=\"color:#268BD2;\">if</span>(ggam==<span style=\"color:#268BD2;\">true</span>){<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; player2.push(sender);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pan++;<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;최대 인원은 4명입니다. 시작하시려면\\n/악겜시작&quot;</span>);}<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악겜참가&quot;</span>)<span style=\"color:#268BD2;\">if</span>(pan==<span style=\"color:#93A1A1;\">1</span>)<span style=\"color:#268BD2;\">if</span>(ggam==<span style=\"color:#268BD2;\">true</span>){<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; player1.push(sender);<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pan++;<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;최대 인원은 4명입니다. 시작하시려면\\n/악겜시작&quot;</span>);<br />\r\n&nbsp;&nbsp;&nbsp; }<br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#93A1A1;\">/*________시작__________*/</span><br />\r\n&nbsp;&nbsp;&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악겜시작&quot;</span>&amp;&amp;pan==<span style=\"color:#93A1A1;\">2</span>)<span style=\"color:#268BD2;\">if</span>(ggam==<span style=\"color:#268BD2;\">true</span>){<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;숫자가 정해졌습니다. /악어 1~10중에 골라주세요.&quot;</span>);<br />\r\n&nbsp;&nbsp;&nbsp; game = <span style=\"color:#268BD2;\">true</span>;}<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악겜시작&quot;</span>&amp;&amp;pan==<span style=\"color:#93A1A1;\">3</span>)<span style=\"color:#268BD2;\">if</span>(ggam==<span style=\"color:#268BD2;\">true</span>){<br />\r\n&nbsp;&nbsp;&nbsp; <br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;숫자가 정해졌습니다. /악어 1~10중에 골라주세요.\\n순서는 &quot;</span>+player1+<span style=\"color:#269186;\">&quot;&#10145;&#65039;&quot;</span>+player2+<span style=\"color:#269186;\">&quot;입니다.&quot;</span>);game = <span style=\"color:#268BD2;\">true</span>;}<br />\r\n&nbsp; <span style=\"color:#268BD2;\">if</span>(msg==<span style=\"color:#269186;\">&quot;/악겜시작&quot;</span>&amp;&amp;pan==<span style=\"color:#93A1A1;\">4</span>)<span style=\"color:#268BD2;\">if</span>(ggam==<span style=\"color:#268BD2;\">true</span>){<br />\r\n&nbsp;&nbsp;&nbsp; replier.reply(<span style=\"color:#269186;\">&quot;숫자가 정해졌습니다. /악어 1~10중에 골라주세요.\\n순서는 &quot;</span>+player1+<span style=\"color:#269186;\">&quot;&#10145;&#65039;&quot;</span>+player2+<span style=\"color:#269186;\">&quot;&#10145;&#65039;&quot;</span>+player3+<span style=\"color:#269186;\">&quot;입니다.&quot;</span>);game = true;}<br />\r\n&nbsp; <br />\r\n&nbsp; /*_________게임__________*/\r\n<br />\r\nif (msg.startsWith(&quot;/악어 &quot;)&amp;&amp;game == true) {<br />\r\nvar bay = msg.substr(4);<br />\r\nif(zongbok==bay){replier.reply(&quot;이미 했던 숫자입니다.&quot;);}<br />\r\nif (bay == alligators) {replier.reply(&quot;쾈!!!! &quot;+sender+&quot; 님이 악어에 물렸습니다!&quot;);<br />\r\ngame = false;<br />\r\nplayer1 = [];<br />\r\n player2 = [];<br />\r\n&nbsp; player3 = [];<br />\r\n&nbsp;&nbsp; player4 = [];<br />\r\n&nbsp;&nbsp;&nbsp; pan = 1;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp; zongbok = [];<br />\r\nggam = false;<br />\r\n}<br />\r\n if (bay &gt; alligators)&nbsp; if(bay!=zongbok){replier.reply(&quot;콰...흠.. &quot;+sender+&quot; 님이 아쉽게도 악어를 피했습니다.&quot;); <br />\r\nzongbok=[];<br />\r\nzongbok+=bay;}<br />\r\n&nbsp; if (bay &lt; alligators)&nbsp; if(bay!=zongbok){replier.reply(&quot;콰...흠.. &quot;+sender+&quot; 님이 아쉽게도 악어를 피했습니다.&quot;); <br />\r\nzongbok=[];<br />\r\nzongbok+=bay;<br />\r\n&nbsp; <br />\r\n}<br />\r\n}<br />\r\n}</p><p dir=\"ltr\">//made by inxby</p><p dir=\"ltr\">//수정ㄱㄴ</p><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000414E00000000",
+            "head": "미니게임",
+            "headId": 70,
+            "id": 16718,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 188,
+            "refArticleId": 16718,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "악어이빨 쾈쾈",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1587814414090,
+            "writer": {
+                "id": "yih2776",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "레몬펭귄"
+            }
+        },
+        "articleId": 16718,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "콱콱",
+                    "id": 88605866,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88605866,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-3-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_3.png",
+                        "width": 129
+                    },
+                    "updateDate": 1587877357000,
+                    "writer": {
+                        "id": "larrykmcho",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20191110_202/larrykmcho_1573354894091u86ye_PNG/image.png"
+                        },
+                        "nick": "지풍"
+                    }
+                },
+                {
+                    "content": "1~10 이아니여도 숫자입력이 되고 1을하고 2를하고 다시 1을 치면 중복이 되요",
+                    "id": 88613600,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 88613600,
+                    "updateDate": 1587884380000,
+                    "writer": {
+                        "id": "ccwwhh0830",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Devil1234"
+                    }
+                },
+                {
+                    "content": "흐으으으음...",
+                    "id": 88617214,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 88613600,
+                    "updateDate": 1587887785000,
+                    "writer": {
+                        "id": "yih2776",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MjVfMjgx/MDAxNjAxMDI0ODM2Mzk1._c247sYSoh9BUYLYIoM6LXpyi8a0SoEjSXZF1IzDEywg.y_jhllCb3_v1ztAFfCeJAEedq2LZICMgpbH5_RaCFOIg.JPEG/1542715509446.jpeg"
+                        },
+                        "nick": "레몬펭귄"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

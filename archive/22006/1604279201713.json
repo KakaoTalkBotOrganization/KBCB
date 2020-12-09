@@ -1,0 +1,415 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentElements": [],
+            "contentHtml": "<p>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {<br />  if (msg.startsWith(&quot;!트위치목록&quot;) &amp;&amp; msg != &quot;!트위치목록&quot;) {<br />    try {<br />      msg = msg.substring(6).trim();<br />      var line = &quot;\\n\\n&quot; + &quot;-&quot;.repeat(50) + &quot;\\n\\n&quot;;<br />      replier.reply(&quot;&apos;&quot; + msg + &quot;&apos; 닉네임(아이디)을 트위치에 검색중...&quot;);<br />      var nick = new Array();<br />      var id = new Array();<br />      var followers = new Array();<br />      var img = new Array();<br />      var url = new Array();<br />      var jsoup = org.jsoup.Jsoup.connect(&quot;https://m.twitch.tv/search?category=users&amp;term=&quot; + msg).get();<br />      var length = jsoup.select(&quot;h3[class=tw-ellipsis tw-c-text-base tw-font-size-5]&quot;).select(&apos;h3&apos;).size();<br />      for (var n = 0; n &lt; length; n++) {<br />        nick[n] = jsoup.select(&quot;h3[class=tw-ellipsis tw-c-text-base tw-font-size-5]&quot;).get(n).text();<br />        id[n] = jsoup.select(&quot;a&quot;).get(n + 3).attr(&quot;href&quot;).replace(/\\/|(profile)/g, &quot;&quot;);<br />        followers[n] = jsoup.select(&quot;p[class=tw-c-text-alt-2]&quot;).get(n).text().replace(/( followers| follower)/g, &quot;&quot;);<br />        img[n] = jsoup.select(&quot;div[class=tw-aspect tw-aspect--align-top]&quot;).get(n + 1).select(&quot;img&quot;).attr(&quot;src&quot;);<br />        url[n] = &quot;https://m.twitch.tv&quot; + jsoup.select(&quot;a&quot;).get(n + 3).attr(&quot;href&quot;);<br />      }<br />      var result = &quot;닉네임 : &quot; + nick[0] + &quot;\\nID : &quot; + id[0] + &quot;\\n팔로워 : &quot; + followers[0] + &quot;\\n프로필 : &quot; + img[0] + &quot;\\nURL : &quot; + url[0] + line + &quot;닉네임 : &quot; + nick[1] + &quot;\\nID : &quot; + id[1] + &quot;\\n팔로워 : &quot; + followers[1] + &quot;\\n프로필 : &quot; + img[1] + &quot;\\nURL : &quot; + url[1] + line + &quot;닉네임 : &quot; + nick[2] + &quot;\\nID : &quot; + id[2] + &quot;\\n팔로워 : &quot; + followers[2] + &quot;\\n프로필 : &quot; + img[2] + &quot;\\nURL : &quot; + url[2] + line + &quot;닉네임 : &quot; + nick[3] + &quot;\\nID : &quot; + id[3] + &quot;\\n팔로워 : &quot; + followers[3] + &quot;\\n프로필 : &quot; + img[3] + &quot;\\nURL : &quot; + url[3] + line + &quot;닉네임 : &quot; + nick[4] + &quot;\\nID : &quot; + id[4] + &quot;\\n팔로워 : &quot; + followers[4] + &quot;\\n프로필 : &quot; + img[4] + &quot;\\nURL : &quot; + url[4];<br />      if (nick[0] != undefined) {<br />        replier.reply(&quot;검색 목록 URL : <a href=\"https://m.twitch.tv/search?category=users&amp;term=&quot;\" target=\"_blank\">https://m.twitch.tv/search?category=users&amp;term=&quot;</a> + msg + &quot;\\n\\n&quot; + &quot;-&quot;.repeat(50) + &quot;\\n\\n&quot; + result);<br />      } else if (nick[0] == undefined) {<br />        replier.reply(&quot;입력하신 닉네임(아이디)을 검색할 수 없습니다.&quot;);<br />      }<br />    }    catch (e) {<br />  replier.reply(&quot;입력하신 닉네임(아이디)을 검색할 수 없습니다.&quot;);<br />}<br />  }<br />  if (msg == &quot;!트위치목록&quot;) {<br />    replier.reply(&quot;&apos;!트위치목록&apos; 뒤에 닉네임(아이디)을 적어주세요.&quot;);<br />  }<br />  if (msg.startsWith(&quot;!트위치검색&quot;) &amp;&amp; msg != &quot;!트위치검색&quot;) {<br />    try {<br />      msg = msg.substring(6).trim();<br />      var nickID = new Array();<br />      var follower = new Array();<br />      var viewer = new Array();<br />      var on = new Array();<br />      var title1 = new Array();<br />      var title2 = new Array();<br />      var len = new Array();<br />      var view = new Array();<br />      var profilelink = new Array();<br />      var link = new Array();<br />      var profile = new Array();<br />      var video = new Array();<br />      replier.reply(&quot;&apos;&quot; + msg + &quot;&apos; 아이디를 트위치에 검색중...&quot;);<br />      var jsp = org.jsoup.Jsoup.connect(&quot;https://m.twitch.tv/&quot; + msg + &quot;/profile&quot;).get();<br />      nickID = jsp.select(&quot;div[class=tw-flex-grow-2 tw-pd-x-05]&quot;).select(&quot;h4&quot;).text();<br />      follower = jsp.select(&quot;div[class=tw-stat__value tw-mg-l-05]&quot;).get(0).text();<br />      viewer = jsp.select(&quot;div[class=tw-stat__value tw-mg-l-05]&quot;).get(1).text();<br />      on = jsp.select(&quot;div[class=tw-pd-x-1 tw-pd-y-05 tw-c-background-alt]&quot;).select(&quot;h5&quot;).text().replace(&quot;Now Streaming&quot;, &quot;방송 중&quot;).replace(&quot;Most Recent Broadcast&quot;, &quot;최근 생방송&quot;);<br />      title1 = jsp.select(&quot;div[class=tw-ellipsis tw-flex-column]&quot;).select(&quot;h5&quot;).text();<br />      title2 = jsp.select(&quot;p[class=tw-ellipsis tw-c-text-alt]&quot;).text();<br />      len = jsp.select(&quot;div[class=tw-stat__value tw-mg-l-05]&quot;).get(3).text();<br />      view = jsp.select(&quot;div[class=tw-stat__value tw-mg-l-05]&quot;).get(2).text();<br />      profilelink = &quot;https://m.twitch.tv/&quot; + msg + &quot;/profile&quot;;<br />      link = &quot;https://m.twitch.tv&quot; + jsp.select(&quot;div[class=mw-featured-content-card__image tw-relative]&quot;).select(&quot;a&quot;).attr(&quot;href&quot;);<br />      profile = jsp.select(&quot;div[class=tw-border-t tw-border-r tw-border-b tw-border-l tw-elevation-1 mw-channel-info-card__avatar tw-pd-05 tw-c-background-base]&quot;).select(&quot;img&quot;).attr(&quot;src&quot;);<br />      video = jsp.select(&quot;div[class=tw-aspect tw-aspect--align-top]&quot;).select(&quot;img&quot;).attr(&quot;src&quot;).replace(&quot;276x155&quot;, &quot;1656x932&quot;);<br />      var result1 = &quot;닉네임 : &quot; + nickID + &quot;\\n팔로워 : &quot; + follower + &quot;\\n시청자 : &quot; + viewer + &quot;\\n타이틀 : &quot; + on + &quot;\\n제목 : &quot; + title1 + &quot;\\n카테고리 : &quot; + title2 + &quot;\\n동영상 길이 : &quot; + len + &quot;\\n시청자 수 : &quot; + view + &quot;\\n프로필 링크 : &quot; + profilelink + &quot;\\n영상 링크 : &quot; + link + &quot;\\n프로필 이미지 : &quot; + profile + &quot;\\n영상 이미지 : &quot; + video;<br />      if (nickID != undefined) {<br />        replier.reply(result1);<br />      } else if (nickID == undefined) {<br />        replier.reply(&quot;입력하신 아이디를 검색할 수 없습니다.&quot;);<br />      }<br />    }    catch (e) {<br />  replier.reply(&quot;입력하신 아이디를 검색할 수 없습니다.&quot;);<br />}<br />  }<br />  if (msg == &quot;!트위치검색&quot;) {<br />    replier.reply(&quot;&apos;!트위치검색&apos; 뒤에 아이디를 적어주세요.&quot;);<br />  }<br />}<br /><br /><br /><br /><br />jsoup은 별로 안해봐서 보기 흉합니다ㅠ</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000055F600000000",
+            "head": "파싱",
+            "headId": 72,
+            "id": 22006,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 129,
+            "refArticleId": 22006,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "트위치",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1596037719993,
+            "writer": {
+                "id": "dusupia",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "terror"
+            }
+        },
+        "articleId": 22006,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "jsoup하시는데 replace로 노가다를...ㄷㄷ",
+                    "id": 98328547,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "updateDate": 1596037912000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "우째합니까ㅠㅠ",
+                    "id": 98328568,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "updateDate": 1596037934000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "헉...select만 여러 번 써도 충분하실텐데..",
+                    "id": 98328605,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "dusupia",
+                        "nick": "terror"
+                    },
+                    "updateDate": 1596037970000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "ㅠㅠ",
+                    "id": 98328636,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1596038007000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "순위같은거 반복되는거는 무조건 toArray랑 map쓰시면 되고 다른건 select 여러번",
+                    "id": 98328677,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "dusupia",
+                        "nick": "terror"
+                    },
+                    "updateDate": 1596038050000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "그것만 아셔도 충분",
+                    "id": 98328687,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "dusupia",
+                        "nick": "terror"
+                    },
+                    "updateDate": 1596038060000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "아직 select만 배우고 설레발 치면서 만들었슴다...",
+                    "id": 98328694,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1596038070000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "어라",
+                    "id": 98328698,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "dusupia",
+                        "nick": "terror"
+                    },
+                    "updateDate": 1596038076000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                },
+                {
+                    "content": "size도 몰랐다가 오픈챗에 물어봤어요ㅠ",
+                    "id": 98328729,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "kiri9266",
+                        "nick": "Kiri"
+                    },
+                    "updateDate": 1596038108000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "모르는 부분은 무조건 카페 또는 옾챗에 물어보면 되는 거시에오.",
+                    "id": 98328756,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 98328547,
+                    "replyMember": {
+                        "id": "dusupia",
+                        "nick": "terror"
+                    },
+                    "updateDate": 1596038135000,
+                    "writer": {
+                        "id": "kiri9266",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "Kiri"
+                    }
+                }
+            ],
+            "last": {
+                "id": 98328547,
+                "refId": 98328547
+            },
+            "next": {
+                "id": 98328771,
+                "refId": 98328547
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

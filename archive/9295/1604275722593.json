@@ -1,0 +1,177 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt;&nbsp;</b><span style=\"font-size: 13.3333px;\">메신저봇R</span></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b></div><div><b><br /></b></div><div><div style=\"\"><b>const scriptName = &quot;학습&quot;;</b></div><div style=\"\"><b>const File = java.io.File;</b></div><div style=\"\"><b>const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();</b></div><div style=\"\"><b>const listPath =&nbsp;</b><b>sdcard +</b><b>&quot;/katalkbot/learn/list.json&quot;;</b></div><div style=\"\"><b>const enter = &quot;\\n&quot;;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>/*</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*(string) room</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*(string) sender</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*(boolean) isGroupChat</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*(function) replier.reply(message)</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*(function) replier.reply(room, message, hideErrorToast = false)</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*(function) imageDB.getProfileBase64()</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*(string) packageName</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>*/</b></div><div style=\"\"><span style=\"white-space:pre\"><b> </b></span></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>var json = FileStream.read(listPath);</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>var length = Object.keys(data).length;</b></div><div style=\"\"><span style=\"white-space:pre\"><b> </b></span><b>var returnValue = &quot;&quot;;</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>if(msg == &quot;학습가이드&quot;) {</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>replier.reply(</b></div><div style=\"\"><b><span style=\"white-space:pre\">   </span> &quot;&#128073; 학습 A-B (A라고 말하면 B라고 대답합니다.)&quot;</b></div><div style=\"\"><b><span style=\"white-space:pre\">   </span>+enter</b></div><div style=\"\"><b><span style=\"white-space:pre\">   </span>+&quot;&#128073; 학습취소 A (A에 대한 학습을 잊습니다.)&quot;</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>);</b></div><div style=\"\"><span style=\"white-space:pre\"><b>  </b></span></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>if(length &gt; 0) {</b></div><div style=\"\"><b><span style=\"white-space:pre\">   </span>for(key in json) {</b></div><div style=\"\"><b><span style=\"white-space:pre\">    </span>returnValue += key+&quot;-&quot;+json[key]+&quot;\\n&quot;;</b></div><div style=\"\"><b><span style=\"white-space:pre\">   </span>}</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b><span style=\"white-space:pre\">   </span>replier.reply(&quot;&lt;학습 목록&gt;\\n&quot;+returnValue);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>} else {</b></div><div style=\"\"><b><span style=\"white-space:pre\">   </span>replier.reply(&quot;학습 내용이 없습니다.&quot;);</b></div><div style=\"\"><b><span style=\"white-space:pre\">  </span>}</b></div><div style=\"\"><b><span style=\"white-space:pre\"> </span>}</b></div><div style=\"\"><b>}</b></div></div><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 보시는 것처럼 특정경로에 저장된 json 파일을 받아와서</b></div><div><b>returnValue에 저장된 json key,value를 결합해서 담으려고 하는데요..</b></div><div><b>(json파일에는 테스트:테스트중 한건만 저장되어 있습니다.)</b></div><div><br /></div><div><b><font color=\"#ff0000\">그래서 예상 결과값은,</font></b></div><div><b><br /></b></div><div><b>&lt;학습 목록&gt;</b></div><div><b>테스트-테스트중&nbsp;&nbsp;</b><b>&lt;-- 이래야 하는데....</b></div></div><div class=\"NHN_Writeform_Main\"><div><b><br /></b></div><div><b><font color=\"#ff0000\">결과가,</font></b></div><div><b><br /></b></div><div><div style=\"\"><b>&lt;학습 목록&gt;</b></div><div style=\"\"><b>0-{</b></div><div style=\"\"><b>1-</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>2-&nbsp;</b></div><div style=\"\"><b>3-&nbsp;</b></div><div style=\"\"><b>4-&nbsp;</b></div><div style=\"\"><b>5-&nbsp;</b></div><div style=\"\"><b>6-&quot;</b></div><div style=\"\"><b>7-테</b></div><div style=\"\"><b>8-스</b></div><div style=\"\"><b>9-트</b></div><div style=\"\"><b>10-&quot;</b></div><div style=\"\"><b>11-&nbsp;</b></div><div style=\"\"><b>12-:</b></div><div style=\"\"><b>13-&nbsp;</b></div><div style=\"\"><b>14-&quot;</b></div><div style=\"\"><b>15-테</b></div><div style=\"\"><b>16-스</b></div><div style=\"\"><b>17-트</b></div><div style=\"\"><b>18-중</b></div><div style=\"\"><b>19-&quot;</b></div><div style=\"\"><b>20-</b></div><div style=\"\"><b><br /></b></div><div style=\"\"><b>21-}&nbsp; &lt;-- 이렇게 나오네요...</b></div></div><div style=\"\"><b>이 숫자들은 어디서 튀어나온 걸까요???</b></div><div style=\"\"><b>왜 한글자씩 가져오는지도 모르겠구요...</b></div><div style=\"\"><b>jduddle같은 곳에서 스크립트 테스트하면 정상적으로 되는데</b></div><div style=\"\"><b>봇에서 하니까 이런 결과가 나오네요..</b></div><div style=\"\"><b>답변 좀 부탁드려요 ㅠㅠ</b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000244F00000000",
+            "id": 9295,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 93,
+            "refArticleId": 9295,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "저장된 json파일을 받아와서 문자열 결합...",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1577191731193,
+            "writer": {
+                "id": "umtaetae",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_1.gif",
+                "memberLevelName": "챗봇 입문자",
+                "nick": "웹딩"
+            }
+        },
+        "articleId": 9295,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "저렇게 잘려서 저장이 되더라고요..\r\n그래서 JSON 은 stringify 메서드로 문자열화 해서 txt 파일에 저장하시는 편이 나아요. 그리고 이게 더 빠를 수도?",
+                    "id": 76684251,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 76684251,
+                    "updateDate": 1577193014000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "아... 봇의 특성일까요...??\r\n그런식으로 한번 해봐야겠네요... 답변 감사드립니다^^",
+                    "id": 76687684,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 76684251,
+                    "updateDate": 1577195806000,
+                    "writer": {
+                        "id": "umtaetae",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "웹딩"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

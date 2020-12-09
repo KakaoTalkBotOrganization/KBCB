@@ -1,0 +1,294 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 7,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-eaa32521-df8b-11ea-a16e-1de0910f54d0\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfa184d-df8c-11ea-a16e-4d7a6e9575e3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfa184c-df8c-11ea-a16e-6b84815790a6\">검색 여부 : O / X (선택)×</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfa3f5f-df8c-11ea-a16e-e3a8b8457aac\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfa3f5e-df8c-11ea-a16e-9508dde4a38c\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfa3f61-df8c-11ea-a16e-034b3307cd83\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfa3f60-df8c-11ea-a16e-11ee6525450c\">오류 내용 : O / X (필수기제)한줄에다넣어진다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfa3f63-df8c-11ea-a16e-931b9488b0c7\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfa3f62-df8c-11ea-a16e-bb9effe63ba3\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfa6675-df8c-11ea-a16e-5b62f275a2c3\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfa6674-df8c-11ea-a16e-89f392382115\">오류가 발생하는 부분의 소스코드 : (필수기제)function response(room, msg, sender, isGroupChat, replier, ImageDB) { if (msg.indexOf (&quot;!날씨 &quot;) &#x3D;&#x3D; 0) { var where &#x3D; msg.substr (4); try { var link &#x3D; org.jsoup.Jsoup.connect(&quot;https://search.naver.com/search.naver?sm&#x3D;tab_hty.top&amp;where&#x3D;nexearch&amp;query&#x3D;&quot; + where + &quot; 날씨&quot;).get(); var today_weather_mainTab &#x3D; link.select(&quot;div.today_area._mainTabContent&quot;); //메인탭 var today_temp_c &#x3D; today_weather_mainTab.select(&quot;span.todaytemp&quot;).text(); //현재 기온 var today_temp_summary &#x3D; today_weather_mainTab.select(&quot;p.cast_txt&quot;).text(); //날씨 요약 //최저, 최대 var today_temp_min &#x3D; today_weather_mainTab.select(&quot;span.min&quot;); var today_temp_minC &#x3D; today_temp_min.select(&quot;span.num&quot;).text(); var today_temp_max &#x3D; today_weather_mainTab.select(&quot;span.max&quot;); var today_temp_maxC &#x3D; today_temp_max.select(&quot;span.num&quot;).text(); //체감온도 var today_sensible &#x3D; today_weather_mainTab.select(&quot;span.sensible&quot;); var today_sensibleC &#x3D; today_sensible.select(&quot;span.num&quot;).text(); //미세, 초미세먼지 var today_dust &#x3D; today_weather_mainTab.select(&quot;dl.indicator&quot;); var today_dust_data &#x3D; today_dust.select(&quot;dd.lv2&quot;); var today_dust_ug &#x3D; today_dust_data.select(&quot;span.num&quot;).text(); var today_dust_final &#x3D; today_dust_ug.substring(0,5); //if (today_dust_ug.substring(0,2) &lt;&#x3D; 30) { //replier.reply(today_dust_final + &quot; 좋음&quot;); //} else if (30 &lt; today_dust_ug.substring(0,2) &lt;&#x3D; 80) { //replier.reply(today_dust_final + &quot; 보통&quot;); //} else if (80 &lt; today_dust_ug.substring(0,2) &lt;&#x3D; 150) { //replier.reply(today_dust_final + &quot; 나쁨&quot;); //} else if (today_dust_ug.substring(0,2) &gt; 150) { //replier.reply(today_dust_final + &quot; 매우나쁨&quot;); //} //습도 var today_humidity &#x3D; today_weather_mainTab.select(&quot;div.info_list.humidity._tabContent&quot;); var today_humidity_now &#x3D; today_humidity.select(&quot;li.on.now&quot;); var today_humidity_percent &#x3D; today_humidity_now.select(&quot;dd.weather_item._dotWrapper&quot;).text(); //강수 var today_rain &#x3D; today_weather_mainTab.select(&quot;div.info_list.rainfall._tabContent&quot;); var today_rain_now &#x3D; today_rain.select(&quot;li.on.now&quot;); var today_rain_percent &#x3D; today_rain_now.select(&quot;dd.weather_item._dotWrapper&quot;).text(); //풍향 var today_wind &#x3D; today_weather_mainTab.select(&quot;div.info_list.wind._tabContent&quot;); var today_wind_now &#x3D; today_wind.select(&quot;li.on.now&quot;); var today_wind_percent &#x3D; today_wind_now.select(&quot;dd.weather_item._dotWrapper&quot;).text(); var today_wind_direction &#x3D; today_wind_now.select(&quot;span.wt_status&quot;).text(); //replier.reply (today_wind_direction); replier.reply(where+&quot;의 날씨 정보\\n\\n&quot;+today_temp_summary +&quot;\\n현재기온 : &quot; + today_temp_c+&quot;°C\\n최저/최대기온 : &quot; + today_temp_minC+&quot;/&quot;+today_temp_maxC+&quot;°C\\n체감온도 : &quot; + today_sensibleC +&quot;°C\\n습도 : &quot;     + today_humidity_percent + &quot;\\n강수확률 : &quot; + today_rain_percent + &quot;\\n풍속 : &quot; + today_wind_direction + &quot; &quot; + today_wind_percent); } catch (e) { replier.reply (&quot;날씨 정보 가져오기 실패.\\n()님께 오류메시지 발송합니다.&quot;); } } } </span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfa8d87-df8c-11ea-a16e-2d853d662f35\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfa8d86-df8c-11ea-a16e-57ed5c2ad0f9\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfa8d89-df8c-11ea-a16e-e3d7e808ff2b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfa8d88-df8c-11ea-a16e-67bbb7bbdd67\">전체소스 : (필요한 경우 기제)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfab49b-df8c-11ea-a16e-c3e882f5d148\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfab49a-df8c-11ea-a16e-9578981837e5\">어떻게하면한줄이아니라정상적으로넣을수있을까요?!</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3cfab49d-df8c-11ea-a16e-c5072d2fc1c9\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3cfab49c-df8c-11ea-a16e-151f9b1c2d22\">한줄에만넣어져서요ㅠㅠ알려주시면감사하겠습니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000059AC00000000",
+            "id": 22956,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 152,
+            "refArticleId": 22956,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "날씨소스질문입니다.",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1597560398823,
+            "writer": {
+                "id": "tjdgns679900",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/20200918_99/tjdgns679900_1600397468522sy6xw_JPEG/image.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "추억은방울방울"
+            }
+        },
+        "articleId": 22956,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "한줄에 넣어져서 나쁠 것은 없지만 그래도 하고 싶으시면 세미콜론에서 줄바꿈 하시면 됩니다\r\n그리고 중괄호에서도 줄바꿈하면 됩니다",
+                    "id": 100133353,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100133353,
+                    "updateDate": 1597561007000,
+                    "writer": {
+                        "id": "riruhyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDVfODMg/MDAxNTgzMzk0NjUwNDI3.zWXUXb_T3UCOMpgQyf4g34NjSQK_rKCYBdkuqrSC9vwg.J5bPo_o-ZJMjljxxjbgzWzp3DHHfm6wTjfHmmKJnMqEg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "hyun123"
+                    }
+                },
+                {
+                    "content": "중간에 있는 // 때문에, 뒷부분 소스가 전부 주석처리되어서 오류가 뜰 거시에오.",
+                    "id": 100133880,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100133353,
+                    "updateDate": 1597561481000,
+                    "writer": {
+                        "id": "dt3141592",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxNzA3MTNfNjAg/MDAxNDk5ODc0MzI1ODY0.L23nhKElHQBYU1HI-neTmsWWI76dJM8ijnLGirojm_0g.ZsTOi3Ay5KzWIPqmG2ZbjR7l0bCQfmpzyPQB9naua4og.PNG.dt3141592/Dark%2BTornado%252B.png"
+                        },
+                        "nick": "Dark Tornado"
+                    }
+                },
+                {
+                    "content": "//를없애면되나요?!",
+                    "id": 100133919,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100133919,
+                    "updateDate": 1597561519000,
+                    "writer": {
+                        "id": "tjdgns679900",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200918_99/tjdgns679900_1600397468522sy6xw_JPEG/image.jpg"
+                        },
+                        "nick": "추억은방울방울"
+                    }
+                },
+                {
+                    "content": "/**/ 으로 바꾸면 되요",
+                    "id": 100134033,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100133919,
+                    "updateDate": 1597561621000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                },
+                {
+                    "content": "// 주석\r\n/*주석*/",
+                    "id": 100134061,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 100133919,
+                    "replyMember": {
+                        "id": "franknoh1218",
+                        "nick": "franknoh"
+                    },
+                    "updateDate": 1597561642000,
+                    "writer": {
+                        "id": "franknoh1218",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "franknoh"
+                    }
+                },
+                {
+                    "content": "너무길어서...어디에//가있는지모르겠네요ㅠㅠ",
+                    "id": 100134358,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100134358,
+                    "updateDate": 1597561919000,
+                    "writer": {
+                        "id": "tjdgns679900",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200918_99/tjdgns679900_1600397468522sy6xw_JPEG/image.jpg"
+                        },
+                        "nick": "추억은방울방울"
+                    }
+                },
+                {
+                    "content": "감사합니다!!",
+                    "id": 100135791,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 100135791,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_58146d6d0ab0a-8-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_58146d6d0ab0a/original_8.png",
+                        "width": 129
+                    },
+                    "updateDate": 1597563269000,
+                    "writer": {
+                        "id": "tjdgns679900",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20200918_99/tjdgns679900_1600397468522sy6xw_JPEG/image.jpg"
+                        },
+                        "nick": "추억은방울방울"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

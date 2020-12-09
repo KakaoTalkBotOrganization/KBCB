@@ -1,0 +1,235 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 2,
+            "contentElements": [],
+            "contentHtml": "<p>cCho = [ &quot;ㄱ&quot;, &quot;ㄲ&quot;, &quot;ㄴ&quot;, &quot;ㄷ&quot;, &quot;ㄸ&quot;, &quot;ㄹ&quot;, &quot;ㅁ&quot;, &quot;ㅂ&quot;, &quot;ㅃ&quot;, &quot;ㅅ&quot;, &quot;ㅆ&quot;, &quot;ㅇ&quot;, &quot;ㅈ&quot;, &quot;ㅉ&quot;, &quot;ㅊ&quot;, &quot;ㅋ&quot;, &quot;ㅌ&quot;, &quot;ㅍ&quot;, &quot;ㅎ&quot;]<br />cJung = [ &quot;ㅏ&quot;, &quot;ㅐ&quot;, &quot;ㅑ&quot;, &quot;ㅒ&quot;, &quot;ㅓ&quot;, &quot;ㅔ&quot;, &quot;ㅕ&quot;, &quot;ㅖ&quot;, &quot;ㅗ&quot;, &quot;ㅘ&quot;, &quot;ㅙ&quot;, &quot;ㅚ&quot;, &quot;ㅛ&quot;, &quot;ㅜ&quot;, &quot;ㅝ&quot;, &quot;ㅞ&quot;, &quot;ㅟ&quot;, &quot;ㅠ&quot;, &quot;ㅡ&quot;, &quot;ㅢ&quot;, &quot;ㅣ&quot; ]<br />cJong = [ &quot;&quot;, &quot;ㄱ&quot;, &quot;ㄲ&quot;, &quot;ㄳ&quot;, &quot;ㄴ&quot;, &quot;ㄵ&quot;, &quot;ㄶ&quot;, &quot;ㄷ&quot;, &quot;ㄹ&quot;, &quot;ㄺ&quot;, &quot;ㄻ&quot;, &quot;ㄼ&quot;, &quot;ㄽ&quot;, &quot;ㄾ&quot;, &quot;ㄿ&quot;, &quot;ㅀ&quot;, &quot;ㅁ&quot;, &quot;ㅂ&quot;, &quot;ㅄ&quot;, &quot;ㅅ&quot;, &quot;ㅆ&quot;, &quot;ㅇ&quot;, &quot;ㅈ&quot;, &quot;ㅊ&quot;, &quot;ㅋ&quot;, &quot;ㅌ&quot;, &quot;ㅍ&quot;, &quot;ㅎ&quot; ]<br />kor = &quot;ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔㅁㄴㅇㄹㅎㅗㅓㅏㅣㅋㅌㅊㅍㅠㅜㅡ&quot;<br /><br />sep = han =&gt; {<br />return han.split(&quot;&quot;).map(str =&gt; {<br />cnt = str.length<br />if (str.match(/[ㄱ-ㅎ가-힣]/)) {<br />chars = []<br />var cCode<br />for (i = 0; i &lt; cnt; i++) {<br />cCode = str.charCodeAt(i)<br />if (cCode &lt; 0xAC00 || cCode &gt; 0xD7A3) {<br />chars.push(str.charAt(i))<br />continue<br />}<br />cCode = str.charCodeAt(i) - 0xAC00<br />jong = cCode % 28<br />jung = ((cCode - jong) / 28) % 21<br />cho = (((cCode - jong) / 28) - jung) / 21<br />chars.push(cCho[cho], cJung[jung])<br />cJong[jong] &amp;&amp; chars.push(cJong[jong])<br />}<br />return chars.join(&quot;&quot;)<br />}<br />return str<br />}).join(&quot;&quot;)<br />}<br /><br />dis = (a, b) =&gt; {<br />a = a.split(&quot;&quot;).map(char =&gt; char.match(/[ㄱ-ㅎ가-힣]/) ? sep(char) : char).join(&quot;&quot;)<br />b = b.split(&quot;&quot;).map(char =&gt; char.match(/[ㄱ-ㅎ가-힣]/) ? sep(char) : char).join(&quot;&quot;)<br />if (!a.length) return b.length;<br />if (!b.length) return a.length;<br />l = Math.max(a.length, b.length)<br />matrix = [];<br />Array(b.length+1).fill().map((_, i) =&gt; matrix[i] = [i])<br />Array(a.length+1).fill().map((_, i) =&gt; matrix[0][i] = i)<br />Array(b.length).fill().map((_, i) =&gt; Array(a.length).fill().map((_, j) =&gt; matrix[i+1][j+1] = b.charAt(i) == a.charAt(j) ? matrix[i][j] : Math.min(matrix[i][j] + 1, Math.min(matrix[i+1][j] + 1, matrix[i][j+1] + 1))))<br />return ((100 - (matrix[b.length][a.length] / l * 100))|0)+&quot;%&quot;<br />}<br /><br /><br />dis(&quot;강아지&quot;, &quot;망아지&quot;)<br />이런식으로 하시면 &quot;n%&quot; 문자열로 줍니다.<br /><br />한글은 분해해버리기 때문에<br />dis(&quot;안녕&quot;, &quot;ㅇㅏㄴㄴㅕㅇ&quot;) 은 &quot;100%&quot; 입니다.<br /><br />레벤슈타인 알고리즘을 사용하여 값이 정확합니다.<br /><br /><br />참조된 글<br />- <a href=\"https://medium.com/@sumn2u/string-similarity-comparision-in-js-with-examples-4bae35f13968\" target=\"_blank\">https://medium.com/@sumn2u/string-similarity-comparision-in-js-with-examples-4bae35f13968</a></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000385D00000000",
+            "id": 14429,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 228,
+            "refArticleId": 14429,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "유사도 (편집 거리) 함수",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585456992897,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "도미 doami2005"
+            }
+        },
+        "articleId": 14429,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 85710892,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 85710892,
+                    "updateDate": 1585458650000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "히잌",
+                    "id": 85711011,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85710892,
+                    "updateDate": 1585458759000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "ㅓ 저는 딱히 모르겠",
+                    "id": 85711151,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 85710892,
+                    "replyMember": {
+                        "id": "kamurichan1108",
+                        "nick": "Kana"
+                    },
+                    "updateDate": 1585458893000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

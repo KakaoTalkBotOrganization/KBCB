@@ -1,0 +1,369 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 10,
+            "contentElements": [],
+            "contentHtml": "<span style=\"font-size: 13.3333px;\"><b><span style=\"font-size: 10pt;\">본 강좌는 복붙러들을 위한 강좌입니다. 가르치기 봇을 작성해보고 싶으신 분들은 꼭 참고해보세요!</span></b></span><div><br /></div><div><span style=\"font-size: 10pt;\">편의를 위해 저자는 command()라는 함수를 하나 만들 것이다.</span></div><div><span style=\"font-size: 10pt;\">command()함수는 띄어쓰기를 기준으로 앞과 뒤를 분리해주는 기능이 있다.</span></div><div><br /></div><div><span style=\"font-size: 10pt;\">이를 만들려고 한 이유는 바로 가르치는 것이 단어가 아니라 띄어쓰기가 포함되어 있는 문장이기 때문인데, 예를 들어 다음과 같이 분리하고자 한다.</span></div><div><br /></div><div><span style=\"font-size: 10pt;\">예를들어 msg = &quot;@가르치기 로리 다이스키!!=경찰아저씨 여기에요!&quot; 인 경우에 .split(&quot; &quot;)를 이용하면 다음과 같은 결과가 나온다.</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 10pt;\">[ &apos;@가르치기&apos;, &apos;로리&apos;, &apos;다이스키!!=경찰아저씨&apos;, &apos;여기에요!&apos; ]</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 10pt;\">이렇게 하면 .split(&quot;=&quot;)를 사용해 입력값과 출력값을 나누기 힘들다. 따라서 첫번째 띄어쓰기를 기준으로 나누기 위하여 다음과 같은 함수를 작성하였다.</span></div><div><br /></div><div><div style=\"color: rgb(204, 204, 204); background-color: rgb(36, 36, 36); font-family: Consolas, 'Courier New', monospace; font-size: 12.6px; line-height: 17px; white-space: pre;\"><div><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">function</span><span style=\"font-size: 10pt;\">&nbsp;</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">command</span><span style=\"font-size: 10pt;\">(cmd)&nbsp;{</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">var</span><span style=\"font-size: 10pt;\">&nbsp;cmd_str&nbsp;=&nbsp;cmd.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">split</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&apos;&nbsp;&apos;</span><span style=\"font-size: 10pt;\">)[</span><span style=\"color: rgb(122, 158, 194); font-size: 10pt;\">0</span><span style=\"font-size: 10pt;\">];</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">var</span><span style=\"font-size: 10pt;\">&nbsp;param&nbsp;=&nbsp;cmd.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">substring</span><span style=\"font-size: 10pt;\">(cmd_str.</span><span style=\"color: rgb(158, 123, 176); font-size: 10pt;\">length</span><span style=\"font-size: 10pt;\">&nbsp;+&nbsp;</span><span style=\"color: rgb(122, 158, 194); font-size: 10pt;\">1</span><span style=\"font-size: 10pt;\">,&nbsp;cmd.</span><span style=\"color: rgb(158, 123, 176); font-size: 10pt;\">length</span><span style=\"font-size: 10pt;\">);</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">return</span><span style=\"font-size: 10pt;\">&nbsp;[cmd_str,&nbsp;param];</span></div><div><span style=\"font-size: 10pt;\">}</span></div></div></div><div><br /></div><div><span style=\"font-size: 10pt;\">이렇게 하면 다음과 같이 전처리가 가능해진다.</span></div><div><br /></div><div><div><span style=\"font-size: 10pt;\">&gt; command(&quot;@가르치기 로리 다이스키!!=경찰아저씨 여기에요!&quot;)</span></div><div><span style=\"font-size: 10pt;\">[ &apos;@가르치기&apos;, &apos;로리 다이스키!!=경찰아저씨 여기에요!&apos; ]</span></div></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 10pt;\">여기서 이제 [1]을 .split(&quot;=&quot;)을 하면,&nbsp;[ &apos;로리 다이스키!!&apos;, &apos;경찰아저씨 여기에요!&apos; ] 가 되므로 가르치기 봇을 작성하기에 안성맞춤이다.</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 10pt;\">이제 본격적으로 작성을 해보자.</span></div><div><br /></div><div><span style=\"font-size: 10pt;\">우선은 저자는 데이터를 저장할 객체의 이름을 learned_data로 하였고&nbsp;sdcard/KakaoTeach/learned_data.json에 저장할 것이다. 이 부분에 대해서는&nbsp;</span><span style=\"font-size: 10pt;\">[응용]&nbsp;</span><span style=\"font-size: 10pt;\">채팅횟수 및 출석 봇 만들기 강좌 에서 설명을 하였으므로 생략하고 바로 작성한다.</span></div><div><br /></div><div><div style=\"color: rgb(204, 204, 204); background-color: rgb(36, 36, 36); font-family: Consolas, 'Courier New', monospace; font-size: 12.6px; line-height: 17px; white-space: pre;\"><div><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">var</span><span style=\"font-size: 10pt;\">&nbsp;learned_data&nbsp;=&nbsp;FileStream.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">read</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;sdcard/KakaoTeach/learned_data.json&quot;</span><span style=\"font-size: 10pt;\">);</span></div><div><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">&nbsp;(learned_data&nbsp;==&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">null</span><span style=\"font-size: 10pt;\">)&nbsp;learned_data&nbsp;=&nbsp;{};</span></div><div><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">else</span><span style=\"font-size: 10pt;\">&nbsp;learned_data&nbsp;=&nbsp;JSON.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">parse</span><span style=\"font-size: 10pt;\">(learned_data);</span></div></div></div><div><br /></div><div><span style=\"font-size: 10pt;\">그리고 필요한 데이터 중 하나가 바로 블랙리스트인데, 만약에 가르치는 말에 므흣(?)한 단어라든가, 공격적인 단어가 있으면 차후에 매우 곤란하게 된다. 여러분의 봇이 흑역사 생성봇이 되기 전에, 미리 방지하고자 걸러낼 단어 목록을 만들어놔야 하는데, 저자는 다음과 같은 데이터를 사용하였다.</span></div><div><br /></div><div><span style=\"font-size: 10pt;\">[&quot;凸&quot;, &quot;갈보&quot;, &quot;갈보년&quot;, &quot;강아지&quot;, &quot;같은년&quot;, &quot;같은뇬&quot;, &quot;개같은&quot;, &quot;개구라&quot;, &quot;개년&quot;, &quot;개놈&quot;, &quot;개뇬&quot;, &quot;개대중&quot;, &quot;개독&quot;, &quot;개돼중&quot;, &quot;개랄&quot;, &quot;개보지&quot;, &quot;개뻥&quot;, &quot;개뿔&quot;, &quot;개새&quot;, &quot;개새기&quot;, &quot;개새끼&quot;, &quot;개새키&quot;, &quot;개색기&quot;, &quot;개색끼&quot;, &quot;개색키&quot;, &quot;개색히&quot;, &quot;개섀끼&quot;, &quot;개세&quot;, &quot;개세끼&quot;, &quot;개세이&quot;, &quot;개소리&quot;, &quot;개쑈&quot;, &quot; 개쇳기&quot;, &quot;개수작&quot;, &quot;개쉐&quot;, &quot;개쉐리&quot;, &quot;개쉐이&quot;, &quot;개쉑&quot;, &quot;개쉽&quot;, &quot;개스끼&quot;, &quot;개시키&quot;, &quot;개십새기&quot;, &quot; 개십새끼&quot;, &quot;개쐑&quot;, &quot;개씹&quot;, &quot;개아들&quot;, &quot;개자슥&quot;, &quot;개자지&quot;, &quot;개접&quot;, &quot;개좆&quot;, &quot;개좌식&quot;, &quot;개허접&quot;, &quot;걔새&quot;, &quot;걔수작&quot;, &quot;걔시끼&quot;, &quot;걔시키&quot;, &quot;걔썌&quot;, &quot;걸레&quot;, &quot;게색기&quot;, &quot;게색끼&quot;, &quot;광뇬&quot;, &quot;구녕&quot;, &quot;구라&quot;, &quot;구멍&quot;, &quot;그년&quot;, &quot;그새끼&quot;, &quot;냄비&quot;, &quot;놈현&quot;, &quot;뇬&quot;, &quot;눈깔&quot;, &quot;뉘미럴&quot;, &quot;니귀미&quot;, &quot;니기미&quot;, &quot;니미&quot;, &quot;니미랄&quot;, &quot;니미럴&quot;, &quot;니미씹&quot;, &quot;니아배&quot;, &quot;니아베&quot;, &quot;니아비&quot;, &quot;니어매&quot;, &quot;니어메&quot;, &quot;니어미&quot;, &quot;닝기리&quot;, &quot;닝기미&quot;, &quot;대가리&quot;, &quot;뎡신&quot;, &quot;도라이&quot;, &quot;돈놈&quot;, &quot;돌아이&quot;, &quot;돌은놈&quot;, &quot;되질래&quot;, &quot;뒈져&quot;, &quot;뒈져라&quot;, &quot;뒈진&quot;, &quot;뒈진다&quot;, &quot;뒈질&quot;, &quot; 뒤질래&quot;, &quot;등신&quot;, &quot;디져라&quot;, &quot;디진다&quot;, &quot;디질래&quot;, &quot;딩시&quot;, &quot;따식&quot;, &quot;때놈&quot;, &quot;또라이&quot;, &quot;똘아이&quot;, &quot;똘아이&quot;, &quot;뙈놈&quot;, &quot;뙤놈&quot;, &quot;뙨넘&quot;, &quot;뙨놈&quot;, &quot;뚜쟁&quot;, &quot;띠바&quot;, &quot;띠발&quot;, &quot;띠불&quot;, &quot;띠팔&quot;, &quot;메친넘&quot;, &quot;메친놈&quot;, &quot;미췬&quot;, &quot; 미췬&quot;, &quot;미친&quot;, &quot;미친넘&quot;, &quot;미친년&quot;, &quot;미친놈&quot;, &quot;미친새끼&quot;, &quot;미친스까이&quot;, &quot;미틴&quot;, &quot;미틴넘&quot;, &quot;미틴년&quot;, &quot; 미틴놈&quot;, &quot;바랄년&quot;, &quot;병자&quot;, &quot;뱅마&quot;, &quot;뱅신&quot;, &quot;벼엉신&quot;, &quot;병쉰&quot;, &quot;병신&quot;, &quot;부랄&quot;, &quot;부럴&quot;, &quot;불알&quot;, &quot;불할&quot;, &quot;붕가&quot;, &quot;붙어먹&quot;, &quot;뷰웅&quot;, &quot;븅&quot;, &quot;븅신&quot;, &quot;빌어먹&quot;, &quot;빙시&quot;, &quot;빙신&quot;, &quot;빠가&quot;, &quot;빠구리&quot;, &quot;빠굴&quot;, &quot;빠큐&quot;, &quot;뻐큐&quot;, &quot;뻑큐&quot;, &quot;뽁큐&quot;, &quot;상넘이&quot;, &quot;상놈을&quot;, &quot;상놈의&quot;, &quot;상놈이&quot;, &quot;새갸&quot;, &quot;새꺄&quot;, &quot;새끼&quot;, &quot;새새끼&quot;, &quot;새키&quot;, &quot;색끼&quot;, &quot;생쑈&quot;, &quot;세갸&quot;, &quot;세꺄&quot;, &quot;세끼&quot;, &quot;섹스&quot;, &quot;쇼하네&quot;, &quot;쉐&quot;, &quot;쉐기&quot;, &quot;쉐끼&quot;, &quot;쉐리&quot;, &quot;쉐에기&quot;, &quot;쉐키&quot;, &quot;쉑&quot;, &quot;쉣&quot;, &quot;쉨&quot;, &quot;쉬발&quot;, &quot;쉬밸&quot;, &quot;쉬벌&quot;, &quot;쉬뻘&quot;, &quot;쉬펄&quot;, &quot;쉽알&quot;, &quot;스패킹&quot;, &quot;스팽&quot;, &quot;시궁창&quot;, &quot;시끼&quot;, &quot;시댕&quot;, &quot;시뎅&quot;, &quot;시랄&quot;, &quot;시발&quot;, &quot;시벌&quot;, &quot;시부랄&quot;, &quot;시부럴&quot;, &quot;시부리&quot;, &quot;시불&quot;, &quot;시브랄&quot;, &quot;시팍&quot;, &quot;시팔&quot;, &quot;시펄&quot;, &quot;신발끈&quot;, &quot;심발끈&quot;, &quot;심탱&quot;, &quot;십8&quot;, &quot;십라&quot;, &quot;십새&quot;, &quot;십새끼&quot;, &quot;십세&quot;, &quot;십쉐&quot;, &quot;십쉐이&quot;, &quot;십스키&quot;, &quot;십쌔&quot;, &quot;십창&quot;, &quot;십탱&quot;, &quot;싶알&quot;, &quot;싸가지&quot;, &quot;싹아지&quot;, &quot;쌉년&quot;, &quot;쌍넘&quot;, &quot;쌍년&quot;, &quot;쌍놈&quot;, &quot;쌍뇬&quot;, &quot;쌔끼&quot;, &quot; 쌕&quot;, &quot;쌩쑈&quot;, &quot;쌴년&quot;, &quot;썅&quot;, &quot;썅년&quot;, &quot;썅놈&quot;, &quot;썡쇼&quot;, &quot;써벌&quot;, &quot;썩을년&quot;, &quot;썩을놈&quot;, &quot;쎄꺄&quot;, &quot;쎄엑&quot;, &quot; 쒸벌&quot;, &quot;쒸뻘&quot;, &quot;쒸팔&quot;, &quot;쒸펄&quot;, &quot;쓰바&quot;, &quot;쓰박&quot;, &quot;쓰발&quot;, &quot;쓰벌&quot;, &quot;쓰팔&quot;, &quot;씁새&quot;, &quot;씁얼&quot;, &quot;씌파&quot;, &quot;씨8&quot;, &quot; 씨끼&quot;, &quot;씨댕&quot;, &quot;씨뎅&quot;, &quot;씨바&quot;, &quot;씨바랄&quot;, &quot;씨박&quot;, &quot;씨발&quot;, &quot;씨방&quot;, &quot;씨방새&quot;, &quot;씨방세&quot;, &quot;씨밸&quot;, &quot;씨뱅&quot;, &quot;씨벌&quot;, &quot;씨벨&quot;, &quot;씨봉&quot;, &quot;씨봉알&quot;, &quot;씨부랄&quot;, &quot;씨부럴&quot;, &quot;씨부렁&quot;, &quot;씨부리&quot;, &quot;씨불&quot;, &quot;씨붕&quot;, &quot;씨브랄&quot;, &quot; 씨빠&quot;, &quot;씨빨&quot;, &quot;씨뽀랄&quot;, &quot;씨앙&quot;, &quot;씨파&quot;, &quot;씨팍&quot;, &quot;씨팔&quot;, &quot;씨펄&quot;, &quot;씸년&quot;, &quot;씸뇬&quot;, &quot;씸새끼&quot;, &quot;씹같&quot;, &quot;씹년&quot;, &quot;씹뇬&quot;, &quot;씹보지&quot;, &quot;씹새&quot;, &quot;씹새기&quot;, &quot;씹새끼&quot;, &quot;씹새리&quot;, &quot;씹세&quot;, &quot;씹쉐&quot;, &quot;씹스키&quot;, &quot;씹쌔&quot;, &quot;씹이&quot;, &quot;씹자지&quot;, &quot;씹질&quot;, &quot;씹창&quot;, &quot;씹탱&quot;, &quot;씹퇭&quot;, &quot;씹팔&quot;, &quot;씹할&quot;, &quot;씹헐&quot;, &quot;아가리&quot;, &quot;아갈&quot;, &quot;아갈이&quot;, &quot;아갈통&quot;, &quot;아구창&quot;, &quot;아구통&quot;, &quot;아굴&quot;, &quot;얌마&quot;, &quot;양넘&quot;, &quot;양년&quot;, &quot;양놈&quot;, &quot;엄창&quot;, &quot;엠병&quot;, &quot;여물통&quot;, &quot;염병&quot;, &quot;엿같&quot;, &quot;옘병&quot;, &quot;옘빙&quot;, &quot;오입&quot;, &quot;왜년&quot;, &quot;왜놈&quot;, &quot;욤병&quot;, &quot;육갑&quot;, &quot;은년&quot;, &quot;을년&quot;, &quot;이년&quot;, &quot;이새끼&quot;, &quot;이새키&quot;, &quot;이스끼&quot;, &quot;이스키&quot;, &quot;임마&quot;, &quot;자슥&quot;, &quot;잡넘&quot;, &quot;잡년&quot;, &quot;잡놈&quot;, &quot;저년&quot;, &quot;저새끼&quot;, &quot;접년&quot;, &quot;젖밥&quot;, &quot;조까&quot;, &quot;조까치&quot;, &quot;조낸&quot;, &quot;조또&quot;, &quot;조랭&quot;, &quot;조빠&quot;, &quot;조쟁이&quot;, &quot;조지냐&quot;, &quot;조진다&quot;, &quot;조찐&quot;, &quot;&nbsp; 조질래&quot;, &quot;존나&quot;, &quot;존나게&quot;, &quot;존니&quot;, &quot;존만&quot;, &quot; 존만한&quot;, &quot;좀물&quot;, &quot;좁년&quot;, &quot;좆&quot;, &quot;좁밥&quot;, &quot;좃까&quot;, &quot;좃또&quot;, &quot;좃만&quot;, &quot;좃밥&quot;, &quot;좃이&quot;, &quot;좃찐&quot;, &quot;좆같&quot;, &quot;좆까&quot;, &quot;좆나&quot;, &quot;좆또&quot;, &quot;좆만&quot;, &quot;좆밥&quot;, &quot;좆이&quot;, &quot;좆찐&quot;, &quot;좇같&quot;, &quot;좇이&quot;, &quot;좌식&quot;, &quot;주글&quot;, &quot;주글래&quot;, &quot;주데이&quot;, &quot;주뎅&quot;, &quot;주뎅이&quot;, &quot;주둥아리&quot;, &quot;주둥이&quot;, &quot;주접&quot;, &quot;주접떨&quot;, &quot;죽고잡&quot;, &quot;죽을래&quot;, &quot;죽통&quot;, &quot;쥐랄&quot;, &quot;쥐롤&quot;, &quot;쥬디&quot;, &quot;지랄&quot;, &quot;지럴&quot;, &quot;지롤&quot;, &quot;지미랄&quot;, &quot;짜식&quot;, &quot;짜아식&quot;, &quot;쪼다&quot;, &quot;쫍빱&quot;, &quot;찌랄&quot;, &quot;창녀&quot;, &quot;캐년&quot;, &quot;캐놈&quot;, &quot;캐스끼&quot;, &quot;캐스키&quot;, &quot;캐시키&quot;, &quot;탱구&quot;, &quot;팔럼&quot;, &quot;퍽큐&quot;, &quot;호로&quot;, &quot;호로놈&quot;, &quot;호로새끼&quot;, &quot;호로색&quot;, &quot;호로쉑&quot;, &quot;호로스까이&quot;, &quot;호로스키&quot;, &quot;후라들&quot;, &quot;후래자식&quot;, &quot;후레&quot;, &quot;후뢰&quot;, &quot;씨ㅋ발&quot;, &quot;ㅆ1발&quot;, &quot;씌발&quot;, &quot;띠발&quot;, &quot;띄발&quot;, &quot;뛰발&quot;, &quot;띠ㅋ발&quot;, &quot;뉘뮈&quot;, &quot;씹뜨억&quot;, &quot;씹떡&quot;, &quot;씹덕&quot;, &quot;페도&quot;]</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><span style=\"font-size: 10pt;\">이를 복사하여,&nbsp;teach_filter 변수에 저장하자. 물론 변수는 전역변수로 두자. 그리고 prefix도 넣어두자. prefix는 다음과 같이 정의해주면 될 것이다.</span></div><div><span style=\"font-size: 13.3333px;\"><br /></span></div><div><div style=\"color: rgb(204, 204, 204); background-color: rgb(36, 36, 36); font-family: Consolas, 'Courier New', monospace; font-size: 12.6px; line-height: 17px; white-space: pre;\"><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">const</span><span style=\"font-size: 10pt;\">&nbsp;prefix&nbsp;=&nbsp;</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;@&quot;</span><span style=\"font-size: 10pt;\">;</span></div></div><div><br /></div><div><span style=\"font-size: 10pt;\">이제, response()를 작성할 것이다. 여기서부터는 function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) { } 내부에 작성한다.</span></div><div><br /></div><div><span style=\"font-size: 10pt;\">우선, msg의 앞부분이 prefix+&quot;가르치기&quot; 인 경우를 분기하자. 분기한 내용 안에는 우선 msg와 값이 같은 변수가 하나 필요하다. var test = msg; 를 넣어서 블랙리스트에 해당하는지 점검할 변수(복사본)을 하나 만들자.</span></div><div><br /></div><div><span style=\"font-size: 10pt;\">그런 다음, for문을 통해 teach_filter에 있는 모든 원소에 대하여 test.replace(원소, &apos;&apos;)를 진행한다. 만약에 test==msg이라면 msg안에는 해당하는 단어가 없다는 것이고 만약에 값이 바뀌어서 msg와 값이 다르다면 msg안에 해당하는 단어가 있다는 것을 의미하므로 test==msg일 때, learned_data객체 안에 command(msg)[1].split(&quot;=&quot;)[0]에 객체를 하나 대응시키자. 이 내용을 코드로 표현하면 다음과 같다.</span></div><div><br /></div><div><div style=\"color: rgb(204, 204, 204); background-color: rgb(36, 36, 36); font-family: Consolas, 'Courier New', monospace; font-size: 12.6px; line-height: 17px; white-space: pre;\"><div><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">&nbsp;(</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">command</span><span style=\"font-size: 10pt;\">(msg)[</span><span style=\"color: rgb(122, 158, 194); font-size: 10pt;\">0</span><span style=\"font-size: 10pt;\">]&nbsp;==&nbsp;prefix&nbsp;+&nbsp;</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;가르치기&quot;</span><span style=\"font-size: 10pt;\">)&nbsp;{</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">var</span><span style=\"font-size: 10pt;\">&nbsp;test&nbsp;=&nbsp;msg;</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">for</span><span style=\"font-size: 10pt;\">&nbsp;(</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">var</span><span style=\"font-size: 10pt;\">&nbsp;i&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">in</span><span style=\"font-size: 10pt;\">&nbsp;teach_filter)&nbsp;{</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test&nbsp;=&nbsp;test.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">replace</span><span style=\"font-size: 10pt;\">(teach_filter[i],&nbsp;</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&apos;&apos;</span><span style=\"font-size: 10pt;\">);</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">&nbsp;(test&nbsp;==&nbsp;msg)&nbsp;{</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;learned_data[</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">command</span><span style=\"font-size: 10pt;\">(msg)[</span><span style=\"color: rgb(122, 158, 194); font-size: 10pt;\">1</span><span style=\"font-size: 10pt;\">].</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">split</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;=&quot;</span><span style=\"font-size: 10pt;\">)[</span><span style=\"color: rgb(122, 158, 194); font-size: 10pt;\">0</span><span style=\"font-size: 10pt;\">]]&nbsp;=&nbsp;{</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;trainer&quot;</span><span style=\"font-size: 10pt;\">:&nbsp;sender,</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;returns&quot;</span><span style=\"font-size: 10pt;\">:&nbsp;</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">command</span><span style=\"font-size: 10pt;\">(msg)[</span><span style=\"color: rgb(122, 158, 194); font-size: 10pt;\">1</span><span style=\"font-size: 10pt;\">].</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">split</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;=&quot;</span><span style=\"font-size: 10pt;\">)[</span><span style=\"color: rgb(122, 158, 194); font-size: 10pt;\">1</span><span style=\"font-size: 10pt;\">]</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FileStream.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">write</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;sdcard/KakaoTeach/learned_data.json&quot;</span><span style=\"font-size: 10pt;\">,&nbsp;JSON.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">stringify</span><span style=\"font-size: 10pt;\">(learned_data,&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">null</span><span style=\"font-size: 10pt;\">,&nbsp;</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&apos;</span><span style=\"color: rgb(158, 123, 176); font-size: 10pt;\">\\t</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&apos;</span><span style=\"font-size: 10pt;\">));</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;새로운&nbsp;말을&nbsp;배웠습니다.&quot;</span><span style=\"font-size: 10pt;\">);</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">else</span><span style=\"font-size: 10pt;\">&nbsp;{</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replier.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;도대체&nbsp;무슨&nbsp;말을&nbsp;가르칠려구...!&quot;</span><span style=\"font-size: 10pt;\">);</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;}</span></div><div><span style=\"font-size: 10pt;\">}</span></div></div></div><div><br /></div><div><span style=\"font-size: 10pt;\">이제, 누군가가 learned_data의 key값 중에 해당하는 말을 하는 경우에 value를 답장하도록 구현하면 끝난다. 이는 매우 간단하게 if문으로 끝난다.</span></div><div><br /></div><div><div style=\"color: rgb(204, 204, 204); background-color: rgb(36, 36, 36); font-family: Consolas, 'Courier New', monospace; font-size: 12.6px; line-height: 17px; white-space: pre;\"><div><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">if</span><span style=\"font-size: 10pt;\">&nbsp;(msg&nbsp;</span><span style=\"color: rgb(204, 130, 66); font-size: 10pt;\">in</span><span style=\"font-size: 10pt;\">&nbsp;learned_data)&nbsp;{</span></div><div><span style=\"font-size: 10pt;\">&nbsp;&nbsp;&nbsp;&nbsp;replier.</span><span style=\"color: rgb(255, 198, 109); font-size: 10pt;\">reply</span><span style=\"font-size: 10pt;\">(learned_data[msg][</span><span style=\"color: rgb(106, 135, 89); font-size: 10pt;\">&quot;returns&quot;</span><span style=\"font-size: 10pt;\">]);</span></div><div><span style=\"font-size: 10pt;\">}</span></div></div></div><div><br /></div><div><span style=\"font-size: 10pt;\">끝이다. 이걸로 가르치기 봇 개발은 끝났다. 물론 여기에 여러 기능을 덧붙여도 좋다. 예를 들어 삭제하는 기능도 있으면 좋을 것이다! 필요한 기능은 여기서 스스로 더 덭붙여보자!</span></div><div><span style=\"font-size: 10pt;\"><br /></span></div><div><span style=\"font-size: 13.3333px;\">좀더 기능이 많은 코드는 <a href=\"https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoTeach.js\" target=\"_blank\">https://github.com/OtakoidTony/MessengerBotExample/blob/master/KakaoTeach.js</a> 를 참고하면 된다.</span></div><div><br /></div><div style=\"text-align: right;\"><span style=\"font-size: 24pt;\"><b><span style=\"font-size: 24pt;\">終</span></b></span></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000538700000000",
+            "head": "응용",
+            "headId": 7,
+            "id": 21383,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 400,
+            "refArticleId": 21383,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "가르치기 봇 만들기 강좌",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1595087575930,
+            "writer": {
+                "id": "pak_hyun",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "OtakoidTony"
+            }
+        },
+        "articleId": 21383,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "for (var i in teach_filter) {\r\n함정 ㄷㄷ",
+                    "id": 97196574,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97196574,
+                    "updateDate": 1595087796000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "읭?",
+                    "id": 97196608,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97196574,
+                    "updateDate": 1595087844000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "? 어차피 i에는 teach_filter의 index들이 와가지고 i로 치환하지 않고 teach_filter[i]로 치환하는거 맞아요.",
+                    "id": 97196710,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97196574,
+                    "updateDate": 1595088013000,
+                    "writer": {
+                        "id": "pak_hyun",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA4MTVfMTcw/MDAxNTk3NDM0MzU3Mjgz.hPc1qxX-zvd9m9ACyX_8uGDhR7t1iO9XHfJD10oQQVMg.UWXORJ-0PGwKhNLCULYY1YrUtuDtvz6skpXf34s8_08g.JPEG/939e21c5cfcac7bc3eb4991b4048b4ec.jpg"
+                        },
+                        "nick": "OtakoidTony"
+                    }
+                },
+                {
+                    "content": "다 야매로해서 저거 작동 안하는줄 알음 :(",
+                    "id": 97196757,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97196574,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1595088024000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "ㄹㅇ 불편",
+                    "id": 97199641,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97196574,
+                    "replyMember": {
+                        "id": "pak_hyun",
+                        "nick": "OtakoidTony"
+                    },
+                    "updateDate": 1595094324000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "그냥 욕들 원본들만 넣어놓고 유사도로 대충 조지지 ㄷ",
+                    "id": 97199643,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97199643,
+                    "updateDate": 1595094341000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "와드",
+                    "id": 97206218,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97199643,
+                    "updateDate": 1595116981000,
+                    "writer": {
+                        "id": "gigigia-1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTUz/MDAxNTk5NjEyNTg2MDgw.gz9LKfYQFlIU1Ih6Ro4ODKnP-r-LbWE_B5ROxm6GcN4g.AzxtviQvtDbkk0DawTj6adZ2Xc-ZL8piX8CadbcCd1Mg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "재승"
+                    }
+                },
+                {
+                    "content": "일단와드",
+                    "id": 97199646,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97199646,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1595094346000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "굿",
+                    "id": 97205521,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97205521,
+                    "updateDate": 1595116257000,
+                    "writer": {
+                        "id": "leejaehee0613",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTEyMTRfMTA1/MDAxNTc2MzI2Mjg5NjYw.bTbuOgNk2ZyOqG8KPYviz1_1uVawuuTjuWTEK9wHCEEg.bEupwDbuCLmm5ZNbpPd5z1ANTd7YyIwfZx0JwVuP_T8g.PNG.leejaehee0613/c3628304.png"
+                        },
+                        "nick": "긴애용"
+                    }
+                },
+                {
+                    "content": "function command(cmd) { var cmd_str = cmd.split(' ')[0]; var param = cmd.substring(cmd_str.length + 1, cmd.length); return [cmd_str, param];} var learned_data = FileStream.read(\"sdcard/KakaoTeach/learned_data.json\");if (learned_data == null) learned_data = {};else learned_data = JSON.parse(learned_data); const teach_filter = [\"凸\", \"갈보\", \"갈보년\", \"강아지\", \"같은년\", \"같은뇬\", \"개같은\", \"개구라\", \"개년\", \"개놈\", \"개뇬\", \"개대중\", \"개독\", \"개돼중\", \"개랄\", \"개보지\", \"개뻥\", \"개뿔\", \"개새\", \"개새기\", \"개새끼\", \"개새키\", \"개색기\", \"개색끼\", \"개색키\", \"개색히\", \"개섀끼\", \"개세\", \"개세끼\", \"개세이\", \"개소리\", \"개쑈\", \" 개쇳기\", \"개수작\", \"개쉐\", \"개쉐리\", \"개쉐이\", \"개쉑\", \"개쉽\", \"개스끼\", \"개시키\", \"개십새기\", \" 개십새끼\", \"개쐑\", \"개씹\", \"개아들\", \"개자슥\", \"개자지\", \"개접\", \"개좆\", \"개좌식\", \"개허접\", \"걔새\", \"걔수작\", \"걔시끼\", \"걔시키\", \"걔썌\", \"걸레\", \"게색기\", \"게색끼\", \"광뇬\", \"구녕\", \"구라\", \"구멍\", \"그년\", \"그새끼\", \"냄비\", \"놈현\", \"뇬\", \"눈깔\", \"뉘미럴\", \"니귀미\", \"니기미\", \"니미\", \"니미랄\", \"니미럴\", \"니미씹\", \"니아배\", \"니아베\", \"니아비\", \"니어매\", \"니어메\", \"니어미\", \"닝기리\", \"닝기미\", \"대가리\", \"뎡신\", \"도라이\", \"돈놈\", \"돌아이\", \"돌은놈\", \"되질래\", \"뒈져\", \"뒈져라\", \"뒈진\", \"뒈진다\", \"뒈질\", \" 뒤질래\", \"등신\", \"디져라\", \"디진다\", \"디질래\", \"딩시\", \"따식\", \"때놈\", \"또라이\", \"똘아이\", \"똘아이\", \"뙈놈\", \"뙤놈\", \"뙨넘\", \"뙨놈\", \"뚜쟁\", \"띠바\", \"띠발\", \"띠불\", \"띠팔\", \"메친넘\", \"메친놈\", \"미췬\", \" 미췬\", \"미친\", \"미친넘\", \"미친년\", \"미친놈\", \"미친새끼\", \"미친스까이\", \"미틴\", \"미틴넘\", \"미틴년\", \" 미틴놈\", \"바랄년\", \"병자\", \"뱅마\", \"뱅신\", \"벼엉신\", \"병쉰\", \"병신\", \"부랄\", \"부럴\", \"불알\", \"불할\", \"붕가\", \"붙어먹\", \"뷰웅\", \"븅\", \"븅신\", \"빌어먹\", \"빙시\", \"빙신\", \"빠가\", \"빠구리\", \"빠굴\", \"빠큐\", \"뻐큐\", \"뻑큐\", \"뽁큐\", \"상넘이\", \"상놈을\", \"상놈의\", \"상놈이\", \"새갸\", \"새꺄\", \"새끼\", \"새새끼\", \"새키\", \"색끼\", \"생쑈\", \"세갸\", \"세꺄\", \"세끼\", \"섹스\", \"쇼하네\", \"쉐\", \"쉐기\", \"쉐끼\", \"쉐리\", \"쉐에기\", \"쉐키\", \"쉑\", \"쉣\", \"쉨\", \"쉬발\", \"쉬밸\", \"쉬벌\", \"쉬뻘\", \"쉬펄\", \"쉽알\", \"스패킹\", \"스팽\", \"시궁창\", \"시끼\", \"시댕\", \"시뎅\", \"시랄\", \"시발\", \"시벌\", \"시부랄\", \"시부럴\", \"시부리\", \"시불\", \"시브랄\", \"시팍\", \"시팔\", \"시펄\", \"신발끈\", \"심발끈\", \"심탱\", \"십8\", \"십라\", \"십새\", \"십새끼\", \"십세\", \"십쉐\", \"십쉐이\", \"십스키\", \"십쌔\", \"십창\", \"십탱\", \"싶알\", \"싸가지\", \"싹아지\", \"쌉년\", \"쌍넘\", \"쌍년\", \"쌍놈\", \"쌍뇬\", \"쌔끼\", \" 쌕\", \"쌩쑈\", \"쌴년\", \"썅\", \"썅년\", \"썅놈\", \"썡쇼\", \"써벌\", \"썩을년\", \"썩을놈\", \"쎄꺄\", \"쎄엑\", \" 쒸벌\", \"쒸뻘\", \"쒸팔\", \"쒸펄\", \"쓰바\", \"쓰박\", \"쓰발\", \"쓰벌\", \"쓰팔\", \"씁새\", \"씁얼\", \"씌파\", \"씨8\", \" 씨끼\", \"씨댕\", \"씨뎅\", \"씨바\", \"씨바랄\", \"씨박\", \"씨발\", \"씨방\", \"씨방새\", \"씨방세\", \"씨밸\", \"씨뱅\", \"씨벌\", \"씨벨\", \"씨봉\", \"씨봉알\", \"씨부랄\", \"씨부럴\", \"씨부렁\", \"씨부리\", \"씨불\", \"씨붕\", \"씨브랄\", \" 씨빠\", \"씨빨\", \"씨뽀랄\", \"씨앙\", \"씨파\", \"씨팍\", \"씨팔\", \"씨펄\", \"씸년\", \"씸뇬\", \"씸새끼\", \"씹같\", \"씹년\", \"씹뇬\", \"씹보지\", \"씹새\", \"씹새기\", \"씹새끼\", \"씹새리\", \"씹세\", \"씹쉐\", \"씹스키\", \"씹쌔\", \"씹이\", \"씹자지\", \"씹질\", \"씹창\", \"씹탱\", \"씹퇭\", \"씹팔\", \"씹할\", \"씹헐\", \"아가리\", \"아갈\", \"아갈이\", \"아갈통\", \"아구창\", \"아구통\", \"아굴\", \"얌마\", \"양넘\", \"양년\", \"양놈\", \"엄창\", \"엠병\", \"여물통\", \"염병\", \"엿같\", \"옘병\", \"옘빙\", \"오입\", \"왜년\", \"왜놈\", \"욤병\", \"육갑\", \"은년\", \"을년\", \"이년\", \"이새끼\", \"이새키\", \"이스끼\", \"이스키\", \"임마\", \"자슥\", \"잡넘\", \"잡년\", \"잡놈\", \"저년\", \"저새끼\", \"접년\", \"젖밥\", \"조까\", \"조까치\", \"조낸\", \"조또\", \"조랭\", \"조빠\", \"조쟁이\", \"조지냐\", \"조진다\", \"조찐\", \" 조질래\", \"존나\", \"존나게\", \"존니\", \"존만\", \" 존만한\", \"좀물\", \"좁년\", \"좆\", \"좁밥\", \"좃까\", \"좃또\", \"좃만\", \"좃밥\", \"좃이\", \"좃찐\", \"좆같\", \"좆까\", \"좆나\", \"좆또\", \"좆만\", \"좆밥\", \"좆이\", \"좆찐\", \"좇같\", \"좇이\", \"좌식\", \"주글\", \"주글래\", \"주데이\", \"주뎅\", \"주뎅이\", \"주둥아리\", \"주둥이\", \"주접\", \"주접떨\", \"죽고잡\", \"죽을래\", \"죽통\", \"쥐랄\", \"쥐롤\", \"쥬디\", \"지랄\", \"지럴\", \"지롤\", \"지미랄\", \"짜식\", \"짜아식\", \"쪼다\", \"쫍빱\", \"찌랄\", \"창녀\", \"캐년\", \"캐놈\", \"캐스끼\", \"캐스키\", \"캐시키\", \"탱구\", \"팔럼\", \"퍽큐\", \"호로\", \"호로놈\", \"호로새끼\", \"호로색\", \"호로쉑\", \"호로스까이\", \"호로스키\", \"후라들\", \"후래자식\", \"후레\", \"후뢰\", \"씨ㅋ발\", \"ㅆ1발\", \"씌발\", \"띠발\", \"띄발\", \"뛰발\", \"띠ㅋ발\", \"뉘뮈\", \"씹뜨억\", \"씹떡\", \"씹덕\", \"페도\"]; const prefix = \"@\";function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId) { if (msg == prefix + \"금지어목록\") { replier.reply(teach_filter); } if (command(msg)[0] == prefix + \"조교하기\") { var test = msg; for (var i in teach_filter) { test = test.replace(teach_filter[i], ''); } if (test == msg) { learned_data[command(msg)[1].split(\"=\")[0]] = { \"trainer\": sender, \"returns\": command(msg)[1].split(\"=\")[1] }; FileStream.write(\"sdcard/KakaoTeach/learned_data.json\", JSON.stringify(learned_data, null, '\\t')); replier.reply(\"새로운 말을 배웠습니다.\"); } else { replier.reply(\"도대체 무슨 말을 가르칠려구...!\"); } } if (msg in learned_data) { replier.reply(learned_data[msg][\"returns\"]); } if (msg == prefix + \"학습어목록\") { var learned = Object.keys(learned_data); replier.reply(learned); var result = \"[ 학습어 목록 ]\\n\\n\"; var i = 0; while (i < learned.length) { if (i != learned.length - 1) { result = result + learned[i] + \"\\n\" + \">> Trainer |\" + learned_data[learned[i]][\"trainer\"] + \"\\n\" + \">> Returns |\" + learned_data[learned[i]][\"returns\"] + \"\\n\\n\"; } else { result = result + learned[i] + \"\\n\" + \">> Trainer |\" + learned_data[learned[i]][\"returns\"] + \"\\n\"; } i = i + 1; } replier.reply(result); } if (msg == prefix + \"일괄삭제\") { learned_data = {}; replier.reply(\"삭제되었습니다.\"); FileStream.write(\"sdcard/KakaoTeach/learned_data.json\", JSON.stringify(learned_data, null, '\\t')); } if (command(msg)[0] == prefix + \"삭제하기\") { delete(learned_data[command(msg)[1]]); FileStream.write(\"sdcard/KakaoTeach/learned_data.json\", JSON.stringify(learned_data, null, '\\t')); replier.reply(\"삭제되었습니다.\"); }}\n\n잘 작동하네용 감사합니다!",
+                    "id": 97603491,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97603491,
+                    "updateDate": 1595424818000,
+                    "writer": {
+                        "id": "dughdhk0826",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "줜이"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

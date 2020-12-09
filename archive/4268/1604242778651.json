@@ -1,0 +1,136 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "<p>var sd = &quot;/storage/emulated/0&quot;;<br />var Admins = {};<br />var request = [];<br />var process = 0; //0 - x, 1 - 번호 입력대기, 2 - y &amp; n 입력대기<br />var now = 0;<br />function isAdmin(name, code) {<br />try{<br />Admins = JSON.parse(FileStream.read(sd+&quot;/Admin/admins.txt&quot;));<br />}catch(e){ Admins={};}<br />for(var i in Admins) {<br />if(name == i &amp;&amp; code == Admins[i]) return true;<br />}<br />return false;<br />}<br />function response(room, msg, sender, isG, replier, ImageDB){<br />if(room == &quot;/*요기에 승인처리할 방의 이름을*/&quot;) {<br />if(msg == &quot;cancel&quot; &amp;&amp; process != 0) {<br />replier.reply(&quot;진행중인 작업을 강제종료하고 대기모드로 변환합니다.&quot;);<br />process = 0;<br />return;<br />}<br />if(process == 2) {<br />switch(msg.toUpperCase()) {<br />case &quot;Y&quot; :<br />replier.reply(now+&quot;님의 관리자 요청을 승인하였습니다.&quot;);<br />Admins[now] = request[now];<br />FileStream.write(sd+&quot;/Admin/admins.txt&quot;,JSON.stringify(Admins));<br />request.splice(request.indexOf(now),1);<br />process = 1;<br />break;<br />case &quot;N&quot; :<br />replier.reply(now+&quot;님의 관리자 요청을 거부하였습니다.&quot;);<br />request.splice(request.indexOf(now),1);<br />process = 1;<br />break;<br />default :<br />replier.reply(&quot;올바른 명령이 아닙니다.&quot;);<br />process = 1;<br />break;<br />}<br />}<br />if(process == 1) {<br />if(!isNaN(msg)) {<br />if(msg &lt;= request.length &amp;&amp; msg &gt;= 1) {<br />replier.reply(request[msg-1]+&quot;님의 관리자 요청을 승인하시겠습니까?(Y/N)&quot;);<br />process = 2<br />now = request[msg-1];<br />}<br />}<br />}<br />if(msg == &quot;/관리자 요청처리&quot;) {<br />if(process == 0) {<br />var result = &quot;&quot;;<br />for(var i = 0; i &lt; request.length; i++) {<br />result += &quot;\\n&quot;+&quot;[&quot;+(i+1)+&quot;] &quot;+request[i]+&quot; - &quot;+request[request[i]];<br />}<br />replier.reply(&quot;관리자 요청 목록입니다.&quot;+result);<br />process = 1;<br />}<br />else {<br />replier.reply(&quot;이미 처리가 진행중입니다. 작업을 중지하시려면 \\&quot;cancel\\&quot;을 입력해주세요&quot;);<br />}<br />}<br />if(msg.indexOf(&quot;/관리자 박탈 &quot;) == 0) {<br />if(Admins[msg.substr(8)]) {<br />replier.reply(msg.substr(8)+&quot;님의 관리자 권한을 박탈합니다.&quot;);<br />delete Admins[msg.substr(8)];<br />FileStream.write(sd+&quot;/Admin/admins.txt&quot;,JSON.stringify(Admins));<br />}<br />else replier.reply(msg.substr(8)+&quot;님은 관리자가 아닙니다.&quot;);<br />}<br />}<br />if(msg == &quot;/관리자 요청&quot;) {<br />if(!isAdmin(sender, java.lang.String(ImageDB.getProfileImage()).hashCode())) {<br />if(request.indexOf(sender) == -1) {<br />replier.reply(sender+&quot;님의 관리자 요청이 확인되었습니다.\\n요청이 승인될 때까지 기다려주세요.&quot;);<br />request.push(sender);<br />request[sender] = java.lang.String(ImageDB.getProfileImage()).hashCode();<br />}<br />else replier.reply(sender+&quot;님은 이미 관리자 요청 승인대기 상태입니다.\\n요청이 승인될 때까지 기다려주세요.&quot;);<br />}<br />else replier.reply(&quot;이미 관리자인 대상입니다.\\n본인이 아니라면 닉네임 변경 후 다시 시도해주세요.&quot;)<br />}<br />if(msg == &quot;/관리자 목록&quot;) {<br />result = &quot;&quot;;<br />for(var i in Admins) {<br />result += &quot;\\n&quot;+&quot;[&quot;+i+&quot;] : &quot;+Admins[i];<br />}<br />replier.reply(&quot;봇의 관리자 목록입니다.&quot;+result);<br />}<br />}<br /><br />이 소스 얻은 건데 승인을 제가 할려하는데 생각해보니까<br />저도 안 되있어요 어떻게해야할까요?<br /><br /></p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000010AC00000000",
+            "id": 4268,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 77,
+            "refArticleId": 4268,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "이거..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1565010813553,
+            "writer": {
+                "id": "yhs-1277",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA3MTdfMTQw/MDAxNTk0OTUyMjYxODA3.xcvWljLE4GIaPWSmvMcj3BPaQ8CJo_v_bvusZF1n8VAg.x0BNuQ4IClVCe3jsSBeaitUR4t6DJS2P-RB6MBtfwxcg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_150.gif",
+                "memberLevelName": "챗봇 창시자",
+                "nick": "신광"
+            }
+        },
+        "articleId": 4268,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

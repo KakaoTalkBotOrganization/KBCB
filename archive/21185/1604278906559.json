@@ -1,0 +1,292 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 5,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 </b>(새자봇, 젤브봇, 메신저봇, 닼토봇, 기타)<div><b>=&gt; 메신저봇r</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;&nbsp;</b><span style=\"font-size: 13pt; color: rgb(203, 119, 47);\">function</span><span style=\"font-size: 13pt;\"> </span><span style=\"font-size: 13pt; color: rgb(255, 198, 109);\">response</span><span style=\"font-size: 13pt;\">(room, msg, sender, isGroupChat, replier, imageDB) </span><b>{</b><span style=\"font-size: 13pt;\"></span></div><p dir=\"ltr\">\r\n&nbsp; <span style=\"color:#7A9EC2;\"><span style=\"background-color:#FFAA00;\">Jsoup</span></span><span style=\"background-color:#FFAA00;\"> = org.jsoup.</span><span style=\"color:#7A9EC2;\"><span style=\"background-color:#FFAA00;\">Jsoup</span></span></p>\r\n<p dir=\"ltr\"><span style=\"color:#CB772F;\">if</span> (msg.startsWith(<span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;/사진&quot;</span></span>)) {<br />\r\n<span style=\"background-color:#FFAA00;\">search = msg.substr(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">3</span></span></span><span style=\"background-color:#FFAA00;\">).trim()</span><br />\r\n<span style=\"background-color:#FFAA00;\">parse = </span><span style=\"color:#7A9EC2;\"><span style=\"background-color:#FFAA00;\">Jsoup</span></span><span style=\"background-color:#FFAA00;\">.connect(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;https://m.search.naver.com/search.naver?where=m_image&amp;sm=mtb_jum&amp;query=&quot;</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">+search</span></span><span style=\"background-color:#FFAA00;\">).get().select(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;img[alt=&quot;</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">+search+</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;]&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n<span style=\"color:#CB772F;\">if</span> (parse.size()) {<br />\r\n<span style=\"background-color:#FFAA00;\">img = parse.get(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#7A9EC2;\"><span style=\"background-color:#FFAA00;\">Math</span></span></span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">.random()*parse.size()|</span></span><span style=\"color:#FFFFFF;\"><span style=\"color:#6897BB;\"><span style=\"background-color:#FFAA00;\">0</span></span></span><span style=\"background-color:#FFAA00;\">).attr(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;data-source&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n<span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"background-color:#FFAA00;\">img</span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n}<span style=\"color:#CB772F;\"> else</span>{ <span style=\"background-color:#FFAA00;\">replier.reply(</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\"><span style=\"background-color:#FFAA00;\">&quot;&bull; 이미지 검색 결과가 없습니다.&quot;</span></span></span><span style=\"background-color:#FFAA00;\">)</span><br />\r\n} <br />\r\n}\r\n<br />\r\n&nbsp;&nbsp; \r\n<br />\r\n<span style=\"color:#7A9EC2;\">Kakao</span>.send(<span style=\"color:#FFFFFF;\">room</span>,<br />\r\n&nbsp;<span style=\"color:#FFFFFF;\">{&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;link_ver&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;4.0&quot;</span></span><span style=\"color:#FFFFFF;\">,</span><br />\r\n<span style=\"color:#FFFFFF;\"> &nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;template_object&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp; {&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;object_type&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;feed&quot;</span></span><span style=\"color:#FFFFFF;\">,&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;button_title&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">,&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;content&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp; {&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;title&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">,&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;image_url&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">+img+</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">,&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;link&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;{&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;web_url&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">,&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;mobile_web_url&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">&nbsp;},&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;description&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">&nbsp;},&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;buttons&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;[{&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;title&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ,&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;link&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;{&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;web_url&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">,&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;mobile_web_url&quot;</span></span><span style=\"color:#FFFFFF;\">:&nbsp;</span><span style=\"color:#FFFFFF;\"><span style=\"color:#A5C25C;\">&quot;&quot;</span></span><span style=\"color:#FFFFFF;\">&nbsp;</span><br />\r\n<span style=\"color:#FFFFFF;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;}]&nbsp;}&nbsp;}</span>);<br />\r\n<b>}</b></p><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt; 첨부 사진처럼 출력했을 때 이미지고 잘리고 무엇보다 이미지가 보이기 전에 url 주소가 보입니다. 제가 원하는 것은 사진 하나만 카링으로 출력되는 것인데 카카오 디벨로퍼에서도 설정을 어떻게 해야할지 몰라 질문 남깁니다..! 카페 내에 검색을 해 보아도 잘 나오질 않아서 다시 한 번 카페의 힘을 빌려보고 싶습니다!ㅠㅠ 첨부사진은 디벨로퍼 템플릿 이미지 설정창 과 카톡 출력 상태입니다!</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000052C100000000",
+            "head": "메신저봇",
+            "headId": 57,
+            "id": 21185,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 231,
+            "refArticleId": 21185,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "카링 이미지 출력에는 성공했지만 다른 문제가 생겼습니다..",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1594863747310,
+            "writer": {
+                "id": "daneal1",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "리스트"
+            }
+        },
+        "articleId": 21185,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "1594862614217.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "1594862614217.jpg",
+                "size": 159312,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/10850cbfabf3f42804e287b08769156cca986684f4/20200716_76_cafefile/29537083_1594863084976_ICOrQP_jpg/1594862614217.jpg?type=attachment"
+            },
+            {
+                "extension": "jpg",
+                "fullName": "Screenshot_20200716-102552_Samsung Internet.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "Screenshot_2020...ung Internet.jpg",
+                "size": 215515,
+                "suspendLayerName": "block_common",
+                "type": "F",
+                "url": "https://cafeattach.naver.net/1b8e07b4a1fdff230fe98cbb8c621e67c1936d8f26/20200716_182_cafefile/29537083_1594863098282_dU1x4b_jpg/Screenshot_20200716-102552_Samsung+Internet.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 96927945,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96927945,
+                    "updateDate": 1594863804000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "미쳣습니다.. 바로 해결..\n혹시 사진 사이즈 조절은 팁이라도 있을까요??? 정말 감사합니다!!",
+                    "id": 96928067,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96927945,
+                    "updateDate": 1594863870000,
+                    "writer": {
+                        "id": "daneal1",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리스트"
+                    }
+                },
+                {
+                    "content": "카카오링크 템플릿쪽 쓰면 될껄요???\n",
+                    "id": 96942959,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96942959,
+                    "updateDate": 1594873371000,
+                    "writer": {
+                        "id": "leej_m",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20111031_179/leej_m_1319993786549_64Rj6l_jpg/%B5%A5%B8%B6_00000.jpg"
+                        },
+                        "nick": "deadmau5"
+                    }
+                },
+                {
+                    "content": "커스텀 템플릿",
+                    "id": 96963373,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 96963373,
+                    "updateDate": 1594887437000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "커스텀 템플릿에서 사진 사이즈를 몇으로 해야 할까요??",
+                    "id": 96966794,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96963373,
+                    "updateDate": 1594890027000,
+                    "writer": {
+                        "id": "daneal1",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "리스트"
+                    }
+                },
+                {
+                    "content": "전 500  500하고 자동으로 맞추는 편입니다",
+                    "id": 96971363,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 96963373,
+                    "replyMember": {
+                        "id": "daneal1",
+                        "nick": "리스트"
+                    },
+                    "updateDate": 1594893501000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

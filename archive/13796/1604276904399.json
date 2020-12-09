@@ -1,0 +1,397 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 30,
+            "contentElements": [],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b>공유할 소스 용도</b><div><b>=&gt; </b><span style=\"font-family: 굴림;\">사진저장을 포함한 채팅기록입니다. 테스트해본결과, 여러사진을 한꺼번에 보냈을때는 사진 몇몇개가 인식이 안되더라고요..그거빼고는 오류 없는것 같습니다.&nbsp;</span><span style=\"font-size: 10pt;\"><span style=\"font-family: 굴림;\">묶음사진도 구현하려 하였으나, 저장방식이 달라 포기하였습니다.(똑같은 사진을 일정확률로 여러폴더에 저장하는것 같더라고요)</span></span></div><div><span style=\"font-size: 10pt;\"><span style=\"font-family: 굴림;\">소스는 성빈님과 세미콜론님 소스 짜집기해서 엉성하게 만들었습니다..ㅎ&nbsp;</span></span></div><div><span style=\"font-size: 10pt;\"><span style=\"font-family: 굴림;\">사진이 저장되는 서버(?)는 직접 만드셔야 하는데 이는 다음글에서 자세히 설명하겠습니다.</span></span></div><div><br /></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">const scriptName = &quot;chat&quot;;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">pb = &quot;[Bot] &quot;; fs = FileStream; Lw=&quot;\\u200b&quot;.repeat(500);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">룸=[]; //작동되게 할 방</span></span></div><div style=\"\"><span style=\"font-family: 굴림; font-size: 10pt;\">let mysite=&quot;&quot; </span><font color=\"#ffffff\" style=\"background-color: rgb(142, 142, 142);\"><span style=\"font-family: 굴림; font-size: 10pt;\">//내 사이트주소. 다음글에서 자세히 설명하겠습니다.</span></font></div><div style=\"\"><br /></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">const PICTURE_PATH = &quot;sdcard/Android/data/com.kakao.talk/contents/Mg==&quot;;&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">function getLastPictureFolderPath(){&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">var file = new java.io.File(PICTURE_PATH);&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">var list = file.listFiles().sort(function(a, b){</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">return b.lastModified() -a.lastModified();&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">});&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">return list[0].toString();</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><br /></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">function getLastPictureFilePathFromFoldPath(path){&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">var file = new java.io.File(path);&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">var list = file.listFiles().sort(function(a, b){&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">return b.lastModified() - a.lastModified();&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}); return list;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><br /></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">function getLastPicture(r){&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">try{&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">var path = getLastPictureFilePathFromFoldPath(getLastPictureFolderPath());&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">for(var i=0;i&lt;path.length;i++){&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">var file = new java.io.File(path[i].toString()); if(file.listFiles().length == 0) continue;&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">else {&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">var picture = getLastPictureFilePathFromFoldPath(file.getPath())[0].toString();&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let baos = new java.io.ByteArrayOutputStream();</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let bm = android.graphics.BitmapFactory.decodeFile(picture)</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">try{</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">bm.compress(android.graphics.Bitmap.CompressFormat.JPEG, 100, baos);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}catch(e){}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let bImage = baos.toByteArray();</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let base64 = android.util.Base64.encodeToString(bImage, android.util.Base64.NO_WRAP);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">return base64;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">return null;&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">} catch(e){&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">return null;&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId){</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">try{</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(룸.indexOf(room)!=-1){</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">msg=msg.replace(/\\u202E/g,&quot;&quot;);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">sender=sender.replace(/\\u202E/g,&quot;&quot;);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let day = new Date(); let 시 = day.getHours(); let 분 = day.getMinutes();</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let path = &quot;sdcard/bot/chatreport/&quot;+room+&quot;.txt&quot;;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(fs.read(path)==null) fs.write(path,&quot;{}&quot;);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let json = JSON.parse(fs.read(path));</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(json[&quot;chat&quot;] == undefined) json[&quot;chat&quot;] = [];</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(msg!=&apos;사진을 보냈습니다.&apos;){</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">json[&quot;chat&quot;].push(&quot;[&quot;+sender+&quot;][&quot;+시+&quot;:&quot;+분+&quot;] &quot;+msg);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}else{</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let a=org.jsoup.Jsoup.connect(mysite+&apos;/imglog.php&apos;).data(&apos;room&apos;,room).data(&apos;img&apos;,getLastPicture(room)).ignoreContentType(true).post().text()</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">json[&quot;chat&quot;].push(&quot;[&quot;+sender+&quot;][&quot;+시+&quot;:&quot;+분+&quot;] &quot;+&apos;사진을 보냈습니다(링크를 눌러 사진확인)\\n&apos;+mysite+&apos;/img/&apos;+room+&apos;/&apos;+a+&apos;.jpg&apos;);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">fs.write(path, JSON.stringify(json));</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><br /></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(msg==&quot;챗&quot;){</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let chat = json[&quot;chat&quot;].reverse().slice(1,20);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">(chat.length&gt;0) ? replier.reply(pb+&quot;방 [&quot;+room+&quot;] 의 최근 채팅리스트입니다:&quot;+Lw+&quot;\\n\\n&quot;+chat.reverse().join(&quot;\\n\\n&quot;)):replier.reply(pb+&quot;채팅방의 채팅기록이 존재하지 않습니다!&quot;);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><br /></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(json[&quot;chat&quot;].length &gt; 500){</span></span></div><div style=\"\"><span style=\"font-family: 굴림; font-size: 10pt;\">fs.write(path,&quot;{}&quot;);&nbsp;</span></div><div style=\"\"><span style=\"font-family: 굴림; font-size: 10pt;\">replier.reply(org.jsoup.Jsoup.connect(mysite+&apos;/delete.php?delete=img/&apos;+room+&apos;&amp;type=typeb&apos;).ignoreContentType(true).get().text());</span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><br /></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(msg==&quot;삭제&quot;){</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">fs.write(path,&quot;{}&quot;);&nbsp;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">replier.reply(org.jsoup.Jsoup.connect(mysite+&apos;/delete.php?delete=img/&apos;+room+&apos;&amp;type=typea&apos;).ignoreContentType(true).get().text());</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}catch(e) {</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">replier.reply(e+&quot;\\nErrorline: &quot;+e.lineNumber+&quot;\\n에러발생 스크립트: &quot;+scriptName);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">replier.reply(pb+&quot;오류가 발생하여 [&quot;+scriptName+&quot;] 스크립트를 중지합니다&quot;);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">Api.off(scriptName);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">function onStartCompile() {</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">let pathbackup=&quot;sdcard/bot/backup/&quot;+scriptName+&quot;.txt&quot;;</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">if(!FileStream.read(pathbackup)) FileStream.write(pathbackup,&quot;{}&quot;);</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">FileStream.write(pathbackup, FileStream.read(&quot;sdcard/katalkbot/Bots/&quot;+scriptName+&quot;/&quot;+scriptName+&quot;.js&quot;));</span></span></div><div style=\"\"><span style=\"font-size: 13.3333px;\"><span style=\"font-family: 굴림; font-size: 10pt;\">}</span></span></div></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"background-color: rgb(153, 220, 255);\">( 말머리 등록 해주세요! )</span></div></div><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000035E400000000",
+            "id": 13796,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": false,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 762,
+            "refArticleId": 13796,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "[메봇R] 사진저장을 포함한 채팅기록 #1",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1584612801120,
+            "writer": {
+                "id": "junyoungbae02",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "프로그"
+            }
+        },
+        "articleId": 13796,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "전 사진은 닷홈으로 세미콜론님처럼 받았어영",
+                    "id": 84708862,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84708862,
+                    "updateDate": 1584613248000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "저도 그렇게 해용ㅎ",
+                    "id": 84708912,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84708862,
+                    "updateDate": 1584613298000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "와 드디어 원하던것이...!",
+                    "id": 84709550,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84709550,
+                    "updateDate": 1584613753000,
+                    "writer": {
+                        "id": "tuduri000",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "MinSoup"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 84711456,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 84711456,
+                    "updateDate": 1584615087000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "님 지금 멜론 창닫기 구현하느라 귀차나서 안하는거자나요ㅡㅡ",
+                    "id": 84711494,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84711456,
+                    "updateDate": 1584615109000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "고인물",
+                    "id": 84711542,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84711456,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "pynMilk"
+                    },
+                    "updateDate": 1584615148000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "님도 허위사실 유포로 신고",
+                    "id": 84711984,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84711456,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "pynMilk"
+                    },
+                    "updateDate": 1584615467000,
+                    "writer": {
+                        "id": "junyoungbae02",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "프로그"
+                    }
+                },
+                {
+                    "content": "뭐야 왜 톡 안했어요 빼애애액",
+                    "id": 84712915,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84711456,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "pynMilk"
+                    },
+                    "updateDate": 1584616137000,
+                    "writer": {
+                        "id": "ykd4365",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "OVERWATCH"
+                    }
+                },
+                {
+                    "content": "그건 도와드릴 수 있는데 만들 었다면서요 최적화는 안됬다는건가?...",
+                    "id": 84712993,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84711456,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "pynMilk"
+                    },
+                    "updateDate": 1584616200000,
+                    "writer": {
+                        "id": "ykd4365",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "OVERWATCH"
+                    }
+                },
+                {
+                    "content": "콜백이 뭔지 몰라서 죄~송~합~니~당",
+                    "id": 84713070,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 84711456,
+                    "replyMember": {
+                        "id": "hanbyeul04",
+                        "nick": "pynMilk"
+                    },
+                    "updateDate": 1584616258000,
+                    "writer": {
+                        "id": "ykd4365",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "OVERWATCH"
+                    }
+                }
+            ],
+            "last": {
+                "id": 97367688,
+                "refId": 97367688
+            },
+            "next": {
+                "id": 84713104,
+                "refId": 84711456
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

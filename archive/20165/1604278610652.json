@@ -1,0 +1,346 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 9,
+            "contentElements": [],
+            "contentHtml": "기본적인 정리<br />메신저봇R 기준으로 설명합니다.<br /><br />// 아주 기초적인것부터 설명합니다.<br /><br />integer, int = 정수 형태<br />string, str = 문자 형태<br /><div>boolean, bool = 자료형 (true, false)</div><div><br /></div>function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)<br />=&gt; 알람이 오면 호출되는 함수입니다. 모든것은 여기 안에서 이루어집니다. 괄호 안에 들어가는건 어떤 이름이 들어가든 역할은 변하지 않습니다.<br /><br />room (string)<br />=&gt; 방 이름을 문자 형태로 반환합니다.<br />예제 ( if (msg == &quot;방 이름&quot;) { replier.reply(room); } ) 방금 보여드린 예제대로 하면 방 이름이 나올겁니다.<br /><br />sneder (string)<br />=&gt; 보낸이의 이름을 문자 형태로 반환합니다.<br />예제 ( if (msg == &quot;누가 보냈니?&quot;) { replier.reply(sender); } ) 방금 보여드린 예제대로 하면 보낸이의 이름이 나올겁니다.<br /><br />isGroupChat (boolean)<br />=&gt; 이것이 그룹채팅인가 아닌가를 true, false 형태로 반환합니다.<br />예제 ( if (msg == &quot;여기 그룹채팅?&quot;) { if (isGroupChat == true) { replier.reply(&quot;네&quot;); } else { if (isGroupChat == false) { replier.reply(&quot;아니요&quot;); } } } ) 방금 보연드린 예제대로 하면 그룹채팅인가 아닌가가 나올겁니다.<br /><br />replier.reply(message) (void)<br />=&gt; 메세지를 전송하는 함수입니다.<br />예제 ( replier.reply(&quot;보내기 성공&quot;); ) 방금 보여드린 예제대로 하면 아무 메세지나 전송해도 보내기 성공이라는 메세지가 전송될겁니다.<br /><br />replier.reply(room, message, hideErrorToast = false) (boolean)<br />=&gt; 메세지를 보내는 함수입니다. 하지만 방금전에 설명한 함수와는 다릅니다. 먼저 파라미터가 3개입니다. 첫번째 파라미터인 room은 보낼 곳을 지정하는 곳입니다. 두번째 파라미터인 message는 보낼 메세지를 지정하는 곳입니다. 세번째 파라미터인 hideErrorToast는 false로 지정시 전송 실패시 이유가 포함된 토스트 가 뜹니다.<br />예제1 ( if (msg == &quot;보내&quot;) { replier.reply(&quot;테스트방&quot;, &quot;안녕&quot;); } ) 방금 보여드린 예제대로 하면 테스트방이라는 이름을 가진 방에게 안녕이란 메세지가 전송될것입니다. (한번이라도 메세지가 왔어야지 전송됩니다.)<br />예제2 ( if (msg == &quot;보내&quot;) { replier.reply(&quot;테스트방&quot;, &quot;안녕&quot;, hideErrorToast = true); } ) 방금 보여드린 예제대로 하면 테스트방이라는 이름을 가진 방에게 안녕이란 메세지가 전송될것입니다. 전송 실패시 이유가 포함된 토스트 가 뜹니다.<br /><br />imageDB.getProfileBase64() (string)<br />=&gt; 보낸이의 프로필 사진을 Base64로 인코딩하여 반환합니다.<br />예제 ( if (msg == &quot;내프로필&quot;) { var profile = imageDB.getProfileBase64(); replier.reply(profile); } ) 방금 보여드린 예제대로 하면 보낸이의 프로필 사진이 Base64로 인코딩되어 나올겁니다.<br /><br />packageName (string)<br />=&gt; 보내는 어플의 패키지 이름을 문자 형태로 반환합니다.<br />예제 ( if (msg == &quot;패키지&quot;) { var package = packageName; replier.reply(packageName); } ) 방금 보여드린 예제대로 하면 패키지 이름이 나올겁니다.<br /><br />// 유용한 함수 (위에있는 함수는 전부 뺏습니다.)<br /><br />replace<br />=&gt; 문자 형태의 어떤 부분을 바꿉니다. 어떤 변수라도 문자 형태면 바꿀 수 있습니다.<br />예제 ( if (msg == &quot;안녕&quot;) { var Nyung = msg.replace(&quot;안&quot;, &quot;&quot;); replier.reply(Nyung); }<br /><br />split<br />=&gt; 문자 형태의 어떤 부분을 자릅니다. 어떤 변수라도 문자 형태면 자를 수 있습니다.<br />예제 ( if (msg == &quot;안안녕&quot;) { var anNyung = msg.split(&quot;안&quot;); replier.reply(anNyung); } ) 방금 보여드린 예제대로 하면 ,,녕이 나올겁니다. 사실 replace 도 편하긴 하나 split해서 그중 원하는것만 replace 하는것도 나쁘지 않습니다.<br /><div><br /></div><div>(string).repeat(int)<br />=&gt; 문자를 반복합니다. 문자 형태에 붙여서 사용할 수 있습니다.<br />예제 ( if (msg == &quot;도배해&quot;) { replier.reply(&quot;도배&quot;.repeat(500)); } 방금 보여드린 예제대로 하면 &quot;도배&quot;라는 글자가 500번 반복되어 나올겁니다.</div><div><br /></div>// 파싱 함수<br /><br />Utils.getWebText<br />=&gt; 문자 형태로 사이트의 모든 텍스트를 반환합니다.<br />예제 ( if (msg == &quot;네이버&quot;) { var naver = Utils.getWebText(&quot;<a href=\"https://naver.com\" target=\"_blank\">https://naver.com</a>&quot;); replier.reply(naver); } ) 방금 보여드린 예제대로 하면 네이버의 모든 텍스트가 나올겁니다.<br /><br />Jsoup<br />추가중 (언젠간.)<br /><br />// 팁<br /><br />var<br />=&gt; 변수입니다. 지정되어있다면 언제나 불러서 사용할 수 있습니다. (response 함수 안에 들어가는 경우 메세지가 올때마다 다시 지정됩니다.)<br />예제 ( if (msg == &quot;방 이름&quot;) { var name = room; replier.reply(name); } ) 방금 보여드린 예제대로 하면 name라는 변수에게 지정된 방 이름이 나올겁니다.<br />if (msg == &quot;방 이름&quot;) { var name = room; replier.reply(name); } 이렇게 있는경우 var을 빼도 작동합니다.<br /><br />&quot;\\n&quot;<br />=&gt; 줄내림입니다. 문자 형태에 넣어서 사용할 수 있습니다.<br />예제 ( if (msg == &quot;인사해&quot;) { replier.reply(sender + &quot;\\n님 안녕하세요!&quot;); } ) 방금 보여드린 예제대로 하면 보낸이의 이름에 줄내림을 하고 님 안녕하세요! 라는 문자가 나올겁니다.<br /><br /><br />계속 업데이트 됩니다!<br />문제가 있는경우 지적해주세요! 수정하겠습니다.<br /><br />2020 06 23 6:00 마지막 수정<br /><br /><br />",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004EC500000000",
+            "id": 20165,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 209,
+            "refArticleId": 20165,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "기본적인것들 정리 2020-06-23 6:00",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1592851215363,
+            "writer": {
+                "id": "wjdtmdrl131",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "맨들"
+            }
+        },
+        "articleId": 20165,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "",
+                    "id": 94498688,
+                    "isArticleWriter": false,
+                    "isDeleted": true,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94498688,
+                    "updateDate": 1592856429000,
+                    "writer": {
+                        "id": "",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": ""
+                    }
+                },
+                {
+                    "content": "반영하겠습니다",
+                    "id": 94499102,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94498688,
+                    "updateDate": 1592859619000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "let\r\nconst",
+                    "id": 94505200,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94505200,
+                    "updateDate": 1592866756000,
+                    "writer": {
+                        "id": "yunhoo33",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "왜사냐"
+                    }
+                },
+                {
+                    "content": "추가해주시면 감사하겠습니다",
+                    "id": 94505237,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94505200,
+                    "updateDate": 1592866771000,
+                    "writer": {
+                        "id": "yunhoo33",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "왜사냐"
+                    }
+                },
+                {
+                    "content": "마지막에 \\n에대해 츄가할때 두번뛰움은 \\n2. 이렇게하는거라고 추가하면 좋겠습니다.(아마 맞을거예요. 저도 처음에 이걸몰라서 다르게하다가 알게된거라서요맞으려나..아니라면 지적해주세요.. 두번띄움은 뭔가더해야되는건아니는데 확실치가 않아서요..)",
+                    "id": 94529296,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94529296,
+                    "updateDate": 1592877517000,
+                    "writer": {
+                        "id": "kimsc5188",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "김성철"
+                    }
+                },
+                {
+                    "content": "아닙니다.",
+                    "id": 97247428,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94529296,
+                    "updateDate": 1595151431000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 97247465,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA3MTlfMjM5/MDAxNTk1MTUxNDU4MTYy.zzTqhkDsejlTAU4Oc_ehJJUT-n2Ck4VNYdd_j-dYpH8g.tzfvBqQeLcOB7IBnviuFN3EwmWl5TcJ6w4x0iS_Dppcg.JPEG/externalFile.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "externalFile.jpg",
+                        "height": 477,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA3MTlfMjM5/MDAxNTk1MTUxNDU4MTYy.zzTqhkDsejlTAU4Oc_ehJJUT-n2Ck4VNYdd_j-dYpH8g.tzfvBqQeLcOB7IBnviuFN3EwmWl5TcJ6w4x0iS_Dppcg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA3MTlfMjM5/MDAxNTk1MTUxNDU4MTYy.zzTqhkDsejlTAU4Oc_ehJJUT-n2Ck4VNYdd_j-dYpH8g.tzfvBqQeLcOB7IBnviuFN3EwmWl5TcJ6w4x0iS_Dppcg.JPEG/externalFile.jpg",
+                        "width": 1080
+                    },
+                    "refId": 94529296,
+                    "updateDate": 1595151458000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                },
+                {
+                    "content": "\\n\\n 맞아요",
+                    "id": 97247544,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94529296,
+                    "updateDate": 1595151524000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 97247182,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 97247182,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1595151242000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "ㄷ",
+                    "id": 97247491,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 97247182,
+                    "updateDate": 1595151478000,
+                    "writer": {
+                        "id": "wjdtmdrl131",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "맨들"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

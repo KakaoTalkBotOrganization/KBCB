@@ -1,0 +1,202 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 4,
+            "contentElements": [],
+            "contentHtml": "<p>&lt;html&gt;<br /> &lt;head&gt;<br />  &lt;meta charset=&apos;utf-8&apos;&gt;<br /> &lt;/head&gt;<br /> &lt;?<br />  $bus=$_GET[&apos;number&apos;];<br /><br /> <br />    require($_SERVER[&apos;DOCUMENT_ROOT&apos;].&apos;/snoopy/Snoopy.class.php&apos;);<br />  $snoopy = new Snoopy;<br /><br />  //버스 id가져오기<br />  $snoopy-&gt;fetch(&apos;https://search.naver.com/search.naver?sm=top_hty&amp;fbm=1&amp;ie=utf8&amp;query=&apos;.$bus.&apos;%EB%B2%88+%EB%B2%84%EC%8A%A4&apos;);<br />  $r=explode(&apos;https://map.naver.com/?busId=&apos;,$snoopy-&gt;results);<br />  $key=explode(&apos;&quot;&apos;,$r[1])[0];<br /><br />  if ($key==&apos;&apos;) {<br />   echo &apos;못찾음&apos;;<br />   exit;<br />  }<br /><br />  //버스정보 가져오기<br />  $snoopy-&gt;fetch(&apos;https://s.search.naver.com/n/api.pubtrans.map/2.0/live/getBusLocation.jsonp?_callback=window.__jindo2_callback._bus_location_list_0&amp;caller=pc_search&amp;routeId=&apos;.$key);<br />  $data=preg_replace(&apos;/&lt;[^&gt;]+&gt;|[^(]+\\(|\\);/&apos;,&apos;&apos;,$snoopy-&gt;results);<br />  $d=json_decode($data)-&gt;message-&gt;result-&gt;busLocationList;<br />  $box=[];<br />  for ($i=0;$i&lt;count($d);$i++) {<br />   $busNo=$d[$i]-&gt;plateNo;<br />   $station=$d[$i]-&gt;stationId;<br />   array_push($box,[$busNo,$station]);<br />  }<br /><br />  //정류장&amp;버스 정보 가져오기<br />  $snoopy-&gt;fetch(&apos;https://s.search.naver.com/p/mlocation/map/api2/getBusDetailInfo.nhn?_callback=window.__jindo2_callback._bus_detail_info_0&amp;output=json&amp;caller=pc_search&amp;includeCompanyInfo=true&amp;doSeparateSection=true&amp;includeNonStopBusStops=true&amp;busID=&apos;.$key);<br />  $data=preg_replace(&apos;/&lt;[^&gt;]+&gt;|^[^(]+\\(|\\);/&apos;,&apos;&apos;,$snoopy-&gt;results);<br />  $json=json_decode($data)-&gt;message-&gt;result;<br />  $city=$json-&gt;busCityName;<br />  $busNum=$json-&gt;routeNo;<br />  $start=$json-&gt;busStartPoint;<br />  $end=$json-&gt;busEndPoint;<br />  $first=$json-&gt;busFirstTime;<br />  $last=$json-&gt;busLastTime;<br />  $interval=$json-&gt;busInterval;<br />  $company=$json-&gt;company;<br />  $company=[$company-&gt;name,$company-&gt;tel];<br />  $station=$json-&gt;station;<br />  $busBox=[];<br />  for ($i=0;$i&lt;count($station);$i++) {<br />   $name=$station[$i]-&gt;stationName;<br />   $code=$station[$i]-&gt;stationID;<br />   for ($s=0;$s&lt;count($box);$s++) {<br />    if ($code==$box[$s][1]) {<br />     $name=&apos;&#128653; &apos;.$name.&apos;(버스 번호 : &apos;.$box[$s][0].&apos;)&apos;;<br />     break;<br />    }<br />   }<br />   array_push($busBox,$name);<br />  }<br /><br />  //이제 퉤<br />  echo &apos;지역 : &apos;.$city.&apos;&lt;br&gt;노선번호 : &apos;.$busNum.&apos;&lt;br&gt;출발점 : &apos;.$start.&apos;&lt;br&gt;종점 : &apos;.$end.&apos;&lt;br&gt;배차간격 : &apos;.$interval.&apos;분&lt;br&gt;첫차시간 : &apos;.$first.&apos;&lt;br&gt;막차시간 : &apos;.$last.&apos;&lt;br&gt;회사 이름 : &apos;.$company[0].&apos;&lt;br&gt;회사 전화번호 : &apos;.$company[1].&apos;&lt;p&gt;총 &apos;.count($box).&apos;대 운영중&lt;/p&gt;&lt;p&gt;&apos;.join($busBox,&apos;&lt;br&gt;&apos;).&apos;&lt;/p&gt;&apos;;<br /> ?&gt;<br />&lt;/html&gt;</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000A7100000000",
+            "id": 2673,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 1,
+                "menuType": "B",
+                "name": "| 자유 게시판 |"
+            },
+            "readCount": 175,
+            "refArticleId": 2673,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "busInfo",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1558869947793,
+            "writer": {
+                "id": "qkralswo0825",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA4MjdfNzIg/MDAxNTM1Mzc0ODA1Mzcx.4fPPQyRh3gNOuCLhi__tQWMyX0gkFf03Mq0wZ377BhMg.26O6HkEnB0ZHkJ9pjOGX0MI9p-bH9ONpRk6_3gROFPIg.PNG.qkralswo0825/profileImage.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "이름을입력해주세요"
+            }
+        },
+        "articleId": 2673,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "배열에 다 넣어서 json encode해주세...",
+                    "id": 60327793,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60327793,
+                    "updateDate": 1558875738000,
+                    "writer": {
+                        "id": "psksun4500",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTEyMjNfNzcg/MDAxNTc3MDg1MjUzMjc1.Tj41hY3Fihf3FbDxiqS5cGMV_kE4Apmqalpr-NVPYF0g.ErPqiHPHMFD_eJf5JDEM9d0KpEiDb9EE-j40bikYNcYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "MatSoGeum"
+                    }
+                },
+                {
+                    "content": "엥 어디서 많이 본 주소가???",
+                    "id": 60331521,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60331521,
+                    "updateDate": 1558878209000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "그러게요",
+                    "id": 60337317,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 60331521,
+                    "updateDate": 1558881919000,
+                    "writer": {
+                        "id": "qkralswo0825",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxODA4MjdfNzIg/MDAxNTM1Mzc0ODA1Mzcx.4fPPQyRh3gNOuCLhi__tQWMyX0gkFf03Mq0wZ377BhMg.26O6HkEnB0ZHkJ9pjOGX0MI9p-bH9ONpRk6_3gROFPIg.PNG.qkralswo0825/profileImage.png"
+                        },
+                        "nick": "이름을입력해주세요"
+                    }
+                },
+                {
+                    "content": "프흐프 고인물 다됬네;",
+                    "id": 60399719,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 60399719,
+                    "updateDate": 1558956453000,
+                    "writer": {
+                        "id": "wltjdqls5304",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

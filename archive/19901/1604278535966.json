@@ -1,0 +1,395 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 15,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 2171,
+                            "service": "CAFE",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA2MTlfMTcz/MDAxNTkyNDkzNDk5NjUw.vlwjBLlCgY7JH9NSteTISnEyw-7pP_6ub1KENaKSrTwg.MAioVNhPqR-_JTRV2teF-D9jjQe7iVxQvCgbrpPPfDEg.JPEG/externalFile.jpg",
+                            "width": 740
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<p>이번 강좌엔 전역변수의 응용 과정을 다뤄보도록 하겠습니다.<br /><br />미니게임 만드는 걸 어려워하시는 분들이 많아서<br />오늘 간단한 예제로 업다운 게임을 만들어 보겠습니다.<br /><br />게임은 여러명이서 참여할 수 있게 할거에요.<br />게임 시작은 &quot;/업다운 시작&quot;<br />게임 포기는 &quot;/업다운 포기&quot;<br />숫자 입력은 &quot;/(숫자)&quot;<br />로 해보겠습니다.<br /><br /><br />자 일단 리스폰스 함수.<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />}<br /><br />시작 명령어부터 만들어 볼게요<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (msg == &quot;/업다운 시작&quot;) {<br /><br />}<br /><br />}<br /><br />자 그런데 게임이 이미 시작되었을 때 시작 명령어 중복이 안되도록 해야겠죠?<br /><br />전역에 시작 여부를 나타내는 변수를 선언해둘게요.<br /><br />let start = false<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (msg == &quot;/업다운 시작&quot;) {<br />if (start == false) {<br />start = true<br />replier.reply(&quot;게임이 시작되었습니다! 숫자를 맞춰보세요&quot;)<br />} else {<br />replier.reply(&quot;게임이 이미 시작되었습니다.&quot;)<br />}<br />}<br /><br />}<br /><br />게임 시작 기능만 구현했습니다.<br />하지만 업다운 게임을 시작하려면 맞춰야 할 숫자를 지정해놔야겠죠?<br /><br />이것도 전역에 선언해 놓읍시다.<br /><br />let start = false<br />let num = 0<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (msg == &quot;/업다운 시작&quot;) {<br />if (start == false) {<br />start = true<br />num = Math.floor(Math.random()*100)+1<br />replier.reply(&quot;게임이 시작되었습니다! 숫자를 맞춰보세요&quot;)<br />} else {<br />replier.reply(&quot;게임이 이미 시작되었습니다.&quot;)<br />}<br />}<br /><br />}<br /><br />1 과 100 사이의 수로 지정됩니다.<br /><br />이제 게임 포기도 만들게요.<br /><br />let start = false<br />let num = 0<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (msg == &quot;/업다운 시작&quot;) {<br />if (start == false) {<br />start = true<br />num = Math.floor(Math.random()*100)+1<br />replier.reply(&quot;게임이 시작되었습니다! 숫자를 맞춰보세요&quot;)<br />} else {<br />replier.reply(&quot;게임이 이미 시작되었습니다.&quot;)<br />}<br />}<br /><br />if (msg == &quot;/업다운 포기&quot;) {<br />if (start == true) {<br />start = false<br />replier.reply(&quot;게임이 종료되었습니다. 지정된 수는 &quot;+num+&quot; 이었습니다!&quot;)<br />} else {<br />replier.reply(&quot;게임이 시작되지 않았습니다!&quot;)<br />}<br />}<br /><br />}<br /><br />여기까지만 하셔도 다른 게임들을 충분히 만드실 수 있습니다.<br /><br />이제 업다운 게임의 주 기능을 만들겠습니다.<br /><br /><br />let start = false<br />let num = 0<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (msg == &quot;/업다운 시작&quot;) {<br />if (start == false) {<br />start = true<br />num = Math.floor(Math.random()*100)+1<br />replier.reply(&quot;게임이 시작되었습니다! 숫자를 맞춰보세요&quot;)<br />} else {<br />replier.reply(&quot;게임이 이미 시작되었습니다.&quot;)<br />}<br />}<br /><br />if (msg == &quot;/업다운 포기&quot;) {<br />if (start == true) {<br />start = false<br />replier.reply(&quot;게임이 종료되었습니다. 지정된 수는 &quot;+num+&quot; 이었습니다!&quot;)<br />} else {<br />replier.reply(&quot;게임이 시작되지 않았습니다!&quot;)<br />}<br />}<br /><br />input = Number(msg.substr(1))<br />if (msg[0] == &quot;/&quot; &amp;&amp; isNaN(input) == false) {<br />if (num == input) {<br />replier.reply(&quot;숫자를 맞추셨습니다! 게임이 종료됩니다.&quot;)<br />start = false<br />} else {<br />replier.reply(num&gt;input?&quot;업&quot;:&quot;다운&quot;)<br />}<br />}<br /><br />}<br /><br />msg 의 첫글자가 &quot;/&quot; 이며 그 다음 글자가 숫자라면 반응하게 했습니다.<br /><br />입력된 숫자와 지정된 숫자가 같으면 게임이 종료되며, 다르다면 삼항연산자로 &quot;업&quot; 혹은 &quot;다운&quot; 을 반환합니다.<br /><br />대충 완성된 거 같네요.<br />제가 코딩하던 스타일과 너무 달라서<br />제 스타일대로 좀 다듬겠습니다.<br /><br /><br />let start = false<br />let num = 0<br /><br />function response (room, msg, sender, igc, replier) {<br /><br />if (msg == &quot;/업다운 시작&quot;) {<br />if (!start) {<br />start = true<br />num = Math.random()*100|0+1<br />replier.reply(&quot;&bull; 게임이 시작되었습니다! 숫자를 맞춰보세요&quot;)<br />} else replier.reply(&quot;&bull; 게임이 이미 시작되었습니다.&quot;)<br />}<br /><br />if (msg == &quot;/업다운 포기&quot;) {<br />if (start) {<br />start = false<br />replier.reply(&quot;&bull; 게임이 종료되었습니다. 지정된 수는 &quot;+num+&quot; 이었습니다!&quot;)<br />} else replier.reply(&quot;&bull; 게임이 시작되지 않았습니다!&quot;)<br />}<br /><br />input = Number(msg.substr(1))<br />if (msg[0] == &quot;/&quot; &amp;&amp; isNaN(input) == false) {<br />if (num == input) {<br />replier.reply(&quot;&bull; 숫자를 맞추셨습니다! 게임이 종료됩니다.&quot;)<br />start = false<br />} else {<br />replier.reply(&quot;&bull; &quot;+(num&gt;input?&quot;업&quot;:&quot;다운&quot;))<br />}<br />}<br /><br />}<br /><br /><br />완성!<br /><br /><br /></p>[[[CONTENT-ELEMENT-0]]]<br /><p><br />잘 작동하네요.</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004DBD00000000",
+            "head": "응용",
+            "headId": 7,
+            "id": 19901,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 20,
+                "menuType": "B",
+                "name": "| 카카오톡 봇 강좌 |"
+            },
+            "readCount": 366,
+            "refArticleId": 19901,
+            "replyListOrder": "",
+            "scrapCount": 1,
+            "subject": "전역변수 응용 - 업다운 게임 만들기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1592493500217,
+            "writer": {
+                "id": "doami200507",
+                "image": {
+                    "isAnimated": false,
+                    "service": "BLOG",
+                    "type": "c77_77",
+                    "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "도미 doami2005"
+            }
+        },
+        "articleId": 19901,
+        "attaches": [
+            {
+                "extension": "jpg",
+                "fullName": "externalFile.jpg",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "externalFile.jpg",
+                "size": 174210,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/049118abbee9e03c10f693a4937d047ede8c729056/MjAyMDA2MTlfMTcz/MDAxNTkyNDkzNDk5NjUw.vlwjBLlCgY7JH9NSteTISnEyw-7pP_6ub1KENaKSrTwg.MAioVNhPqR-_JTRV2teF-D9jjQe7iVxQvCgbrpPPfDEg.JPEG/externalFile.jpg?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷ",
+                    "id": 94106478,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94106478,
+                    "updateDate": 1592493547000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SP청정"
+                    }
+                },
+                {
+                    "content": "형 공부한다며",
+                    "id": 94106844,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94106844,
+                    "updateDate": 1592493766000,
+                    "writer": {
+                        "id": "port_side0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "윤 위해 웃어줘"
+                    }
+                },
+                {
+                    "content": "공부하다와써\r\n15분동안 적은거라 퀄다운",
+                    "id": 94106892,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94106844,
+                    "updateDate": 1592493816000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "아하",
+                    "id": 94106938,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94106844,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "updateDate": 1592493833000,
+                    "writer": {
+                        "id": "port_side0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "윤 위해 웃어줘"
+                    }
+                },
+                {
+                    "content": "안녕",
+                    "id": 94109280,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94106844,
+                    "replyMember": {
+                        "id": "port_side0707",
+                        "nick": "윤 위해 웃어줘"
+                    },
+                    "updateDate": 1592495956000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "num>input?\"업\":\"다운\"\r\n이런 방식이 낯설어서 잘 이해가 되지 않는데 어떻게 해석을 해야하나요 ?",
+                    "id": 94113429,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94113429,
+                    "updateDate": 1592514946000,
+                    "writer": {
+                        "id": "tjdrn8200",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/20110725_263/tjdrn8200_1311583435331_nh9LaB_gif/b9fab7b9-4139-_rlaxogus1597.gif"
+                        },
+                        "nick": "비닐봉지"
+                    }
+                },
+                {
+                    "content": "삼항 연산자입니다.\r\n조건문?조건이참이면:참이아니면",
+                    "id": 94115476,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94113429,
+                    "updateDate": 1592518783000,
+                    "writer": {
+                        "id": "port_side0707",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "윤 위해 웃어줘"
+                    }
+                },
+                {
+                    "content": "포기 기능 ㄱㄱㄱ",
+                    "id": 94113885,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94113885,
+                    "updateDate": 1592516340000,
+                    "writer": {
+                        "id": "pjhmilo1",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "undefined"
+                    }
+                },
+                {
+                    "content": "아 있넹..;",
+                    "id": 94113893,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 94113885,
+                    "updateDate": 1592516353000,
+                    "writer": {
+                        "id": "pjhmilo1",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "undefined"
+                    }
+                },
+                {
+                    "content": "와 상세한 설명 최고에요 감사합니다. 횟수 제한 걸어두는것도 재미있을 것 같아요. 횟수를 카운트 해주거나. 누가 빨리 맞추나 계산 가능/",
+                    "id": 94139103,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 94139103,
+                    "updateDate": 1592530221000,
+                    "writer": {
+                        "id": "jtech10cnc",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "초초초초보컴맹"
+                    }
+                }
+            ],
+            "last": {
+                "id": 102150244,
+                "refId": 102150244
+            },
+            "next": {
+                "id": 94140980,
+                "refId": 94139103
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "초급",
+                "headId": 5
+            },
+            {
+                "head": "응용",
+                "headId": 7
+            },
+            {
+                "head": "중급",
+                "headId": 20
+            },
+            {
+                "head": "고급",
+                "headId": 21
+            },
+            {
+                "head": "기타",
+                "headId": 39
+            },
+            {
+                "head": "팁",
+                "headId": 54
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

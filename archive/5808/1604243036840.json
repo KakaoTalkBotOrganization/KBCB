@@ -1,0 +1,337 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 6,
+            "contentElements": [
+                {
+                    "json": {
+                        "from": "MOBILEWEB",
+                        "image": {
+                            "height": 382,
+                            "service": "CAFE",
+                            "style": "width: 493px; height: 382px;",
+                            "type": "w740",
+                            "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTExMThfMjM5/MDAxNTc0MDgxMjM4MjA1.sotDZgE9a0WsmTAwv7xlfOdN3IUFOcbcyNuigGRyRkQg.NUJXrJEGm0V-SlEZJj8rwpI_oHD0AAT4JZdWmkjjB3Ug.PNG/KakaoTalk_Snapshot_20191118_214623.png",
+                            "width": 493
+                        }
+                    },
+                    "type": "IMAGE"
+                }
+            ],
+            "contentHtml": "<div class=\"NHN_Writeform_Main\"><b></b><div class=\"NHN_Writeform_Main\"><b><b>공유할 소스 용도</b></b></div><div><b>=&gt;&nbsp;</b><span style=\"font-size: 9pt;\"><font color=\"#7d7d7d\">(ex: 가위바위보 게임)</font></span></div><div><span style=\"font-size: 12px; font-family: Verdana;\">브롤스타즈 정보 소스</span></div><div><br /></div><div><span style=\"font-size: 12px; font-family: Verdana;\">처음 만드는 소스입니다.</span></div><div><span style=\"font-size: 12px; font-family: Verdana;\">사로로님께서 제작하신 <span style=\"font-family: Verdana;\"><a href=\"https://cafe.naver.com/nameyee/7524\" target=\"_blank\" title=\"새창으로 열림\">API</a></span></span><span style=\"font-size: 12px; font-family: Verdana;\">를 이용하여 (최대한 심플하게) 제작했습니다.</span></div><div><span style=\"font-size: 12px; font-family: Verdana;\"><br /></span></div><div><span style=\"font-size: 12px; font-family: Verdana;\">10/31 : 보스전, 파워 플레이 추가, 브롤러 수 수정</span></div><div><span style=\"font-size: 12px; font-family: Verdana;\">11/18 : 주소 변경</span></div><div><b><br /></b></div><div><b>소스 코드</b></div><div><b>=&gt;</b></div><div><b><br /></b></div><div><div style=\"\"><div><font face=\"Verdana\">function response(room, msg, sender, isGroupChat, replier, ImageDB, packageName, threadId)&nbsp;</font><span style=\"font-family: Verdana; font-size: 10pt;\">{</span></div><div><font face=\"Verdana\">&nbsp; &nbsp; if(msg.indexOf(&quot;/브롤정보&quot;) == 0)&nbsp;</font><span style=\"font-family: Verdana; font-size: 10pt;\">{</span></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var tag = msg.substr(6);</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; let url = &apos;<a href=\"https://saroro.develope.dev/main.php?what=Uinfo&amp;tag=\" target=\"_blank\">https://saroro.develope.dev/main.php?what=Uinfo&amp;tag=</a>&apos;+ tag;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var result = JSON.parse(org.jsoup.Jsoup.connect(url).get().text());</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var nametxt = &quot;[&quot; + result.name + &quot; 정보]\\n\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var lvtxt = &quot;레벨: &quot; + result.expLevel + &quot; (&quot; + result.expFmt + &quot;)\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var trophiestxt = &quot;현재 트로피: &quot; + result.trophies + &quot;\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var highesttxt = &quot;최고 트로피: &quot; + result.highestTrophies + &quot;\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var brawlertxt = &quot;보유 브롤러: &quot; + result.brawlersUnlocked + &quot;/32\\n\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var victoriestxt = &quot;3:3 승리: &quot; + result.victories + &quot;\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var solotxt = &quot;솔로 쇼다운 승리: &quot; + result.soloShowdownVictories + &quot;\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var duotxt = &quot;듀오 쇼다운 승리: &quot; + result.duoShowdownVictories + &quot;\\n\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var bigbrawlertxt = &quot;빅 브롤러 기록: &quot; + result.bestTimeAsBigBrawler + &quot; (&quot; + result.bestTimeAsBigBrawlerInSeconds + &quot;초)\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var roborumbletxt = &quot;로보 럼블 기록: &quot; + result.bestRoboRumbleTime + &quot; (&quot; + result.bestRoboRumbleTimeInSeconds + &quot;초)\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var bossfightlvtxt = &quot;보스전 최고 레벨: &quot; + result.highestBossFightLevel + &quot;\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var powerplaypttxt = &quot;파워 플레이 최고 점수: &quot; + result.highestPowerPlayPoints&nbsp; + &quot;\\n\\n&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var clubtxt = &quot;클럽: 없음&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; if(result.club) {</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; clubtxt = &quot;클럽: &quot; + result.club.name + &quot; (#&quot; + result.club.tag + &quot;)&quot;</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; }</font></div><div><font face=\"Verdana\"><br /></font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; var text = nametxt + lvtxt + trophiestxt + highesttxt + brawlertxt + victoriestxt + solotxt + duotxt + bigbrawlertxt + roborumbletxt + bossfightlvtxt + powerplaypttxt + clubtxt</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; &nbsp; &nbsp; replier.reply(text)</font></div><div><font face=\"Verdana\">&nbsp; &nbsp; }</font></div><div><font face=\"Verdana\">}</font></div><div><font face=\"Verdana\"><br /></font></div><div><font face=\"Verdana\"><b>출력 형식</b></font></div><div><font face=\"Verdana\"><br /></font></div><div><font face=\"Verdana\">[[[CONTENT-ELEMENT-0]]]<br /></font></div></div></div><div><div style=\"\"><div><br /></div></div></div><div><span style=\"background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? Yes / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000016B000000000",
+            "id": 5808,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 336,
+            "refArticleId": 5808,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "브롤스타즈 정보",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1569656499027,
+            "writer": {
+                "id": "9289wjddus",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "",
+                "memberLevelName": "",
+                "nick": "thinking"
+            }
+        },
+        "articleId": 5808,
+        "attaches": [
+            {
+                "extension": "png",
+                "fullName": "KakaoTalk_Snapshot_20191118_214623.png",
+                "hasCopyrightIssue": false,
+                "hasLicenseIssue": false,
+                "isBlind": false,
+                "isInfected": false,
+                "name": "KakaoTalk_Snaps...91118_214623.png",
+                "size": 17156,
+                "suspendLayerName": "block_common",
+                "type": "I",
+                "url": "https://blogattach.naver.net/59cc45f5e7b5bd614dabcef9c2245d2b83d12fcd96/MjAxOTExMThfMjM5/MDAxNTc0MDgxMjM4MjA1.sotDZgE9a0WsmTAwv7xlfOdN3IUFOcbcyNuigGRyRkQg.NUJXrJEGm0V-SlEZJj8rwpI_oHD0AAT4JZdWmkjjB3Ug.PNG/KakaoTalk_Snapshot_20191118_214623.png?type=attachment"
+            }
+        ],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㅠ 이거도 팔고싶지만\r\n사로로님 사이트라 수익창출이 안된답",
+                    "id": 69833470,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 69833470,
+                    "updateDate": 1569656667000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "doami2005"
+                    }
+                },
+                {
+                    "content": "흠 런타임 에러 수정해서 사용하겠습니다.",
+                    "id": 70322579,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 70322579,
+                    "updateDate": 1570197018000,
+                    "writer": {
+                        "id": "jjh060213",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "중학생입니다"
+                    }
+                },
+                {
+                    "content": "파란 메신저봇에서만 작동됩니다!\r\n\r\n11/18 확인 : 노란 메신저봇에서도 잘 작동됩니다",
+                    "id": 73650436,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 73650436,
+                    "updateDate": 1574080969000,
+                    "writer": {
+                        "id": "9289wjddus",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "thinking"
+                    }
+                },
+                {
+                    "content": "어라 주소 바뀌었어여",
+                    "id": 73782743,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73650436,
+                    "updateDate": 1574079377000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "https://saroro.develope.dev/main.php?what=event\r\n현재 및 다음 맵\r\n\r\nhttps://saroro.develope.dev/main.php?what=Uinfo&tag=\r\n유저 정보 (=뒤에 태그)",
+                    "id": 73782868,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 73650436,
+                    "updateDate": 1574079469000,
+                    "writer": {
+                        "id": "hbhj4633",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "사로로"
+                    }
+                },
+                {
+                    "content": "그대로 썼는데 이런 오류가 뜨네요",
+                    "id": 77056477,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTEyMjlfMjk4/MDAxNTc3NTg0MjcwOTI0.1mBwm56Fsyd73KASOncZtBPBIkX27TkIVMlJWf9N_Ecg.nL7WWs84ZUlw-3kFTmvYiEHBdlDUcefZGtEP0-01Cmgg.PNG/Screenshot_20191229-105044.png"
+                    },
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "Screenshot_20191229-105044.png",
+                        "height": 1920,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAxOTEyMjlfMjk4/MDAxNTc3NTg0MjcwOTI0.1mBwm56Fsyd73KASOncZtBPBIkX27TkIVMlJWf9N_Ecg.nL7WWs84ZUlw-3kFTmvYiEHBdlDUcefZGtEP0-01Cmgg.PNG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAxOTEyMjlfMjk4/MDAxNTc3NTg0MjcwOTI0.1mBwm56Fsyd73KASOncZtBPBIkX27TkIVMlJWf9N_Ecg.nL7WWs84ZUlw-3kFTmvYiEHBdlDUcefZGtEP0-01Cmgg.PNG/Screenshot_20191229-105044.png",
+                        "width": 1080
+                    },
+                    "refId": 77056477,
+                    "updateDate": 1577584308000,
+                    "writer": {
+                        "id": "tkdgjs6897",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAyMDFfMTAx/MDAxNTgwNTY3MzYzMTY2.XUeAx5gDTLB-IBBj-2Sb8BmdLVmtTF2Nn9PAkRw4GV0g.zno8J23Z--_f3x3V5V7N7r0O_Pxr4lA1SAktuNttGIIg.JPEG/1552227072327.jpg"
+                        },
+                        "nick": "상헌굿"
+                    }
+                }
+            ]
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

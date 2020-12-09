@@ -1,0 +1,401 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 13,
+            "contentElements": [],
+            "contentHtml": "늅늅이 야심차게 만들어본 결과물입니다 헤헿<div><br /></div><div><div style=\"color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, 'Courier New', monospace; font-size: 14px; line-height: 19px; white-space: pre;\"><div><span style=\"color: #569cd6;\">var</span>&nbsp;player&nbsp;=&nbsp;[];</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;출제자&nbsp;=&nbsp;[];</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;qnum&nbsp;=&nbsp;<span style=\"color: #b5cea8;\">1</span>;</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;gameplay=<span style=\"color: #569cd6;\">false</span>;</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;start&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div><span style=\"color: #569cd6;\">var</span>&nbsp;ans&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div><span style=\"color: #569cd6;\">function</span>&nbsp;response(room,&nbsp;msg,&nbsp;sender,&nbsp;isGroupChat,&nbsp;replier,&nbsp;imageDB,&nbsp;packageName)&nbsp;{</div><br /><div><span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/스무고개&quot;</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>&nbsp;&amp;&amp;&nbsp;start&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;스무고개&nbsp;게임을&nbsp;시작합니다.&nbsp;&apos;스무고개&nbsp;도움말&apos;을&nbsp;참고해&nbsp;주세요.&quot;</span>);</div><div>&nbsp;&nbsp;gameplay&nbsp;=&nbsp;<span style=\"color: #569cd6;\">true</span>;</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/스무고개&quot;</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>&nbsp;&amp;&amp;&nbsp;start)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply(<span style=\"color: #ce9178;\">&quot;현재&nbsp;게임이&nbsp;시작되어&nbsp;있습니다.&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>(msg&nbsp;==<span style=\"color: #ce9178;\">&quot;/스무고개&quot;</span>&nbsp;&amp;&amp;&nbsp;gameplay)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply(<span style=\"color: #ce9178;\">&quot;현재&nbsp;게임이&nbsp;시작되어&nbsp;있습니다.&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;스무고개&nbsp;도움말&quot;</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;스무고개&nbsp;도움말\\n\\n플레이어로&nbsp;참가&nbsp;:&nbsp;&apos;/참가&apos;\\n출제자로&nbsp;참가&nbsp;:&nbsp;&apos;/출제&apos;\\n총&nbsp;플레이어&nbsp;수가&nbsp;2명&nbsp;이상일때&nbsp;게임이&nbsp;시작됩니다.&nbsp;게임을&nbsp;시작할&nbsp;때는&nbsp;/시작&nbsp;을&nbsp;입력해&nbsp;주세요\\n질문할때는&nbsp;&apos;?질문내용&apos;&nbsp;의&nbsp;형태로&nbsp;입력해&nbsp;주시고&nbsp;정답을&nbsp;맞췄을&nbsp;경우에는&nbsp;출제자님께서&nbsp;&apos;정답&apos;을&nbsp;입력해&nbsp;주시면&nbsp;됩니다.&nbsp;20번안에&nbsp;맞추지&nbsp;못하면&nbsp;21번째&nbsp;질문시에&nbsp;알림톡과&nbsp;동시에&nbsp;게임이&nbsp;종료되며&nbsp;게임을&nbsp;강제로&nbsp;종료시키고&nbsp;싶을&nbsp;때는&nbsp;&apos;/리겜&apos;을&nbsp;누르면&nbsp;게임&nbsp;상황과&nbsp;플레이어&nbsp;및&nbsp;출제자가&nbsp;모두&nbsp;초기화됩니다.\\n\\nmade&nbsp;by&nbsp;Erik4141\\n스무고개&nbsp;봇&nbsp;버전&nbsp;:&nbsp;1.0.0&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/출제&quot;</span>&nbsp;&amp;&amp;&nbsp;player.indexOf&nbsp;(sender)&nbsp;==&nbsp;-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;&amp;&amp;&nbsp;start&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>)&nbsp;{</div><div>&nbsp;&nbsp;출제자&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;출제자.push(sender);</div><div>&nbsp;&nbsp;replier.reply(sender+<span style=\"color: #ce9178;\">&quot;님이&nbsp;출제자가&nbsp;되었습니다.&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/출제&quot;</span>&nbsp;&amp;&amp;&nbsp;player.indexOf&nbsp;(sender)&nbsp;!=-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;&amp;&amp;&nbsp;start&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply(sender+<span style=\"color: #ce9178;\">&quot;님은&nbsp;이미&nbsp;플레이어로&nbsp;참가하신&nbsp;상태입니다.&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/출제&quot;</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;&amp;&amp;&nbsp;start&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply(<span style=\"color: #ce9178;\">&quot;이미&nbsp;게임이&nbsp;진행중입니다.&quot;</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">if</span>&nbsp;(gameplay&nbsp;&amp;&amp;&nbsp;msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/참가&quot;</span>&nbsp;&amp;&amp;&nbsp;player.indexOf&nbsp;(sender)&nbsp;!=&nbsp;-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;start&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>){</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;이미&nbsp;있자너\\n현재&nbsp;참가자&nbsp;:&nbsp;&quot;</span>+player);</div><div>&nbsp;&nbsp;}&nbsp;</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>&nbsp;(gameplay&nbsp;&amp;&amp;&nbsp;msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/참가&quot;</span>&nbsp;&amp;&amp;&nbsp;출제자.indexOf&nbsp;(sender)&nbsp;!=&nbsp;-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;start&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(sender+<span style=\"color: #ce9178;\">&quot;님은&nbsp;이미&nbsp;출제자로&nbsp;등록되어있습니다.&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>&nbsp;(gameplay&nbsp;&amp;&amp;&nbsp;msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/참가&quot;</span>&nbsp;&amp;&amp;&nbsp;출제자.indexOf&nbsp;(sender)&nbsp;==&nbsp;-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;start&nbsp;==&nbsp;<span style=\"color: #569cd6;\">false</span>)&nbsp;{</div><div>&nbsp;&nbsp;player.unshift&nbsp;(sender);</div><div>&nbsp;&nbsp;replier.reply&nbsp;(sender+<span style=\"color: #ce9178;\">&quot;님께서&nbsp;참가하셨습니다.&nbsp;현재&nbsp;참가인원은&nbsp;&quot;</span>+player+<span style=\"color: #ce9178;\">&quot;이고,&nbsp;출제자는&nbsp;&quot;</span>+출제자+<span style=\"color: #ce9178;\">&quot;입니다.&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>&nbsp;(gameplay&nbsp;&amp;&amp;&nbsp;msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/참가&quot;</span>&nbsp;&amp;&amp;&nbsp;start)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply(<span style=\"color: #ce9178;\">&quot;이미&nbsp;게임이&nbsp;진행중입니다&quot;</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/시작&quot;</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;&amp;&amp;&nbsp;player.length&nbsp;&gt;=&nbsp;<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;출제자.length&nbsp;==&nbsp;<span style=\"color: #b5cea8;\">1</span>)&nbsp;{</div><div>&nbsp;&nbsp;ans&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;replier.reply&nbsp;&nbsp;(<span style=\"color: #ce9178;\">&quot;게임을&nbsp;시작합니다.&quot;</span>);</div><div>&nbsp;&nbsp;replier.reply&nbsp;(출제자+<span style=\"color: #ce9178;\">&quot;님께서는&nbsp;답을&nbsp;정하시고&nbsp;&quot;</span>+player[<span style=\"color: #b5cea8;\">0</span>]+<span style=\"color: #ce9178;\">&quot;님께선&nbsp;&apos;?질문내용&apos;&nbsp;의&nbsp;형태로&nbsp;질문해주세요.&quot;</span>);</div><div>&nbsp;&nbsp;start&nbsp;=&nbsp;<span style=\"color: #569cd6;\">true</span>;&nbsp;&nbsp;</div><div>}&nbsp;</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/시작&quot;</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;&amp;&amp;&nbsp;player.length&nbsp;&gt;=&nbsp;<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;출제자.length&nbsp;!=<span style=\"color: #b5cea8;\">1</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;출제자&nbsp;수가&nbsp;올바르지&nbsp;않습니다.\\n현재&nbsp;출제자&nbsp;수&nbsp;:&nbsp;&quot;</span>+출제자.length);</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==&nbsp;<span style=\"color: #ce9178;\">&quot;/시작&quot;</span>&nbsp;&amp;&amp;&nbsp;gameplay&nbsp;&amp;&amp;&nbsp;player.length&nbsp;&lt;<span style=\"color: #b5cea8;\">1</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;플레이어&nbsp;수가&nbsp;올바르지&nbsp;않습니다.&nbsp;출제자&nbsp;제외&nbsp;플레이어&nbsp;수는&nbsp;1명&nbsp;이상이어야&nbsp;게임&nbsp;진행이&nbsp;가능합니다.&quot;</span>);</div><div>}</div><br /><div><span style=\"color: #569cd6;\">if</span>(msg.startsWith&nbsp;&nbsp;(<span style=\"color: #ce9178;\">&quot;?&quot;</span>)&nbsp;&nbsp;&amp;&amp;&nbsp;sender==player[<span style=\"color: #b5cea8;\">0</span>])&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(qnum+<span style=\"color: #ce9178;\">&quot;번째&nbsp;질문.&nbsp;&quot;</span>+msg.substr(<span style=\"color: #b5cea8;\">1</span>)+<span style=\"color: #ce9178;\">&quot;\\n&quot;</span>+출제자+<span style=\"color: #ce9178;\">&quot;님께서는&nbsp;ㅇ&nbsp;또는&nbsp;ㄴ&nbsp;으로&nbsp;답해주세요.&quot;</span>);</div><div>&nbsp;&nbsp;ans&nbsp;=&nbsp;<span style=\"color: #569cd6;\">true</span>;&nbsp;&nbsp;&nbsp;&nbsp;</div><div>}&nbsp;</div><div><span style=\"color: #569cd6;\">if</span>&nbsp;((qnum&nbsp;&lt;&nbsp;<span style=\"color: #b5cea8;\">20</span>&nbsp;&amp;&amp;&nbsp;sender&nbsp;==&nbsp;출제자&nbsp;&amp;&amp;&nbsp;ans&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>&nbsp;&amp;&amp;&nbsp;msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㅇ&quot;</span>)&nbsp;!=-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㄴ&quot;</span>)&nbsp;==-<span style=\"color: #b5cea8;\">1</span>&nbsp;)&nbsp;||&nbsp;(msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㅇ&quot;</span>)&nbsp;==-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㄴ&quot;</span>)&nbsp;!=-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;ans&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>&nbsp;&amp;&amp;&nbsp;sender&nbsp;==&nbsp;출제자&nbsp;&amp;&amp;&nbsp;qnum&nbsp;&lt;<span style=\"color: #b5cea8;\">20</span>))&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;질문에&nbsp;대한&nbsp;답&nbsp;:&nbsp;&quot;</span>+msg);</div><div>&nbsp;&nbsp;player.push&nbsp;(player[<span style=\"color: #b5cea8;\">0</span>]);</div><div>&nbsp;&nbsp;player.shift&nbsp;();</div><div>&nbsp;&nbsp;replier.reply&nbsp;(player[<span style=\"color: #b5cea8;\">0</span>]+<span style=\"color: #ce9178;\">&quot;님&nbsp;께서&nbsp;질문하실&nbsp;차례입니다.&quot;</span>);</div><div>&nbsp;&nbsp;qnum++;</div><div>&nbsp;&nbsp;ans&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>}</div><div><span style=\"color: #569cd6;\">else</span>&nbsp;<span style=\"color: #569cd6;\">if</span>&nbsp;((qnum&nbsp;==&nbsp;<span style=\"color: #b5cea8;\">20</span>&nbsp;&amp;&amp;&nbsp;sender&nbsp;==&nbsp;출제자&nbsp;&amp;&amp;&nbsp;ans&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>&nbsp;&amp;&amp;&nbsp;msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㅇ&quot;</span>)&nbsp;!=-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㄴ&quot;</span>)&nbsp;==-<span style=\"color: #b5cea8;\">1</span>)&nbsp;||&nbsp;(msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㅇ&quot;</span>)&nbsp;==-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;msg.indexOf&nbsp;(<span style=\"color: #ce9178;\">&quot;ㄴ&quot;</span>)&nbsp;!=-<span style=\"color: #b5cea8;\">1</span>&nbsp;&amp;&amp;&nbsp;ans&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>&nbsp;&amp;&amp;&nbsp;sender&nbsp;==&nbsp;출제자&nbsp;&amp;&amp;&nbsp;qnum&nbsp;==<span style=\"color: #b5cea8;\">20</span>))&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;20회의&nbsp;기회가&nbsp;모두&nbsp;사라졌습니다.&nbsp;게임을&nbsp;자동으로&nbsp;리셋합니다.&nbsp;혹시나&nbsp;정답이라는&nbsp;의미의&nbsp;ㅇ&nbsp;이라면&nbsp;앞으로는&nbsp;&apos;정답&apos;&nbsp;이라고&nbsp;입력해&nbsp;주시길&nbsp;부탁드립니다~&nbsp;&quot;</span>+출제자+<span style=\"color: #ce9178;\">&quot;님께서는&nbsp;정답을&nbsp;말해주시기&nbsp;바랍니다ㅎ&quot;</span>);</div><div>&nbsp;&nbsp;player&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;출제자&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;qnum&nbsp;=&nbsp;<span style=\"color: #b5cea8;\">1</span>;</div><div>&nbsp;&nbsp;gameplay&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;start&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;ans=<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;초기화&nbsp;완료!&quot;</span>);</div><div>}</div><div><span style=\"color: #569cd6;\">if</span>&nbsp;(qnum&nbsp;&lt;=&nbsp;<span style=\"color: #b5cea8;\">20</span>&nbsp;&amp;&amp;&nbsp;sender&nbsp;==&nbsp;출제자&nbsp;&amp;&amp;&nbsp;ans&nbsp;==&nbsp;<span style=\"color: #569cd6;\">true</span>&nbsp;&amp;&amp;&nbsp;msg.indexOf(<span style=\"color: #ce9178;\">&quot;정답&quot;</span>)&nbsp;!=&nbsp;-<span style=\"color: #b5cea8;\">1</span>)&nbsp;{</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;정답을&nbsp;맞추셨습니다.&nbsp;축하합니다!&quot;</span>);</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;게임이&nbsp;종료되었습니다.&nbsp;게임을&nbsp;초기화합니다.&quot;</span>);</div><div>&nbsp;&nbsp;player&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;출제자&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;qnum&nbsp;=&nbsp;<span style=\"color: #b5cea8;\">1</span>;</div><div>&nbsp;&nbsp;gameplay&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;start&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;ans=<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;초기화&nbsp;완료!&quot;</span>);</div><div>}</div><br /><br /><div><span style=\"color: #569cd6;\">if</span>&nbsp;(msg&nbsp;==<span style=\"color: #ce9178;\">&quot;/리겜&quot;</span>)&nbsp;{</div><div>&nbsp;&nbsp;player&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;출제자&nbsp;=&nbsp;[];</div><div>&nbsp;&nbsp;qnum&nbsp;=&nbsp;<span style=\"color: #b5cea8;\">1</span>;</div><div>&nbsp;&nbsp;gameplay&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;start&nbsp;=&nbsp;<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;ans=<span style=\"color: #569cd6;\">false</span>;</div><div>&nbsp;&nbsp;replier.reply&nbsp;(<span style=\"color: #ce9178;\">&quot;초기화&nbsp;완료!&quot;</span>);</div><div>}</div><br /><br /><br /><div>}&nbsp;</div></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00004A1000000000",
+            "id": 18960,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 340,
+            "refArticleId": 18960,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "스무고개 봇",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1590849228220,
+            "writer": {
+                "id": "aircraft3207",
+                "image": {
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_120.gif",
+                "memberLevelName": "챗봇 중수",
+                "nick": "카톡봇 배우고싶어요"
+            }
+        },
+        "articleId": 18960,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "ㄷㄷ",
+                    "id": 92090361,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92090361,
+                    "updateDate": 1590851062000,
+                    "writer": {
+                        "id": "gigigia-1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTUz/MDAxNTk5NjEyNTg2MDgw.gz9LKfYQFlIU1Ih6Ro4ODKnP-r-LbWE_B5ROxm6GcN4g.AzxtviQvtDbkk0DawTj6adZ2Xc-ZL8piX8CadbcCd1Mg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "재승"
+                    }
+                },
+                {
+                    "content": "냠",
+                    "id": 92092153,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92092153,
+                    "updateDate": 1590852064000,
+                    "writer": {
+                        "id": "yesnocool123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA0MTJfMjc5/MDAxNTg2NzAzMDgzOTU2.4oZahm3x1255CtsNBGrxfhr73zVZOEKnASgBMQSPaIEg.BDUNVNi8lVS0xrX461207IYAtj7bMtUoTJrZfMgo2ZYg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "SSAP청정"
+                    }
+                },
+                {
+                    "content": "꿀꺽",
+                    "id": 92093426,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92093426,
+                    "updateDate": 1590852933000,
+                    "writer": {
+                        "id": "imroy09",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "imroy09"
+                    }
+                },
+                {
+                    "content": "출제자가 정답 이라고 하면 원래 반응이 없나요?",
+                    "id": 92093534,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92093534,
+                    "updateDate": 1590853008000,
+                    "writer": {
+                        "id": "burngboy",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "burngboy"
+                    }
+                },
+                {
+                    "content": "아뇨 게임중에 출제자가 정답이 들어가게만 말해도 정답을 맞추셨습니다 하면서 리셋해줄텐데요.??",
+                    "id": 92108384,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 92093534,
+                    "updateDate": 1590885882000,
+                    "writer": {
+                        "id": "aircraft3207",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "카톡봇 배우고싶어요"
+                    }
+                },
+                {
+                    "content": "앗 감사합니닷!",
+                    "id": 92125106,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 92093534,
+                    "replyMember": {
+                        "id": "aircraft3207",
+                        "nick": "카톡봇 배우고싶어요"
+                    },
+                    "updateDate": 1590898710000,
+                    "writer": {
+                        "id": "burngboy",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "burngboy"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 92108744,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDA1MzFfMTAy/MDAxNTkwODg2MTg4ODMw.gAsUD_aQ6c9Z_D7KkR9Fem8J489CmuAoTaI9-_11B6kg.Nd2CRO8eiD9ifs1sRj_X29Qxqq9DiXQOvW7mDxGtRoYg.JPEG/%25EC%25A3%25BC%25EC%2584%259D_2020-05-31_094711.jpg"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "originalImage": {
+                        "fileName": "%EC%A3%BC%EC%84%9D_2020-05-31_094711.jpg",
+                        "height": 566,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDA1MzFfMTAy/MDAxNTkwODg2MTg4ODMw.gAsUD_aQ6c9Z_D7KkR9Fem8J489CmuAoTaI9-_11B6kg.Nd2CRO8eiD9ifs1sRj_X29Qxqq9DiXQOvW7mDxGtRoYg.JPEG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDA1MzFfMTAy/MDAxNTkwODg2MTg4ODMw.gAsUD_aQ6c9Z_D7KkR9Fem8J489CmuAoTaI9-_11B6kg.Nd2CRO8eiD9ifs1sRj_X29Qxqq9DiXQOvW7mDxGtRoYg.JPEG/%25EC%25A3%25BC%25EC%2584%259D_2020-05-31_094711.jpg",
+                        "width": 407
+                    },
+                    "refId": 92108744,
+                    "updateDate": 1590886190000,
+                    "writer": {
+                        "id": "aircraft3207",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "카톡봇 배우고싶어요"
+                    }
+                },
+                {
+                    "content": "no ga da",
+                    "id": 92117436,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92117436,
+                    "updateDate": 1590892469000,
+                    "writer": {
+                        "id": "khs050909",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "백작선생"
+                    }
+                },
+                {
+                    "content": "No ga daaaaaa",
+                    "id": 92118665,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 92117436,
+                    "updateDate": 1590893396000,
+                    "writer": {
+                        "id": "aircraft3207",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "카톡봇 배우고싶어요"
+                    }
+                },
+                {
+                    "content": "ㄷㄷ",
+                    "id": 92121510,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 92121510,
+                    "updateDate": 1590895630000,
+                    "writer": {
+                        "id": "hw5418",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMDJfMjMx/MDAxNTgzMTI2NTI0NzYx.qzMN3iLpNwYk6Qpel1mDLLJh1VEi1bYV4xeuK-HjXRkg.ryZZsjLcBzoh8vKfo8cz2A71VMI8tkEyKU9n8JgPQWgg.PNG/1579654015109.png"
+                        },
+                        "nick": "1010"
+                    }
+                }
+            ],
+            "last": {
+                "id": 92137686,
+                "refId": 92137686
+            },
+            "next": {
+                "id": 92137686,
+                "refId": 92137686
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

@@ -1,0 +1,136 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 0,
+            "contentElements": [],
+            "contentHtml": "<p>&nbsp;</p><div class=\"NHN_Writeform_Main\"><div><b>질문할 어플 (새카봇, 젤브봇, 메신져봇, 닼토봇, 기타)</b><div><b>=&gt;탘토봇</b></div></div><b></b><div><b><b><br /></b></b></div><b>질문할 소스</b><div><b>=&gt;</b><span style=\"font-size: 13pt; color: rgb(21, 101, 192);\">var</span><span style=\"font-size: 13pt;\"> ch = </span><span style=\"font-size: 13pt; color: rgb(255, 160, 0);\">&quot;&quot;</span><span style=\"font-size: 13pt;\">;</span></div><p dir=\"ltr\"><span style=\"color:#8BC34A;\">/*</span><br /><span style=\"color:#8BC34A;\">날씨 정보 불러오기</span><br /><span style=\"color:#8BC34A;\">&copy; 2019 Dark Tornado, All rights reserved.</span><br /><span style=\"color:#8BC34A;\">젤브봇에 맞추어 작성된 소스입니다.</span><br /><span style=\"color:#8BC34A;\">본인이 만든거라고 구라치면 디지게 맞음(?).</span><br /><span style=\"color:#8BC34A;\">*/</span><br /><span style=\"color:#1565C0;\">function</span> getWeathetInfo(pos) {<br />&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">try</span>{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">var</span> data = Utils.getWebText(<span style=\"color:#FFA000;\">&quot;<a href=\"https://m.search.naver.com/search.naver?query=\" target=\"_blank\">https://m.search.naver.com/search.naver?query=</a>&quot;</span>+pos+<span style=\"color:#FFA000;\">&quot;%20날씨&quot;</span>, <span style=\"color:#FFA000;\">&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36&quot;</span>, <span style=\"color:#1565C0;\">false</span>, <span style=\"color:#1565C0;\">false</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data = data.replace(/&lt;[^&gt;]+&gt;/g,<span style=\"color:#FFA000;\">&quot;&quot;</span>);&nbsp; <span style=\"color:#8BC34A;\">//태그 삭제</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data = data.split(<span style=\"color:#FFA000;\">&quot;월간&quot;</span>)[<span style=\"color:#BF360C;\">1</span>];&nbsp; <span style=\"color:#8BC34A;\">//날씨 정보 시작 부분의 윗부분 삭제</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data = data.split(<span style=\"color:#FFA000;\">&quot;시간별 예보&quot;</span>)[<span style=\"color:#BF360C;\">0</span>];&nbsp; <span style=\"color:#8BC34A;\">//날씨 정보 끝 부분의 아래쪽 부분 삭제</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data = data.trim();&nbsp; <span style=\"color:#8BC34A;\">//위아래에 붙은 불필요한 공백 삭제</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data = data.split(<span style=\"color:#FFA000;\">&quot;\\n&quot;</span>);&nbsp; <span style=\"color:#8BC34A;\">//엔터 단위로 자름</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">var</span> results = [];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; results[<span style=\"color:#BF360C;\">0</span>] = data[<span style=\"color:#BF360C;\">0</span>];&nbsp; <span style=\"color:#8BC34A;\">//날씨 상태(?)</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; results[<span style=\"color:#BF360C;\">1</span>] = data[<span style=\"color:#BF360C;\">3</span>].replace(<span style=\"color:#FFA000;\">&quot;온도&quot;</span>, <span style=\"color:#FFA000;\">&quot;온도 : &quot;</span>).trim() + <span style=\"color:#FFA000;\">&quot;℃&quot;</span>;&nbsp; <span style=\"color:#8BC34A;\">//현재 온도</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; results[<span style=\"color:#BF360C;\">2</span>] = data[<span style=\"color:#BF360C;\">4</span>].replace(<span style=\"color:#FFA000;\">&quot;온도&quot;</span>, <span style=\"color:#FFA000;\">&quot;온도 : &quot;</span>).trim() + <span style=\"color:#FFA000;\">&quot;℃&quot;</span>;&nbsp; <span style=\"color:#8BC34A;\">//체감 온도</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; results[<span style=\"color:#BF360C;\">3</span>] = data[<span style=\"color:#BF360C;\">9</span>].replace(<span style=\"color:#FFA000;\">&quot;먼지&quot;</span>, <span style=\"color:#FFA000;\">&quot;먼지 : &quot;</span>).trim();&nbsp; <span style=\"color:#8BC34A;\">//미세먼지</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; results[<span style=\"color:#BF360C;\">4</span>] = data[<span style=\"color:#BF360C;\">1</span><span style=\"color:#BF360C;\">3</span>].replace(<span style=\"color:#FFA000;\">&quot;습도&quot;</span>, <span style=\"color:#FFA000;\">&quot;습도 :&quot;</span>).trim() + <span style=\"color:#FFA000;\">&quot;%&quot;</span>;&nbsp; <span style=\"color:#8BC34A;\">//습도</span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">var</span> result = <span style=\"color:#FFA000;\">&quot;[&quot;</span> + pos + <span style=\"color:#FFA000;\">&quot; 날씨 정보]\\n\\n상태 : &quot;</span> + results.join(<span style=\"color:#FFA000;\">&quot;\\n&quot;</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> result;&nbsp; <span style=\"color:#8BC34A;\">//결과 반환</span><br />&nbsp;&nbsp;&nbsp; } <span style=\"color:#1565C0;\">catch</span>(e) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">return</span> <span style=\"color:#1565C0;\">null</span>;<br />&nbsp;&nbsp;&nbsp; }<br />}</p><p dir=\"ltr\"><span style=\"color:#1565C0;\">function</span> response(room, msg, sender, isGroupChat, replier, ImageDB) {<br /> if(room == <span style=\"color:#FFA000;\">&quot;test&quot;</span>){<br />  var day = <span style=\"color:#1565C0;\">new</span> Date();<br />  if(day.getHours() == <span style=\"color:#FFA000;\">&quot;0&quot;</span> &amp;&amp; day.getMinutes() == <span style=\"color:#FFA000;\">&quot;0&quot;</span> &amp;&amp; day.getSeconds() == <span style=\"color:#FFA000;\">&quot;0&quot;</span>){<br />   ch = <span style=\"color:#FFA000;\">&quot;&quot;</span>;<br />  }<br />  var day = <span style=\"color:#1565C0;\">new</span> Date();<br />  ch = ch + <span style=\"color:#FFA000;\">&quot;\\n&quot;</span> + <span style=\"color:#FFA000;\">&quot;[&quot;</span> + (day.getMonth() + <span style=\"color:#BF360C;\">1</span>) +<span style=\"color:#FFA000;\">&quot;/&quot;</span> + day.getDate() + <span style=\"color:#FFA000;\">&quot; &quot;</span> + day.getHours() + <span style=\"color:#FFA000;\">&quot;:&quot;</span> + day.getMinutes() + <span style=\"color:#FFA000;\">&quot;:&quot;</span> + day.getSeconds() + <span style=\"color:#FFA000;\">&quot; &quot;</span> + sender + <span style=\"color:#FFA000;\">&quot;] &quot;</span> + msg;<br />  if(msg == <span style=\"color:#FFA000;\">&quot;test&quot;</span>){<br />   replier.reply(<span style=\"color:#FFA000;\">&quot;성공함 축하&quot;</span>);<br />  }<br />  if(msg == <span style=\"color:#FFA000;\">&quot;!log&quot;</span>){<br />  replier.reply(<span style=\"color:#FFA000;\">&quot;채팅 로그임&quot;</span> + ch);<br />  }<br />  var Data = msg.split(<span style=\"color:#FFA000;\">&quot; &quot;</span>);<br />  if(Data[<span style=\"color:#BF360C;\">0</span>] == <span style=\"color:#FFA000;\">&quot;!확률&quot;</span>){<br />   var pro = Math.floor(Math.random() * <span style=\"color:#BF360C;\">1</span><span style=\"color:#BF360C;\">0</span><span style=\"color:#BF360C;\">0</span>) + <span style=\"color:#BF360C;\">1</span> + <span style=\"color:#FFA000;\">&quot;%&quot;</span>;<br />   replier.reply(msg.replace(<span style=\"color:#FFA000;\">&quot;!확률 &quot;</span>,<span style=\"color:#FFA000;\">&quot;&quot;</span>) + <span style=\"color:#FFA000;\">&quot;(의 확률)은 &quot;</span> + pro + <span style=\"color:#FFA000;\">&quot;입니다.&quot;</span>);<br />  }<br />  msg = msg.trim();<br />  var cmd = msg.split(<span style=\"color:#FFA000;\">&quot; &quot;</span>)[<span style=\"color:#BF360C;\">0</span>];<br />  var data = msg.replace(cmd + <span style=\"color:#FFA000;\">&quot; &quot;</span>, <span style=\"color:#FFA000;\">&quot;&quot;</span>);<br />  if(cmd == <span style=\"color:#FFA000;\">&quot;!날씨&quot;</span>) {<br />   var result = getWeathetInfo(data);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style=\"color:#1565C0;\">if</span>(result == <span style=\"color:#1565C0;\">null</span>) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(data + <span style=\"color:#FFA000;\">&quot;의 날씨 정보를 가져올 수 없습니다.\\n&copy; 2019 Dark Tornado, All rights reserved.&quot;</span>);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span style=\"color:#1565C0;\">else</span> {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replier.reply(result + <span style=\"color:#FFA000;\">&quot;\\n&copy; 2019 Dark Tornado, All rights reserved.&quot;</span>);<br />   }<br />  }<br /> }<br />}</p><div><b><br /></b></div><div><b>질문내용</b></div><div><b>=&gt;탘토님이 만든 젤브봇 기반으로 만들어진 날씨 파싱 봇을 탘토봇으로 그대로 옮겨왔습니다.</b></div><div><b>리로드까진 에러가 없었는데 닼</b><b>토님이 검색했던 지역까지 검색이 안됩니다.</b></div><div><b>알아보니 젤브봇은 날씨가 태그같은것을 지울때 결과가 엔터가 여러번 처져서 나오는데 닼토봇은 그냥 한줄로 나와 값이 없다고 인식되서 안되는것 같더라고요.</b></div><div><b>근데 제가 자바 스크립트로 봇을 짠지 얼마 안되서 거기까지밖에 모르겠고 어디를 고쳐야 할진 알겠는데 어떻게 고쳐야되는지 모르겠습니다. 그리고 랜덤함수를 응용해서 확룰을 만들었는데 이것 또한 작동을 안하네요;;</b></div><div><b>된다면 이것도 해결방안을 알려주세요</b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><b><br /></b></div><div><span style=\"font-family: dotum; font-size: 13.3333px; background-color: rgb(153, 220, 255);\">(말머리 등록 하셨나요? <span style=\"background-color: rgb(204, 0, 0);\">Yes</span> / No)</span></div></div>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00000A7000000000",
+            "id": 2672,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 3,
+                "menuType": "B",
+                "name": "| 소스 질문 |"
+            },
+            "readCount": 293,
+            "refArticleId": 2672,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "닼토봇 날씨, 확률[날씨소스 바꿔서 해결완료]",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1558868724533,
+            "writer": {
+                "id": "bass90301",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMjkx/MDAxNjA0MDY0NzU3OTk2.H1BDzQTTrIcO_1-N11RdFRPjnkefXgkn6GvE54TR_4Ag.jW34JGliB99w-pvlFqWpO-QSzNncO5HLs-eAYMteMV8g.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "bass90301"
+            }
+        },
+        "articleId": 2672,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5247,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": []
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "메신저봇",
+                "headId": 57
+            },
+            {
+                "head": "채팅자동봇",
+                "headId": 58
+            },
+            {
+                "head": "답변 완료",
+                "headId": 99
+            },
+            {
+                "head": "카링",
+                "headId": 105
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": false,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

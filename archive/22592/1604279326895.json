@@ -1,0 +1,419 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 30,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-quotation se-l-quotation_corner\" id=\"SE-ff86ee77-9fe1-4ed7-852b-faa4036d9316\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-quotation se-l-quotation_corner\">\n                            <blockquote class=\"se-quotation-container\">\n                                <div class=\"se-module se-module-text se-quote\"><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-648c73f3-bbf0-4cbc-ba3b-dfb5e94af018\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-bee34036-7982-47e5-96d6-0a8624571c38\">학생 건강상태 자가진단 소스</span></p><!-- } SE-TEXT --></div>\n                                <div class=\"se-module se-module-text se-cite\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-67ae6595-c90f-4d8b-b923-0c2f71817c67\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-e485efae-1217-41a3-a8db-4aa2bd05a391\">사용 방법      /자가진단 학교/이름/생년월일</span></p><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-804d36f4-3072-42f5-a4be-7ee79b5373ef\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-c3e0bdb4-db2b-4f7d-9749-637f45613472\">학교 풀이름으로 쓰고 생년월일은 6자리. </span></p><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1147b839-c988-40de-a360-2a3aa5abed8f\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-a4506b59-ad70-4c13-831a-825a2386d997\">*띄어쓰기 없이 입력, 기본 링크는 서울시 자가진단 링크.</span></p></div>\n                            </blockquote>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-code se-l-code_black\" id=\"SE-3a443bd8-863c-4190-9178-bca5d433e281\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">importPackage(org.jsoup);\nconst url &#x3D; &quot;https://eduro.sen.go.kr/stv_cvd_&quot;;\nfunction response(E, L, I, F) {\n  if (L.startsWith(&quot;/자가진단 &quot;)) {\n    var info_ori &#x3D; L.substr(6).split(&quot;/&quot;);\n    var info_school &#x3D; info_ori[0];\n    var info_name &#x3D; info_ori[1];\n    var info_birth &#x3D; info_ori[2];\n    var SchoolCode &#x3D; getSchoolCode(info_school);\n    if (SchoolCode[0] !&#x3D; &quot;&quot;) {\n      var qstnCrtfcNoEncp &#x3D; doSelfCheck(SchoolCode[0], info_school, info_name, info_birth);\n      if (qstnCrtfcNoEncp[0] &#x3D;&#x3D; &quot;SUCCESS&quot;) {\n        var result_selfcheck &#x3D; SelfCheckResult(qstnCrtfcNoEncp[0], qstnCrtfcNoEncp[1]);\n        if (result_selfcheck[0] &#x3D;&#x3D; &quot;SUCCESS&quot;) {\n          Api.replyRoom(E, result_selfcheck[1] + &quot; (&quot; + result_selfcheck[2] + &quot;)\\n님의 자가진단을 완료했습니다.&quot;);\n        } \n      } else {\n        switch (qstnCrtfcNoEncp[0]) {\n          case &quot;ADIT_CRTFC_NO&quot;:\n            Api.replyRoom(E, &quot;동일한 이름을 가진 학생이 있어, 웹 페이지에서 진행해 주시길 바랍니다.&quot;);\n            break;\n          case &quot;QSTN_USR_ERROR&quot;:\n            Api.replyRoom(E, &quot;잘못된 본인확인 정보를 입력하였습니다.&quot;);\n            break;\n          case &quot;SCHOR_RFLT_YMD_ERROR&quot;:\n            Api.replyRoom(E, &quot;자가진단 참여가능기간을 확인바랍니다.&quot;);\n            break;\n          default:\n            Api.replyRoom(E, &quot;잘못된 본인확인 정보입니다.&quot;);\n            break;\n        }\n      }\n    } else {\n      Api.replyRoom(E, &quot;학교를 찾을 수 없습니다.&quot;);\n    }\n  }\n}\nfunction getSchoolCode(name) {\n  var connect &#x3D; JSON.parse(Jsoup.connect(url + &quot;co00_004.do&quot;).data(&#x27;schulNm&#x27;, name).ignoreContentType(true).post().text()).resultSVO.data;\n  var schulCode &#x3D; connect.schulCode;\n  if (schulCode !&#x3D; null) {\n    result &#x3D; [];\n    result.push(schulCode);\n    return result;\n  } else {\n    return null;\n  }\n}\nfunction doSelfCheck(code, school, name, birth) {\n  var connect &#x3D; JSON.parse(Jsoup.connect(url + &quot;co00_012.do&quot;).data(&#x27;schulCode&#x27;, code).data(&#x27;schulNm&#x27;, school).data(&#x27;pName&#x27;, name).data(&#x27;frnoRidno&#x27;, birth).ignoreContentType(true).post().text()).resultSVO.data;\n  var rtnRsltCode &#x3D; connect.rtnRsltCode;\n  var qstnCrtfcNoEncpt &#x3D; connect.qstnCrtfcNoEncpt;\n  var result &#x3D; [];\n  if (rtnRsltCode &#x3D;&#x3D; &quot;SUCCESS&quot;) {\n    result.push(rtnRsltCode);\n    result.push(qstnCrtfcNoEncpt);\n    return result;\n  } else {\n    result.push(rtnRsltCode);\n    return result;\n  }\n}\nfunction SelfCheckResult(rtnRsltCode, qstnCrtfcNoEncpt) {\n  var connect &#x3D; JSON.parse(Jsoup.connect(url + &quot;co01_000.do&quot;).data(&#x27;rtnRsltCode&#x27;, rtnRsltCode).data(&#x27;qstnCrtfcNoEncpt&#x27;, qstnCrtfcNoEncpt).data(&#x27;rspns01&#x27;, 1).data(&#x27;rspns02&#x27;, 1).data(&#x27;rspns07&#x27;, 0).data(&#x27;rspns08&#x27;, 0).data(&#x27;rspns09&#x27;, 0).ignoreContentType(true).post().text()).resultSVO.data;\n  var rtnRsltCode &#x3D; connect.rtnRsltCode;\n  var stdntName &#x3D; connect.stdntName;\n  var schulNm &#x3D; connect.schulNm;\n  result &#x3D; [];\n  if (rtnRsltCode &#x3D;&#x3D; &quot;SUCCESS&quot;) {\n    result.push(rtnRsltCode);\n    result.push(stdntName);\n    result.push(schulNm);\n    return result;\n  } else {\n    result.push(rtnRsltCode);\n    return result;\n  }\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-3a443bd8-863c-4190-9178-bca5d433e281\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-1cc5bac7-ca66-40a9-bf4c-bc74c5f3e760\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7188aa2f-653a-4768-b946-642ef02bffd0\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-61d67291-6b47-49cd-8eb4-4b17c579282d\">​</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "articleForm": {},
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B0000584000000000",
+            "id": 22592,
+            "isAutoSourcing": true,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 533,
+            "refArticleId": 22592,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "학생 건강상태 자가진단 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1596854935300,
+            "writer": {
+                "id": "joonsama2004",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "EliF"
+            }
+        },
+        "articleId": 22592,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "고수 ㄷㄷ",
+                    "id": 99297518,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99297518,
+                    "updateDate": 1596855846000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 99297609,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99297518,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_57f2b52920a55-35-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_57f2b52920a55/original_35.png",
+                        "width": 129
+                    },
+                    "updateDate": 1596855921000,
+                    "writer": {
+                        "id": "joonsama2004",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                        },
+                        "nick": "EliF"
+                    }
+                },
+                {
+                    "content": "리스폰스 인자 ELIF 센스 ㄷㄷ;",
+                    "id": 99298572,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99298572,
+                    "updateDate": 1596856661000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "존경합니당",
+                    "id": 99298660,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99298572,
+                    "updateDate": 1596856720000,
+                    "writer": {
+                        "id": "doami200507",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "BLOG",
+                            "type": "c77_77",
+                            "url": "https://blogpfthumb-phinf.pstatic.net/MjAxOTExMDNfNDgg/MDAxNTcyNzc2MTIwMTM4.WsQHQwBtfym4EFXRR7I3MC60DkXKYyWaJHfMLAjBkEUg.0PpSunK0cJ2aJRARXEtexCyrh42TLDy9ftaD0ZkOKDgg.JPEG.doami200507/profileImage.jpg"
+                        },
+                        "nick": "도미 doami2005"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 99298799,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99298572,
+                    "replyMember": {
+                        "id": "doami200507",
+                        "nick": "도미 doami2005"
+                    },
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_56b08d24d9f24-14-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_56b08d24d9f24/original_14.png",
+                        "width": 129
+                    },
+                    "updateDate": 1596856821000,
+                    "writer": {
+                        "id": "joonsama2004",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                        },
+                        "nick": "EliF"
+                    }
+                },
+                {
+                    "content": "인자 뭐야ㅋㄱㄲ",
+                    "id": 99300396,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99300396,
+                    "updateDate": 1596858235000,
+                    "writer": {
+                        "id": "dusupia",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA1MDJfNzcg/MDAxNTg4NDAzMzk2Nzgw.allYgEuGb0eJ4-5rSUM-k-_F_MPCa2LRK26RSvpnjNsg.2uUy3lNSgLgc5fL-gL79j_raNb0z9u69tDziEGt_2pgg.JPEG/terrorbot.jpg"
+                        },
+                        "nick": "terror"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 99303494,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99300396,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5747936e7d55d-2-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5747936e7d55d/original_2.png",
+                        "width": 129
+                    },
+                    "updateDate": 1596860993000,
+                    "writer": {
+                        "id": "joonsama2004",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                        },
+                        "nick": "EliF"
+                    }
+                },
+                {
+                    "content": "레전드네요 ㄷㄷㄷ 잘쓰겠습니다. 감사합니다",
+                    "id": 99301288,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99301288,
+                    "updateDate": 1596859072000,
+                    "writer": {
+                        "id": "gfpower00",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTIx/MDAxNTk5NjM5OTY3MjI1.z0yw_d8wLfdHew4AQtKlJWjIAU7RMlYTWxSaL_KRZPQg.gFoCVVsXZtlJxSVmNFcZ-tCAX2Ap-ertbpLkAJm5Z5wg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "TWITCHBOT"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 99303506,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 99301288,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_56b08d24d9f24-4-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_56b08d24d9f24/original_4.png",
+                        "width": 129
+                    },
+                    "updateDate": 1596861001000,
+                    "writer": {
+                        "id": "joonsama2004",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTdfMjIz/MDAxNjAyOTA4Njk4NDE5.3dQ2qlClBd6uqNsVWzP4w3OauCxk84s4Mno5v1OpGNQg.PKarN5CETQaqnCMab5gY_8XsJrynp6bREY7neKLKjLwg.PNG/externalFile.png"
+                        },
+                        "nick": "EliF"
+                    }
+                },
+                {
+                    "content": "ㄷㄷ 감사합니다",
+                    "id": 99302593,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 99302593,
+                    "updateDate": 1596860268000,
+                    "writer": {
+                        "id": "ihr0410",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "자전거515"
+                    }
+                }
+            ],
+            "last": {
+                "id": 102742201,
+                "refId": 102742201
+            },
+            "next": {
+                "id": 99303516,
+                "refId": 99302593
+            }
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}

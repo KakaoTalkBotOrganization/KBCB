@@ -1,0 +1,391 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 12,
+            "contentHtml": "<div class=\"se-viewer se-theme-default\" lang=\"ko-KR\">\n    <!-- SE_DOC_HEADER_START -->\n    <!--@CONTENTS_HEADER-->\n    <!-- SE_DOC_HEADER_END -->\n    <div class=\"se-main-container\">\n                <div class=\"se-component se-text se-l-default\" id=\"SE-588a2c56-fa98-4eec-a6b5-292855e5cb03\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-8fa00e96-e2e1-4bf9-a004-99884e225b1b\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-d824899f-b4e4-4dd7-8dc5-0dea7b69b574\">시작하기 앞서, C++, SQL을 모두 하실 수 있다고 간주하고 작성하였습니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-2362b5b1-0e77-4db6-a9e0-51ed534f8f5b\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-f81472e5-ec2e-4df0-8bfd-178d03e975fe\">오늘의 내용: API의 작동방식 생각해보기</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-9d05d725-39be-4f84-ab54-ebc2857937ef\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-bc01b881-79f4-465c-8e50-b6dcf53a88cf\">안녕하세요. Hibot입니다!</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-c4424e33-fe9a-485f-a63b-29fbddf3c2c8\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:273px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-c4424e33-fe9a-485f-a63b-29fbddf3c2c8\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTNfMTMx/MDAxNjAyNTg3MzcwNDYx.ya9KG2Cy4_SmQHLi1rdtJxZOIo1Ci5slUZmKc41BxZgg.Q7IWSKC3YsRazhADmd9ZaGq9ARFRcmFvI8RrYpZXDBUg.PNG/9.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTNfMTMx/MDAxNjAyNTg3MzcwNDYx.ya9KG2Cy4_SmQHLi1rdtJxZOIo1Ci5slUZmKc41BxZgg.Q7IWSKC3YsRazhADmd9ZaGq9ARFRcmFvI8RrYpZXDBUg.PNG/9.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-f13dca08-e11a-4979-aae1-7b73338af433\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-facdbddf-1efa-4be3-9b0f-58ee80e86ed1\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-223a5af9-6467-4df2-90c9-f31ddb01680e\">오늘은 API강좌 1탄 1편 API의 작동방식에 대하여 구조를 짜볼거에요.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-4fff115d-f4da-417c-a159-e6078b0071d3\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-dafd677e-8f82-4424-b479-784a9688b5b2\">먼저 어떻게 작동해야할지 부터 생각해보자구요</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-00c39a73-0796-4009-8d16-52c53ec3e513\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs30 se-ff-nanumgothic  se-style-unset \" id=\"SE-9474b1e8-61a7-4327-9dc1-b0b4787cdd2f\">1. API가 어떻게 작동해야할까요?</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7daab8d4-c096-4ff4-bf2b-f41d048598a2\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs24 se-ff-nanumgothic  se-style-unset \" id=\"SE-5606feb4-2167-4445-8eb5-73718b01bd38\">1. 어떠한 API일까요?</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1a282cd3-5d20-4118-bd03-e54d0ecca1e5\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-ec253635-3b51-4cc0-8690-b7f6dd8caf09\">음... 당연히 JPOP목록 API겠죠?</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-81945fd6-5907-493a-ad6b-2b68270bf8d7\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:198px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-81945fd6-5907-493a-ad6b-2b68270bf8d7\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTNfNDYg/MDAxNjAyNTg3OTI1NDk1.vgYE15lUnz_jSe8-7J5AIZavuwRO2aED7LM4DJN5Qb4g.UtY-L4jbE3VO3onR4P01RiCj3t9evtx4KwXgIwI7L3wg.PNG/91.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTNfNDYg/MDAxNjAyNTg3OTI1NDk1.vgYE15lUnz_jSe8-7J5AIZavuwRO2aED7LM4DJN5Qb4g.UtY-L4jbE3VO3onR4P01RiCj3t9evtx4KwXgIwI7L3wg.PNG/91.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-3cbe8526-e86a-477b-9d62-afee62a38a60\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-129a7cb7-3331-462e-9dd4-a95453558064\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs24 se-ff-nanumgothic  se-style-unset \" id=\"SE-ed61e8c9-f736-44a8-be1b-59b3aa901c67\">2. 결과에 무엇이 포함되어야 할까요?</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-3f730ac8-f663-4547-b198-712d3b1d697e\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-7c9fba8c-b272-4640-9d9b-8bbc9b67e34d\">먼저 곡 명이 필요하겠습니다. 곡 명이 없으면 어디에 써먹지를 못하니까요. JPOP이니 일어일겁니다. 우리는 한국인이니 한국어 곡 명이 필요하지요</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-168a5908-d25d-474d-85ce-da318dfb889c\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-dc3095cd-690d-4c40-aa14-37db0ddcf27d\">다음으로 당연히 노래 링크가 있어야 합니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-b04b0a52-801d-4e7d-8705-3bb58901c780\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-f67f2477-36e4-4ba1-8c5a-de8b9e4cfb9e\">음... 관리를 위해 내부적으로 곡의 일련번호가 있으면 좋겠군요.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-07f68c65-9201-4f93-bb30-342bf17c0016\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:231px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-07f68c65-9201-4f93-bb30-342bf17c0016\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTNfMjYz/MDAxNjAyNTg3ODU5MDI5.89nrLjf32t58B7bQgrhnA-vp7HnEyDM10Ixv3TlS5NAg.R9MLr98-n0XDtwchyEVDtS98FKLrJuV-fOsmCUaBu_og.PNG/33.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTNfMjYz/MDAxNjAyNTg3ODU5MDI5.89nrLjf32t58B7bQgrhnA-vp7HnEyDM10Ixv3TlS5NAg.R9MLr98-n0XDtwchyEVDtS98FKLrJuV-fOsmCUaBu_og.PNG/33.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-af2a4da1-d8ff-4408-8130-eb5e23654372\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-657c36e4-3b57-490e-b240-c55ac1b850f2\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs24 se-ff-nanumgothic  se-style-unset \" id=\"SE-b3ee7107-be6e-4af9-85cc-8e0c3e90c294\">3. 무슨 기능이 팔요할까요?</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-c4402a26-7e12-4419-b7f9-8c5e99eb7efd\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-bd1d9b0c-0b36-4be1-a66a-4e4853bbfe5d\">편의를 위해 필요한 기능을 떠올려봅시다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-06e6f3fe-a272-4589-b474-3c38de689cf0\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-a2d629ad-54f7-48f2-8ffd-a3970c1c9a0f\">1. 정렬 기준이 필요합니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-b0ddf853-6ff2-48aa-973e-1c12d2aede8d\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-3fa70a90-adab-428b-ba27-2c27689201da\">2. </span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-1236f6d7-5c85-4cb7-95b6-ffea6795df3a\"><a href=\"https://cafe.naver.com/nameyee/24956\" class=\"se-link\" target=\"_blank\">페이징</a></span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-73386cb2-c035-49c2-aef2-22c819cb4eab\">이 가능해야합니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-4e16cca6-7176-4bce-a8ca-49aa0130adf4\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-e0d48bb8-6311-4e42-98c3-4b091f33b181\">3. 페이징할 때 페이지 당 곡 갯수를 정할 수 었어야 합니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-df27f1eb-4b81-4ca0-b7c8-ccc8d26e8aea\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:394px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-df27f1eb-4b81-4ca0-b7c8-ccc8d26e8aea\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTNfMjkg/MDAxNjAyNTg4MDg1MDcz.h-G_kQjBwNciF-79gEOROqRIb4HKok2Yj3s8xWm9iNwg.eFU_fr9rF5S8eCWZtkxF0X7rmMqX5ixVudWrIJ0Pxawg.PNG/11.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTNfMjkg/MDAxNjAyNTg4MDg1MDcz.h-G_kQjBwNciF-79gEOROqRIb4HKok2Yj3s8xWm9iNwg.eFU_fr9rF5S8eCWZtkxF0X7rmMqX5ixVudWrIJ0Pxawg.PNG/11.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                            <div class=\"se-module se-module-text se-caption\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a8322a6e-9c35-4279-a10f-0edb6542f678\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-1c8471e3-fa35-4c98-ae5b-bec151e40d0e\">벌써 못해먹겠다!!!</span></p></div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-983039de-e644-4fb2-b4c6-624bf97df2f0\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-1de65a1b-04f4-42e0-b9f1-01b2fbce3578\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs30 se-ff-nanumgothic  se-style-unset \" id=\"SE-99cb1833-33bf-4a65-859c-09692bc89eef\">2. 어떠한 방법으로 구현할건가요?</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-0416446c-0969-4e3e-8068-ef2e9f2aca81\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs24 se-ff-nanumgothic  se-style-unset \" id=\"SE-e54fbff9-f454-4416-b5d8-2ba1cb51aad9\">1. 응답 방식</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-d4c19ec5-1137-4fbd-8569-6c31f3d5cc73\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-fc6e7b1c-b3b7-4824-9e23-380b759746d9\">응답방식은 써먹기 좋은 JSON으로 합시다!!!</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6eacf680-4eca-4e9a-b412-31a175d84879\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs24 se-ff-nanumgothic  se-style-unset \" id=\"SE-b0e8a9f8-04ea-4083-af8d-82fa2290f7f6\">2. 목록 저장 방식</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5b7c04d4-16be-4a53-b673-5b11051e29f4\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-016ac0f5-14b8-42b9-aef1-878c89a15080\">JSON, XML, SQL 등등 여러 방식이 있지만 제 생각에는 가장 관리하기 편한 SQL을 쓰도록하겠습니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-dec3c501-59ec-4a51-864a-8d9367b316d1\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-1be30f3f-fcf1-43d3-9c5a-8f336bacda43\">그러면 table이름은 귀찮으니 list로 합시다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-19c5a9bc-3a7e-4dd1-9a31-3493cd3ee8af\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:339px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-19c5a9bc-3a7e-4dd1-9a31-3493cd3ee8af\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTNfMjYw/MDAxNjAyNTg4NDcyMDgy.15dJMHagcXlZPfPiIbXuy0EIHC6wjcL9qTh1daSs8i0g.8NoL9D7kQVDlPw7VH9tJa1AyF64OT_Gy4T_1nCcwawsg.PNG/42.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTNfMjYw/MDAxNjAyNTg4NDcyMDgy.15dJMHagcXlZPfPiIbXuy0EIHC6wjcL9qTh1daSs8i0g.8NoL9D7kQVDlPw7VH9tJa1AyF64OT_Gy4T_1nCcwawsg.PNG/42.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                            <div class=\"se-module se-module-text se-caption\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-065b2778-057e-42fb-894f-e6f25abe3b19\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-3dfa1ecc-1e5c-421a-8c59-c07d2acc1c9b\">!귀차니즘 만세!</span></p></div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-afd833ea-bb66-43c5-97cd-cf3364854d3b\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5e2a4990-6d70-406c-8313-e2eebb5372f9\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-e88ee4a7-5ec1-4e9f-9af3-31d603b1a242\">이제 테이블 구조를 생각해봅시다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6d2bfe29-2381-447d-bf13-e7cdbba25568\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-19c3f8f3-4436-4512-bdf6-d0aab978cb9d\">ko_name에 한국어 곡 명을 넣고, ja_name에 일본어 곡 명을 넣어봅시다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-367db467-b6a5-4c3b-9334-5265dc7540bc\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-12c627d2-1b40-4f00-b211-2652e38e58fd\">link에는 노래 링크를 넣구요.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-4f7fbb25-1163-41ce-a988-43bd120fc773\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-b3a4c2df-c243-4ee3-9c60-4b71cf53bc16\">id는 </span><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-b77e73e6-4762-4b9e-958c-f3f02508e523\">PRIMARY으로서, AUTO_INCREMENT으로 자동으로 지정되게 할겁니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-0c5ae9b7-85b6-4264-b8d5-57e6a962b8a6\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-81292cf7-ab6c-41f7-9760-30ea853233a6\">이제 table구조는 이정도면 적당 할 것 같습니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-67f3e1e2-ed96-4fe6-aa3b-14c7c2647114\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:256px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-67f3e1e2-ed96-4fe6-aa3b-14c7c2647114\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTNfMTgw/MDAxNjAyNTg4ODUzMzYz.LVJiZtzqaVppMrqHOx_Axah-7cU-4ZbhgPhkVbUaALwg.sXafw2u6iO6nIWvDzkPxJpnwPOEOmiP9uSFU4MRF3E4g.PNG/58.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTNfMTgw/MDAxNjAyNTg4ODUzMzYz.LVJiZtzqaVppMrqHOx_Axah-7cU-4ZbhgPhkVbUaALwg.sXafw2u6iO6nIWvDzkPxJpnwPOEOmiP9uSFU4MRF3E4g.PNG/58.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                            <div class=\"se-module se-module-text se-caption\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ea7f0f5c-01ec-40a7-8495-ee943708148b\"><span style=\"\" class=\"se-fs- se-ff-   \" id=\"SE-1bcb3af6-18ba-48f2-8d7a-4dc5e43bdf74\">어... 이게 무슨말이지...</span></p></div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-3a38fb87-6f3a-4ea6-b7a8-6178abb89fd2\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-23ba97d2-6ea4-443a-8d80-e6562c652cd0\"><span style=\"\" class=\"se-fs-fs24 se-ff-nanumgothic   \" id=\"SE-e75d6920-f889-4300-b9a7-176cb8e82562\">3. 쓸 라이브러리</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-75af5547-edb9-4747-92af-a2a2ffe61df8\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-80e10062-cbae-41c8-98be-6afc74f1b730\">이제 라이브러리를 정해야합니다. </span><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-230dc210-a965-47d2-bde4-f2da38485afd\"><strike>다들 이해도 제대로 못했는데 벌써?</strike></span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-7203da0a-06db-4ad9-a8f5-1f795396e231\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-49e61858-040f-4894-a007-bacb4654f1a5\">JSON을 위한 라이브러리를 직접 만들기에는 시간이 아깝습니다. 정신건강에도 악영향을 미치고요.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-0dbe82c9-9cc1-4b33-93ed-e0cccfd4b87f\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-609f1690-3aec-42f5-9956-8a362ed559a1\">그러니 깃허브에 돌아다니는 API를 쓰는게 정신건강에 좋습니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5417ca37-e792-40df-8031-790284c07275\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-7e260e0b-657a-4691-932b-f71a3c6fbf32\">저는 이걸로 정했어요</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a4584f45-3e15-40cc-9caf-6c87d1aa502c\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-31e63ddc-cfcc-4100-9b79-a251efc823c7\"><a href=\"https://github.com/nlohmann/json\" class=\"se-link\" target=\"_blank\">https://github.com/nlohmann/json</a></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-oglink se-l-large_image\" id=\"SE-e94f3b5f-8f96-4648-9bd6-413e30e6514a\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-oglink se-l-large_image se-section-align-\">\n                            <div class=\"se-module se-module-oglink\">\n                                <a href=\"https://github.com/nlohmann/json\" class=\"se-oglink-thumbnail\" target=\"_blank\">\n                                    <img src=\"https://dthumb-phinf.pstatic.net/?src&#x3D;%22https%3A%2F%2Frepository-images.githubusercontent.com%2F11171548%2Fa403c600-b5f0-11e9-8db8-2d5e6ec2ac98%22&amp;type&#x3D;ff500_300\" class=\"se-oglink-thumbnail-resource\" alt=\"\" />\n                                </a>\n                                <a href=\"https://github.com/nlohmann/json\" class=\"se-oglink-info\" target=\"_blank\">\n                                    <div class=\"se-oglink-info-container\">\n                                        <strong class=\"se-oglink-title\">nlohmann/json</strong>\n\n                                        <p class=\"se-oglink-summary\">JSON for Modern C++. Contribute to nlohmann/json development by creating an account on GitHub.</p>\n                                        <p class=\"se-oglink-url\">github.com</p>\n                                    </div>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_oglink\", \"id\" :\"SE-e94f3b5f-8f96-4648-9bd6-413e30e6514a\", \"data\" : {\"link\" : \"https://github.com/nlohmann/json\", \"isVideo\" : \"false\", \"thumbnail\" : \"https://dthumb-phinf.pstatic.net/?src&#x3D;%22https%3A%2F%2Frepository-images.githubusercontent.com%2F11171548%2Fa403c600-b5f0-11e9-8db8-2d5e6ec2ac98%22&amp;type&#x3D;ff500_300\"}}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-7dfdd772-f7c9-4d3e-b085-8d26beb40067\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-e5101f91-97f0-4615-9d96-a68db4fc8030\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-74bb77a3-05ee-4fd1-999a-62788872b6b2\">SQL은 MySQL로 할 예정입니다. </span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-5feabaa9-f445-4c83-8858-6f79166bea10\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-5b2f61d1-024e-4a03-a8ea-1f3161a0e4a5\">공식적으로 제공하는 라이브러리를 씁시다!</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a2d43529-d64a-4918-ada0-2a9fec6f9467\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-897f331b-62ee-41c2-8795-0e3f74d78309\"><a href=\"https://dev.mysql.com/doc/dev/connector-cpp/8.0/\" class=\"se-link\" target=\"_blank\">https://dev.mysql.com/doc/dev/connector-cpp/8.0/</a></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-oglink se-l-text\" id=\"SE-308ee2f0-7112-4c0a-94f2-b4cf79b8e9a5\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-oglink se-l-text se-section-align-\">\n                            <div class=\"se-module se-module-oglink\">\n                                <a href=\"https://dev.mysql.com/doc/dev/connector-cpp/8.0/\" class=\"se-oglink-info\" target=\"_blank\">\n                                    <div class=\"se-oglink-info-container\">\n                                        <strong class=\"se-oglink-title\">MySQL Connector/C++: MySQL Connector/C++ Documentation</strong>\n\n                                        <p class=\"se-oglink-summary\">MySQL Connector/C++ is a library for applications written in C or C++ that communicate with MySQL database servers. Version 8.0 of Connector/C++ implements three different APIs which can be used by applications: The new X DevAPI for applications written in C++. The new X DevAPI for C for application...</p>\n                                        <p class=\"se-oglink-url\">dev.mysql.com</p>\n                                    </div>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_oglink\", \"id\" :\"SE-308ee2f0-7112-4c0a-94f2-b4cf79b8e9a5\", \"data\" : {\"link\" : \"https://dev.mysql.com/doc/dev/connector-cpp/8.0/\", \"isVideo\" : \"false\", \"thumbnail\" : \"\"}}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-0720fd9f-d614-4c3c-a032-0746e8beb305\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-9a92547d-5050-4b06-8796-a26e10d4d9ed\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-ee2aaa96-08e6-4000-876e-53d3765b9c6d\">API는 </span><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-b879f5b4-e9eb-4379-8d34-c248b7b22531\"><a href=\"https://terms.naver.com/entry.nhn?docId&#x3D;817485&amp;cid&#x3D;42344&amp;categoryId&#x3D;42344\" class=\"se-link\" target=\"_blank\">CGI</a></span><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-d8c1d47b-c820-448d-aaad-7287ae8bfd55\">입니다. 그러니 우리는 입력을 stdin으로 받고, stdout으로 쓰는데, POST나 GET이든 간에 직접 처리하는건 귀찮습니다. 그레서 또 라이브러리를 찾아왔습니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-16e21558-5bf8-47fd-9f73-16a6da5be727\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-376f755e-a90c-4e39-929b-b9faabfa3930\"><a href=\"https://www.gnu.org/software/cgicc/index.html\" class=\"se-link\" target=\"_blank\">https://www.gnu.org/software/cgicc/index.html</a></span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-oglink se-l-text\" id=\"SE-23a3a853-ee93-4477-b2ad-302a231c0b6b\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-oglink se-l-text se-section-align-\">\n                            <div class=\"se-module se-module-oglink\">\n                                <a href=\"https://www.gnu.org/software/cgicc/index.html\" class=\"se-oglink-info\" target=\"_blank\">\n                                    <div class=\"se-oglink-info-container\">\n                                        <strong class=\"se-oglink-title\">Cgicc - GNU Project - Free Software Foundation</strong>\n\n                                        <p class=\"se-oglink-summary\">a C++ class library for writing CGI applications Introduction to GNU Cgicc GNU Cgicc is an ANSI C++ compliant class library that greatly simplifies the creation of CGI applications for the World Wide Web. cgicc performs the following functions: Parses both GET and POST form data transparently. Pro...</p>\n                                        <p class=\"se-oglink-url\">www.gnu.org</p>\n                                    </div>\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_oglink\", \"id\" :\"SE-23a3a853-ee93-4477-b2ad-302a231c0b6b\", \"data\" : {\"link\" : \"https://www.gnu.org/software/cgicc/index.html\", \"isVideo\" : \"false\", \"thumbnail\" : \"\"}}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-967377e0-489e-4966-a14f-5b1edb15352a\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-6654c25f-0310-46de-987f-2bb391ea055c\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-683fef65-497e-4a91-af9d-31d7b33f65b2\">이제 모든 라이브러리가 준비되었습니다!</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-2fe58f3f-c53f-4f95-b39a-0b657f47edf1\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:252px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-2fe58f3f-c53f-4f95-b39a-0b657f47edf1\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTRfMjc1/MDAxNjAyNjE1NzU1Nzcw.npmd422MYbC2LlKN9sGNvz4ZRhueJhah8-knRLxlaCkg.DkZwdMeXufDjxT1ZcDXQKrpMNT7ReVwnhpxravCJz3Ig.PNG/17.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTRfMjc1/MDAxNjAyNjE1NzU1Nzcw.npmd422MYbC2LlKN9sGNvz4ZRhueJhah8-knRLxlaCkg.DkZwdMeXufDjxT1ZcDXQKrpMNT7ReVwnhpxravCJz3Ig.PNG/17.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-2153b5e3-3590-4b0e-bb6f-2c449c9df721\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-e5774d7f-39df-458c-8e23-06e87d2a54f0\"><span style=\"\" class=\"se-fs-fs24 se-ff-nanumgothic   \" id=\"SE-23d1fcbe-ae0d-465b-a3de-8d7fd8294936\">3. 요청과 응답 형식 정하기</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-13e8c9d0-37db-415b-8d43-8c136ae75161\"><span style=\"\" class=\"se-fs-fs19 se-ff-nanumgothic   \" id=\"SE-3814a571-358d-435e-82fe-0cd39b0f8faa\">1. 요청</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a68c316a-7a31-4a27-9467-5808df5da9a6\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-4a697218-8cef-450c-afff-890dfa7c2fc5\">요청은 제가 이미 생각해놓았답니다</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-5cd4ca01-d1ea-49a3-a120-1aa4ab95690a\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs16 se-ff-nanumgothic  se-style-unset \" id=\"SE-42979ed1-a8c3-4eb1-bc28-5dee9a4e7061\">선택 인자</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-20d14cdd-43be-479e-b861-3bddd16f5465\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-e38c0746-08e0-466b-87e2-908bc0644d02\">· </span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-fee60ef9-da97-4064-93ca-d6865d7406cf\"><b>beautify </b></span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-f8292b5a-3f0f-4183-9888-a8739ed25260\">json로 나온 결과를 beautify함 [true|false](기본값 false, true가 아니면 모두 false처리)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-b874cbda-b9ff-4098-9c08-311200275606\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-5151bc1a-b1ce-47cb-8e26-b548b8c04044\">· </span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-5e7bfa9b-bcf0-45d0-8937-fc7cf3794d92\"><b>page </b></span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-e8cd201e-3ef0-4010-b113-649af036254a\">목록에서 페이지[1~1000](기본값 1)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-4e2d5b50-0607-40f7-a475-bef0b0f3ac14\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-15966195-b57d-4c41-91ae-9a5aad337637\">· </span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-9711089b-80d4-4f57-a3ae-848968703f2a\"><b>perPage </b></span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-ceda15af-b4df-4b12-adc6-1e0f80417316\">페이지당 개시글 수 [1~50](기본값 15)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-3437f63c-ebbb-4e18-ade9-75d810bb356b\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-16ec6ca6-3f21-4764-b2a1-f12ee62a10f5\">· </span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-82a76cb0-c593-47a0-b02e-195aa5e3dee1\"><b>sort </b></span><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-d848e5f5-175a-4261-ad28-85a72a761e9a\">정렬기준 지정 [ja_name, ko_name, link](기본값 ko_name)</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-b6cf4fee-8a5e-4f14-a4cf-b71075c486a7\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-d67cab90-8263-45f1-b72a-ecdfc82e3b51\">이렇게 받을겁니다.</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-8bde57b0-246a-4dbb-a8e9-2529f5f27e56\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs19 se-ff-nanumgothic  se-style-unset \" id=\"SE-d804dcbb-44e6-43e2-b582-b577ecb8d182\">2. 응답</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-372e5c11-a6b8-47cc-98f1-7aa10d4b8828\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-fc400df1-d302-409b-add1-0b81f8efcf74\">응답도 제가 미리 정했어요</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-3bcc53eb-5ab9-4228-8046-7489e508cd82\"><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs16 se-ff-nanumgothic  se-style-unset \" id=\"SE-8dbc462e-88bd-4330-a924-f76c076ba709\">정상응답(</span><span style=\"\" class=\"se-fs-fs16 se-ff-nanumgothic   \" id=\"SE-29b8359d-cc7d-4da9-8144-a9112fa83662\">beautify &#x3D; true</span><span style=\"background-color:#FFFFFF;\" class=\"se-fs-fs16 se-ff-nanumgothic  se-style-unset \" id=\"SE-6fc20740-ec92-425d-88ed-ce5c58d67bec\">)</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-34d05e5b-e66c-464b-9f32-3f5b5d35b073\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">{\n  &quot;result&quot;: [\n    {\n      &quot;ja_name&quot;: &quot;ja_name1&quot;,\n      &quot;ko_name&quot;: &quot;ko_name1&quot;,\n      &quot;link&quot;: &quot;link1&quot;\n    },\n    {\n      &quot;ja_name&quot;: &quot;ja_name2&quot;,\n      &quot;ko_name&quot;: &quot;ko_name2&quot;,\n      &quot;link&quot;: &quot;link2&quot;\n    }\n  ]\n}</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-34d05e5b-e66c-464b-9f32-3f5b5d35b073\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-bb06f400-c5aa-4e0a-b5ee-f9752736023b\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"line-height:1.6;\" id=\"SE-851718d7-6715-4fce-baea-00ae9f78fbd2\"><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs-fs16 se-ff-nanumgothic  se-style-unset \" id=\"SE-7d86bcec-723a-4769-8987-ac942106f435\">오류</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-code se-l-code_black\" id=\"SE-c4454709-4c87-4f8f-87d2-d7907863f698\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-code se-l-code_black\">\n                            <div class=\"se-module se-module-code se-fs-fs13\">\n                                <div class=\"se-code-source\">\n                                    <div class=\"__se_code_view language-javascript\">{&quot;error_code&quot;:&quot;오류코드&quot;, &quot;error_message&quot;: &quot;오류내용&quot;}﻿</div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <script type=\"text/data\" class=\"__se_module_data\" data-module='{\"type\":\"v2_code\", \"id\" : \"SE-c4454709-4c87-4f8f-87d2-d7907863f698\"}'></script>\n                </div>                <div class=\"se-component se-text se-l-default\" id=\"SE-19f5875c-17de-41c4-a33b-e53c11ca861b\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-a5a436f3-64f2-4c5a-928f-e567c9ddcac6\"><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs-fs24 se-ff-nanumgothic  se-style-unset \" id=\"SE-b38a0e1a-7977-4f70-8fa0-3487d7c9c841\">4. </span><span style=\"\" class=\"se-fs-fs24 se-ff-nanumgothic   \" id=\"SE-a1818374-28e7-4f07-9e21-6b52bcb08c05\">다이어그램</span><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs-fs24 se-ff-nanumgothic  se-style-unset \" id=\"SE-445316bb-1402-46f4-b566-3610596916e4\"> 그리기</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-32d26245-9c74-48bc-aaa4-53185aed9db1\"><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-c8b143cd-94ed-4021-b793-b519e11f8186\">이제 </span><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-b149407c-ad04-4e51-9c5f-8fa0ea62b82b\">다이어그램</span><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-f4e10d0b-c70d-4926-9b6b-c7c15ae1039e\">을 제가 그려오도록 하겠습니다.</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-163602e5-115f-4e0e-a148-6743c375d0e8\">\n                    <div class=\"se-component-content se-component-content-extend\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" >\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-163602e5-115f-4e0e-a148-6743c375d0e8\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTRfMzUg/MDAxNjAyNjE1NDkxNzQ2.fOBpynANRkyEPo6dpXyLNfSHJhZEc7dWcx45ZUD-tPMg.cws7ogKdzeT_oZKsZT_Drg_XkrLfP_-gxXIA-4AwuT0g.PNG/Api-1.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTRfMzUg/MDAxNjAyNjE1NDkxNzQ2.fOBpynANRkyEPo6dpXyLNfSHJhZEc7dWcx45ZUD-tPMg.cws7ogKdzeT_oZKsZT_Drg_XkrLfP_-gxXIA-4AwuT0g.PNG/Api-1.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-ada906e1-35be-4308-901c-4b4f89a4a42e\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-37c6576d-244d-4943-bd16-89494dc8c8f7\"><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-94420626-795c-4f33-b837-4109c3732799\">???: 참 쉽죠?</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-eb9eec9f-4260-4194-9c18-4618ab3427f4\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:248px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-eb9eec9f-4260-4194-9c18-4618ab3427f4\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTRfMjM3/MDAxNjAyNjE1NTMwNjg0.5sXJ4QSTEEXnm9n-rmtRkboh1LFmNcHqCr59qSp2qv0g.GR9NumhH09PC0k33MtD9oB6ev2DyXJGIB3RZS_GXjqYg.PNG/7.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTRfMjM3/MDAxNjAyNjE1NTMwNjg0.5sXJ4QSTEEXnm9n-rmtRkboh1LFmNcHqCr59qSp2qv0g.GR9NumhH09PC0k33MtD9oB6ev2DyXJGIB3RZS_GXjqYg.PNG/7.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"se-component se-text se-l-default\" id=\"SE-730aef35-f871-4677-b6de-993782abae01\">\n                    <div class=\"se-component-content\">\n                        <div class=\"se-section se-section-text se-l-default\">\n                            <div class=\"se-module se-module-text\">\n\n                                    <!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-440e6f17-e9be-43ae-9a4e-fb370ff017e5\"><span style=\"color:#000000;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-c74c20a4-81fa-41d4-9a78-76e22c620eac\">​</span></p><!-- } SE-TEXT --><!-- SE-TEXT { --><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-977dc5b4-af59-418d-81c0-7ad7782501b5\"><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-62c1b7c2-33aa-4bf1-beba-9cec3ff91068\">이것으로 저만 이해할 것 같은 &#x60;</span><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-69bc243d-1597-4fe7-914c-0c5105c04930\">1-1. JPOP List API의 작동방식 생각해보기&#x60;를</span><span style=\"color:#000000;background-color:#FFFFFF;\" class=\"se-fs- se-ff-nanumgothic  se-style-unset \" id=\"SE-1a46281e-d011-45a9-9258-017af934b2c7\"> 마칩니다!!!</span></p><!-- } SE-TEXT -->\n                            </div>\n                        </div>\n                    </div>\n                </div>                <div class=\"se-component se-image se-l-default\" id=\"SE-e39f7a5c-51f2-4c4b-8133-3ee2445bb8d9\">\n                    <div class=\"se-component-content se-component-content-normal\">\n                        <div class=\"se-section se-section-image se-l-default se-section-align-\" style=\"max-width:286px;\">\n\n                                <div class=\"se-module se-module-image\" style=\"\">\n                                    <a href=\"#\" class=\"se-module-image-link __se_image_link __se_link\" style=\"\" onclick=\"return false;\" data-linktype=\"img\" data-linkdata='{\"id\" : \"SE-e39f7a5c-51f2-4c4b-8133-3ee2445bb8d9\", \"src\" : \"https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTRfMjI5/MDAxNjAyNjE1NjQ5NzI5.qriqbsRzae6ss1goEYmr66XqZncwQu3aug0y82Sk8vMg.NBfmkCLOA6WNQJFDDQFMTNkWtCqYraJRDk2GxecmEUIg.PNG/9.png\", \"linkUse\" : \"false\", \"link\" : \"\"}'>\n                                        <img src=\"https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTRfMjI5/MDAxNjAyNjE1NjQ5NzI5.qriqbsRzae6ss1goEYmr66XqZncwQu3aug0y82Sk8vMg.NBfmkCLOA6WNQJFDDQFMTNkWtCqYraJRDk2GxecmEUIg.PNG/9.png?type=w800\" alt=\"\" class=\"se-image-resource\" />\n                                    </a>\n                                </div>\n                            <div class=\"se-module se-module-text se-caption\"><p class=\"se-text-paragraph se-text-paragraph-align- \" style=\"\" id=\"SE-ba0812cb-5bee-4f39-af8a-901b08968a88\"><span style=\"\" class=\"se-fs- se-ff-nanumgothic   \" id=\"SE-deb83098-c910-4355-8f21-c5f2933c6914\">무책임</span></p></div>\n                        </div>\n                    </div>\n                </div>\n    </div>\n</div>",
+            "customElements": [],
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B000066D700000000",
+            "id": 26327,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 205,
+                "menuType": "B",
+                "name": "| 뭔가 이상한 API 만들기 |"
+            },
+            "readCount": 124,
+            "refArticleId": 26327,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "1-1. JPOP List API의 작동방식 생각해보기",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1602615795760,
+            "writer": {
+                "id": "hui1601",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_130.gif",
+                "memberLevelName": "챗봇 고수",
+                "nick": "Hibot"
+            }
+        },
+        "articleId": 26327,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": true,
+            "isMove": false,
+            "isRemove": true,
+            "isReport": false,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5249,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "다이어그램은 제가 임의로 만든겁니다. 세상에 저런 언어는 없어요(?)",
+                    "id": 105993498,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": true,
+                    "refId": 105993498,
+                    "updateDate": 1602618091000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "나나세 쿠루미는 킹정이지",
+                    "id": 105997687,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 105997687,
+                    "updateDate": 1602628893000,
+                    "writer": {
+                        "id": "whdrhkddl123",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMTJfMjg3/MDAxNjAyNDU4NTIzNTE1.MLezUCiaBjjsTRp3eHxrGiEauqPGrV_8QXDjpDNXhLYg.kvN9713evojEbEKHSDMnY2uhPiKReI5ksEGi2-KVJ60g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "지구"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 106034679,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTRfNzgg/MDAxNjAyNjUyMjA2MjQ4.XqNa5jl_E6NBOvM-qpy3Pp2r4PQRCj4SzDDIRmEDsRwg.-tBe0GwW3H2-77FS67lsviuv4aDvvLiuExpaG8JofKAg.PNG/externalFile.png"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": true,
+                    "originalImage": {
+                        "fileName": "externalFile.png",
+                        "height": 436,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDEwMTRfNzgg/MDAxNjAyNjUyMjA2MjQ4.XqNa5jl_E6NBOvM-qpy3Pp2r4PQRCj4SzDDIRmEDsRwg.-tBe0GwW3H2-77FS67lsviuv4aDvvLiuExpaG8JofKAg.PNG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTRfNzgg/MDAxNjAyNjUyMjA2MjQ4.XqNa5jl_E6NBOvM-qpy3Pp2r4PQRCj4SzDDIRmEDsRwg.-tBe0GwW3H2-77FS67lsviuv4aDvvLiuExpaG8JofKAg.PNG/externalFile.png",
+                        "width": 512
+                    },
+                    "refId": 105997687,
+                    "updateDate": 1602652206000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "이모티콘 뒷광고 해명하세요",
+                    "id": 106002921,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 106002921,
+                    "updateDate": 1602632012000,
+                    "writer": {
+                        "id": "dsy2761",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAxOTExMTRfMjcy/MDAxNTczNjc1MDE4MzE1.xTQI54tOUEO0syvnkIH0HtOOqlPrLi11LShvYF5Y7-Ug.gvo5g0oyWB3F7T61gRFGZrLBZtIQP73GcsCNNg5l7L0g.JPEG/externalFile.jpg"
+                        },
+                        "nick": "AlphaDo"
+                    }
+                },
+                {
+                    "content": "어라 어둠의 경로(?)",
+                    "id": 106034663,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": true,
+                    "refId": 106002921,
+                    "updateDate": 1602652190000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "어차피 라인스티커라 한국에서 못사요",
+                    "id": 106037024,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": true,
+                    "refId": 106002921,
+                    "replyMember": {
+                        "id": "hui1601",
+                        "nick": "Hibot"
+                    },
+                    "updateDate": 1602654041000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "것보단 커엽네요",
+                    "id": 106024585,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 106024585,
+                    "updateDate": 1602644089000,
+                    "writer": {
+                        "id": "gigigia-1234",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MDlfMTUz/MDAxNTk5NjEyNTg2MDgw.gz9LKfYQFlIU1Ih6Ro4ODKnP-r-LbWE_B5ROxm6GcN4g.AzxtviQvtDbkk0DawTj6adZ2Xc-ZL8piX8CadbcCd1Mg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "재승"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 106035026,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 106035026,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5706312aeb7cf-12-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5706312aeb7cf/original_12.png",
+                        "width": 129
+                    },
+                    "updateDate": 1602652454000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 106037075,
+                    "image": {
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "service": "CAFE",
+                        "type": "mc364_364",
+                        "url": "https://mcafethumb-phinf.pstatic.net/MjAyMDEwMTRfOTYg/MDAxNjAyNjU0MDgxMjM5._jsiL6jXqUNH-YGdVSKl8Ul0l6Z8DpeUbDN4DxLf7z0g.KYS5kQXwBs9zMg_lQgVRENQUwPxrCRhthrl4UiSFcEgg.PNG/externalFile.png"
+                    },
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": true,
+                    "originalImage": {
+                        "fileName": "externalFile.png",
+                        "height": 450,
+                        "isAnimated": false,
+                        "isCropped": false,
+                        "path": "/MjAyMDEwMTRfOTYg/MDAxNjAyNjU0MDgxMjM5._jsiL6jXqUNH-YGdVSKl8Ul0l6Z8DpeUbDN4DxLf7z0g.KYS5kQXwBs9zMg_lQgVRENQUwPxrCRhthrl4UiSFcEgg.PNG/",
+                        "service": "CAFE",
+                        "type": "",
+                        "url": "https://cafeptthumb-phinf.pstatic.net/MjAyMDEwMTRfOTYg/MDAxNjAyNjU0MDgxMjM5._jsiL6jXqUNH-YGdVSKl8Ul0l6Z8DpeUbDN4DxLf7z0g.KYS5kQXwBs9zMg_lQgVRENQUwPxrCRhthrl4UiSFcEgg.PNG/externalFile.png",
+                        "width": 512
+                    },
+                    "refId": 106035026,
+                    "updateDate": 1602654081000,
+                    "writer": {
+                        "id": "hui1601",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDA5MTVfMjIx/MDAxNjAwMTcxNTQ3MDY5.o-mXvpIpmhokcsL1qOSqYR04yMlVPjlMYcpFPulXMEgg.veH2AetQAl2B06ANU6h9fptPDzJYstGXowp4_AzOus0g.JPEG/60155475_p0_master1200.jpg"
+                        },
+                        "nick": "Hibot"
+                    }
+                },
+                {
+                    "content": "해석좀",
+                    "id": 106069999,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 106035026,
+                    "replyMember": {
+                        "id": "hui1601",
+                        "nick": "Hibot"
+                    },
+                    "updateDate": 1602680595000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                }
+            ],
+            "last": {
+                "id": 106035026,
+                "refId": 106035026
+            },
+            "next": {
+                "id": 106089611,
+                "refId": 106035026
+            }
+        },
+        "editorVersion": "SE_ONE",
+        "errorCode": null,
+        "heads": [],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": [
+            "나는밥오다"
+        ]
+    }
+}

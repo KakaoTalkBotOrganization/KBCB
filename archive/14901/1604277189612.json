@@ -1,0 +1,417 @@
+{
+    "result": {
+        "article": {
+            "commentCount": 29,
+            "contentElements": [],
+            "contentHtml": "<p>지금은 유비소프트가 포기해서 망해가고 있지만 절대 죽지 않는 좀비같은 서버로 유저들에게 물없이 삶은감자를 입에 넣고 우물거리는 답답함을 느끼게 만드는 그로우토피아 라는 게임이있습니다.<br />이 게임에서의 아이템 정보를 가져오는 소스입니다.<br /><br />//아이템 체킹함수<br />function getItemInfo(pos) {<br />    var item = pos.toLowerCase();<br />    if (item.indexOf(&quot; &quot;) != -1) {<br />        var arr = item.split(&quot; &quot;);<br />        var b = arr.map(a =&gt; a.split(&quot;&quot;)[0].toUpperCase() + a.replace(a.split(&quot;&quot;)[0], &quot;&quot;));<br />        item = b.join(&quot;_&quot;);<br />        var itemnm = item.replace(/_/g, &quot; &quot;);<br />    } else {<br />        item = pos.replace(pos.split(&quot;&quot;)[0], pos.split(&quot;&quot;)[0].toUpperCase()).split(&quot; &quot;);<br />    }<br />    try {<br />        var util = Utils.getWebText(&quot;https://growtopia.fandom.com/wiki/&quot; + item).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;);<br />        var splice = util.split(&quot;▶ Splicing&quot;)[1].trim().split(&quot;\\n&quot;)[3].trim() + &quot; + &quot; + util.split(&quot;▶ Splicing&quot;)[1].trim().split(&quot;\\n&quot;)[6].trim();<br />    }  catch (e) {<br />    var splice = &quot;This item can&apos;t be splice.&quot;;<br />}<br />    try {<br />        var util = Utils.getWebText(&quot;https://growtopia.fandom.com/wiki/&quot; + item).replace(/(&lt;([^&gt;]+)&gt;)/g, &quot;&quot;);<br />        var type = util.split(&quot;Type&quot;)[1].trim().split(&quot;\\n&quot;)[0].trim();<br />        var chi = util.split(&quot;Chi&quot;)[1].trim().split(&quot;\\n&quot;)[0].trim();<br />        var hardness = util.split(&quot;Hardness&quot;)[1].trim().split(&quot;\\n&quot;)[0].trim().replace(/Hits/g, &quot;Hits /&quot;);<br />        var jem = util.split(&quot;Default Gems Drop&quot;)[1].trim().split(&quot;\\n&quot;)[0].trim();<br />        var growtime = util.split(&quot;Grow Time&quot;)[1].trim().split(&quot;\\n&quot;)[0].trim().replace(&quot;d&quot;, &quot;일&quot;).replace(&quot;h&quot;, &quot;시간&quot;).replace(&quot;m&quot;, &quot;분&quot;).replace(&quot;s&quot;, &quot;초&quot;);<br />        var result = (&quot;[하프봇]\\n아이템 정보: &quot; + item + &quot;&#8203;&quot;.repeat(500) + &quot;\\n\\n아이템 타입: &quot; + type + &quot;\\n\\n아이템 속성: &quot; + chi + &quot;\\n\\n부서지는 펀치 횟수: &quot; + hardness + &quot;\\n\\n젬 드랍: &quot; + jem + &quot;\\n\\n자라는 시간: &quot; + growtime + &quot;\\n\\n조합법: &quot; + splice);<br />        return result;<br />    }  catch (obj) {<br />    var re = obj.name + &quot;:\\xa0&quot; + obj.message + &quot;\\xa0(&quot; + obj.fileName + &quot;#&quot; + obj.lineNumber + &quot;)&quot;;<br />    return re;<br />}<br />}<br />//체킹함수 끝<br /><br /><br />//함수 호출 if문<br />if (msg.startsWith(&quot;h아이템&quot;)) {<br />    replier.reply(getItemInfo(msg.substr(4).trim()));<br />}</p>",
+            "decorator": {
+                "isPlug": false,
+                "isShowSuicideSaver": false
+            },
+            "existScrapAddContent": false,
+            "gdid": "90000004_01C2B33B00003A3500000000",
+            "id": 14901,
+            "isAutoSourcing": false,
+            "isBlind": false,
+            "isDeleteParent": false,
+            "isEnableExternal": true,
+            "isEnableScrap": true,
+            "isEnableSocialPlugin": true,
+            "isGroupPurchase": false,
+            "isMarket": false,
+            "isNewComment": false,
+            "isNotice": false,
+            "isOpen": true,
+            "isPersonalTrade": false,
+            "isReadable": true,
+            "isWriteComment": true,
+            "menu": {
+                "badMenu": false,
+                "badMenuByRestrict": false,
+                "boardType": "L",
+                "id": 143,
+                "menuType": "B",
+                "name": "| 소스 공유 |"
+            },
+            "readCount": 49,
+            "refArticleId": 14901,
+            "replyListOrder": "",
+            "scrapCount": 0,
+            "subject": "그로우토피아 아이템 정보 검색 소스",
+            "template": {
+                "isUse": false
+            },
+            "writeDate": 1585755528347,
+            "writer": {
+                "id": "austin929",
+                "image": {
+                    "isAnimated": false,
+                    "service": "CAFE",
+                    "type": "c77_77",
+                    "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                },
+                "memberLevelIconUrl": "https://cafe.pstatic.net/levelicon/1/13_140.gif",
+                "memberLevelName": "챗봇 마스터",
+                "nick": "하프"
+            }
+        },
+        "articleId": 14901,
+        "attaches": [],
+        "authority": {
+            "isDoLike": true,
+            "isEnableAttachFileDownload": true,
+            "isHeadModifiable": false,
+            "isModify": false,
+            "isMove": false,
+            "isRemove": false,
+            "isReport": true,
+            "isRightClick": true,
+            "isSharable": true,
+            "isShowLike": true,
+            "isShowReply": false,
+            "isShowStatistics": false,
+            "isStore": false,
+            "isWrite": true,
+            "isWriteComment": true,
+            "isWriteReply": true
+        },
+        "cafe": {
+            "exposeReservation": false,
+            "hasPopularArticle": true,
+            "id": 29537083,
+            "image": {
+                "service": "CAFE",
+                "type": "f100_100",
+                "url": "https://mcafethumb-phinf.pstatic.net/MjAxOTAyMjVfMTg5/MDAxNTUxMDg2MDc1OTY2.umN5Kq9Z2sFRSdAXyJ2sz9UAlE0ofXm-dWJIRbeRbvsg.i_KxnwZ-FvDMQLnpo0ZYMo0Zl9JjOAPGWozW-WnLXJQg.PNG.wltjdqls5304/image.png"
+            },
+            "introduction": "자바스크립트를 사용하는 카카오톡 봇 관련 커뮤니티 입니다.",
+            "isDormant": false,
+            "memberCount": 5248,
+            "name": "카카오톡 봇 커뮤니티",
+            "openType": "O",
+            "pcCafeName": "카카오톡 봇 커뮤니티",
+            "url": "nameyee",
+            "usingMemberLevel": true
+        },
+        "cafeId": 29537083,
+        "comments": {
+            "alarm": {
+                "isChecked": false,
+                "isShow": true
+            },
+            "disableWriteReason": "",
+            "items": [
+                {
+                    "content": "하와와",
+                    "id": 86133765,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86133765,
+                    "updateDate": 1585791617000,
+                    "writer": {
+                        "id": "ppch0529",
+                        "image": {
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
+                        },
+                        "nick": "무명"
+                    }
+                },
+                {
+                    "content": "",
+                    "id": 86169180,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86169180,
+                    "sticker": {
+                        "height": 112,
+                        "id": "ogq_5856045444265-11-185-160",
+                        "type": "p100_100",
+                        "url": "https://storep-phinf.pstatic.net/ogq_5856045444265/original_11.png",
+                        "width": 129
+                    },
+                    "updateDate": 1585814990000,
+                    "writer": {
+                        "id": "sungbin_dev",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDEwMzBfMzUg/MDAxNjA0MDMwMDYwNzM5.kjePgFoxEs7f_8UwkpF6JtLFx2dFUz9gNtlwgrEPzwEg.agBPDgSw14rZWK1sN50QMz9ncBqE0I9DIq22M9ESoE4g.PNG/z.png"
+                        },
+                        "nick": "성빈"
+                    }
+                },
+                {
+                    "content": "와! 그토!ㅋㅋ",
+                    "id": 86191290,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": false,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "updateDate": 1585830397000,
+                    "writer": {
+                        "id": "korh0101",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDNfMTQ3/MDAxNTc4MDA1NDEzNzA5.FecJpmDBzWn9Sz6a0hzrJQHVL4HOx78afR4_ueji6dwg.nlnE4b-tfZZepgNU-HhEXdv-n4jMkmgnIlFsAoKcjpkg.JPEG/downloadfile-1.jpg"
+                        },
+                        "nick": "소"
+                    }
+                },
+                {
+                    "content": "그토! 아시는구나!",
+                    "id": 86192961,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "updateDate": 1585831324000,
+                    "writer": {
+                        "id": "austin929",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하프"
+                    }
+                },
+                {
+                    "content": "growtopia 갓갓겜이죠ㅋㅋ",
+                    "id": 86193208,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "replyMember": {
+                        "id": "austin929",
+                        "nick": "하프"
+                    },
+                    "updateDate": 1585831456000,
+                    "writer": {
+                        "id": "korh0101",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDNfMTQ3/MDAxNTc4MDA1NDEzNzA5.FecJpmDBzWn9Sz6a0hzrJQHVL4HOx78afR4_ueji6dwg.nlnE4b-tfZZepgNU-HhEXdv-n4jMkmgnIlFsAoKcjpkg.JPEG/downloadfile-1.jpg"
+                        },
+                        "nick": "소"
+                    }
+                },
+                {
+                    "content": "지금은 도읍러들과 감자서버로 인해 하는사람글만 한다는 그 게임....",
+                    "id": 86194679,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "replyMember": {
+                        "id": "korh0101",
+                        "nick": "소"
+                    },
+                    "updateDate": 1585832175000,
+                    "writer": {
+                        "id": "austin929",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하프"
+                    }
+                },
+                {
+                    "content": "허허허.. 그게임으로 200이상 벌었다는건 비밀!",
+                    "id": 86194914,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "replyMember": {
+                        "id": "austin929",
+                        "nick": "하프"
+                    },
+                    "updateDate": 1585832284000,
+                    "writer": {
+                        "id": "korh0101",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDNfMTQ3/MDAxNTc4MDA1NDEzNzA5.FecJpmDBzWn9Sz6a0hzrJQHVL4HOx78afR4_ueji6dwg.nlnE4b-tfZZepgNU-HhEXdv-n4jMkmgnIlFsAoKcjpkg.JPEG/downloadfile-1.jpg"
+                        },
+                        "nick": "소"
+                    }
+                },
+                {
+                    "content": "허허허... 제가 230명 방장이라는건 비밀!",
+                    "id": 86195004,
+                    "isArticleWriter": true,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "replyMember": {
+                        "id": "korh0101",
+                        "nick": "소"
+                    },
+                    "updateDate": 1585832330000,
+                    "writer": {
+                        "id": "austin929",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAzMjBfOTMg/MDAxNTg0NjM0MzU1OTA0.jTUzWTzKbrB4Tmsx_hf5mVvd36XLhcft3pfZ-gqw-CEg.PlCfBpslNHkiqPdQ4hWARWebxgDRy5EL5NDRabMOWeQg.JPEG/externalFile.jpg"
+                        },
+                        "nick": "하프"
+                    }
+                },
+                {
+                    "content": "..?",
+                    "id": 86195048,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "replyMember": {
+                        "id": "austin929",
+                        "nick": "하프"
+                    },
+                    "updateDate": 1585832351000,
+                    "writer": {
+                        "id": "korh0101",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDNfMTQ3/MDAxNTc4MDA1NDEzNzA5.FecJpmDBzWn9Sz6a0hzrJQHVL4HOx78afR4_ueji6dwg.nlnE4b-tfZZepgNU-HhEXdv-n4jMkmgnIlFsAoKcjpkg.JPEG/downloadfile-1.jpg"
+                        },
+                        "nick": "소"
+                    }
+                },
+                {
+                    "content": "혹시 활동하는 이름이..?",
+                    "id": 86195079,
+                    "isArticleWriter": false,
+                    "isDeleted": false,
+                    "isNew": false,
+                    "isRef": true,
+                    "isRemovable": false,
+                    "refId": 86191290,
+                    "replyMember": {
+                        "id": "korh0101",
+                        "nick": "소"
+                    },
+                    "updateDate": 1585832367000,
+                    "writer": {
+                        "id": "korh0101",
+                        "image": {
+                            "isAnimated": false,
+                            "service": "CAFE",
+                            "type": "c77_77",
+                            "url": "https://cafethumb.pstatic.net/MjAyMDAxMDNfMTQ3/MDAxNTc4MDA1NDEzNzA5.FecJpmDBzWn9Sz6a0hzrJQHVL4HOx78afR4_ueji6dwg.nlnE4b-tfZZepgNU-HhEXdv-n4jMkmgnIlFsAoKcjpkg.JPEG/downloadfile-1.jpg"
+                        },
+                        "nick": "소"
+                    }
+                }
+            ],
+            "last": {
+                "id": 86191290,
+                "refId": 86191290
+            },
+            "next": {
+                "id": 86195109,
+                "refId": 86191290
+            }
+        },
+        "editorVersion": "LEGACY",
+        "errorCode": null,
+        "heads": [
+            {
+                "head": "미니게임",
+                "headId": 70
+            },
+            {
+                "head": "RPG",
+                "headId": 71
+            },
+            {
+                "head": "파싱",
+                "headId": 72
+            },
+            {
+                "head": "혼합",
+                "headId": 73
+            },
+            {
+                "head": "기타",
+                "headId": 74
+            },
+            {
+                "head": "모듈",
+                "headId": 80
+            },
+            {
+                "head": "카톡봇",
+                "headId": 83
+            },
+            {
+                "head": "함수",
+                "headId": 90
+            },
+            {
+                "head": "고급",
+                "headId": 101
+            },
+            {
+                "head": "중급",
+                "headId": 102
+            },
+            {
+                "head": "초급",
+                "headId": 103
+            },
+            {
+                "head": "태그",
+                "headId": 106
+            }
+        ],
+        "isReadOnlyMode": false,
+        "isW800": true,
+        "readOnlyModeInfo": {
+            "emergency": false,
+            "linkToNoticeURL": "https://section.cafe.naver.com/cafe-home/cafe-notice?noticeId=1650",
+            "readOnlyNoticeDuration": "",
+            "timeToNotice": false,
+            "timeToPreNotice": false
+        },
+        "tags": []
+    }
+}
